@@ -1,0 +1,3 @@
+force_https: true
+pushstate: enabled
+root: build
