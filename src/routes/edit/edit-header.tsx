@@ -1,9 +1,6 @@
 import React, { useContext } from 'react';
 import { css } from 'emotion';
-import {
-	Button,
-	Checkbox
-} from 'carbon-components-react';
+import { Button } from 'carbon-components-react';
 import {
 	Copy16,
 	Delete16,
@@ -12,7 +9,6 @@ import {
 } from '@carbon/icons-react';
 import { ModalContext, ModalActionType } from '../../context/modal-context';
 import { FragmentModal } from './fragment-modal';
-import { LocalFragmentsContext, LocalFragmentActionType } from '../../context/local-fragments-context';
 
 const editHeader = css`
 	left: 16rem;
@@ -138,7 +134,6 @@ const fragmentEditToolBar = css`
 
 export const EditHeader = ({ fragment }: any) => {
 	const [, dispatchModal] = useContext(ModalContext);
-	const [localFragments, updateLocalFragments] = useContext(LocalFragmentsContext);
 
 	return (
 		<header
