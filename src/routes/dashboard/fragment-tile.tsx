@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { css } from 'emotion';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -8,8 +8,8 @@ import {
 	SkeletonText,
 	Tile
 } from 'carbon-components-react';
-import { LocalFragmentsContext, LocalFragmentActionType } from '../../context/local-fragments-context';
 import { ModalContext, ModalActionType } from '../../context/modal-context';
+import { getFragmentPreview, RenderProps } from '../../utils/fragment-tools';
 
 const tileWrapper = css`
 	margin: 0.75rem;
@@ -82,7 +82,7 @@ export const FragmentTile = ({
 }: any) => {
 	const history = useHistory();
 	const [, dispatchModal] = useContext(ModalContext);
-	const [localFragments, updateLocalFragments] = useContext(LocalFragmentsContext);
+	const [previewUrl, setPreviewUrl] = useState('');
 	const handleModalState = (modalAction: ModalActionType) => {
 		setModalFragment(fragment);
 		dispatchModal({
@@ -91,13 +91,41 @@ export const FragmentTile = ({
 		});
 	};
 
+	const renderProps: RenderProps = {
+		id: fragment.id,
+		name: fragment.title,
+		width: 800,
+		height: 400,
+		preview: {
+			format: 'png',
+			width: 330,
+			height: 200
+		}
+	};
+
+	const resetPreview = async () => {
+		const imageBlob = await getFragmentPreview(fragment, renderProps);
+		const reader = new FileReader();
+		reader.readAsDataURL(imageBlob ? imageBlob : new Blob());
+		reader.onloadend = () => {
+			const imageUrl: string = reader.result ? reader.result.toString() : '';
+			setPreviewUrl(imageUrl);
+		};
+	}
+
+	useEffect(() => {
+		resetPreview();
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
 	return (
 		<div className={tileWrapper}>
 			<Tile className={tileStyle} >
 				<div className={tileInnerWrapper}>
 					<Link to={to}>
 						<img
-							src={`/thumbnail/${fragment.id}.png?timestamp=${fragment.lastModified}`} // TODO this doesn't work, could be replicatable from charts builder
+							loading='lazy'
+							src={previewUrl}
 							className={fragmentImage}
 							alt={`fragment preview: ${title}`} />
 					</Link>
@@ -124,25 +152,9 @@ export const FragmentTile = ({
 							<OverflowMenuItem
 								itemText='Duplicate'
 								onClick={() => { handleModalState(ModalActionType.setDuplicationModal); }}/>
-							{
-								localFragments.find((c: any) => c.id === fragment.id)
-									? <OverflowMenuItem
-										itemText='Remove from my fragments'
-										onClick={() => {
-											updateLocalFragments({
-												type: LocalFragmentActionType.REMOVE,
-												data: { id: fragment.id }
-											});
-										}} />
-									: <OverflowMenuItem
-										itemText='Add to my fragments'
-										onClick={() => {
-											updateLocalFragments({
-												type: LocalFragmentActionType.ADD,
-												data: { id: fragment.id }
-											});
-										}} />
-							}
+							<OverflowMenuItem
+								itemText='Reset preview'
+								onClick={resetPreview}/>
 							<OverflowMenuItem
 								itemText='Remove'
 								onClick={() => { handleModalState(ModalActionType.setDeletionModal); }}
