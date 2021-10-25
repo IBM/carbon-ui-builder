@@ -191,7 +191,7 @@ export const updatedState = (state: any, dragObj: any, dropInId?: number, dropIn
 }
 
 export const getParentComponent = (state: any, child: any) => {
-	if (state.items) {
+	if (state && state.items) {
 		if (state.items.includes(child)) {
 			return state;
 		}

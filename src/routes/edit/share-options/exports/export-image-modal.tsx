@@ -19,6 +19,9 @@ import debounce from 'lodash/debounce';
 import { saveBlob, getFullFileName } from '../../../../utils/file-tools';
 import { ShareOptionsModals } from '../share-options-modal';
 import { ModalContext, ModalActionType } from '../../../../context/modal-context';
+import { getFragmentPreview, RenderProps } from '../../../../utils/fragment-tools';
+import { FragmentsContext } from '../../../../context';
+import { useHistory } from 'react-router';
 
 const exportSettingForm = css`
 	width: 23rem;
@@ -67,6 +70,13 @@ const doUpdatePreviewSize = debounce(() => handleResize(), 200);
 
 export const ExportImageModal = (props: ExportImageProps) => {
 	const [modalState, dispatchModal] = useContext(ModalContext);
+	const [fragmentState] = useContext(FragmentsContext);
+	const history = useHistory();
+	const location = history.location.pathname;
+	const pathSegments = location.split('/');
+
+	const id = `${fragmentState.currentId || pathSegments[pathSegments.length - 1]}`;
+	const fragment = fragmentState.fragments.find((fragment: any) => fragment.id === id);
 
 	const exportSettings = {
 		width: 800,
@@ -130,7 +140,7 @@ export const ExportImageModal = (props: ExportImageProps) => {
 				height: previewSize.height
 			}
 		};
-		const imageBlob = await getImage(renderProps);
+		const imageBlob = await getFragmentPreview(fragment, renderProps);
 		const reader = new FileReader();
 		reader.readAsDataURL(imageBlob ? imageBlob : new Blob());
 		reader.onloadend = () => {
@@ -151,26 +161,10 @@ export const ExportImageModal = (props: ExportImageProps) => {
 			height: inputs.height,
 			format: inputs.format
 		};
-		const imageBlob = await getImage(renderProps);
+		const imageBlob = await getFragmentPreview(fragment, renderProps);
 		const fileName = getFullFileName(inputs.fragmentName, inputs.format);
 		saveBlob(imageBlob, fileName);
 		setIsPerformingAction(false);
-	};
-
-	const getImage = async(props: RenderProps) => {
-		const imageOptions: RequestInit = {
-			method: 'POST',
-			mode: 'cors',
-			headers: { 'Content-Type': 'application/json' },
-			credentials: 'include',
-			body: JSON.stringify(props)
-		};
-		// TODO rewrite this function to actually generate image - inspiration from charts builder
-		// const blob = await fetch(getApiUrl('/api/preview'), imageOptions)
-		// 	.then(async(response) => await response.clone().blob())
-		// 	.catch((error) => console.log(error));
-		// return blob;
-		return undefined;
 	};
 
 	const handleChange = (id: any, value: any) => {
@@ -219,19 +213,6 @@ export const ExportImageModal = (props: ExportImageProps) => {
 		</Modal>
 	);
 };
-
-export interface RenderProps {
-	id: string,
-	name: string,
-	width?: number,
-	height?: number,
-	format?: string,
-	preview?: { // only sent for preview
-		format?: string, // optional
-		width: number,
-		height: number
-	}
-}
 
 const ExportModalSettings = ({ inputs, handleChange }: any) => {
 	// We assume that a working ratio is never 0 (no 1D fragments)

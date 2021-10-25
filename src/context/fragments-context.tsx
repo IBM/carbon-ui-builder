@@ -87,8 +87,18 @@ export const useFetchOne = (id: number, dispatch: any) => {
 };
 
 export const useFragment = (id?: string) => {
-	const [state, dispatch] = useContext(FragmentsContext);
+	const context = useContext(FragmentsContext);
 	const history = useHistory();
+
+	if (!context) {
+		// this happens when rendering, which is fine because it's used
+		// in AComponent to update the state of the whole fragment due to
+		// user interaction - functionality not needed for render only
+		console.info("Rendering only, won't be able to update context");
+		return [{}, (_: any) => {}];
+	}
+
+	const [state, dispatch] = context;
 
 	if (!id) {
 		const location = history.location.pathname;
