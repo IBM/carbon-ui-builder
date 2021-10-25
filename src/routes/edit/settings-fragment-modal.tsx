@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import {
 	Modal,
-	Loading,
 	TextInput,
 	Checkbox,
 	TooltipDefinition
@@ -12,7 +11,7 @@ import './fragment-modal.scss';
 
 export const SettingsFragmentModal = ({ fragment }: any) => {
 	const [modalState, dispatchModal] = useContext(ModalContext);
-	const [{ currentlyProcessing }, dispatch] = useContext(FragmentsContext);
+	const [, dispatch] = useContext(FragmentsContext);
 
 	const props = {
 		size: 'sm',
@@ -56,7 +55,6 @@ export const SettingsFragmentModal = ({ fragment }: any) => {
 			hasForm
 			modalHeading='Edit fragment settings'
 			primaryButtonText='Save'
-			primaryButtonDisabled={currentlyProcessing}
 			onRequestSubmit={() => updateFragmentSettings()} >
 			<TextInput
 				id='fragmentName'
@@ -74,7 +72,6 @@ export const SettingsFragmentModal = ({ fragment }: any) => {
 				direction='bottom'>
 				template
 			</TooltipDefinition>
-			<Loading active={currentlyProcessing} />
 		</Modal>
 	);
 };
