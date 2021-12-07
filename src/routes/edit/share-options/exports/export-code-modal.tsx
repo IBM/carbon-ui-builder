@@ -9,6 +9,7 @@ import { createVanillaApp } from './frameworks/vanilla-fragment';
 import { createVueApp } from './frameworks/vue-fragment';
 
 import {
+	Button,
 	CodeSnippet,
 	Modal,
 	Tab,
@@ -16,6 +17,13 @@ import {
 } from 'carbon-components-react';
 import { css } from 'emotion';
 import { ModalContext, ModalActionType } from '../../../../context/modal-context';
+import { saveBlob } from '../../../../utils/file-tools';
+
+const exportCodeModalStyle = css`
+	.bx--tabs__nav-item {
+		width: calc(20% - 1px);
+	}
+`;
 
 const codeSnippetWrapper = css`
     margin-top: 20px;
@@ -27,7 +35,7 @@ const codeSnippetWrapper = css`
 const titleWrapper = css`
     display: flex;
     margin-top: 30px;
-    a {
+    a, button {
         margin-left: auto;
     }
 `;
@@ -50,7 +58,7 @@ export const ExportCode = ({
 	setDisplayedModal
 }: ExportCodeProps) => {
 	const [modalState, dispatchModal] = useContext(ModalContext);
-
+	const jsonCode: any = JSON.stringify(fragment.data, null, 2);
 	const vanillaCode: any = createVanillaApp(fragment);
 	const reactCode: any = createReactApp(fragment);
 	const angularCode: any = createAngularApp(fragment);
@@ -67,8 +75,30 @@ export const ExportCode = ({
 			secondaryButtonText='Back to export options'
 			onRequestSubmit={() => dispatchModal({ type: ModalActionType.closeModal })}
 			onSecondarySubmit={() => { setDisplayedModal(ShareOptionsModals.SHARE_OPTIONS); }}
-			modalHeading={`Export "${fragment.title}" code`}>
-			<Tabs selected={2}>
+			modalHeading={`Export "${fragment.title}" code`}
+			className={exportCodeModalStyle}>
+			<Tabs selected={3}>
+				<Tab
+					id='json'
+					label='JSON'
+					role='presentation'
+					tabIndex={0}>
+					<div className={titleWrapper}>
+						<h3>JSON</h3>
+						<Button
+						kind='ghost'
+						onClick={() => saveBlob(new Blob([jsonCode]), `${fragment.title}.json`)}>
+							Download JSON
+						</Button>
+					</div>
+					<CodeSnippet
+						type='multi'
+						light
+						className={codeSnippet}
+						copyButtonDescription={`Copy JSON to clipboard`}>
+						{ jsonCode }
+					</CodeSnippet>
+				</Tab>
 				<Tab
 					id='vanilla'
 					label='Vanilla JS'
