@@ -51,6 +51,9 @@ export const App = () => (
 					</NotificationContextProvider>
 				</FragmentsContextProvider>
 			</ErrorBoundary>
+			<span id="forkongithub">
+				<a href="https://github.com/IBM/carbon-components-builder">Fork on GitHub</a>
+			</span>
 		</div>
 	</Router>
 );
