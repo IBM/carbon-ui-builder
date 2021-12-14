@@ -3,6 +3,7 @@ import { css } from 'emotion';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import {
+	Loading,
 	OverflowMenu,
 	OverflowMenuItem,
 	SkeletonText,
@@ -72,6 +73,18 @@ const fragmentOverflow = css`
 const fragmentInfo = css`
 	display: flex;
 `;
+const spinner = css`
+	position: absolute;
+	top: 0;
+	width: calc(100% - 16px);
+
+	.bx--loading {
+		margin: auto;
+	}
+`;
+const imagePlaceholderStyle = css`
+	height: 173px;
+`;
 
 export const FragmentTile = ({
 	fragment,
@@ -123,11 +136,21 @@ export const FragmentTile = ({
 			<Tile className={tileStyle} >
 				<div className={tileInnerWrapper}>
 					<Link to={to}>
-						<img
-							loading='lazy'
-							src={previewUrl}
-							className={fragmentImage}
-							alt={`fragment preview: ${title}`} />
+						{
+							previewUrl &&
+							<img
+								loading='lazy'
+								src={previewUrl}
+								className={fragmentImage}
+								alt={`fragment preview: ${title}`} />
+						}
+						{
+							!previewUrl &&
+							<div className={imagePlaceholderStyle} />
+						}
+						<div className={spinner}>
+							<Loading withOverlay={false} active={!previewUrl} />
+						</div>
 					</Link>
 					<div className={fragmentInfo}>
 						<div>
