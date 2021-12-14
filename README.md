@@ -1,14 +1,43 @@
 # Carbon Components Builder - UI Fragment Composer by IBM
 
-## Available Scripts
+Carbon Components Builder is a visual builder tool for Carbon UI components allowing users to
+build product pages in a fraction of time that it normally takes them.
+
+Pages can be exported in seconds as a
+
+* image for presentations
+* live demo app for user testing or
+* production quality code
+
+and incorporated in the existing product frontend.
+
+No coding required.
+
+[See it in action!](https://ibm.github.io/carbon-components-builder/)
+
+## Privacy
+
+All your data is safely stored on your computer, never leaving the browser.
+This means that the Carbon Components Builder works even if you don't have internet connection.
+
+## What's Carbon, anyway?
+
+It's [IBM's design system](https://www.carbondesignsystem.com/) with ready-to-go component implementations
+in Angular, React and Vue.
+
+## Development and self-hosting
 
 In the project directory, you can run:
+
+### `npm install`
+
+Installs all the required packages and it's only needed the first time, and when you update.
 
 ### `npm start`
 
 Runs the app in the development mode.
 
-Open [http://localhost:4201](http://localhost:4201) to view it in the browser.
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.
 
