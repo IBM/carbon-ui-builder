@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 
 import { CreateFragmentModal } from './create-fragment-modal';
 import { ChooseFragmentModal } from './choose-fragment-modal';
+import { ImportJsonModal } from './import-json-modal';
 
 export enum FragmentWizardModals {
 	CREATE_FRAGMENT_MODAL,
-	CHOOSE_FRAGMENT_MODAL
+	CHOOSE_FRAGMENT_MODAL,
+	IMPORT_JSON_MODAL
 }
 
 export const FragmentWizard = ({ shouldDisplay, setShouldDisplay, dispatch }: any) => {
@@ -23,6 +25,18 @@ export const FragmentWizard = ({ shouldDisplay, setShouldDisplay, dispatch }: an
 			return null;
 		}
 		switch(displayedModal) {
+			case FragmentWizardModals.IMPORT_JSON_MODAL:
+				return (
+					<ImportJsonModal
+						shouldDisplay={shouldDisplay}
+						setShouldDisplay={setShouldDisplay}
+						setDisplayedModal={setDisplayedModal}
+						lastVisitedModal={lastVisitedModal}
+						setLastVisitedModal={setLastVisitedModal}
+						uploadedData={uploadedData}
+						setUploadedData={setUploadedData}
+						dispatch={dispatch} />
+				);
 			case FragmentWizardModals.CREATE_FRAGMENT_MODAL:
 				return (
 					<CreateFragmentModal

@@ -30,7 +30,8 @@ const createFragmentTile = css`
 
 export enum CreateOptions {
 	CHOOSE_TEMPLATE,
-	FROM_SCRATCH
+	FROM_SCRATCH,
+	IMPORT_JSON
 }
 
 export interface CreateFragmentModalProps {
@@ -74,16 +75,20 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 				props.setShouldDisplay(false);
 				props.setLastVisitedModal(FragmentWizardModals.CREATE_FRAGMENT_MODAL);
 			}}
-			onRequestSubmit={
-				() => {
-					if (selectedCreateOption === CreateOptions.FROM_SCRATCH) {
-						generateFragment();
-						return;
-					}
-					props.setDisplayedModal(FragmentWizardModals.CHOOSE_FRAGMENT_MODAL);
+			onRequestSubmit={() => {
+				if (selectedCreateOption === CreateOptions.IMPORT_JSON) {
+					// open modal with file upload
+					props.setDisplayedModal(FragmentWizardModals.IMPORT_JSON_MODAL);
 					props.setLastVisitedModal(FragmentWizardModals.CREATE_FRAGMENT_MODAL);
+					return;
 				}
-			}
+				if (selectedCreateOption === CreateOptions.FROM_SCRATCH) {
+					generateFragment();
+					return;
+				}
+				props.setDisplayedModal(FragmentWizardModals.CHOOSE_FRAGMENT_MODAL);
+				props.setLastVisitedModal(FragmentWizardModals.CREATE_FRAGMENT_MODAL);
+			}}
 			onRequestClose={() => {
 				props.setShouldDisplay(false);
 				props.setLastVisitedModal(FragmentWizardModals.CREATE_FRAGMENT_MODAL);
@@ -94,6 +99,11 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 			secondaryButtonText='Cancel'>
 			<p>Start with a template or create a new fragment from scratch.</p>
 			<div className={createFragmentTiles}>
+				<SelectionTile
+					styles={createFragmentTile}
+					onChange={() => { setSelectedCreateOption(CreateOptions.IMPORT_JSON); }}
+					selected={selectedCreateOption === CreateOptions.IMPORT_JSON}
+					label='Import JSON'/>
 				<SelectionTile
 					styles={createFragmentTile}
 					onChange={() => { setSelectedCreateOption(CreateOptions.CHOOSE_TEMPLATE); }}
