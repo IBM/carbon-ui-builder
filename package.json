@@ -2,6 +2,7 @@
   "name": "carbon-components-builder",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://ibm.github.io/carbon-components-builder/",
   "dependencies": {
     "@carbon/charts": "0.40.11",
     "@carbon/charts-react": "0.40.11",
