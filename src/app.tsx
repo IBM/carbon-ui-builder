@@ -29,7 +29,7 @@ const app = css`
 `;
 
 export const App = () => (
-	<Router>
+	<Router basename='carbon-components-builder'>
 		<div className={app}>
 			<ErrorBoundary>
 				<FragmentsContextProvider>
