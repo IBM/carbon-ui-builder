@@ -50,7 +50,7 @@ const searchRowStyles = css`
 `;
 
 export const Dashboard = () => {
-	const [{ fragments, loaded }, dispatch] = useContext(FragmentsContext);
+	const [{ fragments }, dispatch] = useContext(FragmentsContext);
 	const [fragmentGroupDisplayed, setFragmentGroupDisplayed] = useState(FragmentGroupDisplayed.LocalOnly);
 	const [fragmentTitleFilter, setFragmentTitleFilter] = useState('');
 	const [sortDirection, setSortDirection] = useState(SortDirection.Ascending);
@@ -137,13 +137,10 @@ export const Dashboard = () => {
 						lg: 12
 					}}>
 						{
-							!loaded
-								? 'Loading...'
-								: <FragmentTileList
-									fragments={displayedFragments}
-									localFragments={localFragments}
-									loaded={loaded}
-									setModalFragment={setModalFragment} />
+							<FragmentTileList
+								fragments={displayedFragments}
+								localFragments={localFragments}
+								setModalFragment={setModalFragment} />
 						}
 					</Col>
 				</Row>

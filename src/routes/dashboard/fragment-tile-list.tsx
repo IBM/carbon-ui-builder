@@ -1,7 +1,7 @@
 import React from 'react';
 import { css } from 'emotion';
 
-import { FragmentTile, SkeletonFragmentTile } from './fragment-tile';
+import { FragmentTile } from './fragment-tile';
 
 // import the img placeholder svg
 import placeholder from './../../assets/dashboard-empty-state.svg';
@@ -44,12 +44,6 @@ export const FragmentTileList = ({ fragments, loaded, setModalFragment }: any) =
 					</div>
 				</div>
 			);
-		}
-
-		if (!loaded) {
-			// make a new array and fill it with 0 to 4
-			const count = (new Array(5)).fill(0).map((_, i) => i);
-			return count.map((i) => <SkeletonFragmentTile key={i}/>);
 		}
 
 		return fragments.map((v: any) => (
