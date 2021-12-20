@@ -106,7 +106,7 @@ const toolBarAction = css`
 
 const fragmentEditToolBar = css`
 	display: flex;
-	margin-right: 2rem;
+	margin-right: 4rem;
 	margin-top: 8px;
 	margin-bottom: 8px;
 	button {
