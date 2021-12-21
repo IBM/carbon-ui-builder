@@ -38,3 +38,47 @@ export const getFragmentPreview = async(fragment: any, props: RenderProps) => {
 	(element as HTMLElement).remove();
 	return imageBlob;
 };
+
+export const getAllComponentStyleClasses = (componentObj: any) => {
+	let styleClasses: any = {};
+
+	// convert into an object so all classes are unique
+	componentObj.cssClasses?.forEach((cssClass: any) => {
+		// NOTE do we need to merge them deeply?
+		styleClasses[cssClass.id] = cssClass;
+	});
+
+	componentObj.items?.map((co: any) => {
+		const coClasses = getAllComponentStyleClasses(co);
+		styleClasses = {
+			...styleClasses,
+			...coClasses
+		};
+	});
+
+	return styleClasses;
+};
+
+export const getAllFragmentStyleClasses = (fragment: any) => {
+	if (!fragment || !fragment.data) { return []; }
+
+	return Object.values(getAllComponentStyleClasses(fragment.data));
+};
+
+export const hasComponentStyleClasses = (componentObj: any) => {
+	if (componentObj.cssClasses) {
+		return true;
+	}
+
+	if (componentObj.items) {
+		return componentObj.items.some((item: any) => hasComponentStyleClasses(item));
+	}
+
+	return false;
+};
+
+export const hasFragmentStyleClasses = (fragment: any) => {
+	if (!fragment || !fragment.data) { return false; }
+
+	return hasComponentStyleClasses(fragment.data);
+};

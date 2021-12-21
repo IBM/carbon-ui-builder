@@ -1,5 +1,16 @@
-import { format, Options } from 'prettier';
+import { format as formatPrettier, Options } from 'prettier';
 import parserBabel from 'prettier/parser-babel';
+import parserCss from 'prettier/parser-postcss';
+import { getAllFragmentStyleClasses, hasFragmentStyleClasses } from '../../../../../utils/fragment-tools';
+
+const format = (source: string, options?: Options | undefined) => {
+	// we're catching and ignorring errors so live editing doesn't throw errors
+	try {
+		return formatPrettier(source, options);
+	} catch (_) {
+		return source;
+	}
+};
 
 const addIfNotExist = (arr: any[], items: any[]) => {
     items.forEach(item => {
@@ -77,12 +88,19 @@ export const jsonToTemplate = (json: any) => {
         return json;
     }
 
+	const classNames = (j: any = json) => j.cssClasses
+		? `className='${j.cssClasses.map((cc: any) => cc.id).join(' ')}'`
+		: '';
+
     switch (json.type) {
         case "text":
+			if (json.cssClasses) {
+				return `<span className='${json.cssClasses.map((cc: any) => cc.id).join(' ')}'>${json.text}</span>`;
+			}
             return json.text;
 
         case "button":
-            return `<Button${json.kind && ` kind="${json.kind}"`}>${json.text}</Button>`;
+            return `<Button${json.kind && ` kind="${json.kind}"`} ${classNames()}>${json.text}</Button>`;
 
         case "checkbox":
 			return `<Checkbox
@@ -90,6 +108,7 @@ export const jsonToTemplate = (json: any) => {
 				name="${json.codeContext?.name}"
 				id="${json.codeContext?.name}"
 				checked={state["${json.codeContext?.name}"]?.checked}
+				${classNames()}
 				onChange={(checked) => handleInputChange({
 					target: {
 						name: "${json.codeContext?.name}",
@@ -103,6 +122,7 @@ export const jsonToTemplate = (json: any) => {
 				name="${json.codeContext?.name}"
 				helperText="${json.helperText}"
 				placeholder="${json.placeholder}"
+				${classNames()}
 				onChange={handleInputChange} />`;
 
         case "textarea":
@@ -111,12 +131,13 @@ export const jsonToTemplate = (json: any) => {
 				name="${json.codeContext?.name}"
 				helperText="${json.helperText}"
 				placeholder="${json.placeholder}"
+				${classNames()}
 				onChange={handleInputChange} />`;
 
         case "grid":
-            return `<Grid>
-    ${json.items.map((row: any) => `<Row>
-        ${row.items.map((cell: any) => `<Column ${getCellParamsString(cell)}>
+            return `<Grid ${classNames()}>
+    ${json.items.map((row: any) => `<Row ${classNames(row)}>
+        ${row.items.map((cell: any) => `<Column ${getCellParamsString(cell)} ${classNames(cell)}>
                 ${jsonToTemplate(cell)}
         </Column>`).join('\n')}
     </Row>`).join('\n')}
@@ -150,13 +171,17 @@ export const createReactApp = (fragment: any) => {
 		trailingComma: 'none',
 		useTabs: true
 	};
+	const formatOptionsCss: Options = {
+		parser: 'css',
+		plugins: [parserCss]
+	};
 
 	const indexHtml = `<div id='root'></div>
 `;
 	const componentJs
 		= `import React from 'react';
 ${fragmentTemplate.imports};
-
+${hasFragmentStyleClasses(fragment) ? "\nimport './component.scss';\n" : ''}
 export const FragmentComponent = ({state, setState}) => {
 	const handleInputChange = (event) => {
 		setState({...state, [event.target.name]: event.target.value});
@@ -165,12 +190,18 @@ export const FragmentComponent = ({state, setState}) => {
 	return <>${fragmentTemplate.template}</>;
 };
 `;
+
+	const componentScss = getAllFragmentStyleClasses(fragment).map((styleClass: any) => `.${styleClass.id} {
+	${styleClass.content}
+}`).join('\n');
+
 	const indexJs
 		= `import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { FragmentComponent } from './component.js';
 
 import 'carbon-components/css/carbon-components.css';
+
+import { FragmentComponent } from './component.js';
 
 const App = () => {
 	const [state, setState] = useState({});
@@ -192,6 +223,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 			react: '16.12.0',
 			'react-dom': '16.12.0',
 			'react-scripts': '3.0.1',
+			'sass': '1.45.0',
 			emotion: '10.0.27'
 		}
 	};
@@ -199,6 +231,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 		'src/index.html': indexHtml,
 		'src/index.js': format(indexJs, formatOptions),
 		'src/component.js': format(componentJs, formatOptions),
+		'src/component.scss': format(componentScss, formatOptionsCss),
 		'package.json': packageJson
 	};
 };

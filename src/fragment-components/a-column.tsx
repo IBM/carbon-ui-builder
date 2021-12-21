@@ -10,6 +10,7 @@ import { css, cx } from 'emotion';
 import { AComponent } from './a-component';
 import { useFragment } from '../context';
 import { getParentComponent, updatedState } from '../components';
+import { CssClassSelector } from '../components/css-class-selector';
 
 const helpIconStyle = css`
 	color: #525252;
@@ -24,7 +25,14 @@ const helpIconStyle = css`
 	}
 `;
 
-export const AColumnStyleUI = ({selectedComponent, setComponent}: any) => {
+export const AColumnStyleUI = ({selectedComponent, setComponent, styleClasses}: any) => {
+	const setSelectedClasses = (cssClasses: any[]) => {
+		setComponent({
+			...selectedComponent,
+			cssClasses
+		});
+	};
+
 	const onNumInputchange = (event: any) => {
 		setComponent({
 			...selectedComponent,
@@ -138,6 +146,11 @@ export const AColumnStyleUI = ({selectedComponent, setComponent}: any) => {
 					onChange={onNumInputchange} />
 			</AccordionItem>
 		</Accordion>
+		<CssClassSelector
+			styleClasses={styleClasses}
+			selectedClasses={selectedComponent.cssClasses}
+			setSelectedClasses={setSelectedClasses}
+		/>
 	</>
 };
 
@@ -199,7 +212,7 @@ export const AColumn = ({
 		// to position right add icon
 		<Column
 		onDrop={onDrop}
-		className={css`position: relative`}
+		className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`position: relative`)}
 		sm={{
 			span: componentObj.smallSpan || undefined,
 			offset: componentObj.smallOffset || undefined

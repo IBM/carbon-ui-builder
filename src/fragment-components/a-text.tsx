@@ -1,8 +1,16 @@
 import React from 'react';
 import { TextInput } from 'carbon-components-react';
 import { AComponent } from './a-component';
+import { CssClassSelector } from '../components/css-class-selector';
 
-export const ATextStyleUI = ({selectedComponent, setComponent}: any) => {
+export const ATextStyleUI = ({selectedComponent, setComponent, styleClasses}: any) => {
+	const setSelectedClasses = (cssClasses: any[]) => {
+		setComponent({
+			...selectedComponent,
+			cssClasses
+		});
+	};
+
 	return <>
 		<TextInput
 			value={selectedComponent.text}
@@ -14,6 +22,11 @@ export const ATextStyleUI = ({selectedComponent, setComponent}: any) => {
 				});
 			}}
 		/>
+		<CssClassSelector
+			styleClasses={styleClasses}
+			selectedClasses={selectedComponent.cssClasses}
+			setSelectedClasses={setSelectedClasses}
+		/>
 	</>
 };
 
@@ -23,7 +36,10 @@ export const AText = ({
 	...rest
 }: any) => {
 	return (
-		<AComponent componentObj={componentObj} {...rest}>
+		<AComponent
+		componentObj={componentObj}
+		className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
+		{...rest}>
 			{children}
 		</AComponent>
 	);

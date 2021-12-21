@@ -1,8 +1,16 @@
 import React from 'react';
 import { TextArea, TextInput } from 'carbon-components-react';
 import { AComponent } from './a-component';
+import { CssClassSelector } from '../components/css-class-selector';
 
-export const ATextAreaStyleUI = ({selectedComponent, setComponent}: any) => {
+export const ATextAreaStyleUI = ({selectedComponent, setComponent, styleClasses}: any) => {
+	const setSelectedClasses = (cssClasses: any[]) => {
+		setComponent({
+			...selectedComponent,
+			cssClasses
+		});
+	};
+
 	return <>
 		<TextInput
 			value={selectedComponent.label}
@@ -33,6 +41,11 @@ export const ATextAreaStyleUI = ({selectedComponent, setComponent}: any) => {
 					placeholder: event.currentTarget.value
 				});
 			}}
+		/>
+		<CssClassSelector
+			styleClasses={styleClasses}
+			selectedClasses={selectedComponent.cssClasses}
+			setSelectedClasses={setSelectedClasses}
 		/>
 	</>
 };
@@ -66,7 +79,8 @@ export const ATextArea = ({
 				disabled={componentObj.disabled}
 				labelText={componentObj.label}
 				placeholder={componentObj.placeholder}
-				helperText={componentObj.helperText}/>
+				helperText={componentObj.helperText}
+				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
 		</AComponent>
 	);
 };

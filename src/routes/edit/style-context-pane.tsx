@@ -15,38 +15,38 @@ import {
 
 import { SelectedComponentBreadcrumbs } from './selected-component-breadcrumbs';
 
-const showComponentStyleOptions = (selectedComponent: any, setComponent: any) => {
+const showComponentStyleOptions = (selectedComponent: any, setComponent: any, styleClasses: any) => {
 	switch (selectedComponent.type) {
 		case 'text':
-			return <ATextStyleUI selectedComponent={selectedComponent} setComponent={setComponent} />
+			return <ATextStyleUI selectedComponent={selectedComponent} setComponent={setComponent} styleClasses={styleClasses} />
 
 		case 'button':
-			return <AButtonStyleUI selectedComponent={selectedComponent} setComponent={setComponent} />
+			return <AButtonStyleUI selectedComponent={selectedComponent} setComponent={setComponent} styleClasses={styleClasses} />
 
 		case 'checkbox':
-			return <ACheckboxStyleUI selectedComponent={selectedComponent} setComponent={setComponent} />
+			return <ACheckboxStyleUI selectedComponent={selectedComponent} setComponent={setComponent} styleClasses={styleClasses} />
 
 		case 'grid':
-			return <AGridStyleUI selectedComponent={selectedComponent} setComponent={setComponent} />
+			return <AGridStyleUI selectedComponent={selectedComponent} setComponent={setComponent} styleClasses={styleClasses} />
 
 		case 'row':
-			return <ARowStyleUI selectedComponent={selectedComponent} setComponent={setComponent}/>
+			return <ARowStyleUI selectedComponent={selectedComponent} setComponent={setComponent} styleClasses={styleClasses} />
 
 		case 'column':
-			return <AColumnStyleUI selectedComponent={selectedComponent} setComponent={setComponent}/>
+			return <AColumnStyleUI selectedComponent={selectedComponent} setComponent={setComponent} styleClasses={styleClasses} />
 
 		case 'textarea':
-			return <ATextAreaStyleUI selectedComponent={selectedComponent} setComponent={setComponent} />
+			return <ATextAreaStyleUI selectedComponent={selectedComponent} setComponent={setComponent} styleClasses={styleClasses} />
 
 		case 'textinput':
-			return <ATextInputStyleUI selectedComponent={selectedComponent} setComponent={setComponent} />
+			return <ATextInputStyleUI selectedComponent={selectedComponent} setComponent={setComponent} styleClasses={styleClasses} />
 
 		default:
 			break;
 	}
 };
 
-export const StyleContextPane = ({fragment, setFragment}: any) => {
+export const StyleContextPane = ({fragment, setFragment, styleClasses}: any) => {
 	const selectedComponent = getSelectedComponent(fragment);
 
 	const setComponent = (component: any) => {
@@ -69,7 +69,7 @@ export const StyleContextPane = ({fragment, setFragment}: any) => {
 						setFragment={setFragment} />
 					<hr />
 					<div className='context-pane-content'>
-						{showComponentStyleOptions(selectedComponent, setComponent)}
+						{showComponentStyleOptions(selectedComponent, setComponent, styleClasses)}
 					</div>
 				</>
 			}

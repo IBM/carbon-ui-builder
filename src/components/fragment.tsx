@@ -12,6 +12,7 @@ import {
 	ARow,
 	AColumn
 } from '../fragment-components';
+import { getAllFragmentStyleClasses } from '../utils/fragment-tools';
 
 const canvas = css`
 	border: 2px solid #d8d8d8;
@@ -347,6 +348,13 @@ export const Fragment = ({fragment, setFragment}: any) => {
 		className={cx(canvas, css`width: ${fragment.width || '800px'}; height: ${fragment.height || '600px'}`)}
 		onDragOver={allowDrop}
 		onDrop={(event: any) => { drop(event, fragment.data.id) }}>
+			<style>
+			{
+				getAllFragmentStyleClasses(fragment).map((styleClass: any) => `.${styleClass.id} {
+					${styleClass.content}
+				}`)
+			}
+			</style>
 			{renderComponents(fragment.data)}
 		</div>
 	);

@@ -8,8 +8,16 @@ import { AComponent } from './a-component';
 import { getParentComponent, updatedState } from '../components';
 import { css, cx } from 'emotion';
 import { useFragment } from '../context';
+import { CssClassSelector } from '../components/css-class-selector';
 
-export const ARowStyleUI = ({selectedComponent, setComponent}: any) => {
+export const ARowStyleUI = ({selectedComponent, setComponent, styleClasses}: any) => {
+	const setSelectedClasses = (cssClasses: any[]) => {
+		setComponent({
+			...selectedComponent,
+			cssClasses
+		});
+	};
+
 	return <>
 		<Checkbox
 			labelText='Condensed'
@@ -27,6 +35,11 @@ export const ARowStyleUI = ({selectedComponent, setComponent}: any) => {
 				...selectedComponent,
 				narrow: checked
 			})} />
+		<CssClassSelector
+			styleClasses={styleClasses}
+			selectedClasses={selectedComponent.cssClasses}
+			setSelectedClasses={setSelectedClasses}
+		/>
 	</>
 };
 
@@ -89,7 +102,10 @@ export const ARow = ({
 		// to position right add icon
 		<AComponent componentObj={componentObj} selected={selected} {...rest}>
 			<Row
-			className={css`position: relative`}
+			className={cx(
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				css`position: relative`
+			)}
 			condensed={componentObj.condensed}
 			narrow={componentObj.narrow}>
 				<span className={cx(addStyleTop, selected ? css`` : css`display: none`)}>

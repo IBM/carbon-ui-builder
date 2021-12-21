@@ -10,7 +10,7 @@ export const CssClassSelector = ({ styleClasses, selectedClasses, setSelectedCla
 	const _getAvailableClasses = () => {
 		// available is anything in styleClasses, not yet in selecteClasses, sorted
 		return styleClasses
-			.filter((sc: any) => !selectedClasses.find((ssc: any) => ssc.id === sc.id))
+			.filter((sc: any) => !selectedClasses?.find((ssc: any) => ssc.id === sc.id))
 			.sort(compareClasses);
 	};
 
@@ -30,7 +30,7 @@ export const CssClassSelector = ({ styleClasses, selectedClasses, setSelectedCla
 
 	useEffect(() => {
 		// update the contents of selected classes when needed
-		setSelectedClasses(styleClasses.filter((sc: any) => !!selectedClasses.find((ssc: any) => ssc.id === sc.id)));
+		setSelectedClasses(styleClasses.filter((sc: any) => !!selectedClasses?.find((ssc: any) => ssc.id === sc.id)));
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [styleClasses]);
 

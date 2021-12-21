@@ -130,6 +130,13 @@ enum SelectedLeftPane {
 
 export const Edit = ({ match }: any) => {
 	const [state, dispatch] = useContext(FragmentsContext);
+	const [styleClasses, _setStyleClasses] = useState(JSON.parse(localStorage.getItem('globalStyleClasses') as string || '[]') as any[]);
+
+	const setStyleClasses = (sc: any) => {
+		localStorage.setItem('globalStyleClasses', JSON.stringify(styleClasses))
+		_setStyleClasses(sc);
+	};
+
 	useFetchOne(match.params.id, dispatch);
 	const fragment = state.fragments.find((fragment: any) => fragment.id === match.params.id);
 	const setFragment = (fragment: any) => {
@@ -164,7 +171,10 @@ export const Edit = ({ match }: any) => {
 			className={editPageContent}>
 			{ fragment && <EditHeader fragment={fragment}/> }
 			<ElementsPane isActive={selectedLeftPane === SelectedLeftPane.ELEMENTS} />
-			<StylePane isActive={selectedLeftPane === SelectedLeftPane.STYLE} />
+			<StylePane
+				isActive={selectedLeftPane === SelectedLeftPane.STYLE}
+				styleClasses={styleClasses}
+				setStyleClasses={setStyleClasses} />
 			<CodePane isActive={selectedLeftPane === SelectedLeftPane.CODE} />
 			<ExportPane isActive={selectedLeftPane === SelectedLeftPane.EXPORT} />
 			<SideNav
@@ -211,7 +221,7 @@ export const Edit = ({ match }: any) => {
 					<Tab
 					id='properties-style'
 					label={<ColorPalette16 />}>
-						<StyleContextPane fragment={fragment} setFragment={setFragment} />
+						<StyleContextPane fragment={fragment} setFragment={setFragment} styleClasses={styleClasses} />
 					</Tab>
 					<Tab
 					id='properties-code'

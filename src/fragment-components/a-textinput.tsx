@@ -2,13 +2,21 @@ import React from 'react';
 import { TextInput, Dropdown } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
+import { CssClassSelector } from '../components/css-class-selector';
 
-export const ATextInputStyleUI = ({selectedComponent, setComponent}: any) => {
+export const ATextInputStyleUI = ({selectedComponent, setComponent, styleClasses}: any) => {
 	const typeItems = [
 		{id: 'text', text: 'Text'},
 		{id: 'email', text: 'Email'},
 		{id: 'password', text: 'Password'}
 	];
+
+	const setSelectedClasses = (cssClasses: any[]) => {
+		setComponent({
+			...selectedComponent,
+			cssClasses
+		});
+	};
 
 	return <>
 		<Dropdown
@@ -61,6 +69,11 @@ export const ATextInputStyleUI = ({selectedComponent, setComponent}: any) => {
 				});
 			}}
 		/>
+		<CssClassSelector
+			styleClasses={styleClasses}
+			selectedClasses={selectedComponent.cssClasses}
+			setSelectedClasses={setSelectedClasses}
+		/>
 	</>
 };
 
@@ -96,6 +109,7 @@ export const ATextInput = ({
 			<TextInput
 				type={componentObj.inputType}
 				labelText={componentObj.label}
+				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
 				{...componentObj}
 				{...rest} />
 		</AComponent>
