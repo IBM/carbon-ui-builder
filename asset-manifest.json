@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/carbon-components-builder/static/css/main.84369398.chunk.css",
-    "main.js": "/carbon-components-builder/static/js/main.771ddec6.chunk.js",
-    "main.js.map": "/carbon-components-builder/static/js/main.771ddec6.chunk.js.map",
+    "main.css": "/carbon-components-builder/static/css/main.75ec1a3e.chunk.css",
+    "main.js": "/carbon-components-builder/static/js/main.bb6a65c5.chunk.js",
+    "main.js.map": "/carbon-components-builder/static/js/main.bb6a65c5.chunk.js.map",
     "runtime-main.js": "/carbon-components-builder/static/js/runtime-main.14a4950b.js",
     "runtime-main.js.map": "/carbon-components-builder/static/js/runtime-main.14a4950b.js.map",
-    "static/js/2.64a9fb52.chunk.js": "/carbon-components-builder/static/js/2.64a9fb52.chunk.js",
-    "static/js/2.64a9fb52.chunk.js.map": "/carbon-components-builder/static/js/2.64a9fb52.chunk.js.map",
+    "static/js/2.f3730f4c.chunk.js": "/carbon-components-builder/static/js/2.f3730f4c.chunk.js",
+    "static/js/2.f3730f4c.chunk.js.map": "/carbon-components-builder/static/js/2.f3730f4c.chunk.js.map",
     "index.html": "/carbon-components-builder/index.html",
-    "precache-manifest.b8050788a1b7dcc95f144f0fcc26a21c.js": "/carbon-components-builder/precache-manifest.b8050788a1b7dcc95f144f0fcc26a21c.js",
+    "precache-manifest.4e627c3e5b08b85820363642361a7ab3.js": "/carbon-components-builder/precache-manifest.4e627c3e5b08b85820363642361a7ab3.js",
     "service-worker.js": "/carbon-components-builder/service-worker.js",
-    "static/css/main.84369398.chunk.css.map": "/carbon-components-builder/static/css/main.84369398.chunk.css.map",
-    "static/js/2.64a9fb52.chunk.js.LICENSE.txt": "/carbon-components-builder/static/js/2.64a9fb52.chunk.js.LICENSE.txt",
+    "static/css/main.75ec1a3e.chunk.css.map": "/carbon-components-builder/static/css/main.75ec1a3e.chunk.css.map",
+    "static/js/2.f3730f4c.chunk.js.LICENSE.txt": "/carbon-components-builder/static/js/2.f3730f4c.chunk.js.LICENSE.txt",
     "static/media/button.svg": "/carbon-components-builder/static/media/button.f75955a0.svg",
     "static/media/chart-404.svg": "/carbon-components-builder/static/media/chart-404.9bc8debd.svg",
     "static/media/checkbox.svg": "/carbon-components-builder/static/media/checkbox.d3c186e8.svg",
@@ -23,8 +23,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.14a4950b.js",
-    "static/js/2.64a9fb52.chunk.js",
-    "static/css/main.84369398.chunk.css",
-    "static/js/main.771ddec6.chunk.js"
+    "static/js/2.f3730f4c.chunk.js",
+    "static/css/main.75ec1a3e.chunk.css",
+    "static/js/main.bb6a65c5.chunk.js"
   ]
 }
