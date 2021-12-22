@@ -88,14 +88,14 @@ export const jsonToTemplate = (json: any) => {
         return json;
     }
 
-	const classNames = (j: any = json) => j.cssClasses
+	const classNames = (j: any = json) => j.cssClasses && Array.isArray(j.cssClasses) && j.cssClasses.length > 0
 		? `className='${j.cssClasses.map((cc: any) => cc.id).join(' ')}'`
 		: '';
 
     switch (json.type) {
         case "text":
 			if (json.cssClasses) {
-				return `<span className='${json.cssClasses.map((cc: any) => cc.id).join(' ')}'>${json.text}</span>`;
+				return `<span ${classNames()}>${json.text}</span>`;
 			}
             return json.text;
 
