@@ -122,6 +122,7 @@ export const jsonToTemplate = (json: any) => {
 				name="${json.codeContext?.name}"
 				helperText="${json.helperText}"
 				placeholder="${json.placeholder}"
+				value={state["${json.codeContext?.name}"]}
 				${classNames()}
 				onChange={handleInputChange} />`;
 
@@ -131,6 +132,7 @@ export const jsonToTemplate = (json: any) => {
 				name="${json.codeContext?.name}"
 				helperText="${json.helperText}"
 				placeholder="${json.placeholder}"
+				value={state["${json.codeContext?.name}"]}
 				${classNames()}
 				onChange={handleInputChange} />`;
 
