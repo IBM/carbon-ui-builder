@@ -138,7 +138,6 @@ export const ExportCode = ({
 					id='Angular'
 					label='Angular'
 					role='presentation'
-					disabled
 					tabIndex={0}>
 					<div className={titleWrapper}>
 						<h3>Angular Code</h3>
@@ -149,7 +148,6 @@ export const ExportCode = ({
 							Edit on CodeSandbox
 						</a>
 					</div>
-					<p className={css`color: red`}>/Only React works atm/</p>
 					{
 						Object.keys(angularCode).map((fileName: string) => (
 							<div className={codeSnippetWrapper} key={fileName}>
