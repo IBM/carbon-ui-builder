@@ -1,6 +1,6 @@
 import { camelCase } from 'lodash';
 import { format as formatPrettier, Options } from 'prettier';
-import parserTypescript from 'prettier/parser-typescript';
+import parserBabel from 'prettier/parser-babel';
 import parserHtml from 'prettier/parser-html';
 import parserCss from 'prettier/parser-postcss';
 import { getAllFragmentStyleClasses, hasFragmentStyleClasses } from '../../../../../utils/fragment-tools';
@@ -159,10 +159,10 @@ export const jsonToTemplate = (json: any) => {
 
 export const createAngularApp = (fragment: any) => {
 	const formatOptionsTypescript: Options = {
-		plugins: [parserTypescript],
+		plugins: [parserBabel],
 		trailingComma: 'none',
 		useTabs: true,
-		parser: 'typescript'
+		parser: 'babel-ts'
 	};
 	const formatOptionsHtml: Options = {
 		plugins: [parserHtml],
