@@ -23,6 +23,11 @@ const exportCodeModalStyle = css`
 	.bx--tabs__nav-item {
 		width: calc(20% - 1px);
 	}
+
+	.bx--tab-content {
+		height: calc(100% - 40px);
+		overflow: auto;
+	}
 `;
 
 const codeSnippetWrapper = css`
