@@ -4,7 +4,7 @@ import { AComponent } from './a-component';
 import { css, cx } from 'emotion';
 import { CssClassSelector } from '../components/css-class-selector';
 
-export const AGridStyleUI = ({selectedComponent, setComponent, styleClasses}: any) => {
+export const AGridStyleUI = ({selectedComponent, setComponent}: any) => {
 	const setSelectedClasses = (cssClasses: any[]) => {
 		setComponent({
 			...selectedComponent,
@@ -46,7 +46,6 @@ export const AGridStyleUI = ({selectedComponent, setComponent, styleClasses}: an
 				narrow: checked
 			})} />
 		<CssClassSelector
-			styleClasses={styleClasses}
 			selectedClasses={selectedComponent.cssClasses}
 			setSelectedClasses={setSelectedClasses}
 		/>

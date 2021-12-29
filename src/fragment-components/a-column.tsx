@@ -25,7 +25,7 @@ const helpIconStyle = css`
 	}
 `;
 
-export const AColumnStyleUI = ({selectedComponent, setComponent, styleClasses}: any) => {
+export const AColumnStyleUI = ({selectedComponent, setComponent}: any) => {
 	const setSelectedClasses = (cssClasses: any[]) => {
 		setComponent({
 			...selectedComponent,
@@ -147,7 +147,6 @@ export const AColumnStyleUI = ({selectedComponent, setComponent, styleClasses}: 
 			</AccordionItem>
 		</Accordion>
 		<CssClassSelector
-			styleClasses={styleClasses}
 			selectedClasses={selectedComponent.cssClasses}
 			setSelectedClasses={setSelectedClasses}
 		/>

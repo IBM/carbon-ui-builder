@@ -3,7 +3,7 @@ import { TextArea, TextInput } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { CssClassSelector } from '../components/css-class-selector';
 
-export const ATextAreaStyleUI = ({selectedComponent, setComponent, styleClasses}: any) => {
+export const ATextAreaStyleUI = ({selectedComponent, setComponent}: any) => {
 	const setSelectedClasses = (cssClasses: any[]) => {
 		setComponent({
 			...selectedComponent,
@@ -43,7 +43,6 @@ export const ATextAreaStyleUI = ({selectedComponent, setComponent, styleClasses}
 			}}
 		/>
 		<CssClassSelector
-			styleClasses={styleClasses}
 			selectedClasses={selectedComponent.cssClasses}
 			setSelectedClasses={setSelectedClasses}
 		/>

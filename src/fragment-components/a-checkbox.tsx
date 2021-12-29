@@ -4,7 +4,7 @@ import { AComponent } from './a-component';
 import { css } from 'emotion';
 import { CssClassSelector } from '../components/css-class-selector';
 
-export const ACheckboxStyleUI = ({selectedComponent, setComponent, styleClasses}: any) => {
+export const ACheckboxStyleUI = ({selectedComponent, setComponent}: any) => {
 	const setSelectedClasses = (cssClasses: any[]) => {
 		setComponent({
 			...selectedComponent,
@@ -24,7 +24,6 @@ export const ACheckboxStyleUI = ({selectedComponent, setComponent, styleClasses}
 			}}
 		/>
 		<CssClassSelector
-			styleClasses={styleClasses}
 			selectedClasses={selectedComponent.cssClasses}
 			setSelectedClasses={setSelectedClasses}
 		/>

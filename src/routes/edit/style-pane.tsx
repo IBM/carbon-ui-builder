@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { cx } from 'emotion';
 import {
 	ComboBox,
@@ -8,9 +8,11 @@ import {
 	Tag
 } from 'carbon-components-react';
 import { leftPane } from '.';
+import { StylesContext } from '../../context/styles-context';
 
-export const StylePane = ({isActive, styleClasses, setStyleClasses}: any) => {
+export const StylePane = ({isActive}: any) => {
 	const [selectedStyleClassId, setSelectedStyleClassId] = useState('' as string);
+	const { styleClasses, setStyleClasses } = useContext(StylesContext);
 
 	const getSelectedClass = () => styleClasses.find((c: any) => c.id === selectedStyleClassId) || {};
 	const getSelectedClassIndex = () => styleClasses.findIndex((c: any) => c.id === selectedStyleClassId);

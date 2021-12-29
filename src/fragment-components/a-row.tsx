@@ -10,7 +10,7 @@ import { css, cx } from 'emotion';
 import { useFragment } from '../context';
 import { CssClassSelector } from '../components/css-class-selector';
 
-export const ARowStyleUI = ({selectedComponent, setComponent, styleClasses}: any) => {
+export const ARowStyleUI = ({selectedComponent, setComponent}: any) => {
 	const setSelectedClasses = (cssClasses: any[]) => {
 		setComponent({
 			...selectedComponent,
@@ -36,7 +36,6 @@ export const ARowStyleUI = ({selectedComponent, setComponent, styleClasses}: any
 				narrow: checked
 			})} />
 		<CssClassSelector
-			styleClasses={styleClasses}
 			selectedClasses={selectedComponent.cssClasses}
 			setSelectedClasses={setSelectedClasses}
 		/>

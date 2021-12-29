@@ -8,7 +8,7 @@ import { AComponent } from './a-component';
 import { css } from 'emotion';
 import { CssClassSelector } from '../components/css-class-selector';
 
-export const AButtonStyleUI = ({selectedComponent, setComponent, styleClasses}: any) => {
+export const AButtonStyleUI = ({selectedComponent, setComponent}: any) => {
 	const kindItems = [
 		{id: 'primary', text: 'Primary'},
 		{id: 'secondary', text: 'Secondary'},
@@ -48,7 +48,6 @@ export const AButtonStyleUI = ({selectedComponent, setComponent, styleClasses}: 
 				kind: event.selectedItem.id
 		})}/>
 		<CssClassSelector
-			styleClasses={styleClasses}
 			selectedClasses={selectedComponent.cssClasses}
 			setSelectedClasses={setSelectedClasses}
 		/>

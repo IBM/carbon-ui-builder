@@ -4,7 +4,7 @@ import { AComponent } from './a-component';
 import { css } from 'emotion';
 import { CssClassSelector } from '../components/css-class-selector';
 
-export const ATextInputStyleUI = ({selectedComponent, setComponent, styleClasses}: any) => {
+export const ATextInputStyleUI = ({selectedComponent, setComponent}: any) => {
 	const typeItems = [
 		{id: 'text', text: 'Text'},
 		{id: 'email', text: 'Email'},
@@ -70,7 +70,6 @@ export const ATextInputStyleUI = ({selectedComponent, setComponent, styleClasses
 			}}
 		/>
 		<CssClassSelector
-			styleClasses={styleClasses}
 			selectedClasses={selectedComponent.cssClasses}
 			setSelectedClasses={setSelectedClasses}
 		/>
