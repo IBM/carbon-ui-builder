@@ -75,3 +75,19 @@ export const CssClassSelector = ({ selectedClasses, setSelectedClasses }: any) =
 		</div>
 	);
 };
+
+export const ComponentCssClassSelector = ({ componentObj, setComponent }: any) => {
+	const setSelectedClasses = (cssClasses: any[]) => {
+		setComponent({
+			...componentObj,
+			cssClasses
+		});
+	};
+
+	return (
+		<CssClassSelector
+			selectedClasses={componentObj.cssClasses}
+			setSelectedClasses={setSelectedClasses}
+		/>
+	);
+};

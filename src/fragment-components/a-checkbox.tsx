@@ -2,16 +2,9 @@ import React from 'react';
 import { Checkbox, TextInput } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
-import { CssClassSelector } from '../components/css-class-selector';
+import { ComponentCssClassSelector } from '../components/css-class-selector';
 
 export const ACheckboxStyleUI = ({selectedComponent, setComponent}: any) => {
-	const setSelectedClasses = (cssClasses: any[]) => {
-		setComponent({
-			...selectedComponent,
-			cssClasses
-		});
-	};
-
 	return <>
 		<TextInput
 			value={selectedComponent.label}
@@ -23,10 +16,7 @@ export const ACheckboxStyleUI = ({selectedComponent, setComponent}: any) => {
 				});
 			}}
 		/>
-		<CssClassSelector
-			selectedClasses={selectedComponent.cssClasses}
-			setSelectedClasses={setSelectedClasses}
-		/>
+		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>
 };
 

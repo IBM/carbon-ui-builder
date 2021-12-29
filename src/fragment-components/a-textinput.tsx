@@ -2,7 +2,7 @@ import React from 'react';
 import { TextInput, Dropdown } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
-import { CssClassSelector } from '../components/css-class-selector';
+import { ComponentCssClassSelector } from '../components/css-class-selector';
 
 export const ATextInputStyleUI = ({selectedComponent, setComponent}: any) => {
 	const typeItems = [
@@ -10,13 +10,6 @@ export const ATextInputStyleUI = ({selectedComponent, setComponent}: any) => {
 		{id: 'email', text: 'Email'},
 		{id: 'password', text: 'Password'}
 	];
-
-	const setSelectedClasses = (cssClasses: any[]) => {
-		setComponent({
-			...selectedComponent,
-			cssClasses
-		});
-	};
 
 	return <>
 		<Dropdown
@@ -69,10 +62,7 @@ export const ATextInputStyleUI = ({selectedComponent, setComponent}: any) => {
 				});
 			}}
 		/>
-		<CssClassSelector
-			selectedClasses={selectedComponent.cssClasses}
-			setSelectedClasses={setSelectedClasses}
-		/>
+		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>
 };
 
@@ -82,7 +72,6 @@ export const ATextInputCodeUI = ({selectedComponent, setComponent}: any) => {
 			value={selectedComponent.codeContext?.name}
 			labelText='Input name'
 			onChange={(event: any) => {
-				console.log("event", event.currentTarget, "selectedComponent", selectedComponent)
 				setComponent({
 					...selectedComponent,
 					codeContext: {

@@ -2,16 +2,9 @@ import React from 'react';
 import { Checkbox, Grid } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css, cx } from 'emotion';
-import { CssClassSelector } from '../components/css-class-selector';
+import { ComponentCssClassSelector } from '../components/css-class-selector';
 
 export const AGridStyleUI = ({selectedComponent, setComponent}: any) => {
-	const setSelectedClasses = (cssClasses: any[]) => {
-		setComponent({
-			...selectedComponent,
-			cssClasses
-		});
-	};
-
 	return <>
 		<Checkbox
 			labelText='Show outline'
@@ -45,10 +38,7 @@ export const AGridStyleUI = ({selectedComponent, setComponent}: any) => {
 				...selectedComponent,
 				narrow: checked
 			})} />
-		<CssClassSelector
-			selectedClasses={selectedComponent.cssClasses}
-			setSelectedClasses={setSelectedClasses}
-		/>
+		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>
 };
 

@@ -6,7 +6,7 @@ import {
 } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
-import { CssClassSelector } from '../components/css-class-selector';
+import { ComponentCssClassSelector } from '../components/css-class-selector';
 
 export const AButtonStyleUI = ({selectedComponent, setComponent}: any) => {
 	const kindItems = [
@@ -18,13 +18,6 @@ export const AButtonStyleUI = ({selectedComponent, setComponent}: any) => {
 		{id: 'danger--ghost', text: 'Danger ghost'},
 		{id: 'ghost', text: 'Ghost'}
 	];
-
-	const setSelectedClasses = (cssClasses: any[]) => {
-		setComponent({
-			...selectedComponent,
-			cssClasses
-		});
-	};
 
 	return <>
 		<TextInput
@@ -47,10 +40,7 @@ export const AButtonStyleUI = ({selectedComponent, setComponent}: any) => {
 				...selectedComponent,
 				kind: event.selectedItem.id
 		})}/>
-		<CssClassSelector
-			selectedClasses={selectedComponent.cssClasses}
-			setSelectedClasses={setSelectedClasses}
-		/>
+		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>
 };
 

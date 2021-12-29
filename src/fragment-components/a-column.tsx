@@ -10,7 +10,7 @@ import { css, cx } from 'emotion';
 import { AComponent } from './a-component';
 import { useFragment } from '../context';
 import { getParentComponent, updatedState } from '../components';
-import { CssClassSelector } from '../components/css-class-selector';
+import { ComponentCssClassSelector } from '../components/css-class-selector';
 
 const helpIconStyle = css`
 	color: #525252;
@@ -26,13 +26,6 @@ const helpIconStyle = css`
 `;
 
 export const AColumnStyleUI = ({selectedComponent, setComponent}: any) => {
-	const setSelectedClasses = (cssClasses: any[]) => {
-		setComponent({
-			...selectedComponent,
-			cssClasses
-		});
-	};
-
 	const onNumInputchange = (event: any) => {
 		setComponent({
 			...selectedComponent,
@@ -146,10 +139,7 @@ export const AColumnStyleUI = ({selectedComponent, setComponent}: any) => {
 					onChange={onNumInputchange} />
 			</AccordionItem>
 		</Accordion>
-		<CssClassSelector
-			selectedClasses={selectedComponent.cssClasses}
-			setSelectedClasses={setSelectedClasses}
-		/>
+		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>
 };
 

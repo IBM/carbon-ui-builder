@@ -8,16 +8,9 @@ import { AComponent } from './a-component';
 import { getParentComponent, updatedState } from '../components';
 import { css, cx } from 'emotion';
 import { useFragment } from '../context';
-import { CssClassSelector } from '../components/css-class-selector';
+import { ComponentCssClassSelector } from '../components/css-class-selector';
 
 export const ARowStyleUI = ({selectedComponent, setComponent}: any) => {
-	const setSelectedClasses = (cssClasses: any[]) => {
-		setComponent({
-			...selectedComponent,
-			cssClasses
-		});
-	};
-
 	return <>
 		<Checkbox
 			labelText='Condensed'
@@ -35,10 +28,7 @@ export const ARowStyleUI = ({selectedComponent, setComponent}: any) => {
 				...selectedComponent,
 				narrow: checked
 			})} />
-		<CssClassSelector
-			selectedClasses={selectedComponent.cssClasses}
-			setSelectedClasses={setSelectedClasses}
-		/>
+		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>
 };
 
