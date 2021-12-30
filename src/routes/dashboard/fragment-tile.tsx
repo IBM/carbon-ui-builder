@@ -13,6 +13,7 @@ import { ModalContext, ModalActionType } from '../../context/modal-context';
 import { getFragmentPreview, RenderProps } from '../../utils/fragment-tools';
 
 const tileWrapper = css`
+	position: relative;
 	margin: 0.75rem;
 	padding: 0;
 	height: 250px;
@@ -75,7 +76,7 @@ const fragmentInfo = css`
 `;
 const spinner = css`
 	position: absolute;
-	top: 0;
+	top: calc(50% - 44px - 32px);
 	width: calc(100% - 16px);
 
 	.bx--loading {

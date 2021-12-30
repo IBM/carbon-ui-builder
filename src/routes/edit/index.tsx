@@ -104,7 +104,7 @@ const rightPanel = css`
 	box-shadow: inset 1px 0px #d8d8d8;
 	z-index: 1;
 
-	.bx--tabs__nav-item .bx--tabs__nav-link {
+	.bx--tabs--scrollable__nav-item .bx--tabs--scrollable__nav-link {
 		width: 100px;
 		text-align: center;
 	}
@@ -232,7 +232,7 @@ export const Edit = ({ match }: any) => {
 						disabled
 						kind='secondary'
 						renderIcon={Copy32}
-						className={css`margin-right: 18px`}>
+						className={css`margin-right: 8px`}>
 							Duplicate
 						</Button>
 						<Button

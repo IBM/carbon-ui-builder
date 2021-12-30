@@ -20,7 +20,7 @@ import { ModalContext, ModalActionType } from '../../../../context/modal-context
 import { saveBlob } from '../../../../utils/file-tools';
 
 const exportCodeModalStyle = css`
-	.bx--tabs__nav-item {
+	.bx--tabs--scrollable__nav-item {
 		width: calc(20% - 1px);
 	}
 

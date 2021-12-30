@@ -265,6 +265,7 @@ const ExportModalSettings = ({ inputs, handleChange }: any) => {
 					id='width'
 					label='Width'
 					value={inputs.width}
+					hideSteppers={true}
 					onClick={numInputOnClick}
 					onChange={numInputOnchange} />
 				<NumberInput
@@ -272,6 +273,7 @@ const ExportModalSettings = ({ inputs, handleChange }: any) => {
 					id='height'
 					label='Height'
 					value={inputs.height}
+					hideSteppers={true}
 					onClick={numInputOnClick}
 					onChange={numInputOnchange} />
 			</div>
