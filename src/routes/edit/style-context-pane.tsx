@@ -12,6 +12,7 @@ import {
 	ARowStyleUI,
 	AColumnStyleUI
 } from '../../fragment-components';
+import { ASearchInputStyleUI } from '../../fragment-components/a-searchinput';
 
 import { SelectedComponentBreadcrumbs } from './selected-component-breadcrumbs';
 
@@ -40,6 +41,9 @@ const showComponentStyleOptions = (selectedComponent: any, setComponent: any) =>
 
 		case 'textinput':
 			return <ATextInputStyleUI selectedComponent={selectedComponent} setComponent={setComponent} />
+
+		case 'search':
+			return <ASearchInputStyleUI selectedComponent={selectedComponent} setComponent={setComponent} />
 
 		default:
 			break;

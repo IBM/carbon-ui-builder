@@ -41,6 +41,10 @@ const jsonToImports = (json: any) => {
             addIfNotExist(imports, ['TextInput']);
             break;
 
+		case "search":
+			addIfNotExist(imports, ['Search']);
+			break;
+
         case "grid":
             addIfNotExist(imports, ['Grid', 'Row', 'Column']);
 	}
@@ -121,6 +125,15 @@ export const jsonToTemplate = (json: any) => {
 				labelText="${json.label}"
 				name="${json.codeContext?.name}"
 				helperText="${json.helperText}"
+				placeholder="${json.placeholder}"
+				value={state["${json.codeContext?.name}"]}
+				${classNames()}
+				onChange={handleInputChange} />`;
+
+		case "search":
+			return `<Search
+				labelText="${json.label}"
+				name="${json.codeContext?.name}"
 				placeholder="${json.placeholder}"
 				value={state["${json.codeContext?.name}"]}
 				${classNames()}
@@ -218,10 +231,10 @@ ReactDOM.render(<App />, document.getElementById('root'));
 `;
 	const packageJson = {
 		dependencies: {
-			'carbon-components': '10.15.0',
+			'carbon-components': '10.50.0',
 			'carbon-icons': '7.0.7',
 			'@carbon/icons-react': '10.15.0',
-			'carbon-components-react': '7.15.0',
+			'carbon-components-react': '7.50.0',
 			react: '16.12.0',
 			'react-dom': '16.12.0',
 			'react-scripts': '3.0.1',

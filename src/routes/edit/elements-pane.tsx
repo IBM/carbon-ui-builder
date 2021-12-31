@@ -9,6 +9,7 @@ import checkboxImg from './../../assets/component-icons/checkbox.svg';
 import gridImg from './../../assets/component-icons/grid.svg';
 import textAreaImg from './../../assets/component-icons/text-area.svg';
 import textInputImg from './../../assets/component-icons/text-input.svg';
+import searchImg from './../../assets/component-icons/search.svg';
 import textImg from './../../assets/component-icons/text.svg';
 
 import { leftPane } from '.';
@@ -96,6 +97,17 @@ export const ElementsPane = ({isActive}: any) => {
 					}}>
 						<img src={textInputImg} alt='text input'/>
 						<span className='title'>Text input</span>
+					</ElementTile>
+				}
+				{
+					shouldShow(['search', 'search input']) && <ElementTile componentObj={{
+						type: 'search',
+						label: 'Search',
+						placeholder: 'Search',
+						inputSize: 'lg'
+					}}>
+						<img src={searchImg} alt='search'/>
+						<span className='title'>Search</span>
 					</ElementTile>
 				}
 				{

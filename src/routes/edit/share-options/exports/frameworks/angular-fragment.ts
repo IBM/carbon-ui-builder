@@ -40,6 +40,10 @@ const jsonToAngularImports = (json: any) => {
             addIfNotExist(imports, ['InputModule']);
             break;
 
+		case "search":
+            addIfNotExist(imports, ['SearchModule']);
+            break;
+
         case "grid":
             addIfNotExist(imports, ['GridModule']);
 	}
@@ -126,6 +130,13 @@ export const jsonToTemplate = (json: any) => {
 						name="${json.codeContext?.name}"
 						placeholder="${json.placeholder}">
 				</ibm-label>`;
+
+		case "search":
+			return `<ibm-search
+					${classNames()}
+					name="${json.codeContext?.name}"
+					placeholder="${json.placeholder}">
+				</ibm-search>`;
 
         case "textarea":
 			return `<ibm-label
@@ -295,8 +306,8 @@ export const createAngularApp = (fragment: any) => {
 			'tslib': '2.3.0',
 			'sass': '1.45.0',
 			'zone.js': '0.11.4',
-			'carbon-components-angular': '4.56.2',
-			'carbon-components': '10.15.0'
+			'carbon-components-angular': '4.56.3',
+			'carbon-components': '10.50.0'
 		}
 	};
 

@@ -13,6 +13,7 @@ import {
 	AColumn
 } from '../fragment-components';
 import { getAllFragmentStyleClasses } from '../utils/fragment-tools';
+import { ASearchInput } from '../fragment-components/a-searchinput';
 
 const canvas = css`
 	border: 2px solid #d8d8d8;
@@ -288,6 +289,15 @@ export const Fragment = ({fragment, setFragment}: any) => {
 			case 'textinput':
 				return (
 					<ATextInput
+						componentObj={componentObj}
+						select={() => select(componentObj)}
+						remove={() => remove(componentObj)}
+						selected={fragment.selectedComponentId === componentObj.id} />
+				);
+
+			case 'search':
+				return (
+					<ASearchInput
 						componentObj={componentObj}
 						select={() => select(componentObj)}
 						remove={() => remove(componentObj)}
