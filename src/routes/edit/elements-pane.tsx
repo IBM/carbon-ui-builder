@@ -45,7 +45,7 @@ export const ElementsPane = ({isActive}: any) => {
 				className={searchStyle}
 				light
 				labelText='Filter elements'
-				placeHolderText='Filter elements'
+				placeholder='Filter elements'
 				onChange={(event: any) => setFilterString(event.target.value)} />
 			<div className={elementTileListStyle}>
 				{
