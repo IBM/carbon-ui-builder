@@ -92,6 +92,10 @@ export const StylePane = ({isActive}: any) => {
 		setSelectedStyleClassId(newStyleClass.id);
 	};
 
+	const removeStyleClass = (styleClassId: string) => {
+		setStyleClasses(styleClasses.filter((sc: any) => sc.id !== styleClassId));
+	};
+
 	return (
 		<div className={cx(leftPane, isActive ? 'is-active' : '')}>
 			Style <br /><br />
@@ -115,7 +119,7 @@ export const StylePane = ({isActive}: any) => {
 						<Tag
 						filter
 						onClick={() => setSelectedStyleClassId(styleClass.id)}
-						onClose={() => {}}>
+						onClose={() => removeStyleClass(styleClass.id)}>
 							{styleClass.name}
 						</Tag>
 					))
