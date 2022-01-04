@@ -33,7 +33,8 @@
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.3",
     "sass": "1.45.1",
-    "typescript": "3.9.7"
+    "typescript": "3.9.7",
+    "unique-names-generator": "^4.6.0"
   },
   "devDependencies": {
     "@testing-library/dom": "7.5.9",

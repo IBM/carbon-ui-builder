@@ -1,21 +1,56 @@
 import React, { useContext, useState } from 'react';
-import { cx } from 'emotion';
+import { css, cx } from 'emotion';
+import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-generator';
 import {
-	ComboBox,
+	Button,
 	Form,
+	Search,
 	TextArea,
 	TextInput,
 	Tag
 } from 'carbon-components-react';
+import { Add16 } from '@carbon/icons-react';
 import { leftPane } from '.';
 import { StylesContext } from '../../context/styles-context';
+
+const searchContainerStyle = css`
+	display: flex;
+	margin-bottom: 1rem;
+
+	button {
+		border-bottom: 1px solid #8d8d8d;
+	}
+`;
 
 export const StylePane = ({isActive}: any) => {
 	const [selectedStyleClassId, setSelectedStyleClassId] = useState('' as string);
 	const { styleClasses, setStyleClasses } = useContext(StylesContext);
+	const [filterString, setFilterString] = useState('');
 
 	const getSelectedClass = () => styleClasses.find((c: any) => c.id === selectedStyleClassId) || {};
 	const getSelectedClassIndex = () => styleClasses.findIndex((c: any) => c.id === selectedStyleClassId);
+
+	const shouldShow = (styleClass: any) => {
+		const matches = [styleClass.name, styleClass.id];
+		return !filterString || matches.some((match) => match.includes(filterString));
+	};
+
+	const getUniqueClass = (): any => {
+		let className = uniqueNamesGenerator({
+			dictionaries: [adjectives, colors, animals],
+			separator: '-',
+			length: 3
+		});
+
+		if (!styleClasses.find((sc: any) => sc.id === className || sc.name === className)) {
+			return {
+				id: className,
+				name: className
+			};
+		}
+
+		return getUniqueClass();
+	};
 
 	const updateSelectedClass = (newClass: any) => {
 		const selectedClassIndex = getSelectedClassIndex();
@@ -51,29 +86,32 @@ export const StylePane = ({isActive}: any) => {
 		setSelectedStyleClassId(id);
 	};
 
-	const classSelectorComboRef = React.createRef<any>();
-
-	const handleOnKeypress = (event: any) => {
-		const currentValue = classSelectorComboRef.current.textInput.current.value.trim();
-		if (event.key === 'Enter' && currentValue) {
-			const newItem = {
-				id: currentValue.split(' ').join('-').toLowerCase(),
-				name: currentValue,
-				content: ''
-			};
-			if (getSelectedClassIndex() < 0) {
-				setStyleClasses([...styleClasses, newItem]);
-			}
-			setSelectedStyleClassId(newItem.id);
-		}
+	const addNewStyleClass = () => {
+		const newStyleClass = getUniqueClass();
+		setStyleClasses([...styleClasses, newStyleClass]);
+		setSelectedStyleClassId(newStyleClass.id);
 	};
 
 	return (
 		<div className={cx(leftPane, isActive ? 'is-active' : '')}>
 			Style <br /><br />
 			<Form>
+				<div className={searchContainerStyle}>
+					<Search
+						id="styles-search"
+						light
+						labelText="Filter classes"
+						placeholder="Filter classes"
+						onChange={(event: any) => setFilterString(event.target.value)} />
+					<Button
+						kind="ghost"x
+						renderIcon={Add16}
+						iconDescription="Add new class"
+						hasIconOnly
+						onClick={addNewStyleClass} />
+				</div>
 				{
-					styleClasses.map((styleClass: any) => (
+					styleClasses.filter(shouldShow).map((styleClass: any) => (
 						<Tag
 						filter
 						onClick={() => setSelectedStyleClassId(styleClass.id)}
@@ -81,21 +119,7 @@ export const StylePane = ({isActive}: any) => {
 							{styleClass.name}
 						</Tag>
 					))
-				}
-				<div onKeyDown={handleOnKeypress}>
-					<ComboBox
-						id='style-pane-class-selector'
-						titleText='(S)CSS class name'
-						items={styleClasses}
-						ref={classSelectorComboRef}
-						itemToString={(item: any) => item ? item.name : ''}
-						placeholder='Select class or add new'
-						selectedItem={getSelectedClass()}
-						onChange={(event: any) => {
-							setSelectedStyleClassId(event.selectedItem ? event.selectedItem.id : '');
-						}}
-					/>
-				</div> <br />
+				} <br />
 				<TextInput
 					labelText='Descriptive name'
 					helperText='Name that appears in tags and search'
