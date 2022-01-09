@@ -11,12 +11,7 @@ import {
 import { FragmentWizardModals } from './fragment-wizard';
 import { generateNewFragment } from './generate-new-fragment';
 
-import {
-	FragmentActionType,
-	FragmentAction,
-	FragmentState,
-	FragmentsContext
-} from '../../../context';
+import { FragmentsContext } from '../../../context';
 import { useHistory } from 'react-router-dom';
 import { LocalFragmentsContext, LocalFragmentActionType } from '../../../context/local-fragments-context';
 
@@ -42,8 +37,7 @@ export interface ImportJsonModalProps {
 	lastVisitedModal: FragmentWizardModals,
 	uploadedData: any,
 	setUploadedData: (uploadedData: any) => void,
-	multiple?: boolean,
-	dispatch: (fragmentAction: FragmentAction) => FragmentState
+	multiple?: boolean
 }
 
 let lastId = 0;
@@ -55,7 +49,7 @@ const uid = (prefix = 'id') => {
 
 export const ImportJsonModal = (props: ImportJsonModalProps) => {
 	const [, updateLocalFragments] = useContext(LocalFragmentsContext);
-	const [, dispatch] = useContext(FragmentsContext);
+	const { addOne } = useContext(FragmentsContext);
 	const [files, setFiles] = useState([] as any[]);
 	const [jsonString, _setJsonString] = useState('');
 	const [fragmentJson, setFragmentJson] = useState('');
@@ -200,10 +194,7 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 	const generateFragment = () => {
 		const generatedFragment = generateNewFragment(fragmentJson);
 
-		dispatch({
-			type: FragmentActionType.ADD_ONE,
-			data: generatedFragment
-		});
+		addOne(generateFragment);
 		updateLocalFragments({
 			type: LocalFragmentActionType.ADD,
 			data: { id: generatedFragment.id }

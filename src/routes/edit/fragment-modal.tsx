@@ -3,15 +3,17 @@ import { ShareOptionsModal } from './share-options/share-options-modal';
 import { DuplicateFragmentModal } from './duplicate-fragment-modal';
 import { DeleteFragmentModal } from './delete-fragment-modal';
 import { SettingsFragmentModal } from './settings-fragment-modal';
-import React, { useContext } from 'react';
-import { FragmentsContext, useFetchOne } from '../../context/fragments-context';
+import React, { useContext, useEffect } from 'react';
+import { FragmentsContext } from '../../context/fragments-context';
 
 // eslint-disable-next-line react/prop-types
 export const FragmentModal = ({ fragment }: any) => {
-	const [, dispatch] = useContext(FragmentsContext);
-	// eslint-disable-next-line react/prop-types
-	useFetchOne(fragment.id, dispatch);
+	const { fetchOne } = useContext(FragmentsContext);
 	const [modalState] = useContext(ModalContext);
+
+	useEffect(() => {
+		fetchOne(fragment.id);
+	}, [fragment.id]);
 
 	switch (modalState.ModalType) {
 		case ModalType.DUPLICATION:

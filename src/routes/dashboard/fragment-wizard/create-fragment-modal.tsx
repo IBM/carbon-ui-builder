@@ -6,7 +6,7 @@ import { Modal } from 'carbon-components-react';
 import { css } from 'emotion';
 import { SelectionTile } from '../../../components/selection-tile';
 import { generateNewFragment } from './generate-new-fragment';
-import { FragmentActionType, FragmentsContext } from '../../../context';
+import { FragmentsContext } from '../../../context';
 import { LocalFragmentActionType, LocalFragmentsContext } from '../../../context/local-fragments-context';
 import { useHistory } from 'react-router-dom';
 
@@ -45,7 +45,7 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 	const [selectedCreateOption, setSelectedCreateOption] = useState<CreateOptions | null>(null);
 
 	const [, updateLocalFragments] = useContext(LocalFragmentsContext);
-	const [, dispatch] = useContext(FragmentsContext);
+	const { addOne } = useContext(FragmentsContext);
 
 	const history = useHistory();
 
@@ -54,10 +54,7 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 			{ items: [], id: 1 }
 		);
 
-		dispatch({
-			type: FragmentActionType.ADD_ONE,
-			data: generatedFragment
-		});
+		addOne(generatedFragment);
 		updateLocalFragments({
 			type: LocalFragmentActionType.ADD,
 			data: { id: generatedFragment.id }

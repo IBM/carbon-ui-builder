@@ -6,12 +6,12 @@ import {
 	TooltipDefinition
 } from 'carbon-components-react';
 import { ModalActionType, ModalContext } from '../../context/modal-context';
-import { FragmentActionType, FragmentsContext } from '../../context/fragments-context';
+import { FragmentsContext } from '../../context/fragments-context';
 import './fragment-modal.scss';
 
 export const SettingsFragmentModal = ({ fragment }: any) => {
 	const [modalState, dispatchModal] = useContext(ModalContext);
-	const [, dispatch] = useContext(FragmentsContext);
+	const { updateOne } = useContext(FragmentsContext);
 
 	const props = {
 		size: 'sm',
@@ -36,14 +36,10 @@ export const SettingsFragmentModal = ({ fragment }: any) => {
 			labels = labels.filter((label: string) => label !== 'template');
 		}
 
-		dispatch({
-			type: FragmentActionType.UPDATE_ONE,
-			data: {
-				...fragment,
-				title,
-				labels
-			},
-			loaded: true
+		updateOne({
+			...fragment,
+			title,
+			labels
 		});
 
 		dispatchModal({ type: ModalActionType.closeModal });

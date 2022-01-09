@@ -1,12 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { NotificationActionType, NotificationContext } from '../../context/notification-context';
 import { Modal } from 'carbon-components-react';
 import { ModalActionType, ModalContext } from '../../context/modal-context';
-import {
-	FragmentActionType,
-	FragmentsContext,
-	useFetchOne
-} from '../../context/fragments-context';
+import { FragmentsContext } from '../../context/fragments-context';
 import { useHistory, useLocation } from 'react-router-dom';
 import { LocalFragmentsContext, LocalFragmentActionType } from '../../context/local-fragments-context';
 
@@ -53,8 +49,12 @@ export const DuplicateFragmentModal = ({ id }: any) => {
 	const [modalState, dispatchModal] = useContext(ModalContext);
 	const [, dispatchNotification] = useContext(NotificationContext);
 	const [, updateLocalFragments] = useContext(LocalFragmentsContext);
-	const [fragmentsState, dispatch] = useContext(FragmentsContext);
-	useFetchOne(id, dispatch);
+	const { fragmentsState, fetchOne, addOne } = useContext(FragmentsContext);
+
+	useEffect(() => {
+		fetchOne(id);
+	}, [id]);
+
 	const history = useHistory();
 	const location = useLocation();
 
@@ -69,11 +69,7 @@ export const DuplicateFragmentModal = ({ id }: any) => {
 		fragmentCopy.title = getUniqueName(fragmentsState.fragments, fragmentCopy.title);
 		fragmentCopy.id = `${Math.random().toString().slice(2)}${Math.random().toString().slice(2)}`;
 
-		dispatch({
-			type: FragmentActionType.ADD_ONE,
-			data: fragmentCopy,
-			loaded: true
-		});
+		addOne(fragmentCopy);
 		updateLocalFragments({
 			type: LocalFragmentActionType.ADD,
 			data: { id: fragmentCopy.id }

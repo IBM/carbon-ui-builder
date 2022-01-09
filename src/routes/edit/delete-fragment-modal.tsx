@@ -1,31 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { Modal } from 'carbon-components-react';
 import { ModalActionType, ModalContext } from '../../context/modal-context';
-import {
-	FragmentActionType,
-	FragmentsContext,
-	useFetchOne
-} from '../../context/fragments-context';
+import { FragmentsContext } from '../../context/fragments-context';
 import { useHistory } from 'react-router-dom';
 import { NotificationActionType, NotificationContext } from '../../context/notification-context';
 
 export const DeleteFragmentModal = ({ id }: any) => {
-	const [fragmentsState, dispatch] = useContext(FragmentsContext);
+	const { fragmentsState, toggleVisibility, fetchOne, removeFragment } = useContext(FragmentsContext);
 	const [modalState, dispatchModal] = useContext(ModalContext);
 	const history = useHistory();
 	const [, dispatchNotification] = useContext(NotificationContext);
 	const fragment = fragmentsState.fragments.find((fragment: any) => fragment.id === id);
-	useFetchOne(id, dispatch);
+
+	useEffect(() => {
+		fetchOne(id);
+	}, [id]);
 
 
 	const deleteFragment = () => {
-		dispatch({
-			type: FragmentActionType.TOGGLE_VISIBILITY,
-			id,
-			hidden: true,
-			loaded: true
-		});
+		toggleVisibility(id, true);
 		history.push('/');
 		dispatchNotification({
 			type: NotificationActionType.ADD_NOTIFICATION,
@@ -36,7 +30,7 @@ export const DeleteFragmentModal = ({ id }: any) => {
 				action: {
 					actionText: 'Undo',
 					actionFunction: undoHideFragment,
-					onNotificationClose: doDeleteFragment
+					onNotificationClose: () => { removeFragment(id) }
 				}
 			}
 		});
@@ -44,21 +38,8 @@ export const DeleteFragmentModal = ({ id }: any) => {
 	};
 
 	const undoHideFragment = () => {
-		dispatch({
-			type: FragmentActionType.TOGGLE_VISIBILITY,
-			id,
-			hidden: false,
-			loaded: true
-		});
+		toggleVisibility(id, false);
 	};
-
-	const doDeleteFragment = () => {
-		dispatch({
-			type: FragmentActionType.REMOVE_FRAGMENT,
-			id
-		});
-	};
-
 
 	return (
 		<Modal

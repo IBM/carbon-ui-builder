@@ -9,12 +9,7 @@ import {
 import { FragmentWizardModals } from './fragment-wizard';
 import { generateNewFragment } from './generate-new-fragment';
 
-import {
-	FragmentActionType,
-	FragmentAction,
-	FragmentState,
-	FragmentsContext
-} from '../../../context';
+import { FragmentsContext } from '../../../context';
 import { useHistory } from 'react-router-dom';
 import { LocalFragmentsContext, LocalFragmentActionType } from '../../../context/local-fragments-context';
 import { warningNotificationProps } from '../../../utils/file-tools';
@@ -40,13 +35,12 @@ export interface ChooseFragmentModalProps {
 	setLastVisitedModal: (lastVisitedModal: FragmentWizardModals) => void,
 	lastVisitedModal: FragmentWizardModals,
 	uploadedData: any,
-	setUploadedData: (uploadedData: any) => void,
-	dispatch: (fragmentAction: FragmentAction) => FragmentState
+	setUploadedData: (uploadedData: any) => void
 }
 
 export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 	const [, updateLocalFragments] = useContext(LocalFragmentsContext);
-	const [, dispatch] = useContext(FragmentsContext);
+	const { addOne } = useContext(FragmentsContext);
 
 	const history = useHistory();
 
@@ -55,10 +49,7 @@ export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 			props.uploadedData.data
 		);
 
-		dispatch({
-			type: FragmentActionType.ADD_ONE,
-			data: generatedFragment
-		});
+		addOne(generatedFragment);
 		updateLocalFragments({
 			type: LocalFragmentActionType.ADD,
 			data: { id: generatedFragment.id }

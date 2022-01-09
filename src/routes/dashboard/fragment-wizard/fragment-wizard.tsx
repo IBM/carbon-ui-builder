@@ -10,7 +10,7 @@ export enum FragmentWizardModals {
 	IMPORT_JSON_MODAL
 }
 
-export const FragmentWizard = ({ shouldDisplay, setShouldDisplay, dispatch }: any) => {
+export const FragmentWizard = ({ shouldDisplay, setShouldDisplay }: any) => {
 	// These are states which are shared amongst the three modals.
 	const [displayedModal, setDisplayedModal]
 		= useState<FragmentWizardModals | null>(FragmentWizardModals.CREATE_FRAGMENT_MODAL);
@@ -34,8 +34,7 @@ export const FragmentWizard = ({ shouldDisplay, setShouldDisplay, dispatch }: an
 						lastVisitedModal={lastVisitedModal}
 						setLastVisitedModal={setLastVisitedModal}
 						uploadedData={uploadedData}
-						setUploadedData={setUploadedData}
-						dispatch={dispatch} />
+						setUploadedData={setUploadedData} />
 				);
 			case FragmentWizardModals.CREATE_FRAGMENT_MODAL:
 				return (
@@ -54,8 +53,7 @@ export const FragmentWizard = ({ shouldDisplay, setShouldDisplay, dispatch }: an
 						lastVisitedModal={lastVisitedModal}
 						setLastVisitedModal={setLastVisitedModal}
 						uploadedData={uploadedData}
-						setUploadedData={setUploadedData}
-						dispatch={dispatch} />
+						setUploadedData={setUploadedData} />
 				);
 			default:
 				return null;
