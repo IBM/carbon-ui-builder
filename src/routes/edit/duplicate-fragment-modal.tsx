@@ -53,6 +53,7 @@ export const DuplicateFragmentModal = ({ id }: any) => {
 
 	useEffect(() => {
 		fetchOne(id);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [id]);
 
 	const history = useHistory();

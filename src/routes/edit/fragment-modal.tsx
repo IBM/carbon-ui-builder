@@ -13,6 +13,7 @@ export const FragmentModal = ({ fragment }: any) => {
 
 	useEffect(() => {
 		fetchOne(fragment.id);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [fragment.id]);
 
 	switch (modalState.ModalType) {

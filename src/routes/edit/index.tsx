@@ -130,6 +130,7 @@ export const Edit = ({ match }: any) => {
 
 	useEffect(() => {
 		fetchOne(match.params.id);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [match.params.id]);
 
 	const fragment = fragmentsState.fragments.find((fragment: any) => fragment.id === match.params.id);
