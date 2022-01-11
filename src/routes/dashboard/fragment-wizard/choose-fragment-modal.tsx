@@ -1,13 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { css } from 'emotion';
 import {
 	Modal,
 	InlineNotification,
-	NotificationActionButton
+	NotificationActionButton,
+	SelectableTile
 } from 'carbon-components-react';
 import { FragmentWizardModals } from './fragment-wizard';
-import { generateNewFragment } from './generate-new-fragment';
 
 import {
 	FragmentActionType,
@@ -18,6 +18,9 @@ import {
 import { useHistory } from 'react-router-dom';
 import { LocalFragmentsContext, LocalFragmentActionType } from '../../../context/local-fragments-context';
 import { warningNotificationProps } from '../../../utils/file-tools';
+import { Col } from '../../../components';
+import { FragmentPreview } from '../../../components/fragment-preview';
+import { generateUniqueName } from '../../../utils/fragment-tools';
 
 const fragmentOptions = css`
 	margin-left: 30px;
@@ -30,6 +33,47 @@ const fragmentOptions = css`
 	// This is the viewport width that causes the selection tiles to overlap.
 	@media screen and (max-width: 45rem) {
 		flex-direction: column;
+	}
+`;
+const tileWrapper = css`
+	position: relative;
+	margin: 0.75rem;
+	padding: 0;
+	height: 240px;
+	width: 350px;
+	box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.3);
+	background-color: #ffffff;
+	float: left;
+`;
+const tileStyle = css`
+	padding: 0;
+	background-color: #ffffff;
+`;
+const tileInnerWrapperBase = css`
+	align-items: end;
+`;
+const tileInnerWrapper = css`
+	${tileInnerWrapperBase}
+	margin: 8px;
+	h3 {
+		font-size: 1rem;
+		padding: 5px;
+		padding-left: 16px;
+	}
+	.dashboard-link {
+		color: black;
+		text-decoration: none;
+		transition: 0.3s;
+	}
+	.dashboard-link:hover {
+		opacity: 0.6;
+		color: #6f6f6f;
+		cursor: pointer;
+	}
+	span {
+		padding-left: 16px;
+		font-style: italic;
+		font-size: 0.75rem;
 	}
 `;
 
@@ -46,29 +90,38 @@ export interface ChooseFragmentModalProps {
 
 export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 	const [, updateLocalFragments] = useContext(LocalFragmentsContext);
-	const [, dispatch] = useContext(FragmentsContext);
+	const [fragmentsState, dispatch] = useContext(FragmentsContext);
+	const [selectedFragment, setSelectedFragment] = useState(null);
 
 	const history = useHistory();
 
 	const generateFragment = () => {
-		const generatedFragment = generateNewFragment(
-			props.uploadedData.data
-		);
+		if (fragmentsState.currentlyProcessing) {
+			return;
+		}
+		// copy current fragment and change fragment title
+		const fragmentCopy = JSON.parse(JSON.stringify(selectedFragment));
+		fragmentCopy.title = generateUniqueName(fragmentsState.fragments, fragmentCopy.title);
+		fragmentCopy.id = `${Math.random().toString().slice(2)}${Math.random().toString().slice(2)}`;
+		// new fragments should not be templates by default
+		fragmentCopy.labels = fragmentCopy.labels.filter((label: string) => label !== 'template');
 
 		dispatch({
 			type: FragmentActionType.ADD_ONE,
-			data: generatedFragment
+			data: fragmentCopy,
+			loaded: true
 		});
 		updateLocalFragments({
 			type: LocalFragmentActionType.ADD,
-			data: { id: generatedFragment.id }
+			data: { id: fragmentCopy.id }
 		});
-		history.push(`/edit/${generatedFragment.id}`);
-	};
+		history.push(`/edit/${fragmentCopy.id}`);
+	}
 
 	return (
 		<Modal
 			open={props.shouldDisplay}
+			size='lg'
 			shouldSubmitOnEnter={false}
 			selectorPrimaryFocus='.bx--tile--selectable'
 			onRequestSubmit={() => {
@@ -117,7 +170,34 @@ export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 			}
 			<p>Choose a type of fragment and click done to start editing your new fragment</p>
 			<div className={fragmentOptions}>
-				Empty
+				<Col cols={{
+					sm: 12,
+					md: 12,
+					lg: 12
+				}}>
+					{
+						fragmentsState.fragments.filter((fragment: any) => (
+							fragment.labels && fragment.labels.includes('template')
+						)).map((fragment: any) => (
+							<div className={tileWrapper}>
+								<SelectableTile
+									className={tileStyle}
+									onClick={() => { setSelectedFragment(fragment) }}
+									selected={fragment === selectedFragment}>
+									<div className={tileInnerWrapper}>
+										<FragmentPreview fragment={fragment} />
+										<div>
+											<h3>{fragment.title}</h3>
+											<span>
+												{fragment.lastModified ? fragment.lastModified : 'Last modified date unknown'}
+											</span>
+										</div>
+									</div>
+								</SelectableTile>
+							</div>
+						))
+					}
+				</Col>
 			</div>
 		</Modal>
 	);

@@ -1,16 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useRef } from 'react';
 import { css } from 'emotion';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import {
-	Loading,
 	OverflowMenu,
 	OverflowMenuItem,
 	SkeletonText,
 	Tile
 } from 'carbon-components-react';
 import { ModalContext, ModalActionType } from '../../context/modal-context';
-import { getFragmentPreview, RenderProps } from '../../utils/fragment-tools';
+import { FragmentPreview } from '../../components/fragment-preview';
 
 const tileWrapper = css`
 	position: relative;
@@ -56,15 +55,6 @@ const tileInnerWrapper = css`
 		font-size: 0.75rem;
 	}
 `;
-
-const fragmentImage = css`
-	width: auto;
-	height: auto;
-	max-height: 173px;
-	max-width: 333px;
-	display: block;
-	padding-top: 8px;
-`;
 const fragmentOverflow = css`
 	right: 5px;
 	position: absolute;
@@ -73,18 +63,6 @@ const fragmentOverflow = css`
 `;
 const fragmentInfo = css`
 	display: flex;
-`;
-const spinner = css`
-	position: absolute;
-	top: calc(50% - 44px - 32px);
-	width: calc(100% - 16px);
-
-	.bx--loading {
-		margin: auto;
-	}
-`;
-const imagePlaceholderStyle = css`
-	height: 173px;
 `;
 
 export const FragmentTile = ({
@@ -96,7 +74,7 @@ export const FragmentTile = ({
 }: any) => {
 	const history = useHistory();
 	const [, dispatchModal] = useContext(ModalContext);
-	const [previewUrl, setPreviewUrl] = useState('');
+	const resetPreviewRef = useRef<any>(null);
 	const handleModalState = (modalAction: ModalActionType) => {
 		setModalFragment(fragment);
 		dispatchModal({
@@ -105,53 +83,12 @@ export const FragmentTile = ({
 		});
 	};
 
-	const renderProps: RenderProps = {
-		id: fragment.id,
-		name: fragment.title,
-		width: 800,
-		height: 400,
-		preview: {
-			format: 'png',
-			width: 330,
-			height: 200
-		}
-	};
-
-	const resetPreview = async () => {
-		const imageBlob = await getFragmentPreview(fragment, renderProps);
-		const reader = new FileReader();
-		reader.readAsDataURL(imageBlob ? imageBlob : new Blob());
-		reader.onloadend = () => {
-			const imageUrl: string = reader.result ? reader.result.toString() : '';
-			setPreviewUrl(imageUrl);
-		};
-	}
-
-	useEffect(() => {
-		resetPreview();
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
-
 	return (
 		<div className={tileWrapper}>
 			<Tile className={tileStyle} >
 				<div className={tileInnerWrapper}>
 					<Link to={to}>
-						{
-							previewUrl &&
-							<img
-								loading='lazy'
-								src={previewUrl}
-								className={fragmentImage}
-								alt={`fragment preview: ${title}`} />
-						}
-						{
-							!previewUrl &&
-							<div className={imagePlaceholderStyle} />
-						}
-						<div className={spinner}>
-							<Loading withOverlay={false} active={!previewUrl} />
-						</div>
+						<FragmentPreview fragment={fragment} resetPreviewRef={resetPreviewRef} />
 					</Link>
 					<div className={fragmentInfo}>
 						<div>
@@ -178,7 +115,7 @@ export const FragmentTile = ({
 								onClick={() => { handleModalState(ModalActionType.setDuplicationModal); }}/>
 							<OverflowMenuItem
 								itemText='Reset preview'
-								onClick={resetPreview}/>
+								onClick={() => { resetPreviewRef.current() }}/>
 							<OverflowMenuItem
 								itemText='Remove'
 								onClick={() => { handleModalState(ModalActionType.setDeletionModal); }}
