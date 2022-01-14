@@ -83,16 +83,16 @@ export const hasFragmentStyleClasses = (fragment: any) => {
 	return hasComponentStyleClasses(fragment.data);
 };
 
-export const generateUniqueName = (fragments: Array<any>, name: string) => {
+export const getUniqueFragmentName = (fragments: Array<any>, baseName: string) => {
 	const nameRegEx = new RegExp(String.raw`(.*)\s+(copy)*(\s+(\d+))?$`);
-	const nameMatch = name.match(nameRegEx);
+	const nameMatch = baseName.match(nameRegEx);
 	let count = 0;
 
-	let nameBase = name;
+	let nameBase = baseName;
 	// If match, increment the count and update name base and new name
 	if (nameMatch) {
-		nameBase = name.replace(nameRegEx, '$1');
-		count = Number.parseInt(name.replace(nameRegEx, '$4'), 10);
+		nameBase = baseName.replace(nameRegEx, '$1');
+		count = Number.parseInt(baseName.replace(nameRegEx, '$4'), 10);
 		if (!count) {
 			count = 0;
 		}
@@ -118,4 +118,12 @@ export const generateUniqueName = (fragments: Array<any>, name: string) => {
 		.shift();
 
 	return `${nameBase} copy ${highestNumber && count < highestNumber ? highestNumber + 1 : count + 1}`;
+};
+
+export const duplicateFragment = (fragments: any, fragment: any, options = {}) => {
+	// copy current fragment and change fragment title
+	let fragmentCopy = JSON.parse(JSON.stringify(fragment));
+	fragmentCopy.title = getUniqueFragmentName(fragments, fragmentCopy.title);
+	fragmentCopy.id = `${Math.random().toString().slice(2)}${Math.random().toString().slice(2)}`;
+	return Object.assign({}, fragmentCopy, options);
 };

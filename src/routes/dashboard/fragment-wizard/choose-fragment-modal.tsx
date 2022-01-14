@@ -20,7 +20,7 @@ import { LocalFragmentsContext, LocalFragmentActionType } from '../../../context
 import { warningNotificationProps } from '../../../utils/file-tools';
 import { Col } from '../../../components';
 import { FragmentPreview } from '../../../components/fragment-preview';
-import { generateUniqueName } from '../../../utils/fragment-tools';
+import { duplicateFragment } from '../../../utils/fragment-tools';
 
 const fragmentOptions = css`
 	margin-left: 30px;
@@ -91,20 +91,20 @@ export interface ChooseFragmentModalProps {
 export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 	const [, updateLocalFragments] = useContext(LocalFragmentsContext);
 	const [fragmentsState, dispatch] = useContext(FragmentsContext);
-	const [selectedFragment, setSelectedFragment] = useState(null);
+	const [selectedFragment, setSelectedFragment] = useState<any>(null);
 
 	const history = useHistory();
 
 	const generateFragment = () => {
-		if (fragmentsState.currentlyProcessing) {
+		if (fragmentsState.currentlyProcessing || selectedFragment === null) {
 			return;
 		}
-		// copy current fragment and change fragment title
-		const fragmentCopy = JSON.parse(JSON.stringify(selectedFragment));
-		fragmentCopy.title = generateUniqueName(fragmentsState.fragments, fragmentCopy.title);
-		fragmentCopy.id = `${Math.random().toString().slice(2)}${Math.random().toString().slice(2)}`;
-		// new fragments should not be templates by default
-		fragmentCopy.labels = fragmentCopy.labels.filter((label: string) => label !== 'template');
+
+		const fragmentCopy = duplicateFragment(
+			fragmentsState.fragments,
+			selectedFragment,
+			{ labels: selectedFragment?.labels?.filter((label: string) => label !== 'template') }
+		);
 
 		dispatch({
 			type: FragmentActionType.ADD_ONE,
@@ -136,6 +136,7 @@ export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 			hasForm
 			modalHeading='Create new fragment'
 			primaryButtonText='Done'
+			primaryButtonDisabled={!selectedFragment}
 			secondaryButtonText='Back'>
 			{
 				props.uploadedData.wasDataModified
@@ -182,16 +183,14 @@ export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 							<div className={tileWrapper}>
 								<SelectableTile
 									className={tileStyle}
-									onClick={() => { setSelectedFragment(fragment) }}
+									onClick={() => setSelectedFragment(fragment)}
 									selected={fragment === selectedFragment}>
 									<div className={tileInnerWrapper}>
 										<FragmentPreview fragment={fragment} />
-										<div>
 											<h3>{fragment.title}</h3>
 											<span>
 												{fragment.lastModified ? fragment.lastModified : 'Last modified date unknown'}
 											</span>
-										</div>
 									</div>
 								</SelectableTile>
 							</div>

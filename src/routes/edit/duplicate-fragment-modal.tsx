@@ -10,7 +10,7 @@ import {
 import { useHistory, useLocation } from 'react-router-dom';
 import { LocalFragmentsContext, LocalFragmentActionType } from '../../context/local-fragments-context';
 
-import { generateUniqueName } from '../../utils/fragment-tools';
+import { duplicateFragment } from '../../utils/fragment-tools';
 
 // In the case that fragment modal is used in the dashboard the full fragment containing options and data
 // can't be passed in, so fragment id is passed in and `useFragment` is used within this component.
@@ -25,14 +25,11 @@ export const DuplicateFragmentModal = ({ id }: any) => {
 
 	const fragment = fragmentsState.fragments.find((fragment: any) => fragment.id === id);
 
-	const duplicateFragment = () => {
+	const handleDuplicateFragment = () => {
 		if (fragmentsState.currentlyProcessing) {
 			return;
 		}
-		// copy current fragment and change fragment title
-		const fragmentCopy = JSON.parse(JSON.stringify(fragment));
-		fragmentCopy.title = generateUniqueName(fragmentsState.fragments, fragmentCopy.title);
-		fragmentCopy.id = `${Math.random().toString().slice(2)}${Math.random().toString().slice(2)}`;
+		const fragmentCopy = duplicateFragment(fragmentsState.fragments, fragment);
 
 		dispatch({
 			type: FragmentActionType.ADD_ONE,
@@ -66,7 +63,7 @@ export const DuplicateFragmentModal = ({ id }: any) => {
 			modalHeading='Duplicate fragment?'
 			primaryButtonText='Duplicate'
 			primaryButtonDisabled={!!fragmentsState.currentlyProcessing}
-			onRequestSubmit={() => duplicateFragment()}>
+			onRequestSubmit={() => handleDuplicateFragment()}>
 			<p>
 				Click <strong>Duplicate</strong> to begin to edit a copy of the current fragment
 				or <strong>Cancel</strong> to continue on this fragment.

@@ -26,9 +26,7 @@ const spinner = css`
 	}
 `;
 
-export const FragmentPreview = ({ fragment, resetPreviewRef }: any) => {
-    const [previewUrl, setPreviewUrl] = useState('');
-
+export const getPreviewUrl = async (fragment: any) => {
 	const renderProps: RenderProps = {
 		id: fragment.id,
 		name: fragment.title,
@@ -41,37 +39,47 @@ export const FragmentPreview = ({ fragment, resetPreviewRef }: any) => {
 		}
 	};
 
-	const resetPreview = async () => {
-		const imageBlob = await getFragmentPreview(fragment, renderProps);
+	const imageBlob = await getFragmentPreview(fragment, renderProps);
+	return new Promise((resolve) => {
 		const reader = new FileReader();
 		reader.readAsDataURL(imageBlob ? imageBlob : new Blob());
 		reader.onloadend = () => {
-			const imageUrl: string = reader.result ? reader.result.toString() : '';
-			setPreviewUrl(imageUrl);
+			resolve(reader.result ? reader.result.toString() : '');
 		};
-	};
+	})
+}
+
+export const FragmentPreview = ({ fragment, previewUrl }: any) => {
+    const [activePreviewUrl, setActivePreviewUrl] = useState(previewUrl);
 
 	useEffect(() => {
-		resetPreview();
-		if (resetPreviewRef) {
-			resetPreviewRef.current = resetPreview;
+		if (!previewUrl) {
+			const setPreviewUrl = async () => {
+				const url = await getPreviewUrl(fragment);
+				setActivePreviewUrl(url);
+			}
+			setPreviewUrl();
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	useEffect(() => {
+		setActivePreviewUrl(previewUrl);
+	}, [previewUrl])
+
 	return (
         <>
             {
-                previewUrl
+                activePreviewUrl
                 ? <img
                     loading='lazy'
-                    src={previewUrl}
+                    src={activePreviewUrl}
                     className={fragmentImage}
                     alt={`fragment preview: ${fragment.title}`} />
                 : <div className={imagePlaceholderStyle} />
             }
             <div className={spinner}>
-                <Loading withOverlay={false} active={!previewUrl} />
+                <Loading withOverlay={false} active={!activePreviewUrl} />
             </div>
         </>
 	);
