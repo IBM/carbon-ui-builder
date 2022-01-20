@@ -11,6 +11,7 @@ import { AComponent } from './a-component';
 import { useFragment } from '../context';
 import { getParentComponent, updatedState } from '../components';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
+import { ComponentInfo } from '.';
 
 const helpIconStyle = css`
 	color: #525252;
@@ -243,4 +244,25 @@ export const AColumn = ({
 			</AComponent>
 		</Column>
 	);
+};
+
+export const componentInfo: ComponentInfo = {
+	component: AColumn,
+	styleUI: AColumnStyleUI,
+	render: ({componentObj, select, remove, selected, onDragOver, onDrop, renderComponents}) => <AColumn
+		componentObj={componentObj}
+		select={select}
+		remove={remove}
+		selected={selected}
+		onDragOver={onDragOver}
+		onDrop={onDrop}>
+			{ componentObj.items.map((column: any) => (
+				renderComponents(column)
+			))}
+	</AColumn>,
+	keywords: ['column', 'grid'],
+	name: 'Column',
+	hideFromElementsPane: true,
+	defaultComponentObj: undefined,
+	image: undefined
 };

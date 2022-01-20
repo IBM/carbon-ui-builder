@@ -2,6 +2,9 @@ import React from 'react';
 import { TextArea, TextInput } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
+import { ComponentInfo } from '.';
+
+import image from './../assets/component-icons/text-area.svg';
 
 export const ATextAreaStyleUI = ({selectedComponent, setComponent}: any) => {
 	return <>
@@ -72,4 +75,19 @@ export const ATextArea = ({
 				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
 		</AComponent>
 	);
+};
+
+export const componentInfo: ComponentInfo = {
+	component: ATextArea,
+	styleUI: ATextAreaStyleUI,
+	codeUI: ATextAreaCodeUI,
+	keywords: ['textarea', 'text area', 'input'],
+	name: 'Text area',
+	defaultComponentObj: {
+		type: 'textarea',
+		label: 'Text area label',
+		placeholder: 'Text area placeholder',
+		helperText: 'Helper text'
+	},
+	image
 };

@@ -3,6 +3,9 @@ import { Checkbox, TextInput } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
+import { ComponentInfo } from '.';
+
+import image from './../assets/component-icons/checkbox.svg';
 
 export const ACheckboxStyleUI = ({selectedComponent, setComponent}: any) => {
 	return <>
@@ -53,4 +56,17 @@ export const ACheckbox = ({
 				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
 		</AComponent>
 	);
+};
+
+export const componentInfo: ComponentInfo = {
+	component: ACheckbox,
+	styleUI: ACheckboxStyleUI,
+	codeUI: ACheckboxCodeUI,
+	keywords: ['checkbox', 'check box'],
+	name: 'Checkbox',
+	defaultComponentObj: {
+		type: 'checkbox',
+		label: 'Checkbox'
+	},
+	image
 };

@@ -3,6 +3,9 @@ import { TextInput, Dropdown } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
+import { ComponentInfo } from '.';
+
+import image from './../assets/component-icons/text-input.svg';
 
 export const ATextInputStyleUI = ({selectedComponent, setComponent}: any) => {
 	const typeItems = [
@@ -102,4 +105,20 @@ export const ATextInput = ({
 				{...rest} />
 		</AComponent>
 	);
+};
+
+export const componentInfo: ComponentInfo = {
+	component: ATextInput,
+	styleUI: ATextInputStyleUI,
+	codeUI: ATextInputCodeUI,
+	keywords: ['text', 'text', 'input'],
+	name: 'Text input',
+	defaultComponentObj: {
+		type: 'textinput',
+		label: 'Text input label',
+		placeholder: 'Text input placeholder',
+		helperText: 'Helper text',
+		inputType: 'text'
+	},
+	image
 };

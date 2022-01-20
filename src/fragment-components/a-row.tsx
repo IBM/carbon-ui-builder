@@ -9,6 +9,7 @@ import { getParentComponent, updatedState } from '../components';
 import { css, cx } from 'emotion';
 import { useFragment } from '../context';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
+import { ComponentInfo } from '.';
 
 export const ARowStyleUI = ({selectedComponent, setComponent}: any) => {
 	return <>
@@ -113,4 +114,14 @@ export const ARow = ({
 			</Row>
 		</AComponent>
 	);
+};
+
+export const componentInfo: ComponentInfo = {
+	component: ARow,
+	styleUI: ARowStyleUI,
+	keywords: ['grid', 'row'],
+	name: 'Row',
+	hideFromElementsPane: true,
+	defaultComponentObj: undefined,
+	image: undefined
 };

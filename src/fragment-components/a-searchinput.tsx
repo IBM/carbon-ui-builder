@@ -3,6 +3,9 @@ import { TextInput, Dropdown, Search } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
+import { ComponentInfo } from '.';
+
+import image from './../assets/component-icons/search.svg';
 
 export const ASearchInputStyleUI = ({selectedComponent, setComponent}: any) => {
 	const sizeItems = [
@@ -93,4 +96,19 @@ export const ASearchInput = ({
 				{...rest} />
 		</AComponent>
 	);
+};
+
+export const componentInfo: ComponentInfo = {
+	component: ASearchInput,
+	styleUI: ASearchInputStyleUI,
+	codeUI: ASearchInputCodeUI,
+	keywords: ['search', 'search input'],
+	name: 'Search',
+	defaultComponentObj: {
+		type: 'search',
+		label: 'Search',
+		placeholder: 'Search',
+		inputSize: 'lg'
+	},
+	image
 };

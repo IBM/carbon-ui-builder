@@ -4,9 +4,11 @@ import {
 	Dropdown,
 	TextInput
 } from 'carbon-components-react';
-import { AComponent } from './a-component';
 import { css } from 'emotion';
+import { AComponent, ComponentInfo } from './a-component';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
+
+import image from './../assets/component-icons/button.svg';
 
 export const AButtonStyleUI = ({selectedComponent, setComponent}: any) => {
 	const kindItems = [
@@ -62,4 +64,24 @@ export const AButton = ({
 			</Button>
 		</AComponent>
 	);
+};
+
+export const componentInfo: ComponentInfo = {
+	component: AButton,
+	styleUI: AButtonStyleUI,
+	render: ({componentObj, select, remove, selected}) => <AButton
+		componentObj={componentObj}
+		select={select}
+		remove={remove}
+		selected={selected}>
+			{componentObj.text}
+	</AButton>,
+	keywords: ['button'],
+	name: 'Button',
+	defaultComponentObj: {
+		type: 'button',
+		kind: 'primary',
+		text: 'Button'
+	},
+	image
 };

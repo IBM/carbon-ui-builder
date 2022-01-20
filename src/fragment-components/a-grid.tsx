@@ -3,6 +3,9 @@ import { Checkbox, Grid } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css, cx } from 'emotion';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
+import { ComponentInfo } from '.';
+
+import image from './../assets/component-icons/grid.svg';
 
 export const AGridStyleUI = ({selectedComponent, setComponent}: any) => {
 	return <>
@@ -67,4 +70,29 @@ export const AGrid = ({
 			</Grid>
 		</AComponent>
 	);
+};
+
+export const componentInfo: ComponentInfo = {
+	component: AGrid,
+	styleUI: AGridStyleUI,
+	keywords: ['grid', 'row', 'column'],
+	name: 'Grid',
+	defaultComponentObj: {
+		type: 'grid',
+		items: [
+			{
+				type: 'row', items: [
+					{ type: 'column', items: [{ type: 'text', text: 'A' }]},
+					{ type: 'column', items: [{ type: 'text', text: 'B' }]}
+				]
+			},
+			{
+				type: 'row', items: [
+					{ type: 'column', items: [{ type: 'text', text: 'C' }]},
+					{ type: 'column', items: [{ type: 'text', text: 'D' }]}
+				]
+			}
+		]
+	},
+	image
 };
