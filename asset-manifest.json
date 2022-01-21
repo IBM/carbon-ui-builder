@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/carbon-components-builder/static/css/main.69d0c9db.chunk.css",
-    "main.js": "/carbon-components-builder/static/js/main.d1f2c02f.chunk.js",
-    "main.js.map": "/carbon-components-builder/static/js/main.d1f2c02f.chunk.js.map",
+    "main.js": "/carbon-components-builder/static/js/main.ae02dd97.chunk.js",
+    "main.js.map": "/carbon-components-builder/static/js/main.ae02dd97.chunk.js.map",
     "runtime-main.js": "/carbon-components-builder/static/js/runtime-main.14a4950b.js",
     "runtime-main.js.map": "/carbon-components-builder/static/js/runtime-main.14a4950b.js.map",
-    "static/js/2.6efcb250.chunk.js": "/carbon-components-builder/static/js/2.6efcb250.chunk.js",
-    "static/js/2.6efcb250.chunk.js.map": "/carbon-components-builder/static/js/2.6efcb250.chunk.js.map",
+    "static/js/2.5d9b4140.chunk.js": "/carbon-components-builder/static/js/2.5d9b4140.chunk.js",
+    "static/js/2.5d9b4140.chunk.js.map": "/carbon-components-builder/static/js/2.5d9b4140.chunk.js.map",
     "index.html": "/carbon-components-builder/index.html",
-    "precache-manifest.bcfd8277d8f412df9ed688f73beb4482.js": "/carbon-components-builder/precache-manifest.bcfd8277d8f412df9ed688f73beb4482.js",
+    "precache-manifest.45acae97ef87e8a7cb8ef9e1ec38ccbd.js": "/carbon-components-builder/precache-manifest.45acae97ef87e8a7cb8ef9e1ec38ccbd.js",
     "service-worker.js": "/carbon-components-builder/service-worker.js",
     "static/css/main.69d0c9db.chunk.css.map": "/carbon-components-builder/static/css/main.69d0c9db.chunk.css.map",
-    "static/js/2.6efcb250.chunk.js.LICENSE.txt": "/carbon-components-builder/static/js/2.6efcb250.chunk.js.LICENSE.txt",
+    "static/js/2.5d9b4140.chunk.js.LICENSE.txt": "/carbon-components-builder/static/js/2.5d9b4140.chunk.js.LICENSE.txt",
     "static/media/button.svg": "/carbon-components-builder/static/media/button.f75955a0.svg",
     "static/media/chart-404.svg": "/carbon-components-builder/static/media/chart-404.9bc8debd.svg",
     "static/media/checkbox.svg": "/carbon-components-builder/static/media/checkbox.d3c186e8.svg",
@@ -24,8 +24,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.14a4950b.js",
-    "static/js/2.6efcb250.chunk.js",
+    "static/js/2.5d9b4140.chunk.js",
     "static/css/main.69d0c9db.chunk.css",
-    "static/js/main.d1f2c02f.chunk.js"
+    "static/js/main.ae02dd97.chunk.js"
   ]
 }
