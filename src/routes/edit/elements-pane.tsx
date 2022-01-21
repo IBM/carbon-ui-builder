@@ -43,8 +43,10 @@ export const ElementsPane = ({isActive}: any) => {
 			<div className={elementTileListStyle}>
 				{
 					Object.values(allComponents)
-					.filter((component: any) => !component.componentInfo.hideFromElementsPane)
-					.map((component: any) => shouldShow(component.componentInfo.keywords) &&
+					.filter((component: any) =>
+						!component.componentInfo.hideFromElementsPane
+						&& shouldShow(component.componentInfo.keywords))
+					.map((component: any) =>
 						<ElementTile componentObj={component.componentInfo.defaultComponentObj}>
 							<img src={component.componentInfo.image} alt={component.componentInfo.name} />
 							<span className='title'>{component.componentInfo.name}</span>
