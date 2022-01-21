@@ -56,7 +56,15 @@ export interface ComponentInfo {
 	styleUI: any,
 	codeUI?: any,
 	render?: (props: ComponentInfoRenderProps) => any,
-	hideFromElementsPane?: boolean
+	hideFromElementsPane?: boolean,
+	codeExport: {
+		angular?: {},
+		react: {
+			imports: string[],
+			isNotDirectExport?: boolean,
+			code: (props: {json: any, jsonToTemplate: (json: any) => string}) => string
+		}
+	}
 }
 
 export interface ComponentInfoRenderProps {

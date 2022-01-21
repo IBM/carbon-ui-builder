@@ -249,14 +249,14 @@ export const AColumn = ({
 export const componentInfo: ComponentInfo = {
 	component: AColumn,
 	styleUI: AColumnStyleUI,
-	render: ({componentObj, select, remove, selected, onDragOver, onDrop, renderComponents}) => <AColumn
+	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <AColumn
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
 		selected={selected}
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
-			{ componentObj.items.map((column: any) => (
+			{componentObj.items.map((column: any) => (
 				renderComponents(column)
 			))}
 	</AColumn>,
@@ -264,5 +264,12 @@ export const componentInfo: ComponentInfo = {
 	name: 'Column',
 	hideFromElementsPane: true,
 	defaultComponentObj: undefined,
-	image: undefined
+	image: undefined,
+	codeExport: {
+		react: {
+			imports: ['Column'],
+			isNotDirectExport: true,
+			code: (_) => ''
+		}
+	}
 };

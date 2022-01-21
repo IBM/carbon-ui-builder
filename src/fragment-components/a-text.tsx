@@ -5,6 +5,7 @@ import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/text.svg';
+import { classNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const ATextStyleUI = ({selectedComponent, setComponent}: any) => {
 	return <>
@@ -53,5 +54,16 @@ export const componentInfo: ComponentInfo = {
 		type: 'text',
 		text: 'Text'
 	},
-	image
+	image,
+	codeExport: {
+		react: {
+			imports: [],
+			code: ({json}) => {
+				if (json.cssClasses) {
+					return `<span ${classNamesFromComponentObj(json)}>${json.text}</span>`;
+				}
+				return json.text;
+			}
+		}
+	}
 };

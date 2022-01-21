@@ -5,6 +5,7 @@ import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/text-area.svg';
+import { classNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const ATextAreaStyleUI = ({selectedComponent, setComponent}: any) => {
 	return <>
@@ -89,5 +90,20 @@ export const componentInfo: ComponentInfo = {
 		placeholder: 'Text area placeholder',
 		helperText: 'Helper text'
 	},
-	image
+	image,
+	codeExport: {
+		react: {
+			imports: ['TextArea'],
+			code: ({json}) => {
+				return `<TextArea
+					labelText="${json.label}"
+					name="${json.codeContext?.name}"
+					helperText="${json.helperText}"
+					placeholder="${json.placeholder}"
+					value={state["${json.codeContext?.name}"]}
+					${classNamesFromComponentObj(json)}
+					onChange={handleInputChange} />`;
+			}
+		}
+	}
 };

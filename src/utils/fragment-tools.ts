@@ -82,3 +82,10 @@ export const hasFragmentStyleClasses = (fragment: any) => {
 
 	return hasComponentStyleClasses(fragment.data);
 };
+
+export const classNamesFromComponentObj = (componentObj: any) =>
+	componentObj.cssClasses
+	&& Array.isArray(componentObj.cssClasses)
+	&& componentObj.cssClasses.length > 0
+	? `className='${componentObj.cssClasses.map((cc: any) => cc.id).join(' ')}'`
+	: '';

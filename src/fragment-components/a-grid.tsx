@@ -6,6 +6,7 @@ import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/grid.svg';
+import { classNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const AGridStyleUI = ({selectedComponent, setComponent}: any) => {
 	return <>
@@ -72,6 +73,35 @@ export const AGrid = ({
 	);
 };
 
+const getCellAttributeString = (cell: any, sizeShort: string, sizeLong: string) => {
+	const span = cell[`${sizeLong}Span`];
+	const offset = cell[`${sizeLong}Offset`];
+
+	if (!span && ! offset) {
+		return '';
+	}
+
+	const spanString = `span: ${span}`;
+	const offsetString = `offset: ${offset}`;
+
+	const spanAndOffset = `{
+		${span ? spanString : ''}${span && offset ? ',' : ''}
+		${offset ? offsetString : ''}
+	}`;
+
+	return `${sizeShort}={${!offset ? span : spanAndOffset}}`;
+};
+
+const getCellParamsString = (cell: any) => {
+	return `
+		${getCellAttributeString(cell, 'sm', 'small')}
+		${getCellAttributeString(cell, 'md', 'medium')}
+		${getCellAttributeString(cell, 'lg', 'large')}
+		${getCellAttributeString(cell, 'xlg', 'xLarge')}
+		${getCellAttributeString(cell, 'max', 'max')}
+	`;
+};
+
 export const componentInfo: ComponentInfo = {
 	component: AGrid,
 	styleUI: AGridStyleUI,
@@ -94,5 +124,19 @@ export const componentInfo: ComponentInfo = {
 			}
 		]
 	},
-	image
+	image,
+	codeExport: {
+		react: {
+			imports: ['Grid', 'Column', 'Row'],
+			code: ({json, jsonToTemplate}) => {
+				return `<Grid ${classNamesFromComponentObj(json)}>
+					${json.items.map((row: any) => `<Row ${classNamesFromComponentObj(row)}>
+						${row.items.map((cell: any) => `<Column ${getCellParamsString(cell)} ${classNamesFromComponentObj(cell)}>
+								${jsonToTemplate(cell)}
+						</Column>`).join('\n')}
+					</Row>`).join('\n')}
+				</Grid>`;
+			}
+		}
+	}
 };

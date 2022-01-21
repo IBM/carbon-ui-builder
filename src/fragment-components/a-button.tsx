@@ -9,6 +9,7 @@ import { AComponent, ComponentInfo } from './a-component';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 
 import image from './../assets/component-icons/button.svg';
+import { classNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const AButtonStyleUI = ({selectedComponent, setComponent}: any) => {
 	const kindItems = [
@@ -69,7 +70,7 @@ export const AButton = ({
 export const componentInfo: ComponentInfo = {
 	component: AButton,
 	styleUI: AButtonStyleUI,
-	render: ({componentObj, select, remove, selected}) => <AButton
+	render: ({ componentObj, select, remove, selected }) => <AButton
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
@@ -83,5 +84,13 @@ export const componentInfo: ComponentInfo = {
 		kind: 'primary',
 		text: 'Button'
 	},
-	image
+	image,
+	codeExport: {
+		react: {
+			imports: ['Button'],
+			code: ({ json }) => {
+				return `<Button${json.kind && ` kind="${json.kind}"`} ${classNamesFromComponentObj(json)}>${json.text}</Button>`;
+			}
+		}
+	}
 };

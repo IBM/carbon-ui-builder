@@ -6,6 +6,7 @@ import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/text-input.svg';
+import { classNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const ATextInputStyleUI = ({selectedComponent, setComponent}: any) => {
 	const typeItems = [
@@ -120,5 +121,20 @@ export const componentInfo: ComponentInfo = {
 		helperText: 'Helper text',
 		inputType: 'text'
 	},
-	image
+	image,
+	codeExport: {
+		react: {
+			imports: ['TextInput'],
+			code: ({json}) => {
+				return `<TextInput
+					labelText="${json.label}"
+					name="${json.codeContext?.name}"
+					helperText="${json.helperText}"
+					placeholder="${json.placeholder}"
+					value={state["${json.codeContext?.name}"]}
+					${classNamesFromComponentObj(json)}
+					onChange={handleInputChange} />`;
+			}
+		}
+	}
 };

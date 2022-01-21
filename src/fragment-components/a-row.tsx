@@ -123,5 +123,12 @@ export const componentInfo: ComponentInfo = {
 	name: 'Row',
 	hideFromElementsPane: true,
 	defaultComponentObj: undefined,
-	image: undefined
+	image: undefined,
+	codeExport: {
+		react: {
+			imports: ['Row'],
+			isNotDirectExport: true,
+			code: (_) => ''
+		}
+	}
 };

@@ -6,6 +6,7 @@ import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/checkbox.svg';
+import { classNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const ACheckboxStyleUI = ({selectedComponent, setComponent}: any) => {
 	return <>
@@ -68,5 +69,24 @@ export const componentInfo: ComponentInfo = {
 		type: 'checkbox',
 		label: 'Checkbox'
 	},
-	image
+	image,
+	codeExport: {
+		react: {
+			imports: ['Checkbox'],
+			code: ({json}) => {
+				return `<Checkbox
+					labelText="${json.label}"
+					name="${json.codeContext?.name}"
+					id="${json.codeContext?.name}"
+					checked={state["${json.codeContext?.name}"]?.checked}
+					${classNamesFromComponentObj(json)}
+					onChange={(checked) => handleInputChange({
+						target: {
+							name: "${json.codeContext?.name}",
+							value: checked
+						}
+					})} />`;
+			}
+		}
+	}
 };
