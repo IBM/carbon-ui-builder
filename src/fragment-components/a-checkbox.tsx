@@ -6,7 +6,7 @@ import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/checkbox.svg';
-import { classNamesFromComponentObj } from '../utils/fragment-tools';
+import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const ACheckboxStyleUI = ({selectedComponent, setComponent}: any) => {
 	return <>
@@ -71,6 +71,21 @@ export const componentInfo: ComponentInfo = {
 	},
 	image,
 	codeExport: {
+		angular: {
+			inputs: ({json}) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked: boolean;`,
+			outputs: ({json}) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}CheckedChange = new EventEmitter<boolean>();`,
+			imports: ['CheckboxModule'],
+			code: ({json}) => {
+				return `<ibm-checkbox
+					name="${json.codeContext?.name}"
+					id="${json.codeContext?.name}"
+					[(checked)]="${nameStringToVariableString(json.codeContext?.name)}Checked"
+					(checkedChange)="${nameStringToVariableString(json.codeContext?.name)}CheckedChange.emit($event)"
+					${angularClassNamesFromComponentObj(json)}>
+						${json.label}
+				</ibm-checkbox>`;
+			}
+		},
 		react: {
 			imports: ['Checkbox'],
 			code: ({json}) => {
@@ -79,7 +94,7 @@ export const componentInfo: ComponentInfo = {
 					name="${json.codeContext?.name}"
 					id="${json.codeContext?.name}"
 					checked={state["${json.codeContext?.name}"]?.checked}
-					${classNamesFromComponentObj(json)}
+					${reactClassNamesFromComponentObj(json)}
 					onChange={(checked) => handleInputChange({
 						target: {
 							name: "${json.codeContext?.name}",

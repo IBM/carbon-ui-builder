@@ -266,6 +266,13 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: undefined,
 	image: undefined,
 	codeExport: {
+		angular: {
+			inputs: (_) => '',
+			outputs: (_) => '',
+			imports: ['GridModule'],
+			isNotDirectExport: true,
+			code: (_) => ''
+		},
 		react: {
 			imports: ['Column'],
 			isNotDirectExport: true,

@@ -6,7 +6,7 @@ import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/search.svg';
-import { classNamesFromComponentObj } from '../utils/fragment-tools';
+import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const ASearchInputStyleUI = ({selectedComponent, setComponent}: any) => {
 	const sizeItems = [
@@ -113,6 +113,18 @@ export const componentInfo: ComponentInfo = {
 	},
 	image,
 	codeExport: {
+		angular: {
+			inputs: ({json}) => ``,
+			outputs: ({json}) => ``,
+			imports: ['SearchModule'],
+			code: ({json}) => {
+				return `<ibm-search
+					${angularClassNamesFromComponentObj(json)}
+					name="${json.codeContext?.name}"
+					placeholder="${json.placeholder}">
+				</ibm-search>`;
+			}
+		},
 		react: {
 			imports: ['Search'],
 			code: ({json}) => {
@@ -121,7 +133,7 @@ export const componentInfo: ComponentInfo = {
 					name="${json.codeContext?.name}"
 					placeholder="${json.placeholder}"
 					value={state["${json.codeContext?.name}"]}
-					${classNamesFromComponentObj(json)}
+					${reactClassNamesFromComponentObj(json)}
 					onChange={handleInputChange} />`
 			}
 		}

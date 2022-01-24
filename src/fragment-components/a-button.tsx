@@ -9,7 +9,7 @@ import { AComponent, ComponentInfo } from './a-component';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 
 import image from './../assets/component-icons/button.svg';
-import { classNamesFromComponentObj } from '../utils/fragment-tools';
+import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const AButtonStyleUI = ({selectedComponent, setComponent}: any) => {
 	const kindItems = [
@@ -86,10 +86,23 @@ export const componentInfo: ComponentInfo = {
 	},
 	image,
 	codeExport: {
+		angular: {
+			inputs: ({json}) => ``,
+			outputs: ({json}) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
+			imports: ['ButtonModule'],
+			code: ({json}) => {
+				return `<button
+					${json.kind ? `ibmButton='${json.kind}'` : 'ibmButton'}
+					(click)='${nameStringToVariableString(json.codeContext?.name)}Clicked.emit()'
+					${angularClassNamesFromComponentObj(json)}>
+						${json.text}
+				</button>`;
+			}
+		},
 		react: {
 			imports: ['Button'],
 			code: ({ json }) => {
-				return `<Button${json.kind && ` kind="${json.kind}"`} ${classNamesFromComponentObj(json)}>${json.text}</Button>`;
+				return `<Button${json.kind && ` kind="${json.kind}"`} ${reactClassNamesFromComponentObj(json)}>${json.text}</Button>`;
 			}
 		}
 	}

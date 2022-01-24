@@ -6,7 +6,7 @@ import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/grid.svg';
-import { classNamesFromComponentObj } from '../utils/fragment-tools';
+import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const AGridStyleUI = ({selectedComponent, setComponent}: any) => {
 	return <>
@@ -126,12 +126,26 @@ export const componentInfo: ComponentInfo = {
 	},
 	image,
 	codeExport: {
+		angular: {
+			inputs: ({json}) => ``,
+			outputs: ({json}) => ``,
+			imports: ['GridModule'],
+			code: ({json, jsonToTemplate}) => {
+				return `<div ibmGrid ${angularClassNamesFromComponentObj(json)}>
+					${json.items.map((row: any) => `<div ibmRow ${angularClassNamesFromComponentObj(row)}>
+						${row.items.map((cell: any) => `<div ibmCol ${angularClassNamesFromComponentObj(cell)}>
+								${jsonToTemplate(cell)}
+						</div>`).join('\n')}
+					</div>`).join('\n')}
+				</div>`;
+			}
+		},
 		react: {
 			imports: ['Grid', 'Column', 'Row'],
 			code: ({json, jsonToTemplate}) => {
-				return `<Grid ${classNamesFromComponentObj(json)}>
-					${json.items.map((row: any) => `<Row ${classNamesFromComponentObj(row)}>
-						${row.items.map((cell: any) => `<Column ${getCellParamsString(cell)} ${classNamesFromComponentObj(cell)}>
+				return `<Grid ${reactClassNamesFromComponentObj(json)}>
+					${json.items.map((row: any) => `<Row ${reactClassNamesFromComponentObj(row)}>
+						${row.items.map((cell: any) => `<Column ${getCellParamsString(cell)} ${reactClassNamesFromComponentObj(cell)}>
 								${jsonToTemplate(cell)}
 						</Column>`).join('\n')}
 					</Row>`).join('\n')}

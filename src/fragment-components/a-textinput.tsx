@@ -6,7 +6,7 @@ import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/text-input.svg';
-import { classNamesFromComponentObj } from '../utils/fragment-tools';
+import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const ATextInputStyleUI = ({selectedComponent, setComponent}: any) => {
 	const typeItems = [
@@ -123,6 +123,22 @@ export const componentInfo: ComponentInfo = {
 	},
 	image,
 	codeExport: {
+		angular: {
+			inputs: ({json}) => ``,
+			outputs: ({json}) => ``,
+			imports: ['InputModule'],
+			code: ({json}) => {
+				return `<ibm-label
+					helperText="${json.helperText}">
+						${json.label}
+						<input
+							ibmText
+							${angularClassNamesFromComponentObj(json)}
+							name="${json.codeContext?.name}"
+							placeholder="${json.placeholder}">
+				</ibm-label>`;
+			}
+		},
 		react: {
 			imports: ['TextInput'],
 			code: ({json}) => {
@@ -132,7 +148,7 @@ export const componentInfo: ComponentInfo = {
 					helperText="${json.helperText}"
 					placeholder="${json.placeholder}"
 					value={state["${json.codeContext?.name}"]}
-					${classNamesFromComponentObj(json)}
+					${reactClassNamesFromComponentObj(json)}
 					onChange={handleInputChange} />`;
 			}
 		}

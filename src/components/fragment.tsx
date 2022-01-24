@@ -77,24 +77,10 @@ export const stateWithoutComponent = (state: any, componentId: number) => {
 	return { ...state };
 };
 
-const componentsThatNeedNames = [
-	'checkbox',
-	'combobox',
-	'datepicker',
-	'dropdown',
-	'fileinput',
-	'radio',
-	'search',
-	'select',
-	'textarea',
-	'textinput',
-	'timepicker'
-];
-
 export const initializeIds = (componentObj: any) => {
 	const id = componentObj.id || componentCounter++;
-	let name = componentsThatNeedNames.includes(componentObj.type) ? `${componentObj.type}-${id}` : undefined;
-	name = componentObj.codeContext?.name ? componentObj.codeContext?.name : name;
+	// name is used in form items and for angular inputs and outputs variable names
+	const name = componentObj.codeContext?.name || `${componentObj.type}-${id}`;
 
 	return {
 		...componentObj,

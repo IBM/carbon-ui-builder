@@ -5,7 +5,7 @@ import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/text-area.svg';
-import { classNamesFromComponentObj } from '../utils/fragment-tools';
+import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const ATextAreaStyleUI = ({selectedComponent, setComponent}: any) => {
 	return <>
@@ -92,6 +92,22 @@ export const componentInfo: ComponentInfo = {
 	},
 	image,
 	codeExport: {
+		angular: {
+			inputs: ({json}) => ``,
+			outputs: ({json}) => ``,
+			imports: ['InputModule'],
+			code: ({json}) => {
+				return `<ibm-label
+					helperText="${json.helperText}">
+						${json.label}
+						<textarea
+							ibmTextArea
+							${angularClassNamesFromComponentObj(json)}
+							name="${json.codeContext?.name}"
+							placeholder="${json.placeholder}"></textarea>
+				</ibm-label>`;
+			}
+		},
 		react: {
 			imports: ['TextArea'],
 			code: ({json}) => {
@@ -101,7 +117,7 @@ export const componentInfo: ComponentInfo = {
 					helperText="${json.helperText}"
 					placeholder="${json.placeholder}"
 					value={state["${json.codeContext?.name}"]}
-					${classNamesFromComponentObj(json)}
+					${reactClassNamesFromComponentObj(json)}
 					onChange={handleInputChange} />`;
 			}
 		}
