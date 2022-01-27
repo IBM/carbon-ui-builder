@@ -1,22 +1,23 @@
 {
   "files": {
     "main.css": "/carbon-components-builder/static/css/main.69d0c9db.chunk.css",
-    "main.js": "/carbon-components-builder/static/js/main.627960bd.chunk.js",
-    "main.js.map": "/carbon-components-builder/static/js/main.627960bd.chunk.js.map",
+    "main.js": "/carbon-components-builder/static/js/main.99281647.chunk.js",
+    "main.js.map": "/carbon-components-builder/static/js/main.99281647.chunk.js.map",
     "runtime-main.js": "/carbon-components-builder/static/js/runtime-main.14a4950b.js",
     "runtime-main.js.map": "/carbon-components-builder/static/js/runtime-main.14a4950b.js.map",
-    "static/js/2.f22c9dcd.chunk.js": "/carbon-components-builder/static/js/2.f22c9dcd.chunk.js",
-    "static/js/2.f22c9dcd.chunk.js.map": "/carbon-components-builder/static/js/2.f22c9dcd.chunk.js.map",
+    "static/js/2.5e1ea0b3.chunk.js": "/carbon-components-builder/static/js/2.5e1ea0b3.chunk.js",
+    "static/js/2.5e1ea0b3.chunk.js.map": "/carbon-components-builder/static/js/2.5e1ea0b3.chunk.js.map",
     "index.html": "/carbon-components-builder/index.html",
-    "precache-manifest.c91e47aef3d5896e9e25abcbb7c0ae88.js": "/carbon-components-builder/precache-manifest.c91e47aef3d5896e9e25abcbb7c0ae88.js",
+    "precache-manifest.6653201bd707ec639ef13c6e6dfd9224.js": "/carbon-components-builder/precache-manifest.6653201bd707ec639ef13c6e6dfd9224.js",
     "service-worker.js": "/carbon-components-builder/service-worker.js",
     "static/css/main.69d0c9db.chunk.css.map": "/carbon-components-builder/static/css/main.69d0c9db.chunk.css.map",
-    "static/js/2.f22c9dcd.chunk.js.LICENSE.txt": "/carbon-components-builder/static/js/2.f22c9dcd.chunk.js.LICENSE.txt",
+    "static/js/2.5e1ea0b3.chunk.js.LICENSE.txt": "/carbon-components-builder/static/js/2.5e1ea0b3.chunk.js.LICENSE.txt",
     "static/media/button.svg": "/carbon-components-builder/static/media/button.f75955a0.svg",
     "static/media/chart-404.svg": "/carbon-components-builder/static/media/chart-404.9bc8debd.svg",
     "static/media/checkbox.svg": "/carbon-components-builder/static/media/checkbox.d3c186e8.svg",
     "static/media/dashboard-empty-state.svg": "/carbon-components-builder/static/media/dashboard-empty-state.5e050054.svg",
     "static/media/grid.svg": "/carbon-components-builder/static/media/grid.d052e9f8.svg",
+    "static/media/number-input.svg": "/carbon-components-builder/static/media/number-input.7c0b9515.svg",
     "static/media/search.svg": "/carbon-components-builder/static/media/search.d4e4d083.svg",
     "static/media/text-area.svg": "/carbon-components-builder/static/media/text-area.947a0503.svg",
     "static/media/text-input.svg": "/carbon-components-builder/static/media/text-input.e389934c.svg",
@@ -24,8 +25,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.14a4950b.js",
-    "static/js/2.f22c9dcd.chunk.js",
+    "static/js/2.5e1ea0b3.chunk.js",
     "static/css/main.69d0c9db.chunk.css",
-    "static/js/main.627960bd.chunk.js"
+    "static/js/main.99281647.chunk.js"
   ]
 }
