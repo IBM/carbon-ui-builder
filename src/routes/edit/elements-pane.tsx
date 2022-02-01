@@ -4,18 +4,18 @@ import { Search } from 'carbon-components-react';
 
 import { ElementTile } from '../../components/element-tile';
 
-import { leftPane } from '.';
+import { leftPane, leftPaneHeader } from '.';
 import { allComponents } from '../../fragment-components';
 
 const searchStyle = css`
 	margin-top: 15px;
-	margin-bottom: 30px;
 `;
 
 const elementTileListStyle = css`
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: wrap;
+	margin-top: 100px;
 `;
 
 export const ElementsPane = ({isActive}: any) => {
@@ -32,14 +32,16 @@ export const ElementsPane = ({isActive}: any) => {
 
 	return (
 		<div className={cx(leftPane, isActive ? 'is-active' : '')}>
-			Elements
-			<Search
-				id='elements-search'
-				className={searchStyle}
-				light
-				labelText='Filter elements'
-				placeholder='Filter elements'
-				onChange={(event: any) => setFilterString(event.target.value)} />
+			<div className={leftPaneHeader}>
+				Elements
+				<Search
+					id='elements-search'
+					className={searchStyle}
+					light
+					labelText='Filter elements'
+					placeholder='Filter elements'
+					onChange={(event: any) => setFilterString(event.target.value)} />
+			</div>
 			<div className={elementTileListStyle}>
 				{
 					Object.values(allComponents)
