@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "70cac5a10986377b676aaca5f7e31613",
+    "revision": "90581f3df32f053ae8dfd31914e1d142",
     "url": "/carbon-components-builder/index.html"
   },
   {
