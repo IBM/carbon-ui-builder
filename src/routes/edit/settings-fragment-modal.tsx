@@ -11,7 +11,7 @@ import './fragment-modal.scss';
 
 export const SettingsFragmentModal = ({ fragment }: any) => {
 	const [modalState, dispatchModal] = useContext(ModalContext);
-	const { updateOne } = useContext(FragmentsContext);
+	const { updateFragment } = useContext(FragmentsContext);
 
 	const props = {
 		size: 'sm',
@@ -36,7 +36,7 @@ export const SettingsFragmentModal = ({ fragment }: any) => {
 			labels = labels.filter((label: string) => label !== 'template');
 		}
 
-		updateOne({
+		updateFragment({
 			...fragment,
 			title,
 			labels

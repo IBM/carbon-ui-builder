@@ -133,11 +133,11 @@ enum SelectedLeftPane {
 };
 
 export const Edit = ({ match }: any) => {
-	const { fragments, updateOne } = useContext(FragmentsContext);
+	const { fragments, updateFragment } = useContext(FragmentsContext);
 
 	const fragment = fragments.find((fragment: any) => fragment.id === match.params.id);
 	const setFragment = (fragment: any) => {
-		updateOne(fragment);
+		updateFragment(fragment);
 	};
 
 	const [selectedLeftPane, setSelectedLeftPane] = useState(SelectedLeftPane.NONE);

@@ -49,7 +49,7 @@ const uid = (prefix = 'id') => {
 
 export const ImportJsonModal = (props: ImportJsonModalProps) => {
 	const [, updateLocalFragments] = useContext(LocalFragmentsContext);
-	const { addOne } = useContext(FragmentsContext);
+	const { addFragment } = useContext(FragmentsContext);
 	const [files, setFiles] = useState([] as any[]);
 	const [jsonString, _setJsonString] = useState('');
 	const [fragmentJson, setFragmentJson] = useState('');
@@ -194,7 +194,7 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 	const generateFragment = () => {
 		const generatedFragment = generateNewFragment(fragmentJson);
 
-		addOne(generateFragment);
+		addFragment(generateFragment);
 		updateLocalFragments({
 			type: LocalFragmentActionType.ADD,
 			data: { id: generatedFragment.id }

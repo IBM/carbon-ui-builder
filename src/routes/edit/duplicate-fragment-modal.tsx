@@ -49,7 +49,7 @@ export const DuplicateFragmentModal = ({ id }: any) => {
 	const [modalState, dispatchModal] = useContext(ModalContext);
 	const [, dispatchNotification] = useContext(NotificationContext);
 	const [, updateLocalFragments] = useContext(LocalFragmentsContext);
-	const { fragments, addOne } = useContext(FragmentsContext);
+	const { fragments, addFragment } = useContext(FragmentsContext);
 
 	const history = useHistory();
 	const location = useLocation();
@@ -62,7 +62,7 @@ export const DuplicateFragmentModal = ({ id }: any) => {
 		fragmentCopy.title = getUniqueName(fragments, fragmentCopy.title);
 		fragmentCopy.id = `${Math.random().toString().slice(2)}${Math.random().toString().slice(2)}`;
 
-		addOne(fragmentCopy);
+		addFragment(fragmentCopy);
 		updateLocalFragments({
 			type: LocalFragmentActionType.ADD,
 			data: { id: fragmentCopy.id }

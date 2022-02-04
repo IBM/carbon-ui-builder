@@ -40,7 +40,7 @@ export interface ChooseFragmentModalProps {
 
 export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 	const [, updateLocalFragments] = useContext(LocalFragmentsContext);
-	const { addOne } = useContext(FragmentsContext);
+	const { addFragment } = useContext(FragmentsContext);
 
 	const history = useHistory();
 
@@ -49,7 +49,7 @@ export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 			props.uploadedData.data
 		);
 
-		addOne(generatedFragment);
+		addFragment(generatedFragment);
 		updateLocalFragments({
 			type: LocalFragmentActionType.ADD,
 			data: { id: generatedFragment.id }

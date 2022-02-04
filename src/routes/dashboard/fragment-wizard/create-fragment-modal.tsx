@@ -45,7 +45,7 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 	const [selectedCreateOption, setSelectedCreateOption] = useState<CreateOptions | null>(null);
 
 	const [, updateLocalFragments] = useContext(LocalFragmentsContext);
-	const { addOne } = useContext(FragmentsContext);
+	const { addFragment } = useContext(FragmentsContext);
 
 	const history = useHistory();
 
@@ -54,7 +54,7 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 			{ items: [], id: 1 }
 		);
 
-		addOne(generatedFragment);
+		addFragment(generatedFragment);
 		updateLocalFragments({
 			type: LocalFragmentActionType.ADD,
 			data: { id: generatedFragment.id }

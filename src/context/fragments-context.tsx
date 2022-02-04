@@ -22,7 +22,7 @@ export const useFragment = (id?: string) => {
 		return [{}, (_: any) => {}];
 	}
 
-	const { fragments, updateOne } = context;
+	const { fragments, updateFragment } = context;
 
 	if (!id) {
 		const location = history.location.pathname;
@@ -32,7 +32,7 @@ export const useFragment = (id?: string) => {
 
 	const fragment = fragments.find((fragment: any) => fragment.id === id);
 	const setFragment = (fragment: any) => {
-		updateOne(fragment);
+		updateFragment(fragment);
 	};
 	return [fragment, setFragment];
 };
@@ -55,7 +55,7 @@ const FragmentsContextProvider = ({ children }: any) => {
 		localStorage.setItem('localFragments', JSON.stringify(frags));
 	}
 
-	const updateAll = (frags: any[]) => {
+	const updateFragments = (frags: any[]) => {
 		if (!fragments || !fragments.length) {
 			setFragments(frags);
 			return;
@@ -105,7 +105,7 @@ const FragmentsContextProvider = ({ children }: any) => {
 		setFragments(remainingFragments);
 	}
 
-	const updateOne = (fragment: any) => {
+	const updateFragment = (fragment: any) => {
 		if (!fragments.length) {
 			setFragments([fragment]);
 			return;
@@ -122,7 +122,7 @@ const FragmentsContextProvider = ({ children }: any) => {
 		setFragments(updatedFragments);
 	};
 
-	const addOne = (fragment: any) => {
+	const addFragment = (fragment: any) => {
 		const duplicate = assign({}, fragment);
 		const expandedFragments = fragments.concat(duplicate);
 		setFragments(expandedFragments);
@@ -132,7 +132,7 @@ const FragmentsContextProvider = ({ children }: any) => {
 		const localFragments = JSON.parse(localStorage.getItem('localFragments') as string || '[]');
 		// clean up the hidden fragments (those marked for deletion but failed to be deleted)
 		const filteredFragments = localFragments.filter((fragment: any) => !fragment.hidden);
-		updateAll(filteredFragments);
+		updateFragments(filteredFragments);
 		localStorage.setItem('localFragments', JSON.stringify(filteredFragments));
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -141,12 +141,12 @@ const FragmentsContextProvider = ({ children }: any) => {
 		<FragmentsContext.Provider value={{
 			fragments,
 			setFragments,
-			addOne,
-			updateAll,
+			addFragment,
+			updateFragments,
 			toggleVisibility,
 			removeFragment,
 			removeFragments,
-			updateOne
+			updateFragment
 		}}>
 			{children}
 		</FragmentsContext.Provider>
