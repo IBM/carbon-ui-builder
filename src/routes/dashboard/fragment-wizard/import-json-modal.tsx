@@ -11,9 +11,8 @@ import {
 import { FragmentWizardModals } from './fragment-wizard';
 import { generateNewFragment } from './generate-new-fragment';
 
-import { FragmentsContext } from '../../../context';
+import { GlobalStateContext } from '../../../context';
 import { useHistory } from 'react-router-dom';
-import { LocalFragmentsContext, LocalFragmentActionType } from '../../../context/local-fragments-context';
 
 const fragmentOptions = css`
 	margin-left: 30px;
@@ -48,8 +47,7 @@ const uid = (prefix = 'id') => {
 }
 
 export const ImportJsonModal = (props: ImportJsonModalProps) => {
-	const [, updateLocalFragments] = useContext(LocalFragmentsContext);
-	const { addFragment } = useContext(FragmentsContext);
+	const { addFragment } = useContext(GlobalStateContext);
 	const [files, setFiles] = useState([] as any[]);
 	const [jsonString, _setJsonString] = useState('');
 	const [fragmentJson, setFragmentJson] = useState('');
@@ -195,10 +193,6 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 		const generatedFragment = generateNewFragment(fragmentJson);
 
 		addFragment(generateFragment);
-		updateLocalFragments({
-			type: LocalFragmentActionType.ADD,
-			data: { id: generatedFragment.id }
-		});
 		history.push(`/edit/${generatedFragment.id}`);
 	};
 

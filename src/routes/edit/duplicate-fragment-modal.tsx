@@ -2,9 +2,8 @@ import React, { useContext } from 'react';
 import { NotificationActionType, NotificationContext } from '../../context/notification-context';
 import { Modal } from 'carbon-components-react';
 import { ModalActionType, ModalContext } from '../../context/modal-context';
-import { FragmentsContext } from '../../context/fragments-context';
+import { GlobalStateContext } from '../../context/global-state-context';
 import { useHistory, useLocation } from 'react-router-dom';
-import { LocalFragmentsContext, LocalFragmentActionType } from '../../context/local-fragments-context';
 
 const getUniqueName = (fragments: Array<any>, name: string) => {
 	const nameRegEx = new RegExp(String.raw`(.*)\s+(copy)*(\s+(\d+))?$`);
@@ -48,8 +47,7 @@ const getUniqueName = (fragments: Array<any>, name: string) => {
 export const DuplicateFragmentModal = ({ id }: any) => {
 	const [modalState, dispatchModal] = useContext(ModalContext);
 	const [, dispatchNotification] = useContext(NotificationContext);
-	const [, updateLocalFragments] = useContext(LocalFragmentsContext);
-	const { fragments, addFragment } = useContext(FragmentsContext);
+	const { fragments, addFragment } = useContext(GlobalStateContext);
 
 	const history = useHistory();
 	const location = useLocation();
@@ -63,10 +61,6 @@ export const DuplicateFragmentModal = ({ id }: any) => {
 		fragmentCopy.id = `${Math.random().toString().slice(2)}${Math.random().toString().slice(2)}`;
 
 		addFragment(fragmentCopy);
-		updateLocalFragments({
-			type: LocalFragmentActionType.ADD,
-			data: { id: fragmentCopy.id }
-		});
 		if (location.pathname !== '/') {
 			history.push(`/edit/${fragmentCopy.id}`);
 		}

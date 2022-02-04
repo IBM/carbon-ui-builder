@@ -6,7 +6,7 @@ import React, {
 import { css, cx } from 'emotion';
 import { Fragment } from '../../components';
 import { EditHeader } from './edit-header';
-import { FragmentsContext } from '../../context/fragments-context';
+import { GlobalStateContext } from '../../context/global-state-context';
 import {
 	Button,
 	SideNav,
@@ -32,7 +32,6 @@ import { ExportPane } from './export-pane';
 
 import { StyleContextPane } from './style-context-pane';
 import { CodeContextPane } from './code-context-pane';
-import { ActionHistory, ActionHistoryProvider } from '../../context/action-history-context';
 
 const leftPaneWidth = '300px';
 const rightPaneWidth = '302px';
@@ -133,23 +132,14 @@ enum SelectedLeftPane {
 };
 
 export const Edit = ({ match }: any) => {
-	const { fragments, updateFragment } = useContext(FragmentsContext);
-	const {actionHistory, setActionHistory} = useContext(ActionHistory);
+	const { fragments, updateFragment } = useContext(GlobalStateContext);
 
 	const fragment = fragments.find((fragment: any) => fragment.id === match.params.id);
 	const setFragment = (fragment: any) => {
 		updateFragment(fragment);
-		setActionHistory([...actionHistory, {
-			fragment: JSON.parse(JSON.stringify(fragment)) // deep clone
-		}]);
 	};
 
 	const [selectedLeftPane, setSelectedLeftPane] = useState(SelectedLeftPane.NONE);
-
-	useEffect(() => {
-		setActionHistory([]); // restart history on page (re)load
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
 
 	useEffect(() => {
 		if (fragment && fragment.title) {
@@ -171,87 +161,84 @@ export const Edit = ({ match }: any) => {
 		<div
 			id='edit-wrapper'
 			className={editPageContent}>
-			<ActionHistoryProvider>
-
-				{ fragment && <EditHeader fragment={fragment}/> }
-				<ElementsPane isActive={selectedLeftPane === SelectedLeftPane.ELEMENTS} />
-				<StylePane isActive={selectedLeftPane === SelectedLeftPane.STYLE} />
-				<CodePane isActive={selectedLeftPane === SelectedLeftPane.CODE} />
-				<ExportPane isActive={selectedLeftPane === SelectedLeftPane.EXPORT} />
-				<SideNav
-				aria-label='Side navigation'
-				className={cx(sideRail, selectedLeftPane !== SelectedLeftPane.NONE ? 'is-active' : '')}
-				isRail>
-					<SideNavItems>
-						<SideNavLink
-						renderIcon={Development16}
-						onClick={() => onRailClick(SelectedLeftPane.ELEMENTS)}
-						isActive={selectedLeftPane === SelectedLeftPane.ELEMENTS}>
-							Elements
-						</SideNavLink>
-						<SideNavLink
-						renderIcon={ColorPalette16}
-						onClick={() => onRailClick(SelectedLeftPane.STYLE)}
-						isActive={selectedLeftPane === SelectedLeftPane.STYLE}>
-							Style
-						</SideNavLink>
-						<SideNavLink
-						renderIcon={Code16}
-						onClick={() => onRailClick(SelectedLeftPane.CODE)}
-						isActive={selectedLeftPane === SelectedLeftPane.CODE}>
-							Code
-						</SideNavLink>
-						<SideNavLink
-						renderIcon={Export16}
-						onClick={() => onRailClick(SelectedLeftPane.EXPORT)}
-						isActive={selectedLeftPane === SelectedLeftPane.EXPORT}>
-							Export
-						</SideNavLink>
-					</SideNavItems>
-				</SideNav>
-				<div className='edit-content'>
-					{
-						fragment
-						&& <>
-							<Fragment fragment={fragment} setFragment={setFragment} />
-						</>
-					}
+			{ fragment && <EditHeader fragment={fragment}/> }
+			<ElementsPane isActive={selectedLeftPane === SelectedLeftPane.ELEMENTS} />
+			<StylePane isActive={selectedLeftPane === SelectedLeftPane.STYLE} />
+			<CodePane isActive={selectedLeftPane === SelectedLeftPane.CODE} />
+			<ExportPane isActive={selectedLeftPane === SelectedLeftPane.EXPORT} />
+			<SideNav
+			aria-label='Side navigation'
+			className={cx(sideRail, selectedLeftPane !== SelectedLeftPane.NONE ? 'is-active' : '')}
+			isRail>
+				<SideNavItems>
+					<SideNavLink
+					renderIcon={Development16}
+					onClick={() => onRailClick(SelectedLeftPane.ELEMENTS)}
+					isActive={selectedLeftPane === SelectedLeftPane.ELEMENTS}>
+						Elements
+					</SideNavLink>
+					<SideNavLink
+					renderIcon={ColorPalette16}
+					onClick={() => onRailClick(SelectedLeftPane.STYLE)}
+					isActive={selectedLeftPane === SelectedLeftPane.STYLE}>
+						Style
+					</SideNavLink>
+					<SideNavLink
+					renderIcon={Code16}
+					onClick={() => onRailClick(SelectedLeftPane.CODE)}
+					isActive={selectedLeftPane === SelectedLeftPane.CODE}>
+						Code
+					</SideNavLink>
+					<SideNavLink
+					renderIcon={Export16}
+					onClick={() => onRailClick(SelectedLeftPane.EXPORT)}
+					isActive={selectedLeftPane === SelectedLeftPane.EXPORT}>
+						Export
+					</SideNavLink>
+				</SideNavItems>
+			</SideNav>
+			<div className='edit-content'>
+				{
+					fragment
+					&& <>
+						<Fragment fragment={fragment} setFragment={setFragment} />
+					</>
+				}
+			</div>
+			<div className={rightPanel}>
+				<Tabs>
+					<Tab
+					id='properties-style'
+					label={<ColorPalette16 />}>
+						<StyleContextPane fragment={fragment} setFragment={setFragment} />
+					</Tab>
+					<Tab
+					id='properties-code'
+					label={<Code16 />}>
+						<CodeContextPane fragment={fragment} setFragment={setFragment} />
+					</Tab>
+					<Tab
+					id='properties-info'
+					label={<Information16 />}>
+						info
+					</Tab>
+				</Tabs>
+				<div className={actionsStyle}>
+					<Button
+					disabled
+					kind='secondary'
+					renderIcon={Copy32}
+					className={css`margin-right: 8px`}>
+						Duplicate
+					</Button>
+					<Button
+					disabled
+					kind='danger'
+					renderIcon={TrashCan32}>
+						Delete
+					</Button>
 				</div>
-				<div className={rightPanel}>
-					<Tabs>
-						<Tab
-						id='properties-style'
-						label={<ColorPalette16 />}>
-							<StyleContextPane fragment={fragment} setFragment={setFragment} />
-						</Tab>
-						<Tab
-						id='properties-code'
-						label={<Code16 />}>
-							<CodeContextPane fragment={fragment} setFragment={setFragment} />
-						</Tab>
-						<Tab
-						id='properties-info'
-						label={<Information16 />}>
-							info
-						</Tab>
-					</Tabs>
-					<div className={actionsStyle}>
-						<Button
-						disabled
-						kind='secondary'
-						renderIcon={Copy32}
-						className={css`margin-right: 8px`}>
-							Duplicate
-						</Button>
-						<Button
-						disabled
-						kind='danger'
-						renderIcon={TrashCan32}>
-							Delete
-						</Button>
-					</div>
-				</div>
-			</ActionHistoryProvider>
+			</div>
 		</div>
 	);
 };

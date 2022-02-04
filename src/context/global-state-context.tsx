@@ -7,11 +7,11 @@ import React, {
 import { useHistory } from 'react-router';
 import assign from 'lodash/assign';
 
-const FragmentsContext: React.Context<any> = createContext(null);
-FragmentsContext.displayName = 'FragmentsContext';
+const GlobalStateContext: React.Context<any> = createContext(null);
+GlobalStateContext.displayName = 'GlobalStateContext';
 
 export const useFragment = (id?: string) => {
-	const context = useContext(FragmentsContext);
+	const context = useContext(GlobalStateContext);
 	const history = useHistory();
 
 	if (!context) {
@@ -45,7 +45,7 @@ const validInitialFragments = (localFragments: any[] | undefined) => {
 	return localFragments.filter((fragment: any) => !!fragment.id && typeof fragment.id === 'string');
 };
 
-const FragmentsContextProvider = ({ children }: any) => {
+const GlobalStateContextProvider = ({ children }: any) => {
 	const [fragments, _setFragments] = useState<any[]>(
 		validInitialFragments(JSON.parse(localStorage.getItem('localFragments') as string)) || []
 	);
@@ -83,14 +83,14 @@ const FragmentsContextProvider = ({ children }: any) => {
 		setFragments(updatedFragments);
 	}
 
-	const toggleVisibility = (id: string, hidden = false) => {
+	const toggleFragmentVisibility = (id: string, hidden = false) => {
 		const updatedFragments = fragments.map((f: any) => {
 			if (f.id === id) {
 				return {...f, hidden}
 			}
 			return f;
 		})
-		
+
 		setFragments(updatedFragments);
 	}
 
@@ -118,7 +118,7 @@ const FragmentsContextProvider = ({ children }: any) => {
 			}
 			return f;
 		});
-	
+
 		setFragments(updatedFragments);
 	};
 
@@ -138,22 +138,22 @@ const FragmentsContextProvider = ({ children }: any) => {
 	}, []);
 
 	return (
-		<FragmentsContext.Provider value={{
+		<GlobalStateContext.Provider value={{
 			fragments,
 			setFragments,
 			addFragment,
 			updateFragments,
-			toggleVisibility,
+			toggleFragmentVisibility,
 			removeFragment,
 			removeFragments,
 			updateFragment
 		}}>
 			{children}
-		</FragmentsContext.Provider>
+		</GlobalStateContext.Provider>
 	);
 };
 
 export {
-	FragmentsContext,
-	FragmentsContextProvider
+	GlobalStateContext,
+	GlobalStateContextProvider
 };

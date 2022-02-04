@@ -1,2 +1,2 @@
-export * from './fragments-context';
+export * from './global-state-context';
 export * from './notification-context';

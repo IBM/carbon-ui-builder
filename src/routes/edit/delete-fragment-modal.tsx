@@ -2,19 +2,19 @@ import React, { useContext } from 'react';
 
 import { Modal } from 'carbon-components-react';
 import { ModalActionType, ModalContext } from '../../context/modal-context';
-import { FragmentsContext } from '../../context/fragments-context';
+import { GlobalStateContext } from '../../context/global-state-context';
 import { useHistory } from 'react-router-dom';
 import { NotificationActionType, NotificationContext } from '../../context/notification-context';
 
 export const DeleteFragmentModal = ({ id }: any) => {
-	const { fragments, toggleVisibility, removeFragment } = useContext(FragmentsContext);
+	const { fragments, toggleFragmentVisibility, removeFragment } = useContext(GlobalStateContext);
 	const [modalState, dispatchModal] = useContext(ModalContext);
 	const history = useHistory();
 	const [, dispatchNotification] = useContext(NotificationContext);
 	const fragment = fragments.find((fragment: any) => fragment.id === id);
 
 	const deleteFragment = () => {
-		toggleVisibility(id, true);
+		toggleFragmentVisibility(id, true);
 		history.push('/');
 		dispatchNotification({
 			type: NotificationActionType.ADD_NOTIFICATION,
@@ -33,7 +33,7 @@ export const DeleteFragmentModal = ({ id }: any) => {
 	};
 
 	const undoHideFragment = () => {
-		toggleVisibility(id, false);
+		toggleFragmentVisibility(id, false);
 	};
 
 	return (

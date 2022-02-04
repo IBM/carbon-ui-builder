@@ -9,9 +9,8 @@ import {
 import { FragmentWizardModals } from './fragment-wizard';
 import { generateNewFragment } from './generate-new-fragment';
 
-import { FragmentsContext } from '../../../context';
+import { GlobalStateContext } from '../../../context';
 import { useHistory } from 'react-router-dom';
-import { LocalFragmentsContext, LocalFragmentActionType } from '../../../context/local-fragments-context';
 import { warningNotificationProps } from '../../../utils/file-tools';
 
 const fragmentOptions = css`
@@ -39,8 +38,7 @@ export interface ChooseFragmentModalProps {
 }
 
 export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
-	const [, updateLocalFragments] = useContext(LocalFragmentsContext);
-	const { addFragment } = useContext(FragmentsContext);
+	const { addFragment } = useContext(GlobalStateContext);
 
 	const history = useHistory();
 
@@ -50,10 +48,6 @@ export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 		);
 
 		addFragment(generatedFragment);
-		updateLocalFragments({
-			type: LocalFragmentActionType.ADD,
-			data: { id: generatedFragment.id }
-		});
 		history.push(`/edit/${generatedFragment.id}`);
 	};
 

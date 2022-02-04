@@ -6,8 +6,7 @@ import { Modal } from 'carbon-components-react';
 import { css } from 'emotion';
 import { SelectionTile } from '../../../components/selection-tile';
 import { generateNewFragment } from './generate-new-fragment';
-import { FragmentsContext } from '../../../context';
-import { LocalFragmentActionType, LocalFragmentsContext } from '../../../context/local-fragments-context';
+import { GlobalStateContext } from '../../../context';
 import { useHistory } from 'react-router-dom';
 
 const createFragmentTiles = css`
@@ -44,8 +43,7 @@ export interface CreateFragmentModalProps {
 export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 	const [selectedCreateOption, setSelectedCreateOption] = useState<CreateOptions | null>(null);
 
-	const [, updateLocalFragments] = useContext(LocalFragmentsContext);
-	const { addFragment } = useContext(FragmentsContext);
+	const { addFragment } = useContext(GlobalStateContext);
 
 	const history = useHistory();
 
@@ -55,10 +53,6 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 		);
 
 		addFragment(generatedFragment);
-		updateLocalFragments({
-			type: LocalFragmentActionType.ADD,
-			data: { id: generatedFragment.id }
-		});
 		history.push(`/edit/${generatedFragment.id}`);
 	};
 

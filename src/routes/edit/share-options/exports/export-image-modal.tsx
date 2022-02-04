@@ -20,7 +20,7 @@ import { saveBlob, getFullFileName } from '../../../../utils/file-tools';
 import { ShareOptionsModals } from '../share-options-modal';
 import { ModalContext, ModalActionType } from '../../../../context/modal-context';
 import { getFragmentPreview, RenderProps } from '../../../../utils/fragment-tools';
-import { FragmentsContext } from '../../../../context';
+import { GlobalStateContext } from '../../../../context';
 import { useHistory } from 'react-router';
 
 const exportSettingForm = css`
@@ -70,7 +70,7 @@ const doUpdatePreviewSize = debounce(() => handleResize(), 200);
 
 export const ExportImageModal = (props: ExportImageProps) => {
 	const [modalState, dispatchModal] = useContext(ModalContext);
-	const { fragments } = useContext(FragmentsContext);
+	const { fragments } = useContext(GlobalStateContext);
 	const history = useHistory();
 	const location = history.location.pathname;
 	const pathSegments = location.split('/');

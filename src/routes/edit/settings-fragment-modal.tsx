@@ -6,12 +6,12 @@ import {
 	TooltipDefinition
 } from 'carbon-components-react';
 import { ModalActionType, ModalContext } from '../../context/modal-context';
-import { FragmentsContext } from '../../context/fragments-context';
+import { GlobalStateContext } from '../../context/global-state-context';
 import './fragment-modal.scss';
 
 export const SettingsFragmentModal = ({ fragment }: any) => {
 	const [modalState, dispatchModal] = useContext(ModalContext);
-	const { updateFragment } = useContext(FragmentsContext);
+	const { updateFragment } = useContext(GlobalStateContext);
 
 	const props = {
 		size: 'sm',
