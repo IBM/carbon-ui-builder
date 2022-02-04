@@ -4,13 +4,9 @@ import { DuplicateFragmentModal } from './duplicate-fragment-modal';
 import { DeleteFragmentModal } from './delete-fragment-modal';
 import { SettingsFragmentModal } from './settings-fragment-modal';
 import React, { useContext } from 'react';
-import { FragmentsContext, useFetchOne } from '../../context/fragments-context';
 
 // eslint-disable-next-line react/prop-types
 export const FragmentModal = ({ fragment }: any) => {
-	const [, dispatch] = useContext(FragmentsContext);
-	// eslint-disable-next-line react/prop-types
-	useFetchOne(fragment.id, dispatch);
 	const [modalState] = useContext(ModalContext);
 
 	switch (modalState.ModalType) {

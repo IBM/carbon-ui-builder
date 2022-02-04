@@ -16,7 +16,7 @@ import { FragmentTileList } from './fragment-tile-list';
 import { FragmentWizard } from './fragment-wizard/fragment-wizard';
 import { LocalFragmentsContext } from '../../context/local-fragments-context';
 import { FragmentModal } from '../edit/fragment-modal';
-import { FragmentsContext, FragmentActionType } from '../../context';
+import { FragmentsContext } from '../../context';
 
 const fragmentSort = (sortDirection: SortDirection) => function(a: any, b: any) {
 	if (sortDirection === SortDirection.Descending) {
@@ -50,7 +50,7 @@ const searchRowStyles = css`
 `;
 
 export const Dashboard = () => {
-	const [{ fragments }, dispatch] = useContext(FragmentsContext);
+	const { fragments, updateFragments } = useContext(FragmentsContext);
 	const [fragmentGroupDisplayed, setFragmentGroupDisplayed] = useState(FragmentGroupDisplayed.LocalOnly);
 	const [fragmentTitleFilter, setFragmentTitleFilter] = useState('');
 	const [sortDirection, setSortDirection] = useState(SortDirection.Ascending);
@@ -58,14 +58,10 @@ export const Dashboard = () => {
 	const [localFragments] = useContext(LocalFragmentsContext);
 
 	useEffect(() => {
-		dispatch({
-			type: FragmentActionType.UPDATE_ALL,
-			data: fragments,
-			loaded: true
-		});
+		updateFragments(fragments);
 	// we don't want to run this effect when fragments change because it creates a loop
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dispatch]);
+	}, []);
 
 	useEffect(() => {
 		document.title = 'Carbon Components Builder • UI Fragments Composer';
@@ -79,7 +75,7 @@ export const Dashboard = () => {
 		return fragments.filter((fragment: any) => localFragments.find((lc: any) => lc.id === fragment.id));
 	};
 
-	const filterFragments = (fragments: any) => fragments.filter((fragment: any) => fragment?.title.toLowerCase()
+	const filterFragments = (fragments: any) => fragments.filter((fragment: any) => fragment?.title?.toLowerCase()
 		.includes(fragmentTitleFilter.toLowerCase()) && !fragment.hidden)
 		.sort(fragmentSort(sortDirection));
 

@@ -6,11 +6,7 @@ import React, {
 import { css, cx } from 'emotion';
 import { Fragment } from '../../components';
 import { EditHeader } from './edit-header';
-import {
-	FragmentsContext,
-	useFetchOne,
-	FragmentActionType
-} from '../../context/fragments-context';
+import { FragmentsContext } from '../../context/fragments-context';
 import {
 	Button,
 	SideNav,
@@ -137,16 +133,11 @@ enum SelectedLeftPane {
 };
 
 export const Edit = ({ match }: any) => {
-	const [state, dispatch] = useContext(FragmentsContext);
+	const { fragments, updateFragment } = useContext(FragmentsContext);
 
-	useFetchOne(match.params.id, dispatch);
-	const fragment = state.fragments.find((fragment: any) => fragment.id === match.params.id);
+	const fragment = fragments.find((fragment: any) => fragment.id === match.params.id);
 	const setFragment = (fragment: any) => {
-		dispatch({
-			type: FragmentActionType.UPDATE_ONE,
-			data: fragment,
-			loaded: true
-		});
+		updateFragment(fragment);
 	};
 
 	const [selectedLeftPane, setSelectedLeftPane] = useState(SelectedLeftPane.NONE);
