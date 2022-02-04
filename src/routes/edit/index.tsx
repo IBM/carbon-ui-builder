@@ -133,14 +133,9 @@ enum SelectedLeftPane {
 };
 
 export const Edit = ({ match }: any) => {
-	const { fragmentsState, fetchOne, updateOne } = useContext(FragmentsContext);
+	const { fragments, updateOne } = useContext(FragmentsContext);
 
-	useEffect(() => {
-		fetchOne(match.params.id);
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [match.params.id]);
-
-	const fragment = fragmentsState.fragments.find((fragment: any) => fragment.id === match.params.id);
+	const fragment = fragments.find((fragment: any) => fragment.id === match.params.id);
 	const setFragment = (fragment: any) => {
 		updateOne(fragment);
 	};

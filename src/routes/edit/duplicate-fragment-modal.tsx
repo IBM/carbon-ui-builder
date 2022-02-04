@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { NotificationActionType, NotificationContext } from '../../context/notification-context';
 import { Modal } from 'carbon-components-react';
 import { ModalActionType, ModalContext } from '../../context/modal-context';
@@ -49,25 +49,17 @@ export const DuplicateFragmentModal = ({ id }: any) => {
 	const [modalState, dispatchModal] = useContext(ModalContext);
 	const [, dispatchNotification] = useContext(NotificationContext);
 	const [, updateLocalFragments] = useContext(LocalFragmentsContext);
-	const { fragmentsState, fetchOne, addOne } = useContext(FragmentsContext);
-
-	useEffect(() => {
-		fetchOne(id);
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [id]);
+	const { fragments, addOne } = useContext(FragmentsContext);
 
 	const history = useHistory();
 	const location = useLocation();
 
-	const fragment = fragmentsState.fragments.find((fragment: any) => fragment.id === id);
+	const fragment = fragments.find((fragment: any) => fragment.id === id);
 
 	const duplicateFragment = () => {
-		if (fragmentsState.currentlyProcessing) {
-			return;
-		}
 		// copy current fragment and change fragment title
 		const fragmentCopy = JSON.parse(JSON.stringify(fragment));
-		fragmentCopy.title = getUniqueName(fragmentsState.fragments, fragmentCopy.title);
+		fragmentCopy.title = getUniqueName(fragments, fragmentCopy.title);
 		fragmentCopy.id = `${Math.random().toString().slice(2)}${Math.random().toString().slice(2)}`;
 
 		addOne(fragmentCopy);
@@ -97,7 +89,6 @@ export const DuplicateFragmentModal = ({ id }: any) => {
 			secondaryButtonText='Cancel'
 			modalHeading='Duplicate fragment?'
 			primaryButtonText='Duplicate'
-			primaryButtonDisabled={!!fragmentsState.currentlyProcessing}
 			onRequestSubmit={() => duplicateFragment()}>
 			<p>
 				Click <strong>Duplicate</strong> to begin to edit a copy of the current fragment

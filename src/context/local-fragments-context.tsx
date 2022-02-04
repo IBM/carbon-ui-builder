@@ -43,13 +43,6 @@ const validInitialState = (localFragments: any[] | undefined) => {
 const LocalFragmentsContextProvider = ({ children }: any) => {
 	const initialState: any[] = validInitialState(JSON.parse(localStorage.getItem('localFragments') as string));
 	const store = useReducer(fragmentsReducer, initialState);
-	const [fragments] = store;
-
-	React.useEffect(() => {
-		// store only ids to local storage so we don't get into temptation of using other
-		// props that should really be coming from db
-		localStorage.setItem('localFragments', JSON.stringify(fragments.map((lc: any) => ({ id: lc.id }))));
-	}, [fragments]);
 
 	return (
 		<LocalFragmentsContext.Provider value={store}>

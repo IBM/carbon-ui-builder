@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 
 import { Modal } from 'carbon-components-react';
 import { ModalActionType, ModalContext } from '../../context/modal-context';
@@ -7,16 +7,11 @@ import { useHistory } from 'react-router-dom';
 import { NotificationActionType, NotificationContext } from '../../context/notification-context';
 
 export const DeleteFragmentModal = ({ id }: any) => {
-	const { fragmentsState, toggleVisibility, fetchOne, removeFragment } = useContext(FragmentsContext);
+	const { fragments, toggleVisibility, removeFragment } = useContext(FragmentsContext);
 	const [modalState, dispatchModal] = useContext(ModalContext);
 	const history = useHistory();
 	const [, dispatchNotification] = useContext(NotificationContext);
-	const fragment = fragmentsState.fragments.find((fragment: any) => fragment.id === id);
-
-	useEffect(() => {
-		fetchOne(id);
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [id]);
+	const fragment = fragments.find((fragment: any) => fragment.id === id);
 
 	const deleteFragment = () => {
 		toggleVisibility(id, true);

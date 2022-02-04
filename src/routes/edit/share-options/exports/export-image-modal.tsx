@@ -70,13 +70,13 @@ const doUpdatePreviewSize = debounce(() => handleResize(), 200);
 
 export const ExportImageModal = (props: ExportImageProps) => {
 	const [modalState, dispatchModal] = useContext(ModalContext);
-	const { fragmentsState } = useContext(FragmentsContext);
+	const { fragments } = useContext(FragmentsContext);
 	const history = useHistory();
 	const location = history.location.pathname;
 	const pathSegments = location.split('/');
 
-	const id = `${fragmentsState.currentId || pathSegments[pathSegments.length - 1]}`;
-	const fragment = fragmentsState.fragments.find((fragment: any) => fragment.id === id);
+	const id = pathSegments[pathSegments.length - 1];
+	const fragment = fragments.find((fragment: any) => fragment.id === id);
 
 	const exportSettings = {
 		width: 800,

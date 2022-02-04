@@ -50,7 +50,7 @@ const searchRowStyles = css`
 `;
 
 export const Dashboard = () => {
-	const { fragmentsState: { fragments }, updateAll } = useContext(FragmentsContext);
+	const { fragments, updateAll } = useContext(FragmentsContext);
 	const [fragmentGroupDisplayed, setFragmentGroupDisplayed] = useState(FragmentGroupDisplayed.LocalOnly);
 	const [fragmentTitleFilter, setFragmentTitleFilter] = useState('');
 	const [sortDirection, setSortDirection] = useState(SortDirection.Ascending);
@@ -58,7 +58,7 @@ export const Dashboard = () => {
 	const [localFragments] = useContext(LocalFragmentsContext);
 
 	useEffect(() => {
-		updateAll({ fragments });
+		updateAll(fragments);
 	// we don't want to run this effect when fragments change because it creates a loop
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -75,7 +75,7 @@ export const Dashboard = () => {
 		return fragments.filter((fragment: any) => localFragments.find((lc: any) => lc.id === fragment.id));
 	};
 
-	const filterFragments = (fragments: any) => fragments.filter((fragment: any) => fragment?.title.toLowerCase()
+	const filterFragments = (fragments: any) => fragments.filter((fragment: any) => fragment?.title?.toLowerCase()
 		.includes(fragmentTitleFilter.toLowerCase()) && !fragment.hidden)
 		.sort(fragmentSort(sortDirection));
 
