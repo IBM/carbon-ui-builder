@@ -3,6 +3,10 @@ import { TextInput, Dropdown } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
+import { ComponentInfo } from '.';
+
+import image from './../assets/component-icons/text-input.svg';
+import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const ATextInputStyleUI = ({selectedComponent, setComponent}: any) => {
 	const typeItems = [
@@ -102,4 +106,51 @@ export const ATextInput = ({
 				{...rest} />
 		</AComponent>
 	);
+};
+
+export const componentInfo: ComponentInfo = {
+	component: ATextInput,
+	styleUI: ATextInputStyleUI,
+	codeUI: ATextInputCodeUI,
+	keywords: ['text', 'text', 'input'],
+	name: 'Text input',
+	defaultComponentObj: {
+		type: 'textinput',
+		label: 'Text input label',
+		placeholder: 'Text input placeholder',
+		helperText: 'Helper text',
+		inputType: 'text'
+	},
+	image,
+	codeExport: {
+		angular: {
+			inputs: ({json}) => ``,
+			outputs: ({json}) => ``,
+			imports: ['InputModule'],
+			code: ({json}) => {
+				return `<ibm-label
+					helperText="${json.helperText}">
+						${json.label}
+						<input
+							ibmText
+							${angularClassNamesFromComponentObj(json)}
+							name="${json.codeContext?.name}"
+							placeholder="${json.placeholder}">
+				</ibm-label>`;
+			}
+		},
+		react: {
+			imports: ['TextInput'],
+			code: ({json}) => {
+				return `<TextInput
+					labelText="${json.label}"
+					name="${json.codeContext?.name}"
+					helperText="${json.helperText}"
+					placeholder="${json.placeholder}"
+					value={state["${json.codeContext?.name}"]}
+					${reactClassNamesFromComponentObj(json)}
+					onChange={handleInputChange} />`;
+			}
+		}
+	}
 };

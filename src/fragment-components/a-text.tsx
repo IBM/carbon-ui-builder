@@ -2,6 +2,10 @@ import React from 'react';
 import { TextInput } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
+import { ComponentInfo } from '.';
+
+import image from './../assets/component-icons/text.svg';
+import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const ATextStyleUI = ({selectedComponent, setComponent}: any) => {
 	return <>
@@ -32,4 +36,45 @@ export const AText = ({
 			{children}
 		</AComponent>
 	);
+};
+
+export const componentInfo: ComponentInfo = {
+	component: AText,
+	styleUI: ATextStyleUI,
+	render: ({componentObj, select, remove, selected}) => <AText
+		componentObj={componentObj}
+		select={select}
+		remove={remove}
+		selected={selected}>
+			{componentObj.text}
+	</AText>,
+	keywords: ['text'],
+	name: 'Text',
+	defaultComponentObj: {
+		type: 'text',
+		text: 'Text'
+	},
+	image,
+	codeExport: {
+		angular: {
+			inputs: ({json}) => ``,
+			outputs: ({json}) => ``,
+			imports: [],
+			code: ({json}) => {
+				if (json.cssClasses) {
+					return `<span ${angularClassNamesFromComponentObj(json)}>${json.text}</span>`;
+				}
+				return json.text;
+			}
+		},
+		react: {
+			imports: [],
+			code: ({json}) => {
+				if (json.cssClasses) {
+					return `<span ${reactClassNamesFromComponentObj(json)}>${json.text}</span>`;
+				}
+				return json.text;
+			}
+		}
+	}
 };

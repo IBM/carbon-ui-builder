@@ -3,6 +3,10 @@ import { TextInput, Dropdown, Search } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
+import { ComponentInfo } from '.';
+
+import image from './../assets/component-icons/search.svg';
+import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const ASearchInputStyleUI = ({selectedComponent, setComponent}: any) => {
 	const sizeItems = [
@@ -93,4 +97,45 @@ export const ASearchInput = ({
 				{...rest} />
 		</AComponent>
 	);
+};
+
+export const componentInfo: ComponentInfo = {
+	component: ASearchInput,
+	styleUI: ASearchInputStyleUI,
+	codeUI: ASearchInputCodeUI,
+	keywords: ['search', 'search input'],
+	name: 'Search',
+	defaultComponentObj: {
+		type: 'search',
+		label: 'Search',
+		placeholder: 'Search',
+		inputSize: 'lg'
+	},
+	image,
+	codeExport: {
+		angular: {
+			inputs: ({json}) => ``,
+			outputs: ({json}) => ``,
+			imports: ['SearchModule'],
+			code: ({json}) => {
+				return `<ibm-search
+					${angularClassNamesFromComponentObj(json)}
+					name="${json.codeContext?.name}"
+					placeholder="${json.placeholder}">
+				</ibm-search>`;
+			}
+		},
+		react: {
+			imports: ['Search'],
+			code: ({json}) => {
+				return `<Search
+					labelText="${json.label}"
+					name="${json.codeContext?.name}"
+					placeholder="${json.placeholder}"
+					value={state["${json.codeContext?.name}"]}
+					${reactClassNamesFromComponentObj(json)}
+					onChange={handleInputChange} />`
+			}
+		}
+	}
 };

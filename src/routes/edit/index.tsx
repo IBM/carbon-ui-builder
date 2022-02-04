@@ -84,10 +84,17 @@ export const leftPane = css`
 	padding: 15px;
 	box-shadow: inset -1px 0px #d8d8d8;
 	z-index: 999;
+	overflow-y: auto;
 
 	&.is-active {
 		left: 0;
 	}
+`;
+
+export const leftPaneHeader = css`
+	position: fixed;
+	width: 270px;
+	background: white;
 `;
 
 const rightPanel = css`

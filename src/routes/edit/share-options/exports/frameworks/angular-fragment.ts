@@ -1,8 +1,8 @@
-import { camelCase } from 'lodash';
 import { format as formatPrettier, Options } from 'prettier';
 import parserBabel from 'prettier/parser-babel';
 import parserHtml from 'prettier/parser-html';
 import parserCss from 'prettier/parser-postcss';
+import { allComponents } from '../../../../../fragment-components';
 import { getAllFragmentStyleClasses, hasFragmentStyleClasses } from '../../../../../utils/fragment-tools';
 
 const format = (source: string, options?: Options | undefined) => {
@@ -14,8 +14,8 @@ const format = (source: string, options?: Options | undefined) => {
 	}
 };
 
-const addIfNotExist = (arr: any[], items: any[]) => {
-    items.forEach(item => {
+const addIfNotExist = (arr: any[], items: string[] | undefined) => {
+    items?.forEach(item => {
         if (!arr.includes(item)) {
             arr.push(item);
         }
@@ -26,26 +26,10 @@ const addIfNotExist = (arr: any[], items: any[]) => {
 const jsonToAngularImports = (json: any) => {
     const imports: any[] = [];
 
-    switch (json.type) {
-        case "button":
-            addIfNotExist(imports, ['ButtonModule']);
-            break;
-
-        case "checkbox":
-            addIfNotExist(imports, ['CheckboxModule']);
-            break;
-
-        case "textarea":
-		case "textinput":
-            addIfNotExist(imports, ['InputModule']);
-            break;
-
-		case "search":
-            addIfNotExist(imports, ['SearchModule']);
-            break;
-
-        case "grid":
-            addIfNotExist(imports, ['GridModule']);
+	for (let [key, component] of Object.entries(allComponents)) {
+		if (json.type === key) {
+			addIfNotExist(imports, component.componentInfo.codeExport.angular?.imports);
+		}
 	}
 
 	if (json.items) {
@@ -57,18 +41,14 @@ const jsonToAngularImports = (json: any) => {
     return imports;
 };
 
-export const nameStringToVariableString = (name: string) => camelCase(name);
-
 const getAngularInputsFromJson = (json: any): string => {
 	const getOne = (json: any) => {
-		switch(json.type) {
-			case 'checkbox':
-				return `@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked: boolean;
-				`
-
-			default:
-				return '';
+		for (let [key, component] of Object.entries(allComponents)) {
+			if (json.type === key) {
+				return component.componentInfo.codeExport.angular?.inputs({json}) || '';
+			}
 		}
+		return '';
 	};
 
 	return `${getOne(json)} ${json.items ? json.items.map((item: any) => getAngularInputsFromJson(item)).join('\n') : ''}
@@ -77,14 +57,12 @@ const getAngularInputsFromJson = (json: any): string => {
 
 const getAngularOutputsFromJson = (json: any): string => {
 	const getOne = (json: any) => {
-		switch(json.type) {
-			case 'checkbox':
-				return `@Output() ${nameStringToVariableString(json.codeContext?.name)}CheckedChange = new EventEmitter<boolean>();
-				`
-
-			default:
-				return '';
+		for (let [key, component] of Object.entries(allComponents)) {
+			if (json.type === key) {
+				return component.componentInfo.codeExport.angular?.outputs({json}) || '';
+			}
 		}
+		return '';
 	};
 
 	return `${getOne(json)} ${json.items ? json.items.map((item: any) => getAngularOutputsFromJson(item)).join('\n') : ''}
@@ -96,70 +74,10 @@ export const jsonToTemplate = (json: any) => {
         return json;
     }
 
-	const classNames = (j: any = json) => j.cssClasses && Array.isArray(j.cssClasses) && j.cssClasses.length > 0
-		? `class='${j.cssClasses.map((cc: any) => cc.id).join(' ')}'`
-		: '';
-
-    switch (json.type) {
-        case "text":
-			if (json.cssClasses) {
-				return `<span ${classNames()}>${json.text}</span>`;
-			}
-            return json.text;
-
-        case "button":
-            return `<button ${json.kind ? `ibmButton='${json.kind}'` : 'ibmButton'} ${classNames()}>${json.text}</button>`;
-
-        case "checkbox":
-			return `<ibm-checkbox
-				name="${json.codeContext?.name}"
-				id="${json.codeContext?.name}"
-				[(checked)]="${nameStringToVariableString(json.codeContext?.name)}Checked"
-				(checkedChange)="${nameStringToVariableString(json.codeContext?.name)}CheckedChange.emit($event)"
-				${classNames()}>
-					${json.label}
-				</ibm-checkbox>`;
-
-		case "textinput":
-			return `<ibm-label
-				helperText="${json.helperText}">
-					${json.label}
-					<input
-						ibmText
-						${classNames()}
-						name="${json.codeContext?.name}"
-						placeholder="${json.placeholder}">
-				</ibm-label>`;
-
-		case "search":
-			return `<ibm-search
-					${classNames()}
-					name="${json.codeContext?.name}"
-					placeholder="${json.placeholder}">
-				</ibm-search>`;
-
-        case "textarea":
-			return `<ibm-label
-				helperText="${json.helperText}">
-					${json.label}
-					<textarea
-						ibmTextArea
-						${classNames()}
-						name="${json.codeContext?.name}"
-						placeholder="${json.placeholder}"></textarea>
-				</ibm-label>`;
-
-        case "grid":
-			return `<div ibmGrid ${classNames()}>
-				${json.items.map((row: any) => `<div ibmRow ${classNames(row)}>
-					${row.items.map((cell: any) => `<div ibmCol ${classNames(cell)}>
-							${jsonToTemplate(cell)}
-					</div>`).join('\n')}
-				</div>`).join('\n')}
-			</div>`;
-
-        default:
-            break;
+	for (let [key, component] of Object.entries(allComponents)) {
+		if (json.type === key && !component.componentInfo.codeExport.angular.isNotDirectExport) {
+			return component.componentInfo.codeExport.angular.code({json, jsonToTemplate});
+		}
 	}
 
     if (json.items) {

@@ -8,7 +8,7 @@ const StylesContextProvider = ({ children }: any) => {
 	const [styleClasses, _setStyleClasses] = useState(JSON.parse(localStorage.getItem('globalStyleClasses') as string || '[]') as any[]);
 
 	const setStyleClasses = (sc: any) => {
-		localStorage.setItem('globalStyleClasses', JSON.stringify(styleClasses))
+		localStorage.setItem('globalStyleClasses', JSON.stringify(sc))
 		_setStyleClasses(sc);
 	};
 

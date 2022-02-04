@@ -3,6 +3,10 @@ import { Checkbox, Grid } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css, cx } from 'emotion';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
+import { ComponentInfo } from '.';
+
+import image from './../assets/component-icons/grid.svg';
+import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const AGridStyleUI = ({selectedComponent, setComponent}: any) => {
 	return <>
@@ -67,4 +71,86 @@ export const AGrid = ({
 			</Grid>
 		</AComponent>
 	);
+};
+
+const getCellAttributeString = (cell: any, sizeShort: string, sizeLong: string) => {
+	const span = cell[`${sizeLong}Span`];
+	const offset = cell[`${sizeLong}Offset`];
+
+	if (!span && ! offset) {
+		return '';
+	}
+
+	const spanString = `span: ${span}`;
+	const offsetString = `offset: ${offset}`;
+
+	const spanAndOffset = `{
+		${span ? spanString : ''}${span && offset ? ',' : ''}
+		${offset ? offsetString : ''}
+	}`;
+
+	return `${sizeShort}={${!offset ? span : spanAndOffset}}`;
+};
+
+const getCellParamsString = (cell: any) => {
+	return `
+		${getCellAttributeString(cell, 'sm', 'small')}
+		${getCellAttributeString(cell, 'md', 'medium')}
+		${getCellAttributeString(cell, 'lg', 'large')}
+		${getCellAttributeString(cell, 'xlg', 'xLarge')}
+		${getCellAttributeString(cell, 'max', 'max')}
+	`;
+};
+
+export const componentInfo: ComponentInfo = {
+	component: AGrid,
+	styleUI: AGridStyleUI,
+	keywords: ['grid', 'row', 'column'],
+	name: 'Grid',
+	defaultComponentObj: {
+		type: 'grid',
+		items: [
+			{
+				type: 'row', items: [
+					{ type: 'column', items: [{ type: 'text', text: 'A' }]},
+					{ type: 'column', items: [{ type: 'text', text: 'B' }]}
+				]
+			},
+			{
+				type: 'row', items: [
+					{ type: 'column', items: [{ type: 'text', text: 'C' }]},
+					{ type: 'column', items: [{ type: 'text', text: 'D' }]}
+				]
+			}
+		]
+	},
+	image,
+	codeExport: {
+		angular: {
+			inputs: ({json}) => ``,
+			outputs: ({json}) => ``,
+			imports: ['GridModule'],
+			code: ({json, jsonToTemplate}) => {
+				return `<div ibmGrid ${angularClassNamesFromComponentObj(json)}>
+					${json.items.map((row: any) => `<div ibmRow ${angularClassNamesFromComponentObj(row)}>
+						${row.items.map((cell: any) => `<div ibmCol ${angularClassNamesFromComponentObj(cell)}>
+								${jsonToTemplate(cell)}
+						</div>`).join('\n')}
+					</div>`).join('\n')}
+				</div>`;
+			}
+		},
+		react: {
+			imports: ['Grid', 'Column', 'Row'],
+			code: ({json, jsonToTemplate}) => {
+				return `<Grid ${reactClassNamesFromComponentObj(json)}>
+					${json.items.map((row: any) => `<Row ${reactClassNamesFromComponentObj(row)}>
+						${row.items.map((cell: any) => `<Column ${getCellParamsString(cell)} ${reactClassNamesFromComponentObj(cell)}>
+								${jsonToTemplate(cell)}
+						</Column>`).join('\n')}
+					</Row>`).join('\n')}
+				</Grid>`;
+			}
+		}
+	}
 };
