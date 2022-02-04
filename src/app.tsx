@@ -15,6 +15,8 @@ import { NotificationContextProvider } from './context/notification-context';
 import { LocalFragmentsContextProvider } from './context/local-fragments-context';
 import { UIShell } from './components/ui-shell';
 import { css } from 'emotion';
+import { ActionHistoryProvider } from './context/action-history-context';
+import { StylesContextProvider } from './context/styles-context';
 
 const app = css`
 	nav.bx--side-nav--expanded + div#edit-content {
@@ -33,22 +35,24 @@ export const App = () => (
 		<div className={app}>
 			<ErrorBoundary>
 				<FragmentsContextProvider>
-					<NotificationContextProvider>
-						<LocalFragmentsContextProvider>
-							<UIShell />
-							<Notification />
-							<ModalContextProvider>
-								<Switch>
-									<Route path='/' exact component={Dashboard} />
-									<Route
-										path={['/edit', '/edit/:id']}
-										exact
-										component={Edit} />
-									<Route path="*" component={NotFound} />
-								</Switch>
-							</ModalContextProvider>
-						</LocalFragmentsContextProvider>
-					</NotificationContextProvider>
+					<StylesContextProvider>
+						<NotificationContextProvider>
+							<LocalFragmentsContextProvider>
+								<UIShell />
+								<Notification />
+								<ModalContextProvider>
+									<Switch>
+										<Route path='/' exact component={Dashboard} />
+										<Route
+											path={['/edit', '/edit/:id']}
+											exact
+											component={Edit} />
+										<Route path="*" component={NotFound} />
+									</Switch>
+								</ModalContextProvider>
+							</LocalFragmentsContextProvider>
+						</NotificationContextProvider>
+					</StylesContextProvider>
 				</FragmentsContextProvider>
 			</ErrorBoundary>
 			<span id="forkongithub">

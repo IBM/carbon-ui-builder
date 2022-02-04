@@ -32,7 +32,7 @@ import { ExportPane } from './export-pane';
 
 import { StyleContextPane } from './style-context-pane';
 import { CodeContextPane } from './code-context-pane';
-import { StylesContextProvider } from '../../context/styles-context';
+import { ActionHistory, ActionHistoryProvider } from '../../context/action-history-context';
 
 const leftPaneWidth = '300px';
 const rightPaneWidth = '302px';
@@ -134,13 +134,22 @@ enum SelectedLeftPane {
 
 export const Edit = ({ match }: any) => {
 	const { fragments, updateFragment } = useContext(FragmentsContext);
+	const {actionHistory, setActionHistory} = useContext(ActionHistory);
 
 	const fragment = fragments.find((fragment: any) => fragment.id === match.params.id);
 	const setFragment = (fragment: any) => {
 		updateFragment(fragment);
+		setActionHistory([...actionHistory, {
+			fragment: JSON.parse(JSON.stringify(fragment)) // deep clone
+		}]);
 	};
 
 	const [selectedLeftPane, setSelectedLeftPane] = useState(SelectedLeftPane.NONE);
+
+	useEffect(() => {
+		setActionHistory([]); // restart history on page (re)load
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	useEffect(() => {
 		if (fragment && fragment.title) {
@@ -162,7 +171,8 @@ export const Edit = ({ match }: any) => {
 		<div
 			id='edit-wrapper'
 			className={editPageContent}>
-			<StylesContextProvider>
+			<ActionHistoryProvider>
+
 				{ fragment && <EditHeader fragment={fragment}/> }
 				<ElementsPane isActive={selectedLeftPane === SelectedLeftPane.ELEMENTS} />
 				<StylePane isActive={selectedLeftPane === SelectedLeftPane.STYLE} />
@@ -241,7 +251,7 @@ export const Edit = ({ match }: any) => {
 						</Button>
 					</div>
 				</div>
-			</StylesContextProvider>
+			</ActionHistoryProvider>
 		</div>
 	);
 };
