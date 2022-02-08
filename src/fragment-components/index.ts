@@ -8,6 +8,7 @@ import * as textarea from "./a-textarea";
 import * as textinput from "./a-textinput";
 import * as searchinput from "./a-searchinput";
 import * as numberinput from "./a-numberinput";
+import * as tile from './tiles/a-tile';
 
 export { AButton, AButtonStyleUI } from "./a-button";
 export { ACheckbox, ACheckboxStyleUI, ACheckboxCodeUI } from "./a-checkbox";
@@ -20,6 +21,7 @@ export { ATextArea, ATextAreaStyleUI, ATextAreaCodeUI } from "./a-textarea";
 export { ATextInput, ATextInputStyleUI, ATextInputCodeUI } from "./a-textinput";
 export { ASearchInput, ASearchInputStyleUI, ASearchInputCodeUI } from "./a-searchinput";
 export { ANumberInput, ANumberInputStyleUI, ANumberInputCodeUI } from "./a-numberinput";
+export { ATile, ATileCodeUI, ATileStyleUI } from './tiles/a-tile';
 
 export const allComponents = {
 	button,
@@ -31,5 +33,6 @@ export const allComponents = {
 	textarea,
 	textinput,
 	searchinput,
-	numberinput
+	numberinput,
+	tile,
 };
