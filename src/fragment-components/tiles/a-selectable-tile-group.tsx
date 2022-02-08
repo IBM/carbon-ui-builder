@@ -124,13 +124,13 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: (_) => ``,
-			outputs: ({ json }) =>
-				`@Output() ${nameStringToVariableString(json.codeContext?.name)}selected = new EventEmitter<Event>();`,
+			outputs: (_) =>
+				``,
 			imports: ['TileModule'],
 			code: ({ json, jsonToTemplate }) => {
 				return `<ibm-tile-group
 					(selected)="${nameStringToVariableString(json.codeContext?.name)}selected.emit($event)"
-					[multiple]="false"
+					[multiple]="true"
 					${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
 				</ibm-tile-group>`

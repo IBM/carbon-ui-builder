@@ -204,7 +204,8 @@ export const componentInfo: ComponentInfo = {
 		))}
 	</ASelectableTile>,
 	/**
-	 * Can only be added via tile-group or by clicking `plus` icon on top or bottom of existing SelectableTile
+	 * Can only be added by adding tile-group or by clicking `plus` icon on top or bottom
+	 * of existing SelectableTile
 	 */
 	hideFromElementsPane: true,
 	image: undefined,
