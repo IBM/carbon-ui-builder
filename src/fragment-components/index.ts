@@ -13,6 +13,8 @@ import * as tile from './tiles/a-tile';
 import * as clickabletile from './tiles/a-clickabletile';
 import * as expandabletile from './tiles/a-expandabletile';
 import * as tilefold from './tiles/a-tileFold';
+import * as selectabletile from './tiles/a-selectabletile';
+import * as selectableTileGroup from './tiles/a-selectable-tile-group';
 
 export { AButton, AButtonStyleUI } from "./a-button";
 export { ACheckbox, ACheckboxStyleUI, ACheckboxCodeUI } from "./a-checkbox";
@@ -30,6 +32,8 @@ export { ATile, ATileCodeUI, ATileStyleUI } from './tiles/a-tile';
 export { AClickableTile, AClickableTileCodeUI, AClickableTileStyleUI } from './tiles/a-clickabletile';
 export { AExpandableTile, AExpandableTileCodeUI, AExpandableStyleUI } from './tiles/a-expandabletile';
 export { ATileFold, ATileFoldStyleUI } from './tiles/a-tileFold';
+export { ASelectableTile, ASelectableTileCodeUI, ASelectableTileStyleUI } from './tiles/a-selectabletile';
+export { ASelectableTileGroup, ASelectableTileGroupCodeUI, ASelectableTileGroupStyleUI } from './tiles/a-selectable-tile-group';
 
 export const allComponents = {
 	button,
@@ -46,5 +50,7 @@ export const allComponents = {
 	tile,
 	clickabletile,
 	expandabletile,
-	tilefold
+	tilefold,
+	selectabletile,
+	selectableTileGroup,
 };
