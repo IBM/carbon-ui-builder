@@ -132,7 +132,12 @@ enum SelectedLeftPane {
 };
 
 export const Edit = ({ match }: any) => {
-	const { fragments, updateFragment } = useContext(GlobalStateContext);
+	const {
+		fragments,
+		updateFragment,
+		clearActionHistory,
+		addAction
+	} = useContext(GlobalStateContext);
 
 	const fragment = fragments.find((fragment: any) => fragment.id === match.params.id);
 	const setFragment = (fragment: any) => {
@@ -148,6 +153,12 @@ export const Edit = ({ match }: any) => {
 			document.title = 'Edit fragment';
 		}
 	}, [fragment]);
+
+	useEffect(() => {
+		clearActionHistory();
+		addAction({fragment});
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const onRailClick = (clickedLeftPane: SelectedLeftPane) => {
 		if (clickedLeftPane === selectedLeftPane) {

@@ -6,6 +6,7 @@ import React, {
 } from 'react';
 import { useHistory } from 'react-router';
 import assign from 'lodash/assign';
+import { getFragmentHelpers } from './fragments-context-helper';
 
 const GlobalStateContext: React.Context<any> = createContext(null);
 GlobalStateContext.displayName = 'GlobalStateContext';
@@ -49,63 +50,70 @@ const GlobalStateContextProvider = ({ children }: any) => {
 	const [fragments, _setFragments] = useState<any[]>(
 		validInitialFragments(JSON.parse(localStorage.getItem('localFragments') as string)) || []
 	);
+	const [actionHistory, _setActionHistory] = useState([] as any[]);
+	const [actionHistoryIndex, setActionHistoryIndex] = useState(-1);
 
 	const setFragments = (frags: any[]) => {
 		_setFragments(frags);
 		localStorage.setItem('localFragments', JSON.stringify(frags));
 	}
 
-	const updateFragments = (frags: any[]) => {
-		if (!fragments || !fragments.length) {
-			setFragments(frags);
+	const setActionHistory = (ah: any[]) => {
+		console.log(ah)
+		_setActionHistory(ah);
+	};
+
+	const addAction = (action: any) => {
+		const newActionHistoryIndex = actionHistoryIndex + 1;
+		setActionHistoryIndex(newActionHistoryIndex);
+
+		const actionClone = JSON.parse(JSON.stringify(action));
+
+		setActionHistory([...actionHistory.slice(0, newActionHistoryIndex), actionClone]);
+	};
+
+	const canUndo = () => actionHistoryIndex > 0;
+
+	const undoAction = () => {
+		if (!canUndo()) {
 			return;
 		}
 
-		// Remove fragments which are in the original state but not in the payload.
-		const filteredFragments = fragments
-			.filter((fragment: any) => frags.some((actionFragment: any) => actionFragment.id === fragment.id));
-		// If fragments already exist in the state, we need to merge any changes to the fragments with
-		// the current matching fragments and add any new fragments (if any) to the state.
-		const mergedFragments = filteredFragments.map((fragment: any) => {
-		// Find the fragment in the payload containing the same id as the current state's fragments
-		// to merge updated changes with.
-			const updatedFragment = frags.find((actionFragment: any) => fragment.id === actionFragment.id);
-			// Can not use merge because removing datasets or labels will not
-			// work since it keeps the values, while assign overwrites past values.
-			return assign({}, fragment, updatedFragment);
-		});
-		// Adds any fragments in the payload which do not match any id in the current state's fragments.
-		const updatedFragments = mergedFragments
-			.concat(frags.filter((actionFragment: any) => (
-				fragments.every((fragment: any) => fragment.id !== actionFragment.id)
-			)));
+		const newActionHistoryIndex = actionHistoryIndex - 1;
+		const action = actionHistory[newActionHistoryIndex];
 
-		setFragments(updatedFragments);
-	}
+		// if there was a change in fragment
+		if (action.fragment) {
+			updateFragment(action.fragment, false);
+		}
 
-	const toggleFragmentVisibility = (id: string, hidden = false) => {
-		const updatedFragments = fragments.map((f: any) => {
-			if (f.id === id) {
-				return {...f, hidden}
-			}
-			return f;
-		})
+		setActionHistoryIndex(newActionHistoryIndex);
+	};
 
-		setFragments(updatedFragments);
-	}
+	const canRedo = () => actionHistoryIndex < actionHistory.length - 1;
 
-	const removeFragment = (id: string) => {
-		setFragments(fragments.filter((fragment: any) => fragment.id !== id));
-	}
+	const redoAction = () => {
+		if (!canRedo()) {
+			return;
+		}
 
-	const removeFragments = (ids: string[]) => {
-		const remainingFragments = fragments.filter((fragment: any) => (
-			!ids.some((actionFragment: any) => actionFragment.id === fragment.id)
-		));
-		setFragments(remainingFragments);
-	}
+		const newActionHistoryIndex = actionHistoryIndex + 1;
+		const action = actionHistory[newActionHistoryIndex];
 
-	const updateFragment = (fragment: any) => {
+		// if there was a change in fragment
+		if (action.fragment) {
+			updateFragment(action.fragment, false);
+		}
+		setActionHistoryIndex(newActionHistoryIndex);
+	};
+
+	const clearActionHistory = () => {
+		setActionHistoryIndex(-1);
+		setActionHistory([]);
+	};
+
+	const updateFragment = (fragment: any, updateActionHistory = true) => {
+		console.log("updating fragment", fragment)
 		if (!fragments.length) {
 			setFragments([fragment]);
 			return;
@@ -120,19 +128,19 @@ const GlobalStateContextProvider = ({ children }: any) => {
 		});
 
 		setFragments(updatedFragments);
+
+		if (updateActionHistory) {
+			addAction({fragment});
+		}
 	};
 
-	const addFragment = (fragment: any) => {
-		const duplicate = assign({}, fragment);
-		const expandedFragments = fragments.concat(duplicate);
-		setFragments(expandedFragments);
-	}
+	const fragmentHelpers = getFragmentHelpers({fragments, setFragments});
 
 	useEffect(() => {
 		const localFragments = JSON.parse(localStorage.getItem('localFragments') as string || '[]');
 		// clean up the hidden fragments (those marked for deletion but failed to be deleted)
 		const filteredFragments = localFragments.filter((fragment: any) => !fragment.hidden);
-		updateFragments(filteredFragments);
+		fragmentHelpers.updateFragments(filteredFragments);
 		localStorage.setItem('localFragments', JSON.stringify(filteredFragments));
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -141,12 +149,18 @@ const GlobalStateContextProvider = ({ children }: any) => {
 		<GlobalStateContext.Provider value={{
 			fragments,
 			setFragments,
-			addFragment,
-			updateFragments,
-			toggleFragmentVisibility,
-			removeFragment,
-			removeFragments,
-			updateFragment
+			updateFragment,
+			...fragmentHelpers,
+			actionHistory,
+			actionHistoryIndex,
+			setActionHistory,
+			setActionHistoryIndex,
+			addAction,
+			canUndo,
+			undoAction,
+			canRedo,
+			redoAction,
+			clearActionHistory
 		}}>
 			{children}
 		</GlobalStateContext.Provider>
