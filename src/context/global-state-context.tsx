@@ -50,18 +50,13 @@ const GlobalStateContextProvider = ({ children }: any) => {
 	const [fragments, _setFragments] = useState<any[]>(
 		validInitialFragments(JSON.parse(localStorage.getItem('localFragments') as string)) || []
 	);
-	const [actionHistory, _setActionHistory] = useState([] as any[]);
+	const [actionHistory, setActionHistory] = useState([] as any[]);
 	const [actionHistoryIndex, setActionHistoryIndex] = useState(-1);
 
 	const setFragments = (frags: any[]) => {
 		_setFragments(frags);
 		localStorage.setItem('localFragments', JSON.stringify(frags));
 	}
-
-	const setActionHistory = (ah: any[]) => {
-		console.log(ah)
-		_setActionHistory(ah);
-	};
 
 	const addAction = (action: any) => {
 		const newActionHistoryIndex = actionHistoryIndex + 1;
