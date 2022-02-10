@@ -53,6 +53,8 @@ const GlobalStateContextProvider = ({ children }: any) => {
 	const [actionHistory, setActionHistory] = useState([] as any[]);
 	const [actionHistoryIndex, setActionHistoryIndex] = useState(-1);
 
+	const [styleClasses, _setStyleClasses] = useState(JSON.parse(localStorage.getItem('globalStyleClasses') as string || '[]') as any[]);
+
 	const setFragments = (frags: any[]) => {
 		_setFragments(frags);
 		localStorage.setItem('localFragments', JSON.stringify(frags));
@@ -67,23 +69,43 @@ const GlobalStateContextProvider = ({ children }: any) => {
 		setActionHistory([...actionHistory.slice(0, newActionHistoryIndex), actionClone]);
 	};
 
+	const setStyleClasses = (sc: any) => {
+		const csString = JSON.stringify(sc);
+		localStorage.setItem('globalStyleClasses', csString)
+		_setStyleClasses(sc);
+		addAction({
+			styleClasses: JSON.parse(csString)
+		});
+	};
+
 	const canUndo = () => actionHistoryIndex > 0;
 
-	const undoAction = () => {
-		if (!canUndo()) {
+	const setAction = (newIndex: number) => {
+		if (newIndex < 0 || newIndex > actionHistory.length - 1) {
 			return;
 		}
 
-		const newActionHistoryIndex = actionHistoryIndex - 1;
-		const action = actionHistory[newActionHistoryIndex];
-
+		const action = actionHistory[newIndex];
 		// if there was a change in fragment
 		if (action.fragment) {
 			updateFragment(action.fragment, false);
 		}
 
-		setActionHistoryIndex(newActionHistoryIndex);
+		// if there was a change in styleClasses
+		if (action.styleClasses) {
+			setStyleClasses(action.styleClasses);
+		}
+
+		setActionHistoryIndex(newIndex);
 	};
+
+	function undoAction() {
+		if (!canUndo()) {
+			return;
+		}
+
+		setAction(actionHistoryIndex - 1)
+	}
 
 	const canRedo = () => actionHistoryIndex < actionHistory.length - 1;
 
@@ -92,14 +114,7 @@ const GlobalStateContextProvider = ({ children }: any) => {
 			return;
 		}
 
-		const newActionHistoryIndex = actionHistoryIndex + 1;
-		const action = actionHistory[newActionHistoryIndex];
-
-		// if there was a change in fragment
-		if (action.fragment) {
-			updateFragment(action.fragment, false);
-		}
-		setActionHistoryIndex(newActionHistoryIndex);
+		setAction(actionHistoryIndex + 1)
 	};
 
 	const clearActionHistory = () => {
@@ -108,7 +123,6 @@ const GlobalStateContextProvider = ({ children }: any) => {
 	};
 
 	const updateFragment = (fragment: any, updateActionHistory = true) => {
-		console.log("updating fragment", fragment)
 		if (!fragments.length) {
 			setFragments([fragment]);
 			return;
@@ -142,10 +156,17 @@ const GlobalStateContextProvider = ({ children }: any) => {
 
 	return (
 		<GlobalStateContext.Provider value={{
+			// FRAGMENTS
 			fragments,
 			setFragments,
 			updateFragment,
 			...fragmentHelpers,
+
+			// STYLE CLASSES
+			styleClasses,
+			setStyleClasses,
+
+			// ACTION HISTORY
 			actionHistory,
 			actionHistoryIndex,
 			setActionHistory,

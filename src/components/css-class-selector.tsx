@@ -3,12 +3,12 @@ import {
 	FormLabel,
 	Tag
 } from 'carbon-components-react';
-import { StylesContext } from '../context/styles-context';
+import { GlobalStateContext } from '../context';
 
 const compareClasses = (sc1: any, sc2: any) => sc1.name < sc2.name ? -1 : 1;
 
 export const CssClassSelector = ({ selectedClasses, setSelectedClasses }: any) => {
-	const { styleClasses } = useContext(StylesContext);
+	const { styleClasses } = useContext(GlobalStateContext);
 
 	const _getAvailableClasses = () => {
 		// available is anything in styleClasses, not yet in selecteClasses, sorted
