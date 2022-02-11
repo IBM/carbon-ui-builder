@@ -136,13 +136,11 @@ export const Edit = ({ match }: any) => {
 		fragments,
 		updateFragment,
 		clearActionHistory,
-		addAction
+		addAction,
+		styleClasses
 	} = useContext(GlobalStateContext);
 
 	const fragment = fragments.find((fragment: any) => fragment.id === match.params.id);
-	const setFragment = (fragment: any) => {
-		updateFragment(fragment);
-	};
 
 	const [selectedLeftPane, setSelectedLeftPane] = useState(SelectedLeftPane.NONE);
 
@@ -156,7 +154,7 @@ export const Edit = ({ match }: any) => {
 
 	useEffect(() => {
 		clearActionHistory();
-		addAction({fragment});
+		addAction({fragment, styleClasses});
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -212,7 +210,7 @@ export const Edit = ({ match }: any) => {
 				{
 					fragment
 					&& <>
-						<Fragment fragment={fragment} setFragment={setFragment} />
+						<Fragment fragment={fragment} setFragment={updateFragment} />
 					</>
 				}
 			</div>
@@ -221,12 +219,12 @@ export const Edit = ({ match }: any) => {
 					<Tab
 					id='properties-style'
 					label={<ColorPalette16 />}>
-						<StyleContextPane fragment={fragment} setFragment={setFragment} />
+						<StyleContextPane fragment={fragment} setFragment={updateFragment} />
 					</Tab>
 					<Tab
 					id='properties-code'
 					label={<Code16 />}>
-						<CodeContextPane fragment={fragment} setFragment={setFragment} />
+						<CodeContextPane fragment={fragment} setFragment={updateFragment} />
 					</Tab>
 					<Tab
 					id='properties-info'

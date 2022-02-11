@@ -69,13 +69,15 @@ const GlobalStateContextProvider = ({ children }: any) => {
 		setActionHistory([...actionHistory.slice(0, newActionHistoryIndex), actionClone]);
 	};
 
-	const setStyleClasses = (sc: any) => {
+	const setStyleClasses = (sc: any, updateActionHistory = true) => {
 		const csString = JSON.stringify(sc);
 		localStorage.setItem('globalStyleClasses', csString)
 		_setStyleClasses(sc);
-		addAction({
-			styleClasses: JSON.parse(csString)
-		});
+		if (updateActionHistory) {
+			addAction({
+				styleClasses: JSON.parse(csString)
+			});
+		}
 	};
 
 	const canUndo = () => actionHistoryIndex > 0;
@@ -93,7 +95,7 @@ const GlobalStateContextProvider = ({ children }: any) => {
 
 		// if there was a change in styleClasses
 		if (action.styleClasses) {
-			setStyleClasses(action.styleClasses);
+			setStyleClasses(action.styleClasses, false);
 		}
 
 		setActionHistoryIndex(newIndex);
