@@ -8,7 +8,7 @@ import { css } from 'emotion';
 import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { ComponentInfo } from '..';
 
-import image from '../../assets/component-icons/tile-selectable.svg';
+import image from '../../assets/component-icons/tile-selectable-group.svg';
 import {
 	angularClassNamesFromComponentObj,
 	nameStringToVariableString,
@@ -94,17 +94,18 @@ export const componentInfo: ComponentInfo = {
 	name: 'Selectable Tile',
 	defaultComponentObj: {
 		type: 'selectableTileGroup',
+		tileGroup: true,
 		items: [
 			{
-				type: 'selectabletile',
+				type: 'selectabletile', standalone: false,
 				items: [{ type: 'text', text: 'A' }]
 			},
 			{
-				type: 'selectabletile',
+				type: 'selectabletile', standalone: false,
 				items: [{ type: 'text', text: 'B' }]
 			},
 			{
-				type: 'selectabletile',
+				type: 'selectabletile', standalone: false,
 				items: [{ type: 'text', text: 'C' }]
 			}
 		]

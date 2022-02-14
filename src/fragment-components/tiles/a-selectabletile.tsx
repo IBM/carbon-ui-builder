@@ -5,6 +5,7 @@ import {
 	SelectableTile,
 } from 'carbon-components-react';
 import { AComponent } from '../a-component';
+import { TileMorphism } from './converter';
 import { Add32 } from '@carbon/icons-react';
 import { getParentComponent, updatedState } from '../../components';
 import { css, cx } from 'emotion';
@@ -12,6 +13,7 @@ import { useFragment } from '../../context';
 import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { ComponentInfo } from '..';
 
+import image from '../../assets/component-icons/tile-selectable.svg';
 import {
 	angularClassNamesFromComponentObj,
 	nameStringToVariableString,
@@ -20,6 +22,7 @@ import {
 
 export const ASelectableTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
+		<TileMorphism component={selectedComponent} componentSetter={setComponent} />
 		<TextInput
 			value={selectedComponent.value}
 			labelText='Tile value'
@@ -130,7 +133,9 @@ export const ASelectableTile = ({
 			{
 				type: 'insert',
 				component: {
+					standalone: false,
 					type: 'selectabletile',
+					value: 'value',
 					items: [{ type: 'text', text: 'New selectable tile' }]
 				}
 			},
@@ -149,12 +154,12 @@ export const ASelectableTile = ({
 	});
 
 	return <>
-		<span className={cx(addStyleTop, selected ? css`` : css`display: none`)}>
+		{parentComponent.tileGroup && <span className={cx(addStyleTop, selected ? css`` : css`display: none`)}>
 			<Add32 onClick={(event: any) => {
 				event.stopPropagation();
 				addTile();
 			}} className={iconStyle} />
-		</span>
+		</span>}
 
 		<AComponent
 			componentObj={componentObj}
@@ -162,7 +167,8 @@ export const ASelectableTile = ({
 			selected={selected}
 			{...rest}>
 			<SelectableTile
-				id={componentObj.id}
+				id={componentObj.id.toString()}
+				value={componentObj.value}
 				light={componentObj.light}
 				selected={componentObj.selected}
 				disabled={componentObj.disabled}
@@ -171,12 +177,12 @@ export const ASelectableTile = ({
 			</SelectableTile>
 		</AComponent>
 
-		<span className={cx(addStyle, selected ? css`` : css`display: none`)}>
+		{parentComponent.tileGroup && <span className={cx(addStyle, selected ? css`` : css`display: none`)}>
 			<Add32 onClick={(event: any) => {
 				event.stopPropagation();
 				addTile(1);
 			}} className={iconStyle} />
-		</span>
+		</span>}
 	</>;
 };
 
@@ -188,6 +194,7 @@ export const componentInfo: ComponentInfo = {
 	name: 'Selectable Tile',
 	defaultComponentObj: {
 		type: 'selectabletile',
+		standalone: true,
 		/**
 		 * Value & title, light are default props
 		 * @todo
@@ -195,7 +202,6 @@ export const componentInfo: ComponentInfo = {
 		 */
 		value: 'value',
 		title: 'title',
-		light: false,
 		disabled: false,
 		selected: false,
 		items: [],
@@ -211,12 +217,7 @@ export const componentInfo: ComponentInfo = {
 			renderComponents(tile)
 		))}
 	</ASelectableTile>,
-	/**
-	 * Can only be added by adding tile-group or by clicking `plus` icon on top or bottom
-	 * of existing SelectableTile
-	 */
-	hideFromElementsPane: true,
-	image: undefined,
+	image,
 	codeExport: {
 		angular: {
 			inputs: ({ json }) =>
@@ -238,11 +239,13 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			imports: ['SelectableTile'],
 			code: ({ json, jsonToTemplate }) => {
-				return `<SelectableTile
+				const onChange = json.standalone ? `const onChange = (event) => { console.log('onChange event', event); }; ` : '';
+				return `${onChange}<SelectableTile
 					${json.selected !== undefined ? `selected="${json.selected}"` : ''}
 					${json.light !== undefined ? `light="${json.light}"` : ''}
 					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
 					${json.name !== undefined ? `disabled={${json.name}}` : ''}
+					${json.standalone ? `onChange={onChange}` : ''}
 					value={${json.value}}
 					title={${json.title}}
 					${reactClassNamesFromComponentObj(json)}>

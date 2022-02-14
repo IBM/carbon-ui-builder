@@ -5,6 +5,7 @@ import {
 	RadioTile,
 } from 'carbon-components-react';
 import { AComponent } from '../a-component';
+import { TileMorphism } from './converter';
 import { Add32 } from '@carbon/icons-react';
 import { getParentComponent, updatedState } from '../../components';
 import { css, cx } from 'emotion';
@@ -39,34 +40,12 @@ export const ARadioTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 	if (!selectedComponent.radioID) {
 		setComponent({
 			...selectedComponent,
-			radioID: selectedComponent.id
+			radioID: selectedComponent.id.toString()
 		})
 	}
 
 	return <>
-		<Checkbox
-			labelText='Default checked'
-			id='default-checked'
-			checked={selectedComponent.defaultChecked}
-			onChange={(defaultChecked: any) => {
-				updateParentDefaultChecked(defaultChecked);
-				setComponent({
-					...selectedComponent,
-					defaultChecked
-				})
-			}}
-		/>
-		<Checkbox
-			labelText='Disabled'
-			id='disabled'
-			checked={selectedComponent.disabled}
-			onChange={(checked: any) => {
-				setComponent({
-					...selectedComponent,
-					disabled: checked
-				})
-			}}
-		/>
+		<TileMorphism component={selectedComponent} componentSetter={setComponent} />
 		<TextInput
 			value={selectedComponent.radioID}
 			labelText='Radio input ID'
@@ -91,6 +70,29 @@ export const ARadioTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 						value: event.currentTarget.value
 					}
 				});
+			}}
+		/>
+		<Checkbox
+			labelText='Default checked'
+			id='default-checked'
+			checked={selectedComponent.defaultChecked}
+			onChange={(defaultChecked: any) => {
+				updateParentDefaultChecked(defaultChecked);
+				setComponent({
+					...selectedComponent,
+					defaultChecked
+				})
+			}}
+		/>
+		<Checkbox
+			labelText='Disabled'
+			id='disabled'
+			checked={selectedComponent.disabled}
+			onChange={(checked: any) => {
+				setComponent({
+					...selectedComponent,
+					disabled: checked
+				})
 			}}
 		/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
@@ -144,17 +146,16 @@ export const ARadioTile = ({
 	renderComponents,
 	...rest
 }: any) => {
-	const [fragment, setFragment] = useFragment();
-	const parentComponent = getParentComponent(fragment.data, componentObj);
 
-	/**
-	 * Removing `for` attribute so users can select text and other non-form elements.
-	 */
+	// Removing `for` attribute so users can select text and other non-form elements.
 	useEffect(() => {
 		const tileElement = document.getElementById(componentObj.id);
 		const labelElement = tileElement?.parentElement?.querySelector('label.bx--tile.bx--tile--selectable');
 		labelElement?.removeAttribute('for');
 	});
+
+	const [fragment, setFragment] = useFragment();
+	const parentComponent = getParentComponent(fragment.data, componentObj);
 
 	const addRadio = (offset = 0) => setFragment({
 		...fragment,
@@ -185,7 +186,7 @@ export const ARadioTile = ({
 			selected={selected}
 			{...rest}>
 			<RadioTile
-				id={componentObj.radioID || componentObj.id}
+				id={componentObj?.radioID || componentObj.id.toString()}
 				name={componentObj.formItemName}
 				light={componentObj.light}
 				checked={componentObj.defaultChecked}
@@ -215,7 +216,6 @@ export const componentInfo: ComponentInfo = {
 		type: 'radiotile',
 		radioID: '',
 		formItemName: 'tile-group',
-		light: false,
 		disabled: false,
 		checked: false,
 		items: [],

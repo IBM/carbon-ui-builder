@@ -131,8 +131,6 @@ export const ARadioTileGroup = ({
 	</AComponent>
 };
 
-
-
 export const componentInfo: ComponentInfo = {
 	component: ARadioTileGroup,
 	styleUI: ARadioTileGroupStyleUI,
@@ -141,6 +139,7 @@ export const componentInfo: ComponentInfo = {
 	name: 'Radio Tile',
 	defaultComponentObj: {
 		type: 'radioTileGroup',
+		tileGroup: true,
 		formItemName: 'tile-group',
 		legend: 'Radio Tile Group',
 		items: [
