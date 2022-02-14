@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
 	TextInput,
 	Checkbox,
@@ -17,7 +17,6 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
-
 
 export const ASelectableTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -138,6 +137,15 @@ export const ASelectableTile = ({
 			parentComponent.id,
 			parentComponent.items.indexOf(componentObj) + offset
 		)
+	});
+
+	/**
+	 * Removing `for` attribute so users can select text and other non-form elements.
+	 */
+	useEffect(() => {
+		const tileElement = document.getElementById(componentObj.id);
+		const labelElement = tileElement?.parentElement?.querySelector('label.bx--tile.bx--tile--selectable');
+		labelElement?.removeAttribute('for');
 	});
 
 	return <>

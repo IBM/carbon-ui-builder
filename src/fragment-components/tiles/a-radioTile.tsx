@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
 	TextInput,
 	Checkbox,
@@ -68,7 +68,7 @@ export const ARadioTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 			}}
 		/>
 		<TextInput
-			value={selectedComponent.value}
+			value={selectedComponent.radioID}
 			labelText='Radio input ID'
 			onChange={(event: any) => {
 				setComponent({
@@ -81,14 +81,14 @@ export const ARadioTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 			}}
 		/>
 		<TextInput
-			value={selectedComponent.radioID}
+			value={selectedComponent.value}
 			labelText='Radio value'
 			onChange={(event: any) => {
 				setComponent({
 					...selectedComponent,
 					codeContext: {
 						...selectedComponent.codeContext,
-						radioID: event.currentTarget.value
+						value: event.currentTarget.value
 					}
 				});
 			}}
@@ -146,6 +146,15 @@ export const ARadioTile = ({
 }: any) => {
 	const [fragment, setFragment] = useFragment();
 	const parentComponent = getParentComponent(fragment.data, componentObj);
+
+	/**
+	 * Removing `for` attribute so users can select text and other non-form elements.
+	 */
+	useEffect(() => {
+		const tileElement = document.getElementById(componentObj.id);
+		const labelElement = tileElement?.parentElement?.querySelector('label.bx--tile.bx--tile--selectable');
+		labelElement?.removeAttribute('for');
+	});
 
 	const addRadio = (offset = 0) => setFragment({
 		...fragment,
@@ -249,7 +258,7 @@ export const componentInfo: ComponentInfo = {
 			imports: ['RadioTile'],
 			code: ({ json, jsonToTemplate }) => {
 				return `<RadioTile
-					${json.id !== undefined ? `id="${json.id}"` : '' }
+					${json.id !== undefined ? `id="${json.id}"` : ''}
 					${json.light !== undefined ? `light="${json.light}"` : ''}
 					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
 					value="${json.value}"
