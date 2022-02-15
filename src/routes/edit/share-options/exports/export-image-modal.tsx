@@ -21,7 +21,6 @@ import { ShareOptionsModals } from '../share-options-modal';
 import { ModalContext, ModalActionType } from '../../../../context/modal-context';
 import { getFragmentPreview, RenderProps } from '../../../../utils/fragment-tools';
 import { GlobalStateContext } from '../../../../context';
-import { useHistory } from 'react-router';
 
 const exportSettingForm = css`
 	width: 23rem;
@@ -71,12 +70,8 @@ const doUpdatePreviewSize = debounce(() => handleResize(), 200);
 export const ExportImageModal = (props: ExportImageProps) => {
 	const [modalState, dispatchModal] = useContext(ModalContext);
 	const { fragments } = useContext(GlobalStateContext);
-	const history = useHistory();
-	const location = history.location.pathname;
-	const pathSegments = location.split('/');
 
-	const id = pathSegments[pathSegments.length - 1];
-	const fragment = fragments.find((fragment: any) => fragment.id === id);
+	const fragment = fragments.find((fragment: any) => fragment.id === props.fragment.id);
 
 	const exportSettings = {
 		width: 800,

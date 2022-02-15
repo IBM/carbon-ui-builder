@@ -121,12 +121,12 @@ export const getUniqueFragmentName = (fragments: Array<any>, baseName: string) =
 	return `${nameBase} copy ${highestNumber && count < highestNumber ? highestNumber + 1 : count + 1}`;
 };
 
-export const duplicateFragment = (fragments: any, fragment: any, options = {}) => {
+export const duplicateFragment = (fragments: any, fragment: any, overrides = {}) => {
 	// copy current fragment and change fragment title
 	let fragmentCopy = JSON.parse(JSON.stringify(fragment));
 	fragmentCopy.title = getUniqueFragmentName(fragments, fragmentCopy.title);
 	fragmentCopy.id = `${Math.random().toString().slice(2)}${Math.random().toString().slice(2)}`;
-	return Object.assign({}, fragmentCopy, options);
+	return Object.assign({}, fragmentCopy, overrides);
 };
 export const reactClassNamesFromComponentObj = (componentObj: any) =>
 	componentObj.cssClasses

@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 
-import { css } from 'emotion';
 import {
 	Modal,
 	InlineNotification,
@@ -15,61 +14,7 @@ import { warningNotificationProps } from '../../../utils/file-tools';
 import { Col } from '../../../components';
 import { FragmentPreview } from '../../../components/fragment-preview';
 import { duplicateFragment } from '../../../utils/fragment-tools';
-
-const fragmentOptions = css`
-	margin-left: 30px;
-	margin-right: 30px;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: space-between;
-
-	// This is the viewport width that causes the selection tiles to overlap.
-	@media screen and (max-width: 45rem) {
-		flex-direction: column;
-	}
-`;
-const tileWrapper = css`
-	position: relative;
-	margin: 0.75rem;
-	padding: 0;
-	height: 240px;
-	width: 350px;
-	box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.3);
-	background-color: #ffffff;
-	float: left;
-`;
-const tileStyle = css`
-	padding: 0;
-	background-color: #ffffff;
-`;
-const tileInnerWrapperBase = css`
-	align-items: end;
-`;
-const tileInnerWrapper = css`
-	${tileInnerWrapperBase}
-	margin: 8px;
-	h3 {
-		font-size: 1rem;
-		padding: 5px;
-		padding-left: 16px;
-	}
-	.dashboard-link {
-		color: black;
-		text-decoration: none;
-		transition: 0.3s;
-	}
-	.dashboard-link:hover {
-		opacity: 0.6;
-		color: #6f6f6f;
-		cursor: pointer;
-	}
-	span {
-		padding-left: 16px;
-		font-style: italic;
-		font-size: 0.75rem;
-	}
-`;
+import './choose-fragment-modal.scss';
 
 export interface ChooseFragmentModalProps {
 	shouldDisplay: boolean,
@@ -154,7 +99,7 @@ export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 					: null
 			}
 			<p>Choose a type of fragment and click done to start editing your new fragment</p>
-			<div className={fragmentOptions}>
+			<div className='fragment-options'>
 				<Col cols={{
 					sm: 12,
 					md: 12,
@@ -164,17 +109,17 @@ export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 						fragments.filter((fragment: any) => (
 							fragment.labels && fragment.labels.includes('template')
 						)).map((fragment: any) => (
-							<div className={tileWrapper}>
+							<div className='modal-tile-wrapper'>
 								<SelectableTile
-									className={tileStyle}
+									className='tile-style'
 									onClick={() => setSelectedFragment(fragment)}
 									selected={fragment === selectedFragment}>
-									<div className={tileInnerWrapper}>
+									<div className='tile-inner-wrapper'>
 										<FragmentPreview fragment={fragment} />
-											<h3>{fragment.title}</h3>
-											<span>
-												{fragment.lastModified ? fragment.lastModified : 'Last modified date unknown'}
-											</span>
+										<h3>{fragment.title}</h3>
+										<span>
+											{fragment.lastModified ? fragment.lastModified : 'Last modified date unknown'}
+										</span>
 									</div>
 								</SelectableTile>
 							</div>
