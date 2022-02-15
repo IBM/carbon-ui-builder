@@ -14,9 +14,8 @@ import {
 } from './../../components';
 import { FragmentTileList } from './fragment-tile-list';
 import { FragmentWizard } from './fragment-wizard/fragment-wizard';
-import { LocalFragmentsContext } from '../../context/local-fragments-context';
 import { FragmentModal } from '../edit/fragment-modal';
-import { FragmentsContext, FragmentActionType } from '../../context';
+import { GlobalStateContext } from '../../context';
 
 const fragmentSort = (sortDirection: SortDirection) => function(a: any, b: any) {
 	if (sortDirection === SortDirection.Descending) {
@@ -50,45 +49,29 @@ const searchRowStyles = css`
 `;
 
 export const Dashboard = () => {
-	const [{ fragments }, dispatch] = useContext(FragmentsContext);
+	const { fragments, updateFragments } = useContext(GlobalStateContext);
 	const [fragmentGroupDisplayed, setFragmentGroupDisplayed] = useState(FragmentGroupDisplayed.LocalOnly);
 	const [fragmentTitleFilter, setFragmentTitleFilter] = useState('');
 	const [sortDirection, setSortDirection] = useState(SortDirection.Ascending);
 	const [displayWizard, setDisplayWizard] = useState(false);
-	const [localFragments] = useContext(LocalFragmentsContext);
 
 	useEffect(() => {
-		dispatch({
-			type: FragmentActionType.UPDATE_ALL,
-			data: fragments,
-			loaded: true
-		});
+		updateFragments(fragments);
 	// we don't want to run this effect when fragments change because it creates a loop
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dispatch]);
+	}, []);
 
 	useEffect(() => {
 		document.title = 'Carbon Components Builder • UI Fragments Composer';
 	}, []);
 
-	const getLocalFragments = () => {
-		if (!fragments || fragments.length === 0) {
-			return [];
-		}
-		// when pagination works, change this to take that into account TODO
-		return fragments.filter((fragment: any) => localFragments.find((lc: any) => lc.id === fragment.id));
-	};
-
-	const filterFragments = (fragments: any) => fragments.filter((fragment: any) => fragment?.title.toLowerCase()
+	const filterFragments = (fragments: any) => fragments.filter((fragment: any) => fragment?.title?.toLowerCase()
 		.includes(fragmentTitleFilter.toLowerCase()) && !fragment.hidden)
 		.sort(fragmentSort(sortDirection));
 
 	let displayedFragments;
 
 	switch (fragmentGroupDisplayed) {
-		case FragmentGroupDisplayed.LocalOnly:
-			displayedFragments = filterFragments(getLocalFragments());
-			break;
 		case FragmentGroupDisplayed.Templates: {
 			displayedFragments = filterFragments(
 				fragments.filter((fragment: any) => fragment.labels && fragment.labels.includes('template'))
@@ -139,7 +122,6 @@ export const Dashboard = () => {
 						{
 							<FragmentTileList
 								fragments={displayedFragments}
-								localFragments={localFragments}
 								setModalFragment={setModalFragment} />
 						}
 					</Col>

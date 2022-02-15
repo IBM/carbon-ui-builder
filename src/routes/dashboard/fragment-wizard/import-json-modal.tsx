@@ -11,14 +11,8 @@ import {
 import { FragmentWizardModals } from './fragment-wizard';
 import { generateNewFragment } from './generate-new-fragment';
 
-import {
-	FragmentActionType,
-	FragmentAction,
-	FragmentState,
-	FragmentsContext
-} from '../../../context';
+import { GlobalStateContext } from '../../../context';
 import { useHistory } from 'react-router-dom';
-import { LocalFragmentsContext, LocalFragmentActionType } from '../../../context/local-fragments-context';
 
 const fragmentOptions = css`
 	margin-left: 30px;
@@ -42,8 +36,7 @@ export interface ImportJsonModalProps {
 	lastVisitedModal: FragmentWizardModals,
 	uploadedData: any,
 	setUploadedData: (uploadedData: any) => void,
-	multiple?: boolean,
-	dispatch: (fragmentAction: FragmentAction) => FragmentState
+	multiple?: boolean
 }
 
 let lastId = 0;
@@ -54,8 +47,7 @@ const uid = (prefix = 'id') => {
 }
 
 export const ImportJsonModal = (props: ImportJsonModalProps) => {
-	const [, updateLocalFragments] = useContext(LocalFragmentsContext);
-	const [, dispatch] = useContext(FragmentsContext);
+	const { addFragment } = useContext(GlobalStateContext);
 	const [files, setFiles] = useState([] as any[]);
 	const [jsonString, _setJsonString] = useState('');
 	const [fragmentJson, setFragmentJson] = useState('');
@@ -136,7 +128,7 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 			setJsonString(event.target?.result as string);
 		}
 		reader.onerror = function (evt) {
-			console.log("oops, fo")
+			console.log("oops")
 		}
 
 		const updatedFile = {
@@ -200,14 +192,7 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 	const generateFragment = () => {
 		const generatedFragment = generateNewFragment(fragmentJson);
 
-		dispatch({
-			type: FragmentActionType.ADD_ONE,
-			data: generatedFragment
-		});
-		updateLocalFragments({
-			type: LocalFragmentActionType.ADD,
-			data: { id: generatedFragment.id }
-		});
+		addFragment(generateFragment);
 		history.push(`/edit/${generatedFragment.id}`);
 	};
 

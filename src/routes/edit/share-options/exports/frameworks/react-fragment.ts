@@ -1,6 +1,7 @@
 import { format as formatPrettier, Options } from 'prettier';
 import parserBabel from 'prettier/parser-babel';
 import parserCss from 'prettier/parser-postcss';
+import { allComponents } from '../../../../../fragment-components';
 import { getAllFragmentStyleClasses, hasFragmentStyleClasses } from '../../../../../utils/fragment-tools';
 
 const format = (source: string, options?: Options | undefined) => {
@@ -24,29 +25,10 @@ const addIfNotExist = (arr: any[], items: any[]) => {
 const jsonToImports = (json: any) => {
     const imports: any[] = [];
 
-    switch (json.type) {
-        case "button":
-            addIfNotExist(imports, ['Button']);
-            break;
-
-        case "checkbox":
-            addIfNotExist(imports, ['Checkbox']);
-            break;
-
-        case "textarea":
-            addIfNotExist(imports, ['TextArea']);
-            break;
-
-        case "textinput":
-            addIfNotExist(imports, ['TextInput']);
-            break;
-
-		case "search":
-			addIfNotExist(imports, ['Search']);
-			break;
-
-        case "grid":
-            addIfNotExist(imports, ['Grid', 'Row', 'Column']);
+	for (let [key, component] of Object.entries(allComponents)) {
+		if (json.type === key) {
+			addIfNotExist(imports, component.componentInfo.codeExport.react.imports);
+		}
 	}
 
 	if (json.items) {
@@ -58,108 +40,15 @@ const jsonToImports = (json: any) => {
     return imports;
 };
 
-const getCellAttributeString = (cell: any, sizeShort: string, sizeLong: string) => {
-	const span = cell[`${sizeLong}Span`];
-	const offset = cell[`${sizeLong}Offset`];
-
-	if (!span && ! offset) {
-		return '';
-	}
-
-	const spanString = `span: ${span}`;
-	const offsetString = `offset: ${offset}`;
-
-	const spanAndOffset = `{
-		${span ? spanString : ''}${span && offset ? ',' : ''}
-		${offset ? offsetString : ''}
-	}`;
-
-	return `${sizeShort}={${!offset ? span : spanAndOffset}}`;
-};
-
-const getCellParamsString = (cell: any) => {
-	return `
-		${getCellAttributeString(cell, 'sm', 'small')}
-		${getCellAttributeString(cell, 'md', 'medium')}
-		${getCellAttributeString(cell, 'lg', 'large')}
-		${getCellAttributeString(cell, 'xlg', 'xLarge')}
-		${getCellAttributeString(cell, 'max', 'max')}
-	`;
-};
-
 export const jsonToTemplate = (json: any) => {
     if (typeof json === "string" || !json) {
         return json;
     }
 
-	const classNames = (j: any = json) => j.cssClasses && Array.isArray(j.cssClasses) && j.cssClasses.length > 0
-		? `className='${j.cssClasses.map((cc: any) => cc.id).join(' ')}'`
-		: '';
-
-    switch (json.type) {
-        case "text":
-			if (json.cssClasses) {
-				return `<span ${classNames()}>${json.text}</span>`;
-			}
-            return json.text;
-
-        case "button":
-            return `<Button${json.kind && ` kind="${json.kind}"`} ${classNames()}>${json.text}</Button>`;
-
-        case "checkbox":
-			return `<Checkbox
-				labelText="${json.label}"
-				name="${json.codeContext?.name}"
-				id="${json.codeContext?.name}"
-				checked={state["${json.codeContext?.name}"]?.checked}
-				${classNames()}
-				onChange={(checked) => handleInputChange({
-					target: {
-						name: "${json.codeContext?.name}",
-						value: checked
-					}
-				})} />`;
-
-		case "textinput":
-			return `<TextInput
-				labelText="${json.label}"
-				name="${json.codeContext?.name}"
-				helperText="${json.helperText}"
-				placeholder="${json.placeholder}"
-				value={state["${json.codeContext?.name}"]}
-				${classNames()}
-				onChange={handleInputChange} />`;
-
-		case "search":
-			return `<Search
-				labelText="${json.label}"
-				name="${json.codeContext?.name}"
-				placeholder="${json.placeholder}"
-				value={state["${json.codeContext?.name}"]}
-				${classNames()}
-				onChange={handleInputChange} />`;
-
-        case "textarea":
-			return `<TextArea
-				labelText="${json.label}"
-				name="${json.codeContext?.name}"
-				helperText="${json.helperText}"
-				placeholder="${json.placeholder}"
-				value={state["${json.codeContext?.name}"]}
-				${classNames()}
-				onChange={handleInputChange} />`;
-
-        case "grid":
-            return `<Grid ${classNames()}>
-    ${json.items.map((row: any) => `<Row ${classNames(row)}>
-        ${row.items.map((cell: any) => `<Column ${getCellParamsString(cell)} ${classNames(cell)}>
-                ${jsonToTemplate(cell)}
-        </Column>`).join('\n')}
-    </Row>`).join('\n')}
-</Grid>`;
-
-        default:
-            break;
+	for (let [key, component] of Object.entries(allComponents)) {
+		if (json.type === key && !component.componentInfo.codeExport.react.isNotDirectExport) {
+			return component.componentInfo.codeExport.react.code({json, jsonToTemplate});
+		}
 	}
 
     if (json.items) {

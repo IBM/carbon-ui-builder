@@ -2,18 +2,8 @@ import React from 'react';
 import { SkeletonPlaceholder } from 'carbon-components-react';
 import './fragment-preview.scss';
 import { css, cx } from 'emotion';
-import {
-	AButton,
-	AGrid,
-	ACheckbox,
-	ATextArea,
-	ATextInput,
-	AText,
-	ARow,
-	AColumn
-} from '../fragment-components';
+import { allComponents, ComponentInfoRenderProps } from '../fragment-components';
 import { getAllFragmentStyleClasses } from '../utils/fragment-tools';
-import { ASearchInput } from '../fragment-components/a-searchinput';
 
 const canvas = css`
 	border: 2px solid #d8d8d8;
@@ -87,24 +77,10 @@ export const stateWithoutComponent = (state: any, componentId: number) => {
 	return { ...state };
 };
 
-const componentsThatNeedNames = [
-	'checkbox',
-	'combobox',
-	'datepicker',
-	'dropdown',
-	'fileinput',
-	'radio',
-	'search',
-	'select',
-	'textarea',
-	'textinput',
-	'timepicker'
-];
-
 export const initializeIds = (componentObj: any) => {
 	const id = componentObj.id || componentCounter++;
-	let name = componentsThatNeedNames.includes(componentObj.type) ? `${componentObj.type}-${id}` : undefined;
-	name = componentObj.codeContext?.name ? componentObj.codeContext?.name : name;
+	// name is used in form items and for angular inputs and outputs variable names
+	const name = componentObj.codeContext?.name || `${componentObj.type}-${id}`;
 
 	return {
 		...componentObj,
@@ -245,104 +221,27 @@ export const Fragment = ({fragment, setFragment}: any) => {
 			return componentObj;
 		}
 
-		switch (componentObj.type) {
-			case 'text':
-				return (
-					<AText
-					componentObj={componentObj}
-					select={() => select(componentObj)}
-					remove={() => remove(componentObj)}
-					selected={fragment.selectedComponentId === componentObj.id}>
-						{componentObj.text}
-					</AText>
-				);
-
-			case 'button':
-				return (
-					<AButton
-					componentObj={componentObj}
-					select={() => select(componentObj)}
-					remove={() => remove(componentObj)}
-					selected={fragment.selectedComponentId === componentObj.id}>
-						{componentObj.text}
-					</AButton>
-				);
-
-			case 'checkbox':
-				return (
-					<ACheckbox
-						componentObj={componentObj}
-						select={() => select(componentObj)}
-						remove={() => remove(componentObj)}
-						selected={fragment.selectedComponentId === componentObj.id} />
-				);
-
-			case 'textarea':
-				return (
-					<ATextArea
-						componentObj={componentObj}
-						select={() => select(componentObj)}
-						remove={() => remove(componentObj)}
-						selected={fragment.selectedComponentId === componentObj.id} />
-				);
-
-			case 'textinput':
-				return (
-					<ATextInput
-						componentObj={componentObj}
-						select={() => select(componentObj)}
-						remove={() => remove(componentObj)}
-						selected={fragment.selectedComponentId === componentObj.id} />
-				);
-
-			case 'search':
-				return (
-					<ASearchInput
-						componentObj={componentObj}
-						select={() => select(componentObj)}
-						remove={() => remove(componentObj)}
-						selected={fragment.selectedComponentId === componentObj.id} />
-				);
-
-			case 'grid':
-				return (
-					<AGrid
+		for (let [key, component] of Object.entries(allComponents)) {
+			if (componentObj.type === key) {
+				if (component.componentInfo.render) {
+					return component.componentInfo.render({
+						componentObj,
+						select: () => select(componentObj),
+						remove: () => remove(componentObj),
+						selected: fragment.selectedComponentId === componentObj.id,
+						onDragOver: allowDrop,
+						onDrop: (event: any) => { event.stopPropagation(); drop(event, componentObj.id); },
+						renderComponents
+					} as ComponentInfoRenderProps);
+				}
+				return <component.componentInfo.component
 					componentObj={componentObj}
 					select={() => select(componentObj)}
 					remove={() => remove(componentObj)}
 					selected={fragment.selectedComponentId === componentObj.id}>
 						{componentObj.items && componentObj.items.map((row: any) => renderComponents(row))}
-					</AGrid>
-				);
-
-			case 'row':
-				return (
-					<ARow
-					componentObj={componentObj}
-					select={() => select(componentObj)}
-					remove={() => remove(componentObj)}
-					selected={fragment.selectedComponentId === componentObj.id}>
-						{ componentObj.items.map((column: any) => renderComponents(column))}
-					</ARow>
-				);
-
-			case 'column':
-				return (
-					<AColumn
-					componentObj={componentObj}
-					select={() => select(componentObj)}
-					remove={() => remove(componentObj)}
-					selected={fragment.selectedComponentId === componentObj.id}
-					onDragOver={allowDrop}
-					onDrop={(event: any) => { event.stopPropagation(); drop(event, componentObj.id); }}>
-						{ componentObj.items.map((column: any) => (
-							renderComponents(column)
-						))}
-					</AColumn>
-				);
-
-			default:
-				break;
+				</component.componentInfo.component>
+			}
 		}
 
 		if (componentObj.items) {

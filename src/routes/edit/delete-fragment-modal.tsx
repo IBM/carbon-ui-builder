@@ -2,30 +2,19 @@ import React, { useContext } from 'react';
 
 import { Modal } from 'carbon-components-react';
 import { ModalActionType, ModalContext } from '../../context/modal-context';
-import {
-	FragmentActionType,
-	FragmentsContext,
-	useFetchOne
-} from '../../context/fragments-context';
+import { GlobalStateContext } from '../../context/global-state-context';
 import { useHistory } from 'react-router-dom';
 import { NotificationActionType, NotificationContext } from '../../context/notification-context';
 
 export const DeleteFragmentModal = ({ id }: any) => {
-	const [fragmentsState, dispatch] = useContext(FragmentsContext);
+	const { fragments, toggleFragmentVisibility, removeFragment } = useContext(GlobalStateContext);
 	const [modalState, dispatchModal] = useContext(ModalContext);
 	const history = useHistory();
 	const [, dispatchNotification] = useContext(NotificationContext);
-	const fragment = fragmentsState.fragments.find((fragment: any) => fragment.id === id);
-	useFetchOne(id, dispatch);
-
+	const fragment = fragments.find((fragment: any) => fragment.id === id);
 
 	const deleteFragment = () => {
-		dispatch({
-			type: FragmentActionType.TOGGLE_VISIBILITY,
-			id,
-			hidden: true,
-			loaded: true
-		});
+		toggleFragmentVisibility(id, true);
 		history.push('/');
 		dispatchNotification({
 			type: NotificationActionType.ADD_NOTIFICATION,
@@ -36,7 +25,7 @@ export const DeleteFragmentModal = ({ id }: any) => {
 				action: {
 					actionText: 'Undo',
 					actionFunction: undoHideFragment,
-					onNotificationClose: doDeleteFragment
+					onNotificationClose: () => { removeFragment(id) }
 				}
 			}
 		});
@@ -44,21 +33,8 @@ export const DeleteFragmentModal = ({ id }: any) => {
 	};
 
 	const undoHideFragment = () => {
-		dispatch({
-			type: FragmentActionType.TOGGLE_VISIBILITY,
-			id,
-			hidden: false,
-			loaded: true
-		});
+		toggleFragmentVisibility(id, false);
 	};
-
-	const doDeleteFragment = () => {
-		dispatch({
-			type: FragmentActionType.REMOVE_FRAGMENT,
-			id
-		});
-	};
-
 
 	return (
 		<Modal

@@ -6,11 +6,7 @@ import React, {
 import { css, cx } from 'emotion';
 import { Fragment } from '../../components';
 import { EditHeader } from './edit-header';
-import {
-	FragmentsContext,
-	useFetchOne,
-	FragmentActionType
-} from '../../context/fragments-context';
+import { GlobalStateContext } from '../../context/global-state-context';
 import {
 	Button,
 	SideNav,
@@ -36,7 +32,6 @@ import { ExportPane } from './export-pane';
 
 import { StyleContextPane } from './style-context-pane';
 import { CodeContextPane } from './code-context-pane';
-import { StylesContextProvider } from '../../context/styles-context';
 
 const leftPaneWidth = '300px';
 const rightPaneWidth = '302px';
@@ -88,10 +83,17 @@ export const leftPane = css`
 	padding: 15px;
 	box-shadow: inset -1px 0px #d8d8d8;
 	z-index: 999;
+	overflow-y: auto;
 
 	&.is-active {
 		left: 0;
 	}
+`;
+
+export const leftPaneHeader = css`
+	position: fixed;
+	width: 270px;
+	background: white;
 `;
 
 const rightPanel = css`
@@ -130,17 +132,15 @@ enum SelectedLeftPane {
 };
 
 export const Edit = ({ match }: any) => {
-	const [state, dispatch] = useContext(FragmentsContext);
+	const {
+		fragments,
+		updateFragment,
+		clearActionHistory,
+		addAction,
+		styleClasses
+	} = useContext(GlobalStateContext);
 
-	useFetchOne(match.params.id, dispatch);
-	const fragment = state.fragments.find((fragment: any) => fragment.id === match.params.id);
-	const setFragment = (fragment: any) => {
-		dispatch({
-			type: FragmentActionType.UPDATE_ONE,
-			data: fragment,
-			loaded: true
-		});
-	};
+	const fragment = fragments.find((fragment: any) => fragment.id === match.params.id);
 
 	const [selectedLeftPane, setSelectedLeftPane] = useState(SelectedLeftPane.NONE);
 
@@ -151,6 +151,12 @@ export const Edit = ({ match }: any) => {
 			document.title = 'Edit fragment';
 		}
 	}, [fragment]);
+
+	useEffect(() => {
+		clearActionHistory();
+		addAction({fragment, styleClasses});
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const onRailClick = (clickedLeftPane: SelectedLeftPane) => {
 		if (clickedLeftPane === selectedLeftPane) {
@@ -164,86 +170,84 @@ export const Edit = ({ match }: any) => {
 		<div
 			id='edit-wrapper'
 			className={editPageContent}>
-			<StylesContextProvider>
-				{ fragment && <EditHeader fragment={fragment}/> }
-				<ElementsPane isActive={selectedLeftPane === SelectedLeftPane.ELEMENTS} />
-				<StylePane isActive={selectedLeftPane === SelectedLeftPane.STYLE} />
-				<CodePane isActive={selectedLeftPane === SelectedLeftPane.CODE} />
-				<ExportPane isActive={selectedLeftPane === SelectedLeftPane.EXPORT} />
-				<SideNav
-				aria-label='Side navigation'
-				className={cx(sideRail, selectedLeftPane !== SelectedLeftPane.NONE ? 'is-active' : '')}
-				isRail>
-					<SideNavItems>
-						<SideNavLink
-						renderIcon={Development16}
-						onClick={() => onRailClick(SelectedLeftPane.ELEMENTS)}
-						isActive={selectedLeftPane === SelectedLeftPane.ELEMENTS}>
-							Elements
-						</SideNavLink>
-						<SideNavLink
-						renderIcon={ColorPalette16}
-						onClick={() => onRailClick(SelectedLeftPane.STYLE)}
-						isActive={selectedLeftPane === SelectedLeftPane.STYLE}>
-							Style
-						</SideNavLink>
-						<SideNavLink
-						renderIcon={Code16}
-						onClick={() => onRailClick(SelectedLeftPane.CODE)}
-						isActive={selectedLeftPane === SelectedLeftPane.CODE}>
-							Code
-						</SideNavLink>
-						<SideNavLink
-						renderIcon={Export16}
-						onClick={() => onRailClick(SelectedLeftPane.EXPORT)}
-						isActive={selectedLeftPane === SelectedLeftPane.EXPORT}>
-							Export
-						</SideNavLink>
-					</SideNavItems>
-				</SideNav>
-				<div className='edit-content'>
-					{
-						fragment
-						&& <>
-							<Fragment fragment={fragment} setFragment={setFragment} />
-						</>
-					}
+			{ fragment && <EditHeader fragment={fragment}/> }
+			<ElementsPane isActive={selectedLeftPane === SelectedLeftPane.ELEMENTS} />
+			<StylePane isActive={selectedLeftPane === SelectedLeftPane.STYLE} />
+			<CodePane isActive={selectedLeftPane === SelectedLeftPane.CODE} />
+			<ExportPane isActive={selectedLeftPane === SelectedLeftPane.EXPORT} />
+			<SideNav
+			aria-label='Side navigation'
+			className={cx(sideRail, selectedLeftPane !== SelectedLeftPane.NONE ? 'is-active' : '')}
+			isRail>
+				<SideNavItems>
+					<SideNavLink
+					renderIcon={Development16}
+					onClick={() => onRailClick(SelectedLeftPane.ELEMENTS)}
+					isActive={selectedLeftPane === SelectedLeftPane.ELEMENTS}>
+						Elements
+					</SideNavLink>
+					<SideNavLink
+					renderIcon={ColorPalette16}
+					onClick={() => onRailClick(SelectedLeftPane.STYLE)}
+					isActive={selectedLeftPane === SelectedLeftPane.STYLE}>
+						Style
+					</SideNavLink>
+					<SideNavLink
+					renderIcon={Code16}
+					onClick={() => onRailClick(SelectedLeftPane.CODE)}
+					isActive={selectedLeftPane === SelectedLeftPane.CODE}>
+						Code
+					</SideNavLink>
+					<SideNavLink
+					renderIcon={Export16}
+					onClick={() => onRailClick(SelectedLeftPane.EXPORT)}
+					isActive={selectedLeftPane === SelectedLeftPane.EXPORT}>
+						Export
+					</SideNavLink>
+				</SideNavItems>
+			</SideNav>
+			<div className='edit-content'>
+				{
+					fragment
+					&& <>
+						<Fragment fragment={fragment} setFragment={updateFragment} />
+					</>
+				}
+			</div>
+			<div className={rightPanel}>
+				<Tabs>
+					<Tab
+					id='properties-style'
+					label={<ColorPalette16 />}>
+						<StyleContextPane fragment={fragment} setFragment={updateFragment} />
+					</Tab>
+					<Tab
+					id='properties-code'
+					label={<Code16 />}>
+						<CodeContextPane fragment={fragment} setFragment={updateFragment} />
+					</Tab>
+					<Tab
+					id='properties-info'
+					label={<Information16 />}>
+						info
+					</Tab>
+				</Tabs>
+				<div className={actionsStyle}>
+					<Button
+					disabled
+					kind='secondary'
+					renderIcon={Copy32}
+					className={css`margin-right: 8px`}>
+						Duplicate
+					</Button>
+					<Button
+					disabled
+					kind='danger'
+					renderIcon={TrashCan32}>
+						Delete
+					</Button>
 				</div>
-				<div className={rightPanel}>
-					<Tabs>
-						<Tab
-						id='properties-style'
-						label={<ColorPalette16 />}>
-							<StyleContextPane fragment={fragment} setFragment={setFragment} />
-						</Tab>
-						<Tab
-						id='properties-code'
-						label={<Code16 />}>
-							<CodeContextPane fragment={fragment} setFragment={setFragment} />
-						</Tab>
-						<Tab
-						id='properties-info'
-						label={<Information16 />}>
-							info
-						</Tab>
-					</Tabs>
-					<div className={actionsStyle}>
-						<Button
-						disabled
-						kind='secondary'
-						renderIcon={Copy32}
-						className={css`margin-right: 8px`}>
-							Duplicate
-						</Button>
-						<Button
-						disabled
-						kind='danger'
-						renderIcon={TrashCan32}>
-							Delete
-						</Button>
-					</div>
-				</div>
-			</StylesContextProvider>
+			</div>
 		</div>
 	);
 };

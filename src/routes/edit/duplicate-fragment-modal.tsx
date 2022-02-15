@@ -2,13 +2,8 @@ import React, { useContext } from 'react';
 import { NotificationActionType, NotificationContext } from '../../context/notification-context';
 import { Modal } from 'carbon-components-react';
 import { ModalActionType, ModalContext } from '../../context/modal-context';
-import {
-	FragmentActionType,
-	FragmentsContext,
-	useFetchOne
-} from '../../context/fragments-context';
+import { GlobalStateContext } from '../../context/global-state-context';
 import { useHistory, useLocation } from 'react-router-dom';
-import { LocalFragmentsContext, LocalFragmentActionType } from '../../context/local-fragments-context';
 
 import { duplicateFragment } from '../../utils/fragment-tools';
 
@@ -17,29 +12,17 @@ import { duplicateFragment } from '../../utils/fragment-tools';
 export const DuplicateFragmentModal = ({ id }: any) => {
 	const [modalState, dispatchModal] = useContext(ModalContext);
 	const [, dispatchNotification] = useContext(NotificationContext);
-	const [, updateLocalFragments] = useContext(LocalFragmentsContext);
-	const [fragmentsState, dispatch] = useContext(FragmentsContext);
-	useFetchOne(id, dispatch);
+	const { fragments, addFragment } = useContext(GlobalStateContext);
+
 	const history = useHistory();
 	const location = useLocation();
 
-	const fragment = fragmentsState.fragments.find((fragment: any) => fragment.id === id);
+	const fragment = fragments.find((fragment: any) => fragment.id === id);
 
 	const handleDuplicateFragment = () => {
-		if (fragmentsState.currentlyProcessing) {
-			return;
-		}
-		const fragmentCopy = duplicateFragment(fragmentsState.fragments, fragment);
+		const fragmentCopy = duplicateFragment(fragments, fragment);
 
-		dispatch({
-			type: FragmentActionType.ADD_ONE,
-			data: fragmentCopy,
-			loaded: true
-		});
-		updateLocalFragments({
-			type: LocalFragmentActionType.ADD,
-			data: { id: fragmentCopy.id }
-		});
+		addFragment(fragmentCopy);
 		if (location.pathname !== '/') {
 			history.push(`/edit/${fragmentCopy.id}`);
 		}
@@ -62,7 +45,6 @@ export const DuplicateFragmentModal = ({ id }: any) => {
 			secondaryButtonText='Cancel'
 			modalHeading='Duplicate fragment?'
 			primaryButtonText='Duplicate'
-			primaryButtonDisabled={!!fragmentsState.currentlyProcessing}
 			onRequestSubmit={() => handleDuplicateFragment()}>
 			<p>
 				Click <strong>Duplicate</strong> to begin to edit a copy of the current fragment

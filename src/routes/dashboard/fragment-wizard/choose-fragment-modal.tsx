@@ -9,14 +9,8 @@ import {
 } from 'carbon-components-react';
 import { FragmentWizardModals } from './fragment-wizard';
 
-import {
-	FragmentActionType,
-	FragmentAction,
-	FragmentState,
-	FragmentsContext
-} from '../../../context';
+import { GlobalStateContext } from '../../../context';
 import { useHistory } from 'react-router-dom';
-import { LocalFragmentsContext, LocalFragmentActionType } from '../../../context/local-fragments-context';
 import { warningNotificationProps } from '../../../utils/file-tools';
 import { Col } from '../../../components';
 import { FragmentPreview } from '../../../components/fragment-preview';
@@ -84,39 +78,29 @@ export interface ChooseFragmentModalProps {
 	setLastVisitedModal: (lastVisitedModal: FragmentWizardModals) => void,
 	lastVisitedModal: FragmentWizardModals,
 	uploadedData: any,
-	setUploadedData: (uploadedData: any) => void,
-	dispatch: (fragmentAction: FragmentAction) => FragmentState
+	setUploadedData: (uploadedData: any) => void
 }
 
 export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
-	const [, updateLocalFragments] = useContext(LocalFragmentsContext);
-	const [fragmentsState, dispatch] = useContext(FragmentsContext);
 	const [selectedFragment, setSelectedFragment] = useState<any>(null);
+	const { fragments, addFragment } = useContext(GlobalStateContext);
 
 	const history = useHistory();
 
 	const generateFragment = () => {
-		if (fragmentsState.currentlyProcessing || selectedFragment === null) {
+		if (selectedFragment === null) {
 			return;
 		}
 
 		const fragmentCopy = duplicateFragment(
-			fragmentsState.fragments,
+			fragments,
 			selectedFragment,
 			{ labels: selectedFragment?.labels?.filter((label: string) => label !== 'template') }
 		);
 
-		dispatch({
-			type: FragmentActionType.ADD_ONE,
-			data: fragmentCopy,
-			loaded: true
-		});
-		updateLocalFragments({
-			type: LocalFragmentActionType.ADD,
-			data: { id: fragmentCopy.id }
-		});
+		addFragment(fragmentCopy);
 		history.push(`/edit/${fragmentCopy.id}`);
-	}
+	};
 
 	return (
 		<Modal
@@ -177,7 +161,7 @@ export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 					lg: 12
 				}}>
 					{
-						fragmentsState.fragments.filter((fragment: any) => (
+						fragments.filter((fragment: any) => (
 							fragment.labels && fragment.labels.includes('template')
 						)).map((fragment: any) => (
 							<div className={tileWrapper}>

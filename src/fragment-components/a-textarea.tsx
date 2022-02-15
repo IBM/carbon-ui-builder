@@ -2,6 +2,10 @@ import React from 'react';
 import { TextArea, TextInput } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
+import { ComponentInfo } from '.';
+
+import image from './../assets/component-icons/text-area.svg';
+import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const ATextAreaStyleUI = ({selectedComponent, setComponent}: any) => {
 	return <>
@@ -72,4 +76,50 @@ export const ATextArea = ({
 				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
 		</AComponent>
 	);
+};
+
+export const componentInfo: ComponentInfo = {
+	component: ATextArea,
+	styleUI: ATextAreaStyleUI,
+	codeUI: ATextAreaCodeUI,
+	keywords: ['textarea', 'text area', 'input'],
+	name: 'Text area',
+	defaultComponentObj: {
+		type: 'textarea',
+		label: 'Text area label',
+		placeholder: 'Text area placeholder',
+		helperText: 'Helper text'
+	},
+	image,
+	codeExport: {
+		angular: {
+			inputs: ({json}) => ``,
+			outputs: ({json}) => ``,
+			imports: ['InputModule'],
+			code: ({json}) => {
+				return `<ibm-label
+					helperText="${json.helperText}">
+						${json.label}
+						<textarea
+							ibmTextArea
+							${angularClassNamesFromComponentObj(json)}
+							name="${json.codeContext?.name}"
+							placeholder="${json.placeholder}"></textarea>
+				</ibm-label>`;
+			}
+		},
+		react: {
+			imports: ['TextArea'],
+			code: ({json}) => {
+				return `<TextArea
+					labelText="${json.label}"
+					name="${json.codeContext?.name}"
+					helperText="${json.helperText}"
+					placeholder="${json.placeholder}"
+					value={state["${json.codeContext?.name}"]}
+					${reactClassNamesFromComponentObj(json)}
+					onChange={handleInputChange} />`;
+			}
+		}
+	}
 };

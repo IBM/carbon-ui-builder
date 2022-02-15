@@ -3,12 +3,12 @@ import {
 	FormLabel,
 	Tag
 } from 'carbon-components-react';
-import { StylesContext } from '../context/styles-context';
+import { GlobalStateContext } from '../context';
 
 const compareClasses = (sc1: any, sc2: any) => sc1.name < sc2.name ? -1 : 1;
 
 export const CssClassSelector = ({ selectedClasses, setSelectedClasses }: any) => {
-	const { styleClasses } = useContext(StylesContext);
+	const { styleClasses } = useContext(GlobalStateContext);
 
 	const _getAvailableClasses = () => {
 		// available is anything in styleClasses, not yet in selecteClasses, sorted
@@ -33,7 +33,10 @@ export const CssClassSelector = ({ selectedClasses, setSelectedClasses }: any) =
 
 	useEffect(() => {
 		// update the contents of selected classes when needed
-		setSelectedClasses(styleClasses.filter((sc: any) => !!selectedClasses?.find((ssc: any) => ssc.id === sc.id)));
+		setSelectedClasses(
+			styleClasses.filter((sc: any) => !!selectedClasses?.find((ssc: any) => ssc.id === sc.id)),
+			false
+		);
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [styleClasses]);
 
@@ -77,11 +80,13 @@ export const CssClassSelector = ({ selectedClasses, setSelectedClasses }: any) =
 };
 
 export const ComponentCssClassSelector = ({ componentObj, setComponent }: any) => {
-	const setSelectedClasses = (cssClasses: any[]) => {
+	const setSelectedClasses = (cssClasses: any[], updateActionHistory = true) => {
 		setComponent({
-			...componentObj,
-			cssClasses
-		});
+				...componentObj,
+				cssClasses
+			},
+			updateActionHistory
+		);
 	};
 
 	return (

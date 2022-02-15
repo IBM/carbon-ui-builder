@@ -2,6 +2,7 @@ import React from 'react';
 import domtoimage from 'dom-to-image';
 import ReactDOM from 'react-dom';
 import { Fragment } from '../components';
+import { camelCase } from 'lodash';
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -127,3 +128,18 @@ export const duplicateFragment = (fragments: any, fragment: any, options = {}) =
 	fragmentCopy.id = `${Math.random().toString().slice(2)}${Math.random().toString().slice(2)}`;
 	return Object.assign({}, fragmentCopy, options);
 };
+export const reactClassNamesFromComponentObj = (componentObj: any) =>
+	componentObj.cssClasses
+	&& Array.isArray(componentObj.cssClasses)
+	&& componentObj.cssClasses.length > 0
+	? `className='${componentObj.cssClasses.map((cc: any) => cc.id).join(' ')}'`
+	: '';
+
+export const angularClassNamesFromComponentObj = (componentObj: any) =>
+	componentObj.cssClasses
+	&& Array.isArray(componentObj.cssClasses)
+	&& componentObj.cssClasses.length > 0
+	? `class='${componentObj.cssClasses.map((cc: any) => cc.id).join(' ')}'`
+	: '';
+
+export const nameStringToVariableString = (name: string) => camelCase(name);

@@ -9,10 +9,9 @@ import {
 	ErrorBoundary,
 	NotFound
 } from './routes';
-import { FragmentsContextProvider } from './context/fragments-context';
+import { GlobalStateContextProvider } from './context/global-state-context';
 import { ModalContextProvider } from './context/modal-context';
 import { NotificationContextProvider } from './context/notification-context';
-import { LocalFragmentsContextProvider } from './context/local-fragments-context';
 import { UIShell } from './components/ui-shell';
 import { css } from 'emotion';
 
@@ -32,24 +31,22 @@ export const App = () => (
 	<Router basename='carbon-components-builder'>
 		<div className={app}>
 			<ErrorBoundary>
-				<FragmentsContextProvider>
+				<GlobalStateContextProvider>
 					<NotificationContextProvider>
-						<LocalFragmentsContextProvider>
-							<UIShell />
-							<Notification />
-							<ModalContextProvider>
-								<Switch>
-									<Route path='/' exact component={Dashboard} />
-									<Route
-										path={['/edit', '/edit/:id']}
-										exact
-										component={Edit} />
-									<Route path="*" component={NotFound} />
-								</Switch>
-							</ModalContextProvider>
-						</LocalFragmentsContextProvider>
+						<UIShell />
+						<Notification />
+						<ModalContextProvider>
+							<Switch>
+								<Route path='/' exact component={Dashboard} />
+								<Route
+									path={['/edit', '/edit/:id']}
+									exact
+									component={Edit} />
+								<Route path="*" component={NotFound} />
+							</Switch>
+						</ModalContextProvider>
 					</NotificationContextProvider>
-				</FragmentsContextProvider>
+				</GlobalStateContextProvider>
 			</ErrorBoundary>
 			<span id="forkongithub">
 				<a href="https://github.com/IBM/carbon-components-builder">Fork on GitHub</a>

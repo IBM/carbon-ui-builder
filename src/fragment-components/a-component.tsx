@@ -47,6 +47,42 @@ const dropStyleAfter = cx(dropStyle, css`
 	bottom: -4px;
 `);
 
+export interface ComponentInfo {
+	component: any,
+	keywords: string[],
+	name: string,
+	defaultComponentObj: any,
+	image: any, // whatever fits in the <img src="here">
+	styleUI: any,
+	codeUI?: any,
+	render?: (props: ComponentInfoRenderProps) => any,
+	hideFromElementsPane?: boolean,
+	codeExport: {
+		angular: {
+			inputs: (props: {json: any}) => string,
+			outputs: (props: {json: any}) => string,
+			imports: string[],
+			isNotDirectExport?: boolean,
+			code: (props: {json: any, jsonToTemplate: (json: any) => string}) => string
+		},
+		react: {
+			imports: string[],
+			isNotDirectExport?: boolean,
+			code: (props: {json: any, jsonToTemplate: (json: any) => string}) => string
+		}
+	}
+}
+
+export interface ComponentInfoRenderProps {
+	componentObj: any,
+	select: () => void,
+	remove: () => void,
+	selected: boolean,
+	onDragOver: (event: any) => void,
+	onDrop: (event: any) => any,
+	renderComponents: (componentObj: any) => any
+}
+
 export const AComponent = ({
 	children,
 	componentObj,

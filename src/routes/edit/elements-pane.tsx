@@ -4,25 +4,18 @@ import { Search } from 'carbon-components-react';
 
 import { ElementTile } from '../../components/element-tile';
 
-import buttonImg from './../../assets/component-icons/button.svg';
-import checkboxImg from './../../assets/component-icons/checkbox.svg';
-import gridImg from './../../assets/component-icons/grid.svg';
-import textAreaImg from './../../assets/component-icons/text-area.svg';
-import textInputImg from './../../assets/component-icons/text-input.svg';
-import searchImg from './../../assets/component-icons/search.svg';
-import textImg from './../../assets/component-icons/text.svg';
-
-import { leftPane } from '.';
+import { leftPane, leftPaneHeader } from '.';
+import { allComponents } from '../../fragment-components';
 
 const searchStyle = css`
 	margin-top: 15px;
-	margin-bottom: 30px;
 `;
 
 const elementTileListStyle = css`
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: wrap;
+	margin-top: 100px;
 `;
 
 export const ElementsPane = ({isActive}: any) => {
@@ -39,98 +32,27 @@ export const ElementsPane = ({isActive}: any) => {
 
 	return (
 		<div className={cx(leftPane, isActive ? 'is-active' : '')}>
-			Elements
-			<Search
-				id='elements-search'
-				className={searchStyle}
-				light
-				labelText='Filter elements'
-				placeholder='Filter elements'
-				onChange={(event: any) => setFilterString(event.target.value)} />
+			<div className={leftPaneHeader}>
+				Elements
+				<Search
+					id='elements-search'
+					className={searchStyle}
+					light
+					labelText='Filter elements'
+					placeholder='Filter elements'
+					onChange={(event: any) => setFilterString(event.target.value)} />
+			</div>
 			<div className={elementTileListStyle}>
 				{
-					shouldShow(['button']) && <ElementTile componentObj={{
-						type: 'button',
-						kind: 'primary',
-						text: 'Button'
-					}}>
-						<img src={buttonImg} alt='button'/>
-						<span className='title'>Button</span>
-					</ElementTile>
-				}
-				{
-					shouldShow(['checkbox', 'check box']) && <ElementTile componentObj={{
-						type: 'checkbox',
-						label: 'Checkbox'
-					}}>
-						<img src={checkboxImg} alt='checkbox'/>
-						<span className='title'>Checkbox</span>
-					</ElementTile>
-				}
-				{
-					shouldShow(['text']) && <ElementTile componentObj={{
-						type: 'text',
-						text: 'Text'
-					}}>
-						<img src={textImg} alt='text'/>
-						<span className='title'>Text</span>
-					</ElementTile>
-				}
-				{
-					shouldShow(['textarea', 'text area']) && <ElementTile componentObj={{
-						type: 'textarea',
-						label: 'Text area label',
-						placeholder: 'Text area placeholder',
-						helperText: 'Helper text'
-					}}>
-						<img src={textAreaImg} alt='text area'/>
-						<span className='title'>Text area</span>
-					</ElementTile>
-				}
-				{
-					shouldShow(['textinput', 'text input']) && <ElementTile componentObj={{
-						type: 'textinput',
-						label: 'Text input label',
-						placeholder: 'Text input placeholder',
-						helperText: 'Helper text',
-						inputType: 'text'
-					}}>
-						<img src={textInputImg} alt='text input'/>
-						<span className='title'>Text input</span>
-					</ElementTile>
-				}
-				{
-					shouldShow(['search', 'search input']) && <ElementTile componentObj={{
-						type: 'search',
-						label: 'Search',
-						placeholder: 'Search',
-						inputSize: 'lg'
-					}}>
-						<img src={searchImg} alt='search'/>
-						<span className='title'>Search</span>
-					</ElementTile>
-				}
-				{
-					shouldShow(['grid', 'row', 'column']) && <ElementTile componentObj={{
-						type: 'grid',
-						items: [
-							{
-								type: 'row', items: [
-									{ type: 'column', items: [{ type: 'text', text: 'A' }]},
-									{ type: 'column', items: [{ type: 'text', text: 'B' }]}
-								]
-							},
-							{
-								type: 'row', items: [
-									{ type: 'column', items: [{ type: 'text', text: 'C' }]},
-									{ type: 'column', items: [{ type: 'text', text: 'D' }]}
-								]
-							}
-						]
-					}}>
-						<img src={gridImg} alt='grid'/>
-						<span className="title">Grid</span>
-					</ElementTile>
+					Object.values(allComponents)
+					.filter((component: any) =>
+						!component.componentInfo.hideFromElementsPane
+						&& shouldShow(component.componentInfo.keywords))
+					.map((component: any) =>
+						<ElementTile componentObj={component.componentInfo.defaultComponentObj}>
+							<img src={component.componentInfo.image} alt={component.componentInfo.name} />
+							<span className='title'>{component.componentInfo.name}</span>
+						</ElementTile>)
 				}
 			</div>
 		</div>
