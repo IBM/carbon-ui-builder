@@ -1,7 +1,7 @@
 @import '../fragment-tile.scss';
 
 .fragment-options {
-    margin-left: 30px;
+	margin-left: 30px;
 	margin-right: 30px;
 	display: flex;
 	flex-direction: row;
@@ -15,6 +15,6 @@
 }
 
 .modal-tile-wrapper {
-    @extend .tile-wrapper;
-    height: 240px;
+	@extend .tile-wrapper;
+	height: 240px;
 }

@@ -40,6 +40,10 @@ export const getFragmentPreview = async(fragment: any, props: RenderProps) => {
 	return imageBlob;
 };
 
+export const getFragmentTemplates = (fragments: any) => (
+	fragments.filter((fragment: any) => !!fragment.labels?.includes('template'))
+);
+
 export const getAllComponentStyleClasses = (componentObj: any) => {
 	let styleClasses: any = {};
 
@@ -121,7 +125,7 @@ export const getUniqueFragmentName = (fragments: Array<any>, baseName: string) =
 	return `${nameBase} copy ${highestNumber && count < highestNumber ? highestNumber + 1 : count + 1}`;
 };
 
-export const duplicateFragment = (fragments: any, fragment: any, overrides = {}) => {
+export const getFragmentDuplicate = (fragments: any, fragment: any, overrides = {}) => {
 	// copy current fragment and change fragment title
 	let fragmentCopy = JSON.parse(JSON.stringify(fragment));
 	fragmentCopy.title = getUniqueFragmentName(fragments, fragmentCopy.title);
@@ -129,7 +133,7 @@ export const duplicateFragment = (fragments: any, fragment: any, overrides = {})
 	return Object.assign({}, fragmentCopy, overrides);
 };
 
-export const getPreviewUrl = async (fragment: any) => {
+export const getFragmentPreviewUrl = async (fragment: any) => {
 	const renderProps: RenderProps = {
 		id: fragment.id,
 		name: fragment.title,

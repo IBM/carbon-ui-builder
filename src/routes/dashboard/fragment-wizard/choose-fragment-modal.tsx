@@ -3,8 +3,7 @@ import React, { useContext, useState } from 'react';
 import {
 	Modal,
 	InlineNotification,
-	NotificationActionButton,
-	SelectableTile
+	NotificationActionButton
 } from 'carbon-components-react';
 import { FragmentWizardModals } from './fragment-wizard';
 
@@ -12,9 +11,9 @@ import { GlobalStateContext } from '../../../context';
 import { useHistory } from 'react-router-dom';
 import { warningNotificationProps } from '../../../utils/file-tools';
 import { Col } from '../../../components';
-import { FragmentPreview } from '../../../components/fragment-preview';
-import { duplicateFragment } from '../../../utils/fragment-tools';
+import { getFragmentDuplicate, getFragmentTemplates } from '../../../utils/fragment-tools';
 import './choose-fragment-modal.scss';
+import { ChooseFragmentModalTile } from './choose-fragment-modal-tile';
 
 export interface ChooseFragmentModalProps {
 	shouldDisplay: boolean,
@@ -29,7 +28,6 @@ export interface ChooseFragmentModalProps {
 export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 	const [selectedFragment, setSelectedFragment] = useState<any>(null);
 	const { fragments, addFragment } = useContext(GlobalStateContext);
-	const [previewUrl, setPreviewUrl] = useState('');
 
 	const history = useHistory();
 
@@ -38,9 +36,11 @@ export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 			return;
 		}
 
-		const fragmentCopy = duplicateFragment(
+		const fragmentCopy = getFragmentDuplicate(
 			fragments,
 			selectedFragment,
+			// When a new fragment is created from an existing template, it shouldn't
+			// be a template by default.
 			{ labels: selectedFragment?.labels?.filter((label: string) => label !== 'template') }
 		);
 
@@ -107,26 +107,12 @@ export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 					lg: 12
 				}}>
 					{
-						fragments.filter((fragment: any) => (
-							fragment.labels && fragment.labels.includes('template')
-						)).map((fragment: any) => (
-							<div className='modal-tile-wrapper'>
-								<SelectableTile
-									className='tile-style'
-									onClick={() => setSelectedFragment(fragment)}
-									selected={fragment === selectedFragment}>
-									<div className='tile-inner-wrapper'>
-										<FragmentPreview
-											fragment={fragment}
-											previewUrl={previewUrl}
-											setPreviewUrl={setPreviewUrl} />
-										<h3>{fragment.title}</h3>
-										<span>
-											{fragment.lastModified ? fragment.lastModified : 'Last modified date unknown'}
-										</span>
-									</div>
-								</SelectableTile>
-							</div>
+						getFragmentTemplates(fragments).map((fragment: any) => (
+							<ChooseFragmentModalTile
+								key={fragment.id}
+								fragment={fragment}
+								selectedFragment={selectedFragment}
+								setSelectedFragment={setSelectedFragment} />
 						))
 					}
 				</Col>

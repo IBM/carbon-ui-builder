@@ -9,7 +9,7 @@ import {
 } from 'carbon-components-react';
 import { ModalContext, ModalActionType } from '../../context/modal-context';
 import { FragmentPreview } from '../../components/fragment-preview';
-import { getPreviewUrl } from '../../utils/fragment-tools';
+import { getFragmentPreviewUrl } from '../../utils/fragment-tools';
 import './fragment-tile.scss';
 
 export const FragmentTile = ({
@@ -31,7 +31,7 @@ export const FragmentTile = ({
 	};
 
 	const resetPreview = async () => {
-		setPreviewUrl(await getPreviewUrl(fragment) as string);
+		setPreviewUrl(await getFragmentPreviewUrl(fragment) as string);
 	}
 
 	return (
@@ -69,7 +69,7 @@ export const FragmentTile = ({
 								onClick={() => { handleModalState(ModalActionType.setDuplicationModal); }}/>
 							<OverflowMenuItem
 								itemText='Reset preview'
-								onClick={() => resetPreview()}/>
+								onClick={resetPreview}/>
 							<OverflowMenuItem
 								itemText='Remove'
 								onClick={() => { handleModalState(ModalActionType.setDeletionModal); }}

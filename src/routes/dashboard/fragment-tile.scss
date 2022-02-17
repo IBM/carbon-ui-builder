@@ -1,5 +1,5 @@
 .tile-wrapper {
-    position: relative;
+	position: relative;
 	margin: 0.75rem;
 	padding: 0;
 	height: 250px;
@@ -10,16 +10,16 @@
 }
 
 .tile-style {
-    padding: 0;
+	padding: 0;
 	background-color: #ffffff;
 }
 
 .tile-inner-wrapper-base {
-    align-items: end;
+	align-items: end;
 }
 
 .tile-inner-wrapper {
-    @extend .tile-inner-wrapper-base;
+	@extend .tile-inner-wrapper-base;
 
 	margin: 8px;
 	h3 {
@@ -45,12 +45,12 @@
 }
 
 .fragment-overflow {
-    right: 5px;
+	right: 5px;
 	position: absolute;
 	margin-top: 1rem;
 	padding: 5px;
 }
 
 .fragment-info {
-    display: flex;
+	display: flex;
 }

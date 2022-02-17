@@ -5,7 +5,7 @@ import { ModalActionType, ModalContext } from '../../context/modal-context';
 import { GlobalStateContext } from '../../context/global-state-context';
 import { useHistory, useLocation } from 'react-router-dom';
 
-import { duplicateFragment } from '../../utils/fragment-tools';
+import { getFragmentDuplicate } from '../../utils/fragment-tools';
 
 // In the case that fragment modal is used in the dashboard the full fragment containing options and data
 // can't be passed in, so fragment id is passed in and `useFragment` is used within this component.
@@ -19,8 +19,14 @@ export const DuplicateFragmentModal = ({ id }: any) => {
 
 	const fragment = fragments.find((fragment: any) => fragment.id === id);
 
-	const handleDuplicateFragment = () => {
-		const fragmentCopy = duplicateFragment(fragments, fragment);
+	const duplicateFragment = () => {
+		const fragmentCopy = getFragmentDuplicate(
+			fragments,
+			fragment,
+			// When a new fragment is created from an existing template, it shouldn't
+			// be a template by default.
+			{ labels: fragment?.labels?.filter((label: string) => label !== 'template') }
+		);
 
 		addFragment(fragmentCopy);
 		if (location.pathname !== '/') {
@@ -45,7 +51,7 @@ export const DuplicateFragmentModal = ({ id }: any) => {
 			secondaryButtonText='Cancel'
 			modalHeading='Duplicate fragment?'
 			primaryButtonText='Duplicate'
-			onRequestSubmit={() => handleDuplicateFragment()}>
+			onRequestSubmit={duplicateFragment}>
 			<p>
 				Click <strong>Duplicate</strong> to begin to edit a copy of the current fragment
 				or <strong>Cancel</strong> to continue on this fragment.

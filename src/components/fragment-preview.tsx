@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { Loading } from 'carbon-components-react';
 
 import { css } from 'emotion';
-import { getPreviewUrl } from '../utils/fragment-tools';
+import { getFragmentPreviewUrl } from '../utils/fragment-tools';
 
 const fragmentImage = css`
 	width: auto;
@@ -29,7 +29,7 @@ const spinner = css`
 export const FragmentPreview = ({ fragment, previewUrl, setPreviewUrl }: any) => {
 	const updatePreviewUrl = async () => {
 		if (setPreviewUrl) {
-			setPreviewUrl(await getPreviewUrl(fragment));
+			setPreviewUrl(await getFragmentPreviewUrl(fragment));
 		}
 	}
 
@@ -38,19 +38,19 @@ export const FragmentPreview = ({ fragment, previewUrl, setPreviewUrl }: any) =>
 	}, [fragment])
 
 	return (
-        <>
-            {
-                previewUrl
-                ? <img
-                    loading='lazy'
-                    src={previewUrl}
-                    className={fragmentImage}
-                    alt={`fragment preview: ${fragment.title}`} />
-                : <div className={imagePlaceholderStyle} />
-            }
-            <div className={spinner}>
-                <Loading withOverlay={false} active={!previewUrl} />
-            </div>
-        </>
+		<>
+			{
+				previewUrl
+				? <img
+					loading='lazy'
+					src={previewUrl}
+					className={fragmentImage}
+					alt={`fragment preview: ${fragment.title}`} />
+				: <div className={imagePlaceholderStyle} />
+			}
+			<div className={spinner}>
+				<Loading withOverlay={false} active={!previewUrl} />
+			</div>
+		</>
 	);
 };
