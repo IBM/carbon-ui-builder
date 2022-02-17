@@ -1,21 +1,23 @@
 import React from 'react';
 import {
-    Checkbox,
+	Checkbox,
 	Dropdown,
-    Tag,
-	TextInput,
-    Toggle
+	Tag,
+	TextInput
 } from 'carbon-components-react';
-import { css } from 'emotion';
 import { AComponent, ComponentInfo } from './a-component';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 
-import image from './../assets/component-icons/button.svg';
-import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
+import image from './../assets/component-icons/tag.svg';
+import {
+	angularClassNamesFromComponentObj,
+	nameStringToVariableString,
+	reactClassNamesFromComponentObj
+} from '../utils/fragment-tools';
 
 export const ATagStyleUI = ({selectedComponent, setComponent}: any) => {
 	const typeItems = [
-        {id: 'gray', text: 'Gray'},
+		{id: 'gray', text: 'Gray'},
 		{id: 'red', text: 'Red'},
 		{id: 'magenta', text: 'Magenta'},
 		{id: 'purple', text: 'Purple'},
@@ -23,16 +25,16 @@ export const ATagStyleUI = ({selectedComponent, setComponent}: any) => {
 		{id: 'cyan', text: 'Cyan'},
 		{id: 'teal', text: 'Teal'},
 		{id: 'green', text: 'Green'},
-        {id: 'cool-gray', text: 'Cool gray'},
-        {id: 'warm-gray', text: 'Warm gray'},
-        {id: 'high-contrast', text: 'High contrast'},
-        {id: 'outline', text: 'Outline'},
+		{id: 'cool-gray', text: 'Cool gray'},
+		{id: 'warm-gray', text: 'Warm gray'},
+		{id: 'high-contrast', text: 'High contrast'},
+		{id: 'outline', text: 'Outline'},
 	];
 
-    const sizeItems = [
-        {id: 'md', text: 'Medium'},
+	const sizeItems = [
+		{id: 'md', text: 'Medium'},
 		{id: 'sm', text: 'Small'}
-    ];
+	];
 
 	return <>
 		<TextInput
@@ -43,8 +45,7 @@ export const ATagStyleUI = ({selectedComponent, setComponent}: any) => {
 					...selectedComponent,
 					title: event.currentTarget.value
 				});
-			}}
-		/>
+			}} />
 
 		<Dropdown
 			label='Type'
@@ -55,9 +56,9 @@ export const ATagStyleUI = ({selectedComponent, setComponent}: any) => {
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				kind: event.selectedItem.id
-		})}/>
+		})} />
 
-        <Dropdown
+		<Dropdown
 			label='Size'
 			titleText='Size'
 			items={sizeItems}
@@ -66,30 +67,29 @@ export const ATagStyleUI = ({selectedComponent, setComponent}: any) => {
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				size: event.selectedItem.id
-		})}/>
+		})} />
 
-        <Toggle
-            labelText='Is filter'
-            size='md'
-            labelA='Filter'
-            labelB='Chip'
-            defaultToggled={selectedComponent.filter}
-            onToggle={(isToggled: boolean) => setComponent({
-                ...selectedComponent,
-                filter: isToggled
-				
-            })} />
+		<Checkbox
+			labelText='Is filter'
+			id='filter'
+			checked={selectedComponent.filter}
+			onChange={(checked: boolean) => {
+				setComponent({
+					...selectedComponent,
+					filter: checked
+				})
+			}} />
 
-        <Checkbox
-            labelText='Disabled'
-            id='disabled'
-            checked={selectedComponent.disabled}
-            onChange={(checked: boolean) => {
-                setComponent({
-                    ...selectedComponent,
-                    disabled: checked
-                })
-            }}/>
+		<Checkbox
+			labelText='Disabled'
+			id='disabled'
+			checked={selectedComponent.disabled}
+			onChange={(checked: boolean) => {
+				setComponent({
+					...selectedComponent,
+					disabled: checked
+				})
+			}} />
 
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>
@@ -107,7 +107,7 @@ export const ATag = ({
 			<Tag
 			type={componentObj.kind}
 			disabled={componentObj.disabled}
-            filter={componentObj.filter}
+			filter={componentObj.filter}
 			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 				{children}
 			</Tag>
@@ -129,38 +129,41 @@ export const componentInfo: ComponentInfo = {
 	name: 'Tag',
 	defaultComponentObj: {
 		type: 'tag',
-        // This field is `type` in the `Tag` component
+		// This field is `type` in the `Tag` component
 		kind: 'gray',
-        size: 'md',
-        filter: false,
-        disabled: false,
+		size: 'md',
+		filter: false,
+		disabled: false,
 		title: 'Tag'
 	},
 	image,
 	codeExport: {
 		angular: {
 			inputs: ({json}) => ``,
-			outputs: ({json}) => `${json.filter ? `@Output() ${nameStringToVariableString(json.codeContext?.name)}Close = new EventEmitter();` : ''}`,
+			outputs: ({json}) => `${json.filter
+				? `@Output() ${nameStringToVariableString(json.codeContext?.name)}Close = new EventEmitter();`
+				: ''
+			}`,
 			imports: ['TagModule'],
 			code: ({json}) => {
-                const defaultProps = `
-                    ${`type='${json.kind ? json.kind : "gray"}'`}
-                    ${`size='${json.size ? json.size : "md"}'`}
-                    [disabled]='${json.disabled}'
-                `
-                if (json.filter) {
-                    return `<ibm-tag-filter
-                        ${defaultProps}
-                        (close)='${nameStringToVariableString(json.codeContext?.name)}Close.emit()'
-                        ${angularClassNamesFromComponentObj(json)}>
-                            ${json.title}
-                    </ibm-tag-filter>
-                    `;
-                }
+				const defaultProps = `
+					${`type='${json.kind ? json.kind : "gray"}'`}
+					${`size='${json.size ? json.size : "md"}'`}
+					[disabled]='${json.disabled}'
+				`
+				if (json.filter) {
+					return `<ibm-tag-filter
+						${defaultProps}
+						(close)='${nameStringToVariableString(json.codeContext?.name)}Close.emit()'
+						${angularClassNamesFromComponentObj(json)}>
+							${json.title}
+					</ibm-tag-filter>
+					`;
+				}
 
 				return `<ibm-tag
-                    ${defaultProps}
-                    ${angularClassNamesFromComponentObj(json)}>
+					${defaultProps}
+					${angularClassNamesFromComponentObj(json)}>
 						${json.title}
 				</ibm-tag>`;
 			}
@@ -169,13 +172,13 @@ export const componentInfo: ComponentInfo = {
 			imports: ['Tag'],
 			code: ({ json }) => {
 				return `<Tag
-                    ${json.kind && ` type="${json.kind}"`}
-                    ${`size='${json.size ? json.size : "md"}'`}
-                    disabled={${json.disabled}}
-                    filter={${json.filter}}
-                    ${reactClassNamesFromComponentObj(json)}>
-                        ${json.title}
-                </Tag>`;
+					${json.kind && ` type="${json.kind}"`}
+					${`size='${json.size ? json.size : "md"}'`}
+					disabled={${json.disabled}}
+					filter={${json.filter}}
+					${reactClassNamesFromComponentObj(json)}>
+						${json.title}
+				</Tag>`;
 			}
 		}
 	}
