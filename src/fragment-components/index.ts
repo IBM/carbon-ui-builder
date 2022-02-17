@@ -3,6 +3,7 @@ import * as checkbox from "./a-checkbox";
 import * as column from "./a-column";
 import * as grid from "./a-grid";
 import * as row from "./a-row";
+import * as tag from "./a-tag"
 import * as text from "./a-text";
 import * as textarea from "./a-textarea";
 import * as textinput from "./a-textinput";
@@ -15,6 +16,7 @@ export { AColumn, AColumnStyleUI } from "./a-column";
 export * from "./a-component";
 export { AGrid, AGridStyleUI } from "./a-grid";
 export { ARow, ARowStyleUI } from "./a-row";
+export { ATag, ATagStyleUI } from "./a-tag";
 export { AText, ATextStyleUI } from "./a-text";
 export { ATextArea, ATextAreaStyleUI, ATextAreaCodeUI } from "./a-textarea";
 export { ATextInput, ATextInputStyleUI, ATextInputCodeUI } from "./a-textinput";
@@ -27,6 +29,7 @@ export const allComponents = {
 	column,
 	grid,
 	row,
+	tag,
 	text,
 	textarea,
 	textinput,
