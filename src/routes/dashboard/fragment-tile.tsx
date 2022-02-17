@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { css } from 'emotion';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import {
@@ -9,7 +8,8 @@ import {
 	Tile
 } from 'carbon-components-react';
 import { ModalContext, ModalActionType } from '../../context/modal-context';
-import { FragmentPreview, getPreviewUrl } from '../../components/fragment-preview';
+import { FragmentPreview } from '../../components/fragment-preview';
+import { getPreviewUrl } from '../../utils/fragment-tools';
 import './fragment-tile.scss';
 
 export const FragmentTile = ({
@@ -39,7 +39,10 @@ export const FragmentTile = ({
 			<Tile className='tile-style' >
 				<div className='tile-inner-wrapper'>
 					<Link to={to}>
-						<FragmentPreview fragment={fragment} previewUrl={previewUrl} />
+						<FragmentPreview
+							fragment={fragment}
+							previewUrl={previewUrl}
+							setPreviewUrl={setPreviewUrl}/>
 					</Link>
 					<div className='fragment-info'>
 						<div>

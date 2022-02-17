@@ -128,6 +128,30 @@ export const duplicateFragment = (fragments: any, fragment: any, overrides = {})
 	fragmentCopy.id = `${Math.random().toString().slice(2)}${Math.random().toString().slice(2)}`;
 	return Object.assign({}, fragmentCopy, overrides);
 };
+
+export const getPreviewUrl = async (fragment: any) => {
+	const renderProps: RenderProps = {
+		id: fragment.id,
+		name: fragment.title,
+		width: 800,
+		height: 400,
+		preview: {
+			format: 'png',
+			width: 330,
+			height: 200
+		}
+	};
+
+	const imageBlob = await getFragmentPreview(fragment, renderProps);
+	return new Promise((resolve) => {
+		const reader = new FileReader();
+		reader.readAsDataURL(imageBlob ? imageBlob : new Blob());
+		reader.onloadend = () => {
+			resolve(reader.result ? reader.result.toString() : '');
+		};
+	})
+};
+
 export const reactClassNamesFromComponentObj = (componentObj: any) =>
 	componentObj.cssClasses
 	&& Array.isArray(componentObj.cssClasses)

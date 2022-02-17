@@ -29,6 +29,7 @@ export interface ChooseFragmentModalProps {
 export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 	const [selectedFragment, setSelectedFragment] = useState<any>(null);
 	const { fragments, addFragment } = useContext(GlobalStateContext);
+	const [previewUrl, setPreviewUrl] = useState('');
 
 	const history = useHistory();
 
@@ -115,7 +116,10 @@ export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 									onClick={() => setSelectedFragment(fragment)}
 									selected={fragment === selectedFragment}>
 									<div className='tile-inner-wrapper'>
-										<FragmentPreview fragment={fragment} />
+										<FragmentPreview
+											fragment={fragment}
+											previewUrl={previewUrl}
+											setPreviewUrl={setPreviewUrl} />
 										<h3>{fragment.title}</h3>
 										<span>
 											{fragment.lastModified ? fragment.lastModified : 'Last modified date unknown'}

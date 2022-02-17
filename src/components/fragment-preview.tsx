@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Loading } from 'carbon-components-react';
 
 import { css } from 'emotion';
-import { getFragmentPreview, RenderProps } from '../utils/fragment-tools';
+import { getPreviewUrl } from '../utils/fragment-tools';
 
 const fragmentImage = css`
 	width: auto;
@@ -26,60 +26,30 @@ const spinner = css`
 	}
 `;
 
-export const getPreviewUrl = async (fragment: any) => {
-	const renderProps: RenderProps = {
-		id: fragment.id,
-		name: fragment.title,
-		width: 800,
-		height: 400,
-		preview: {
-			format: 'png',
-			width: 330,
-			height: 200
+export const FragmentPreview = ({ fragment, previewUrl, setPreviewUrl }: any) => {
+	const updatePreviewUrl = async () => {
+		if (setPreviewUrl) {
+			setPreviewUrl(await getPreviewUrl(fragment));
 		}
-	};
-
-	const imageBlob = await getFragmentPreview(fragment, renderProps);
-	return new Promise((resolve) => {
-		const reader = new FileReader();
-		reader.readAsDataURL(imageBlob ? imageBlob : new Blob());
-		reader.onloadend = () => {
-			resolve(reader.result ? reader.result.toString() : '');
-		};
-	})
-}
-
-export const FragmentPreview = ({ fragment, previewUrl }: any) => {
-    const [activePreviewUrl, setActivePreviewUrl] = useState(previewUrl);
+	}
 
 	useEffect(() => {
-		if (!previewUrl) {
-			const setPreviewUrl = async () => {
-				const url = await getPreviewUrl(fragment);
-				setActivePreviewUrl(url);
-			}
-			setPreviewUrl();
-		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
-	useEffect(() => {
-		setActivePreviewUrl(previewUrl);
-	}, [previewUrl])
+		updatePreviewUrl();
+	}, [fragment])
 
 	return (
         <>
             {
-                activePreviewUrl
+                previewUrl
                 ? <img
                     loading='lazy'
-                    src={activePreviewUrl}
+                    src={previewUrl}
                     className={fragmentImage}
                     alt={`fragment preview: ${fragment.title}`} />
                 : <div className={imagePlaceholderStyle} />
             }
             <div className={spinner}>
-                <Loading withOverlay={false} active={!activePreviewUrl} />
+                <Loading withOverlay={false} active={!previewUrl} />
             </div>
         </>
 	);
