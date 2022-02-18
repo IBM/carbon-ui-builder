@@ -128,7 +128,7 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 			setJsonString(event.target?.result as string);
 		}
 		reader.onerror = function (evt) {
-			console.log("oops, fo")
+			console.log("oops")
 		}
 
 		const updatedFile = {

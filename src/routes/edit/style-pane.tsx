@@ -11,7 +11,7 @@ import {
 } from 'carbon-components-react';
 import { Add16 } from '@carbon/icons-react';
 import { leftPane } from '.';
-import { StylesContext } from '../../context/styles-context';
+import { GlobalStateContext } from '../../context';
 
 const searchContainerStyle = css`
 	display: flex;
@@ -24,7 +24,7 @@ const searchContainerStyle = css`
 
 export const StylePane = ({isActive}: any) => {
 	const [selectedStyleClassId, setSelectedStyleClassId] = useState('' as string);
-	const { styleClasses, setStyleClasses } = useContext(StylesContext);
+	const { styleClasses, setStyleClasses } = useContext(GlobalStateContext);
 	const [filterString, setFilterString] = useState('');
 
 	const getSelectedClass = () => styleClasses.find((c: any) => c.id === selectedStyleClassId) || {};

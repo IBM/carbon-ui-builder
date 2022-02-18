@@ -14,7 +14,6 @@ import { ModalContextProvider } from './context/modal-context';
 import { NotificationContextProvider } from './context/notification-context';
 import { UIShell } from './components/ui-shell';
 import { css } from 'emotion';
-import { StylesContextProvider } from './context/styles-context';
 
 const app = css`
 	nav.bx--side-nav--expanded + div#edit-content {
@@ -33,22 +32,20 @@ export const App = () => (
 		<div className={app}>
 			<ErrorBoundary>
 				<GlobalStateContextProvider>
-					<StylesContextProvider>
-						<NotificationContextProvider>
-							<UIShell />
-							<Notification />
-							<ModalContextProvider>
-								<Switch>
-									<Route path='/' exact component={Dashboard} />
-									<Route
-										path={['/edit', '/edit/:id']}
-										exact
-										component={Edit} />
-									<Route path="*" component={NotFound} />
-								</Switch>
-							</ModalContextProvider>
-						</NotificationContextProvider>
-					</StylesContextProvider>
+					<NotificationContextProvider>
+						<UIShell />
+						<Notification />
+						<ModalContextProvider>
+							<Switch>
+								<Route path='/' exact component={Dashboard} />
+								<Route
+									path={['/edit', '/edit/:id']}
+									exact
+									component={Edit} />
+								<Route path="*" component={NotFound} />
+							</Switch>
+						</ModalContextProvider>
+					</NotificationContextProvider>
 				</GlobalStateContextProvider>
 			</ErrorBoundary>
 			<span id="forkongithub">

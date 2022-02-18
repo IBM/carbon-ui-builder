@@ -20,14 +20,16 @@ const showComponentStyleOptions = (selectedComponent: any, setComponent: any) =>
 export const StyleContextPane = ({fragment, setFragment}: any) => {
 	const selectedComponent = getSelectedComponent(fragment);
 
-	const setComponent = (component: any) => {
+	const setComponent = (component: any, updateActionHistory = true) => {
 		setFragment({
-			...fragment,
-			data: updatedState(fragment.data, {
-				type: 'update',
-				component
-			})
-		});
+				...fragment,
+				data: updatedState(fragment.data, {
+					type: 'update',
+					component
+				})
+			},
+			updateActionHistory
+		);
 	};
 
 	return (

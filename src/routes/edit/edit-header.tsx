@@ -5,10 +5,13 @@ import {
 	Copy16,
 	Delete16,
 	Settings16,
-	Share16
+	Share16,
+	Undo16,
+	Redo16
 } from '@carbon/icons-react';
 import { ModalContext, ModalActionType } from '../../context/modal-context';
 import { FragmentModal } from './fragment-modal';
+import { GlobalStateContext } from '../../context';
 
 const editHeader = css`
 	left: 16rem;
@@ -99,14 +102,25 @@ const editHeader = css`
 	}
 `;
 
-const toolBarAction = css`
-	background: #f4f4f4;
-	margin-right: 13px;
+const toolBarSeparator = css`
+	background-color: #e0e0e0;
+	height: 100%;
+	width: 1px;
+	display: inline-block;
+    margin: auto 6px;
+`;
+
+const actionIconStyle = css`
+	color: black;
+
+	.bx--btn--ghost:disabled & {
+		color: #8d8d8d;
+	}
 `;
 
 const fragmentEditToolBar = css`
 	display: flex;
-	margin-right: 4rem;
+	margin-right: 5rem;
 	margin-top: 8px;
 	margin-bottom: 8px;
 	button {
@@ -134,6 +148,12 @@ const fragmentEditToolBar = css`
 
 export const EditHeader = ({ fragment }: any) => {
 	const [, dispatchModal] = useContext(ModalContext);
+	const {
+		canUndo,
+		undoAction,
+		canRedo,
+		redoAction
+	} = useContext(GlobalStateContext);
 
 	return (
 		<header
@@ -153,14 +173,30 @@ export const EditHeader = ({ fragment }: any) => {
 					<div className='toolBarButtons'>
 						<Button
 							kind='ghost'
+							aria-label='Undo'
+							title='Undo'
+							disabled={!canUndo()}
+							onClick={() => undoAction()}>
+							<Undo16 className={actionIconStyle} />
+						</Button>
+						<Button
+							kind='ghost'
+							aria-label='Redo'
+							title='Redo'
+							disabled={!canRedo()}
+							onClick={() => redoAction()}>
+							<Redo16 className={actionIconStyle} />
+						</Button>
+						<div className={toolBarSeparator} />
+						<Button
+							kind='ghost'
 							aria-label='Duplicate fragment'
 							title='Duplicate fragment'
 							onClick={() => dispatchModal({
 								type: ModalActionType.setDuplicationModal,
 								id: fragment.id
-							})}
-							className={toolBarAction}>
-							<Copy16 fill="black" />
+							})}>
+							<Copy16 className={actionIconStyle} />
 						</Button>
 						<Button
 							kind='ghost'
@@ -169,9 +205,8 @@ export const EditHeader = ({ fragment }: any) => {
 							onClick={() => dispatchModal({
 								type: ModalActionType.setDeletionModal,
 								id: fragment.id
-							})}
-							className={toolBarAction}>
-							<Delete16 fill="black" />
+							})}>
+							<Delete16 className={actionIconStyle} />
 						</Button>
 						<Button
 							kind='ghost'
@@ -180,9 +215,8 @@ export const EditHeader = ({ fragment }: any) => {
 							onClick={() => dispatchModal({
 								type: ModalActionType.setShareModal,
 								id: fragment.id
-							})}
-							className={toolBarAction}>
-							<Share16 fill="black" />
+							})}>
+							<Share16 className={actionIconStyle} />
 						</Button>
 						<Button
 							kind='ghost'
@@ -191,9 +225,8 @@ export const EditHeader = ({ fragment }: any) => {
 							onClick={() => dispatchModal({
 								type: ModalActionType.setSettingsModal,
 								id: fragment.id
-							})}
-							className={toolBarAction}>
-							<Settings16 fill="black" />
+							})}>
+							<Settings16 className={actionIconStyle} />
 						</Button>
 					</div>
 				</div>

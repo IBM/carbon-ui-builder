@@ -35,6 +35,8 @@ import { CodeContextPane } from './code-context-pane';
 
 const leftPaneWidth = '300px';
 const rightPaneWidth = '302px';
+const railWidth = '48px';
+const transitionDetails = `0.11s cubic-bezier(0.2, 0, 1, 0.9)`;
 
 const editPageContent = css`
 	position: absolute;
@@ -45,13 +47,22 @@ const editPageContent = css`
 	background: #f4f4f4;
 
 	.edit-content {
-		padding: 1rem 2rem 1rem 5rem;
-		width: calc(100% - ${rightPaneWidth});
+		padding: 1rem;
+		margin: 0 ${rightPaneWidth} 0 ${railWidth};
+		width: calc(100% - ${rightPaneWidth} - ${railWidth});
+		height: calc(100% - 64px);
+		transition: margin-left ${transitionDetails}, width ${transitionDetails};
+		overflow: auto;
+
+		&.is-side-panel-active {
+			margin-left: calc(${railWidth} + ${leftPaneWidth});
+			width: calc(100% - ${leftPaneWidth} - ${rightPaneWidth} - ${railWidth});
+		}
 	}
 `;
 
 const sideRail = css`
-	transition: left 0.11s cubic-bezier(0.2, 0, 1, 0.9);
+	transition: left ${transitionDetails};
 
 	&.bx--side-nav, &.bx--side-nav:hover {
 		.bx--side-nav__item .bx--side-nav__link {
@@ -132,12 +143,15 @@ enum SelectedLeftPane {
 };
 
 export const Edit = ({ match }: any) => {
-	const { fragments, updateFragment } = useContext(GlobalStateContext);
+	const {
+		fragments,
+		updateFragment,
+		clearActionHistory,
+		addAction,
+		styleClasses
+	} = useContext(GlobalStateContext);
 
 	const fragment = fragments.find((fragment: any) => fragment.id === match.params.id);
-	const setFragment = (fragment: any) => {
-		updateFragment(fragment);
-	};
 
 	const [selectedLeftPane, setSelectedLeftPane] = useState(SelectedLeftPane.NONE);
 
@@ -148,6 +162,12 @@ export const Edit = ({ match }: any) => {
 			document.title = 'Edit fragment';
 		}
 	}, [fragment]);
+
+	useEffect(() => {
+		clearActionHistory();
+		addAction({fragment, styleClasses});
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const onRailClick = (clickedLeftPane: SelectedLeftPane) => {
 		if (clickedLeftPane === selectedLeftPane) {
@@ -197,11 +217,11 @@ export const Edit = ({ match }: any) => {
 					</SideNavLink>
 				</SideNavItems>
 			</SideNav>
-			<div className='edit-content'>
+			<div className={cx('edit-content', selectedLeftPane !== SelectedLeftPane.NONE ? 'is-side-panel-active' : '')}>
 				{
 					fragment
 					&& <>
-						<Fragment fragment={fragment} setFragment={setFragment} />
+						<Fragment fragment={fragment} setFragment={updateFragment} />
 					</>
 				}
 			</div>
@@ -210,12 +230,12 @@ export const Edit = ({ match }: any) => {
 					<Tab
 					id='properties-style'
 					label={<ColorPalette16 />}>
-						<StyleContextPane fragment={fragment} setFragment={setFragment} />
+						<StyleContextPane fragment={fragment} setFragment={updateFragment} />
 					</Tab>
 					<Tab
 					id='properties-code'
 					label={<Code16 />}>
-						<CodeContextPane fragment={fragment} setFragment={setFragment} />
+						<CodeContextPane fragment={fragment} setFragment={updateFragment} />
 					</Tab>
 					<Tab
 					id='properties-info'

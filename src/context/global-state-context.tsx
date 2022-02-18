@@ -6,6 +6,7 @@ import React, {
 } from 'react';
 import { useHistory } from 'react-router';
 import assign from 'lodash/assign';
+import { getFragmentHelpers } from './fragments-context-helper';
 
 const GlobalStateContext: React.Context<any> = createContext(null);
 GlobalStateContext.displayName = 'GlobalStateContext';
@@ -49,63 +50,81 @@ const GlobalStateContextProvider = ({ children }: any) => {
 	const [fragments, _setFragments] = useState<any[]>(
 		validInitialFragments(JSON.parse(localStorage.getItem('localFragments') as string)) || []
 	);
+	const [actionHistory, setActionHistory] = useState([] as any[]);
+	const [actionHistoryIndex, setActionHistoryIndex] = useState(-1);
+
+	const [styleClasses, _setStyleClasses] = useState(JSON.parse(localStorage.getItem('globalStyleClasses') as string || '[]') as any[]);
 
 	const setFragments = (frags: any[]) => {
 		_setFragments(frags);
 		localStorage.setItem('localFragments', JSON.stringify(frags));
 	}
 
-	const updateFragments = (frags: any[]) => {
-		if (!fragments || !fragments.length) {
-			setFragments(frags);
+	const addAction = (action: any) => {
+		const newActionHistoryIndex = actionHistoryIndex + 1;
+		setActionHistoryIndex(newActionHistoryIndex);
+
+		const actionClone = JSON.parse(JSON.stringify(action));
+
+		setActionHistory([...actionHistory.slice(0, newActionHistoryIndex), actionClone]);
+	};
+
+	const setStyleClasses = (sc: any, updateActionHistory = true) => {
+		const csString = JSON.stringify(sc);
+		localStorage.setItem('globalStyleClasses', csString)
+		_setStyleClasses(sc);
+		if (updateActionHistory) {
+			addAction({
+				styleClasses: JSON.parse(csString)
+			});
+		}
+	};
+
+	const canUndo = () => actionHistoryIndex > 0;
+
+	const setAction = (newIndex: number) => {
+		if (newIndex < 0 || newIndex > actionHistory.length - 1) {
 			return;
 		}
 
-		// Remove fragments which are in the original state but not in the payload.
-		const filteredFragments = fragments
-			.filter((fragment: any) => frags.some((actionFragment: any) => actionFragment.id === fragment.id));
-		// If fragments already exist in the state, we need to merge any changes to the fragments with
-		// the current matching fragments and add any new fragments (if any) to the state.
-		const mergedFragments = filteredFragments.map((fragment: any) => {
-		// Find the fragment in the payload containing the same id as the current state's fragments
-		// to merge updated changes with.
-			const updatedFragment = frags.find((actionFragment: any) => fragment.id === actionFragment.id);
-			// Can not use merge because removing datasets or labels will not
-			// work since it keeps the values, while assign overwrites past values.
-			return assign({}, fragment, updatedFragment);
-		});
-		// Adds any fragments in the payload which do not match any id in the current state's fragments.
-		const updatedFragments = mergedFragments
-			.concat(frags.filter((actionFragment: any) => (
-				fragments.every((fragment: any) => fragment.id !== actionFragment.id)
-			)));
+		const action = actionHistory[newIndex];
+		// if there was a change in fragment
+		if (action.fragment) {
+			updateFragment(action.fragment, false);
+		}
 
-		setFragments(updatedFragments);
+		// if there was a change in styleClasses
+		if (action.styleClasses) {
+			setStyleClasses(action.styleClasses, false);
+		}
+
+		setActionHistoryIndex(newIndex);
+	};
+
+	function undoAction() {
+		if (!canUndo()) {
+			return;
+		}
+
+		setAction(actionHistoryIndex - 1)
 	}
 
-	const toggleFragmentVisibility = (id: string, hidden = false) => {
-		const updatedFragments = fragments.map((f: any) => {
-			if (f.id === id) {
-				return {...f, hidden}
-			}
-			return f;
-		})
+	const canRedo = () => actionHistoryIndex < actionHistory.length - 1;
 
-		setFragments(updatedFragments);
-	}
+	const redoAction = () => {
+		if (!canRedo()) {
+			return;
+		}
 
-	const removeFragment = (id: string) => {
-		setFragments(fragments.filter((fragment: any) => fragment.id !== id));
-	}
+		setAction(actionHistoryIndex + 1)
+	};
 
-	const removeFragments = (ids: string[]) => {
-		const remainingFragments = fragments.filter((fragment: any) => (
-			!ids.some((actionFragment: any) => actionFragment.id === fragment.id)
-		));
-		setFragments(remainingFragments);
-	}
+	const clearActionHistory = () => {
+		setActionHistoryIndex(-1);
+		setActionHistory([]);
+	};
 
-	const updateFragment = (fragment: any) => {
+	const updateFragment = (fragment: any, updateActionHistory = true) => {
 		if (!fragments.length) {
 			setFragments([fragment]);
 			return;
@@ -120,33 +139,46 @@ const GlobalStateContextProvider = ({ children }: any) => {
 		});
 
 		setFragments(updatedFragments);
+
+		if (updateActionHistory) {
+			addAction({fragment});
+		}
 	};
 
-	const addFragment = (fragment: any) => {
-		const duplicate = assign({}, fragment);
-		const expandedFragments = fragments.concat(duplicate);
-		setFragments(expandedFragments);
-	}
+	const fragmentHelpers = getFragmentHelpers({fragments, setFragments});
 
 	useEffect(() => {
 		const localFragments = JSON.parse(localStorage.getItem('localFragments') as string || '[]');
 		// clean up the hidden fragments (those marked for deletion but failed to be deleted)
 		const filteredFragments = localFragments.filter((fragment: any) => !fragment.hidden);
-		updateFragments(filteredFragments);
+		fragmentHelpers.updateFragments(filteredFragments);
 		localStorage.setItem('localFragments', JSON.stringify(filteredFragments));
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
 		<GlobalStateContext.Provider value={{
+			// FRAGMENTS
 			fragments,
 			setFragments,
-			addFragment,
-			updateFragments,
-			toggleFragmentVisibility,
-			removeFragment,
-			removeFragments,
-			updateFragment
+			updateFragment,
+			...fragmentHelpers,
+
+			// STYLE CLASSES
+			styleClasses,
+			setStyleClasses,
+
+			// ACTION HISTORY
+			actionHistory,
+			actionHistoryIndex,
+			setActionHistory,
+			setActionHistoryIndex,
+			addAction,
+			canUndo,
+			undoAction,
+			canRedo,
+			redoAction,
+			clearActionHistory
 		}}>
 			{children}
 		</GlobalStateContext.Provider>
