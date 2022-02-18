@@ -7,6 +7,8 @@ export const getFragmentHelpers = ({fragments, setFragments}: any) => {
 		setFragments(expandedFragments);
 	}
 
+	const getFragment = (fragmentId: string) => fragments.find((f: any) => f.id === fragmentId);
+
 	const updateFragments = (frags: any[]) => {
 		if (!fragments || !fragments.length) {
 			setFragments(frags);
@@ -59,6 +61,7 @@ export const getFragmentHelpers = ({fragments, setFragments}: any) => {
 
 	return {
 		addFragment,
+		getFragment,
 		updateFragments,
 		toggleFragmentVisibility,
 		removeFragment,
