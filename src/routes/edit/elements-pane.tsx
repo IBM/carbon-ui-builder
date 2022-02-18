@@ -23,7 +23,7 @@ export const ElementsPane = ({isActive}: any) => {
 	const [filterString, setFilterString] = useState('');
 	const { fragments } = useContext(GlobalStateContext);
 
-	const microLayouts = fragments.filter((fragment: any) => fragment.labels.includes('micro-layout'));
+	const microLayouts = fragments.filter((fragment: any) => fragment.labels?.includes('micro-layout'));
 
 	/**
 	 * Returns true if element should show
