@@ -5,7 +5,7 @@ import {
 	Tile,
 } from 'carbon-components-react';
 import { AComponent } from '../a-component';
-import { TileMorphism } from './converter';
+import { TileMorphism } from './tile-morphism';
 import { css } from 'emotion';
 import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { ComponentInfo } from '../';
@@ -19,7 +19,7 @@ import {
 
 export const ATileStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
-		<TileMorphism component={selectedComponent} componentSetter={setComponent} />
+		<TileMorphism component={selectedComponent} setComponent={setComponent} />
 		<Checkbox
 			labelText='Light theme'
 			id='theme-select'

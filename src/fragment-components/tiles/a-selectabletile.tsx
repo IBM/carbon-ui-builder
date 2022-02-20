@@ -5,7 +5,7 @@ import {
 	SelectableTile,
 } from 'carbon-components-react';
 import { AComponent } from '../a-component';
-import { TileMorphism } from './converter';
+import { TileMorphism } from './tile-morphism';
 import { Add32 } from '@carbon/icons-react';
 import { getParentComponent, updatedState } from '../../components';
 import { css, cx } from 'emotion';
@@ -22,7 +22,7 @@ import {
 
 export const ASelectableTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
-		<TileMorphism component={selectedComponent} componentSetter={setComponent} />
+		<TileMorphism component={selectedComponent} setComponent={setComponent} />
 		<TextInput
 			value={selectedComponent.value}
 			labelText='Tile value'

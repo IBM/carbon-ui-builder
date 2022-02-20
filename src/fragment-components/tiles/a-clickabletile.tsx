@@ -5,7 +5,7 @@ import {
 	ClickableTile,
 } from 'carbon-components-react';
 import { AComponent } from '../a-component';
-import { TileMorphism } from './converter';
+import { TileMorphism } from './tile-morphism';
 import { css } from 'emotion';
 import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { ComponentInfo } from '../';
@@ -19,7 +19,7 @@ import {
 
 export const AClickableTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
-		<TileMorphism component={selectedComponent} componentSetter={setComponent} />
+		<TileMorphism component={selectedComponent} setComponent={setComponent} />
 		<TextInput
 			id='href-input'
 			value={selectedComponent.href}
