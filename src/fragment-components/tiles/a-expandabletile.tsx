@@ -9,13 +9,14 @@ import { TileMorphism } from './tile-morphism';
 import { css } from 'emotion';
 import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { ComponentInfo } from '../';
-
 import image from '../../assets/component-icons/tile-expandable.svg';
 import {
 	angularClassNamesFromComponentObj,
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
+
+
 
 export const AExpandableStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -107,7 +108,7 @@ export const componentInfo: ComponentInfo = {
 	component: AExpandableTile,
 	styleUI: AExpandableStyleUI,
 	keywords: ['tile', 'fold', 'expandable'],
-	name: 'Expandable Tile',
+	name: 'Expandable tile',
 	defaultComponentObj: {
 		type: 'expandabletile',
 		light: false,
@@ -145,8 +146,8 @@ export const componentInfo: ComponentInfo = {
 			imports: ['ExpandableTile'],
 			code: ({ json, jsonToTemplate }) => {
 				/**
-				 * @todo
-				 * CCA does not support theme
+				 * @todo - CCA does not support light
+				 * https://github.com/IBM/carbon-components-angular/issues/1999
 				 */
 				return `<ibm-expandable-tile
 					${json.expanded !== undefined ? `[expanded]="${nameStringToVariableString(json.codeContext?.name)}Expanded"` : ''}

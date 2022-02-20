@@ -4,6 +4,7 @@ import {
 	Checkbox,
 } from 'carbon-components-react';
 import { AComponent } from '../a-component';
+import { TileMorphism } from './tile-morphism';
 import { css } from 'emotion';
 import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { ComponentInfo } from '..';
@@ -16,14 +17,13 @@ import {
 } from '../../utils/fragment-tools';
 
 
-export const ASelectableTileGroupStyleUI = ({ selectedComponent, setComponent }: any) => {
 
+export const ASelectableTileGroupStyleUI = ({ selectedComponent, setComponent }: any) => {
 	/**
 	 * It usually is not common for users to have different theme for each tile,
 	 * this approach will ensure they don't have to go through each `tile` & update theme
 	 *
 	 * Iterates through all children & updates their theme
-	 * @param isLight - theme flag
 	 */
 	const updateChildrenTheme = (isLight: boolean) => {
 		selectedComponent.items.forEach((item: any) => {
@@ -32,6 +32,7 @@ export const ASelectableTileGroupStyleUI = ({ selectedComponent, setComponent }:
 	}
 
 	return <>
+		<TileMorphism component={selectedComponent} setComponent={setComponent} />
 		<Checkbox
 			labelText='Light theme'
 			id='theme-select'
@@ -84,14 +85,12 @@ export const ASelectableTileGroup = ({
 	</AComponent>;
 };
 
-
-
 export const componentInfo: ComponentInfo = {
 	component: ASelectableTileGroup,
 	styleUI: ASelectableTileGroupStyleUI,
 	codeUI: ASelectableTileGroupCodeUI,
 	keywords: ['tile', 'card', 'multi', 'select'],
-	name: 'Selectable Tile',
+	name: 'Selectable tile group',
 	defaultComponentObj: {
 		type: 'selectableTileGroup',
 		tileGroup: true,

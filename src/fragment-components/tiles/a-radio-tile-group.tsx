@@ -4,6 +4,7 @@ import {
 	Checkbox,
 } from 'carbon-components-react';
 import { AComponent } from '../a-component';
+import { TileMorphism } from './tile-morphism';
 import { css } from 'emotion';
 import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { ComponentInfo } from '../';
@@ -20,10 +21,9 @@ export const ARadioTileGroupStyleUI = ({ selectedComponent, setComponent }: any)
 
 	/**
 	 * It usually is not common for users to have different theme for each tile,
-	 * this approach will ensure they don't have to go through each `tile` & update theme
+	 * this approach will ensure users don't have to go through each `tile` & update theme
 	 *
 	 * Iterates through all children & updates their theme
-	 * @param isLight - theme flag
 	 */
 	const updateChildrenTheme = (isLight: boolean) => {
 		selectedComponent.items.forEach((item: any) => {
@@ -31,6 +31,7 @@ export const ARadioTileGroupStyleUI = ({ selectedComponent, setComponent }: any)
 		})
 	}
 
+	// Radio form elements within a fieldset should have the same name
 	const updateChildrenFormItemName = (name: string) => {
 		selectedComponent.items.forEach((item: any) => {
 			item.formItemName = name;
@@ -38,6 +39,7 @@ export const ARadioTileGroupStyleUI = ({ selectedComponent, setComponent }: any)
 	}
 
 	return <>
+		<TileMorphism component={selectedComponent} setComponent={setComponent} />
 		<TextInput
 			value={selectedComponent.formItemName}
 			labelText='Form item name'
@@ -46,10 +48,7 @@ export const ARadioTileGroupStyleUI = ({ selectedComponent, setComponent }: any)
 				updateChildrenFormItemName(event.currentTarget.value);
 				setComponent({
 					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						formItemName: event.currentTarget.value
-					}
+					formItemName: event.currentTarget.value,
 				});
 			}}
 		/>
@@ -60,10 +59,7 @@ export const ARadioTileGroupStyleUI = ({ selectedComponent, setComponent }: any)
 			onChange={(event: any) => {
 				setComponent({
 					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						legend: event.currentTarget.value
-					}
+					legend: event.currentTarget.value,
 				});
 			}}
 		/>
@@ -136,7 +132,7 @@ export const componentInfo: ComponentInfo = {
 	styleUI: ARadioTileGroupStyleUI,
 	codeUI: ARadioTileGroupCodeUI,
 	keywords: ['tile', 'card', 'radio', 'select'],
-	name: 'Radio Tile',
+	name: 'Radio tile group',
 	defaultComponentObj: {
 		type: 'radioTileGroup',
 		tileGroup: true,

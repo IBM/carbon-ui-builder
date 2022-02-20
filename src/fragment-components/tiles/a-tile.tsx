@@ -9,13 +9,14 @@ import { TileMorphism } from './tile-morphism';
 import { css } from 'emotion';
 import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { ComponentInfo } from '../';
-
 import image from '../../assets/component-icons/tile.svg';
 import {
 	angularClassNamesFromComponentObj,
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
+
+
 
 export const ATileStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>

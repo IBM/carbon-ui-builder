@@ -12,7 +12,6 @@ import { css, cx } from 'emotion';
 import { useFragment } from '../../context';
 import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { ComponentInfo } from '..';
-
 import image from '../../assets/component-icons/tile-selectable.svg';
 import {
 	angularClassNamesFromComponentObj,
@@ -20,9 +19,12 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 
+
+
 export const ASelectableTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
-		<TileMorphism component={selectedComponent} setComponent={setComponent} />
+		{selectedComponent.standalone &&
+			<TileMorphism component={selectedComponent} setComponent={setComponent} />}
 		<TextInput
 			value={selectedComponent.value}
 			labelText='Tile value'
@@ -49,6 +51,18 @@ export const ASelectableTileStyleUI = ({ selectedComponent, setComponent }: any)
 				});
 			}}
 		/>
+		{selectedComponent.standalone &&
+			<Checkbox
+				labelText='Light theme'
+				id='theme-select'
+				checked={selectedComponent.light}
+				onChange={(checked: any) => {
+					setComponent({
+						...selectedComponent,
+						light: checked
+					})
+				}}
+			/>}
 		<Checkbox
 			labelText='Selected'
 			id='selected'
@@ -93,7 +107,6 @@ export const ASelectableTileCodeUI = ({ selectedComponent, setComponent }: any) 
 	</>
 };
 
-
 const addStyle = css`
 	position: absolute;
 	margin-top: -2px;
@@ -106,7 +119,6 @@ const addStyle = css`
 const addStyleTop = cx(addStyle, css`
 	margin-top: -18px;
 `);
-
 
 const iconStyle = css`
 	height: 1rem;
@@ -191,15 +203,10 @@ export const componentInfo: ComponentInfo = {
 	styleUI: ASelectableTileStyleUI,
 	codeUI: ASelectableTileCodeUI,
 	keywords: ['tile', 'card', 'multi', 'selectable'],
-	name: 'Selectable Tile',
+	name: 'Selectable tile',
 	defaultComponentObj: {
 		type: 'selectabletile',
 		standalone: true,
-		/**
-		 * Value & title, light are default props
-		 * @todo
-		 * CCA does not support light
-		 */
 		value: 'value',
 		title: 'title',
 		disabled: false,
@@ -227,6 +234,10 @@ export const componentInfo: ComponentInfo = {
 				`@Output() ${nameStringToVariableString(json.codeContext?.name)}Change = new EventEmitter<Event>();`,
 			imports: ['TileModule'],
 			code: ({ json, jsonToTemplate }) => {
+				/**
+				 * @todo - CCA does not support light
+				 * https://github.com/IBM/carbon-components-angular/issues/1999
+				 */
 				return `<ibm-selection-tile
 					[value]="${nameStringToVariableString(json.codeContext?.name)}value}"
 					[selected]="${nameStringToVariableString(json.codeContext?.name)}selected"
@@ -239,13 +250,12 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			imports: ['SelectableTile'],
 			code: ({ json, jsonToTemplate }) => {
-				const onChange = json.standalone ? `const onChange = (event) => { console.log('onChange event', event); }; ` : '';
-				return `${onChange}<SelectableTile
+				return `<SelectableTile
 					${json.selected !== undefined ? `selected="${json.selected}"` : ''}
 					${json.light !== undefined ? `light="${json.light}"` : ''}
 					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
 					${json.name !== undefined ? `disabled={${json.name}}` : ''}
-					${json.standalone ? `onChange={onChange}` : ''}
+					${json.standalone ? `onChange={handleInputChange}` : ''}
 					value={${json.value}}
 					title={${json.title}}
 					${reactClassNamesFromComponentObj(json)}>

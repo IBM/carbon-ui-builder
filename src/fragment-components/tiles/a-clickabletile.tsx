@@ -9,13 +9,14 @@ import { TileMorphism } from './tile-morphism';
 import { css } from 'emotion';
 import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { ComponentInfo } from '../';
-
 import image from '../../assets/component-icons/tile-clickable.svg';
 import {
 	angularClassNamesFromComponentObj,
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
+
+
 
 export const AClickableTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -31,7 +32,6 @@ export const AClickableTileStyleUI = ({ selectedComponent, setComponent }: any) 
 				});
 			}}
 		/>
-
 		<Checkbox
 			labelText='Light theme'
 			id='theme-select'
@@ -43,7 +43,6 @@ export const AClickableTileStyleUI = ({ selectedComponent, setComponent }: any) 
 				})
 			}}
 		/>
-
 		<Checkbox
 			labelText='Disabled'
 			id='disabled'
@@ -101,20 +100,14 @@ export const AClickableTile = ({
 	</AComponent>;
 };
 
-
-
 export const componentInfo: ComponentInfo = {
 	component: AClickableTile,
 	styleUI: AClickableTileStyleUI,
 	codeUI: AClickableTileCodeUI,
 	keywords: ['tile', 'clickable', 'card'],
-	name: 'Clickable Tile',
+	name: 'Clickable tile',
 	defaultComponentObj: {
 		type: 'clickabletile',
-		/**
-		 * @todo
-		 * CCA does not support theme
-		 */
 		light: false,
 		items: []
 	},
@@ -137,6 +130,10 @@ export const componentInfo: ComponentInfo = {
 			outputs: (_) => ``,
 			imports: ['ClickableTile'],
 			code: ({ json, jsonToTemplate }) => {
+				/**
+				 * @todo - CCA does not support light
+				 * https://github.com/IBM/carbon-components-angular/issues/1999
+				 */
 				return `<ibm-clickable-tile
 					[href]=${nameStringToVariableString(json.codeContext?.name)}href
 					[disabled]={${nameStringToVariableString(json.codeContext?.name)}disabled}

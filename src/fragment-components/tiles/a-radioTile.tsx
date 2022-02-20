@@ -5,19 +5,18 @@ import {
 	RadioTile,
 } from 'carbon-components-react';
 import { AComponent } from '../a-component';
-import { TileMorphism } from './tile-morphism';
 import { Add32 } from '@carbon/icons-react';
 import { getParentComponent, updatedState } from '../../components';
 import { css, cx } from 'emotion';
 import { useFragment } from '../../context';
 import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { ComponentInfo } from '..';
-
 import {
 	angularClassNamesFromComponentObj,
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
+
 
 
 export const ARadioTileStyleUI = ({ selectedComponent, setComponent }: any) => {
@@ -45,7 +44,6 @@ export const ARadioTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 	}
 
 	return <>
-		<TileMorphism component={selectedComponent} setComponent={setComponent} />
 		<TextInput
 			value={selectedComponent.radioID}
 			labelText='Radio input ID'
@@ -117,7 +115,6 @@ export const ARadioTileCodeUI = ({ selectedComponent, setComponent }: any) => {
 	</>
 };
 
-
 const addStyle = css`
 	position: absolute;
 	margin-top: -2px;
@@ -130,7 +127,6 @@ const addStyle = css`
 const addStyleTop = cx(addStyle, css`
 	margin-top: -18px;
 `);
-
 
 const iconStyle = css`
 	height: 1rem;
@@ -151,7 +147,9 @@ export const ARadioTile = ({
 	useEffect(() => {
 		const tileElement = document.getElementById(componentObj.id);
 		const labelElement = tileElement?.parentElement?.querySelector('label.bx--tile.bx--tile--selectable');
-		labelElement?.removeAttribute('for');
+		// Setting to empty instead of removing so users can select non-form elements within tile when a form element is present
+		// Although form elements should never be added within another
+		labelElement?.setAttribute('for', '');
 	});
 
 	const [fragment, setFragment] = useFragment();
@@ -211,7 +209,7 @@ export const componentInfo: ComponentInfo = {
 	styleUI: ARadioTileStyleUI,
 	codeUI: ARadioTileCodeUI,
 	keywords: ['tile', 'card', 'radio', 'selectable'],
-	name: 'Selectable Tile',
+	name: 'Radio tile',
 	defaultComponentObj: {
 		type: 'radiotile',
 		radioID: '',
@@ -245,6 +243,10 @@ export const componentInfo: ComponentInfo = {
 			outputs: (_) => ``,
 			imports: ['TileModule'],
 			code: ({ json, jsonToTemplate }) => {
+				/**
+				 * @todo - CCA does not support light
+				 * https://github.com/IBM/carbon-components-angular/issues/1999
+				 */
 				return `<ibm-selection-tile
 					[value]="${nameStringToVariableString(json.codeContext?.name)}value}"
 					[selected]="${nameStringToVariableString(json.codeContext?.name)}selected"
