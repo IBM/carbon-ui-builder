@@ -1,0 +1,56 @@
+.tile-wrapper {
+	position: relative;
+	margin: 0.75rem;
+	padding: 0;
+	height: 250px;
+	width: 350px;
+	box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.3);
+	background-color: #ffffff;
+	float: left;
+}
+
+.tile-style {
+	padding: 0;
+	background-color: #ffffff;
+}
+
+.tile-inner-wrapper-base {
+	align-items: end;
+}
+
+.tile-inner-wrapper {
+	@extend .tile-inner-wrapper-base;
+
+	margin: 8px;
+	h3 {
+		font-size: 1rem;
+		padding: 5px;
+		padding-left: 16px;
+	}
+	.dashboard-link {
+		color: black;
+		text-decoration: none;
+		transition: 0.3s;
+	}
+	.dashboard-link:hover {
+		opacity: 0.6;
+		color: #6f6f6f;
+		cursor: pointer;
+	}
+	span {
+		padding-left: 16px;
+		font-style: italic;
+		font-size: 0.75rem;
+	}
+}
+
+.fragment-overflow {
+	right: 5px;
+	position: absolute;
+	margin-top: 1rem;
+	padding: 5px;
+}
+
+.fragment-info {
+	display: flex;
+}
