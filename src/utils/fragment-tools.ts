@@ -40,7 +40,7 @@ export const getFragmentPreview = async(fragment: any, props: RenderProps) => {
 	return imageBlob;
 };
 
-export const getFragmentTemplates = (fragments: any) => (
+export const getFragmentTemplates = (fragments: any[]) => (
 	fragments.filter((fragment: any) => !!fragment.labels?.includes('template'))
 );
 
