@@ -66,8 +66,8 @@ export const Dashboard = () => {
 	}, []);
 
 	const filterFragments = (fragments: any) => fragments.filter((fragment: any) => fragment?.title?.toLowerCase()
-		.includes(fragmentTitleFilter.toLowerCase()) && !fragment.hidden)
-		.sort(fragmentSort(sortDirection));
+		?.includes(fragmentTitleFilter.toLowerCase()) && !fragment.hidden)
+		?.sort(fragmentSort(sortDirection));
 
 	let displayedFragments;
 
