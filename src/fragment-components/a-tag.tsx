@@ -45,7 +45,8 @@ export const ATagStyleUI = ({selectedComponent, setComponent}: any) => {
 					...selectedComponent,
 					title: event.currentTarget.value
 				});
-			}} />
+			}}
+		/>
 
 		<Dropdown
 			label='Type'
@@ -56,7 +57,8 @@ export const ATagStyleUI = ({selectedComponent, setComponent}: any) => {
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				kind: event.selectedItem.id
-		})} />
+			})}
+		/>
 
 		<Dropdown
 			label='Size'
@@ -67,7 +69,8 @@ export const ATagStyleUI = ({selectedComponent, setComponent}: any) => {
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				size: event.selectedItem.id
-		})} />
+			})}
+		/>
 
 		<Checkbox
 			labelText='Is filter'
@@ -77,8 +80,9 @@ export const ATagStyleUI = ({selectedComponent, setComponent}: any) => {
 				setComponent({
 					...selectedComponent,
 					filter: checked
-				})
-			}} />
+				});
+			}}
+		/>
 
 		<Checkbox
 			labelText='Disabled'
@@ -88,8 +92,9 @@ export const ATagStyleUI = ({selectedComponent, setComponent}: any) => {
 				setComponent({
 					...selectedComponent,
 					disabled: checked
-				})
-			}} />
+				});
+			}}
+		/>
 
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>
@@ -139,7 +144,8 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({json}) => ``,
+			inputs: ({json}) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Title = "${json.title}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Type = "${json.kind}";`,
 			outputs: ({json}) => `${json.filter
 				? `@Output() ${nameStringToVariableString(json.codeContext?.name)}Close = new EventEmitter();`
 				: ''
@@ -147,7 +153,8 @@ export const componentInfo: ComponentInfo = {
 			imports: ['TagModule'],
 			code: ({json}) => {
 				const defaultProps = `
-					${`type='${json.kind ? json.kind : "gray"}'`}
+					[type]="${nameStringToVariableString(json.codeContext?.name)}Type"
+					[title]="${nameStringToVariableString(json.codeContext?.name)}Title"
 					${`size='${json.size ? json.size : "md"}'`}
 					[disabled]='${json.disabled}'
 				`
