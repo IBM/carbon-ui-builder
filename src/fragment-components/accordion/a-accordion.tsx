@@ -4,7 +4,11 @@ import { AComponent, ComponentInfo } from '../a-component';
 import { ComponentCssClassSelector } from '../../components/css-class-selector';
 
 import image from '../../assets/component-icons/accordion.svg';
-import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../../utils/fragment-tools';
+import {
+	angularClassNamesFromComponentObj,
+	nameStringToVariableString,
+	reactClassNamesFromComponentObj
+} from '../../utils/fragment-tools';
 
 export const AAccordionStyleUI = ({selectedComponent, setComponent}: any) => {
 	const sizeItems = [
@@ -83,26 +87,16 @@ export const componentInfo: ComponentInfo = {
 		items: [
 			{
 				type: 'accordionitem',
-				title: 'Accordion item 1',
-				items: [{ type: 'text', text: 'Accordion item 1 content' }]
-			},
-			{
-				type: 'accordionitem',
-				title: 'Accordion item 2',
-				items: [{ type: 'text', text: 'Accordion item 2 content' }]
-			},
-			{
-				type: 'accordionitem',
-				title: 'Accordion item 3',
-				items: [{ type: 'text', text: 'Accordion item 3 content' }]
+				title: 'Accordion item',
+				items: [{ type: 'text', text: 'Accordion item content' }]
 			}
 		]
 	},
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({json}) => ``,
-			outputs: ({json}) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
+			inputs: ({json}) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Align = "${json.align}";`,
+			outputs: ({json}) => ``,
 			imports: ['AccordionModule'],
 			// NOTE: Angular accordion does not support size yet.
 			// Issue being tracked here: https://github.com/IBM/carbon-components-angular/issues/2022
@@ -110,7 +104,7 @@ export const componentInfo: ComponentInfo = {
 			// Issue being tracked here: https://github.com/IBM/carbon-components-angular/issues/2023
 			code: ({ json, jsonToTemplate }) => {
 				return `<ibm-accordion
-					${json.align !== undefined ? `align="${json.align}"` : ''}
+					[align]="${nameStringToVariableString(json.codeContext?.name)}Align"
 					${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
 				</ibm-accordion>`;

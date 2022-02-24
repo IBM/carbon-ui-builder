@@ -8,7 +8,11 @@ import { AComponent, ComponentInfo } from '../a-component';
 import { ComponentCssClassSelector } from '../../components/css-class-selector';
 
 import image from '../../assets/component-icons/accordion-item.svg';
-import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../../utils/fragment-tools';
+import {
+	angularClassNamesFromComponentObj,
+	nameStringToVariableString,
+	reactClassNamesFromComponentObj
+} from '../../utils/fragment-tools';
 import { useFragment } from '../../context';
 import { Adder, getParentComponent, updatedState } from '../../components';
 
@@ -93,9 +97,9 @@ export const componentInfo: ComponentInfo = {
 		onDragOver={onDragOver}
 		onDrop={onDrop}
 		selected={selected}>
-		{componentObj.items.map((child: any) => (
-			renderComponents(child)
-		))}
+			{componentObj.items.map((child: any) => (
+				renderComponents(child)
+			))}
 	</AAccordionItem>,
 	keywords: ['accordion', 'item'],
 	name: 'Accordion Item',
@@ -108,14 +112,15 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({json}) => ``,
-			outputs: ({json}) => ``,
+			inputs: ({json}) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Title = "${json.title}";`,
+			outputs: ({json}) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter();`,
 			imports: ['AccordionModule'],
 			// NOTE: Angular accordion item currently does not support 'disabled'.
 			// issue being tracked here: https://github.com/IBM/carbon-components-angular/issues/2021
 			code: ({ json, jsonToTemplate }) => {
 				return `<ibm-accordion-item
-					title="${json.title || ''}"
+					[title]="${nameStringToVariableString(json.codeContext?.name)}Title"
+					(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
 					${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
 				</ibm-accordion-item>`;

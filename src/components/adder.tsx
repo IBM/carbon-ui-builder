@@ -15,28 +15,63 @@ const addStyleTop = cx(addStyle, css`
 	margin-top: -18px;
 `);
 
+const addStyleRight = cx(addStyle, css`
+	right: 0;
+	margin-right: -21px;
+`);
+
+const addStyleLeft = cx(addStyle, css`
+	left: 0;
+	margin-left: -21px;
+`); 
+
 const iconStyle = css`
 	height: 1rem;
 	width: 1rem;
 	float: right;
-	cursor: pointer`;
+	cursor: pointer
+`;
 
-export const Adder = ({ active, topAction, bottomAction, children }: any) => <>
-	<span className={cx(addStyleTop, active ? css`` : css`display: none`)}>
-		<Add16
-			onClick={(event: any) => {
-				event.stopPropagation();
-				topAction()
-			}}
-			className={iconStyle} />
-	</span>
+export const Adder = ({ active, children, topAction, bottomAction, leftAction, rightAction }: any) => <>
+	{
+		active && topAction && <span className={addStyleTop}>
+			<Add16
+				onClick={(event: any) => {
+					event.stopPropagation();
+					topAction();
+				}}
+				className={iconStyle} />
+		</span>
+	}
+	{
+		active && leftAction && <span className={addStyleLeft}>
+			<Add16
+				onClick={(event: any) => {
+					event.stopPropagation();
+					leftAction();
+				}}
+				className={iconStyle} />
+		</span>
+	}
+	{
+		active && rightAction && <span className={addStyleRight}>
+			<Add16
+				onClick={(event: any) => {
+					event.stopPropagation();
+					rightAction();
+				}}
+				className={iconStyle} />
+		</span>
+	}
 	{children}
-	<span className={cx(addStyle, active ? css`` : css`display: none`)}>
-		<Add16
-			onClick={(event: any) => {
-				event.stopPropagation();
-				bottomAction()
-			}}
-			className={iconStyle} />
-	</span>
+	{
+		active && bottomAction && <span className={addStyle}>
+			<Add16
+				onClick={(event: any) => {
+					event.stopPropagation();
+					bottomAction();
+				}}
+				className={iconStyle} />
+		</span>
+	}
 </>;
