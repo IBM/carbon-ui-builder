@@ -35,6 +35,8 @@ import { CodeContextPane } from './code-context-pane';
 
 const leftPaneWidth = '300px';
 const rightPaneWidth = '302px';
+const railWidth = '48px';
+const transitionDetails = `0.11s cubic-bezier(0.2, 0, 1, 0.9)`;
 
 const editPageContent = css`
 	position: absolute;
@@ -45,13 +47,22 @@ const editPageContent = css`
 	background: #f4f4f4;
 
 	.edit-content {
-		padding: 1rem 2rem 1rem 5rem;
-		width: calc(100% - ${rightPaneWidth});
+		padding: 1rem;
+		margin: 0 ${rightPaneWidth} 0 ${railWidth};
+		width: calc(100% - ${rightPaneWidth} - ${railWidth});
+		height: calc(100% - 64px);
+		transition: margin-left ${transitionDetails}, width ${transitionDetails};
+		overflow: auto;
+
+		&.is-side-panel-active {
+			margin-left: calc(${railWidth} + ${leftPaneWidth});
+			width: calc(100% - ${leftPaneWidth} - ${rightPaneWidth} - ${railWidth});
+		}
 	}
 `;
 
 const sideRail = css`
-	transition: left 0.11s cubic-bezier(0.2, 0, 1, 0.9);
+	transition: left ${transitionDetails};
 
 	&.bx--side-nav, &.bx--side-nav:hover {
 		.bx--side-nav__item .bx--side-nav__link {
@@ -206,7 +217,7 @@ export const Edit = ({ match }: any) => {
 					</SideNavLink>
 				</SideNavItems>
 			</SideNav>
-			<div className='edit-content'>
+			<div className={cx('edit-content', selectedLeftPane !== SelectedLeftPane.NONE ? 'is-side-panel-active' : '')}>
 				{
 					fragment
 					&& <>
