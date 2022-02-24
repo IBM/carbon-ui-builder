@@ -16,6 +16,7 @@ import { FragmentTileList } from './fragment-tile-list';
 import { FragmentWizard } from './fragment-wizard/fragment-wizard';
 import { FragmentModal } from '../edit/fragment-modal';
 import { GlobalStateContext } from '../../context';
+import { getFragmentTemplates } from '../../utils/fragment-tools';
 
 const fragmentSort = (sortDirection: SortDirection) => function(a: any, b: any) {
 	if (sortDirection === SortDirection.Descending) {
@@ -66,16 +67,14 @@ export const Dashboard = () => {
 	}, []);
 
 	const filterFragments = (fragments: any) => fragments.filter((fragment: any) => fragment?.title?.toLowerCase()
-		.includes(fragmentTitleFilter.toLowerCase()) && !fragment.hidden)
-		.sort(fragmentSort(sortDirection));
+		?.includes(fragmentTitleFilter.toLowerCase()) && !fragment.hidden)
+		?.sort(fragmentSort(sortDirection));
 
 	let displayedFragments;
 
 	switch (fragmentGroupDisplayed) {
 		case FragmentGroupDisplayed.Templates: {
-			displayedFragments = filterFragments(
-				fragments.filter((fragment: any) => fragment.labels && fragment.labels.includes('template'))
-			);
+			displayedFragments = filterFragments(getFragmentTemplates(fragments));
 			break;
 		}
 		case FragmentGroupDisplayed.AllFragments:

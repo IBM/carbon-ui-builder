@@ -40,6 +40,10 @@ export const getFragmentPreview = async(fragment: any, props: RenderProps) => {
 	return imageBlob;
 };
 
+export const getFragmentTemplates = (fragments: any[]) => (
+	fragments.filter((fragment: any) => !!fragment.labels?.includes('template'))
+);
+
 export const getAllComponentStyleClasses = (componentObj: any) => {
 	let styleClasses: any = {};
 
@@ -82,6 +86,74 @@ export const hasFragmentStyleClasses = (fragment: any) => {
 	if (!fragment || !fragment.data) { return false; }
 
 	return hasComponentStyleClasses(fragment.data);
+};
+
+export const getUniqueFragmentName = (fragments: Array<any>, baseName: string) => {
+	const nameRegEx = new RegExp(String.raw`(.*)\s+(copy)*(\s+(\d+))?$`);
+	const nameMatch = baseName.match(nameRegEx);
+	let count = 0;
+
+	let nameBase = baseName;
+	// If match, increment the count and update name base and new name
+	if (nameMatch) {
+		nameBase = baseName.replace(nameRegEx, '$1');
+		count = Number.parseInt(baseName.replace(nameRegEx, '$4'), 10);
+		if (!count) {
+			count = 0;
+		}
+	}
+
+	// Get a list containing names of all duplicates of original fragment
+	// e.g. [ "Fragment copy", "Fragment copy 1", "Fragment copy 7", ...]
+	const names: string[] = [];
+	fragments.forEach((fragment) => {
+		if (fragment.title.includes(nameBase)) {
+			names.push(fragment.title);
+		}
+	});
+
+	if (names.length <= 1) {
+		// because the fragment we're copying is already in there
+		return `${nameBase} copy`;
+	}
+
+	const highestNumber = names
+		.map((n) => Number.parseInt(n.replace(nameRegEx, '$4'), 10))
+		.filter((n) => !isNaN(n)).sort((a, b) => b - a)
+		.shift();
+
+	return `${nameBase} copy ${highestNumber && count < highestNumber ? highestNumber + 1 : count + 1}`;
+};
+
+export const getFragmentDuplicate = (fragments: any, fragment: any, overrides = {}) => {
+	// copy current fragment and change fragment title
+	let fragmentCopy = JSON.parse(JSON.stringify(fragment));
+	fragmentCopy.title = getUniqueFragmentName(fragments, fragmentCopy.title);
+	fragmentCopy.id = `${Math.random().toString().slice(2)}${Math.random().toString().slice(2)}`;
+	return Object.assign({}, fragmentCopy, overrides);
+};
+
+export const getFragmentPreviewUrl = async (fragment: any) => {
+	const renderProps: RenderProps = {
+		id: fragment.id,
+		name: fragment.title,
+		width: 800,
+		height: 400,
+		preview: {
+			format: 'png',
+			width: 330,
+			height: 200
+		}
+	};
+
+	const imageBlob = await getFragmentPreview(fragment, renderProps);
+	return new Promise((resolve) => {
+		const reader = new FileReader();
+		reader.readAsDataURL(imageBlob ? imageBlob : new Blob());
+		reader.onloadend = () => {
+			resolve(reader.result ? reader.result.toString() : '');
+		};
+	})
 };
 
 export const reactClassNamesFromComponentObj = (componentObj: any) =>

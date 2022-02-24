@@ -1,31 +1,19 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
-import { css } from 'emotion';
 import {
 	Modal,
 	InlineNotification,
 	NotificationActionButton
 } from 'carbon-components-react';
 import { FragmentWizardModals } from './fragment-wizard';
-import { generateNewFragment } from './generate-new-fragment';
 
 import { GlobalStateContext } from '../../../context';
 import { useHistory } from 'react-router-dom';
 import { warningNotificationProps } from '../../../utils/file-tools';
-
-const fragmentOptions = css`
-	margin-left: 30px;
-	margin-right: 30px;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: space-between;
-
-	// This is the viewport width that causes the selection tiles to overlap.
-	@media screen and (max-width: 45rem) {
-		flex-direction: column;
-	}
-`;
+import { Col } from '../../../components';
+import { getFragmentDuplicate, getFragmentTemplates } from '../../../utils/fragment-tools';
+import './choose-fragment-modal.scss';
+import { ChooseFragmentModalTile } from './choose-fragment-modal-tile';
 
 export interface ChooseFragmentModalProps {
 	shouldDisplay: boolean,
@@ -38,22 +26,32 @@ export interface ChooseFragmentModalProps {
 }
 
 export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
-	const { addFragment } = useContext(GlobalStateContext);
+	const [selectedFragment, setSelectedFragment] = useState<any>(null);
+	const { fragments, addFragment } = useContext(GlobalStateContext);
 
 	const history = useHistory();
 
 	const generateFragment = () => {
-		const generatedFragment = generateNewFragment(
-			props.uploadedData.data
+		if (selectedFragment === null) {
+			return;
+		}
+
+		const fragmentCopy = getFragmentDuplicate(
+			fragments,
+			selectedFragment,
+			// When a new fragment is created from an existing template, it shouldn't
+			// be a template by default.
+			{ labels: selectedFragment?.labels?.filter((label: string) => label !== 'template') }
 		);
 
-		addFragment(generatedFragment);
-		history.push(`/edit/${generatedFragment.id}`);
+		addFragment(fragmentCopy);
+		history.push(`/edit/${fragmentCopy.id}`);
 	};
 
 	return (
 		<Modal
 			open={props.shouldDisplay}
+			size='lg'
 			shouldSubmitOnEnter={false}
 			selectorPrimaryFocus='.bx--tile--selectable'
 			onRequestSubmit={() => {
@@ -68,6 +66,7 @@ export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 			hasForm
 			modalHeading='Create new fragment'
 			primaryButtonText='Done'
+			primaryButtonDisabled={!selectedFragment}
 			secondaryButtonText='Back'>
 			{
 				props.uploadedData.wasDataModified
@@ -101,8 +100,22 @@ export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 					: null
 			}
 			<p>Choose a type of fragment and click done to start editing your new fragment</p>
-			<div className={fragmentOptions}>
-				Empty
+			<div className='fragment-options'>
+				<Col cols={{
+					sm: 12,
+					md: 12,
+					lg: 12
+				}}>
+					{
+						getFragmentTemplates(fragments).map((fragment: any) => (
+							<ChooseFragmentModalTile
+								key={fragment.id}
+								fragment={fragment}
+								selectedFragment={selectedFragment}
+								setSelectedFragment={setSelectedFragment} />
+						))
+					}
+				</Col>
 			</div>
 		</Modal>
 	);

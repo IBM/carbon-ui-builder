@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { SkeletonPlaceholder } from 'carbon-components-react';
 import './fragment-preview.scss';
 import { css, cx } from 'emotion';
 import { allComponents, ComponentInfoRenderProps } from '../fragment-components';
 import { getAllFragmentStyleClasses } from '../utils/fragment-tools';
+import { GlobalStateContext } from '../context';
 
 const canvas = css`
 	border: 2px solid #d8d8d8;
@@ -186,6 +187,8 @@ export const getParentComponent = (state: any, child: any) => {
 };
 
 export const Fragment = ({fragment, setFragment}: any) => {
+	const globalState = useContext(GlobalStateContext); // used for fetching subcomponents/microlayouts
+
 	if (!fragment || !fragment.data) { return <SkeletonPlaceholder />; }
 
 	// initialize component counter
@@ -216,9 +219,19 @@ export const Fragment = ({fragment, setFragment}: any) => {
 		});
 	};
 
-	const renderComponents = (componentObj: any) => {
-		if (typeof componentObj === "string" || !componentObj) {
+	const renderComponents = (componentObj: any): any => {
+		if (typeof componentObj === 'string' || !componentObj) {
 			return componentObj;
+		}
+
+		if (componentObj.type === 'fragment') {
+			const subFragment = globalState?.getFragment(componentObj.id);
+
+			if (!subFragment) {
+				return ''; // NOTE should we also remove it from the fragment?
+			}
+
+			return renderComponents(subFragment.data);
 		}
 
 		for (let [key, component] of Object.entries(allComponents)) {
