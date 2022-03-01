@@ -10,12 +10,12 @@ import * as searchinput from "./a-searchinput";
 import * as numberinput from "./a-numberinput";
 // Tiles
 import * as tile from './tiles/a-tile';
-import * as clickabletile from './tiles/a-clickabletile';
-import * as expandabletile from './tiles/a-expandabletile';
-import * as tilefold from './tiles/a-tileFold';
-import * as selectabletile from './tiles/a-selectabletile';
+import * as clickabletile from './tiles/a-clickable-tile';
+import * as expandabletile from './tiles/a-expandable-tile';
+import * as tilefold from './tiles/a-tile-fold';
+import * as selectabletile from './tiles/a-selectable-tile';
 import * as selectableTileGroup from './tiles/a-selectable-tile-group';
-import * as radiotile from './tiles/a-radioTile';
+import * as radiotile from './tiles/a-radio-tile';
 import * as radioTileGroup from './tiles/a-radio-tile-group';
 
 export { AButton, AButtonStyleUI } from "./a-button";
@@ -31,12 +31,12 @@ export { ASearchInput, ASearchInputStyleUI, ASearchInputCodeUI } from "./a-searc
 export { ANumberInput, ANumberInputStyleUI, ANumberInputCodeUI } from "./a-numberinput";
 // Tiles
 export { ATile, ATileCodeUI, ATileStyleUI } from './tiles/a-tile';
-export { AClickableTile, AClickableTileCodeUI, AClickableTileStyleUI } from './tiles/a-clickabletile';
-export { AExpandableTile, AExpandableTileCodeUI, AExpandableStyleUI } from './tiles/a-expandabletile';
-export { ATileFold, ATileFoldStyleUI } from './tiles/a-tileFold';
-export { ASelectableTile, ASelectableTileCodeUI, ASelectableTileStyleUI } from './tiles/a-selectabletile';
+export { AClickableTile, AClickableTileCodeUI, AClickableTileStyleUI } from './tiles/a-clickable-tile';
+export { AExpandableTile, AExpandableTileCodeUI, AExpandableStyleUI } from './tiles/a-expandable-tile';
+export { ATileFold, ATileFoldStyleUI } from './tiles/a-tile-fold';
+export { ASelectableTile, ASelectableTileCodeUI, ASelectableTileStyleUI } from './tiles/a-selectable-tile';
 export { ASelectableTileGroup, ASelectableTileGroupCodeUI, ASelectableTileGroupStyleUI } from './tiles/a-selectable-tile-group';
-export { ARadioTile, ARadioTileCodeUI, ARadioTileStyleUI } from './tiles/a-radioTile';
+export { ARadioTile, ARadioTileCodeUI, ARadioTileStyleUI } from './tiles/a-radio-tile';
 export { ARadioTileGroup, ARadioTileGroupCodeUI, ARadioTileGroupStyleUI } from './tiles/a-radio-tile-group';
 
 export const allComponents = {
