@@ -16,9 +16,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 
-
 export const ARadioTileGroupStyleUI = ({ selectedComponent, setComponent }: any) => {
-
 	/**
 	 * It usually is not common for users to have different theme for each tile,
 	 * this approach will ensure users don't have to go through each `tile` & update theme
@@ -91,21 +89,19 @@ export const ARadioTileGroupStyleUI = ({ selectedComponent, setComponent }: any)
 };
 
 export const ARadioTileGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
-		<TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>
-	</>
+	return <TextInput
+		value={selectedComponent.codeContext?.name}
+		labelText='Input name'
+		onChange={(event: any) => {
+			setComponent({
+				...selectedComponent,
+				codeContext: {
+					...selectedComponent.codeContext,
+					name: event.currentTarget.value
+				}
+			});
+		}}
+	/>
 };
 
 export const ARadioTileGroup = ({
@@ -169,11 +165,11 @@ export const componentInfo: ComponentInfo = {
 		angular: {
 			inputs: (_) => ``,
 			outputs: ({ json }) =>
-				`@Output() ${nameStringToVariableString(json.codeContext?.name)}selected = new EventEmitter<Event>();`,
-			imports: ['TileModule'],
+				`@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<Event>();`,
+			imports: ['TilesModule'],
 			code: ({ json, jsonToTemplate }) => {
 				return `<ibm-tile-group
-					(selected)="${nameStringToVariableString(json.codeContext?.name)}selected.emit($event)"
+					(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
 					[multiple]="false"
 					${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}

@@ -7,7 +7,6 @@ import { useFragment } from '../../context';
  * Dropdown component to morph between different tiles
  */
 export const TileMorphism = ({ component, setComponent }: any) => {
-
 	const tileTypes = [
 		{
 			id: 'tile',
@@ -115,18 +114,15 @@ export const TileMorphism = ({ component, setComponent }: any) => {
 		}
 	}
 
-	return <>
-		<Dropdown
-			id="tile-morpher"
-			label="Convert to another tile type"
-			titleText="Tile type"
-			items={tileTypes.filter(({ id }) => id !== component.type)}
-			itemToString={(item: any) => (item ? item.text : '')}
-			onChange={convert}
-		/>
-	</>
+	return <Dropdown
+		id="tile-morpher"
+		label="Convert to another tile type"
+		titleText="Tile type"
+		items={tileTypes.filter(({ id }) => id !== component.type)}
+		itemToString={(item: any) => (item ? item.text : '')}
+		onChange={convert}
+	/>
 }
-
 
 /**
  *  Morph parent (Group) & children to other group type
@@ -179,7 +175,6 @@ const groupToSingle = (selectedItem: any, component: any, parentComponent: any) 
  * Sets current component as a wrapper & passes a single tile as an item (child)
  */
 const singleToGroup = (selectedItem: any, component: any) => {
-
 	const items = [];
 
 	if (component.type === 'expandabletile') {
@@ -206,7 +201,6 @@ const singleToGroup = (selectedItem: any, component: any) => {
  * Majority of the atrributes are the same, so they will be overwrriten to default state
  */
 const singleToSingle = (selectedItem: any, component: any) => {
-
 	const items = [];
 
 	if (component.type === 'expandabletile') {

@@ -19,8 +19,6 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 
-
-
 export const ASelectableTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		{selectedComponent.standalone &&
@@ -34,6 +32,19 @@ export const ASelectableTileStyleUI = ({ selectedComponent, setComponent }: any)
 					codeContext: {
 						...selectedComponent.codeContext,
 						value: event.currentTarget.value
+					}
+				});
+			}}
+		/>
+		<TextInput
+			value={selectedComponent.title}
+			labelText='Title'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						title: event.currentTarget.value
 					}
 				});
 			}}
@@ -156,14 +167,14 @@ export const ASelectableTile = ({
 		)
 	});
 
-	/**
-	 * Removing `for` attribute so users can select text and other non-form elements.
-	 */
+	// Removing `for` attribute so users can select text and other non-form elements.
 	useEffect(() => {
 		const tileElement = document.getElementById(componentObj.id);
 		const labelElement = tileElement?.parentElement?.querySelector('label.bx--tile.bx--tile--selectable');
-		labelElement?.removeAttribute('for');
-	});
+		// Setting to empty instead of removing so users can select non-form elements within tile when a form element is present
+		// Although form elements should never be added within another
+		labelElement?.setAttribute('for', '');
+	}, [componentObj.id]);
 
 	return <>
 		{parentComponent.tileGroup && <span className={cx(addStyleTop, selected ? css`` : css`display: none`)}>
@@ -180,6 +191,7 @@ export const ASelectableTile = ({
 			{...rest}>
 			<SelectableTile
 				id={componentObj.id.toString()}
+				title={componentObj.title}
 				value={componentObj.value}
 				light={componentObj.light}
 				selected={componentObj.selected}
@@ -228,19 +240,19 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: ({ json }) =>
-				`@Input() ${nameStringToVariableString(json.codeContext?.name)}selected = "${json.selected}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}value = ${json.value};`,
+				`@Input() ${nameStringToVariableString(json.codeContext?.name)}Selected = ${json.selected || false};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = '${json.value}';`,
 			outputs: ({ json }) =>
 				`@Output() ${nameStringToVariableString(json.codeContext?.name)}Change = new EventEmitter<Event>();`,
-			imports: ['TileModule'],
+			imports: ['TilesModule'],
 			code: ({ json, jsonToTemplate }) => {
 				/**
-				 * @todo - CCA does not support light
+				 * @todo - CCA does not support light & disabled
 				 * https://github.com/IBM/carbon-components-angular/issues/1999
 				 */
 				return `<ibm-selection-tile
-					[value]="${nameStringToVariableString(json.codeContext?.name)}value}"
-					[selected]="${nameStringToVariableString(json.codeContext?.name)}selected"
+					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
+					[selected]="${nameStringToVariableString(json.codeContext?.name)}Selected"
 					(change)="${nameStringToVariableString(json.codeContext?.name)}Change.emit($event)"
 					${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
@@ -256,8 +268,8 @@ export const componentInfo: ComponentInfo = {
 					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
 					${json.name !== undefined ? `disabled={${json.name}}` : ''}
 					${json.standalone ? `onChange={handleInputChange}` : ''}
-					value={${json.value}}
-					title={${json.title}}
+					value="${json.value}"
+					title="${json.title}"
 					${reactClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
 				</SelectableTile>`;

@@ -16,8 +16,6 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 
-
-
 export const ASelectableTileGroupStyleUI = ({ selectedComponent, setComponent }: any) => {
 	/**
 	 * It usually is not common for users to have different theme for each tile,
@@ -124,12 +122,12 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: (_) => ``,
-			outputs: (_) =>
-				``,
-			imports: ['TileModule'],
+			outputs: ({ json }) =>
+				`@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<Event>();`,
+			imports: ['TilesModule'],
 			code: ({ json, jsonToTemplate }) => {
 				return `<ibm-tile-group
-					(selected)="${nameStringToVariableString(json.codeContext?.name)}selected.emit($event)"
+					(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
 					[multiple]="true"
 					${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}

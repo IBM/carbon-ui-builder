@@ -16,8 +16,6 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 
-
-
 export const AClickableTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TileMorphism component={selectedComponent} setComponent={setComponent} />
@@ -59,21 +57,19 @@ export const AClickableTileStyleUI = ({ selectedComponent, setComponent }: any) 
 };
 
 export const AClickableTileCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
-		<TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>
-	</>
+	return <TextInput
+		value={selectedComponent.codeContext?.name}
+		labelText='Input name'
+		onChange={(event: any) => {
+			setComponent({
+				...selectedComponent,
+				codeContext: {
+					...selectedComponent.codeContext,
+					name: event.currentTarget.value
+				}
+			});
+		}}
+	/>
 };
 
 export const AClickableTile = ({
@@ -109,6 +105,7 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'clickabletile',
 		light: false,
+		href: '#',
 		items: []
 	},
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <AClickableTile
@@ -125,18 +122,18 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}href = '${json.helperText}';
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}disabled = ${json.disabled}`,
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Href = '${json.href}';
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled || false}`,
 			outputs: (_) => ``,
-			imports: ['ClickableTile'],
+			imports: ['TilesModule'],
 			code: ({ json, jsonToTemplate }) => {
 				/**
 				 * @todo - CCA does not support light
 				 * https://github.com/IBM/carbon-components-angular/issues/1999
 				 */
 				return `<ibm-clickable-tile
-					[href]=${nameStringToVariableString(json.codeContext?.name)}href
-					[disabled]={${nameStringToVariableString(json.codeContext?.name)}disabled}
+					[href]=${nameStringToVariableString(json.codeContext?.name)}Href
+					[disabled]=${nameStringToVariableString(json.codeContext?.name)}Disabled
 					${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
 				</ibm-clickable-tile>`;

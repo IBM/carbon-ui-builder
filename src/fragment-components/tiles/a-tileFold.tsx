@@ -10,12 +10,8 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 
-
-
 export const ATileFoldStyleUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	return <ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 };
 
 export const ATileFold = ({
@@ -70,7 +66,9 @@ export const componentInfo: ComponentInfo = {
 				const foldClass = json.aboveFold ? `bx--tile-content__above-the-fold` : `bx--tile-content__below-the-fold`;
 				let classes = angularClassNamesFromComponentObj(json);
 				if (classes) {
-					classes = classes.replace(new RegExp(/"$/), ` ${foldClass}"`)
+					classes = classes.replace('="', `="${foldClass} `);
+				} else {
+					classes = `class="${foldClass}"`;
 				}
 
 				return `<span ${classes}>

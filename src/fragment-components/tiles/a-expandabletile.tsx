@@ -16,8 +16,6 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 
-
-
 export const AExpandableStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TileMorphism component={selectedComponent} setComponent={setComponent} />
@@ -140,10 +138,9 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: ({ json }) =>
-				`@Input() ${nameStringToVariableString(json.codeContext?.name)}Expanded = "${json.expanded}"`,
-			outputs: (_) =>
-				``,
-			imports: ['ExpandableTile'],
+				`@Input() ${nameStringToVariableString(json.codeContext?.name)}Expanded = ${json.expanded}`,
+			outputs: (_) => ``,
+			imports: ['TilesModule'],
 			code: ({ json, jsonToTemplate }) => {
 				/**
 				 * @todo - CCA does not support light

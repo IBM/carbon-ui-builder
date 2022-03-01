@@ -17,10 +17,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 
-
-
 export const ARadioTileStyleUI = ({ selectedComponent, setComponent }: any) => {
-
 	const [fragment] = useFragment();
 	const parentComponent = getParentComponent(fragment.data, selectedComponent);
 
@@ -98,21 +95,19 @@ export const ARadioTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 };
 
 export const ARadioTileCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
-		<TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>
-	</>
+	return <TextInput
+		value={selectedComponent.codeContext?.name}
+		labelText='Input name'
+		onChange={(event: any) => {
+			setComponent({
+				...selectedComponent,
+				codeContext: {
+					...selectedComponent.codeContext,
+					name: event.currentTarget.value
+				}
+			});
+		}}
+	/>
 };
 
 const addStyle = css`
@@ -142,7 +137,6 @@ export const ARadioTile = ({
 	renderComponents,
 	...rest
 }: any) => {
-
 	// Removing `for` attribute so users can select text and other non-form elements.
 	useEffect(() => {
 		const tileElement = document.getElementById(componentObj.id);
@@ -150,7 +144,7 @@ export const ARadioTile = ({
 		// Setting to empty instead of removing so users can select non-form elements within tile when a form element is present
 		// Although form elements should never be added within another
 		labelElement?.setAttribute('for', '');
-	});
+	}, [componentObj.id]);
 
 	const [fragment, setFragment] = useFragment();
 	const parentComponent = getParentComponent(fragment.data, componentObj);
@@ -194,7 +188,6 @@ export const ARadioTile = ({
 				{children}
 			</RadioTile>
 		</AComponent>
-
 		<span className={cx(addStyle, selected ? css`` : css`display: none`)}>
 			<Add32 onClick={(event: any) => {
 				event.stopPropagation();
@@ -238,19 +231,18 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: ({ json }) =>
-				`@Input() ${nameStringToVariableString(json.codeContext?.name)}selected = "${json.selected}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}value = ${json.value};`,
-			outputs: (_) => ``,
-			imports: ['TileModule'],
+				`@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${json.checked || false};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = '${json.value}';`,
+			outputs: () => ``,
+			imports: ['TilesModule'],
 			code: ({ json, jsonToTemplate }) => {
 				/**
-				 * @todo - CCA does not support light
+				 * @todo - CCA does not support light & disabled
 				 * https://github.com/IBM/carbon-components-angular/issues/1999
 				 */
 				return `<ibm-selection-tile
-					[value]="${nameStringToVariableString(json.codeContext?.name)}value}"
-					[selected]="${nameStringToVariableString(json.codeContext?.name)}selected"
-					(change)="${nameStringToVariableString(json.codeContext?.name)}Change.emit($event)"
+					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
+					[selected]="${nameStringToVariableString(json.codeContext?.name)}Selected"
 					${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
 					</ibm-selection-tile>`

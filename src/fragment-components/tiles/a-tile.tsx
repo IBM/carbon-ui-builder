@@ -16,8 +16,6 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 
-
-
 export const ATileStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TileMorphism component={selectedComponent} setComponent={setComponent} />
@@ -37,21 +35,19 @@ export const ATileStyleUI = ({ selectedComponent, setComponent }: any) => {
 };
 
 export const ATileCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
-		<TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>
-	</>
+	return <TextInput
+		value={selectedComponent.codeContext?.name}
+		labelText='Input name'
+		onChange={(event: any) => {
+			setComponent({
+				...selectedComponent,
+				codeContext: {
+					...selectedComponent.codeContext,
+					name: event.currentTarget.value
+				}
+			});
+		}}
+	/>
 };
 
 export const ATile = ({
@@ -100,9 +96,9 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : ''}";`,
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? "light" : ""}';`,
 			outputs: (_) => ``,
-			imports: ['TilesModule '],
+			imports: ['TilesModule'],
 			code: ({ json, jsonToTemplate }) => {
 				return `<ibm-tile
 					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
