@@ -33,37 +33,33 @@ export const ARadioTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 		}
 	}
 
+	// React components do not have auto increment ID, so user must provide one
+	// This will autofill id field if missing
 	if (!selectedComponent.radioID) {
 		setComponent({
 			...selectedComponent,
-			radioID: selectedComponent.id.toString()
+			radioID: `radio-tile${selectedComponent.id.toString()}`
 		})
 	}
 
 	return <>
 		<TextInput
 			value={selectedComponent.radioID}
-			labelText='Radio input ID'
+			labelText='Input ID'
 			onChange={(event: any) => {
 				setComponent({
 					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						radioID: event.currentTarget.value
-					}
+					radioID: event.currentTarget.value
 				});
 			}}
 		/>
 		<TextInput
 			value={selectedComponent.value}
-			labelText='Radio value'
+			labelText='Value'
 			onChange={(event: any) => {
 				setComponent({
 					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						value: event.currentTarget.value
-					}
+					value: event.currentTarget.value
 				});
 			}}
 		/>
@@ -252,7 +248,7 @@ export const componentInfo: ComponentInfo = {
 			imports: ['RadioTile'],
 			code: ({ json, jsonToTemplate }) => {
 				return `<RadioTile
-					${json.id !== undefined ? `id="${json.id}"` : ''}
+					${json.radioID !== undefined ? `id="${json.radioID}"` : ''}
 					${json.light !== undefined ? `light="${json.light}"` : ''}
 					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
 					value="${json.value}"

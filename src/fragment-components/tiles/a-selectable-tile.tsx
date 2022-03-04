@@ -20,19 +20,35 @@ import {
 } from '../../utils/fragment-tools';
 
 export const ASelectableTileStyleUI = ({ selectedComponent, setComponent }: any) => {
+	// React components do not have auto increment ID, so user must provide one
+	// This will autofill id field if missing
+	if (!selectedComponent.selectableID) {
+		setComponent({
+			...selectedComponent,
+			selectableID: `selectable-tile${selectedComponent.id.toString()}`
+		})
+	}
+
 	return <>
 		{selectedComponent.standalone &&
 			<TileMorphism component={selectedComponent} setComponent={setComponent} />}
 		<TextInput
-			value={selectedComponent.value}
-			labelText='Tile value'
+			value={selectedComponent.selectableID}
+			labelText='Input ID'
 			onChange={(event: any) => {
 				setComponent({
 					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						value: event.currentTarget.value
-					}
+					selectableID: event.currentTarget.value
+				});
+			}}
+		/>
+		<TextInput
+			value={selectedComponent.value}
+			labelText='Value'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					value: event.currentTarget.value
 				});
 			}}
 		/>
@@ -42,23 +58,7 @@ export const ASelectableTileStyleUI = ({ selectedComponent, setComponent }: any)
 			onChange={(event: any) => {
 				setComponent({
 					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						title: event.currentTarget.value
-					}
-				});
-			}}
-		/>
-		<TextInput
-			value={selectedComponent.name}
-			labelText='Input name attribute'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
+					title: event.currentTarget.value
 				});
 			}}
 		/>
@@ -159,6 +159,7 @@ export const ASelectableTile = ({
 					standalone: false,
 					type: 'selectabletile',
 					value: 'value',
+					title: 'title',
 					items: [{ type: 'text', text: 'New selectable tile' }]
 				}
 			},
@@ -190,7 +191,7 @@ export const ASelectableTile = ({
 			selected={selected}
 			{...rest}>
 			<SelectableTile
-				id={componentObj.id.toString()}
+				id={componentObj?.selectableID || componentObj.id.toString()}
 				title={componentObj.title}
 				value={componentObj.value}
 				light={componentObj.light}
@@ -217,6 +218,7 @@ export const componentInfo: ComponentInfo = {
 	keywords: ['tile', 'card', 'multi', 'selectable'],
 	name: 'Selectable tile',
 	defaultComponentObj: {
+		selectableID: '',
 		type: 'selectabletile',
 		standalone: true,
 		value: 'value',
@@ -263,13 +265,13 @@ export const componentInfo: ComponentInfo = {
 			imports: ['SelectableTile'],
 			code: ({ json, jsonToTemplate }) => {
 				return `<SelectableTile
+					${json.selectableID !== undefined ? `id="${json.selectableID}"` : ''}
 					${json.selected !== undefined ? `selected="${json.selected}"` : ''}
 					${json.light !== undefined ? `light="${json.light}"` : ''}
 					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
-					${json.name !== undefined ? `disabled={${json.name}}` : ''}
 					${json.standalone ? `onChange={handleInputChange}` : ''}
 					value="${json.value}"
-					title="${json.title}"
+					${json.title !== undefined ? `title="${json.title}"` : ''}
 					${reactClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
 				</SelectableTile>`;

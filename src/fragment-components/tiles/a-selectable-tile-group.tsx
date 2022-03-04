@@ -94,15 +94,24 @@ export const componentInfo: ComponentInfo = {
 		tileGroup: true,
 		items: [
 			{
-				type: 'selectabletile', standalone: false,
+				type: 'selectabletile',
+				standalone: false,
+				title: 'title',
+				value: 'a',
 				items: [{ type: 'text', text: 'A' }]
 			},
 			{
-				type: 'selectabletile', standalone: false,
+				type: 'selectabletile',
+				standalone: false,
+				title: 'title',
+				value: 'b',
 				items: [{ type: 'text', text: 'B' }]
 			},
 			{
-				type: 'selectabletile', standalone: false,
+				type: 'selectabletile',
+				standalone: false,
+				title: 'title',
+				value: 'c',
 				items: [{ type: 'text', text: 'C' }]
 			}
 		]
