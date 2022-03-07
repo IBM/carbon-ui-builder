@@ -26,7 +26,7 @@ export const ASelectableTileStyleUI = ({ selectedComponent, setComponent }: any)
 		setComponent({
 			...selectedComponent,
 			selectableID: `selectable-tile${selectedComponent.id.toString()}`
-		})
+		});
 	}
 
 	return <>
@@ -71,7 +71,7 @@ export const ASelectableTileStyleUI = ({ selectedComponent, setComponent }: any)
 					setComponent({
 						...selectedComponent,
 						light: checked
-					})
+					});
 				}}
 			/>}
 		<Checkbox
@@ -82,7 +82,7 @@ export const ASelectableTileStyleUI = ({ selectedComponent, setComponent }: any)
 				setComponent({
 					...selectedComponent,
 					selected: checked
-				})
+				});
 			}}
 		/>
 		<Checkbox
@@ -93,7 +93,7 @@ export const ASelectableTileStyleUI = ({ selectedComponent, setComponent }: any)
 				setComponent({
 					...selectedComponent,
 					disabled: checked
-				})
+				});
 			}}
 		/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />

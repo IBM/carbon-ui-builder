@@ -27,7 +27,7 @@ export const AExpandableStyleUI = ({ selectedComponent, setComponent }: any) => 
 				setComponent({
 					...selectedComponent,
 					light: checked
-				})
+				});
 			}}
 		/>
 		<Checkbox
@@ -38,7 +38,7 @@ export const AExpandableStyleUI = ({ selectedComponent, setComponent }: any) => 
 				setComponent({
 					...selectedComponent,
 					expanded: checked
-				})
+				});
 			}}
 		/>
 		<Checkbox
@@ -49,7 +49,7 @@ export const AExpandableStyleUI = ({ selectedComponent, setComponent }: any) => 
 				setComponent({
 					...selectedComponent,
 					outline: checked
-				})
+				});
 			}}
 		/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />

@@ -38,7 +38,7 @@ export const AClickableTileStyleUI = ({ selectedComponent, setComponent }: any) 
 				setComponent({
 					...selectedComponent,
 					light: checked
-				})
+				});
 			}}
 		/>
 		<Checkbox
@@ -49,7 +49,7 @@ export const AClickableTileStyleUI = ({ selectedComponent, setComponent }: any) 
 				setComponent({
 					...selectedComponent,
 					disabled: checked
-				})
+				});
 			}}
 		/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />

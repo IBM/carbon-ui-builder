@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-	TextInput,
-	Checkbox,
-} from 'carbon-components-react';
+import { TextInput, Checkbox } from 'carbon-components-react';
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
 import { css } from 'emotion';
@@ -26,7 +23,7 @@ export const ASelectableTileGroupStyleUI = ({ selectedComponent, setComponent }:
 	const updateChildrenTheme = (isLight: boolean) => {
 		selectedComponent.items.forEach((item: any) => {
 			item.light = isLight;
-		})
+		});
 	}
 
 	return <>
@@ -40,7 +37,7 @@ export const ASelectableTileGroupStyleUI = ({ selectedComponent, setComponent }:
 				setComponent({
 					...selectedComponent,
 					light: checked
-				})
+				});
 			}}
 		/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />

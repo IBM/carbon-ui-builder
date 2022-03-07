@@ -39,7 +39,7 @@ export const ARadioTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 		setComponent({
 			...selectedComponent,
 			radioID: `radio-tile${selectedComponent.id.toString()}`
-		})
+		});
 	}
 
 	return <>
@@ -72,7 +72,7 @@ export const ARadioTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 				setComponent({
 					...selectedComponent,
 					defaultChecked
-				})
+				});
 			}}
 		/>
 		<Checkbox
@@ -83,7 +83,7 @@ export const ARadioTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 				setComponent({
 					...selectedComponent,
 					disabled: checked
-				})
+				});
 			}}
 		/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />

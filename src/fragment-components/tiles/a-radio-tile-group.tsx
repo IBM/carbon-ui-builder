@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-	TextInput,
-	Checkbox,
-} from 'carbon-components-react';
+import { TextInput, Checkbox } from 'carbon-components-react';
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
 import { css } from 'emotion';
@@ -26,14 +23,14 @@ export const ARadioTileGroupStyleUI = ({ selectedComponent, setComponent }: any)
 	const updateChildrenTheme = (isLight: boolean) => {
 		selectedComponent.items.forEach((item: any) => {
 			item.light = isLight;
-		})
+		});
 	}
 
 	// Radio form elements within a fieldset should have the same name
 	const updateChildrenFormItemName = (name: string) => {
 		selectedComponent.items.forEach((item: any) => {
 			item.formItemName = name;
-		})
+		});
 	}
 
 	return <>
@@ -70,7 +67,7 @@ export const ARadioTileGroupStyleUI = ({ selectedComponent, setComponent }: any)
 				setComponent({
 					...selectedComponent,
 					light: checked
-				})
+				});
 			}}
 		/>
 		<Checkbox
@@ -81,7 +78,7 @@ export const ARadioTileGroupStyleUI = ({ selectedComponent, setComponent }: any)
 				setComponent({
 					...selectedComponent,
 					disabled: checked
-				})
+				});
 			}}
 		/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
