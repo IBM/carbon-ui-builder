@@ -133,15 +133,24 @@ export const componentInfo: ComponentInfo = {
 		legend: 'Radio Tile Group',
 		items: [
 			{
-				type: 'radiotile', value: 'Tile 1', formItemName: 'tile-group',
+				radioID: '',
+				type: 'radiotile',
+				value: 'Tile 1',
+				formItemName: 'tile-group',
 				items: [{ type: 'text', text: 'A' }]
 			},
 			{
-				type: 'radiotile', value: 'Tile 2', formItemName: 'tile-group',
+				radioID: '',
+				type: 'radiotile',
+				value: 'Tile 2',
+				formItemName: 'tile-group',
 				items: [{ type: 'text', text: 'B' }]
 			},
 			{
-				type: 'radiotile', value: 'Tile 3', formItemName: 'tile-group',
+				radioID: '',
+				type: 'radiotile',
+				value: 'Tile 3',
+				formItemName: 'tile-group',
 				items: [{ type: 'text', text: 'C' }]
 			}
 		]

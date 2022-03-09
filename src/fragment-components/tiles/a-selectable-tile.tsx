@@ -20,20 +20,12 @@ import {
 } from '../../utils/fragment-tools';
 
 export const ASelectableTileStyleUI = ({ selectedComponent, setComponent }: any) => {
-	// React components do not have auto increment ID, so user must provide one
-	// This will autofill id field if missing
-	if (!selectedComponent.selectableID) {
-		setComponent({
-			...selectedComponent,
-			selectableID: `selectable-tile${selectedComponent.id.toString()}`
-		});
-	}
-
 	return <>
 		{selectedComponent.standalone &&
 			<TileMorphism component={selectedComponent} setComponent={setComponent} />}
 		<TextInput
-			value={selectedComponent.selectableID}
+			value={selectedComponent?.selectableID}
+			placeholder='Let component assign'
 			labelText='Input ID'
 			onChange={(event: any) => {
 				setComponent({
@@ -101,21 +93,19 @@ export const ASelectableTileStyleUI = ({ selectedComponent, setComponent }: any)
 };
 
 export const ASelectableTileCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
-		<TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>
-	</>
+	return <TextInput
+		value={selectedComponent.codeContext?.name}
+		labelText='Input name'
+		onChange={(event: any) => {
+			setComponent({
+				...selectedComponent,
+				codeContext: {
+					...selectedComponent.codeContext,
+					name: event.currentTarget.value
+				}
+			});
+		}}
+	/>
 };
 
 const addStyle = css`
@@ -191,7 +181,7 @@ export const ASelectableTile = ({
 			selected={selected}
 			{...rest}>
 			<SelectableTile
-				id={componentObj?.selectableID || componentObj.id.toString()}
+				id={componentObj.id}
 				title={componentObj.title}
 				value={componentObj.value}
 				light={componentObj.light}
@@ -265,7 +255,7 @@ export const componentInfo: ComponentInfo = {
 			imports: ['SelectableTile'],
 			code: ({ json, jsonToTemplate }) => {
 				return `<SelectableTile
-					${json.selectableID !== undefined ? `id="${json.selectableID}"` : ''}
+					${json.selectableID !== '' ? `id="${json.selectableID}"` : ''}
 					${json.selected !== undefined ? `selected="${json.selected}"` : ''}
 					${json.light !== undefined ? `light="${json.light}"` : ''}
 					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}

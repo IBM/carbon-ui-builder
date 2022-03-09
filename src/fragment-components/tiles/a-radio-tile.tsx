@@ -21,6 +21,7 @@ export const ARadioTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 	const [fragment] = useFragment();
 	const parentComponent = getParentComponent(fragment.data, selectedComponent);
 
+	// Removes checkmark from siblings and checks current
 	const updateParentDefaultChecked = (checked: boolean) => {
 		if (!checked && parentComponent.defaultChecked) {
 			delete parentComponent.defaultChecked;
@@ -33,19 +34,11 @@ export const ARadioTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 		}
 	}
 
-	// React components do not have auto increment ID, so user must provide one
-	// This will autofill id field if missing
-	if (!selectedComponent.radioID) {
-		setComponent({
-			...selectedComponent,
-			radioID: `radio-tile${selectedComponent.id.toString()}`
-		});
-	}
-
 	return <>
 		<TextInput
 			value={selectedComponent.radioID}
 			labelText='Input ID'
+			placeholder='Let component assign'
 			onChange={(event: any) => {
 				setComponent({
 					...selectedComponent,
@@ -174,7 +167,7 @@ export const ARadioTile = ({
 			selected={selected}
 			{...rest}>
 			<RadioTile
-				id={componentObj?.radioID || componentObj.id.toString()}
+				id={componentObj.id}
 				name={componentObj.formItemName}
 				light={componentObj.light}
 				checked={componentObj.defaultChecked}
@@ -248,7 +241,7 @@ export const componentInfo: ComponentInfo = {
 			imports: ['RadioTile'],
 			code: ({ json, jsonToTemplate }) => {
 				return `<RadioTile
-					${json.radioID !== undefined ? `id="${json.radioID}"` : ''}
+					${json.radioID !== '' ? `id="${json.radioID}"` : ''}
 					${json.light !== undefined ? `light="${json.light}"` : ''}
 					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
 					value="${json.value}"
