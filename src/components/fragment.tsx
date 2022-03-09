@@ -251,20 +251,26 @@ export const Fragment = ({fragment, setFragment}: any) => {
 		return null;
 	};
 
+	const styles = css`
+		${
+			getAllFragmentStyleClasses(fragment).map((styleClass: any) => `.${styleClass.id} {
+				${styleClass.content}
+			}`)
+		}
+	`;
 	// TODO add fragment.width and fragment.height to database
 	return (
 		<div
-		className={cx(canvas, css`width: ${fragment.width || '800px'}; height: ${fragment.height || '600px'}`)}
+		className={cx(
+			canvas,
+			styles,
+			css`width: ${fragment.width || '800px'}; height: ${fragment.height || '600px'}`
+		)}
 		onDragOver={allowDrop}
 		onDrop={(event: any) => { drop(event, fragment.data.id) }}>
-			<style>
-			{
-				getAllFragmentStyleClasses(fragment).map((styleClass: any) => `.${styleClass.id} {
-					${styleClass.content}
-				}`)
-			}
-			</style>
-			{renderComponents(fragment.data)}
+			<div className={`${fragment.cssClasses ? fragment.cssClasses.map((cc: any) => cc.id).join(' ') : ''}`}>
+				{renderComponents(fragment.data)}
+			</div>
 		</div>
 	);
 };
