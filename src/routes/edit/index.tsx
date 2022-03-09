@@ -217,7 +217,9 @@ export const Edit = ({ match }: any) => {
 					</SideNavLink>
 				</SideNavItems>
 			</SideNav>
-			<div className={cx('edit-content', selectedLeftPane !== SelectedLeftPane.NONE ? 'is-side-panel-active' : '')}>
+			<div
+			className={cx('edit-content', selectedLeftPane !== SelectedLeftPane.NONE ? 'is-side-panel-active' : '')}
+			onClick={(event: any) => { updateFragment({...fragment, selectedComponentId: 0}) }}>
 				{
 					fragment
 					&& <>
