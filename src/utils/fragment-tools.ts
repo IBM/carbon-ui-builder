@@ -67,7 +67,11 @@ export const getAllComponentStyleClasses = (componentObj: any) => {
 export const getAllFragmentStyleClasses = (fragment: any) => {
 	if (!fragment || !fragment.data) { return []; }
 
-	return Object.values(getAllComponentStyleClasses(fragment.data));
+	const allClasses = {
+		...getAllComponentStyleClasses(fragment),
+		...getAllComponentStyleClasses(fragment.data)
+	};
+	return Object.values(allClasses);
 };
 
 export const hasComponentStyleClasses = (componentObj: any) => {
