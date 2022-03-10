@@ -24,17 +24,6 @@ export const ASelectableTileStyleUI = ({ selectedComponent, setComponent }: any)
 		{selectedComponent.standalone &&
 			<TileMorphism component={selectedComponent} setComponent={setComponent} />}
 		<TextInput
-			value={selectedComponent?.selectableID}
-			placeholder='Let component assign'
-			labelText='Input ID'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					selectableID: event.currentTarget.value
-				});
-			}}
-		/>
-		<TextInput
 			value={selectedComponent.value}
 			labelText='Value'
 			onChange={(event: any) => {
@@ -93,19 +82,35 @@ export const ASelectableTileStyleUI = ({ selectedComponent, setComponent }: any)
 };
 
 export const ASelectableTileCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-		value={selectedComponent.codeContext?.name}
-		labelText='Input name'
-		onChange={(event: any) => {
-			setComponent({
-				...selectedComponent,
-				codeContext: {
-					...selectedComponent.codeContext,
-					name: event.currentTarget.value
-				}
-			});
-		}}
-	/>
+	return <>
+		<TextInput
+			value={selectedComponent.codeContext?.name}
+			labelText='Input name'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						name: event.currentTarget.value
+					}
+				});
+			}}
+		/>
+		<TextInput
+			value={selectedComponent.codeContext?.tileID || ''}
+			labelText='Input ID'
+			placeholder='Auto assign'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						tileID: event.currentTarget.value
+					}
+				});
+			}}
+		/>
+	</>
 };
 
 const addStyle = css`
@@ -208,7 +213,6 @@ export const componentInfo: ComponentInfo = {
 	keywords: ['tile', 'card', 'multi', 'selectable'],
 	name: 'Selectable tile',
 	defaultComponentObj: {
-		selectableID: '',
 		type: 'selectabletile',
 		standalone: true,
 		value: 'value',
@@ -255,7 +259,7 @@ export const componentInfo: ComponentInfo = {
 			imports: ['SelectableTile'],
 			code: ({ json, jsonToTemplate }) => {
 				return `<SelectableTile
-					${json.selectableID !== '' ? `id="${json.selectableID}"` : ''}
+					${(json.codeContext?.tileID !== undefined && json.codeContext?.tileID !== '') ? `id="${json.codeContext?.tileID}"` : ''}
 					${json.selected !== undefined ? `selected="${json.selected}"` : ''}
 					${json.light !== undefined ? `light="${json.light}"` : ''}
 					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}

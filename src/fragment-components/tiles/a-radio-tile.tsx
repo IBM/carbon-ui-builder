@@ -36,17 +36,6 @@ export const ARadioTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 
 	return <>
 		<TextInput
-			value={selectedComponent.radioID}
-			labelText='Input ID'
-			placeholder='Let component assign'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					radioID: event.currentTarget.value
-				});
-			}}
-		/>
-		<TextInput
 			value={selectedComponent.value}
 			labelText='Value'
 			onChange={(event: any) => {
@@ -84,19 +73,35 @@ export const ARadioTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 };
 
 export const ARadioTileCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-		value={selectedComponent.codeContext?.name}
-		labelText='Input name'
-		onChange={(event: any) => {
-			setComponent({
-				...selectedComponent,
-				codeContext: {
-					...selectedComponent.codeContext,
-					name: event.currentTarget.value
-				}
-			});
-		}}
-	/>
+	return <>
+		<TextInput
+			value={selectedComponent.codeContext?.name}
+			labelText='Input name'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						name: event.currentTarget.value
+					}
+				});
+			}}
+		/>
+		<TextInput
+			value={selectedComponent.codeContext?.tileID || ''}
+			labelText='Input ID'
+			placeholder='Auto assign'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						tileID: event.currentTarget.value
+					}
+				});
+			}}
+		/>
+	</>
 };
 
 const addStyle = css`
@@ -194,7 +199,6 @@ export const componentInfo: ComponentInfo = {
 	name: 'Radio tile',
 	defaultComponentObj: {
 		type: 'radiotile',
-		radioID: '',
 		formItemName: 'tile-group',
 		disabled: false,
 		checked: false,
@@ -241,7 +245,7 @@ export const componentInfo: ComponentInfo = {
 			imports: ['RadioTile'],
 			code: ({ json, jsonToTemplate }) => {
 				return `<RadioTile
-					${json.radioID !== '' ? `id="${json.radioID}"` : ''}
+					${(json.codeContext?.tileID !== undefined && json.codeContext?.tileID !== '') ? `id="${json.codeContext?.tileID}"` : ''}
 					${json.light !== undefined ? `light="${json.light}"` : ''}
 					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
 					value="${json.value}"

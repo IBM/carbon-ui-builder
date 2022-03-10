@@ -91,7 +91,6 @@ export const componentInfo: ComponentInfo = {
 		tileGroup: true,
 		items: [
 			{
-				selectableID: '',
 				type: 'selectabletile',
 				standalone: false,
 				title: 'title',
@@ -99,7 +98,6 @@ export const componentInfo: ComponentInfo = {
 				items: [{ type: 'text', text: 'A' }]
 			},
 			{
-				selectableID: '',
 				type: 'selectabletile',
 				standalone: false,
 				title: 'title',
@@ -107,7 +105,6 @@ export const componentInfo: ComponentInfo = {
 				items: [{ type: 'text', text: 'B' }]
 			},
 			{
-				selectableID: '',
 				type: 'selectabletile',
 				standalone: false,
 				title: 'title',
