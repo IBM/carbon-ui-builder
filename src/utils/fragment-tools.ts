@@ -44,7 +44,7 @@ export const getFragmentTemplates = (fragments: any[]) => (
 	fragments.filter((fragment: any) => !!fragment.labels?.includes('template'))
 );
 
-export const getAllComponentStyleClasses = (componentObj: any) => {
+export const getAllComponentStyleClasses = (componentObj: any, fragments: any[] = []) => {
 	let styleClasses: any = {};
 
 	// convert into an object so all classes are unique
@@ -59,17 +59,26 @@ export const getAllComponentStyleClasses = (componentObj: any) => {
 			...styleClasses,
 			...coClasses
 		};
+
+		if (co.type === 'fragment') {
+			const fragment = fragments.find(f => f.id === co.id);
+
+			styleClasses = {
+				...styleClasses,
+				...getAllFragmentStyleClasses(fragment || {}, fragments)
+			};
+		}
 	});
 
 	return styleClasses;
 };
 
-export const getAllFragmentStyleClasses = (fragment: any) => {
+export const getAllFragmentStyleClasses = (fragment: any, fragments: any[] = []) => {
 	if (!fragment || !fragment.data) { return []; }
 
 	const allClasses = {
-		...getAllComponentStyleClasses(fragment),
-		...getAllComponentStyleClasses(fragment.data)
+		...getAllComponentStyleClasses(fragment, fragments),
+		...getAllComponentStyleClasses(fragment.data, fragments)
 	};
 	return Object.values(allClasses);
 };
