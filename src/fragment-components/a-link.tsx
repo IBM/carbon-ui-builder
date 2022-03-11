@@ -27,7 +27,7 @@ export const ALinkStyleUI = ({selectedComponent, setComponent}: any) => {
 				setComponent({
 					...selectedComponent,
 					disabled: checked
-				})
+				});
 			}}
 		/>
 		<Checkbox
