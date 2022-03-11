@@ -110,11 +110,15 @@ export const ARadioTileGroup = ({
 }: any) => {
 	return <AComponent
 		componentObj={componentObj}
-		className={css`display: block;`}
+		headingCss={css`display: block;`}
 		selected={selected}
 		{...rest}>
-		<fieldset className="bx--tile-group" disabled={componentObj.disabled}>
-			<legend className="bx--label">{componentObj.legend}</legend>
+		<fieldset
+			className={`bx--tile-group ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}`}
+			disabled={componentObj.disabled}>
+			<legend className="bx--label">
+				{componentObj.legend}
+			</legend>
 			{children}
 		</fieldset>
 	</AComponent>
@@ -166,7 +170,7 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: (_) => ``,
+			inputs: (_) => '',
 			outputs: ({ json }) =>
 				`@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<Event>();`,
 			imports: ['TilesModule'],

@@ -120,6 +120,7 @@ const addStyle = css`
 	border: 2px solid #d8d8d8;
 	line-height: 21px;
 	z-index: 1;
+	display: block !important;
 `;
 
 const addStyleTop = cx(addStyle, css`
@@ -130,7 +131,8 @@ const iconStyle = css`
 	height: 1rem;
 	width: 1rem;
 	float: right;
-	cursor: pointer`;
+	cursor: pointer;
+`;
 
 export const ASelectableTile = ({
 	children,
@@ -173,7 +175,7 @@ export const ASelectableTile = ({
 	}, [componentObj.id]);
 
 	return <>
-		{parentComponent.tileGroup && <span className={cx(addStyleTop, selected ? css`` : css`display: none`)}>
+		{parentComponent.tileGroup && <span style={{ display: 'none' }} className={selected ? addStyleTop : ''}>
 			<Add32 onClick={(event: any) => {
 				event.stopPropagation();
 				addTile();
@@ -182,7 +184,7 @@ export const ASelectableTile = ({
 
 		<AComponent
 			componentObj={componentObj}
-			className={css`display: block;`}
+			headingCss={css`display: block;`}
 			selected={selected}
 			{...rest}>
 			<SelectableTile
@@ -192,12 +194,13 @@ export const ASelectableTile = ({
 				light={componentObj.light}
 				selected={componentObj.selected}
 				disabled={componentObj.disabled}
+				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
 				onDrop={onDrop}>
 				{children}
 			</SelectableTile>
 		</AComponent>
 
-		{parentComponent.tileGroup && <span className={cx(addStyle, selected ? css`` : css`display: none`)}>
+		{parentComponent.tileGroup && <span style={{ display: 'none' }} className={selected ? addStyle : ''}>
 			<Add32 onClick={(event: any) => {
 				event.stopPropagation();
 				addTile(1);

@@ -91,11 +91,11 @@ export const AExpandableTile = ({
 	return <AComponent
 		componentObj={componentObj}
 		selected={selected}
-		className={css`display: block;`}
+		headingCss={css`display: block;`}
 		{...rest}>
 		<ExpandableTile
-			className={componentObj.outline ? showOutlineStyle : {}}
 			light={componentObj.light}
+			className={`${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} ${componentObj.outline ? showOutlineStyle : ''}`}
 			expanded={componentObj.expanded}>
 			{children}
 		</ExpandableTile>
@@ -111,7 +111,7 @@ export const componentInfo: ComponentInfo = {
 		type: 'expandabletile',
 		light: false,
 		expanded: true,
-		outline: true,
+		outline: false,
 		items: [
 			{
 				type: 'tilefold', aboveFold: true,
@@ -139,7 +139,7 @@ export const componentInfo: ComponentInfo = {
 		angular: {
 			inputs: ({ json }) =>
 				`@Input() ${nameStringToVariableString(json.codeContext?.name)}Expanded = ${json.expanded}`,
-			outputs: (_) => ``,
+			outputs: (_) => '',
 			imports: ['TilesModule'],
 			code: ({ json, jsonToTemplate }) => {
 				/**

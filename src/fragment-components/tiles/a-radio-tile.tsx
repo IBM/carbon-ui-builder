@@ -23,6 +23,7 @@ export const ARadioTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 
 	// Removes checkmark from siblings and checks current
 	const updateParentDefaultChecked = (checked: boolean) => {
+		// Deleting attribute to prevent from being in export
 		if (!checked && parentComponent.defaultChecked) {
 			delete parentComponent.defaultChecked;
 		} else {
@@ -111,6 +112,7 @@ const addStyle = css`
 	border: 2px solid #d8d8d8;
 	line-height: 21px;
 	z-index: 1;
+	display: block !important;
 `;
 
 const addStyleTop = cx(addStyle, css`
@@ -121,7 +123,8 @@ const iconStyle = css`
 	height: 1rem;
 	width: 1rem;
 	float: right;
-	cursor: pointer`;
+	cursor: pointer;
+`;
 
 export const ARadioTile = ({
 	children,
@@ -160,15 +163,16 @@ export const ARadioTile = ({
 	});
 
 	return <>
-		<span className={cx(addStyleTop, selected ? css`` : css`display: none`)}>
+		<span style={{ display: 'none' }} className={selected ? addStyleTop : ''}>
 			<Add32 onClick={(event: any) => {
 				event.stopPropagation();
 				addRadio();
 			}} className={iconStyle} />
 		</span>
+
 		<AComponent
 			componentObj={componentObj}
-			className={css`display: block;`}
+			headingCss={css`display: block;`}
 			selected={selected}
 			{...rest}>
 			<RadioTile
@@ -178,11 +182,13 @@ export const ARadioTile = ({
 				checked={componentObj.defaultChecked}
 				disabled={componentObj.disabled}
 				value={componentObj.value}
+				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
 				onDrop={onDrop}>
 				{children}
 			</RadioTile>
 		</AComponent>
-		<span className={cx(addStyle, selected ? css`` : css`display: none`)}>
+
+		<span style={{ display: 'none' }} className={selected ? addStyle : ''}>
 			<Add32 onClick={(event: any) => {
 				event.stopPropagation();
 				addRadio(1);
@@ -226,7 +232,7 @@ export const componentInfo: ComponentInfo = {
 			inputs: ({ json }) =>
 				`@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${json.checked || false};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = '${json.value}';`,
-			outputs: () => ``,
+			outputs: () => '',
 			imports: ['TilesModule'],
 			code: ({ json, jsonToTemplate }) => {
 				/**

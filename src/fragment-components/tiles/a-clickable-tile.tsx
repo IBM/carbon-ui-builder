@@ -83,13 +83,14 @@ export const AClickableTile = ({
 
 	return <AComponent
 		componentObj={componentObj}
-		className={css`display: block;`}
+		headingCss={css`display: block;`}
 		selected={selected}
 		{...rest}>
 		<ClickableTile
 			onDrop={onDrop}
 			light={componentObj.light}
 			href={componentObj.href}
+			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
 			disabled={componentObj.disabled}>
 			{children}
 		</ClickableTile>

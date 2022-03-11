@@ -60,11 +60,12 @@ export const ATile = ({
 }: any) => {
 	return <AComponent
 		componentObj={componentObj}
-		className={css`display: block;`}
+		headingCss={css`display: block;`}
 		selected={selected}
 		{...rest}>
 		<Tile
 			onDrop={onDrop}
+			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
 			light={componentObj.light}>
 			{children}
 		</Tile>
@@ -97,7 +98,7 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? "light" : ""}';`,
-			outputs: (_) => ``,
+			outputs: (_) => '',
 			imports: ['TilesModule'],
 			code: ({ json, jsonToTemplate }) => {
 				return `<ibm-tile

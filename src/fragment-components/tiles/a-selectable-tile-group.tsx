@@ -71,10 +71,13 @@ export const ASelectableTileGroup = ({
 }: any) => {
 	return <AComponent
 		componentObj={componentObj}
-		className={css`display: block;`}
+		headingCss={css`display: block;`}
 		selected={selected}
 		{...rest}>
-		<div role="group" aria-label="Selectable tiles">
+		<div
+			role="group"
+			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
+			aria-label="Selectable tiles">
 			{children}
 		</div>
 	</AComponent>;
@@ -127,7 +130,7 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: (_) => ``,
+			inputs: (_) => '',
 			outputs: ({ json }) =>
 				`@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<Event>();`,
 			imports: ['TilesModule'],
