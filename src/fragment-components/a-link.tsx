@@ -38,7 +38,7 @@ export const ALinkStyleUI = ({selectedComponent, setComponent}: any) => {
 				setComponent({
 					...selectedComponent,
 					inline: checked
-				})
+				});
 			}}
 		/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
