@@ -104,7 +104,8 @@ export const componentInfo: ComponentInfo = {
 				return `<Link
 				${json.disabled !== undefined && json.disabled !== '' ? `disabled="${json.disabled}"` : ''}
 				${json.inline !== undefined && json.inline !== '' ? `inline="${json.inline}"` : ''}
-				${reactClassNamesFromComponentObj(json)}>${json.text}
+				${reactClassNamesFromComponentObj(json)}>
+					${json.text}
 				</Link>`;
 			}
 		}
