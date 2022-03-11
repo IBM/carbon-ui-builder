@@ -23,7 +23,7 @@ export const ALinkStyleUI = ({selectedComponent, setComponent}: any) => {
 			labelText='Disabled'
 			id='disable-label'
 			checked={selectedComponent.disabled}
-			onChange={(checked: any) => {
+			onChange={(checked: boolean) => {
 				setComponent({
 					...selectedComponent,
 					disabled: checked
