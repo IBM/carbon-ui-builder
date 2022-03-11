@@ -23,22 +23,22 @@ export const ALinkStyleUI = ({selectedComponent, setComponent}: any) => {
 			labelText='Disabled'
 			id='disable-label'
 			checked={selectedComponent.disabled}
-			onChange={(checked: any) => {
+			onChange={(checked: boolean) => {
 				setComponent({
 					...selectedComponent,
 					disabled: checked
-				})
+				});
 			}}
 		/>
 		<Checkbox
 			labelText='Inline'
 			id='Inline-select'
 			checked={selectedComponent.inline}
-			onChange={(checked: any) => {
+			onChange={(checked: boolean) => {
 				setComponent({
 					...selectedComponent,
 					inline: checked
-				})
+				});
 			}}
 		/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
@@ -104,7 +104,8 @@ export const componentInfo: ComponentInfo = {
 				return `<Link
 				${json.disabled !== undefined && json.disabled !== '' ? `disabled="${json.disabled}"` : ''}
 				${json.inline !== undefined && json.inline !== '' ? `inline="${json.inline}"` : ''}
-				${reactClassNamesFromComponentObj(json)}>${json.text}
+				${reactClassNamesFromComponentObj(json)}>
+					${json.text}
 				</Link>`;
 			}
 		}

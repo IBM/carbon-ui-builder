@@ -23,7 +23,7 @@ export { ATextArea, ATextAreaStyleUI, ATextAreaCodeUI } from "./a-textarea";
 export { ATextInput, ATextInputStyleUI, ATextInputCodeUI } from "./a-textinput";
 export { ASearchInput, ASearchInputStyleUI, ASearchInputCodeUI } from "./a-searchinput";
 export { ANumberInput, ANumberInputStyleUI, ANumberInputCodeUI } from "./a-numberinput";
-export { ALink } from "./a-link";
+export { ALink, ALinkStyleUI, ALinkCodeUI } from "./a-link";
 
 export const allComponents = {
 	button,
