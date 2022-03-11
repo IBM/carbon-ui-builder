@@ -1,0 +1,20 @@
+@import '../fragment-tile.scss';
+
+.fragment-options {
+	margin-left: 30px;
+	margin-right: 30px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+
+	// This is the viewport width that causes the selection tiles to overlap.
+	@media screen and (max-width: 45rem) {
+		flex-direction: column;
+	}
+}
+
+.modal-tile-wrapper {
+	@extend .tile-wrapper;
+	height: 240px;
+}
