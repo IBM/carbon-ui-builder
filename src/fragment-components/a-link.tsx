@@ -34,7 +34,7 @@ export const ALinkStyleUI = ({selectedComponent, setComponent}: any) => {
 			labelText='Inline'
 			id='Inline-select'
 			checked={selectedComponent.inline}
-			onChange={(checked: any) => {
+			onChange={(checked: boolean) => {
 				setComponent({
 					...selectedComponent,
 					inline: checked
