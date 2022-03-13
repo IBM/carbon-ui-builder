@@ -80,7 +80,7 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'tile',
 		items: [
-			{ type: 'text', text: 'A' },
+			{ type: 'text', text: 'A simple tile' },
 		],
 	},
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <ATile

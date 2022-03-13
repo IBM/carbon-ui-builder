@@ -19,17 +19,6 @@ import {
 export const AClickableTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TileMorphism component={selectedComponent} setComponent={setComponent} />
-		<TextInput
-			id='href-input'
-			value={selectedComponent.href}
-			labelText='href for clickable UI'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					href: event.currentTarget.value
-				});
-			}}
-		/>
 		<Checkbox
 			labelText='Light theme'
 			id='theme-select'
@@ -57,19 +46,34 @@ export const AClickableTileStyleUI = ({ selectedComponent, setComponent }: any) 
 };
 
 export const AClickableTileCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-		value={selectedComponent.codeContext?.name}
-		labelText='Input name'
-		onChange={(event: any) => {
-			setComponent({
-				...selectedComponent,
-				codeContext: {
-					...selectedComponent.codeContext,
-					name: event.currentTarget.value
-				}
-			});
-		}}
-	/>
+	return <>
+		<TextInput
+			value={selectedComponent.codeContext?.name}
+			labelText='Input name'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						name: event.currentTarget.value
+					}
+				});
+			}}
+		/>
+		<TextInput
+			value={selectedComponent.codeContext?.href || ''}
+			labelText='href for clickable UI'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						href: event.currentTarget.value
+					}
+				});
+			}}
+		/>
+	</>
 };
 
 export const AClickableTile = ({
@@ -81,15 +85,21 @@ export const AClickableTile = ({
 	...rest
 }: any) => {
 
+	// Prevent users from being redirected
+	const onClick = (event: any) => {
+		event.preventDefault();
+	}
+
 	return <AComponent
 		componentObj={componentObj}
 		headingCss={css`display: block;`}
 		selected={selected}
 		{...rest}>
 		<ClickableTile
+			onClick={onClick}
 			onDrop={onDrop}
 			light={componentObj.light}
-			href={componentObj.href}
+			href={componentObj.codeContext?.href}
 			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
 			disabled={componentObj.disabled}>
 			{children}
@@ -105,9 +115,9 @@ export const componentInfo: ComponentInfo = {
 	name: 'Clickable tile',
 	defaultComponentObj: {
 		type: 'clickabletile',
-		light: false,
-		href: '#',
-		items: []
+		items: [
+			{ type: 'text', text: 'A clickable tile' },
+		]
 	},
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <AClickableTile
 		componentObj={componentObj}
@@ -144,7 +154,7 @@ export const componentInfo: ComponentInfo = {
 			imports: ['ClickableTile'],
 			code: ({ json, jsonToTemplate }) => {
 				return `<ClickableTile
-					${json.href !== undefined ? `href="${json.href}"` : ''}
+					${json.codeContext?.href !== undefined && json.codeContext?.href !== '' ? `href='${json.codeContext?.href}'` : ''}
 					${json.light !== undefined ? `light="${json.light}"` : ''}
 					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
 					${reactClassNamesFromComponentObj(json)}>

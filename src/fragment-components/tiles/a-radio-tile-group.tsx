@@ -14,43 +14,12 @@ import {
 } from '../../utils/fragment-tools';
 
 export const ARadioTileGroupStyleUI = ({ selectedComponent, setComponent }: any) => {
-	/**
-	 * It usually is not common for users to have different theme for each tile,
-	 * this approach will ensure users don't have to go through each `tile` & update theme
-	 *
-	 * Iterates through all children & updates their theme
-	 */
-	const updateChildrenTheme = (isLight: boolean) => {
-		selectedComponent.items.forEach((item: any) => {
-			item.light = isLight;
-		});
-	}
-
-	// Radio form elements within a fieldset should have the same name
-	const updateChildrenFormItemName = (name: string) => {
-		selectedComponent.items.forEach((item: any) => {
-			item.formItemName = name;
-		});
-	}
-
 	return <>
 		<TileMorphism component={selectedComponent} setComponent={setComponent} />
 		<TextInput
-			value={selectedComponent.formItemName}
-			labelText='Form item name'
-			id='form-item-name'
-			onChange={(event: any) => {
-				updateChildrenFormItemName(event.currentTarget.value);
-				setComponent({
-					...selectedComponent,
-					formItemName: event.currentTarget.value,
-				});
-			}}
-		/>
-		<TextInput
 			value={selectedComponent.legend}
 			labelText='Legend name'
-			id='legend-name'
+			placeholder='Fieldset header'
 			onChange={(event: any) => {
 				setComponent({
 					...selectedComponent,
@@ -63,10 +32,17 @@ export const ARadioTileGroupStyleUI = ({ selectedComponent, setComponent }: any)
 			id='theme-select'
 			checked={selectedComponent.light}
 			onChange={(checked: any) => {
-				updateChildrenTheme(checked);
+				/**
+				 * It usually is not common for users to have different theme for each tile,
+				 * this approach will ensure users don't have to go through each child `tile` & update theme
+				 */
 				setComponent({
 					...selectedComponent,
-					light: checked
+					light: checked,
+					items: selectedComponent.items.map((tile: any) => ({
+						...tile,
+						light: checked,
+					}))
 				});
 			}}
 		/>
@@ -86,19 +62,42 @@ export const ARadioTileGroupStyleUI = ({ selectedComponent, setComponent }: any)
 };
 
 export const ARadioTileGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-		value={selectedComponent.codeContext?.name}
-		labelText='Input name'
-		onChange={(event: any) => {
-			setComponent({
-				...selectedComponent,
-				codeContext: {
-					...selectedComponent.codeContext,
-					name: event.currentTarget.value
-				}
-			});
-		}}
-	/>
+	return <>
+		<TextInput
+			value={selectedComponent.codeContext?.name}
+			labelText='Input name'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						name: event.currentTarget.value
+					}
+				});
+			}}
+		/>
+		<TextInput
+			value={selectedComponent.codeContext?.formItemName}
+			labelText='Form item name'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						formItemName: event.currentTarget.value,
+					},
+					// Radio form elements within a fieldset should have the same name
+					items: selectedComponent.items.map((tile: any) => ({
+						...tile,
+						codeContext: {
+							...tile.codeContext,
+							formItemName: event.currentTarget.value
+						}
+					}))
+				});
+			}}
+		/>
+	</>
 };
 
 export const ARadioTileGroup = ({
@@ -116,9 +115,10 @@ export const ARadioTileGroup = ({
 		<fieldset
 			className={`bx--tile-group ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}`}
 			disabled={componentObj.disabled}>
-			<legend className="bx--label">
-				{componentObj.legend}
-			</legend>
+			{(componentObj.legend !== undefined && componentObj.legend !== '') &&
+				<legend className="bx--label">
+					{componentObj.legend}
+				</legend>}
 			{children}
 		</fieldset>
 	</AComponent>
@@ -133,26 +133,35 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'radioTileGroup',
 		tileGroup: true,
-		formItemName: 'tile-group',
 		legend: 'Radio Tile Group',
+		codeContext: {
+			formItemName: 'tile-group'
+		},
 		items: [
 			{
 				type: 'radiotile',
-				value: 'Tile 1',
-				formItemName: 'tile-group',
-				items: [{ type: 'text', text: 'A' }]
+				codeContext: {
+					value: 'Tile 1',
+					formItemName: 'tile-group',
+				},
+
+				items: [{ type: 'text', text: 'Radio tile A' }]
 			},
 			{
 				type: 'radiotile',
-				value: 'Tile 2',
-				formItemName: 'tile-group',
-				items: [{ type: 'text', text: 'B' }]
+				codeContext: {
+					value: 'Tile 2',
+					formItemName: 'tile-group',
+				},
+				items: [{ type: 'text', text: 'Radio tile B' }]
 			},
 			{
 				type: 'radiotile',
-				value: 'Tile 3',
-				formItemName: 'tile-group',
-				items: [{ type: 'text', text: 'C' }]
+				codeContext: {
+					value: 'Tile 3',
+					formItemName: 'tile-group'
+				},
+				items: [{ type: 'text', text: 'Radio tile C' }]
 			}
 		]
 	},
@@ -187,10 +196,11 @@ export const componentInfo: ComponentInfo = {
 			imports: ['TileGroup'],
 			code: ({ json, jsonToTemplate }) => {
 				return `<TileGroup
-					legend="${json.legend}"
-					name="${json.formItemName}"
+					${json.legend !== undefined && json.legend !== '' ? `legend="${json.legend}"` : ''}
+					${json.codeContext?.formItemName !== undefined && json.codeContext?.formItemName !== '' ? `name="${json.codeContext?.formItemName}"` : ''}
 					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
-					${reactClassNamesFromComponentObj(json)}>
+					${reactClassNamesFromComponentObj(json)}
+					onChange={handleInputChange}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
 				</TileGroup>`;
 			}

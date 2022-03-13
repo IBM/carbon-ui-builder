@@ -14,18 +14,6 @@ import {
 } from '../../utils/fragment-tools';
 
 export const ASelectableTileGroupStyleUI = ({ selectedComponent, setComponent }: any) => {
-	/**
-	 * It usually is not common for users to have different theme for each tile,
-	 * this approach will ensure they don't have to go through each `tile` & update theme
-	 *
-	 * Iterates through all children & updates their theme
-	 */
-	const updateChildrenTheme = (isLight: boolean) => {
-		selectedComponent.items.forEach((item: any) => {
-			item.light = isLight;
-		});
-	}
-
 	return <>
 		<TileMorphism component={selectedComponent} setComponent={setComponent} />
 		<Checkbox
@@ -33,10 +21,17 @@ export const ASelectableTileGroupStyleUI = ({ selectedComponent, setComponent }:
 			id='theme-select'
 			checked={selectedComponent.light}
 			onChange={(checked: any) => {
-				updateChildrenTheme(checked);
+				/**
+				 * It usually is not common for users to have different theme for each tile,
+				 * this approach will ensure users don't have to go through each child `tile` & update theme
+				 */
 				setComponent({
 					...selectedComponent,
-					light: checked
+					light: checked,
+					items: selectedComponent.items.map((tile: any) => ({
+						...tile,
+						light: checked,
+					}))
 				});
 			}}
 		/>
@@ -56,6 +51,27 @@ export const ASelectableTileGroupCodeUI = ({ selectedComponent, setComponent }: 
 						...selectedComponent.codeContext,
 						name: event.currentTarget.value
 					}
+				});
+			}}
+		/>
+		<TextInput
+			value={selectedComponent.codeContext?.formItemName}
+			labelText='Form item name'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						formItemName: event.currentTarget.value,
+					},
+					// Radio form elements within a fieldset should have the same name
+					items: selectedComponent.items.map((tile: any) => ({
+						...tile,
+						codeContext: {
+							...tile.codeContext,
+							formItemName: event.currentTarget.value
+						}
+					}))
 				});
 			}}
 		/>
@@ -95,24 +111,27 @@ export const componentInfo: ComponentInfo = {
 		items: [
 			{
 				type: 'selectabletile',
+				codeContext: {
+					formItemName: 'multiselect-tile-group',
+				},
 				standalone: false,
-				title: 'title',
-				value: 'a',
-				items: [{ type: 'text', text: 'A' }]
+				items: [{ type: 'text', text: 'Selectable tile A' }]
 			},
 			{
 				type: 'selectabletile',
+				codeContext: {
+					formItemName: 'multiselect-tile-group',
+				},
 				standalone: false,
-				title: 'title',
-				value: 'b',
-				items: [{ type: 'text', text: 'B' }]
+				items: [{ type: 'text', text: 'Selectable tile B' }]
 			},
 			{
 				type: 'selectabletile',
+				codeContext: {
+					formItemName: 'multiselect-tile-group',
+				},
 				standalone: false,
-				title: 'title',
-				value: 'c',
-				items: [{ type: 'text', text: 'C' }]
+				items: [{ type: 'text', text: 'Selectable tile C' }]
 			}
 		]
 	},

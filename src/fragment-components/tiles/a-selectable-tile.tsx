@@ -22,28 +22,7 @@ import {
 export const ASelectableTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		{selectedComponent.standalone &&
-			<TileMorphism component={selectedComponent} setComponent={setComponent} />}
-		<TextInput
-			value={selectedComponent.value}
-			labelText='Value'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					value: event.currentTarget.value
-				});
-			}}
-		/>
-		<TextInput
-			value={selectedComponent.title}
-			labelText='Title'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					title: event.currentTarget.value
-				});
-			}}
-		/>
-		{selectedComponent.standalone &&
+			<TileMorphism component={selectedComponent} setComponent={setComponent} /> &&
 			<Checkbox
 				labelText='Light theme'
 				id='theme-select'
@@ -97,19 +76,60 @@ export const ASelectableTileCodeUI = ({ selectedComponent, setComponent }: any) 
 			}}
 		/>
 		<TextInput
-			value={selectedComponent.codeContext?.tileID || ''}
+			value={selectedComponent.codeContext?.tileId || ''}
 			labelText='Input ID'
-			placeholder='Auto assign'
+			placeholder='Custom ID'
 			onChange={(event: any) => {
 				setComponent({
 					...selectedComponent,
 					codeContext: {
 						...selectedComponent.codeContext,
-						tileID: event.currentTarget.value
+						tileId: event.currentTarget.value
 					}
 				});
 			}}
 		/>
+		<TextInput
+			value={selectedComponent.codeContext?.title || ''}
+			labelText='Title'
+			placeholder='Title attribute'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						title: event.currentTarget.value
+					}
+				});
+			}}
+		/>
+		<TextInput
+			value={selectedComponent.codeContext?.value || ''}
+			labelText='Value'
+			placeholder='Tile value'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						value: event.currentTarget.value
+					}
+				});
+			}}
+		/>
+		{selectedComponent.standalone && <TextInput
+			value={selectedComponent.codeContext?.formItemName || ''}
+			labelText='Form item name'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						formItemName: event.currentTarget.value
+					}
+				});
+			}}
+		/>}
 	</>
 };
 
@@ -155,8 +175,10 @@ export const ASelectableTile = ({
 				component: {
 					standalone: false,
 					type: 'selectabletile',
-					value: 'value',
-					title: 'title',
+					codeContext: {
+						...(componentObj.codeContext?.formItemName ? { formItemName: componentObj.codeContext?.formItemName } : '')
+					},
+					...(componentObj.light !== undefined ? { light: componentObj.light } : ''),
 					items: [{ type: 'text', text: 'New selectable tile' }]
 				}
 			},
@@ -167,7 +189,7 @@ export const ASelectableTile = ({
 
 	// Removing `for` attribute so users can select text and other non-form elements.
 	useEffect(() => {
-		const tileElement = document.getElementById(componentObj.id);
+		const tileElement = document.getElementById(componentObj.id.toString());
 		const labelElement = tileElement?.parentElement?.querySelector('label.bx--tile.bx--tile--selectable');
 		// Setting to empty instead of removing so users can select non-form elements within tile when a form element is present
 		// Although form elements should never be added within another
@@ -188,7 +210,8 @@ export const ASelectableTile = ({
 			selected={selected}
 			{...rest}>
 			<SelectableTile
-				id={componentObj.id}
+				id={componentObj.id.toString()}
+				{...(componentObj.codeContext?.formItemName ? { name: componentObj.codeContext?.formItemName } : '')}
 				title={componentObj.title}
 				value={componentObj.value}
 				light={componentObj.light}
@@ -218,11 +241,11 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'selectabletile',
 		standalone: true,
-		value: 'value',
-		title: 'title',
 		disabled: false,
 		selected: false,
-		items: [],
+		items: [
+			{ type: 'text', text: 'A standalone selectable tile' },
+		]
 	},
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <ASelectableTile
 		componentObj={componentObj}
@@ -262,14 +285,15 @@ export const componentInfo: ComponentInfo = {
 			imports: ['SelectableTile'],
 			code: ({ json, jsonToTemplate }) => {
 				return `<SelectableTile
-					${(json.codeContext?.tileID !== undefined && json.codeContext?.tileID !== '') ? `id="${json.codeContext?.tileID}"` : ''}
-					${json.selected !== undefined ? `selected="${json.selected}"` : ''}
-					${json.light !== undefined ? `light="${json.light}"` : ''}
-					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
-					${json.standalone ? `onChange={handleInputChange}` : ''}
-					value="${json.value}"
-					${json.title !== undefined ? `title="${json.title}"` : ''}
-					${reactClassNamesFromComponentObj(json)}>
+					${(json.codeContext?.tileId !== undefined && json.codeContext?.tileId !== '') ? `id="${json.codeContext?.tileId}"` : ''}
+					${(json.codeContext?.value !== undefined && json.codeContext?.value !== '') ? `value="${json.codeContext?.value}"` : ''}
+					${(json.codeContext?.title !== undefined && json.codeContext?.title !== '') ? `title="${json.codeContext?.title}"` : ''}
+					${(json.codeContext?.formItemName !== undefined && json.codeContext?.formItemName !== '') ? `name="${json.codeContext?.formItemName}"` : ''}
+					${json.selected !== undefined ? `selected={${json.selected}}` : ''}
+					${json.light !== undefined ? `light={${json.light}}` : ''}
+					${json.disabled !== undefined && !!json.disabled ? `disabled={${json.disabled}}` : ''}
+					${reactClassNamesFromComponentObj(json)}
+					onChange={handleInputChange}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
 				</SelectableTile>`;
 			}

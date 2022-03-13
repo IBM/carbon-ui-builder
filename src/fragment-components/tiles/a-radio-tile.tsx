@@ -36,16 +36,6 @@ export const ARadioTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 	}
 
 	return <>
-		<TextInput
-			value={selectedComponent.value}
-			labelText='Value'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					value: event.currentTarget.value
-				});
-			}}
-		/>
 		<Checkbox
 			labelText='Default checked'
 			id='default-checked'
@@ -89,15 +79,29 @@ export const ARadioTileCodeUI = ({ selectedComponent, setComponent }: any) => {
 			}}
 		/>
 		<TextInput
-			value={selectedComponent.codeContext?.tileID || ''}
+			value={selectedComponent.codeContext?.tileId || ''}
 			labelText='Input ID'
-			placeholder='Auto assign'
+			placeholder='Custom ID'
 			onChange={(event: any) => {
 				setComponent({
 					...selectedComponent,
 					codeContext: {
 						...selectedComponent.codeContext,
-						tileID: event.currentTarget.value
+						tileId: event.currentTarget.value
+					}
+				});
+			}}
+		/>
+		<TextInput
+			value={selectedComponent.codeContext?.value || ''}
+			labelText='Value'
+			placeholder='Tile value'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						value: event.currentTarget.value
 					}
 				});
 			}}
@@ -136,7 +140,7 @@ export const ARadioTile = ({
 }: any) => {
 	// Removing `for` attribute so users can select text and other non-form elements.
 	useEffect(() => {
-		const tileElement = document.getElementById(componentObj.id);
+		const tileElement = document.getElementById(componentObj.id.toString());
 		const labelElement = tileElement?.parentElement?.querySelector('label.bx--tile.bx--tile--selectable');
 		// Setting to empty instead of removing so users can select non-form elements within tile when a form element is present
 		// Although form elements should never be added within another
@@ -153,7 +157,12 @@ export const ARadioTile = ({
 			{
 				type: 'insert',
 				component: {
-					type: 'radiotile', value: 'Tile 1', formItemName: componentObj.formItemName,
+					type: 'radiotile',
+					codeContext: {
+						value: 'Tile',
+						formItemName: componentObj.formItemName
+					},
+					...(componentObj.light !== undefined ? { light: componentObj.light } : ''),
 					items: [{ type: 'text', text: 'New radio tile' }]
 				}
 			},
@@ -176,12 +185,12 @@ export const ARadioTile = ({
 			selected={selected}
 			{...rest}>
 			<RadioTile
-				id={componentObj.id}
-				name={componentObj.formItemName}
+				id={componentObj.id.toString()}
+				name={componentObj.codeContext?.formItemName}
 				light={componentObj.light}
 				checked={componentObj.defaultChecked}
 				disabled={componentObj.disabled}
-				value={componentObj.value}
+				value={componentObj.codeContext?.value}
 				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
 				onDrop={onDrop}>
 				{children}
@@ -205,7 +214,6 @@ export const componentInfo: ComponentInfo = {
 	name: 'Radio tile',
 	defaultComponentObj: {
 		type: 'radiotile',
-		formItemName: 'tile-group',
 		disabled: false,
 		checked: false,
 		items: [],
@@ -251,10 +259,11 @@ export const componentInfo: ComponentInfo = {
 			imports: ['RadioTile'],
 			code: ({ json, jsonToTemplate }) => {
 				return `<RadioTile
-					${(json.codeContext?.tileID !== undefined && json.codeContext?.tileID !== '') ? `id="${json.codeContext?.tileID}"` : ''}
+					${(json.codeContext?.tileId !== undefined && json.codeContext?.tileId !== '') ? `id="${json.codeContext?.tileId}"` : ''}
+					${(json.codeContext?.formItemName !== undefined && json.codeContext?.formItemName !== '') ? `name="${json.codeContext?.formItemName}"` : ''}
+					${(json.codeContext?.value !== undefined && json.codeContext?.value !== '') ? `value="${json.codeContext?.value}"` : ''}
 					${json.light !== undefined ? `light="${json.light}"` : ''}
-					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
-					value="${json.value}"
+					${json.disabled !== undefined && !!json.disabled ? `disabled={${json.disabled}}` : ''}
 					${reactClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
 				</RadioTile>`;
