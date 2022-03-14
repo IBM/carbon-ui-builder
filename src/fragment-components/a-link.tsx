@@ -117,11 +117,12 @@ export const componentInfo: ComponentInfo = {
 			imports: ['LinkModule'],
 			code: ({json }) => {
 				return `<a
+				ibmLink
 				[inline]="${nameStringToVariableString(json.codeContext?.name)}Inline"
 				[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
 				[href]=${nameStringToVariableString(json.codeContext?.name)}Href
-					${angularClassNamesFromComponentObj(json)}>
-						
+				${angularClassNamesFromComponentObj(json)}>
+					${json.text}
 				</a>`;
 			}
 		},
@@ -129,10 +130,11 @@ export const componentInfo: ComponentInfo = {
 			imports: ['Link'],
 			code: ({ json }) => {
 				return `<Link
-				${json.disabled !== undefined && json.disabled !== '' ? `disabled="${json.disabled}"` : ''}
-				${json.inline !== undefined && json.inline !== '' ? `inline="${json.inline}"` : ''}
+				disabled="${json.disabled}"
+				inline="${json.inline}"
 				${json.codeContext?.href !== undefined && json.codeContext?.href !== '' ? `href='${json.codeContext?.href}'` : ''}
 				${reactClassNamesFromComponentObj(json)}>
+					${json.text}
 				</Link>`;
 			}
 		}
