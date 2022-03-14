@@ -2,7 +2,7 @@ import React from 'react';
 import domtoimage from 'dom-to-image';
 import ReactDOM from 'react-dom';
 import { Fragment } from '../components';
-import { camelCase } from 'lodash';
+import { camelCase, kebabCase, upperFirst } from 'lodash';
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -71,6 +71,16 @@ export const getAllComponentStyleClasses = (componentObj: any, fragments: any[] 
 	});
 
 	return styleClasses;
+};
+
+export const tagNameFromFragment = (fragment: any) => {
+	// TODO fragment can have a tag name?
+	return kebabCase(fragment.title);
+};
+
+export const classNameFromFragment = (fragment: any) => {
+	// TODO fragment can have a class name?
+	return upperFirst(camelCase(fragment.title));
 };
 
 export const getAllFragmentStyleClasses = (fragment: any, fragments: any[] = []) => {
