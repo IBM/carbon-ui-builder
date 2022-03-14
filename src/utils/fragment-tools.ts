@@ -138,7 +138,7 @@ export const getFragmentDuplicate = (fragments: any, fragment: any, overrides = 
 	const fragmentCopy = JSON.parse(JSON.stringify(fragment));
 	fragmentCopy.title = getUniqueFragmentName(fragments, fragmentCopy.title);
 	fragmentCopy.id = `${Math.random().toString().slice(2)}${Math.random().toString().slice(2)}`;
-	return Object.assign({}, fragmentCopy, overrides);
+	return { ...fragmentCopy, ...overrides };
 };
 
 export const getFragmentPreviewUrl = async (fragment: any) => {
