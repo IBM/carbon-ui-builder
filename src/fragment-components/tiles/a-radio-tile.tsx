@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import {
 	TextInput,
 	Checkbox,
-	RadioTile,
+	RadioTile
 } from 'carbon-components-react';
 import { AComponent } from '../a-component';
 import { Add32 } from '@carbon/icons-react';

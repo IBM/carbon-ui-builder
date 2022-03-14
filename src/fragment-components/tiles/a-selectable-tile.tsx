@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import {
 	TextInput,
 	Checkbox,
-	SelectableTile,
+	SelectableTile
 } from 'carbon-components-react';
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';

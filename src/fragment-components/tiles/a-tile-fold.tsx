@@ -1,7 +1,7 @@
 import React from 'react';
 import {
 	TileAboveTheFoldContent,
-	TileBelowTheFoldContent,
+	TileBelowTheFoldContent
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from '../a-component';
 import { ComponentCssClassSelector } from '../../components/css-class-selector';

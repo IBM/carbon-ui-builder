@@ -2,7 +2,7 @@ import React from 'react';
 import {
 	Checkbox,
 	ExpandableTile,
-	TextInput,
+	TextInput
 } from 'carbon-components-react';
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
