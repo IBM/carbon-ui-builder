@@ -2,7 +2,7 @@ import React from 'react';
 import domtoimage from 'dom-to-image';
 import ReactDOM from 'react-dom';
 import { Fragment } from '../components';
-import { camelCase } from 'lodash';
+import { camelCase, kebabCase, upperFirst } from 'lodash';
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -19,7 +19,7 @@ export interface RenderProps {
 	};
 }
 
-export const getFragmentPreview = async(fragment: any, props: RenderProps) => {
+export const getFragmentPreview = async (fragment: any, props: RenderProps) => {
 	const element = document.createElement('div');
 	element.className = 'render-preview';
 
@@ -44,7 +44,7 @@ export const getFragmentTemplates = (fragments: any[]) => (
 	fragments.filter((fragment: any) => !!fragment.labels?.includes('template'))
 );
 
-export const getAllComponentStyleClasses = (componentObj: any) => {
+export const getAllComponentStyleClasses = (componentObj: any, fragments: any[] = []) => {
 	let styleClasses: any = {};
 
 	// convert into an object so all classes are unique
@@ -59,19 +59,38 @@ export const getAllComponentStyleClasses = (componentObj: any) => {
 			...styleClasses,
 			...coClasses
 		};
+
+		if (co.type === 'fragment') {
+			const fragment = fragments.find(f => f.id === co.id);
+
+			styleClasses = {
+				...styleClasses,
+				...getAllFragmentStyleClasses(fragment || {}, fragments)
+			};
+		}
 	});
 
 	return styleClasses;
 };
 
-export const getAllFragmentStyleClasses = (fragment: any) => {
+export const tagNameFromFragment = (fragment: any) => {
+	// TODO fragment can have a tag name?
+	return kebabCase(fragment.title);
+};
+
+export const classNameFromFragment = (fragment: any) => {
+	// TODO fragment can have a class name?
+	return upperFirst(camelCase(fragment.title));
+};
+
+export const getAllFragmentStyleClasses = (fragment: any, fragments: any[] = []) => {
 	if (!fragment || !fragment.data) {
 		return [];
 	}
 
 	const allClasses = {
-		...getAllComponentStyleClasses(fragment),
-		...getAllComponentStyleClasses(fragment.data)
+		...getAllComponentStyleClasses(fragment, fragments),
+		...getAllComponentStyleClasses(fragment.data, fragments)
 	};
 	return Object.values(allClasses);
 };
@@ -166,15 +185,15 @@ export const getFragmentPreviewUrl = async (fragment: any) => {
 
 export const reactClassNamesFromComponentObj = (componentObj: any) =>
 	componentObj.cssClasses
-	&& Array.isArray(componentObj.cssClasses)
-	&& componentObj.cssClasses.length > 0
+		&& Array.isArray(componentObj.cssClasses)
+		&& componentObj.cssClasses.length > 0
 		? `className='${componentObj.cssClasses.map((cc: any) => cc.id).join(' ')}'`
 		: '';
 
 export const angularClassNamesFromComponentObj = (componentObj: any) =>
 	componentObj.cssClasses
-	&& Array.isArray(componentObj.cssClasses)
-	&& componentObj.cssClasses.length > 0
+		&& Array.isArray(componentObj.cssClasses)
+		&& componentObj.cssClasses.length > 0
 		? `class='${componentObj.cssClasses.map((cc: any) => cc.id).join(' ')}'`
 		: '';
 

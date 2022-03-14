@@ -59,16 +59,17 @@ export interface ComponentInfo {
 	hideFromElementsPane?: boolean;
 	codeExport: {
 		angular: {
-			inputs: (props: {json: any}) => string;
-			outputs: (props: {json: any}) => string;
+			inputs: (props: { json: any }) => string;
+			outputs: (props: { json: any }) => string;
 			imports: string[];
 			isNotDirectExport?: boolean;
-			code: (props: {json: any; jsonToTemplate: (json: any) => string}) => string;
+			code: (props: { json: any; jsonToTemplate: (json: any) => string }) => string;
 		};
 		react: {
 			imports: string[];
+			otherImports?: (props: { json: any; fragments?: any[] }) => string;
 			isNotDirectExport?: boolean;
-			code: (props: {json: any; jsonToTemplate: (json: any) => string}) => string;
+			code: (props: { json: any; jsonToTemplate: (json: any, fragments?: any[]) => string; fragments?: any[] }) => string;
 		};
 	};
 }
@@ -98,9 +99,9 @@ export const AComponent = ({
 	const [dragOverPosition, setDragOverPosition] = useState([] as any[]);
 	const holderRef = useRef(null as any);
 
-	const isDragOverLeft = () => dragOverPosition[0] < holderRef.current.offsetWidth  / 2;
+	const isDragOverLeft = () => dragOverPosition[0] < holderRef.current.offsetWidth / 2;
 	// const isDragOverRight = () => !isDragOverLeft();
-	const isDragOverTop = () => dragOverPosition[1] < holderRef.current.offsetHeight  / 2;
+	const isDragOverTop = () => dragOverPosition[1] < holderRef.current.offsetHeight / 2;
 	// const isDragOverBottom = () => !isDragOverTop();
 	const isDragOverBefore = () => isDragOverLeft() || isDragOverTop();
 	const isDragOverAfter = () => !isDragOverBefore();
@@ -161,13 +162,13 @@ export const AComponent = ({
 				<span className={css`margin-right: 1rem`}>
 					{componentObj && componentObj.type ? componentObj.type : 'Header'}
 				</span>
-				<Draggable32 className={iconStyle}/>
+				<Draggable32 className={iconStyle} />
 				<TrashCan32 onClick={(event: any) => {
 					event.stopPropagation();
 					if (remove) {
 						remove();
 					}
-				}} className={iconStyle}/>
+				}} className={iconStyle} />
 			</span>
 			{children}
 		</span>

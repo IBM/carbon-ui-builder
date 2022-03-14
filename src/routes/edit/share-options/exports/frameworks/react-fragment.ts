@@ -1,8 +1,9 @@
+import { sortedUniq } from 'lodash';
 import { format as formatPrettier, Options } from 'prettier';
 import parserBabel from 'prettier/parser-babel';
 import parserCss from 'prettier/parser-postcss';
 import { allComponents } from '../../../../../fragment-components';
-import { getAllFragmentStyleClasses, hasFragmentStyleClasses } from '../../../../../utils/fragment-tools';
+import { classNameFromFragment, getAllFragmentStyleClasses, hasFragmentStyleClasses, tagNameFromFragment } from '../../../../../utils/fragment-tools';
 
 const format = (source: string, options?: Options | undefined) => {
 	// we're catching and ignorring errors so live editing doesn't throw errors
@@ -11,6 +12,17 @@ const format = (source: string, options?: Options | undefined) => {
 	} catch (_) {
 		return source;
 	}
+};
+
+const formatOptions: Options = {
+	plugins: [parserBabel],
+	trailingComma: 'none',
+	useTabs: true
+};
+
+const formatOptionsCss: Options = {
+	parser: 'css',
+	plugins: [parserCss]
 };
 
 const addIfNotExist = (arr: any[], items: any[]) => {
@@ -22,7 +34,7 @@ const addIfNotExist = (arr: any[], items: any[]) => {
 	return arr;
 };
 
-const jsonToImports = (json: any) => {
+const jsonToCarbonImports = (json: any) => {
 	const imports: any[] = [];
 
 	for (const [key, component] of Object.entries(allComponents)) {
@@ -33,52 +45,110 @@ const jsonToImports = (json: any) => {
 
 	if (json.items) {
 		json.items.forEach((item: any) => {
-			addIfNotExist(imports, jsonToImports(item));
+			addIfNotExist(imports, jsonToCarbonImports(item));
 		});
 	}
 
 	return imports;
 };
 
-export const jsonToTemplate = (json: any) => {
+export const jsonToTemplate = (json: any, fragments?: any[]) => {
 	if (typeof json === 'string' || !json) {
 		return json;
 	}
 
 	for (const [key, component] of Object.entries(allComponents)) {
 		if (json.type === key && !component.componentInfo.codeExport.react.isNotDirectExport) {
-			return component.componentInfo.codeExport.react.code({ json, jsonToTemplate });
+			return component.componentInfo.codeExport.react.code({ json, jsonToTemplate, fragments });
 		}
 	}
 
 	if (json.items) {
-		return json.items.map((item: any) => jsonToTemplate(item)).join('\n');
+		return json.items.map((item: any) => jsonToTemplate(item, fragments)).join('\n');
 	}
 };
 
+const otherImportsFromComponentObj = (json: any, fragments?: any[]) => {
+	let imports = '';
+	for (const [key, component] of Object.entries(allComponents)) {
+		if (json.type === key) {
+			if (component.componentInfo.codeExport.react.otherImports) {
+				imports += component.componentInfo.codeExport.react.otherImports({ json, fragments });
+				break;
+			}
+		}
+	}
 
-const generateTemplate = (json: any) => {
-	const carbonImports = jsonToImports(json);
+	if (json.items) {
+		imports += json.items.map((item: any) => otherImportsFromComponentObj(item, fragments)).join('\n');
+	}
+
+	// remove duplicate imports
+	imports = sortedUniq(imports.split('\n')).join('\n');
+
+	return imports;
+};
+
+const generateTemplate = (json: any, fragments: any[]) => {
+	const carbonImports = jsonToCarbonImports(json);
 	const carbonImportsString = carbonImports.reduce((string: string, curr: string) => (
 		string += `${curr}, `
 	), '');
 	return {
-		imports: `import { ${carbonImportsString} } from 'carbon-components-react'`,
-		template: jsonToTemplate(json)
+		imports: `import { ${carbonImportsString} } from 'carbon-components-react';
+			${otherImportsFromComponentObj(json, fragments)}`,
+		template: jsonToTemplate(json, fragments)
 	};
 };
 
-export const createReactApp = (fragment: any) => {
-	const fragmentTemplate = generateTemplate(fragment.data);
-	const formatOptions: Options = {
-		plugins: [parserBabel],
-		trailingComma: 'none',
-		useTabs: true
-	};
-	const formatOptionsCss: Options = {
-		parser: 'css',
-		plugins: [parserCss]
-	};
+const jsonToSharedComponents = (json: any, fragments: any[]) => {
+	let sharedComponents: any = {};
+
+	if (json.type === 'fragment') {
+		const fragment = fragments.find(f => f.id === json.id);
+		const fragmentTemplate = generateTemplate(fragment.data, fragments);
+
+		sharedComponents[`src/shared/${tagNameFromFragment(fragment)}.js`] = format(`import React from 'react';
+			${fragmentTemplate.imports};
+			${hasFragmentStyleClasses(fragment) ? `
+				import './${tagNameFromFragment(fragment)}.scss';
+			` : ''}
+			export const ${classNameFromFragment(fragment)} = ({state, setState}) => {
+				const handleInputChange = (event) => {
+					setState({...state, [event.target.name]: event.target.value});
+				};
+
+				return <>${fragmentTemplate.template}</>;
+			};
+		`, formatOptions);
+
+		sharedComponents[`src/shared/${tagNameFromFragment(fragment)}.scss`] = format(
+			`${getAllFragmentStyleClasses(fragment).map((styleClass: any) => `.${styleClass.id} {
+				${styleClass.content}
+			}`).join('\n')}`,
+			formatOptionsCss
+		);
+
+		sharedComponents = {
+			...sharedComponents,
+			...jsonToSharedComponents(fragment.data, fragments)
+		};
+	}
+
+	json.items?.forEach((item: any) => {
+		sharedComponents = {
+			...sharedComponents,
+			...jsonToSharedComponents(item, fragments)
+		};
+	});
+
+	return sharedComponents;
+};
+
+export const createReactApp = (fragment: any, fragments = []) => {
+	const fragmentTemplate = generateTemplate(fragment.data, fragments);
+
+	const sharedComponents = jsonToSharedComponents(fragment.data, fragments);
 
 	const indexHtml = `<div id='root'></div>
 `;
@@ -131,11 +201,13 @@ ReactDOM.render(<App />, document.getElementById('root'));
 			emotion: '10.0.27'
 		}
 	};
+
 	return {
 		'src/index.html': indexHtml,
 		'src/index.js': format(indexJs, formatOptions),
 		'src/component.js': format(componentJs, formatOptions),
 		'src/component.scss': format(componentScss, formatOptionsCss),
-		'package.json': packageJson
+		'package.json': packageJson,
+		...sharedComponents
 	};
 };

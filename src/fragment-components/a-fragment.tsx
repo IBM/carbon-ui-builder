@@ -9,6 +9,7 @@ import { ComponentCssClassSelector } from '../components/css-class-selector';
 
 import image from './../assets/component-icons/button.svg';
 import { GlobalStateContext } from '../context';
+import { classNameFromFragment, tagNameFromFragment } from '../utils/fragment-tools';
 
 export const AFragmentStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -58,8 +59,8 @@ export const AFragment = ({
 			<div
 				style={{ pointerEvents: 'none' }}
 				className={cx(
-				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-				componentObj.showOutline ? showOutlineStyle : ''
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					componentObj.showOutline ? showOutlineStyle : ''
 				)}>
 				{children}
 			</div>
@@ -84,7 +85,7 @@ export const componentInfo: ComponentInfo = {
 			select={select}
 			remove={remove}
 			selected={selected}>
-			{ renderComponents(subFragment.data) }
+			{renderComponents(subFragment.data)}
 		</AFragment>;
 	},
 	keywords: ['fragment'],
@@ -103,7 +104,14 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: [],
-			code: () => ''
+			otherImports: ({ json, fragments }) => {
+				const fragment = fragments?.find(f => f.id === json.id);
+				return `import {${classNameFromFragment(fragment)}} from "/src/shared/${tagNameFromFragment(fragment)}.js";`;
+			},
+			code: ({ json, fragments }) => {
+				const fragment = fragments?.find(f => f.id === json.id);
+				return `<${classNameFromFragment(fragment)} state={state} setState={setState} />`;
+			}
 		}
 	}
 };
