@@ -102,15 +102,17 @@ export const componentInfo: ComponentInfo = {
 		text: 'Link',
 		inline: false,
 		disabled: false,
-		href: ''
+		codeContext: { 
+			href: ''
+		}
 	},
 	image,
 	codeExport: {
 		angular: {
 			inputs: ({json}) => `
-			@Input() ${nameStringToVariableString(json.codeContext?.name)}Inline = ${json.inline}'
+			@Input() ${nameStringToVariableString(json.codeContext?.name)}Inline = ${json.inline};
 			@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
-			@Input() ${nameStringToVariableString(json.codeContext?.name)}Href = '${json.href}'`,
+			@Input() ${nameStringToVariableString(json.codeContext?.name)}Href = '${json.codeContext?.href}'`,
 			outputs: ({json}) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
 			imports: ['LinkModule'],
 			code: ({json }) => {
@@ -131,7 +133,6 @@ export const componentInfo: ComponentInfo = {
 				${json.inline !== undefined && json.inline !== '' ? `inline="${json.inline}"` : ''}
 				${json.codeContext?.href !== undefined && json.codeContext?.href !== '' ? `href='${json.codeContext?.href}'` : ''}
 				${reactClassNamesFromComponentObj(json)}>
-
 				</Link>`;
 			}
 		}
