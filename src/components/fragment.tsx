@@ -191,7 +191,7 @@ export const Fragment = ({fragment, setFragment}: any) => {
 
 	if (!fragment || !fragment.data) { return <SkeletonPlaceholder />; }
 
-	const { fragments } = globalState;
+	const { fragments } = globalState || {};
 
 	// initialize component counter
 	componentCounter = getHighestId(fragment.data) + 1;
