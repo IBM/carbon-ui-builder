@@ -91,6 +91,7 @@ module.exports = {
 		'brace-style': 'off',
 		'@typescript-eslint/brace-style': ['error'], // Using default 1tbs
 		'curly': 'error',
+		'default-case': 'error',
 		'eol-last': 'error',
 		'eqeqeq': [
 			'error',
@@ -100,7 +101,7 @@ module.exports = {
 		'max-len': [
 			'error',
 			{
-				'code': 140
+				'code': 150
 			}
 		],
 		'no-bitwise': 'error',
@@ -133,6 +134,7 @@ module.exports = {
 			}
 		],
 		'no-debugger': 'error',
+		'no-duplicate-imports': 'error',
 		'no-eval': 'error',
 		'no-fallthrough': 'error',
 		'no-new-wrappers': 'error',
@@ -141,6 +143,8 @@ module.exports = {
 		'no-underscore-dangle': 'error',
 		'no-unused-labels': 'error',
 		'no-var': 'error',
+		// Should be using spread operator over Object.assign
+		'prefer-object-spread': 'error',
 		'object-curly-spacing': [
 			'error',
 			'always'
@@ -155,6 +159,11 @@ module.exports = {
 				]
 			}
 		],
+		'space-before-blocks': [
+			'error',
+			'always'
+		],
+		'space-in-parens': 'error',
 		// React specific
 		'react-hooks/rules-of-hooks': 'error',
 		'react-hooks/exhaustive-deps': 'warn'
