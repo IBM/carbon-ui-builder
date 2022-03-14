@@ -8,18 +8,18 @@ import {
 import { getSelectedComponent, updatedState } from '../../components/fragment';
 
 const showComponentCodeOptions = (selectedComponent: any, setComponent: any) => {
-	for (let [key, component] of Object.entries(allComponents)) {
+	for (const [key, component] of Object.entries(allComponents)) {
 		// Find the UI for editing code props for our component
 		if (selectedComponent.type === key && component.componentInfo.codeUI) {
 			return <component.componentInfo.codeUI
 				selectedComponent={selectedComponent}
-				setComponent={setComponent} />
+				setComponent={setComponent} />;
 		}
 	}
 	return <AComponentCodeUI selectedComponent={selectedComponent} setComponent={setComponent} />;
 };
 
-export const CodeContextPane = ({fragment, setFragment}: any) => {
+export const CodeContextPane = ({ fragment, setFragment }: any) => {
 	const selectedComponent = getSelectedComponent(fragment);
 
 	const setComponent = (component: any) => {

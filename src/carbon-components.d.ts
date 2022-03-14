@@ -4,4 +4,3 @@ declare module '@carbon/icons-react';
 declare module '@carbon/icons-react/*';
 declare module '@carbon/charts';
 declare module '@carbon/charts-react';
-declare let module: any;

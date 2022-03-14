@@ -36,7 +36,7 @@ import { CodeContextPane } from './code-context-pane';
 const leftPaneWidth = '300px';
 const rightPaneWidth = '302px';
 const railWidth = '48px';
-const transitionDetails = `0.11s cubic-bezier(0.2, 0, 1, 0.9)`;
+const transitionDetails = '0.11s cubic-bezier(0.2, 0, 1, 0.9)';
 
 const editPageContent = css`
 	position: absolute;
@@ -140,7 +140,7 @@ enum SelectedLeftPane {
 	STYLE = 'style',
 	CODE = 'code',
 	EXPORT = 'export'
-};
+}
 
 export const Edit = ({ match }: any) => {
 	const {
@@ -165,7 +165,7 @@ export const Edit = ({ match }: any) => {
 
 	useEffect(() => {
 		clearActionHistory();
-		addAction({fragment, styleClasses});
+		addAction({ fragment, styleClasses });
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -175,7 +175,7 @@ export const Edit = ({ match }: any) => {
 		} else {
 			setSelectedLeftPane(clickedLeftPane);
 		}
-	}
+	};
 
 	return (
 		<div
@@ -187,39 +187,41 @@ export const Edit = ({ match }: any) => {
 			<CodePane isActive={selectedLeftPane === SelectedLeftPane.CODE} />
 			<ExportPane isActive={selectedLeftPane === SelectedLeftPane.EXPORT} />
 			<SideNav
-			aria-label='Side navigation'
-			className={cx(sideRail, selectedLeftPane !== SelectedLeftPane.NONE ? 'is-active' : '')}
-			isRail>
+				aria-label='Side navigation'
+				className={cx(sideRail, selectedLeftPane !== SelectedLeftPane.NONE ? 'is-active' : '')}
+				isRail>
 				<SideNavItems>
 					<SideNavLink
-					renderIcon={Development16}
-					onClick={() => onRailClick(SelectedLeftPane.ELEMENTS)}
-					isActive={selectedLeftPane === SelectedLeftPane.ELEMENTS}>
+						renderIcon={Development16}
+						onClick={() => onRailClick(SelectedLeftPane.ELEMENTS)}
+						isActive={selectedLeftPane === SelectedLeftPane.ELEMENTS}>
 						Elements
 					</SideNavLink>
 					<SideNavLink
-					renderIcon={ColorPalette16}
-					onClick={() => onRailClick(SelectedLeftPane.STYLE)}
-					isActive={selectedLeftPane === SelectedLeftPane.STYLE}>
+						renderIcon={ColorPalette16}
+						onClick={() => onRailClick(SelectedLeftPane.STYLE)}
+						isActive={selectedLeftPane === SelectedLeftPane.STYLE}>
 						Style
 					</SideNavLink>
 					<SideNavLink
-					renderIcon={Code16}
-					onClick={() => onRailClick(SelectedLeftPane.CODE)}
-					isActive={selectedLeftPane === SelectedLeftPane.CODE}>
+						renderIcon={Code16}
+						onClick={() => onRailClick(SelectedLeftPane.CODE)}
+						isActive={selectedLeftPane === SelectedLeftPane.CODE}>
 						Code
 					</SideNavLink>
 					<SideNavLink
-					renderIcon={Export16}
-					onClick={() => onRailClick(SelectedLeftPane.EXPORT)}
-					isActive={selectedLeftPane === SelectedLeftPane.EXPORT}>
+						renderIcon={Export16}
+						onClick={() => onRailClick(SelectedLeftPane.EXPORT)}
+						isActive={selectedLeftPane === SelectedLeftPane.EXPORT}>
 						Export
 					</SideNavLink>
 				</SideNavItems>
 			</SideNav>
 			<div
-			className={cx('edit-content', selectedLeftPane !== SelectedLeftPane.NONE ? 'is-side-panel-active' : '')}
-			onClick={(event: any) => { updateFragment({...fragment, selectedComponentId: 0}) }}>
+				className={cx('edit-content', selectedLeftPane !== SelectedLeftPane.NONE ? 'is-side-panel-active' : '')}
+				onClick={() => {
+					updateFragment({ ...fragment, selectedComponentId: 0 });
+				}}>
 				{
 					fragment
 					&& <>
@@ -230,33 +232,33 @@ export const Edit = ({ match }: any) => {
 			<div className={rightPanel}>
 				<Tabs>
 					<Tab
-					id='properties-style'
-					label={<ColorPalette16 />}>
+						id='properties-style'
+						label={<ColorPalette16 />}>
 						<StyleContextPane fragment={fragment} setFragment={updateFragment} />
 					</Tab>
 					<Tab
-					id='properties-code'
-					label={<Code16 />}>
+						id='properties-code'
+						label={<Code16 />}>
 						<CodeContextPane fragment={fragment} setFragment={updateFragment} />
 					</Tab>
 					<Tab
-					id='properties-info'
-					label={<Information16 />}>
+						id='properties-info'
+						label={<Information16 />}>
 						info
 					</Tab>
 				</Tabs>
 				<div className={actionsStyle}>
 					<Button
-					disabled
-					kind='secondary'
-					renderIcon={Copy32}
-					className={css`margin-right: 8px`}>
+						disabled
+						kind='secondary'
+						renderIcon={Copy32}
+						className={css`margin-right: 8px`}>
 						Duplicate
 					</Button>
 					<Button
-					disabled
-					kind='danger'
-					renderIcon={TrashCan32}>
+						disabled
+						kind='danger'
+						renderIcon={TrashCan32}>
 						Delete
 					</Button>
 				</div>

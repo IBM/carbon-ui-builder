@@ -8,7 +8,7 @@ import { ComponentInfo } from '.';
 import image from './../assets/component-icons/grid.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
-export const AGridStyleUI = ({selectedComponent, setComponent}: any) => {
+export const AGridStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<Checkbox
 			labelText='Show outline'
@@ -43,7 +43,7 @@ export const AGridStyleUI = ({selectedComponent, setComponent}: any) => {
 				narrow: checked
 			})} />
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
 const showOutlineStyle = css`
@@ -60,13 +60,13 @@ export const AGrid = ({
 	return (
 		<AComponent componentObj={componentObj} {...rest}>
 			<Grid
-			className={cx(
+				className={cx(
 				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
 				componentObj.showOutline ? showOutlineStyle : ''
-			)}
-			condensed={componentObj.condensed}
-			fullWidth={componentObj.fullWidth}
-			narrow={componentObj.narrow}>
+				)}
+				condensed={componentObj.condensed}
+				fullWidth={componentObj.fullWidth}
+				narrow={componentObj.narrow}>
 				{children}
 			</Grid>
 		</AComponent>
@@ -112,14 +112,14 @@ export const componentInfo: ComponentInfo = {
 		items: [
 			{
 				type: 'row', items: [
-					{ type: 'column', items: [{ type: 'text', text: 'A' }]},
-					{ type: 'column', items: [{ type: 'text', text: 'B' }]}
+					{ type: 'column', items: [{ type: 'text', text: 'A' }] },
+					{ type: 'column', items: [{ type: 'text', text: 'B' }] }
 				]
 			},
 			{
 				type: 'row', items: [
-					{ type: 'column', items: [{ type: 'text', text: 'C' }]},
-					{ type: 'column', items: [{ type: 'text', text: 'D' }]}
+					{ type: 'column', items: [{ type: 'text', text: 'C' }] },
+					{ type: 'column', items: [{ type: 'text', text: 'D' }] }
 				]
 			}
 		]
@@ -127,10 +127,10 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({json}) => ``,
-			outputs: ({json}) => ``,
+			inputs: () => '',
+			outputs: () => '',
 			imports: ['GridModule'],
-			code: ({json, jsonToTemplate}) => {
+			code: ({ json, jsonToTemplate }) => {
 				return `<div ibmGrid ${angularClassNamesFromComponentObj(json)}>
 					${json.items.map((row: any) => `<div ibmRow ${angularClassNamesFromComponentObj(row)}>
 						${row.items.map((cell: any) => `<div ibmCol ${angularClassNamesFromComponentObj(cell)}>
@@ -142,7 +142,7 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: ['Grid', 'Column', 'Row'],
-			code: ({json, jsonToTemplate}) => {
+			code: ({ json, jsonToTemplate }) => {
 				return `<Grid ${reactClassNamesFromComponentObj(json)}>
 					${json.items.map((row: any) => `<Row ${reactClassNamesFromComponentObj(row)}>
 						${row.items.map((cell: any) => `<Column ${getCellParamsString(cell)} ${reactClassNamesFromComponentObj(cell)}>

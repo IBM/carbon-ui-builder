@@ -8,11 +8,11 @@ import { ComponentInfo } from '.';
 import image from './../assets/component-icons/search.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
-export const ASearchInputStyleUI = ({selectedComponent, setComponent}: any) => {
+export const ASearchInputStyleUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
-		{id: 'sm', text: 'Small'},
-		{id: 'lg', text: 'Large'},
-		{id: 'xl', text: 'Extra large'}
+		{ id: 'sm', text: 'Small' },
+		{ id: 'lg', text: 'Large' },
+		{ id: 'xl', text: 'Extra large' }
 	];
 
 	return <>
@@ -25,7 +25,7 @@ export const ASearchInputStyleUI = ({selectedComponent, setComponent}: any) => {
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				inputSize: event.selectedItem.id
-		})}/>
+			})}/>
 		<TextInput
 			value={selectedComponent.label}
 			labelText='Label'
@@ -57,10 +57,10 @@ export const ASearchInputStyleUI = ({selectedComponent, setComponent}: any) => {
 			}}
 		/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
-export const ASearchInputCodeUI = ({selectedComponent, setComponent}: any) => {
+export const ASearchInputCodeUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TextInput
 			value={selectedComponent.codeContext?.name}
@@ -75,7 +75,7 @@ export const ASearchInputCodeUI = ({selectedComponent, setComponent}: any) => {
 				});
 			}}
 		/>
-	</>
+	</>;
 };
 
 export const ASearchInput = ({
@@ -84,10 +84,10 @@ export const ASearchInput = ({
 }: any) => {
 	return (
 		<AComponent
-		componentObj={componentObj}
-		headingCss={css`display: block;`}
-		className={css`position: relative; display: flex`}
-		{...rest}>
+			componentObj={componentObj}
+			headingCss={css`display: block;`}
+			className={css`position: relative; display: flex`}
+			{...rest}>
 			<Search
 				size={componentObj.inputSize}
 				labelText={componentObj.label}
@@ -114,10 +114,10 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({json}) => ``,
-			outputs: ({json}) => ``,
+			inputs: () => '',
+			outputs: () => '',
 			imports: ['SearchModule'],
-			code: ({json}) => {
+			code: ({ json }) => {
 				return `<ibm-search
 					${angularClassNamesFromComponentObj(json)}
 					name="${json.codeContext?.name}"
@@ -127,14 +127,14 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: ['Search'],
-			code: ({json}) => {
+			code: ({ json }) => {
 				return `<Search
 					labelText="${json.label}"
 					name="${json.codeContext?.name}"
 					placeholder="${json.placeholder}"
 					value={state["${json.codeContext?.name}"]}
 					${reactClassNamesFromComponentObj(json)}
-					onChange={handleInputChange} />`
+					onChange={handleInputChange} />`;
 			}
 		}
 	}

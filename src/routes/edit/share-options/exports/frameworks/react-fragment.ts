@@ -14,46 +14,46 @@ const format = (source: string, options?: Options | undefined) => {
 };
 
 const addIfNotExist = (arr: any[], items: any[]) => {
-    items.forEach(item => {
-        if (!arr.includes(item)) {
-            arr.push(item);
-        }
-    });
-    return arr;
-}
+	items.forEach(item => {
+		if (!arr.includes(item)) {
+			arr.push(item);
+		}
+	});
+	return arr;
+};
 
 const jsonToImports = (json: any) => {
-    const imports: any[] = [];
+	const imports: any[] = [];
 
-	for (let [key, component] of Object.entries(allComponents)) {
+	for (const [key, component] of Object.entries(allComponents)) {
 		if (json.type === key) {
 			addIfNotExist(imports, component.componentInfo.codeExport.react.imports);
 		}
 	}
 
 	if (json.items) {
-        json.items.forEach((item: any) => {
-            addIfNotExist(imports, jsonToImports(item));
-        });
+		json.items.forEach((item: any) => {
+			addIfNotExist(imports, jsonToImports(item));
+		});
 	}
 
-    return imports;
+	return imports;
 };
 
 export const jsonToTemplate = (json: any) => {
-    if (typeof json === "string" || !json) {
-        return json;
-    }
+	if (typeof json === 'string' || !json) {
+		return json;
+	}
 
-	for (let [key, component] of Object.entries(allComponents)) {
+	for (const [key, component] of Object.entries(allComponents)) {
 		if (json.type === key && !component.componentInfo.codeExport.react.isNotDirectExport) {
-			return component.componentInfo.codeExport.react.code({json, jsonToTemplate});
+			return component.componentInfo.codeExport.react.code({ json, jsonToTemplate });
 		}
 	}
 
-    if (json.items) {
-        return json.items.map((item: any) => jsonToTemplate(item)).join('\n');
-    }
+	if (json.items) {
+		return json.items.map((item: any) => jsonToTemplate(item)).join('\n');
+	}
 };
 
 
@@ -85,7 +85,7 @@ export const createReactApp = (fragment: any) => {
 	const componentJs
 		= `import React from 'react';
 ${fragmentTemplate.imports};
-${hasFragmentStyleClasses(fragment) ? "\nimport './component.scss';\n" : ''}
+${hasFragmentStyleClasses(fragment) ? '\nimport \'./component.scss\';\n' : ''}
 export const FragmentComponent = ({state, setState}) => {
 	const handleInputChange = (event) => {
 		setState({...state, [event.target.name]: event.target.value});

@@ -19,7 +19,7 @@ const elementTileListStyle = css`
 	margin-top: 100px;
 `;
 
-export const ElementsPane = ({isActive}: any) => {
+export const ElementsPane = ({ isActive }: any) => {
 	const [filterString, setFilterString] = useState('');
 	const { fragments } = useContext(GlobalStateContext);
 
@@ -49,14 +49,14 @@ export const ElementsPane = ({isActive}: any) => {
 			<div className={elementTileListStyle}>
 				{
 					Object.values(allComponents)
-					.filter((component: any) =>
-						!component.componentInfo.hideFromElementsPane
-						&& shouldShow(component.componentInfo.keywords))
-					.map((component: any) =>
-						<ElementTile componentObj={component.componentInfo.defaultComponentObj}>
-							<img src={component.componentInfo.image} alt={component.componentInfo.name} />
-							<span className='title'>{component.componentInfo.name}</span>
-						</ElementTile>)
+						.filter((component: any) =>
+							!component.componentInfo.hideFromElementsPane
+							&& shouldShow(component.componentInfo.keywords))
+						.map((component: any, index: number) =>
+							<ElementTile componentObj={component.componentInfo.defaultComponentObj} key={index}>
+								<img src={component.componentInfo.image} alt={component.componentInfo.name} />
+								<span className='title'>{component.componentInfo.name}</span>
+							</ElementTile>)
 				}
 			</div>
 			{
@@ -65,13 +65,13 @@ export const ElementsPane = ({isActive}: any) => {
 					<div className={elementTileListStyle}>
 						{
 							Object.values(microLayouts)
-							// TODO prevent recursive adding
-							.filter((component: any) => shouldShow([component.title, ...component.labels]))
-							.map((component: any) =>
-								<ElementTile componentObj={{type: 'fragment', id: component.id}}>
-									{/* <img src={component.componentInfo.image} alt={component.title} /> */}
-									<span className='title'>{component.title}</span>
-								</ElementTile>)
+								// TODO prevent recursive adding
+								.filter((component: any) => shouldShow([component.title, ...component.labels]))
+								.map((component: any, index: number) =>
+									<ElementTile componentObj={{ type: 'fragment', id: component.id }} key={index}>
+										{/* <img src={component.componentInfo.image} alt={component.title} /> */}
+										<span className='title'>{component.title}</span>
+									</ElementTile>)
 						}
 					</div>
 				</>

@@ -7,16 +7,16 @@ import { camelCase } from 'lodash';
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export interface RenderProps {
-	id: string,
-	name: string,
-	width?: number,
-	height?: number,
-	format?: string,
+	id: string;
+	name: string;
+	width?: number;
+	height?: number;
+	format?: string;
 	preview?: { // only sent for preview
-		format?: string, // optional
-		width: number,
-		height: number
-	}
+		format?: string; // optional
+		width: number;
+		height: number;
+	};
 }
 
 export const getFragmentPreview = async(fragment: any, props: RenderProps) => {
@@ -30,7 +30,7 @@ export const getFragmentPreview = async(fragment: any, props: RenderProps) => {
 	(element as HTMLElement).style.width = `${props.width || 800}px`;
 	(element as HTMLElement).style.height = `${props.height || 400}px`;
 	(element as HTMLElement).style.minHeight = `${props.height || 400}px`;
-	ReactDOM.render(React.createElement(Fragment, {fragment}), element);
+	ReactDOM.render(React.createElement(Fragment, { fragment }), element);
 	document.body.appendChild(element);
 
 	await sleep(100); // wait for render to finish
@@ -65,7 +65,9 @@ export const getAllComponentStyleClasses = (componentObj: any) => {
 };
 
 export const getAllFragmentStyleClasses = (fragment: any) => {
-	if (!fragment || !fragment.data) { return []; }
+	if (!fragment || !fragment.data) {
+		return [];
+	}
 
 	const allClasses = {
 		...getAllComponentStyleClasses(fragment),
@@ -87,7 +89,9 @@ export const hasComponentStyleClasses = (componentObj: any) => {
 };
 
 export const hasFragmentStyleClasses = (fragment: any) => {
-	if (!fragment || !fragment.data) { return false; }
+	if (!fragment || !fragment.data) {
+		return false;
+	}
 
 	return hasComponentStyleClasses(fragment.data);
 };
@@ -131,7 +135,7 @@ export const getUniqueFragmentName = (fragments: Array<any>, baseName: string) =
 
 export const getFragmentDuplicate = (fragments: any, fragment: any, overrides = {}) => {
 	// copy current fragment and change fragment title
-	let fragmentCopy = JSON.parse(JSON.stringify(fragment));
+	const fragmentCopy = JSON.parse(JSON.stringify(fragment));
 	fragmentCopy.title = getUniqueFragmentName(fragments, fragmentCopy.title);
 	fragmentCopy.id = `${Math.random().toString().slice(2)}${Math.random().toString().slice(2)}`;
 	return Object.assign({}, fragmentCopy, overrides);
@@ -157,21 +161,21 @@ export const getFragmentPreviewUrl = async (fragment: any) => {
 		reader.onloadend = () => {
 			resolve(reader.result ? reader.result.toString() : '');
 		};
-	})
+	});
 };
 
 export const reactClassNamesFromComponentObj = (componentObj: any) =>
 	componentObj.cssClasses
 	&& Array.isArray(componentObj.cssClasses)
 	&& componentObj.cssClasses.length > 0
-	? `className='${componentObj.cssClasses.map((cc: any) => cc.id).join(' ')}'`
-	: '';
+		? `className='${componentObj.cssClasses.map((cc: any) => cc.id).join(' ')}'`
+		: '';
 
 export const angularClassNamesFromComponentObj = (componentObj: any) =>
 	componentObj.cssClasses
 	&& Array.isArray(componentObj.cssClasses)
 	&& componentObj.cssClasses.length > 0
-	? `class='${componentObj.cssClasses.map((cc: any) => cc.id).join(' ')}'`
-	: '';
+		? `class='${componentObj.cssClasses.map((cc: any) => cc.id).join(' ')}'`
+		: '';
 
 export const nameStringToVariableString = (name: string) => camelCase(name);

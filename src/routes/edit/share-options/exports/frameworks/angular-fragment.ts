@@ -15,37 +15,37 @@ const format = (source: string, options?: Options | undefined) => {
 };
 
 const addIfNotExist = (arr: any[], items: string[] | undefined) => {
-    items?.forEach(item => {
-        if (!arr.includes(item)) {
-            arr.push(item);
-        }
-    });
-    return arr;
-}
+	items?.forEach(item => {
+		if (!arr.includes(item)) {
+			arr.push(item);
+		}
+	});
+	return arr;
+};
 
 const jsonToAngularImports = (json: any) => {
-    const imports: any[] = [];
+	const imports: any[] = [];
 
-	for (let [key, component] of Object.entries(allComponents)) {
+	for (const [key, component] of Object.entries(allComponents)) {
 		if (json.type === key) {
 			addIfNotExist(imports, component.componentInfo.codeExport.angular?.imports);
 		}
 	}
 
 	if (json.items) {
-        json.items.forEach((item: any) => {
-            addIfNotExist(imports, jsonToAngularImports(item));
-        });
+		json.items.forEach((item: any) => {
+			addIfNotExist(imports, jsonToAngularImports(item));
+		});
 	}
 
-    return imports;
+	return imports;
 };
 
 const getAngularInputsFromJson = (json: any): string => {
 	const getOne = (json: any) => {
-		for (let [key, component] of Object.entries(allComponents)) {
+		for (const [key, component] of Object.entries(allComponents)) {
 			if (json.type === key) {
-				return component.componentInfo.codeExport.angular?.inputs({json}) || '';
+				return component.componentInfo.codeExport.angular?.inputs({ json }) || '';
 			}
 		}
 		return '';
@@ -57,9 +57,9 @@ const getAngularInputsFromJson = (json: any): string => {
 
 const getAngularOutputsFromJson = (json: any): string => {
 	const getOne = (json: any) => {
-		for (let [key, component] of Object.entries(allComponents)) {
+		for (const [key, component] of Object.entries(allComponents)) {
 			if (json.type === key) {
-				return component.componentInfo.codeExport.angular?.outputs({json}) || '';
+				return component.componentInfo.codeExport.angular?.outputs({ json }) || '';
 			}
 		}
 		return '';
@@ -70,19 +70,19 @@ const getAngularOutputsFromJson = (json: any): string => {
 };
 
 export const jsonToTemplate = (json: any) => {
-    if (typeof json === "string" || !json) {
-        return json;
-    }
+	if (typeof json === 'string' || !json) {
+		return json;
+	}
 
-	for (let [key, component] of Object.entries(allComponents)) {
+	for (const [key, component] of Object.entries(allComponents)) {
 		if (json.type === key && !component.componentInfo.codeExport.angular.isNotDirectExport) {
-			return component.componentInfo.codeExport.angular.code({json, jsonToTemplate});
+			return component.componentInfo.codeExport.angular.code({ json, jsonToTemplate });
 		}
 	}
 
-    if (json.items) {
-        return json.items.map((item: any) => jsonToTemplate(item)).join('\n');
-    }
+	if (json.items) {
+		return json.items.map((item: any) => jsonToTemplate(item)).join('\n');
+	}
 };
 
 
@@ -188,7 +188,7 @@ export const createAngularApp = (fragment: any) => {
 		`;
 
 	const angularCliJson =
-`{
+		`{
 	"apps": [
 		{
 			"root": "src",
@@ -232,7 +232,7 @@ export const createAngularApp = (fragment: any) => {
 	return {
 		'src/index.html': format(indexHtml, formatOptionsHtml),
 		'src/main.ts': format(mainTs, formatOptionsTypescript),
-		'src/polyfills.ts': format("import 'zone.js/dist/zone';", formatOptionsTypescript),
+		'src/polyfills.ts': format('import \'zone.js/dist/zone\';', formatOptionsTypescript),
 		'src/styles.scss': format('', formatOptionsCss),
 		'src/app/app.component.html': format(appComponentHtml, formatOptionsHtml),
 		'src/app/app.component.ts': format(appComponentTs, formatOptionsTypescript),

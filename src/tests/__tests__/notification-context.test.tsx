@@ -27,7 +27,9 @@ const TestComponent = () => {
 			</span>
 			<button
 				data-testid='notification-trigger'
-				onClick={() => { dispatch(notificationState); }}>
+				onClick={() => {
+					dispatch(notificationState);
+				}}>
 			</button>
 		</>
 	);

@@ -13,7 +13,7 @@ const canvas = css`
 
 const allowDrop = (event: any) => {
 	event.preventDefault();
-}
+};
 
 let componentCounter = 2; // actually initialized (again) in Fragment
 
@@ -43,7 +43,7 @@ export const getSelectedComponent = (fragment: any) => {
 		return undefined;
 	}
 
-	return getComponentById(fragment.data, fragment.selectedComponentId)
+	return getComponentById(fragment.data, fragment.selectedComponentId);
 };
 
 export const getHighestId = (componentObj: any) => {
@@ -65,13 +65,13 @@ export const stateWithoutComponent = (state: any, componentId: number) => {
 			return {
 				...state,
 				items: [...state.items.slice(0, componentIndex), ...state.items.slice(componentIndex + 1)]
-			}
+			};
 		}
 
 		return {
 			...state,
 			items: state.items.map((item: any) => stateWithoutComponent(item, componentId))
-		}
+		};
 	}
 
 	return { ...state };
@@ -90,7 +90,7 @@ export const initializeIds = (componentObj: any) => {
 			name
 		}
 	};
-}
+};
 
 const updatedList = (list: any[], item: any, dropInIndex?: number) => {
 	if (dropInIndex === undefined) {
@@ -114,7 +114,7 @@ export const updatedState = (state: any, dragObj: any, dropInId?: number, dropIn
 			return {
 				...state,
 				...dragObj.component
-			}
+			};
 		}
 		if (state.items) {
 			state.items = state.items.map((item: any) => updatedState(item, dragObj, dropInId, dropInIndex));
@@ -125,7 +125,7 @@ export const updatedState = (state: any, dragObj: any, dropInId?: number, dropIn
 
 	if (dragObj.type === 'move') {
 		state = stateWithoutComponent(state, dragObj.component.id);
-		dragObj.type = 'insert'
+		dragObj.type = 'insert';
 	}
 
 
@@ -139,7 +139,7 @@ export const updatedState = (state: any, dragObj: any, dropInId?: number, dropIn
 			items: updatedList(state.items, dragObj.component, dropInIndex)
 		} : { ...state };
 	}
-///////////// TODO NOTE clean the container items with 1 item //////////////
+	/// ////////// TODO NOTE clean the container items with 1 item //////////////
 	if (state.id && state.id === dropInId) {
 		// add data into state
 		if (state.items) {
@@ -147,15 +147,15 @@ export const updatedState = (state: any, dragObj: any, dropInId?: number, dropIn
 				...state,
 				items: updatedList(state.items, dragObj.component, dropInIndex),
 				id: state.id
-			}
+			};
 		}
 
 		// convert into a list of components, move current component into list
 		return {
 			// TODO should this be a `type: container`?
 			id: componentCounter++,
-			items: updatedList([{...state}], dragObj.component, dropInIndex)
-		}
+			items: updatedList([{ ...state }], dragObj.component, dropInIndex)
+		};
 	}
 
 	if (dropInId) { // probably don't wanna add it here since it didn't match anything and it should somewhere
@@ -166,7 +166,7 @@ export const updatedState = (state: any, dragObj: any, dropInId?: number, dropIn
 		...state,
 		items: updatedList(state.items, dragObj.component, dropInIndex)
 	} : { ...state };
-}
+};
 
 export const getParentComponent = (state: any, child: any) => {
 	if (state && state.items) {
@@ -185,8 +185,10 @@ export const getParentComponent = (state: any, child: any) => {
 	return null;
 };
 
-export const Fragment = ({fragment, setFragment}: any) => {
-	if (!fragment || !fragment.data) { return <SkeletonPlaceholder />; }
+export const Fragment = ({ fragment, setFragment }: any) => {
+	if (!fragment || !fragment.data) {
+		return <SkeletonPlaceholder />;
+	}
 
 	// initialize component counter
 	componentCounter = getHighestId(fragment.data) + 1;
@@ -194,13 +196,13 @@ export const Fragment = ({fragment, setFragment}: any) => {
 	const drop = (event: any, dropInId?: number) => {
 		event.preventDefault();
 
-		const dragObj = JSON.parse(event.dataTransfer.getData("drag-object"));
+		const dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
 
 		setFragment({
 			...fragment,
 			data: updatedState(fragment.data, dragObj, dropInId)
 		});
-	}
+	};
 
 	const select = (componentObj: any) => {
 		setFragment({
@@ -221,7 +223,7 @@ export const Fragment = ({fragment, setFragment}: any) => {
 			return componentObj;
 		}
 
-		for (let [key, component] of Object.entries(allComponents)) {
+		for (const [key, component] of Object.entries(allComponents)) {
 			if (componentObj.type === key) {
 				if (component.componentInfo.render) {
 					return component.componentInfo.render({
@@ -230,7 +232,9 @@ export const Fragment = ({fragment, setFragment}: any) => {
 						remove: () => remove(componentObj),
 						selected: fragment.selectedComponentId === componentObj.id,
 						onDragOver: allowDrop,
-						onDrop: (event: any) => { event.stopPropagation(); drop(event, componentObj.id); },
+						onDrop: (event: any) => {
+							event.stopPropagation(); drop(event, componentObj.id);
+						},
 						renderComponents
 					} as ComponentInfoRenderProps);
 				}
@@ -239,8 +243,8 @@ export const Fragment = ({fragment, setFragment}: any) => {
 					select={() => select(componentObj)}
 					remove={() => remove(componentObj)}
 					selected={fragment.selectedComponentId === componentObj.id}>
-						{componentObj.items && componentObj.items.map((row: any) => renderComponents(row))}
-				</component.componentInfo.component>
+					{componentObj.items && componentObj.items.map((row: any) => renderComponents(row))}
+				</component.componentInfo.component>;
 			}
 		}
 
@@ -253,21 +257,23 @@ export const Fragment = ({fragment, setFragment}: any) => {
 
 	const styles = css`
 		${
-			getAllFragmentStyleClasses(fragment).map((styleClass: any) => `.${styleClass.id} {
+	getAllFragmentStyleClasses(fragment).map((styleClass: any) => `.${styleClass.id} {
 				${styleClass.content}
 			}`)
-		}
+}
 	`;
 	// TODO add fragment.width and fragment.height to database
 	return (
 		<div
-		className={cx(
-			canvas,
-			styles,
-			css`width: ${fragment.width || '800px'}; height: ${fragment.height || '600px'}`
-		)}
-		onDragOver={allowDrop}
-		onDrop={(event: any) => { drop(event, fragment.data.id) }}>
+			className={cx(
+				canvas,
+				styles,
+				css`width: ${fragment.width || '800px'}; height: ${fragment.height || '600px'}`
+			)}
+			onDragOver={allowDrop}
+			onDrop={(event: any) => {
+				drop(event, fragment.data.id);
+			}}>
 			<div className={`${fragment.cssClasses ? fragment.cssClasses.map((cc: any) => cc.id).join(' ') : ''}`}>
 				{renderComponents(fragment.data)}
 			</div>

@@ -17,10 +17,10 @@ const headerStyle = css`
 
 const iconStyle = css`height: 1rem; width: 1rem; float: right`;
 
-export const AComponentCodeUI = ({selectedComponent, setComponent}: any) => {
+export const AComponentCodeUI = ({ selectedComponent, setComponent }: any) => {
 	return <span className={css`overflow-wrap: anywhere`}>
 		{JSON.stringify(selectedComponent)}
-	</span>
+	</span>;
 };
 
 const dropBorderStyle = '2px solid #0f62fe';
@@ -48,39 +48,39 @@ const dropStyleAfter = cx(dropStyle, css`
 `);
 
 export interface ComponentInfo {
-	component: any,
-	keywords: string[],
-	name: string,
-	defaultComponentObj: any,
-	image: any, // whatever fits in the <img src="here">
-	styleUI: any,
-	codeUI?: any,
-	render?: (props: ComponentInfoRenderProps) => any,
-	hideFromElementsPane?: boolean,
+	component: any;
+	keywords: string[];
+	name: string;
+	defaultComponentObj: any;
+	image: any; // whatever fits in the <img src="here">
+	styleUI: any;
+	codeUI?: any;
+	render?: (props: ComponentInfoRenderProps) => any;
+	hideFromElementsPane?: boolean;
 	codeExport: {
 		angular: {
-			inputs: (props: {json: any}) => string,
-			outputs: (props: {json: any}) => string,
-			imports: string[],
-			isNotDirectExport?: boolean,
-			code: (props: {json: any, jsonToTemplate: (json: any) => string}) => string
-		},
+			inputs: (props: {json: any}) => string;
+			outputs: (props: {json: any}) => string;
+			imports: string[];
+			isNotDirectExport?: boolean;
+			code: (props: {json: any; jsonToTemplate: (json: any) => string}) => string;
+		};
 		react: {
-			imports: string[],
-			isNotDirectExport?: boolean,
-			code: (props: {json: any, jsonToTemplate: (json: any) => string}) => string
-		}
-	}
+			imports: string[];
+			isNotDirectExport?: boolean;
+			code: (props: {json: any; jsonToTemplate: (json: any) => string}) => string;
+		};
+	};
 }
 
 export interface ComponentInfoRenderProps {
-	componentObj: any,
-	select: () => void,
-	remove: () => void,
-	selected: boolean,
-	onDragOver: (event: any) => void,
-	onDrop: (event: any) => any,
-	renderComponents: (componentObj: any) => any
+	componentObj: any;
+	select: () => void;
+	remove: () => void;
+	selected: boolean;
+	onDragOver: (event: any) => void;
+	onDrop: (event: any) => any;
+	renderComponents: (componentObj: any) => any;
 }
 
 export const AComponent = ({
@@ -108,9 +108,9 @@ export const AComponent = ({
 	const onDrop = (event: any) => {
 		event.stopPropagation();
 		event.preventDefault();
-		setShowDragOverIndicator(false)
+		setShowDragOverIndicator(false);
 
-		const dragObj = JSON.parse(event.dataTransfer.getData("drag-object"));
+		const dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
 
 		setFragment({
 			...fragment,
@@ -125,30 +125,30 @@ export const AComponent = ({
 
 	return (
 		<span
-		className={className}
-		ref={holderRef}
-		onClick={(event) => {
-			event.stopPropagation();
-			select();
-		}}
-		draggable='true' // TODO make Draggable32 the drag handle and this element as preview
-		onDragStart={(event: any) => drag(event, {
-			component: componentObj,
-			type: 'move'
-		})}
-		onDragEnter={(event: any) => {
-			event.stopPropagation();
-			setShowDragOverIndicator(true);
-		}}
-		onDragLeave={(event: any) => {
-			event.stopPropagation();
-			setShowDragOverIndicator(false);
-		}}
-		onDragOver={(event) => {
-			const rect = event.currentTarget.getBoundingClientRect();
-			setDragOverPosition([event.pageX - rect.left, event.pageY - rect.top]);
-		}}
-		onDrop={onDrop}>
+			className={className}
+			ref={holderRef}
+			onClick={(event) => {
+				event.stopPropagation();
+				select();
+			}}
+			draggable='true' // TODO make Draggable32 the drag handle and this element as preview
+			onDragStart={(event: any) => drag(event, {
+				component: componentObj,
+				type: 'move'
+			})}
+			onDragEnter={(event: any) => {
+				event.stopPropagation();
+				setShowDragOverIndicator(true);
+			}}
+			onDragLeave={(event: any) => {
+				event.stopPropagation();
+				setShowDragOverIndicator(false);
+			}}
+			onDragOver={(event) => {
+				const rect = event.currentTarget.getBoundingClientRect();
+				setDragOverPosition([event.pageX - rect.left, event.pageY - rect.top]);
+			}}
+			onDrop={onDrop}>
 			<span className={cx(
 				dropStyleBefore,
 				showDragOverIndicator && isDragOverBefore() ? css`` : css`display: none`

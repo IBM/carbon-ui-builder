@@ -11,7 +11,7 @@ import { useFragment } from '../context';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 
-export const ARowStyleUI = ({selectedComponent, setComponent}: any) => {
+export const ARowStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<Checkbox
 			labelText='Condensed'
@@ -30,7 +30,7 @@ export const ARowStyleUI = ({selectedComponent, setComponent}: any) => {
 				narrow: checked
 			})} />
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
 const addStyle = css`
@@ -77,10 +77,10 @@ export const ARow = ({
 				type: 'insert',
 				component: {
 					type: 'row', items: [
-						{ type: 'column', items: [{ type: 'text', text: 'Cell 1' }]},
-						{ type: 'column', items: [{ type: 'text', text: 'Cell 2' }]}
+						{ type: 'column', items: [{ type: 'text', text: 'Cell 1' }] },
+						{ type: 'column', items: [{ type: 'text', text: 'Cell 2' }] }
 					]
-				},
+				}
 			},
 			parentComponent.id,
 			parentComponent.items.indexOf(componentObj) + offset
@@ -92,12 +92,12 @@ export const ARow = ({
 		// to position right add icon
 		<AComponent componentObj={componentObj} selected={selected} {...rest}>
 			<Row
-			className={cx(
+				className={cx(
 				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
 				css`position: relative`
-			)}
-			condensed={componentObj.condensed}
-			narrow={componentObj.narrow}>
+				)}
+				condensed={componentObj.condensed}
+				narrow={componentObj.narrow}>
 				<span className={cx(addStyleTop, selected ? css`` : css`display: none`)}>
 					<Add32 onClick={(event: any) => {
 						event.stopPropagation();
@@ -126,16 +126,16 @@ export const componentInfo: ComponentInfo = {
 	image: undefined,
 	codeExport: {
 		angular: {
-			inputs: (_) => '',
-			outputs: (_) => '',
+			inputs: () => '',
+			outputs: () => '',
 			imports: ['GridModule'],
 			isNotDirectExport: true,
-			code: (_) => ''
+			code: () => ''
 		},
 		react: {
 			imports: ['Row'],
 			isNotDirectExport: true,
-			code: (_) => ''
+			code: () => ''
 		}
 	}
 };

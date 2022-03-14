@@ -16,13 +16,13 @@ import './choose-fragment-modal.scss';
 import { ChooseFragmentModalTile } from './choose-fragment-modal-tile';
 
 export interface ChooseFragmentModalProps {
-	shouldDisplay: boolean,
-	setShouldDisplay: (shouldDisplay: boolean) => void,
-	setDisplayedModal: (displayedModal: FragmentWizardModals | null) => void,
-	setLastVisitedModal: (lastVisitedModal: FragmentWizardModals) => void,
-	lastVisitedModal: FragmentWizardModals,
-	uploadedData: any,
-	setUploadedData: (uploadedData: any) => void
+	shouldDisplay: boolean;
+	setShouldDisplay: (shouldDisplay: boolean) => void;
+	setDisplayedModal: (displayedModal: FragmentWizardModals | null) => void;
+	setLastVisitedModal: (lastVisitedModal: FragmentWizardModals) => void;
+	lastVisitedModal: FragmentWizardModals;
+	uploadedData: any;
+	setUploadedData: (uploadedData: any) => void;
 }
 
 export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
@@ -58,7 +58,9 @@ export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 				generateFragment();
 				props.setLastVisitedModal(FragmentWizardModals.CHOOSE_FRAGMENT_MODAL);
 			}}
-			onRequestClose={() => { props.setShouldDisplay(false); }}
+			onRequestClose={() => {
+				props.setShouldDisplay(false);
+			}}
 			onSecondarySubmit={() => {
 				props.setDisplayedModal(props.lastVisitedModal);
 				props.setLastVisitedModal(FragmentWizardModals.CHOOSE_FRAGMENT_MODAL);

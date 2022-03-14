@@ -45,7 +45,7 @@ enum Exports {
 }
 
 interface ShareOptionsModalState {
-	selectedExportOption: Exports | null
+	selectedExportOption: Exports | null;
 }
 
 export const ShareOptionsModal = ({ fragment }: any) => {

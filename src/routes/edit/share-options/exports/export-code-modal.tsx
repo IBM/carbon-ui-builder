@@ -52,9 +52,9 @@ const codeSnippet = css`
 `;
 
 interface ExportCodeProps {
-    fragment: any,
-    displayedModal: ShareOptionsModals | null,
-    setDisplayedModal: (displayedModal: ShareOptionsModals | null) => void
+	fragment: any;
+	displayedModal: ShareOptionsModals | null;
+	setDisplayedModal: (displayedModal: ShareOptionsModals | null) => void;
 }
 
 export const ExportCode = ({
@@ -79,7 +79,9 @@ export const ExportCode = ({
 			primaryButtonText='Done'
 			secondaryButtonText='Back to export options'
 			onRequestSubmit={() => dispatchModal({ type: ModalActionType.closeModal })}
-			onSecondarySubmit={() => { setDisplayedModal(ShareOptionsModals.SHARE_OPTIONS); }}
+			onSecondarySubmit={() => {
+				setDisplayedModal(ShareOptionsModals.SHARE_OPTIONS);
+			}}
 			modalHeading={`Export "${fragment.title}" code`}
 			className={exportCodeModalStyle}>
 			<Tabs selected={3}>
@@ -91,8 +93,8 @@ export const ExportCode = ({
 					<div className={titleWrapper}>
 						<h3>JSON</h3>
 						<Button
-						kind='ghost'
-						onClick={() => saveBlob(new Blob([jsonCode]), `${fragment.title}.json`)}>
+							kind='ghost'
+							onClick={() => saveBlob(new Blob([jsonCode]), `${fragment.title}.json`)}>
 							Download JSON
 						</Button>
 					</div>
@@ -100,7 +102,7 @@ export const ExportCode = ({
 						type='multi'
 						light
 						className={codeSnippet}
-						copyButtonDescription={`Copy JSON to clipboard`}>
+						copyButtonDescription={'Copy JSON to clipboard'}>
 						{ jsonCode }
 					</CodeSnippet>
 				</Tab>

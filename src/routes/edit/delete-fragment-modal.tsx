@@ -14,6 +14,9 @@ export const DeleteFragmentModal = ({ id }: any) => {
 	const fragment = fragments.find((fragment: any) => fragment.id === id);
 
 	const deleteFragment = () => {
+		const undoHideFragment = () => {
+			toggleFragmentVisibility(id, false);
+		};
 		toggleFragmentVisibility(id, true);
 		history.push('/');
 		dispatchNotification({
@@ -25,22 +28,22 @@ export const DeleteFragmentModal = ({ id }: any) => {
 				action: {
 					actionText: 'Undo',
 					actionFunction: undoHideFragment,
-					onNotificationClose: () => { removeFragment(id) }
+					onNotificationClose: () => {
+						removeFragment(id);
+					}
 				}
 			}
 		});
 		dispatchModal({ type: ModalActionType.closeModal });
 	};
 
-	const undoHideFragment = () => {
-		toggleFragmentVisibility(id, false);
-	};
-
 	return (
 		<Modal
 			size='sm'
 			open={modalState.ShowModal}
-			onRequestClose={() => { dispatchModal({ type: ModalActionType.closeModal }); }}
+			onRequestClose={() => {
+				dispatchModal({ type: ModalActionType.closeModal });
+			}}
 			secondaryButtonText='Cancel'
 			modalHeading='Delete this fragment?'
 			danger

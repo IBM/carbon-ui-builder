@@ -10,7 +10,7 @@ import { ComponentCssClassSelector } from '../components/css-class-selector';
 import image from './../assets/component-icons/button.svg';
 import { GlobalStateContext } from '../context';
 
-export const AFragmentStyleUI = ({selectedComponent, setComponent}: any) => {
+export const AFragmentStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<Checkbox
 			labelText='Show outline'
@@ -21,10 +21,10 @@ export const AFragmentStyleUI = ({selectedComponent, setComponent}: any) => {
 				showOutline: checked
 			})} />
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
-export const AFragmentCodeUI = ({selectedComponent, setComponent}: any) => {
+export const AFragmentCodeUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TextInput
 			value={selectedComponent.codeContext?.name}
@@ -38,7 +38,7 @@ export const AFragmentCodeUI = ({selectedComponent, setComponent}: any) => {
 				});
 			}}
 		/>
-	</>
+	</>;
 };
 
 const showOutlineStyle = css`
@@ -52,15 +52,15 @@ export const AFragment = ({
 }: any) => {
 	return (
 		<AComponent
-		componentObj={componentObj}
-		className={css`position: relative; display: inline-flex`}
-		{...rest}>
+			componentObj={componentObj}
+			className={css`position: relative; display: inline-flex`}
+			{...rest}>
 			<div
-			style={{pointerEvents: 'none'}}
-			className={cx(
+				style={{ pointerEvents: 'none' }}
+				className={cx(
 				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
 				componentObj.showOutline ? showOutlineStyle : ''
-			)}>
+				)}>
 				{children}
 			</div>
 		</AComponent>
@@ -84,8 +84,8 @@ export const componentInfo: ComponentInfo = {
 			select={select}
 			remove={remove}
 			selected={selected}>
-				{ renderComponents(subFragment.data) }
-		</AFragment>
+			{ renderComponents(subFragment.data) }
+		</AFragment>;
 	},
 	keywords: ['fragment'],
 	name: 'Fragment',
@@ -96,18 +96,14 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: { // TODO exports
 		angular: {
-			inputs: ({json}) => ``,
-			outputs: ({json}) => ``,
+			inputs: () => '',
+			outputs: () => '',
 			imports: [],
-			code: ({json}) => {
-				return ``;
-			}
+			code: () => ''
 		},
 		react: {
 			imports: [],
-			code: ({ json }) => {
-				return ``;
-			}
+			code: () => ''
 		}
 	}
 };

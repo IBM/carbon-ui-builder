@@ -8,13 +8,13 @@ export type NotificationData = {
 	kind: string;
 	title: string;
 	message: string;
-	id: number,
+	id: number;
 	action?: any;
-}
+};
 export interface BaseNotificationAction {
-	type: NotificationActionType,
+	type: NotificationActionType;
 	data: NotificationData;
-	action?: Action
+	action?: Action;
 }
 
 export type NotificationAction =
@@ -36,14 +36,14 @@ export interface NotificationActionRemove extends BaseNotificationAction {
 }
 
 interface Action {
-	actionText: string,
-	actionFunction: any,
-	onNotificationClose: any
+	actionText: string;
+	actionFunction: any;
+	onNotificationClose: any;
 }
 
 
 export interface NotificationState {
-	notifications: NotificationData[]
+	notifications: NotificationData[];
 }
 
 const initialState = { notifications: [] };

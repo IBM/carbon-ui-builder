@@ -57,157 +57,15 @@ const fragmentImage = css`
 `;
 
 export interface ExportImageProps {
-	fragment: any,
-	displayedModal: ShareOptionsModals | null,
-	setDisplayedModal: (displayedModal: ShareOptionsModals | null) => void
+	fragment: any;
+	displayedModal: ShareOptionsModals | null;
+	setDisplayedModal: (displayedModal: ShareOptionsModals | null) => void;
 }
 
-let updatePreviewUrl = async() => console.log('updatePreviewUrl not initialized yet');
+let updatePreviewUrl = async () => console.log('updatePreviewUrl not initialized yet');
 let handleResize = () => console.log('handleResize not initialized yet');
 const doInputChange = debounce(() => updatePreviewUrl(), 400);
 const doUpdatePreviewSize = debounce(() => handleResize(), 200);
-
-export const ExportImageModal = (props: ExportImageProps) => {
-	const [modalState, dispatchModal] = useContext(ModalContext);
-	const { fragments } = useContext(GlobalStateContext);
-
-	const fragment = fragments.find((fragment: any) => fragment.id === props.fragment.id);
-
-	const exportSettings = {
-		width: 800,
-		height: 400,
-		unit: 'pixels',
-		ratioLock: false,
-		fragmentName: props.fragment.title,
-		format: 'image/png',
-		curRatio: 0
-	};
-	const [inputs, setInputs] = useState(exportSettings);
-	const [previewUrl, setPreviewUrl] = useState(props.fragment.preview);
-	const [isPerformingAction, setIsPerformingAction] = useState(false);
-	const previewContainerRef = useRef<HTMLDivElement>(null);
-	const [imageContainerSize, setImageContainerSize] = useState<any>();
-
-	handleResize = () => {
-		if (!previewContainerRef || !previewContainerRef.current) {
-			return;
-		}
-		setImageContainerSize({
-			width: previewContainerRef.current.offsetWidth,
-			height: previewContainerRef.current.offsetHeight
-		});
-	};
-	useEffect(() => {
-		window.addEventListener('resize', doUpdatePreviewSize);
-		if(previewContainerRef) {
-			doUpdatePreviewSize();
-		}
-		return () => {
-			window.removeEventListener('resize', doUpdatePreviewSize);
-		};
-	}, [previewContainerRef]);
-
-	const getPreviewSize = (width: number, height: number) => {
-		let fitRatio: number;
-		if (width <= height) {
-			// preview is square or tall rectangle (mobile)
-			fitRatio = imageContainerSize.height / height;
-		} else {
-			// preview is long rectangle
-			fitRatio = imageContainerSize.width / width;
-		}
-		return {
-			width: width * fitRatio,
-			height: height * fitRatio
-		};
-	};
-
-	updatePreviewUrl = async() => {
-		const previewSize = getPreviewSize(inputs.width, inputs.height);
-		const renderProps: RenderProps = {
-			id: props.fragment.id,
-			name: inputs.fragmentName,
-			width: inputs.width,
-			height: inputs.height,
-			preview: {
-				format: inputs.format,
-				width: previewSize.width,
-				height: previewSize.height
-			}
-		};
-		const imageBlob = await getFragmentPreview(fragment, renderProps);
-		const reader = new FileReader();
-		reader.readAsDataURL(imageBlob ? imageBlob : new Blob());
-		reader.onloadend = () => {
-			const imageUrl: string = reader.result ? reader.result.toString() : '';
-			setPreviewUrl(imageUrl);
-		};
-	};
-
-	const onSubmit = async() => {
-		if (isPerformingAction) {
-			return;
-		}
-		setIsPerformingAction(true);
-		const renderProps: RenderProps = {
-			id: props.fragment.id,
-			name: inputs.fragmentName,
-			width: inputs.width,
-			height: inputs.height,
-			format: inputs.format
-		};
-		const imageBlob = await getFragmentPreview(fragment, renderProps);
-		const fileName = getFullFileName(inputs.fragmentName, inputs.format);
-		saveBlob(imageBlob, fileName);
-		setIsPerformingAction(false);
-	};
-
-	const handleChange = (id: any, value: any) => {
-		setInputs({
-			...inputs,
-			[id]: value
-		});
-		doInputChange();
-	};
-
-	useEffect(() => {
-		doInputChange();
-	}, []);
-
-	return (
-		<Modal
-			hasForm
-			onRequestSubmit={() => {
-				// TODO look into whether it's a better user experience to have the
-				// processing in the background, perhaps with the saving indication
-				onSubmit().then(dispatchModal({ type: ModalActionType.closeModal }));
-			}}
-			onSecondarySubmit={() => { props.setDisplayedModal(ShareOptionsModals.SHARE_OPTIONS); }}
-			open={modalState.ShowModal && props.displayedModal === ShareOptionsModals.IMAGE_EXPORTS}
-			onRequestClose={() => dispatchModal({ type: ModalActionType.closeModal })}
-			primaryButtonText='Export'
-			secondaryButtonText='Back to export options'
-			modalHeading={`Export '${props.fragment.title}' as image`}>
-			<p>
-				Export a static image of this fragment for use in presentation decks or designs.
-			</p>
-			<div style={{
-				display: 'flex',
-				marginTop: '3rem'
-			}}>
-				<ExportModalSettings inputs={inputs} handleChange={handleChange} />
-				<div className={previewContainer} ref={previewContainerRef}>
-					<img
-						id="previewimg"
-						className={fragmentImage}
-						src={previewUrl}
-						alt={`fragment preview: ${props.fragment.title}`} />
-				</div>
-			</div>
-			<Loading active={isPerformingAction} />
-		</Modal>
-	);
-};
 
 const ExportModalSettings = ({ inputs, handleChange }: any) => {
 	// We assume that a working ratio is never 0 (no 1D fragments)
@@ -300,3 +158,149 @@ const ExportModalSettings = ({ inputs, handleChange }: any) => {
 		</Form>
 	);
 };
+
+export const ExportImageModal = (props: ExportImageProps) => {
+	const [modalState, dispatchModal] = useContext(ModalContext);
+	const { fragments } = useContext(GlobalStateContext);
+
+	const fragment = fragments.find((fragment: any) => fragment.id === props.fragment.id);
+
+	const exportSettings = {
+		width: 800,
+		height: 400,
+		unit: 'pixels',
+		ratioLock: false,
+		fragmentName: props.fragment.title,
+		format: 'image/png',
+		curRatio: 0
+	};
+	const [inputs, setInputs] = useState(exportSettings);
+	const [previewUrl, setPreviewUrl] = useState(props.fragment.preview);
+	const [isPerformingAction, setIsPerformingAction] = useState(false);
+	const previewContainerRef = useRef<HTMLDivElement>(null);
+	const [imageContainerSize, setImageContainerSize] = useState<any>();
+
+	handleResize = () => {
+		if (!previewContainerRef || !previewContainerRef.current) {
+			return;
+		}
+		setImageContainerSize({
+			width: previewContainerRef.current.offsetWidth,
+			height: previewContainerRef.current.offsetHeight
+		});
+	};
+	useEffect(() => {
+		window.addEventListener('resize', doUpdatePreviewSize);
+		if (previewContainerRef) {
+			doUpdatePreviewSize();
+		}
+		return () => {
+			window.removeEventListener('resize', doUpdatePreviewSize);
+		};
+	}, [previewContainerRef]);
+
+	const getPreviewSize = (width: number, height: number) => {
+		let fitRatio: number;
+		if (width <= height) {
+			// preview is square or tall rectangle (mobile)
+			fitRatio = imageContainerSize.height / height;
+		} else {
+			// preview is long rectangle
+			fitRatio = imageContainerSize.width / width;
+		}
+		return {
+			width: width * fitRatio,
+			height: height * fitRatio
+		};
+	};
+
+	updatePreviewUrl = async () => {
+		const previewSize = getPreviewSize(inputs.width, inputs.height);
+		const renderProps: RenderProps = {
+			id: props.fragment.id,
+			name: inputs.fragmentName,
+			width: inputs.width,
+			height: inputs.height,
+			preview: {
+				format: inputs.format,
+				width: previewSize.width,
+				height: previewSize.height
+			}
+		};
+		const imageBlob = await getFragmentPreview(fragment, renderProps);
+		const reader = new FileReader();
+		reader.readAsDataURL(imageBlob ? imageBlob : new Blob());
+		reader.onloadend = () => {
+			const imageUrl: string = reader.result ? reader.result.toString() : '';
+			setPreviewUrl(imageUrl);
+		};
+	};
+
+	const onSubmit = async () => {
+		if (isPerformingAction) {
+			return;
+		}
+		setIsPerformingAction(true);
+		const renderProps: RenderProps = {
+			id: props.fragment.id,
+			name: inputs.fragmentName,
+			width: inputs.width,
+			height: inputs.height,
+			format: inputs.format
+		};
+		const imageBlob = await getFragmentPreview(fragment, renderProps);
+		const fileName = getFullFileName(inputs.fragmentName, inputs.format);
+		saveBlob(imageBlob, fileName);
+		setIsPerformingAction(false);
+	};
+
+	const handleChange = (id: any, value: any) => {
+		setInputs({
+			...inputs,
+			[id]: value
+		});
+		doInputChange();
+	};
+
+	useEffect(() => {
+		doInputChange();
+	}, []);
+
+	return (
+		<Modal
+			hasForm
+			onRequestSubmit={() => {
+				// TODO look into whether it's a better user experience to have the
+				// processing in the background, perhaps with the saving indication
+				onSubmit().then(dispatchModal({ type: ModalActionType.closeModal }));
+			}}
+			onSecondarySubmit={() => {
+				props.setDisplayedModal(ShareOptionsModals.SHARE_OPTIONS);
+			}}
+			open={modalState.ShowModal && props.displayedModal === ShareOptionsModals.IMAGE_EXPORTS}
+			onRequestClose={() => dispatchModal({ type: ModalActionType.closeModal })}
+			primaryButtonText='Export'
+			secondaryButtonText='Back to export options'
+			modalHeading={`Export '${props.fragment.title}' as image`}>
+			<p>
+				Export a static image of this fragment for use in presentation decks or designs.
+			</p>
+			<div style={{
+				display: 'flex',
+				marginTop: '3rem'
+			}}>
+				<ExportModalSettings inputs={inputs} handleChange={handleChange} />
+				<div className={previewContainer} ref={previewContainerRef}>
+					<img
+						id="previewimg"
+						className={fragmentImage}
+						src={previewUrl}
+						alt={`fragment preview: ${props.fragment.title}`} />
+				</div>
+			</div>
+			<Loading active={isPerformingAction} />
+		</Modal>
+	);
+};
+
+
