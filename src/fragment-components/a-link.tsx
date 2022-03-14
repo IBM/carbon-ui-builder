@@ -101,7 +101,8 @@ export const componentInfo: ComponentInfo = {
 		type: 'link',
 		text: 'Link',
 		inline: false,
-		disabled: false
+		disabled: false,
+		href: ''
 	},
 	image,
 	codeExport: {
@@ -112,25 +113,25 @@ export const componentInfo: ComponentInfo = {
 			@Input() ${nameStringToVariableString(json.codeContext?.name)}Href = '${json.href}'`,
 			outputs: ({json}) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
 			imports: ['LinkModule'],
-			code: ({json, jsonToTemplate }) => {
+			code: ({json }) => {
 				return `<a
 				[inline]="${nameStringToVariableString(json.codeContext?.name)}Inline"
 				[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
 				[href]=${nameStringToVariableString(json.codeContext?.name)}Href
 					${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
+						
 				</a>`;
 			}
 		},
 		react: {
 			imports: ['Link'],
-			code: ({ json,  jsonToTemplate }) => {
+			code: ({ json }) => {
 				return `<Link
 				${json.disabled !== undefined && json.disabled !== '' ? `disabled="${json.disabled}"` : ''}
 				${json.inline !== undefined && json.inline !== '' ? `inline="${json.inline}"` : ''}
 				${json.codeContext?.href !== undefined && json.codeContext?.href !== '' ? `href='${json.codeContext?.href}'` : ''}
 				${reactClassNamesFromComponentObj(json)}>
-					${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
+
 				</Link>`;
 			}
 		}
