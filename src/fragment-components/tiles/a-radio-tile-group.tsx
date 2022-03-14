@@ -172,9 +172,7 @@ export const componentInfo: ComponentInfo = {
 		selected={selected}
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
-		{componentObj.items.map((tile: any) => (
-			renderComponents(tile)
-		))}
+		{componentObj.items.map((tile: any) => (renderComponents(tile)))}
 	</ARadioTileGroup>,
 	image,
 	codeExport: {

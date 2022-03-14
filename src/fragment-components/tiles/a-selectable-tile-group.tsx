@@ -142,14 +142,12 @@ export const componentInfo: ComponentInfo = {
 		selected={selected}
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
-		{componentObj.items.map((tile: any) => (
-			renderComponents(tile)
-		))}
+		{componentObj.items.map((tile: any) => (renderComponents(tile)))}
 	</ASelectableTileGroup>,
 	image,
 	codeExport: {
 		angular: {
-			inputs: (_) => '',
+			inputs: () => '',
 			outputs: ({ json }) =>
 				`@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<Event>();`,
 			imports: ['TilesModule'],

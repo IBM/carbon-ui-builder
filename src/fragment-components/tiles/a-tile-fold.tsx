@@ -84,7 +84,7 @@ export const componentInfo: ComponentInfo = {
 				return `<${foldComponent}
 					${reactClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
-					</${foldComponent}>`
+					</${foldComponent}>`;
 			}
 		}
 	}
