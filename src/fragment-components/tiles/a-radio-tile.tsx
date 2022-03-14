@@ -216,7 +216,7 @@ export const componentInfo: ComponentInfo = {
 		type: 'radiotile',
 		disabled: false,
 		checked: false,
-		items: [],
+		items: []
 	},
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <ARadioTile
 		componentObj={componentObj}

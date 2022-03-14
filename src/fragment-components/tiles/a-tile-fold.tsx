@@ -59,8 +59,8 @@ export const componentInfo: ComponentInfo = {
 	},
 	codeExport: {
 		angular: {
-			inputs: (_) => '',
-			outputs: (_) => '',
+			inputs: () => '',
+			outputs: () => '',
 			imports: [],
 			code: ({ json, jsonToTemplate }) => {
 				const foldClass = json.aboveFold ? `bx--tile-content__above-the-fold` : `bx--tile-content__below-the-fold`;

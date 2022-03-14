@@ -27,7 +27,7 @@ export const ATileStyleUI = ({ selectedComponent, setComponent }: any) => {
 				setComponent({
 					...selectedComponent,
 					light: checked
-				})
+				});
 			}}
 		/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
@@ -80,7 +80,7 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'tile',
 		items: [
-			{ type: 'text', text: 'A simple tile' },
+			{ type: 'text', text: 'A simple tile' }
 		],
 	},
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <ATile

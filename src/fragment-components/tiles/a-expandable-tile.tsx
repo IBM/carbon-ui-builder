@@ -121,7 +121,7 @@ export const componentInfo: ComponentInfo = {
 				type: 'tilefold', aboveFold: false,
 				items: [{ type: 'text', text: 'Below fold' }]
 			}
-		],
+		]
 	},
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <AExpandableTile
 		componentObj={componentObj}
@@ -139,7 +139,7 @@ export const componentInfo: ComponentInfo = {
 		angular: {
 			inputs: ({ json }) =>
 				`@Input() ${nameStringToVariableString(json.codeContext?.name)}Expanded = ${json.expanded}`,
-			outputs: (_) => '',
+			outputs: () => '',
 			imports: ['TilesModule'],
 			code: ({ json, jsonToTemplate }) => {
 				/**

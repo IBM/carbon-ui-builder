@@ -244,7 +244,7 @@ export const componentInfo: ComponentInfo = {
 		disabled: false,
 		selected: false,
 		items: [
-			{ type: 'text', text: 'A standalone selectable tile' },
+			{ type: 'text', text: 'A standalone selectable tile' }
 		]
 	},
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <ASelectableTile
