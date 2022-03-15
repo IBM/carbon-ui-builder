@@ -71,12 +71,11 @@ export const ALink = ({
 	return (
 		<AComponent
 		componentObj={componentObj}
-		className={css`align-items: center; justify-content: center; display: inline-flex`}
+		className={css`align-items: center; justify-content: center; display: inline-flex; cursor: pointer;`}
 		{...rest}>
 			<Link
 			inline={componentObj.inline}
 			disabled={componentObj.disabled}
-			href={componentObj.codeContext?.href}
 			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 				{children}
 			</Link>
@@ -103,7 +102,7 @@ export const componentInfo: ComponentInfo = {
 		inline: false,
 		disabled: false,
 		codeContext: { 
-			href: ''
+			href: '#'
 		}
 	},
 	image,
@@ -130,8 +129,8 @@ export const componentInfo: ComponentInfo = {
 			imports: ['Link'],
 			code: ({ json }) => {
 				return `<Link
-				disabled="${json.disabled}"
-				inline="${json.inline}"
+				${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
+				${json.inline !== undefined ? `inline={${json.inline}}` : ''}
 				${json.codeContext?.href !== undefined && json.codeContext?.href !== '' ? `href='${json.codeContext?.href}'` : ''}
 				${reactClassNamesFromComponentObj(json)}>
 					${json.text}
