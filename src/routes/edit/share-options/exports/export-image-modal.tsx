@@ -274,9 +274,7 @@ export const ExportImageModal = (props: ExportImageProps) => {
 				// processing in the background, perhaps with the saving indication
 				onSubmit().then(dispatchModal({ type: ModalActionType.closeModal }));
 			}}
-			onSecondarySubmit={() => {
-				props.setDisplayedModal(ShareOptionsModals.SHARE_OPTIONS);
-			}}
+			onSecondarySubmit={() => props.setDisplayedModal(ShareOptionsModals.SHARE_OPTIONS)}
 			open={modalState.ShowModal && props.displayedModal === ShareOptionsModals.IMAGE_EXPORTS}
 			onRequestClose={() => dispatchModal({ type: ModalActionType.closeModal })}
 			primaryButtonText='Export'
@@ -302,5 +300,4 @@ export const ExportImageModal = (props: ExportImageProps) => {
 		</Modal>
 	);
 };
-
 

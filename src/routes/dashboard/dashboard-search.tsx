@@ -78,7 +78,7 @@ export const DashboardSearch = ({
 		<OverflowMenu
 			className={sortButton}
 			ariaLabel='Sort fragment'
-			renderIcon = {() => <ArrowsVertical16 />}
+			renderIcon={() => <ArrowsVertical16 />}
 			onClick={(event: { stopPropagation: () => void }) => {
 				event.stopPropagation();
 			}}>
@@ -93,9 +93,7 @@ export const DashboardSearch = ({
 						}
 					</div>
 				)}
-				onClick={() => {
-					onSortHandler(SortDirection.Ascending);
-				}} />
+				onClick={() => onSortHandler(SortDirection.Ascending)} />
 			<OverflowMenuItem
 				itemText={(
 					<div className={sortOverflowItem}>
@@ -107,20 +105,16 @@ export const DashboardSearch = ({
 						}
 					</div>
 				)}
-				onClick={() => {
-					onSortHandler(SortDirection.Descending);
-				}} />
+				onClick={() => onSortHandler(SortDirection.Descending)} />
 		</OverflowMenu>
 		{/* 🏗️🏗️🏗️ Under construction, add in later 🏗️🏗️🏗️ */}
 		{/* <Button kind='ghost' className={shareButton}><SettingsAdjust16 /></Button> */}
 		<Button
-			onClick={() => {
-				setDisplayWizard(!displayWizard);
-			}}
+			onClick={() => setDisplayWizard(!displayWizard)}
 			title='Add new fragment'
 			aria-label='Add new fragment'>
 			New fragment
-			<Add16 className='bx--btn__icon'/>
+			<Add16 className='bx--btn__icon' />
 		</Button>
 	</div>
 );

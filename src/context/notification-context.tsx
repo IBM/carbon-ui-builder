@@ -21,7 +21,6 @@ export type NotificationAction =
 	NotificationActionAdd |
 	NotificationActionRemove;
 
-
 export enum NotificationActionType {
 	ADD_NOTIFICATION,
 	REMOVE_NOTIFICATION
@@ -40,7 +39,6 @@ interface Action {
 	actionFunction: any;
 	onNotificationClose: any;
 }
-
 
 export interface NotificationState {
 	notifications: NotificationData[];

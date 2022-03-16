@@ -12,7 +12,6 @@ import { ExportCode } from './exports/export-code-modal';
 import { SelectionTile } from '../../../components/selection-tile';
 import { ExportImageModal } from './exports/export-image-modal';
 
-
 const exportOptionTileWrapper = css`
 	width: 50%;
 	height: 200px;
@@ -76,7 +75,7 @@ export const ShareOptionsModal = ({ fragment }: any) => {
 						open={modalState.ShowModal && displayedModal === ShareOptionsModals.SHARE_OPTIONS}
 						onRequestClose={() => dispatchModal({ type: ModalActionType.closeModal })}
 						primaryButtonText='Done'
-						primaryButtonDisabled={ shareOptionsState.selectedExportOption === null }
+						primaryButtonDisabled={shareOptionsState.selectedExportOption === null}
 						secondaryButtonText='Cancel'
 						modalHeading={`Share '${fragment.title}'`}>
 						<div className={exportOptionsWrapper}>
@@ -117,7 +116,7 @@ export const ShareOptionsModal = ({ fragment }: any) => {
 				return <ExportImageModal
 					fragment={fragment}
 					displayedModal={displayedModal}
-					setDisplayedModal={setDisplayedModal}/>;
+					setDisplayedModal={setDisplayedModal} />;
 		}
 	};
 

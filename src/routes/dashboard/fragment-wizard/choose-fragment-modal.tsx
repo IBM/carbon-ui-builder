@@ -58,9 +58,7 @@ export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 				generateFragment();
 				props.setLastVisitedModal(FragmentWizardModals.CHOOSE_FRAGMENT_MODAL);
 			}}
-			onRequestClose={() => {
-				props.setShouldDisplay(false);
-			}}
+			onRequestClose={() => props.setShouldDisplay(false)}
 			onSecondarySubmit={() => {
 				props.setDisplayedModal(props.lastVisitedModal);
 				props.setLastVisitedModal(FragmentWizardModals.CHOOSE_FRAGMENT_MODAL);
@@ -73,7 +71,7 @@ export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 			{
 				props.uploadedData.wasDataModified
 					? <InlineNotification
-						{ ...warningNotificationProps }
+						{...warningNotificationProps}
 						actions={
 							<>
 								<NotificationActionButton

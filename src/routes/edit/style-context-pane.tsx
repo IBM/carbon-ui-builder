@@ -22,14 +22,15 @@ export const StyleContextPane = ({ fragment, setFragment }: any) => {
 	const selectedComponent = getSelectedComponent(fragment);
 
 	const setComponent = (component: any, updateActionHistory = true) => {
-		setFragment({
-			...fragment,
-			data: updatedState(fragment.data, {
-				type: 'update',
-				component
-			})
-		},
-		updateActionHistory
+		setFragment(
+			{
+				...fragment,
+				data: updatedState(fragment.data, {
+					type: 'update',
+					component
+				})
+			},
+			updateActionHistory
 		);
 	};
 

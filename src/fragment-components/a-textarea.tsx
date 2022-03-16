@@ -43,7 +43,6 @@ export const ATextAreaStyleUI = ({ selectedComponent, setComponent }: any) => {
 	</>;
 };
 
-
 export const ATextAreaCodeUI = ({ selectedComponent, setComponent }: any) => {
 	return (
 		<TextInput

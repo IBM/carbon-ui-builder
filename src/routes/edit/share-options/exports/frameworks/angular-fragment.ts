@@ -85,7 +85,6 @@ export const jsonToTemplate = (json: any) => {
 	}
 };
 
-
 export const createAngularApp = (fragment: any) => {
 	const formatOptionsTypescript: Options = {
 		plugins: [parserBabel],

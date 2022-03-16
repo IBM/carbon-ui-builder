@@ -188,7 +188,6 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 		[files]
 	);
 
-
 	const generateFragment = () => {
 		const generatedFragment = generateNewFragment(fragmentJson);
 
@@ -205,9 +204,7 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 				generateFragment();
 				props.setLastVisitedModal(FragmentWizardModals.CHOOSE_FRAGMENT_MODAL);
 			}}
-			onRequestClose={() => {
-				props.setShouldDisplay(false);
-			}}
+			onRequestClose={() => props.setShouldDisplay(false)}
 			onSecondarySubmit={() => {
 				props.setDisplayedModal(props.lastVisitedModal);
 				props.setLastVisitedModal(FragmentWizardModals.CHOOSE_FRAGMENT_MODAL);
@@ -215,7 +212,7 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 			hasForm
 			modalHeading='Import JSON'
 			primaryButtonText='Done'
-			primaryButtonDisabled={ !jsonString || jsonParseError }
+			primaryButtonDisabled={!jsonString || jsonParseError}
 			secondaryButtonText='Back'>
 			<div className={fragmentOptions}>
 				<FormItem>
@@ -232,7 +229,8 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 								filesize,
 								status,
 								iconDescription,
-								invalid
+								invalid,
+								...rest
 							}) => (
 								<FileUploaderItem
 									key={uid()}
@@ -245,13 +243,14 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 									iconDescription={iconDescription}
 									invalid={invalid}
 									onDelete={handleFileUploaderItemClick}
+									{...rest}
 								/>
 							)
 						)}
 					</div>
 				</FormItem>
 				<code style={{ color: '#a00', marginBottom: '10pt', width: '100%' }}>
-					<pre>{ jsonParseError }</pre>
+					<pre>{jsonParseError}</pre>
 				</code>
 				<TextArea
 					labelText='JSON to load'

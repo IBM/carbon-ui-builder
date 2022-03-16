@@ -81,9 +81,7 @@ export const ExportCode = ({
 			primaryButtonText='Done'
 			secondaryButtonText='Back to export options'
 			onRequestSubmit={() => dispatchModal({ type: ModalActionType.closeModal })}
-			onSecondarySubmit={() => {
-				setDisplayedModal(ShareOptionsModals.SHARE_OPTIONS);
-			}}
+			onSecondarySubmit={() => setDisplayedModal(ShareOptionsModals.SHARE_OPTIONS)}
 			modalHeading={`Export "${fragment.title}" code`}
 			className={exportCodeModalStyle}>
 			<Tabs selected={3}>
@@ -105,7 +103,7 @@ export const ExportCode = ({
 						light
 						className={codeSnippet}
 						copyButtonDescription={'Copy JSON to clipboard'}>
-						{ jsonCode }
+						{jsonCode}
 					</CodeSnippet>
 				</Tab>
 				<Tab

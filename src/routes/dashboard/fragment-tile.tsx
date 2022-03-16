@@ -42,7 +42,7 @@ export const FragmentTile = ({
 						<FragmentPreview
 							fragment={fragment}
 							previewUrl={previewUrl}
-							setPreviewUrl={setPreviewUrl}/>
+							setPreviewUrl={setPreviewUrl} />
 					</Link>
 					<div className='fragment-info'>
 						<div>
@@ -62,27 +62,19 @@ export const FragmentTile = ({
 							}>
 							<OverflowMenuItem
 								itemText='Edit'
-								onClick={() => {
-									history.push(`/edit/${fragment.id}`);
-								}}/>
+								onClick={() => history.push(`/edit/${fragment.id}`)} />
 							<OverflowMenuItem
 								itemText='Export'
-								onClick={() => {
-									handleModalState(ModalActionType.setShareModal);
-								}}/>
+								onClick={() => handleModalState(ModalActionType.setShareModal)} />
 							<OverflowMenuItem
 								itemText='Duplicate'
-								onClick={() => {
-									handleModalState(ModalActionType.setDuplicationModal);
-								}}/>
+								onClick={() => handleModalState(ModalActionType.setDuplicationModal)} />
 							<OverflowMenuItem
 								itemText='Reset preview'
-								onClick={resetPreview}/>
+								onClick={resetPreview} />
 							<OverflowMenuItem
 								itemText='Remove'
-								onClick={() => {
-									handleModalState(ModalActionType.setDeletionModal);
-								}}
+								onClick={() => handleModalState(ModalActionType.setDeletionModal)}
 								isDelete />
 						</OverflowMenu>
 					</div>

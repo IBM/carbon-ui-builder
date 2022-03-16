@@ -41,9 +41,7 @@ export const DeleteFragmentModal = ({ id }: any) => {
 		<Modal
 			size='sm'
 			open={modalState.ShowModal}
-			onRequestClose={() => {
-				dispatchModal({ type: ModalActionType.closeModal });
-			}}
+			onRequestClose={() => dispatchModal({ type: ModalActionType.closeModal })}
 			secondaryButtonText='Cancel'
 			modalHeading='Delete this fragment?'
 			danger

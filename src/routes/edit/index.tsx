@@ -219,9 +219,7 @@ export const Edit = ({ match }: any) => {
 			</SideNav>
 			<div
 				className={cx('edit-content', selectedLeftPane !== SelectedLeftPane.NONE ? 'is-side-panel-active' : '')}
-				onClick={() => {
-					updateFragment({ ...fragment, selectedComponentId: 0 });
-				}}>
+				onClick={() => updateFragment({ ...fragment, selectedComponentId: 0 })}>
 				{
 					// eslint-disable-next-line
 					fragment && <Fragment fragment={fragment} setFragment={updateFragment} />
