@@ -23,13 +23,13 @@ const addStyleRight = cx(addStyle, css`
 const addStyleLeft = cx(addStyle, css`
 	left: 0;
 	margin-left: -21px;
-`); 
+`);
 
 const iconStyle = css`
 	height: 1rem;
 	width: 1rem;
 	float: right;
-	cursor: pointer
+	cursor: pointer;
 `;
 
 export const Adder = ({ active, children, topAction, bottomAction, leftAction, rightAction }: any) => <>

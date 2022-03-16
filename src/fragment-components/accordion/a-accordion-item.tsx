@@ -14,7 +14,11 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 import { useFragment } from '../../context';
-import { Adder, getParentComponent, updatedState } from '../../components';
+import {
+	Adder,
+	getParentComponent,
+	updatedState
+} from '../../components';
 
 export const AAccordionItemStyleUI = ({selectedComponent, setComponent}: any) => {
 	return <>
@@ -97,9 +101,7 @@ export const componentInfo: ComponentInfo = {
 		onDragOver={onDragOver}
 		onDrop={onDrop}
 		selected={selected}>
-			{componentObj.items.map((child: any) => (
-				renderComponents(child)
-			))}
+			{componentObj.items.map((child: any) => renderComponents(child))}
 	</AAccordionItem>,
 	keywords: ['accordion', 'item'],
 	name: 'Accordion Item',
@@ -128,12 +130,12 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: ['AccordionItem'],
-			code: ({ json, jsonToTemplate }) => {
+			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<AccordionItem
 					title="${json.title || ''}"
 					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
 					${reactClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</AccordionItem>`;
 			}
 		}

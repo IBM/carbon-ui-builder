@@ -74,9 +74,7 @@ export const componentInfo: ComponentInfo = {
 		select={select}
 		remove={remove}
 		selected={selected}>
-		{componentObj.items.map((accordionItem: any) => (
-			renderComponents(accordionItem)
-		))}
+		{componentObj.items.map((accordionItem: any) => renderComponents(accordionItem))}
 	</AAccordion>,
 	keywords: ['accordion'],
 	name: 'Accordion',
@@ -112,12 +110,12 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: ['Accordion'],
-			code: ({ json, jsonToTemplate }) => {
+			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<Accordion
 					${json.align !== undefined ? `align='${json.align}'` : ''}
 					${json.size !== undefined ? `size='${json.size}'` : ''}
 					${reactClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</Accordion>`;
 			}
 		}
