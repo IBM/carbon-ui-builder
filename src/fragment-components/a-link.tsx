@@ -130,11 +130,11 @@ export const componentInfo: ComponentInfo = {
 			imports: ['LinkModule'],
 			code: ({json }) => {
 				return `<a
-				ibmLink
-				[inline]="${nameStringToVariableString(json.codeContext?.name)}Inline"
-				[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
-				[href]=${nameStringToVariableString(json.codeContext?.name)}Href
-				${angularClassNamesFromComponentObj(json)}>
+					ibmLink
+					[inline]="${nameStringToVariableString(json.codeContext?.name)}Inline"
+					[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
+					[href]=${nameStringToVariableString(json.codeContext?.name)}Href
+						${angularClassNamesFromComponentObj(json)}>
 					${json.text}
 				</a>`;
 			}
