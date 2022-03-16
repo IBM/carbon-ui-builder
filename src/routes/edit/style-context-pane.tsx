@@ -1,4 +1,5 @@
 import React from 'react';
+import { ComponentCssClassSelector } from '../../components/css-class-selector';
 
 import { getSelectedComponent, updatedState } from '../../components/fragment';
 
@@ -44,6 +45,11 @@ export const StyleContextPane = ({fragment, setFragment}: any) => {
 					<div className='context-pane-content'>
 						{showComponentStyleOptions(selectedComponent, setComponent)}
 					</div>
+				</>
+			}
+			{
+				!selectedComponent && <>
+					<ComponentCssClassSelector componentObj={fragment} setComponent={setFragment} />
 				</>
 			}
 		</div>
