@@ -143,10 +143,10 @@ export const componentInfo: ComponentInfo = {
 			imports: ['Link'],
 			code: ({ json }) => {
 				return `<Link
-				${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
-				${json.inline !== undefined ? `inline={${json.inline}}` : ''}
-				${json.codeContext?.href !== undefined && json.codeContext?.href !== '' ? `href='${json.codeContext?.href}'` : ''}
-				${reactClassNamesFromComponentObj(json)}>
+					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
+					${json.inline !== undefined ? `inline={${json.inline}}` : ''}
+					${json.codeContext?.href !== undefined && json.codeContext?.href !== '' ? `href='${json.codeContext?.href}'` : ''}
+						${reactClassNamesFromComponentObj(json)}>
 					${json.text}
 				</Link>`;
 			}
