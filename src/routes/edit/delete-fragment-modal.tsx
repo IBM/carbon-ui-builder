@@ -28,9 +28,7 @@ export const DeleteFragmentModal = ({ id }: any) => {
 				action: {
 					actionText: 'Undo',
 					actionFunction: undoHideFragment,
-					onNotificationClose: () => {
-						removeFragment(id);
-					}
+					onNotificationClose: () => removeFragment(id)
 				}
 			}
 		});

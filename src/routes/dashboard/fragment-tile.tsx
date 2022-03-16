@@ -30,9 +30,7 @@ export const FragmentTile = ({
 		});
 	};
 
-	const resetPreview = async () => {
-		setPreviewUrl(await getFragmentPreviewUrl(fragment) as string);
-	};
+	const resetPreview = async () => setPreviewUrl(await getFragmentPreviewUrl(fragment) as string);
 
 	return (
 		<div className='tile-wrapper'>

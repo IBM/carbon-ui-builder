@@ -177,9 +177,7 @@ export const getFragmentPreviewUrl = async (fragment: any) => {
 	return new Promise((resolve) => {
 		const reader = new FileReader();
 		reader.readAsDataURL(imageBlob ? imageBlob : new Blob());
-		reader.onloadend = () => {
-			resolve(reader.result ? reader.result.toString() : '');
-		};
+		reader.onloadend = () => resolve(reader.result ? reader.result.toString() : '');
 	});
 };
 
