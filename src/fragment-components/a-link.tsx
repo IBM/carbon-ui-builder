@@ -71,6 +71,7 @@ export const ALink = ({
 	return (
 		<AComponent
 		componentObj={componentObj}
+		headingCss={css`display: inline-block;margin-top: -40px;margin-left: 54px;min-width: 83px;`}
 		className={css`align-items: center; justify-content: center; display: inline-flex; cursor: pointer;`}
 		{...rest}>
 			<Link
