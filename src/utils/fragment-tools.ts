@@ -2,7 +2,7 @@ import React from 'react';
 import domtoimage from 'dom-to-image';
 import ReactDOM from 'react-dom';
 import { Fragment } from '../components';
-import { camelCase } from 'lodash';
+import { camelCase, kebabCase, upperFirst } from 'lodash';
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -44,7 +44,7 @@ export const getFragmentTemplates = (fragments: any[]) => (
 	fragments.filter((fragment: any) => !!fragment.labels?.includes('template'))
 );
 
-export const getAllComponentStyleClasses = (componentObj: any) => {
+export const getAllComponentStyleClasses = (componentObj: any, fragments: any[]) => {
 	let styleClasses: any = {};
 
 	// convert into an object so all classes are unique
@@ -54,20 +54,43 @@ export const getAllComponentStyleClasses = (componentObj: any) => {
 	});
 
 	componentObj.items?.map((co: any) => {
-		const coClasses = getAllComponentStyleClasses(co);
+		const coClasses = getAllComponentStyleClasses(co, fragments);
 		styleClasses = {
 			...styleClasses,
 			...coClasses
 		};
+
+		if (co.type === 'fragment') {
+			const fragment = fragments.find(f => f.id === co.id);
+
+			styleClasses = {
+				...styleClasses,
+				...getAllFragmentStyleClasses(fragment || {}, fragments)
+			};
+		}
 	});
 
 	return styleClasses;
 };
 
-export const getAllFragmentStyleClasses = (fragment: any) => {
+export const tagNameFromFragment = (fragment: any) => {
+	// TODO fragment can have a tag name?
+	return kebabCase(fragment.title);
+};
+
+export const classNameFromFragment = (fragment: any) => {
+	// TODO fragment can have a class name?
+	return upperFirst(camelCase(fragment.title));
+};
+
+export const getAllFragmentStyleClasses = (fragment: any, fragments: any[] = []) => {
 	if (!fragment || !fragment.data) { return []; }
 
-	return Object.values(getAllComponentStyleClasses(fragment.data));
+	const allClasses = {
+		...getAllComponentStyleClasses(fragment, fragments),
+		...getAllComponentStyleClasses(fragment.data, fragments)
+	};
+	return Object.values(allClasses);
 };
 
 export const hasComponentStyleClasses = (componentObj: any) => {

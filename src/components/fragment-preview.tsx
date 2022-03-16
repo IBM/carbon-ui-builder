@@ -35,6 +35,7 @@ export const FragmentPreview = ({ fragment, previewUrl, setPreviewUrl }: any) =>
 
 	useEffect(() => {
 		updatePreviewUrl();
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [fragment])
 
 	return (

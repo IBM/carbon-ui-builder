@@ -187,9 +187,11 @@ export const getParentComponent = (state: any, child: any) => {
 };
 
 export const Fragment = ({fragment, setFragment}: any) => {
-	const globalState = useContext(GlobalStateContext); // used for fetching subcomponents/microlayouts
+	const globalState = useContext(GlobalStateContext);
 
 	if (!fragment || !fragment.data) { return <SkeletonPlaceholder />; }
+
+	const { fragments } = globalState || {};
 
 	// initialize component counter
 	componentCounter = getHighestId(fragment.data) + 1;
@@ -224,16 +226,6 @@ export const Fragment = ({fragment, setFragment}: any) => {
 			return componentObj;
 		}
 
-		if (componentObj.type === 'fragment') {
-			const subFragment = globalState?.getFragment(componentObj.id);
-
-			if (!subFragment) {
-				return ''; // NOTE should we also remove it from the fragment?
-			}
-
-			return renderComponents(subFragment.data);
-		}
-
 		for (let [key, component] of Object.entries(allComponents)) {
 			if (componentObj.type === key) {
 				if (component.componentInfo.render) {
@@ -264,20 +256,26 @@ export const Fragment = ({fragment, setFragment}: any) => {
 		return null;
 	};
 
+	const styles = css`
+		${
+			getAllFragmentStyleClasses(fragment, fragments).map((styleClass: any) => `.${styleClass.id} {
+				${styleClass.content}
+			}`)
+		}
+	`;
 	// TODO add fragment.width and fragment.height to database
 	return (
 		<div
-		className={cx(canvas, css`width: ${fragment.width || '800px'}; height: ${fragment.height || '600px'}`)}
+		className={cx(
+			canvas,
+			styles,
+			css`width: ${fragment.width || '800px'}; height: ${fragment.height || '600px'}`
+		)}
 		onDragOver={allowDrop}
 		onDrop={(event: any) => { drop(event, fragment.data.id) }}>
-			<style>
-			{
-				getAllFragmentStyleClasses(fragment).map((styleClass: any) => `.${styleClass.id} {
-					${styleClass.content}
-				}`)
-			}
-			</style>
-			{renderComponents(fragment.data)}
+			<div className={`${fragment.cssClasses ? fragment.cssClasses.map((cc: any) => cc.id).join(' ') : ''}`}>
+				{renderComponents(fragment.data)}
+			</div>
 		</div>
 	);
 };

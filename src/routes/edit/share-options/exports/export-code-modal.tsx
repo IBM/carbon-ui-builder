@@ -18,6 +18,7 @@ import {
 import { css } from 'emotion';
 import { ModalContext, ModalActionType } from '../../../../context/modal-context';
 import { saveBlob } from '../../../../utils/file-tools';
+import { GlobalStateContext } from '../../../../context';
 
 const exportCodeModalStyle = css`
 	.bx--tabs--scrollable__nav-item {
@@ -62,10 +63,11 @@ export const ExportCode = ({
 	displayedModal,
 	setDisplayedModal
 }: ExportCodeProps) => {
+	const { fragments } = useContext(GlobalStateContext);
 	const [modalState, dispatchModal] = useContext(ModalContext);
 	const jsonCode: any = JSON.stringify(fragment.data, null, 2);
 	const vanillaCode: any = createVanillaApp(fragment);
-	const reactCode: any = createReactApp(fragment);
+	const reactCode: any = createReactApp(fragment, fragments);
 	const angularCode: any = createAngularApp(fragment);
 	const vueCode: any = createVueApp(fragment);
 
