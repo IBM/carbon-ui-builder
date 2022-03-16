@@ -114,8 +114,8 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: () => '',
-			outputs: () => '',
+			inputs: (_) => '',
+			outputs: (_) => '',
 			imports: ['SearchModule'],
 			code: ({ json }) => {
 				return `<ibm-search

@@ -127,8 +127,8 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: () => '',
-			outputs: () => '',
+			inputs: (_) => '',
+			outputs: (_) => '',
 			imports: ['GridModule'],
 			code: ({ json, jsonToTemplate }) => {
 				return `<div ibmGrid ${angularClassNamesFromComponentObj(json)}>

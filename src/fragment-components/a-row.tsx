@@ -126,16 +126,16 @@ export const componentInfo: ComponentInfo = {
 	image: undefined,
 	codeExport: {
 		angular: {
-			inputs: () => '',
-			outputs: () => '',
+			inputs: (_) => '',
+			outputs: (_) => '',
 			imports: ['GridModule'],
 			isNotDirectExport: true,
-			code: () => ''
+			code: (_) => ''
 		},
 		react: {
 			imports: ['Row'],
 			isNotDirectExport: true,
-			code: () => ''
+			code: (_) => ''
 		}
 	}
 };

@@ -124,8 +124,8 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: () => '',
-			outputs: () => '',
+			inputs: (_) => '',
+			outputs: (_) => '',
 			imports: ['InputModule'],
 			code: ({ json }) => {
 				return `<ibm-label

@@ -97,10 +97,10 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: { // TODO exports
 		angular: {
-			inputs: () => '',
-			outputs: () => '',
+			inputs: (_) => '',
+			outputs: (_) => '',
 			imports: [],
-			code: () => ''
+			code: (_) => ''
 		},
 		react: {
 			imports: [],

@@ -30,14 +30,12 @@ export const SelectionTile = (props: SelectionTileInterface) => (
 	<div className={props.styles}>
 		<SelectableTile
 			light={true}
-			onChange={() => {
-				props.onChange();
-			}}
+			onChange={() => props.onChange()}
 			selected={props.selected}>
-			{ props.icon }
+			{props.icon}
 			<div className={tileFooter}>
-				<p>{ props.label }</p>
-				{ props.tag }
+				<p>{props.label}</p>
+				{props.tag}
 			</div>
 		</SelectableTile>
 	</div>
