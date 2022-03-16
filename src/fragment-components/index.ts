@@ -3,12 +3,12 @@ import * as checkbox from "./a-checkbox";
 import * as column from "./a-column";
 import * as fragment from "./a-fragment";
 import * as grid from "./a-grid";
+import * as numberinput from "./a-numberinput";
 import * as row from "./a-row";
+import * as searchinput from "./a-searchinput";
 import * as text from "./a-text";
 import * as textarea from "./a-textarea";
 import * as textinput from "./a-textinput";
-import * as searchinput from "./a-searchinput";
-import * as numberinput from "./a-numberinput";
 // Accordion
 import * as accordion from "./accordion/a-accordion";
 import * as accordionitem from "./accordion/a-accordion-item";
