@@ -142,11 +142,11 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: ['Grid', 'Column', 'Row'],
-			code: ({ json, jsonToTemplate }) => {
+			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<Grid ${reactClassNamesFromComponentObj(json)}>
 					${json.items.map((row: any) => `<Row ${reactClassNamesFromComponentObj(row)}>
 						${row.items.map((cell: any) => `<Column ${getCellParamsString(cell)} ${reactClassNamesFromComponentObj(cell)}>
-								${jsonToTemplate(cell)}
+								${jsonToTemplate(cell, fragments)}
 						</Column>`).join('\n')}
 					</Row>`).join('\n')}
 				</Grid>`;

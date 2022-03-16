@@ -52,7 +52,7 @@ const jsonToCarbonImports = (json: any) => {
 	return imports;
 };
 
-export const jsonToTemplate = (json: any, fragments?: any[]) => {
+export const jsonToTemplate = (json: any, fragments: any[]) => {
 	if (typeof json === 'string' || !json) {
 		return json;
 	}

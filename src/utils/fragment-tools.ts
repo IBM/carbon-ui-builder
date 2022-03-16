@@ -44,7 +44,7 @@ export const getFragmentTemplates = (fragments: any[]) => (
 	fragments.filter((fragment: any) => !!fragment.labels?.includes('template'))
 );
 
-export const getAllComponentStyleClasses = (componentObj: any, fragments: any[] = []) => {
+export const getAllComponentStyleClasses = (componentObj: any, fragments: any[]) => {
 	let styleClasses: any = {};
 
 	// convert into an object so all classes are unique
@@ -54,7 +54,7 @@ export const getAllComponentStyleClasses = (componentObj: any, fragments: any[] 
 	});
 
 	componentObj.items?.map((co: any) => {
-		const coClasses = getAllComponentStyleClasses(co);
+		const coClasses = getAllComponentStyleClasses(co, fragments);
 		styleClasses = {
 			...styleClasses,
 			...coClasses
