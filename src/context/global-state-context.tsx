@@ -19,7 +19,7 @@ export const useFragment = (id?: string) => {
 		// this happens when rendering, which is fine because it's used
 		// in AComponent to update the state of the whole fragment due to
 		// user interaction - functionality not needed for render only
-		console.info('Rendering only, won\'t be able to update context');
+		console.info("Rendering only, won't be able to update context");
 		return [{}, () => { }];
 	}
 

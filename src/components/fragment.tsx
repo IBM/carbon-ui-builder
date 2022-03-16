@@ -238,7 +238,8 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 						selected: fragment.selectedComponentId === componentObj.id,
 						onDragOver: allowDrop,
 						onDrop: (event: any) => {
-							event.stopPropagation(); drop(event, componentObj.id);
+							event.stopPropagation();
+							drop(event, componentObj.id);
 						},
 						renderComponents
 					} as ComponentInfoRenderProps);
@@ -274,9 +275,7 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 				css`width: ${fragment.width || '800px'}; height: ${fragment.height || '600px'}`
 			)}
 			onDragOver={allowDrop}
-			onDrop={(event: any) => {
-				drop(event, fragment.data.id);
-			}}>
+			onDrop={(event: any) => drop(event, fragment.data.id)}>
 			<div className={`${fragment.cssClasses ? fragment.cssClasses.map((cc: any) => cc.id).join(' ') : ''}`}>
 				{renderComponents(fragment.data)}
 			</div>

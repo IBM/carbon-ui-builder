@@ -36,7 +36,10 @@ module.exports = {
 		'quotes': 'off',
 		'@typescript-eslint/quotes': [
 			'error',
-			'single'
+			'single',
+			{
+				"avoidEscape": true
+			}
 		],
 		'semi': 'off',
 		'@typescript-eslint/semi': [

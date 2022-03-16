@@ -23,13 +23,11 @@ const TestComponent = () => {
 	return (
 		<>
 			<span data-testid='notification-indicator'>
-				{ state.notifications.length ? 'Displayed' : 'Invisible' }
+				{state.notifications.length ? 'Displayed' : 'Invisible'}
 			</span>
 			<button
 				data-testid='notification-trigger'
-				onClick={() => {
-					dispatch(notificationState);
-				}}>
+				onClick={() => dispatch(notificationState)}>
 			</button>
 		</>
 	);

@@ -155,7 +155,7 @@ export const createReactApp = (fragment: any, fragments = []) => {
 	const componentJs
 		= `import React from 'react';
 ${fragmentTemplate.imports};
-${hasFragmentStyleClasses(fragment) ? '\nimport \'./component.scss\';\n' : ''}
+${hasFragmentStyleClasses(fragment) ? "\nimport './component.scss';\n" : ''}
 export const FragmentComponent = ({state, setState}) => {
 	const handleInputChange = (event) => {
 		setState({...state, [event.target.name]: event.target.value});

@@ -108,7 +108,7 @@ export const StylePane = ({ isActive }: any) => {
 						placeholder="Filter classes"
 						onChange={(event: any) => setFilterString(event.target.value)} />
 					<Button
-						kind="ghost" x
+						kind="ghost"
 						renderIcon={Add16}
 						iconDescription="Add new class"
 						hasIconOnly

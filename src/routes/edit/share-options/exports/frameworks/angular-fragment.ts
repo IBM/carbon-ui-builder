@@ -232,7 +232,7 @@ export const createAngularApp = (fragment: any) => {
 	return {
 		'src/index.html': format(indexHtml, formatOptionsHtml),
 		'src/main.ts': format(mainTs, formatOptionsTypescript),
-		'src/polyfills.ts': format('import \'zone.js/dist/zone\';', formatOptionsTypescript),
+		'src/polyfills.ts': format("import 'zone.js/dist/zone';", formatOptionsTypescript),
 		'src/styles.scss': format('', formatOptionsCss),
 		'src/app/app.component.html': format(appComponentHtml, formatOptionsHtml),
 		'src/app/app.component.ts': format(appComponentTs, formatOptionsTypescript),

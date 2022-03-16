@@ -83,11 +83,12 @@ export const CssClassSelector = ({ selectedClasses, setSelectedClasses }: any) =
 
 export const ComponentCssClassSelector = ({ componentObj, setComponent }: any) => {
 	const setSelectedClasses = (cssClasses: any[], updateActionHistory = true) => {
-		setComponent({
-			...componentObj,
-			cssClasses
-		},
-		updateActionHistory
+		setComponent(
+			{
+				...componentObj,
+				cssClasses
+			},
+			updateActionHistory
 		);
 	};
 
