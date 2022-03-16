@@ -48,6 +48,19 @@ export const ALinkStyleUI = ({selectedComponent, setComponent}: any) => {
 export const ALinkCodeUI = ({selectedComponent, setComponent}: any) => {
 	return <>
 		<TextInput
+			value={selectedComponent.codeContext?.name}
+			labelText='Input name'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						name: event.currentTarget.value
+					}
+				});
+			}}
+		/>
+		<TextInput
 			value={selectedComponent.codeContext?.href || ''}
 			labelText='href'
 			onChange={(event: any) => {
