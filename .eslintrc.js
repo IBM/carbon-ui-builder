@@ -38,7 +38,7 @@ module.exports = {
 			'error',
 			'single',
 			{
-				"avoidEscape": true
+				'avoidEscape': true
 			}
 		],
 		'semi': 'off',
@@ -88,6 +88,14 @@ module.exports = {
 		],
 		'no-unused-expressions': 'off',
 		'@typescript-eslint/no-unused-expressions': 'error',
+		'no-unused-vars': 'off',
+		'@typescript-eslint/no-unused-vars': [
+			'error',
+			{
+				// Allow underscore in function parameter to keep signature
+				argsIgnorePattern: '_',
+			}
+		],
 		'no-use-before-define': 'off',
 		'@typescript-eslint/no-use-before-define': 'error',
 		'@typescript-eslint/type-annotation-spacing': 'error',
@@ -176,7 +184,7 @@ module.exports = {
 		'react/jsx-no-useless-fragment': [
 			'error',
 			{
-				"allowExpressions": true
+				'allowExpressions': true
 			}
 		],
 		// Ensures JSX components are using PascalCase
