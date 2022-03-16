@@ -166,7 +166,7 @@ export const Edit = ({ match }: any) => {
 	useEffect(() => {
 		clearActionHistory();
 		addAction({ fragment, styleClasses });
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const onRailClick = (clickedLeftPane: SelectedLeftPane) => {
@@ -181,7 +181,7 @@ export const Edit = ({ match }: any) => {
 		<div
 			id='edit-wrapper'
 			className={editPageContent}>
-			{ fragment && <EditHeader fragment={fragment}/> }
+			{fragment && <EditHeader fragment={fragment} />}
 			<ElementsPane isActive={selectedLeftPane === SelectedLeftPane.ELEMENTS} />
 			<StylePane isActive={selectedLeftPane === SelectedLeftPane.STYLE} />
 			<CodePane isActive={selectedLeftPane === SelectedLeftPane.CODE} />
@@ -223,10 +223,8 @@ export const Edit = ({ match }: any) => {
 					updateFragment({ ...fragment, selectedComponentId: 0 });
 				}}>
 				{
-					fragment
-					&& <>
-						<Fragment fragment={fragment} setFragment={updateFragment} />
-					</>
+					// eslint-disable-next-line
+					fragment && <Fragment fragment={fragment} setFragment={updateFragment} />
 				}
 			</div>
 			<div className={rightPanel}>

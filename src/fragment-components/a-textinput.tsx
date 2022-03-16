@@ -25,7 +25,7 @@ export const ATextInputStyleUI = ({ selectedComponent, setComponent }: any) => {
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				inputType: event.selectedItem.id
-			})}/>
+			})} />
 		<TextInput
 			value={selectedComponent.label}
 			labelText='Label'
@@ -71,7 +71,7 @@ export const ATextInputStyleUI = ({ selectedComponent, setComponent }: any) => {
 };
 
 export const ATextInputCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
+	return (
 		<TextInput
 			value={selectedComponent.codeContext?.name}
 			labelText='Input name'
@@ -85,7 +85,7 @@ export const ATextInputCodeUI = ({ selectedComponent, setComponent }: any) => {
 				});
 			}}
 		/>
-	</>;
+	);
 };
 
 export const ATextInput = ({

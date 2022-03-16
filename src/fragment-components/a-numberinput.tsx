@@ -30,7 +30,7 @@ export const ANumberInputStyleUI = ({ selectedComponent, setComponent }: any) =>
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				size: event.selectedItem.id
-			})}/>
+			})} />
 		<Checkbox
 			labelText='Hide label'
 			id='hide-label'
@@ -128,7 +128,7 @@ export const ANumberInputStyleUI = ({ selectedComponent, setComponent }: any) =>
 };
 
 export const ANumberInputCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
+	return (
 		<TextInput
 			value={selectedComponent.codeContext?.name}
 			labelText='Input name'
@@ -142,7 +142,7 @@ export const ANumberInputCodeUI = ({ selectedComponent, setComponent }: any) => 
 				});
 			}}
 		/>
-	</>;
+	);
 };
 
 export const ANumberInput = ({

@@ -26,7 +26,7 @@ export const AFragmentStyleUI = ({ selectedComponent, setComponent }: any) => {
 };
 
 export const AFragmentCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
+	return (
 		<TextInput
 			value={selectedComponent.codeContext?.name}
 			labelText='Input name'
@@ -39,7 +39,7 @@ export const AFragmentCodeUI = ({ selectedComponent, setComponent }: any) => {
 				});
 			}}
 		/>
-	</>;
+	);
 };
 
 const showOutlineStyle = css`

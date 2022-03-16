@@ -48,9 +48,7 @@ export const StyleContextPane = ({ fragment, setFragment }: any) => {
 				</>
 			}
 			{
-				!selectedComponent && <>
-					<ComponentCssClassSelector componentObj={fragment} setComponent={setFragment} />
-				</>
+				!selectedComponent && <ComponentCssClassSelector componentObj={fragment} setComponent={setFragment} />
 			}
 		</div>
 	);

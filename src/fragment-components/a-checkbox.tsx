@@ -25,7 +25,7 @@ export const ACheckboxStyleUI = ({ selectedComponent, setComponent }: any) => {
 };
 
 export const ACheckboxCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
+	return (
 		<TextInput
 			value={selectedComponent.codeContext?.name}
 			labelText='Input name'
@@ -38,7 +38,7 @@ export const ACheckboxCodeUI = ({ selectedComponent, setComponent }: any) => {
 				});
 			}}
 		/>
-	</>;
+	);
 };
 
 export const ACheckbox = ({

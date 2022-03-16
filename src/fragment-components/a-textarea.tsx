@@ -45,7 +45,7 @@ export const ATextAreaStyleUI = ({ selectedComponent, setComponent }: any) => {
 
 
 export const ATextAreaCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
+	return (
 		<TextInput
 			value={selectedComponent.codeContext?.name}
 			labelText='Input name'
@@ -58,7 +58,7 @@ export const ATextAreaCodeUI = ({ selectedComponent, setComponent }: any) => {
 				});
 			}}
 		/>
-	</>;
+	);
 };
 
 export const ATextArea = ({

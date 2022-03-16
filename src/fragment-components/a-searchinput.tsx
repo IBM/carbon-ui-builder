@@ -25,7 +25,7 @@ export const ASearchInputStyleUI = ({ selectedComponent, setComponent }: any) =>
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				inputSize: event.selectedItem.id
-			})}/>
+			})} />
 		<TextInput
 			value={selectedComponent.label}
 			labelText='Label'
@@ -61,7 +61,7 @@ export const ASearchInputStyleUI = ({ selectedComponent, setComponent }: any) =>
 };
 
 export const ASearchInputCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
+	return (
 		<TextInput
 			value={selectedComponent.codeContext?.name}
 			labelText='Input name'
@@ -75,7 +75,7 @@ export const ASearchInputCodeUI = ({ selectedComponent, setComponent }: any) => 
 				});
 			}}
 		/>
-	</>;
+	);
 };
 
 export const ASearchInput = ({
