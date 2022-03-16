@@ -261,9 +261,7 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 	};
 
 	const styles = css`
-	${getAllFragmentStyleClasses(fragment, fragments).map((styleClass: any) => `.${styleClass.id} {
-			${styleClass.content}
-		}`)}
+	${getAllFragmentStyleClasses(fragment, fragments).map((styleClass: any) => `.${styleClass.id} {${styleClass.content}}`)}
 	`;
 	// TODO add fragment.width and fragment.height to database
 	return (
