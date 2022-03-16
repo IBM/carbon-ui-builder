@@ -48,7 +48,7 @@
     "@typescript-eslint/parser": "^5.14.0",
     "cypress": "4.11.0",
     "eslint": "^6.8.0",
-    "eslint-plugin-react": "^7.29.3",
+    "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.3.0",
     "jest": "24.9.0",
     "jest-dom": "4.0.0",
@@ -59,8 +59,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-	"lint": "eslint --ext .js,.ts,.jsx,.tsx src/**",
-	"lint:fix": "eslint --ext .js,.ts,.jsx,.tsx src/** --fix",
+    "lint": "eslint --ext .js,.ts,.jsx,.tsx src/**",
+    "lint:fix": "eslint --ext .js,.ts,.jsx,.tsx src/** --fix",
     "test": "react-scripts test --env=jest-environment-jsdom-sixteen --testPathIgnorePatterns=.d.ts",
     "cypress": "cypress open",
     "eject": "react-scripts eject"
