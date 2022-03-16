@@ -140,6 +140,7 @@ module.exports = {
 		'no-duplicate-imports': 'error',
 		'no-eval': 'error',
 		'no-fallthrough': 'error',
+		'no-multi-spaces': 'error',
 		'no-new-wrappers': 'error',
 		'no-redeclare': 'error',
 		'no-trailing-spaces': 'error',
@@ -169,7 +170,19 @@ module.exports = {
 		'space-in-parens': 'error',
 		// React specific
 		'react-hooks/rules-of-hooks': 'error',
-		'react-hooks/exhaustive-deps': 'warn'
+		'react-hooks/exhaustive-deps': 'warn',
+		// React JSX specific
+		// May throw false positives - https://github.com/yannickcr/eslint-plugin-react/issues/2584
+		'react/jsx-no-useless-fragment': [
+			'error',
+			{
+				"allowExpressions": true
+			}
+		],
+		// Ensures JSX components are using PascalCase
+		'react/jsx-pascal-case': 'error',
+		// React should be imported when using JSX
+		'react/react-in-jsx-scope': 'error',
 	},
 	'settings': {
 		'react': {
