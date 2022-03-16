@@ -93,7 +93,7 @@ module.exports = {
 			'error',
 			{
 				// Allow underscore in function parameter to keep signature
-				argsIgnorePattern: '_',
+				'argsIgnorePattern': '_',
 			}
 		],
 		'no-use-before-define': 'off',
@@ -103,7 +103,10 @@ module.exports = {
 		'@typescript-eslint/brace-style': ['error'], // Using default 1tbs
 		'curly': 'error',
 		'default-case': 'error',
-		'eol-last': 'error',
+		'eol-last': [
+			'error',
+			'always'
+		],
 		'eqeqeq': [
 			'error',
 			'smart'
@@ -149,6 +152,14 @@ module.exports = {
 		'no-eval': 'error',
 		'no-fallthrough': 'error',
 		'no-multi-spaces': 'error',
+		'no-multiple-empty-lines': [
+			'error',
+			{
+				max: 1,
+				maxEOF: 1,
+				maxBOF: 0
+			}
+		],
 		'no-new-wrappers': 'error',
 		'no-redeclare': 'error',
 		'no-trailing-spaces': 'error',
