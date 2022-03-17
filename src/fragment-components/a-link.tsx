@@ -137,8 +137,8 @@ export const componentInfo: ComponentInfo = {
 					ibmLink
 					[inline]="${nameStringToVariableString(json.codeContext?.name)}Inline"
 					[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
-					[href]=${nameStringToVariableString(json.codeContext?.name)}Href
-						${angularClassNamesFromComponentObj(json)}>
+					[href]="${nameStringToVariableString(json.codeContext?.name)}Href"
+					${angularClassNamesFromComponentObj(json)}>
 					${json.text}
 				</a>`;
 			}
