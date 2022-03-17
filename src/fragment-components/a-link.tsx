@@ -5,7 +5,11 @@ import { AComponent, ComponentInfo } from './a-component';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 
 import image from './../assets/component-icons/link.svg';
-import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
+import { 
+	angularClassNamesFromComponentObj, 
+	nameStringToVariableString, 
+	reactClassNamesFromComponentObj 
+} from '../utils/fragment-tools';
 
 export const ALinkStyleUI = ({selectedComponent, setComponent}: any) => {
 	return <>
