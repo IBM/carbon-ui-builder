@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TextInput, Checkbox } from 'carbon-components-react';
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
+import { getParentComponent, updatedState } from '../../components';
 import { css } from 'emotion';
+import { useFragment } from '../../context';
 import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { ComponentInfo } from '../';
 
@@ -62,42 +64,28 @@ export const ARadioTileGroupStyleUI = ({ selectedComponent, setComponent }: any)
 };
 
 export const ARadioTileGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
-		<TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
+	return <TextInput
+		value={selectedComponent.codeContext?.name}
+		labelText='Input name'
+		onChange={(event: any) => {
+			setComponent({
+				...selectedComponent,
+				codeContext: {
+					...selectedComponent.codeContext,
+					name: event.currentTarget.value
+				},
+				// Radio form elements within a fieldset should have the same name
+				items: selectedComponent.items.map((tile: any) => ({
+					...tile,
 					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
+						...tile.codeContext,
+						// Radio Tiles (Children) use formItemName
+						formItemName: event.currentTarget.value
 					}
-				});
-			}}
-		/>
-		<TextInput
-			value={selectedComponent.codeContext?.formItemName}
-			labelText='Form item name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						formItemName: event.currentTarget.value,
-					},
-					// Radio form elements within a fieldset should have the same name
-					items: selectedComponent.items.map((tile: any) => ({
-						...tile,
-						codeContext: {
-							...tile.codeContext,
-							formItemName: event.currentTarget.value
-						}
-					}))
-				});
-			}}
-		/>
-	</>
+				}))
+			});
+		}}
+	/>
 };
 
 export const ARadioTileGroup = ({
@@ -107,6 +95,38 @@ export const ARadioTileGroup = ({
 	renderComponents,
 	...rest
 }: any) => {
+	const [fragment, setFragment] = useFragment();
+
+	// Initialize the child tiles with the form item name
+	// We use the name property because it unique by default
+	useEffect(() => {
+		const parentComponent: any = getParentComponent(fragment.data, componentObj);
+		const componentIndex = parentComponent.items.indexOf(componentObj);
+		const items = [
+			...parentComponent.items.slice(0, componentIndex),
+			{
+				...componentObj,
+				items: componentObj.items.map((tile: any) => ({
+					...tile,
+					codeContext: { ...tile.codeContext, formItemName: componentObj.codeContext?.name }
+				}))
+			},
+			...parentComponent.items.slice(componentIndex + 1)
+		];
+		setFragment({
+			...fragment,
+			data: updatedState(fragment.data, {
+				type: 'update',
+				component: {
+					...parentComponent,
+					items
+				},
+			})
+		})
+		// Disabling since we want to call this only once to initialize children `formItemName` attribute in code context
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	return <AComponent
 		componentObj={componentObj}
 		headingCss={css`display: block;`}
@@ -134,15 +154,11 @@ export const componentInfo: ComponentInfo = {
 		type: 'radioTileGroup',
 		tileGroup: true,
 		legend: 'Radio Tile Group',
-		codeContext: {
-			formItemName: 'tile-group'
-		},
 		items: [
 			{
 				type: 'radiotile',
 				codeContext: {
 					value: 'Tile 1',
-					formItemName: 'tile-group',
 				},
 
 				items: [{ type: 'text', text: 'Radio tile A' }]
@@ -151,7 +167,6 @@ export const componentInfo: ComponentInfo = {
 				type: 'radiotile',
 				codeContext: {
 					value: 'Tile 2',
-					formItemName: 'tile-group',
 				},
 				items: [{ type: 'text', text: 'Radio tile B' }]
 			},
@@ -159,7 +174,6 @@ export const componentInfo: ComponentInfo = {
 				type: 'radiotile',
 				codeContext: {
 					value: 'Tile 3',
-					formItemName: 'tile-group'
 				},
 				items: [{ type: 'text', text: 'Radio tile C' }]
 			}
@@ -172,7 +186,7 @@ export const componentInfo: ComponentInfo = {
 		selected={selected}
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
-		{componentObj.items.map((tile: any) => (renderComponents(tile)))}
+		{componentObj.items.map((tile: any) => renderComponents(tile))}
 	</ARadioTileGroup>,
 	image,
 	codeExport: {
@@ -195,10 +209,15 @@ export const componentInfo: ComponentInfo = {
 			code: ({ json, jsonToTemplate }) => {
 				return `<TileGroup
 					${json.legend !== undefined && json.legend !== '' ? `legend="${json.legend}"` : ''}
-					${json.codeContext?.formItemName !== undefined && json.codeContext?.formItemName !== '' ? `name="${json.codeContext?.formItemName}"` : ''}
+					name="${json.codeContext?.name}"
 					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
 					${reactClassNamesFromComponentObj(json)}
-					onChange={handleInputChange}>
+					onChange={(radio) => handleInputChange({
+						target: {
+							name: "${json.codeContext?.name}",
+							value: radio
+						}
+					})}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
 				</TileGroup>`;
 			}

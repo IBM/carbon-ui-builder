@@ -162,7 +162,6 @@ export const ASelectableTile = ({
 	renderComponents,
 	...rest
 }: any) => {
-
 	const [fragment, setFragment] = useFragment();
 	const parentComponent = getParentComponent(fragment.data, componentObj);
 
@@ -210,8 +209,7 @@ export const ASelectableTile = ({
 			selected={selected}
 			{...rest}>
 			<SelectableTile
-				id={componentObj.id.toString()}
-				{...(componentObj.codeContext?.formItemName ? { name: componentObj.codeContext?.formItemName } : '')}
+				id={componentObj.codeContext?.name}
 				title={componentObj.title}
 				value={componentObj.value}
 				light={componentObj.light}
@@ -254,7 +252,7 @@ export const componentInfo: ComponentInfo = {
 		selected={selected}
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
-		{componentObj.items.map((tile: any) => (renderComponents(tile)))}
+		{componentObj.items.map((item: any) => renderComponents(item))}
 	</ASelectableTile>,
 	image,
 	codeExport: {
@@ -273,7 +271,7 @@ export const componentInfo: ComponentInfo = {
 				return `<ibm-selection-tile
 					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 					[selected]="${nameStringToVariableString(json.codeContext?.name)}Selected"
-					(change)="${nameStringToVariableString(json.codeContext?.name)}Change.emit($event)"
+					${json.standalone ? `(change)="${nameStringToVariableString(json.codeContext?.name)}Change.emit($event)"` : ''}
 					${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
 					</ibm-selection-tile>`
@@ -282,16 +280,36 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			imports: ['SelectableTile'],
 			code: ({ json, jsonToTemplate }) => {
+
+				/**
+				 * @todo
+				 */
+				const stateFunction = json.standalone ?
+					`handleInputChange({
+						target: {
+							name: "${json.codeContext?.name}",
+							value: "${json.codeContext?.value}"
+						}
+				})}` :
+					`() => handleInputChange({
+						target: {
+							name: "selectableTileGroup-2",
+							value: state["selectableTileGroup-2"] !== undefined
+								? [...new Set([...state["selectableTileGroup-2"], "${json.codeContext?.value}"])]
+								: ["${json.codeContext?.value}"]
+						}
+					})`;
+
 				return `<SelectableTile
 					${(json.codeContext?.tileId !== undefined && json.codeContext?.tileId !== '') ? `id="${json.codeContext?.tileId}"` : ''}
 					${(json.codeContext?.value !== undefined && json.codeContext?.value !== '') ? `value="${json.codeContext?.value}"` : ''}
 					${(json.codeContext?.title !== undefined && json.codeContext?.title !== '') ? `title="${json.codeContext?.title}"` : ''}
-					${(json.codeContext?.formItemName !== undefined && json.codeContext?.formItemName !== '') ? `name="${json.codeContext?.formItemName}"` : ''}
+					${(json.codeContext?.formItemName !== undefined && !json.standalone) ? `name="${json.codeContext?.formItemName}"` : `name="${json.codeContext?.name}"`}
 					${json.selected !== undefined ? `selected={${json.selected}}` : ''}
 					${json.light !== undefined ? `light={${json.light}}` : ''}
 					${json.disabled !== undefined && !!json.disabled ? `disabled={${json.disabled}}` : ''}
 					${reactClassNamesFromComponentObj(json)}
-					onChange={handleInputChange}>
+					onChange={${stateFunction}}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
 				</SelectableTile>`;
 			}

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TextInput, Checkbox } from 'carbon-components-react';
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
+import { getParentComponent, updatedState } from '../../components';
 import { css } from 'emotion';
+import { useFragment } from '../../context';
 import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { ComponentInfo } from '..';
 
@@ -40,42 +42,28 @@ export const ASelectableTileGroupStyleUI = ({ selectedComponent, setComponent }:
 };
 
 export const ASelectableTileGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
-		<TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
+	return <TextInput
+		value={selectedComponent.codeContext?.name}
+		labelText='Input name'
+		onChange={(event: any) => {
+			setComponent({
+				...selectedComponent,
+				codeContext: {
+					...selectedComponent.codeContext,
+					name: event.currentTarget.value
+				},
+				// Grouped form elements (Radio) within a fieldset should have the same name
+				items: selectedComponent.items.map((tile: any) => ({
+					...tile,
 					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
+						...tile.codeContext,
+						// Selectable Tiles (Children) use formItemName
+						formItemName: event.currentTarget.value
 					}
-				});
-			}}
-		/>
-		<TextInput
-			value={selectedComponent.codeContext?.formItemName}
-			labelText='Form item name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						formItemName: event.currentTarget.value,
-					},
-					// Radio form elements within a fieldset should have the same name
-					items: selectedComponent.items.map((tile: any) => ({
-						...tile,
-						codeContext: {
-							...tile.codeContext,
-							formItemName: event.currentTarget.value
-						}
-					}))
-				});
-			}}
-		/>
-	</>
+				}))
+			});
+		}}
+	/>
 };
 
 export const ASelectableTileGroup = ({
@@ -85,6 +73,38 @@ export const ASelectableTileGroup = ({
 	renderComponents,
 	...rest
 }: any) => {
+	const [fragment, setFragment] = useFragment();
+
+	// Initialize the child tiles with the form item name
+	// We use the name property because it unique by default
+	useEffect(() => {
+		const parentComponent: any = getParentComponent(fragment.data, componentObj);
+		const componentIndex = parentComponent.items.indexOf(componentObj);
+		const items = [
+			...parentComponent.items.slice(0, componentIndex),
+			{
+				...componentObj,
+				items: componentObj.items.map((tile: any) => ({
+					...tile,
+					codeContext: { ...tile.codeContext, formItemName: componentObj.codeContext?.name }
+				}))
+			},
+			...parentComponent.items.slice(componentIndex + 1)
+		];
+		setFragment({
+			...fragment,
+			data: updatedState(fragment.data, {
+				type: 'update',
+				component: {
+					...parentComponent,
+					items
+				},
+			})
+		})
+		// Disabling since we want to call this only once to initialize children `formItemName` attribute in code context
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	return <AComponent
 		componentObj={componentObj}
 		headingCss={css`display: block;`}
@@ -112,7 +132,7 @@ export const componentInfo: ComponentInfo = {
 			{
 				type: 'selectabletile',
 				codeContext: {
-					formItemName: 'multiselect-tile-group',
+					value: 1,
 				},
 				standalone: false,
 				items: [{ type: 'text', text: 'Selectable tile A' }]
@@ -120,7 +140,7 @@ export const componentInfo: ComponentInfo = {
 			{
 				type: 'selectabletile',
 				codeContext: {
-					formItemName: 'multiselect-tile-group',
+					value: 2,
 				},
 				standalone: false,
 				items: [{ type: 'text', text: 'Selectable tile B' }]
@@ -128,7 +148,7 @@ export const componentInfo: ComponentInfo = {
 			{
 				type: 'selectabletile',
 				codeContext: {
-					formItemName: 'multiselect-tile-group',
+					value: 3,
 				},
 				standalone: false,
 				items: [{ type: 'text', text: 'Selectable tile C' }]
@@ -142,7 +162,7 @@ export const componentInfo: ComponentInfo = {
 		selected={selected}
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
-		{componentObj.items.map((tile: any) => (renderComponents(tile)))}
+		{componentObj.items.map((tile: any) => renderComponents(tile))}
 	</ASelectableTileGroup>,
 	image,
 	codeExport: {

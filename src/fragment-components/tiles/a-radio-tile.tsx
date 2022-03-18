@@ -94,7 +94,7 @@ export const ARadioTileCodeUI = ({ selectedComponent, setComponent }: any) => {
 		/>
 		<TextInput
 			value={selectedComponent.codeContext?.value || ''}
-			labelText='Value'
+			labelText='Value*'
 			placeholder='Tile value'
 			onChange={(event: any) => {
 				setComponent({
@@ -185,7 +185,7 @@ export const ARadioTile = ({
 			selected={selected}
 			{...rest}>
 			<RadioTile
-				id={componentObj.id.toString()}
+				id={componentObj.codeContext?.name}
 				name={componentObj.codeContext?.formItemName}
 				light={componentObj.light}
 				checked={componentObj.defaultChecked}
@@ -225,7 +225,7 @@ export const componentInfo: ComponentInfo = {
 		selected={selected}
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
-		{componentObj.items.map((tile: any) => (renderComponents(tile)))}
+		{componentObj.items.map((item: any) => renderComponents(item))}
 	</ARadioTile>,
 	/**
 	 * Can only be added by adding tile-group or by clicking `plus` icon on top or bottom
@@ -250,7 +250,7 @@ export const componentInfo: ComponentInfo = {
 					[selected]="${nameStringToVariableString(json.codeContext?.name)}Selected"
 					${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
-					</ibm-selection-tile>`
+				</ibm-selection-tile>`
 			}
 		},
 		react: {
