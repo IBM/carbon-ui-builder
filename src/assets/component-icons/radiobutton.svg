@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Radio_Button_-_Item" data-name="Radio Button - Item" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="62.75" height="18" viewBox="0 0 62.75 18">
+  <defs>
+    <clipPath id="clip-path">
+      <path id="Path_4805" data-name="Path 4805" d="M202-705.75a8.75,8.75,0,0,0-8.75,8.75,8.75,8.75,0,0,0,8.75,8.75,8.75,8.75,0,0,0,8.75-8.75,8.75,8.75,0,0,0-2.563-6.187A8.75,8.75,0,0,0,202-705.75Zm0,16.25a7.5,7.5,0,0,1-7.5-7.5,7.5,7.5,0,0,1,7.5-7.5,7.5,7.5,0,0,1,7.5,7.5,7.5,7.5,0,0,1-7.5,7.5Zm0-11.25a3.75,3.75,0,0,0-3.75,3.75,3.75,3.75,0,0,0,3.75,3.75,3.75,3.75,0,0,0,3.75-3.75A3.75,3.75,0,0,0,202-700.75Z" fill="#161616" clip-rule="evenodd"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <path id="Path_4804" data-name="Path 4804" d="M192-687H335v-20H192Z" fill="#161616"/>
+    </clipPath>
+  </defs>
+  <text id="Radio" transform="translate(26.75 14)" fill="#161616" font-size="14" font-family="IBMPlexSans, IBM Plex Sans" letter-spacing="0.001em"><tspan x="0" y="0">Radio</tspan></text>
+  <g id="Group_4822" data-name="Group 4822" transform="translate(-193.25 706)" clip-path="url(#clip-path)">
+    <g id="Group_4821" data-name="Group 4821" clip-path="url(#clip-path-2)">
+      <path id="Path_4803" data-name="Path 4803" d="M188.25-710.75h27.5v27.5h-27.5Z" fill="#161616"/>
+    </g>
+  </g>
+</svg>
