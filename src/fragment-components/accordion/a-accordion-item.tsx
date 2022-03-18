@@ -40,7 +40,7 @@ export const AAccordionItemStyleUI = ({selectedComponent, setComponent}: any) =>
 				setComponent({
 					...selectedComponent,
 					disabled: checked
-				})
+				});
 			}} />
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>
