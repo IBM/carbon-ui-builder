@@ -4,7 +4,11 @@ import { AComponent, ComponentInfo } from './a-component';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 
 import image from './../assets/component-icons/link.svg';
-import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
+import { 
+	angularClassNamesFromComponentObj, 
+	nameStringToVariableString, 
+	reactClassNamesFromComponentObj 
+} from '../utils/fragment-tools';
 
 export const ALinkStyleUI = ({selectedComponent, setComponent}: any) => {
 	return <>
@@ -130,8 +134,8 @@ export const componentInfo: ComponentInfo = {
 					ibmLink
 					[inline]="${nameStringToVariableString(json.codeContext?.name)}Inline"
 					[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
-					[href]=${nameStringToVariableString(json.codeContext?.name)}Href
-						${angularClassNamesFromComponentObj(json)}>
+					[href]="${nameStringToVariableString(json.codeContext?.name)}Href"
+					${angularClassNamesFromComponentObj(json)}>
 					${json.text}
 				</a>`;
 			}
