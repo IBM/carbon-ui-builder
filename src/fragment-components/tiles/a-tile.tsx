@@ -81,7 +81,7 @@ export const componentInfo: ComponentInfo = {
 		type: 'tile',
 		items: [
 			{ type: 'text', text: 'A simple tile' }
-		],
+		]
 	},
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <ATile
 		componentObj={componentObj}
@@ -90,7 +90,7 @@ export const componentInfo: ComponentInfo = {
 		selected={selected}
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
-		{componentObj.items.map((tile: any) => (renderComponents(tile)))}
+		{componentObj.items.map((tile: any) => renderComponents(tile))}
 	</ATile>,
 	image,
 	codeExport: {
