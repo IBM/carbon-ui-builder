@@ -32,9 +32,17 @@ const iconStyle = css`
 	cursor: pointer;
 `;
 
-export const Adder = ({ active, children, topAction, bottomAction, leftAction, rightAction }: any) => <>
+export const Adder = ({
+	active,
+	children,
+	topAction,
+	bottomAction,
+	leftAction,
+	rightAction,
+	addButtonsCss
+}: any) => <>
 	{
-		active && topAction && <span className={addStyleTop}>
+		active && topAction && <span className={cx(addStyleTop, addButtonsCss)}>
 			<Add16
 				onClick={(event: any) => {
 					event.stopPropagation();
@@ -44,7 +52,7 @@ export const Adder = ({ active, children, topAction, bottomAction, leftAction, r
 		</span>
 	}
 	{
-		active && leftAction && <span className={addStyleLeft}>
+		active && leftAction && <span className={cx(addStyleLeft, addButtonsCss)}>
 			<Add16
 				onClick={(event: any) => {
 					event.stopPropagation();
@@ -54,7 +62,7 @@ export const Adder = ({ active, children, topAction, bottomAction, leftAction, r
 		</span>
 	}
 	{
-		active && rightAction && <span className={addStyleRight}>
+		active && rightAction && <span className={cx(addStyleRight, addButtonsCss)}>
 			<Add16
 				onClick={(event: any) => {
 					event.stopPropagation();
@@ -65,7 +73,7 @@ export const Adder = ({ active, children, topAction, bottomAction, leftAction, r
 	}
 	{children}
 	{
-		active && bottomAction && <span className={addStyle}>
+		active && bottomAction && <span className={cx(addStyle, addButtonsCss)}>
 			<Add16
 				onClick={(event: any) => {
 					event.stopPropagation();
