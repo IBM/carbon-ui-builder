@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-	TileAboveTheFoldContent,
 	TileBelowTheFoldContent
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from '../a-component';
@@ -25,10 +24,7 @@ export const ATileFold = ({
 		<AComponent
 			componentObj={componentObj}
 			{...rest}>
-			{componentObj.aboveFold ?
-				<TileAboveTheFoldContent onDrop={onDrop}>{children}</TileAboveTheFoldContent> :
-				<TileBelowTheFoldContent onDrop={onDrop}>{children}</TileBelowTheFoldContent>
-			}
+			<TileBelowTheFoldContent onDrop={onDrop}>{children}</TileBelowTheFoldContent>
 		</AComponent>
 	</>;
 };
@@ -44,9 +40,7 @@ export const componentInfo: ComponentInfo = {
 			selected={selected}
 			onDragOver={onDragOver}
 			onDrop={onDrop}>
-			{componentObj.items.map((element: any) => (
-				renderComponents(element)
-			))}
+			{componentObj.items.map((item: any) => renderComponents(item))}
 		</ATileFold>,
 	keywords: ['tile', 'tile fold', 'fold'],
 	name: 'tilefold',
@@ -54,8 +48,7 @@ export const componentInfo: ComponentInfo = {
 	image: undefined,
 	defaultComponentObj: {
 		type: 'tilefold',
-		aboveFold: true,
-		items: [{ type: 'text', text: 'A' }]
+		items: []
 	},
 	codeExport: {
 		angular: {
@@ -63,12 +56,12 @@ export const componentInfo: ComponentInfo = {
 			outputs: () => '',
 			imports: [],
 			code: ({ json, jsonToTemplate }) => {
-				const foldClass = json.aboveFold ? `bx--tile-content__above-the-fold` : `bx--tile-content__below-the-fold`;
+				// Appends below the fold class to class list
 				let classes = angularClassNamesFromComponentObj(json);
 				if (classes) {
-					classes = classes.replace('="', `="${foldClass} `);
+					classes = classes.split('="').join(`="bx--tile-content__below-the-fold `);
 				} else {
-					classes = `class="${foldClass}"`;
+					classes = `class="bx--tile-content__below-the-fold"`;
 				}
 
 				return `<span ${classes}>
@@ -79,12 +72,10 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			imports: [],
 			code: ({ json, jsonToTemplate }) => {
-				const foldComponent = json.aboveFold ? 'TileAboveTheFoldContent' : 'TileBelowTheFoldContent';
-
-				return `<${foldComponent}
+				return `<TileBelowTheFoldContent
 					${reactClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
-					</${foldComponent}>`;
+					</TileBelowTheFoldContent>`;
 			}
 		}
 	}

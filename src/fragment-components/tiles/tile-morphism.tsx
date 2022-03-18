@@ -28,14 +28,10 @@ export const TileMorphism = ({ component, setComponent }: any) => {
 			defaultComponent: {
 				type: 'expandabletile',
 				expanded: true,
-				outline: true,
+				outline: false,
 				items: [
 					{
-						type: 'tilefold', aboveFold: true,
-						items: []
-					},
-					{
-						type: 'tilefold', aboveFold: false,
+						type: 'tilefold',
 						items: []
 					}
 				]
@@ -124,6 +120,23 @@ export const TileMorphism = ({ component, setComponent }: any) => {
 	/>
 }
 
+// Combine all items from 'top' & 'bottom' folds into a single array
+const getExpandableTileItems = (expandableTile: any) => {
+	// Destructuring existing items to prevent changing default object
+	const items = [...expandableTile.items];
+
+	// Find tileFold index & retrieve it from the list
+	const tileFoldIndex = items.findIndex((item: any) => item.type === 'tilefold');
+	const tileFoldItems = items.splice(tileFoldIndex, 1);
+
+	// Append only if it has values
+	if (tileFoldItems.length) {
+		items.push(...tileFoldItems[0].items);
+	}
+
+	return items;
+}
+
 /**
  *  Morph parent (Group) & children to other group type
  */
@@ -143,12 +156,11 @@ const groupToGroup = (selectedItem: any, component: any) => {
  */
 const groupToSingle = (selectedItem: any, component: any, parentComponent: any) => {
 	const tiles = component.items.map((tile: any) => {
-		const tileItems = [];
+		const tileItems = [...tile.items];
+
+		// Adds empty bottom fold
 		if (selectedItem.id === 'expandabletile') {
 			tileItems.push(...selectedItem.defaultComponent.items);
-			tileItems[0].items = component.items;
-		} else {
-			tileItems.push(...tile.items);
 		}
 
 		return {
@@ -158,6 +170,7 @@ const groupToSingle = (selectedItem: any, component: any, parentComponent: any) 
 		}
 	})
 
+	// We are not destructuring entire component object since we do not want tile `group` specific attributes
 	const componentIndex = parentComponent.items.indexOf(component);
 	const items = [
 		...parentComponent.items.slice(0, componentIndex),
@@ -175,24 +188,15 @@ const groupToSingle = (selectedItem: any, component: any, parentComponent: any) 
  * Sets current component as a wrapper & passes a single tile as an item (child)
  */
 const singleToGroup = (selectedItem: any, component: any) => {
-	const items = [];
-
-	if (component.type === 'expandabletile') {
-		items.push({
-			...selectedItem.childDefaultComponent,
-			items: [...component.items[0].items, ...component.items[1].items]
-		});
-	} else {
-		items.push({
-			...selectedItem.childDefaultComponent,
-			items: component.items
-		});
-	}
-
 	return {
 		...component,
 		...selectedItem.defaultComponent,
-		items,
+		items: [
+			{
+				...selectedItem.childDefaultComponent,
+				items: (component.type === 'expandabletile') ? getExpandableTileItems(component) : [...component.items]
+			}
+		],
 		tileGroup: true
 	};
 }
@@ -204,10 +208,9 @@ const singleToSingle = (selectedItem: any, component: any) => {
 	const items = [];
 
 	if (component.type === 'expandabletile') {
-		items.push(...component.items[0].items, ...component.items[1].items);
+		items.push(...getExpandableTileItems(component));
 	} else if (selectedItem.id === 'expandabletile') {
-		items.push(...selectedItem.defaultComponent.items);
-		items[0].items = component.items;
+		items.push(...component.items, ...selectedItem.defaultComponent.items);
 	} else {
 		items.push(...component.items);
 	}
