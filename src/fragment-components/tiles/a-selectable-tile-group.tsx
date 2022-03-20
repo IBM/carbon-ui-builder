@@ -132,7 +132,7 @@ export const componentInfo: ComponentInfo = {
 			{
 				type: 'selectabletile',
 				codeContext: {
-					value: 1,
+					value: 'Tile 1',
 				},
 				standalone: false,
 				items: [{ type: 'text', text: 'Selectable tile A' }]
@@ -140,7 +140,7 @@ export const componentInfo: ComponentInfo = {
 			{
 				type: 'selectabletile',
 				codeContext: {
-					value: 2,
+					value: 'Tile 2',
 				},
 				standalone: false,
 				items: [{ type: 'text', text: 'Selectable tile B' }]
@@ -148,7 +148,7 @@ export const componentInfo: ComponentInfo = {
 			{
 				type: 'selectabletile',
 				codeContext: {
-					value: 3,
+					value: 'Tile 3',
 				},
 				standalone: false,
 				items: [{ type: 'text', text: 'Selectable tile C' }]
