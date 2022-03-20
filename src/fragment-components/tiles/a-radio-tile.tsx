@@ -79,20 +79,6 @@ export const ARadioTileCodeUI = ({ selectedComponent, setComponent }: any) => {
 			}}
 		/>
 		<TextInput
-			value={selectedComponent.codeContext?.tileId || ''}
-			labelText='Input ID'
-			placeholder='Custom ID'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						tileId: event.currentTarget.value
-					}
-				});
-			}}
-		/>
-		<TextInput
 			value={selectedComponent.codeContext?.value || ''}
 			labelText='Value*'
 			placeholder='Tile value'
@@ -138,17 +124,16 @@ export const ARadioTile = ({
 	renderComponents,
 	...rest
 }: any) => {
+	const [fragment, setFragment] = useFragment();
+	const parentComponent = getParentComponent(fragment.data, componentObj);
 	// Removing `for` attribute so users can select text and other non-form elements.
 	useEffect(() => {
-		const tileElement = document.getElementById(componentObj.id.toString());
+		const tileElement = document.getElementById(componentObj.codeContext?.name);
 		const labelElement = tileElement?.parentElement?.querySelector('label.bx--tile.bx--tile--selectable');
 		// Setting to empty instead of removing so users can select non-form elements within tile when a form element is present
 		// Although form elements should never be added within another
 		labelElement?.setAttribute('for', '');
-	}, [componentObj.id]);
-
-	const [fragment, setFragment] = useFragment();
-	const parentComponent = getParentComponent(fragment.data, componentObj);
+	}, [componentObj.codeContext?.name]);
 
 	const addRadio = (offset = 0) => setFragment({
 		...fragment,
@@ -186,7 +171,7 @@ export const ARadioTile = ({
 			{...rest}>
 			<RadioTile
 				id={componentObj.codeContext?.name}
-				name={componentObj.codeContext?.formItemName}
+				name={parentComponent.codeContext?.formItemName}
 				light={componentObj.light}
 				checked={componentObj.defaultChecked}
 				disabled={componentObj.disabled}
@@ -257,7 +242,6 @@ export const componentInfo: ComponentInfo = {
 			imports: ['RadioTile'],
 			code: ({ json, jsonToTemplate }) => {
 				return `<RadioTile
-					${(json.codeContext?.tileId !== undefined && json.codeContext?.tileId !== '') ? `id="${json.codeContext?.tileId}"` : ''}
 					${(json.codeContext?.formItemName !== undefined && json.codeContext?.formItemName !== '') ? `name="${json.codeContext?.formItemName}"` : ''}
 					${(json.codeContext?.value !== undefined && json.codeContext?.value !== '') ? `value="${json.codeContext?.value}"` : ''}
 					${json.light !== undefined ? `light="${json.light}"` : ''}
