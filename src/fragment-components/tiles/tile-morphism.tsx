@@ -43,8 +43,6 @@ export const TileMorphism = ({ component, setComponent }: any) => {
 			defaultComponent: {
 				type: 'selectabletile',
 				standalone: true,
-				value: 'value',
-				title: 'title',
 				disabled: false,
 				selected: false,
 			}
@@ -58,8 +56,6 @@ export const TileMorphism = ({ component, setComponent }: any) => {
 			},
 			childDefaultComponent: {
 				type: 'selectabletile',
-				value: 'Value',
-				formItemName: 'tile-group',
 				selected: false,
 				standalone: false,
 			}
@@ -69,14 +65,11 @@ export const TileMorphism = ({ component, setComponent }: any) => {
 			text: 'Radio tiles',
 			defaultComponent: {
 				type: 'radioTileGroup',
-				formItemName: 'tile-group',
 				legend: 'Radio Tile Group',
 				tileGroup: true,
 			},
 			childDefaultComponent: {
 				type: 'radiotile',
-				value: 'Value',
-				formItemName: 'tile-group',
 			}
 		}
 	];
@@ -194,7 +187,10 @@ const singleToGroup = (selectedItem: any, component: any) => {
 		items: [
 			{
 				...selectedItem.childDefaultComponent,
-				items: (component.type === 'expandabletile') ? getExpandableTileItems(component) : [...component.items]
+				codeContext: {
+					formItemName: component.codeContext?.name
+				},
+				items: (component.type === 'expandabletile') ? getExpandableTileItems(component) : [...component.items],
 			}
 		],
 		tileGroup: true
