@@ -9,7 +9,8 @@ import * as searchinput from "./a-searchinput";
 import * as text from "./a-text";
 import * as textarea from "./a-textarea";
 import * as textinput from "./a-textinput";
-import * as radioGroup from "./a-radiobutton";
+import * as radioButton from "./a-radiobutton";
+import * as radioButtonGroup from "./a-radiobutton-group";
 
 export { AButton, AButtonStyleUI } from "./a-button";
 export { ACheckbox, ACheckboxStyleUI, ACheckboxCodeUI } from "./a-checkbox";
@@ -23,8 +24,8 @@ export { ATextArea, ATextAreaStyleUI, ATextAreaCodeUI } from "./a-textarea";
 export { ATextInput, ATextInputStyleUI, ATextInputCodeUI } from "./a-textinput";
 export { ASearchInput, ASearchInputStyleUI, ASearchInputCodeUI } from "./a-searchinput";
 export { ANumberInput, ANumberInputStyleUI, ANumberInputCodeUI } from "./a-numberinput";
-export { ARadioButton, ARadioButtonStyleUI } from "./a-radiobutton";
-
+export { ARadioButton, ARadioButtonStyleUI, ARadioButtonCodeUI } from "./a-radiobutton";
+export { ARadioButtonGroup, ARadioButtonGroupStyleUI, ARadioButtonGroupCodeUI } from "./a-radiobutton-group"
 export const allComponents = {
 	button,
 	checkbox,
@@ -37,5 +38,6 @@ export const allComponents = {
 	textinput,
 	searchinput,
 	numberinput,
-	radioGroup
+	radioButton,
+	radioButtonGroup
 };
