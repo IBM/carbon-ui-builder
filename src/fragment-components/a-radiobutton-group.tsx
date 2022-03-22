@@ -1,7 +1,7 @@
 import React from 'react';
-import { Dropdown, TextInput, } from 'carbon-components-react';
+import { Dropdown, TextInput, RadioButtonGroup} from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
-import { css } from 'emotion';
+// import { css } from 'emotion';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 
 import image from './../assets/component-icons/radiobutton-group.svg';
@@ -10,6 +10,7 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
+
 
 export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: any) => {
     const orientationItems = [
@@ -61,19 +62,6 @@ export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: an
 export const ARadioButtonGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>
-		<TextInput
 			value={selectedComponent.codeContext?.formItemName}
 			labelText='Form item name'
 			onChange={(event: any) => {
@@ -96,6 +84,7 @@ export const ARadioButtonGroupCodeUI = ({ selectedComponent, setComponent }: any
 	</>
 };
 
+
 export const ARadioButtonGroup = ({
 	children,
 	componentObj,
@@ -103,22 +92,27 @@ export const ARadioButtonGroup = ({
 	renderComponents,
 	...rest
 }: any) => {
-	return <AComponent
+	return <>
+    <AComponent
 		componentObj={componentObj}
-		headingCss={css`display: block;`}
 		selected={selected}
 		{...rest}>
-		<div
-            role="group"
-            aria-label="Radio buttons"
-			className={`bx--radio-button-group ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}`}>
-			{(componentObj.legend !== undefined && componentObj.legend !== '') &&
-				<legend className="bx--label">
-					{componentObj.legend}
-				</legend>}
-			{children}
-		</div>
+        <fieldset>
+            <legend className="bx--label">
+                {componentObj.legend}
+            </legend>
+            <RadioButtonGroup
+                defaultSelected={componentObj.defaultSelected}
+                orientation={componentObj.orientation}
+                labelPosition={componentObj.labelPosition}
+                name={componentObj.codeContext?.formItemName}
+                valueSelected={componentObj.defaultSelected}>
+                    {children}
+            </RadioButtonGroup>
+        </fieldset>
+    
 	</AComponent>
+    </>
 };
 
 export const componentInfo: ComponentInfo = {
@@ -135,32 +129,38 @@ export const componentInfo: ComponentInfo = {
         },
         labelPosition: 'left',
         orientation: 'horizontal',
-        defaultSelected:"Button-1",
+        defaultSelected:"button-1",
 		items: [
 			{
-				type: 'radioButton',
+                type: 'radioButton',
+                value: 'button-1',
+                id: 'button-1',
 				codeContext: {
-					value: 'Button-1',
 					formItemName: 'radio-group',
 				},
-
-				items: [{ type: 'text', text: 'Radio button A' }]
+                labelText: "Option 1",
+                disabled: false
 			},
 			{
-				type: 'radioButton',
+                type: 'radioButton',
+                value: 'button-2',
+                id: 'button-2',
 				codeContext: {
-					value: 'Button-2',
 					formItemName: 'radio-group',
-				},
-				items: [{ type: 'text', text: 'Radio button B' }]
+                },
+                labelText: "Option 2",
+                disabled: false
+				
 			},
 			{
-				type: 'radioButton',
+                type: 'radioButton',
+                value: 'button-3',
+                id: 'button-3',
 				codeContext: {
-					value: 'Button-3',
 					formItemName: 'radio-group'
-				},
-				items: [{ type: 'text', text: 'Radio button C' }]
+                },
+                labelText: "Option 3",
+                disabled: false
 			}
 		]
 	},
@@ -169,35 +169,23 @@ export const componentInfo: ComponentInfo = {
 		select={select}
 		remove={remove}
 		selected={selected}>
-		{componentObj.items.map((tile: any) => (renderComponents(tile)))}
+		{componentObj.items.map((button: any) => (renderComponents(button)))}
 	</ARadioButtonGroup>,
 	image,
 	codeExport: {
 		angular: {
 			inputs: () => '',
 			outputs: ({ json }) =>
-				`@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<Event>();`,
-			imports: ['TilesModule'],
+				``,
+			imports: [''],
 			code: ({ json, jsonToTemplate }) => {
-				return `<ibm-tile-group
-					(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
-					[multiple]="false"
-					${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
-				</ibm-tile-group>`
+				return ``
 			}
 		},
 		react: {
-			imports: ['TileGroup'],
+			imports: [''],
 			code: ({ json, jsonToTemplate }) => {
-				return `<TileGroup
-					${json.legend !== undefined && json.legend !== '' ? `legend="${json.legend}"` : ''}
-					${json.codeContext?.formItemName !== undefined && json.codeContext?.formItemName !== '' ? `name="${json.codeContext?.formItemName}"` : ''}
-					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
-					${reactClassNamesFromComponentObj(json)}
-					onChange={handleInputChange}>
-						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
-				</TileGroup>`;
+				return ``;
 			}
 		}
 	}

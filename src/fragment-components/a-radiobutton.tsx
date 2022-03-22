@@ -1,28 +1,33 @@
 import React, { useEffect } from 'react';
-import { RadioButton, Checkbox, TextInput } from 'carbon-components-react';
+import { RadioButton, TextInput, Checkbox } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
-import { css, cx } from 'emotion';
 import { useFragment } from '../context';
-import image from './../assets/component-icons/radiobutton.svg';
 import { Add32 } from '@carbon/icons-react';
+import { css, cx } from 'emotion';
 import { getParentComponent, updatedState } from '../components';
+
+
 export const ARadioButtonStyleUI = ({selectedComponent, setComponent}: any) => {
 	return <>
 		<Checkbox
-			labelText='Disabled'
-			id='disabled'
+			labelText='Disable button'
+			id='disable'
 			checked={selectedComponent.disabled}
-			onChange={(checked: any) => {
-				setComponent({
-					...selectedComponent,
-					disabled: checked
-				});
-			}}
-		/>
+			onChange={(checked: boolean) => setComponent({
+				...selectedComponent,
+				disabled: checked
+			})} />
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>
 };
+
+const iconStyle = css`
+	height: 1rem;
+	width: 1rem;
+	float: right;
+	cursor: pointer;
+`;
 
 const addStyle = css`
 	position: absolute;
@@ -34,16 +39,6 @@ const addStyle = css`
 	display: block !important;
 `;
 
-const addStyleTop = cx(addStyle, css`
-	margin-top: -18px;
-`);
-
-const iconStyle = css`
-	height: 1rem;
-	width: 1rem;
-	float: right;
-	cursor: pointer;
-`;
 
 export const ARadioButtonCodeUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -55,36 +50,30 @@ export const ARadioButtonCodeUI = ({ selectedComponent, setComponent }: any) => 
 					...selectedComponent,
 					codeContext: {
 						...selectedComponent.codeContext,
-						labelText: event.currentTarget.value
+						name: event.currentTarget.value
 					}
 				});
 			}}
 		/>
 		<TextInput
-			value={selectedComponent.codeContext?.tileId || ''}
-			labelText='Input ID'
+			value={selectedComponent.id || ''}
+			labelText='Radio button ID'
 			placeholder='Custom ID'
 			onChange={(event: any) => {
 				setComponent({
 					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						id: event.currentTarget.value
-					}
+					id: event.currentTarget.value
 				});
 			}}
 		/>
 		<TextInput
-			value={selectedComponent.codeContext?.value || ''}
-			labelText='Value'
+			value={selectedComponent.labelText || ''}
+			labelText='Radio button label'
 			placeholder='Button value'
 			onChange={(event: any) => {
 				setComponent({
 					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						value: event.currentTarget.value
-					}
+					labelText: event.currentTarget.value
 				});
 			}}
 		/>
@@ -101,7 +90,7 @@ export const ARadioButton = ({
 	...rest
 }: any) => {
 	useEffect(() => {
-		const radioElement = document.getElementById(componentObj.id.toString());
+		const radioElement = document.getElementById(componentObj.id);
 		const labelElement = radioElement?.parentElement?.querySelector('label.bx--radio-button__label');
 		labelElement?.setAttribute('for', '');
 	}, [componentObj.id]);
@@ -117,11 +106,12 @@ export const ARadioButton = ({
 				type: 'insert',
 				component: {
 					type: 'radioButton',
+					value: componentObj.value,
 					codeContext: {
-						value: 'Button',
 						formItemName: componentObj.formItemName
 					},
-					items: [{ type: 'text', text: 'New radio button' }]
+					labelText: componentObj.labelText,
+					disabled: componentObj.disabled
 				}
 			},
 			parentComponent.id,
@@ -130,35 +120,31 @@ export const ARadioButton = ({
 	});
 
 	return <>
-		<span style={{ display: 'none' }} className={selected ? addStyleTop : ''}>
-				<Add32 onClick={(event: any) => {
-					event.stopPropagation();
-					addRadio();
-				}} className={iconStyle} />
+		<span style={{ position: 'relative', display: 'none' }} className={selected ? addStyle : ''}>
+		<Add32 onClick={(event: any) => {
+			event.stopPropagation();
+			addRadio(1);
+		}} className={iconStyle} />
 		</span>
 		<AComponent
+			className = ""
 			selected={selected}
-			headingCss={css`display: block;`}
 			componentObj={componentObj}
-			{...rest}>
-               
-            <RadioButton
-				id={componentObj.id.toString()}
-				name={componentObj.codeContext?.formItemName}
-				disabled={componentObj.disabled}
-                labelText={componentObj.codeContext?.formItemName}
-                value={componentObj.codeContext?.value}
-                className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
-					{children}
-            </RadioButton>          
+			{...rest}> 
+				<RadioButton
+					id={componentObj.id}
+					name={componentObj.codeContext?.formItemName}
+					labelText={componentObj.labelText}
+					value={componentObj.value}
+					disabled= {componentObj.disabled}
+					className={cx(
+						componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+						css`margin-right: 1rem;`
+					)}/>
 		</AComponent>
-		<span style={{ display: 'none' }} className={selected ? addStyle : ''}>
-			<Add32 onClick={(event: any) => {
-				event.stopPropagation();
-				addRadio(1);
-			}} className={iconStyle} />
-		</span>
-		</>
+
+	
+	</>
 };
 
 export const componentInfo: ComponentInfo = {
@@ -168,17 +154,21 @@ export const componentInfo: ComponentInfo = {
 	keywords: ['radiobutton', 'radio button'],
 	name: 'Radio button',
 	defaultComponentObj: {
-		disabled: false,
 		type: 'radioButton',
-		items: []
+		items: [],
+		value: '',
+		labelText: '',
+		id: ''
 	},
-	image,
+	
+	image: undefined,
+	hideFromElementsPane: true,
 	render: ({ componentObj, select, remove, selected, renderComponents }) => <ARadioButton
 	componentObj={componentObj}
 	select={select}
 	remove={remove}
 	selected={selected}>
-		{componentObj.items.map((button: any) => (renderComponents(button)))}
+		{componentObj.labelText}
 	</ARadioButton>,
 	codeExport: {
 		angular: {
