@@ -98,11 +98,8 @@ export const ARadioButtonGroup = ({
 		selected={selected}
 		{...rest}>
         <fieldset>
-            <legend className="bx--label">
-                {componentObj.legend}
-            </legend>
             <RadioButtonGroup
-                defaultSelected={componentObj.defaultSelected}
+                legendText= {componentObj.legend}
                 orientation={componentObj.orientation}
                 labelPosition={componentObj.labelPosition}
                 name={componentObj.codeContext?.formItemName}
@@ -129,7 +126,6 @@ export const componentInfo: ComponentInfo = {
         },
         labelPosition: 'left',
         orientation: 'horizontal',
-        defaultSelected:"button-1",
 		items: [
 			{
                 type: 'radioButton',
@@ -139,7 +135,8 @@ export const componentInfo: ComponentInfo = {
 					formItemName: 'radio-group',
 				},
                 labelText: "Option 1",
-                disabled: false
+                disabled: false,
+                defaultSelected: true
 			},
 			{
                 type: 'radioButton',

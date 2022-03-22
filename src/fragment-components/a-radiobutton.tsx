@@ -37,6 +37,8 @@ const addStyle = css`
 	line-height: 21px;
 	z-index: 1;
 	display: block !important;
+	margin-right: -10px;
+    margin-bottom: 4px;
 `;
 
 
@@ -111,7 +113,11 @@ export const ARadioButton = ({
 						formItemName: componentObj.formItemName
 					},
 					labelText: componentObj.labelText,
-					disabled: componentObj.disabled
+					disabled: componentObj.disabled,
+					className: cx(
+						componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+						css`margin-right: 1rem;`
+					)
 				}
 			},
 			parentComponent.id,
@@ -129,6 +135,7 @@ export const ARadioButton = ({
 		<AComponent
 			className = ""
 			selected={selected}
+			headingCss={css`width: fit-content; min-width: 9rem;`}
 			componentObj={componentObj}
 			{...rest}> 
 				<RadioButton
@@ -137,6 +144,8 @@ export const ARadioButton = ({
 					labelText={componentObj.labelText}
 					value={componentObj.value}
 					disabled= {componentObj.disabled}
+					checked= {componentObj.defaultSelected ? componentObj.defaultSelected : selected}
+					defaultChecked = {componentObj.defaultSelected}
 					className={cx(
 						componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
 						css`margin-right: 1rem;`
@@ -158,7 +167,8 @@ export const componentInfo: ComponentInfo = {
 		items: [],
 		value: '',
 		labelText: '',
-		id: ''
+		id: '',
+		selected: false,
 	},
 	
 	image: undefined,
