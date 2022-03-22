@@ -91,7 +91,7 @@ export const leftPane = css`
 	width: ${leftPaneWidth};
 	left: -${leftPaneWidth};
 	height: calc(100% - 4rem);
-	padding: 15px;
+	padding: 0 15px;
 	box-shadow: inset -1px 0px #d8d8d8;
 	z-index: 999;
 	overflow-y: auto;
@@ -103,6 +103,7 @@ export const leftPane = css`
 
 export const leftPaneHeader = css`
 	position: fixed;
+	padding-top: 15px;
 	width: 270px;
 	background: white;
 `;
