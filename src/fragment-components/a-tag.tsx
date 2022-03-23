@@ -64,7 +64,7 @@ export const ATagStyleUI = ({selectedComponent, setComponent}: any) => {
 			label='Size'
 			titleText='Size'
 			items={sizeItems}
-			initialSelectedItem={typeItems.find(item => item.id === selectedComponent.size)}
+			initialSelectedItem={sizeItems.find(item => item.id === selectedComponent.size)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
@@ -112,6 +112,7 @@ export const ATag = ({
 			<Tag
 			type={componentObj.kind}
 			disabled={componentObj.disabled}
+			size={componentObj.size}
 			filter={componentObj.filter}
 			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 				{children}
@@ -151,18 +152,21 @@ export const componentInfo: ComponentInfo = {
 				: ''
 			}`,
 			imports: ['TagModule'],
+			// NOTE: Angular tag does not support 'disabled' yet. Filtered tag is able to take in 'disabled' as an input
+			// but it doesn't do anything.
+			// Issue is being tracked here: https://github.com/IBM/carbon-components-angular/issues/2061
 			code: ({json}) => {
 				const defaultProps = `
 					[type]="${nameStringToVariableString(json.codeContext?.name)}Type"
 					[title]="${nameStringToVariableString(json.codeContext?.name)}Title"
 					${`size='${json.size ? json.size : "md"}'`}
-					[disabled]='${json.disabled}'
 				`
 				if (json.filter) {
 					return `<ibm-tag-filter
 						${defaultProps}
 						(close)='${nameStringToVariableString(json.codeContext?.name)}Close.emit()'
-						${angularClassNamesFromComponentObj(json)}>
+						${angularClassNamesFromComponentObj(json)}
+						[disabled]='${json.disabled}'>
 							${json.title}
 					</ibm-tag-filter>
 					`;
