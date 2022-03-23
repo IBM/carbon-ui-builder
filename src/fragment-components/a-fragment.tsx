@@ -16,11 +16,11 @@ import { LinkButton } from '../components';
 export const AFragmentStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<LinkButton
-		kind='secondary'
-		size='sm'
-		renderIcon={Edit32}
-		className={css`margin-bottom: 1rem`}
-		to={selectedComponent.id}>
+			kind='secondary'
+			size='sm'
+			renderIcon={Edit32}
+			className={css`margin-bottom: 1rem`}
+			to={selectedComponent.id}>
 			Edit fragment
 		</LinkButton>
 		<Checkbox
