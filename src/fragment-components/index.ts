@@ -5,6 +5,7 @@ import * as fragment from './a-fragment';
 import * as grid from './a-grid';
 import * as numberinput from './a-numberinput';
 import * as row from './a-row';
+import * as tag from "./a-tag"
 import * as searchinput from './a-searchinput';
 import * as text from './a-text';
 import * as textarea from './a-textarea';
@@ -18,6 +19,7 @@ export * from './a-component';
 export { AFragment, AFragmentStyleUI, AFragmentCodeUI } from './a-fragment';
 export { AGrid, AGridStyleUI } from './a-grid';
 export { ARow, ARowStyleUI } from './a-row';
+export { ATag, ATagStyleUI } from './a-tag';
 export { AText, ATextStyleUI } from './a-text';
 export { ATextArea, ATextAreaStyleUI, ATextAreaCodeUI } from './a-textarea';
 export { ATextInput, ATextInputStyleUI, ATextInputCodeUI } from './a-textinput';
@@ -32,6 +34,7 @@ export const allComponents = {
 	fragment,
 	grid,
 	row,
+	tag,
 	text,
 	textarea,
 	textinput,
