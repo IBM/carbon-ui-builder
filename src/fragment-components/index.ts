@@ -1,14 +1,15 @@
-import * as button from "./a-button";
-import * as checkbox from "./a-checkbox";
-import * as column from "./a-column";
-import * as fragment from "./a-fragment";
-import * as grid from "./a-grid";
-import * as numberinput from "./a-numberinput";
-import * as row from "./a-row";
-import * as searchinput from "./a-searchinput";
-import * as text from "./a-text";
-import * as textarea from "./a-textarea";
-import * as textinput from "./a-textinput";
+import * as button from './a-button';
+import * as checkbox from './a-checkbox';
+import * as column from './a-column';
+import * as fragment from './a-fragment';
+import * as grid from './a-grid';
+import * as numberinput from './a-numberinput';
+import * as row from './a-row';
+import * as searchinput from './a-searchinput';
+import * as text from './a-text';
+import * as textarea from './a-textarea';
+import * as textinput from './a-textinput';
+import * as link from './a-link';
 // Tiles
 import * as tile from './tiles/a-tile';
 import * as clickabletile from './tiles/a-clickable-tile';
@@ -19,18 +20,19 @@ import * as selectableTileGroup from './tiles/a-selectable-tile-group';
 import * as radiotile from './tiles/a-radio-tile';
 import * as radioTileGroup from './tiles/a-radio-tile-group';
 
-export { AButton, AButtonStyleUI } from "./a-button";
-export { ACheckbox, ACheckboxStyleUI, ACheckboxCodeUI } from "./a-checkbox";
-export { AColumn, AColumnStyleUI } from "./a-column";
-export * from "./a-component";
-export { AFragment, AFragmentStyleUI, AFragmentCodeUI } from "./a-fragment";
-export { AGrid, AGridStyleUI } from "./a-grid";
-export { ARow, ARowStyleUI } from "./a-row";
-export { AText, ATextStyleUI } from "./a-text";
-export { ATextArea, ATextAreaStyleUI, ATextAreaCodeUI } from "./a-textarea";
-export { ATextInput, ATextInputStyleUI, ATextInputCodeUI } from "./a-textinput";
-export { ASearchInput, ASearchInputStyleUI, ASearchInputCodeUI } from "./a-searchinput";
-export { ANumberInput, ANumberInputStyleUI, ANumberInputCodeUI } from "./a-numberinput";
+export { AButton, AButtonStyleUI } from './a-button';
+export { ACheckbox, ACheckboxStyleUI, ACheckboxCodeUI } from './a-checkbox';
+export { AColumn, AColumnStyleUI } from './a-column';
+export * from './a-component';
+export { AFragment, AFragmentStyleUI, AFragmentCodeUI } from './a-fragment';
+export { AGrid, AGridStyleUI } from './a-grid';
+export { ARow, ARowStyleUI } from './a-row';
+export { AText, ATextStyleUI } from './a-text';
+export { ATextArea, ATextAreaStyleUI, ATextAreaCodeUI } from './a-textarea';
+export { ATextInput, ATextInputStyleUI, ATextInputCodeUI } from './a-textinput';
+export { ASearchInput, ASearchInputStyleUI, ASearchInputCodeUI } from './a-searchinput';
+export { ANumberInput, ANumberInputStyleUI, ANumberInputCodeUI } from './a-numberinput';
+export { ALink, ALinkStyleUI, ALinkCodeUI } from './a-link';
 // Tiles
 export { ATile, ATileCodeUI, ATileStyleUI } from './tiles/a-tile';
 export { AClickableTile, AClickableTileCodeUI, AClickableTileStyleUI } from './tiles/a-clickable-tile';
@@ -53,6 +55,7 @@ export const allComponents = {
 	textinput,
 	searchinput,
 	numberinput,
+	link,
 	// Tiles
 	tile,
 	clickabletile,
