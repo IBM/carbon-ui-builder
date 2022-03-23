@@ -88,6 +88,7 @@ export const initializeIds = (componentObj: any) => {
 		id,
 		items: componentObj.items ? componentObj.items.map((co: any) => initializeIds(co)) : undefined,
 		codeContext: {
+			...componentObj.codeContext,
 			name
 		}
 	};
