@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Tag_Gray" data-name="Tag / Gray" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="82" height="24" viewBox="0 0 82 24">
+	<defs>
+		<clipPath id="clip-path">
+			<path id="Path_6205" data-name="Path 6205" d="M208-493h50v8H208Z" fill="#c6c6c6" clip-rule="evenodd"/>
+		</clipPath>
+		<clipPath id="clip-path-2">
+			<path id="Path_6204" data-name="Path 6204" d="M192-477h82v-24H192Z" fill="#c6c6c6"/>
+		</clipPath>
+	</defs>
+	<rect id="Rectangle_312" data-name="Rectangle 312" width="82" height="24" rx="12" fill="#dcdcdc"/>
+	<g id="Group_6276" data-name="Group 6276" transform="translate(-192 501)" clip-path="url(#clip-path)">
+		<g id="Group_6275" data-name="Group 6275" clip-path="url(#clip-path-2)">
+			<path id="Path_6203" data-name="Path 6203" d="M203-498h60v18H203Z" fill="#c6c6c6"/>
+		</g>
+	</g>
+</svg>
