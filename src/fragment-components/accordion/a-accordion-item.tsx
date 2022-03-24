@@ -4,7 +4,6 @@ import {
 	Checkbox,
 	TextInput
 } from 'carbon-components-react';
-import { css } from 'emotion';
 import { AComponent, ComponentInfo } from '../a-component';
 import { ComponentCssClassSelector } from '../../components/css-class-selector';
 
@@ -76,11 +75,9 @@ export const AAccordionItem = ({
 		<Adder
 		active={selected}
 		topAction={() => addAccordionItem()}
-		bottomAction={() => addAccordionItem(1)}
-		addButtonsCss={css`z-index: 1000;`}>
+		bottomAction={() => addAccordionItem(1)}>
 			<AComponent
 			componentObj={componentObj}
-			headingCss={css`z-index: 999;`}
 			{...rest}
 			selected={selected}>
 				<AccordionItem
