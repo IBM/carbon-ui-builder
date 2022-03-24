@@ -1,3 +1,6 @@
+// Accordion
+import * as accordion from './accordion/a-accordion';
+import * as accordionitem from './accordion/a-accordion-item';
 import * as button from './a-button';
 import * as checkbox from './a-checkbox';
 import * as column from './a-column';
@@ -12,6 +15,9 @@ import * as textarea from './a-textarea';
 import * as textinput from './a-textinput';
 import * as link from './a-link';
 
+// Accordion
+export { AAccordion, AAccordionStyleUI } from './accordion/a-accordion';
+export { AAccordionItem, AAccordionItemStyleUI } from './accordion/a-accordion-item';
 export { AButton, AButtonStyleUI } from './a-button';
 export { ACheckbox, ACheckboxStyleUI, ACheckboxCodeUI } from './a-checkbox';
 export { AColumn, AColumnStyleUI } from './a-column';
@@ -28,6 +34,8 @@ export { ANumberInput, ANumberInputStyleUI, ANumberInputCodeUI } from './a-numbe
 export { ALink, ALinkStyleUI, ALinkCodeUI } from './a-link';
 
 export const allComponents = {
+	accordion,
+	accordionitem,
 	button,
 	checkbox,
 	column,
