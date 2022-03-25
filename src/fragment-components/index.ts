@@ -1,3 +1,6 @@
+// Accordion
+import * as accordion from './accordion/a-accordion';
+import * as accordionitem from './accordion/a-accordion-item';
 import * as button from './a-button';
 import * as checkbox from './a-checkbox';
 import * as column from './a-column';
@@ -21,6 +24,9 @@ import * as selectableTileGroup from './tiles/a-selectable-tile-group';
 import * as radiotile from './tiles/a-radio-tile';
 import * as radioTileGroup from './tiles/a-radio-tile-group';
 
+// Accordion
+export { AAccordion, AAccordionStyleUI } from './accordion/a-accordion';
+export { AAccordionItem, AAccordionItemStyleUI } from './accordion/a-accordion-item';
 export { AButton, AButtonStyleUI } from './a-button';
 export { ACheckbox, ACheckboxStyleUI, ACheckboxCodeUI } from './a-checkbox';
 export { AColumn, AColumnStyleUI } from './a-column';
@@ -46,6 +52,8 @@ export { ARadioTile, ARadioTileCodeUI, ARadioTileStyleUI } from './tiles/a-radio
 export { ARadioTileGroup, ARadioTileGroupCodeUI, ARadioTileGroupStyleUI } from './tiles/a-radio-tile-group';
 
 export const allComponents = {
+	accordion,
+	accordionitem,
 	button,
 	checkbox,
 	column,
