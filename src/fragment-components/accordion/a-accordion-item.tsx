@@ -20,7 +20,7 @@ import {
 	updatedState
 } from '../../components';
 
-export const AAccordionItemStyleUI = ({selectedComponent, setComponent}: any) => {
+export const AAccordionItemStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TextInput
 			value={selectedComponent.title}
@@ -42,7 +42,7 @@ export const AAccordionItemStyleUI = ({selectedComponent, setComponent}: any) =>
 				});
 			}} />
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
 export const AAccordionItem = ({
@@ -71,8 +71,7 @@ export const AAccordionItem = ({
 		)
 	});
 
-	return (<>
-		<Adder
+	return (<Adder
 		active={selected}
 		topAction={() => addAccordionItem()}
 		bottomAction={() => addAccordionItem(1)}>
@@ -87,8 +86,7 @@ export const AAccordionItem = ({
 					{children}
 				</AccordionItem>
 			</AComponent>
-		</Adder>
-	</>);
+		</Adder>);
 };
 
 export const componentInfo: ComponentInfo = {
@@ -115,8 +113,8 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({json}) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Title = "${json.title}";`,
-			outputs: ({json}) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter();`,
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Title = "${json.title}";`,
+			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter();`,
 			imports: ['AccordionModule'],
 			// NOTE: Angular accordion item currently does not support 'disabled'.
 			// issue being tracked here: https://github.com/IBM/carbon-components-angular/issues/2021

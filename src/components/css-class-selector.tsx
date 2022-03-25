@@ -58,9 +58,9 @@ export const CssClassSelector = ({ selectedClasses, setSelectedClasses }: any) =
 			{
 				selectedClasses?.map((styleClass: any) => (
 					<Tag
-						key={styleClass.name}
-						filter
-						onClose={() => deselectStyleClass(styleClass)}>
+					key={styleClass.name}
+					filter
+					onClose={() => deselectStyleClass(styleClass)}>
 						{styleClass.name}
 					</Tag>
 				))
@@ -71,8 +71,8 @@ export const CssClassSelector = ({ selectedClasses, setSelectedClasses }: any) =
 			{
 				availableClasses.map((styleClass: any) => (
 					<Tag
-						key={styleClass.name}
-						onClick={() => selectStyleClass(styleClass)}>
+					key={styleClass.name}
+					onClick={() => selectStyleClass(styleClass)}>
 						{styleClass.name}
 					</Tag>
 				))
