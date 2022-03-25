@@ -19,7 +19,7 @@ module.exports = {
 		},
 		'ecmaVersion': 2018,
 		'sourceType': 'module',
-		project: './tsconfig.json'
+		'project': './tsconfig.json'
 	},
 	'plugins': [
 		'react',
@@ -51,7 +51,9 @@ module.exports = {
 			'error',
 			'tab',
 			{
-				'SwitchCase': 1
+				'SwitchCase': 1,
+				// Going to use manual & JSX Indent
+				'ignoredNodes': ['JSXElement *', 'JSXElement']
 			}
 		],
 		'@typescript-eslint/naming-convention': [
@@ -202,6 +204,10 @@ module.exports = {
 		'react/jsx-pascal-case': 'error',
 		// React should be imported when using JSX
 		'react/react-in-jsx-scope': 'error',
+		// Ignores props by default
+		'react/jsx-indent': 'off',
+		// Does not auto indent props, user is reponsible for most of JSX indentation
+		'react/jsx-indent-props': ['error', 0],
 	},
 	'settings': {
 		'react': {
