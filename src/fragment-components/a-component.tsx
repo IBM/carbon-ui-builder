@@ -6,6 +6,8 @@ import { drag } from '../routes/edit/tools';
 import { useFragment } from '../context';
 import { getParentComponent, updatedState } from '../components';
 
+export const componentHeaderZIndex = 999;
+
 const headerStyle = css`
 	position: absolute;
 	margin-top: -26px;
@@ -13,6 +15,7 @@ const headerStyle = css`
 	background: white;
 	border: 2px solid #d8d8d8;
 	line-height: 21px;
+	z-index: ${componentHeaderZIndex};
 `;
 
 const iconStyle = css`height: 1rem; width: 1rem; float: right`;
