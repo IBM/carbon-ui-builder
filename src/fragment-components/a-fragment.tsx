@@ -3,6 +3,7 @@ import {
 	Checkbox,
 	TextInput
 } from 'carbon-components-react';
+import { Edit32 } from '@carbon/icons-react';
 import { css, cx } from 'emotion';
 import { AComponent, ComponentInfo } from './a-component';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
@@ -10,9 +11,18 @@ import { ComponentCssClassSelector } from '../components/css-class-selector';
 import image from './../assets/component-icons/button.svg';
 import { GlobalStateContext } from '../context';
 import { classNameFromFragment, tagNameFromFragment } from '../utils/fragment-tools';
+import { LinkButton } from '../components';
 
 export const AFragmentStyleUI = ({selectedComponent, setComponent}: any) => {
 	return <>
+		<LinkButton
+		kind='secondary'
+		size='sm'
+		renderIcon={Edit32}
+		className={css`margin-bottom: 1rem`}
+		to={selectedComponent.id}>
+			Edit fragment
+		</LinkButton>
 		<Checkbox
 			labelText='Show outline'
 			id='fragment-showOutline'
