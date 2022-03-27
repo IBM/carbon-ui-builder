@@ -126,7 +126,7 @@ export const componentInfo: ComponentInfo = {
 			}
 		},
 		react: {
-			imports: ['Search'],
+			imports: (_) => ['Search'],
 			code: ({json}) => {
 				return `<Search
 					labelText="${json.label}"

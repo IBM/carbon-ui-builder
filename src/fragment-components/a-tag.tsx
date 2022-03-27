@@ -180,7 +180,7 @@ export const componentInfo: ComponentInfo = {
 			}
 		},
 		react: {
-			imports: ['Tag'],
+			imports: (_) =>  ['Tag'],
 			code: ({ json }) => {
 				return `<Tag
 					${json.kind && ` type="${json.kind}"`}

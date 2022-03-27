@@ -4,10 +4,10 @@ import { AComponent, ComponentInfo } from './a-component';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 
 import image from './../assets/component-icons/link.svg';
-import { 
-	angularClassNamesFromComponentObj, 
-	nameStringToVariableString, 
-	reactClassNamesFromComponentObj 
+import {
+	angularClassNamesFromComponentObj,
+	nameStringToVariableString,
+	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 
 export const ALinkStyleUI = ({selectedComponent, setComponent}: any) => {
@@ -116,7 +116,7 @@ export const componentInfo: ComponentInfo = {
 		text: 'Link',
 		inline: false,
 		disabled: false,
-		codeContext: { 
+		codeContext: {
 			href: '#'
 		}
 	},
@@ -141,7 +141,7 @@ export const componentInfo: ComponentInfo = {
 			}
 		},
 		react: {
-			imports: ['Link'],
+			imports: (_) => ['Link'],
 			code: ({ json }) => {
 				return `<Link
 					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}

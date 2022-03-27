@@ -109,7 +109,7 @@ export const componentInfo: ComponentInfo = {
 			}
 		},
 		react: {
-			imports: ['TextArea'],
+			imports: (_) => ['TextArea'],
 			code: ({json}) => {
 				return `<TextArea
 					labelText="${json.label}"

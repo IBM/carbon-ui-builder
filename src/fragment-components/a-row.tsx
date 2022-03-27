@@ -133,7 +133,7 @@ export const componentInfo: ComponentInfo = {
 			code: (_) => ''
 		},
 		react: {
-			imports: ['Row'],
+			imports: (_) => ['Row'],
 			isNotDirectExport: true,
 			code: (_) => ''
 		}

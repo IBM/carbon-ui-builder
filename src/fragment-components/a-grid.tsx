@@ -141,7 +141,7 @@ export const componentInfo: ComponentInfo = {
 			}
 		},
 		react: {
-			imports: ['Grid', 'Column', 'Row'],
+			imports: (_) => ['Grid', 'Column', 'Row'],
 			code: ({json, fragments, jsonToTemplate}) => {
 				return `<Grid ${reactClassNamesFromComponentObj(json)}>
 					${json.items.map((row: any) => `<Row ${reactClassNamesFromComponentObj(row)}>
