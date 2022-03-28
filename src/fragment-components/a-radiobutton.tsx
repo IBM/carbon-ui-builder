@@ -6,6 +6,7 @@ import { useFragment } from '../context';
 import { css } from 'emotion';
 import { getParentComponent, updatedState, Adder } from '../components';
 import image from './../assets/component-icons/radiobutton.svg';
+import { nameStringToVariableString, angularClassNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const ARadioButtonStyleUI = ({selectedComponent, setComponent}: any) => {
 	return <>
@@ -24,19 +25,6 @@ export const ARadioButtonStyleUI = ({selectedComponent, setComponent}: any) => {
 
 export const ARadioButtonCodeUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
-		<TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>
 		<TextInput
 			value={selectedComponent.id || ''}
 			labelText='Radio button ID'
@@ -108,9 +96,8 @@ export const ARadioButton = ({
 				{...rest}> 
 					<RadioButton
 						id={componentObj.codeContext?.name}
-						name={componentObj.codeContext?.formItemName}
 						labelText={componentObj.labelText}
-						value={componentObj.value}
+						value={componentObj.codeContext?.name}
 						disabled= {componentObj.disabled}/>
 			</AComponent>
 		</Adder>
@@ -148,11 +135,20 @@ export const componentInfo: ComponentInfo = {
 	hideFromElementsPane: true,
 	codeExport: {
 		angular: {
-			inputs: ({json}) => ``,
+			inputs: ({json}) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText}";
+								@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
+								@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.codeContext?.name}";
+								@Input() ${nameStringToVariableString(json.codeContext?.name)}Id = "${json.codeContext?.name}";`,
             outputs: ({json}) => ``,
-            imports: [''],
+            imports: ['RadioModule'],
 			code: ({json }) => {
-				return ``;
+				return `<ibm-radio
+					[id]="${nameStringToVariableString(json.codeContext?.name)}Id"
+					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
+					[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
+					${angularClassNamesFromComponentObj(json)}>
+					{{${nameStringToVariableString(json.codeContext?.name)}Label}}
+				</ibm-radio>`;
 			}
 		},
 		react: {
