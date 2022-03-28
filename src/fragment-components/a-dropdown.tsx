@@ -17,9 +17,6 @@ import {
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 
-
-let selectedDropdownType = 'dropdown';
-
 export const ADropdownStyleUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
 		{ id: 'sm', text: 'Small' },
@@ -43,17 +40,22 @@ export const ADropdownStyleUI = ({ selectedComponent, setComponent }: any) => {
 			labelText='Is multiselect'
 			id='multiselect-label'
 			checked={selectedComponent.isMulti}
-			onChange={(checked: any) => {
-				setComponent({
+			onChange={(checked: any) => setComponent({
 					...selectedComponent,
 					isMulti: checked
-				})
-			}}
-		/>
+			})} />
+		<Checkbox
+			labelText='Is inline'
+			id='inline-label'
+			checked={selectedComponent.isInline}
+			onChange={(checked: any) => setComponent({
+				...selectedComponent,
+				isInline: checked
+			})} />
 		<Dropdown
 			label='Size'
 			titleText='Size'
-			items={[]}
+			items={sizeItems}
 			initialSelectedItem={sizeItems.find(item => item.id === selectedComponent.size)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
@@ -76,84 +78,61 @@ export const ADropdownStyleUI = ({ selectedComponent, setComponent }: any) => {
 			items={selectionFeedbackItems}
 			initialSelectedItem={selectionFeedbackItems.find(item => item.id === selectedComponent.selectionFeedback)}
 			itemToString={(item: any) => (item ? item.id : '')}
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					selectionFeedback: event.selectedItem.id
-				});
-			}} />
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				selectionFeedback: event.selectedItem.id
+			})} />
 		<TextInput
 			value={selectedComponent.label}
 			labelText='Label'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					label: event.currentTarget.value
-				});
-			}}
-		/>
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				label: event.currentTarget.value
+			})} />
 		<Checkbox
 			labelText='Hide label'
 			id='hide-label'
 			checked={selectedComponent.hideLabel}
-			onChange={(checked: any) => {
-				setComponent({
-					...selectedComponent,
-					hideLabel: checked
-				})
-			}}
-		/>
+			onChange={(checked: any) => setComponent({
+				...selectedComponent,
+				hideLabel: checked
+			})} />
 		<TextInput
 			value={selectedComponent.placeholder}
 			labelText='Placeholder'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					placeholder: event.currentTarget.value
-				});
-			}}
-		/>
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				placeholder: event.currentTarget.value
+			})} />
 		<TextInput
 			value={selectedComponent.helperText}
 			labelText='Helper text'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					helperText: event.currentTarget.value
-				});
-			}}
-		/>
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				helperText: event.currentTarget.value
+			})} />
 		<TextInput
 			value={selectedComponent.warnText}
 			labelText='Warning text'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					warnText: event.currentTarget.value
-				});
-			}}
-		/>
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				warnText: event.currentTarget.value
+			})} />
 		<TextInput
 			value={selectedComponent.invalidText}
 			labelText='Invalid text'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					invalidText: event.currentTarget.value
-				});
-			}}
-		/>
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				invalidText: event.currentTarget.value
+			})} />
 		<Checkbox
 			labelText='Light theme'
 			id='theme-select'
 			checked={selectedComponent.light}
-			onChange={(checked: any) => {
-				setComponent({
-					...selectedComponent,
-					light: checked
-				})
-			}}
-		/>
+			onChange={(checked: any) => setComponent({
+				...selectedComponent,
+				light: checked
+			})} />
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>
 };
@@ -188,42 +167,29 @@ export const ADropdown = ({
 
 	return (
 		<AComponent
-			componentObj={componentObj}
-			headingCss={css`display: block;`}
-			{...rest}>
+		componentObj={componentObj}
+		headingCss={css`display: block;`}
+		{...rest}>
 			<Component
-				id={componentObj.codeContext?.name}
-				label={componentObj.placeholder}
-				titleText={componentObj.label}
-				size={componentObj.size}
-				light={componentObj.light}
-				disabled={componentObj.disbaled}
-				helperText={componentObj.helperText}
-				warn={componentObj.warn}
-				warnText={componentObj.warnText}
-				hideLabel={componentObj.hideLabel}
-				invalid={componentObj.invalid}
-				invalidText={componentObj.invalidText}
-				direction={componentObj.direction}
-				items={[]}
-				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
+			id={componentObj.codeContext?.name}
+			label={componentObj.placeholder}
+			titleText={componentObj.label}
+			size={componentObj.size}
+			light={componentObj.light}
+			disabled={componentObj.disabled}
+			helperText={componentObj.helperText}
+			type={componentObj.isInline ? 'inline' : 'default'}
+			warn={componentObj.warn}
+			warnText={componentObj.warnText}
+			hideLabel={componentObj.hideLabel}
+			invalid={componentObj.invalid}
+			invalidText={componentObj.invalidText}
+			direction={componentObj.direction}
+			items={[]}
+			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
 		</AComponent>
 	);
 };
-
-const determineImports = () => {
-	let componentImport = 'Dropdown';
-	switch (selectedDropdownType) {
-		case 'multiselect':
-			componentImport = 'MultiSelect';
-			break;
-		default:
-			componentImport = 'Dropdown';
-			break;
-	}
-
-	return componentImport;
-}
 
 export const componentInfo: ComponentInfo = {
 	component: ADropdown,
@@ -233,12 +199,14 @@ export const componentInfo: ComponentInfo = {
 	name: 'Dropdown',
 	defaultComponentObj: {
 		type: 'dropdown',
+		placeholder: 'placeholder',
 		isMulti: false,
+		isInline: false,
 		selectionFeedback: 'top-after-reopen',
 		direction: 'bottom',
 		size: 'md',
 		label: 'Label',
-		titleText: 'Title',
+		helperText: 'Optional helper text',
 	},
 	image,
 	codeExport: {
@@ -260,7 +228,7 @@ export const componentInfo: ComponentInfo = {
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Items = [];`,
 			outputs: ({ json }) =>
 				`@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<any>();
-				@Output() ${nameStringToVariableString(json.codeContext?.name)}onClose = new EventEmitter<any>();`,
+				@Output() ${nameStringToVariableString(json.codeContext?.name)}Close = new EventEmitter<any>();`,
 			imports: ['DropdownModule'],
 			code: ({ json }) =>
 				`<ibm-dropdown
@@ -278,23 +246,19 @@ export const componentInfo: ComponentInfo = {
 				[selectionFeedback]="${nameStringToVariableString(json.codeContext?.name)}SelectionFeedback"
 				[type]="${nameStringToVariableString(json.codeContext?.name)}Type"
 				(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit(event)"
-				(onClose)="${nameStringToVariableString(json.codeContext?.name)}onClose.emit(event)"
+				(close)="${nameStringToVariableString(json.codeContext?.name)}Close.emit(event)"
 				${angularClassNamesFromComponentObj(json)}>
 				<ibm-dropdown-list [items]="${nameStringToVariableString(json.codeContext?.name)}Items"></ibm-dropdown-list>
 			</ibm-dropdown>`
 		},
 		react: {
-			imports: [determineImports()],
+			imports: ({json}) => [json.isMulti ? 'MultiSelect': 'Dropdown'],
 			code: ({ json }) => {
 				// Determine which React Component to render based on dropdownType
 				let Component = 'Dropdown';
 				if (json.isMulti) {
 					Component = 'MultiSelect';
 				}
-				/**
-				 * @todo
-				 * Add support for inline, hideLabel
-				 */
 
 				//Items are required
 				return `<${Component}
@@ -302,6 +266,8 @@ export const componentInfo: ComponentInfo = {
 					titleText="${json.label}"
 					helperText="${json.helperText}"
 					label="${json.placeholder}"
+					${json.isInline ? `type="inline"`: ''}
+					${json.selectionFeedback !== 'top-after-reopen' && json.isMulti ? `selectionFeedback="${json.selectionFeedback}` : ''}
 					${json.hideLabel !== undefined ? `hideLabel={${json.hideLabel}}` : ''}
 					${json.direction !== 'bottom' ? `direction="${json.direction}"` : ''}
 					${json.light ? `light="${json.light}"` : ''}
