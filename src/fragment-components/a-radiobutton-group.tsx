@@ -1,9 +1,7 @@
 import React from 'react';
 import { Dropdown, TextInput, RadioButtonGroup} from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
-// import { css } from 'emotion';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
-
 import image from './../assets/component-icons/radiobutton-group.svg';
 import {
 	// angularClassNamesFromComponentObj,
@@ -88,27 +86,22 @@ export const ARadioButtonGroupCodeUI = ({ selectedComponent, setComponent }: any
 export const ARadioButtonGroup = ({
 	children,
 	componentObj,
-	selected,
-	renderComponents,
 	...rest
 }: any) => {
-	return <>
+	return (
     <AComponent
 		componentObj={componentObj}
-		selected={selected}
 		{...rest}>
-        <fieldset>
             <RadioButtonGroup
+				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
                 legendText= {componentObj.legend}
                 orientation={componentObj.orientation}
                 labelPosition={componentObj.labelPosition}
                 name={componentObj.codeContext?.formItemName}>
                     {children}
             </RadioButtonGroup>
-        </fieldset>
-    
 	</AComponent>
-    </>
+	);
 };
 
 export const componentInfo: ComponentInfo = {
@@ -128,7 +121,7 @@ export const componentInfo: ComponentInfo = {
 		items: [
 			{
                 type: 'radioButton',
-                value: 'button-1',
+                value: 'radiobutton-1',
 				codeContext: {
 					formItemName: 'radio-group',
 				},
@@ -137,17 +130,17 @@ export const componentInfo: ComponentInfo = {
 			},
 			{
                 type: 'radioButton',
-                value: 'button-2',
+                value: 'radiobutton-2',
 				codeContext: {
 					formItemName: 'radio-group',
                 },
                 labelText: "Option 2",
-                disabled: false
+                disabled: false,
 				
 			},
 			{
                 type: 'radioButton',
-                value: 'button-3',
+                value: 'radiobutton-3',
 				codeContext: {
 					formItemName: 'radio-group'
                 },

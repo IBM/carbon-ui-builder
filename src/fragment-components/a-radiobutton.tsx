@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { RadioButton, TextInput, Checkbox } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { useFragment } from '../context';
-import { Add32 } from '@carbon/icons-react';
-import { css, cx } from 'emotion';
-import { getParentComponent, updatedState } from '../components';
-
+import { css } from 'emotion';
+import { getParentComponent, updatedState, Adder } from '../components';
+import image from './../assets/component-icons/radiobutton.svg';
 
 export const ARadioButtonStyleUI = ({selectedComponent, setComponent}: any) => {
 	return <>
@@ -64,12 +63,14 @@ export const ARadioButtonCodeUI = ({ selectedComponent, setComponent }: any) => 
 };
 
 
+const addButtonCss = css`
+	position: relative;
+`;
+
 export const ARadioButton = ({
 	children,
 	componentObj,
-	onDrop,
 	selected,
-	renderComponents,
 	...rest
 }: any) => {
 	const [fragment, setFragment] = useFragment();
@@ -83,10 +84,11 @@ export const ARadioButton = ({
 				type: 'insert',
 				component: {
 					type: 'radioButton',
+					value: componentObj.codeContext?.name,
 					codeContext: {
 						formItemName: componentObj.codeContext?.formItemName
 					},
-					labelText: componentObj.labelText,
+					labelText: 'New Option',
 					disabled: componentObj.disabled
 				}
 			},
@@ -94,39 +96,32 @@ export const ARadioButton = ({
 			parentComponent.items.indexOf(componentObj) + offset
 		)
 	});
-	return <>
-		
-		<AComponent
-			className = ""
-			selected={selected}
-			headingCss={css`width: fit-content; min-width: 9rem;`}
-			componentObj={componentObj}
-			{...rest}> 
-				<RadioButton
-					id={componentObj.codeContext?.name}
-					name={componentObj.codeContext?.formItemName}
-					labelText={componentObj.labelText}
-					value={componentObj.value}
-					disabled= {componentObj.disabled}/>
-		</AComponent>
-
+	return (<>
+		<Adder
+			active={selected}
+			addButtonsCss={addButtonCss}
+			bottomAction={() => addRadio(1)}>
+			<AComponent
+				selected={selected}
+				headingCss={css`width: fit-content; min-width: 9rem;`}
+				componentObj={componentObj}
+				{...rest}> 
+					<RadioButton
+						id={componentObj.codeContext?.name}
+						name={componentObj.codeContext?.formItemName}
+						labelText={componentObj.labelText}
+						value={componentObj.value}
+						disabled= {componentObj.disabled}/>
+			</AComponent>
+		</Adder>
 	
-	</>
+	</>);
 };
 
 export const componentInfo: ComponentInfo = {
 	component: ARadioButton,
 	styleUI: ARadioButtonStyleUI,
 	codeUI: ARadioButtonCodeUI,
-	keywords: ['radiobutton', 'radio button'],
-	name: 'Radio button',
-	defaultComponentObj: {
-		type: 'radioButton',
-		items: []
-	},
-	
-	image: undefined,
-	hideFromElementsPane: true,
 	render: ({ componentObj, select, remove, selected, renderComponents }) => <ARadioButton
 	componentObj={componentObj}
 	select={select}
@@ -134,6 +129,23 @@ export const componentInfo: ComponentInfo = {
 	selected={selected}>
 		{componentObj.labelText}
 	</ARadioButton>,
+	keywords: ['radio','button'],
+	name: 'Radio button',
+	defaultComponentObj: {
+		type: 'radioButton',
+		items: [
+			{
+				type: 'radioButton',
+				codeContext: {
+					formItemName: 'radio-group'
+				},
+				labelText: "New option",
+				disabled: false
+			}
+		]
+	},
+	image: image,
+	hideFromElementsPane: true,
 	codeExport: {
 		angular: {
 			inputs: ({json}) => ``,
