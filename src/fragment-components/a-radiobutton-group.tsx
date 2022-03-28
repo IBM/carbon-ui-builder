@@ -1,8 +1,7 @@
 import React from 'react';
 import { Dropdown,
 	TextInput,
-	RadioButtonGroup,
-	Checkbox } from 'carbon-components-react';
+	RadioButtonGroup } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 import image from './../assets/component-icons/radiobutton-group.svg';
@@ -52,15 +51,6 @@ export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: an
 				...selectedComponent,
 				labelPosition: event.selectedItem.id
 		})}/>
-
-		<Checkbox
-			labelText='Disable radio group'
-			id='disable'
-			checked={selectedComponent.disabled}
-			onChange={(checked: boolean) => setComponent({
-				...selectedComponent,
-				disabled: checked
-			})} />
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>
 };
@@ -167,7 +157,6 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}LegendText = "${json.legend}";
-								@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Orientation = "${json.orientation}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}LabelPosition = "${json.labelPosition}";`,
 			outputs: ({ json }) => ``,
@@ -178,7 +167,6 @@ export const componentInfo: ComponentInfo = {
 				<ibm-radio-group
 					[orientation]="${nameStringToVariableString(json.codeContext?.name)}Orientation"
 					[labelPlacement]="${nameStringToVariableString(json.codeContext?.name)}LabelPosition"
-					[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
 					${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
 				</ibm-radio-group>`
