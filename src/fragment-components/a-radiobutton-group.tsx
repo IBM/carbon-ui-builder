@@ -6,9 +6,9 @@ import { ComponentCssClassSelector } from '../components/css-class-selector';
 
 import image from './../assets/component-icons/radiobutton-group.svg';
 import {
-	angularClassNamesFromComponentObj,
-	nameStringToVariableString,
-	reactClassNamesFromComponentObj
+	// angularClassNamesFromComponentObj,
+	// nameStringToVariableString,
+	// reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 
 
@@ -102,8 +102,7 @@ export const ARadioButtonGroup = ({
                 legendText= {componentObj.legend}
                 orientation={componentObj.orientation}
                 labelPosition={componentObj.labelPosition}
-                name={componentObj.codeContext?.formItemName}
-                valueSelected={componentObj.defaultSelected}>
+                name={componentObj.codeContext?.formItemName}>
                     {children}
             </RadioButtonGroup>
         </fieldset>
@@ -130,18 +129,15 @@ export const componentInfo: ComponentInfo = {
 			{
                 type: 'radioButton',
                 value: 'button-1',
-                id: 'button-1',
 				codeContext: {
 					formItemName: 'radio-group',
 				},
                 labelText: "Option 1",
                 disabled: false,
-                defaultSelected: true
 			},
 			{
                 type: 'radioButton',
                 value: 'button-2',
-                id: 'button-2',
 				codeContext: {
 					formItemName: 'radio-group',
                 },
@@ -152,7 +148,6 @@ export const componentInfo: ComponentInfo = {
 			{
                 type: 'radioButton',
                 value: 'button-3',
-                id: 'button-3',
 				codeContext: {
 					formItemName: 'radio-group'
                 },

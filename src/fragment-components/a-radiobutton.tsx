@@ -22,25 +22,6 @@ export const ARadioButtonStyleUI = ({selectedComponent, setComponent}: any) => {
 	</>
 };
 
-const iconStyle = css`
-	height: 1rem;
-	width: 1rem;
-	float: right;
-	cursor: pointer;
-`;
-
-const addStyle = css`
-	position: absolute;
-	margin-top: -2px;
-	background: white;
-	border: 2px solid #d8d8d8;
-	line-height: 21px;
-	z-index: 1;
-	display: block !important;
-	margin-right: -10px;
-    margin-bottom: 4px;
-`;
-
 
 export const ARadioButtonCodeUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -91,12 +72,6 @@ export const ARadioButton = ({
 	renderComponents,
 	...rest
 }: any) => {
-	useEffect(() => {
-		const radioElement = document.getElementById(componentObj.id);
-		const labelElement = radioElement?.parentElement?.querySelector('label.bx--radio-button__label');
-		labelElement?.setAttribute('for', '');
-	}, [componentObj.id]);
-
 	const [fragment, setFragment] = useFragment();
 	const parentComponent = getParentComponent(fragment.data, componentObj);
 
@@ -108,30 +83,19 @@ export const ARadioButton = ({
 				type: 'insert',
 				component: {
 					type: 'radioButton',
-					value: componentObj.value,
 					codeContext: {
-						formItemName: componentObj.formItemName
+						formItemName: componentObj.codeContext?.formItemName
 					},
 					labelText: componentObj.labelText,
-					disabled: componentObj.disabled,
-					className: cx(
-						componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-						css`margin-right: 1rem;`
-					)
+					disabled: componentObj.disabled
 				}
 			},
 			parentComponent.id,
 			parentComponent.items.indexOf(componentObj) + offset
 		)
 	});
-
 	return <>
-		<span style={{ position: 'relative', display: 'none' }} className={selected ? addStyle : ''}>
-		<Add32 onClick={(event: any) => {
-			event.stopPropagation();
-			addRadio(1);
-		}} className={iconStyle} />
-		</span>
+		
 		<AComponent
 			className = ""
 			selected={selected}
@@ -139,17 +103,11 @@ export const ARadioButton = ({
 			componentObj={componentObj}
 			{...rest}> 
 				<RadioButton
-					id={componentObj.id}
+					id={componentObj.codeContext?.name}
 					name={componentObj.codeContext?.formItemName}
 					labelText={componentObj.labelText}
 					value={componentObj.value}
-					disabled= {componentObj.disabled}
-					checked= {componentObj.defaultSelected ? componentObj.defaultSelected : selected}
-					defaultChecked = {componentObj.defaultSelected}
-					className={cx(
-						componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-						css`margin-right: 1rem;`
-					)}/>
+					disabled= {componentObj.disabled}/>
 		</AComponent>
 
 	
@@ -164,11 +122,7 @@ export const componentInfo: ComponentInfo = {
 	name: 'Radio button',
 	defaultComponentObj: {
 		type: 'radioButton',
-		items: [],
-		value: '',
-		labelText: '',
-		id: '',
-		selected: false,
+		items: []
 	},
 	
 	image: undefined,
