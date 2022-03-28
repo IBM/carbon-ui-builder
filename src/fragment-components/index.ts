@@ -4,6 +4,7 @@ import * as accordionitem from './accordion/a-accordion-item';
 import * as button from './a-button';
 import * as checkbox from './a-checkbox';
 import * as column from './a-column';
+import * as combobox from './a-combobox';
 import * as fragment from './a-fragment';
 import * as grid from './a-grid';
 import * as numberinput from './a-numberinput';
@@ -21,6 +22,7 @@ export { AAccordionItem, AAccordionItemStyleUI } from './accordion/a-accordion-i
 export { AButton, AButtonStyleUI } from './a-button';
 export { ACheckbox, ACheckboxStyleUI, ACheckboxCodeUI } from './a-checkbox';
 export { AColumn, AColumnStyleUI } from './a-column';
+export { AComboBox, AComboBoxStyleUI, AComboBoxCodeUI } from './a-combobox';
 export * from './a-component';
 export { AFragment, AFragmentStyleUI, AFragmentCodeUI } from './a-fragment';
 export { AGrid, AGridStyleUI } from './a-grid';
@@ -38,6 +40,7 @@ export const allComponents = {
 	accordionitem,
 	button,
 	checkbox,
+	combobox,
 	column,
 	fragment,
 	grid,
