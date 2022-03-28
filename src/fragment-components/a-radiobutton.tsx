@@ -6,7 +6,7 @@ import { useFragment } from '../context';
 import { css } from 'emotion';
 import { getParentComponent, updatedState, Adder } from '../components';
 import image from './../assets/component-icons/radiobutton.svg';
-import { nameStringToVariableString, angularClassNamesFromComponentObj } from '../utils/fragment-tools';
+import { nameStringToVariableString, angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const ARadioButtonStyleUI = ({selectedComponent, setComponent}: any) => {
 	return <>
@@ -137,7 +137,6 @@ export const componentInfo: ComponentInfo = {
 		angular: {
 			inputs: ({json}) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
-								@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.codeContext?.name}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Id = "${json.codeContext?.name}";`,
             outputs: ({json}) => ``,
             imports: ['RadioModule'],
@@ -152,9 +151,13 @@ export const componentInfo: ComponentInfo = {
 			}
 		},
 		react: {
-			imports: [''],
+			imports: ['RadioButton'],
 			code: ({ json }) => {
-                return ``;
+				return `<RadioButton
+					id="${json.codeContext?.name}"
+					labelText="${json.labelText}"
+					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
+					${reactClassNamesFromComponentObj(json)}/>`
 			}
 		}
 	}

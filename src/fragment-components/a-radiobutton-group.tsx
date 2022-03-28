@@ -5,7 +5,7 @@ import { Dropdown,
 import { AComponent, ComponentInfo } from './a-component';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 import image from './../assets/component-icons/radiobutton-group.svg';
-import { nameStringToVariableString, angularClassNamesFromComponentObj } from '../utils/fragment-tools';
+import { nameStringToVariableString, angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
 
 export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: any) => {
@@ -158,13 +158,15 @@ export const componentInfo: ComponentInfo = {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}LegendText = "${json.legend}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Orientation = "${json.orientation}";
-								@Input() ${nameStringToVariableString(json.codeContext?.name)}LabelPosition = "${json.labelPosition}";`,
+								@Input() ${nameStringToVariableString(json.codeContext?.name)}LabelPosition = "${json.labelPosition}";
+								@Input() ${nameStringToVariableString(json.codeContext?.name)}Name = "${json.codeContext?.formItemName}";`,
 			outputs: ({ json }) => ``,
 			imports: ['RadioModule'],
 			code: ({ json, jsonToTemplate }) => {
 				return `
 				<legend class="bx--label">{{${nameStringToVariableString(json.codeContext?.name)}LegendText}}</legend>
 				<ibm-radio-group
+					[name]="${nameStringToVariableString(json.codeContext?.name)}Name"
 					[orientation]="${nameStringToVariableString(json.codeContext?.name)}Orientation"
 					[labelPlacement]="${nameStringToVariableString(json.codeContext?.name)}LabelPosition"
 					${angularClassNamesFromComponentObj(json)}>
@@ -173,9 +175,17 @@ export const componentInfo: ComponentInfo = {
 			}
 		},
 		react: {
-			imports: [''],
-			code: ({ json, jsonToTemplate }) => {
-				return ``;
+			imports: ['RadioButtonGroup'],
+			code: ({ json, fragments, jsonToTemplate }) => {
+				return `
+				<RadioButtonGroup
+					name="${json.codeContext?.formItemName}"
+					legendText="${json.legend}"
+					orientation="${json.orientation}"
+					labelPlacement="${json.labelPosition}"
+					${reactClassNamesFromComponentObj(json)}>
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+				</RadioButtonGroup>`;
 			}
 		}
 	}
