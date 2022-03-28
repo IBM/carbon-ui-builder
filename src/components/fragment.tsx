@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { SkeletonPlaceholder } from 'carbon-components-react';
 import './fragment-preview.scss';
 import { css, cx } from 'emotion';
 import { allComponents, ComponentInfoRenderProps } from '../fragment-components';
 import { getAllFragmentStyleClasses } from '../utils/fragment-tools';
+import { GlobalStateContext } from '../context';
 
 const canvas = css`
 	border: 2px solid #d8d8d8;
@@ -187,7 +188,11 @@ export const getParentComponent = (state: any, child: any) => {
 };
 
 export const Fragment = ({fragment, setFragment}: any) => {
+	const globalState = useContext(GlobalStateContext);
+
 	if (!fragment || !fragment.data) { return <SkeletonPlaceholder />; }
+
+	const { fragments } = globalState || {};
 
 	// initialize component counter
 	componentCounter = getHighestId(fragment.data) + 1;
@@ -254,7 +259,7 @@ export const Fragment = ({fragment, setFragment}: any) => {
 
 	const styles = css`
 		${
-			getAllFragmentStyleClasses(fragment).map((styleClass: any) => `.${styleClass.id} {
+			getAllFragmentStyleClasses(fragment, fragments).map((styleClass: any) => `.${styleClass.id} {
 				${styleClass.content}
 			}`)
 		}
