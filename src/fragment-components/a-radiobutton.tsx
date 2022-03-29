@@ -96,7 +96,6 @@ export const ARadioButton = ({
 				{...rest}> 
 					<RadioButton
 						name={componentObj.codeContext?.formItemName}
-						id={componentObj.codeContext?.name}
 						labelText={componentObj.labelText}
 						value={componentObj.codeContext?.name}
 						disabled= {componentObj.disabled}/>
