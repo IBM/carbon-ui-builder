@@ -109,7 +109,7 @@ export const componentInfo: ComponentInfo = {
 	component: ARadioButton,
 	styleUI: ARadioButtonStyleUI,
 	codeUI: ARadioButtonCodeUI,
-	render: ({ componentObj, select, remove, selected, renderComponents }) => <ARadioButton
+	render: ({ componentObj, select, remove, selected }) => <ARadioButton
 	componentObj={componentObj}
 	select={select}
 	remove={remove}
