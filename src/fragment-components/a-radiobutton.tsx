@@ -84,10 +84,12 @@ export const ARadioButton = ({
 			parentComponent.items.indexOf(componentObj) + offset
 		)
 	});
+	console.log(componentObj);
 	return (<>
 		<Adder
 			active={selected}
 			addButtonsCss={addButtonCss}
+			key={componentObj.id}
 			bottomAction={() => addRadio(1)}>
 			<AComponent
 				selected={selected}
@@ -95,6 +97,7 @@ export const ARadioButton = ({
 				componentObj={componentObj}
 				{...rest}> 
 					<RadioButton
+						id={componentObj.id}
 						name={componentObj.codeContext?.formItemName}
 						labelText={componentObj.labelText}
 						value={componentObj.codeContext?.name}
