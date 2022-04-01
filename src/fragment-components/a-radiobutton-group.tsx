@@ -18,16 +18,6 @@ export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: an
 		{id: 'left', text: 'Left'},
 		{id: 'right', text: 'Right'},
 	];
-	let allItems = selectedComponent.items.map((item: any) => {
-		return {
-			text: item.labelText,
-			id: item.id,
-			defaultChecked: item.defaultChecked
-		}
-	});
-	selectedComponent.defaultSelected = `${selectedComponent.items.find(((item: any) => {
-		return item.defaultChecked	
-	})).id}`;
 	selectedComponent.valueSelected = selectedComponent.defaultSelected;
 	return <>
 		<TextInput
@@ -64,7 +54,24 @@ export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: an
 		})}/>
 
 
-		<Dropdown
+
+		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
+	</>
+};
+
+export const ARadioButtonGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
+	let allItems = selectedComponent.items.map((item: any) => {
+		return {
+			text: item.labelText,
+			id: item.id,
+			defaultChecked: item.defaultChecked
+		}
+	});
+	selectedComponent.defaultSelected = `${selectedComponent.items.find(((item: any) => {
+		return item.defaultChecked	
+	})).id}`;
+	return <>
+			<Dropdown
             label='Default selection'
             titleText='Default selection'
             items={allItems}
@@ -78,34 +85,7 @@ export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: an
                         ...item, 
                         defaultChecked: event.selectedItem.id === item.id ? true : false
                 }))
-                
         })}/>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
-};
-
-export const ARadioButtonGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
-		<TextInput
-			value={selectedComponent.codeContext?.formItemName}
-			labelText='Form item name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						formItemName: event.currentTarget.value,
-					},
-					items: selectedComponent.items.map((button: any) => ({
-						...button,
-						codeContext: {
-							...button.codeContext,
-							formItemName: event.currentTarget.value
-						}
-					}))
-				});
-			}}
-		/>   
 	</>
 };
 
@@ -206,12 +186,10 @@ export const componentInfo: ComponentInfo = {
 				<ibm-radio-group
 					[name]="${nameStringToVariableString(json.codeContext?.name)}Name"
 					[orientation]="${nameStringToVariableString(json.codeContext?.name)}Orientation"
-					[valueSelected]="${nameStringToVariableString(json.codeContext?.name)}defaultSelected"
-					[defaultSelected]"${nameStringToVariableString(json.codeContext?.name)}defaultSelected"
 					[labelPlacement]="${nameStringToVariableString(json.codeContext?.name)}LabelPosition"
 					${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
-				</ibm-radio-group>`
+					</ibm-radio-group>`
 			}
 		},
 		react: {
