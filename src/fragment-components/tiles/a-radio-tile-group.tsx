@@ -96,11 +96,11 @@ export const ARadioTileGroup = ({
 	...rest
 }: any) => {
 	const [fragment, setFragment] = useFragment();
-	const parentComponent: any = getParentComponent(fragment.data, componentObj);
 
 	// Initialize the child tiles with the form item name
 	// We use the name property because it unique by default
 	useEffect(() => {
+		const parentComponent = getParentComponent(fragment.data, componentObj);
 		const componentIndex = parentComponent.items.indexOf(componentObj);
 		const items = [
 			...parentComponent.items.slice(0, componentIndex),
@@ -122,7 +122,7 @@ export const ARadioTileGroup = ({
 					items
 				},
 			})
-		})
+		});
 		// Disabling since we want to call this only once to initialize children `formItemName` attribute in code context
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);

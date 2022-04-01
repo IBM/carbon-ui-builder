@@ -100,7 +100,7 @@ export const ASelectableTileGroup = ({
 					items
 				},
 			})
-		})
+		});
 		// Disabling since we want to call this only once to initialize children `formItemName` attribute in code context
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
