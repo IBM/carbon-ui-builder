@@ -115,17 +115,14 @@ export const TileMorphism = ({ component, setComponent }: any) => {
 
 // Combine all items from 'top' & 'bottom' folds into a single array
 const getExpandableTileItems = (expandableTile: any) => {
-	// Destructuring existing items to prevent changing default object
-	const items = [...expandableTile.items];
-
-	// Find tileFold index & retrieve it from the list
-	const tileFoldIndex = items.findIndex((item: any) => item.type === 'tilefold');
-	const tileFoldItems = items.splice(tileFoldIndex, 1);
-
-	// Append only if it has values
-	if (tileFoldItems.length) {
-		items.push(...tileFoldItems[0].items);
-	}
+	const items: any = [];
+	expandableTile.items.forEach((item:any) => {
+		if(item.type === 'tilefold'){
+			items.push(...item.items);
+		} else {
+			items.push({...item})
+		}
+	});
 
 	return items;
 }

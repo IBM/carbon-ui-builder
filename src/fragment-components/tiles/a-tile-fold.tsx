@@ -20,28 +20,27 @@ export const ATileFold = ({
 	selected,
 	...rest
 }: any) => {
-	return <>
+	return (
 		<AComponent
-			componentObj={componentObj}
-			{...rest}>
+		componentObj={componentObj}
+		{...rest}>
 			<TileBelowTheFoldContent onDrop={onDrop}>{children}</TileBelowTheFoldContent>
 		</AComponent>
-	</>;
+	);
 };
 
 export const componentInfo: ComponentInfo = {
 	component: ATileFold,
 	styleUI: ATileFoldStyleUI,
-	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) =>
-		<ATileFold
-			componentObj={componentObj}
-			select={select}
-			remove={remove}
-			selected={selected}
-			onDragOver={onDragOver}
-			onDrop={onDrop}>
+	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <ATileFold
+		componentObj={componentObj}
+		select={select}
+		remove={remove}
+		selected={selected}
+		onDragOver={onDragOver}
+		onDrop={onDrop}>
 			{componentObj.items.map((item: any) => renderComponents(item))}
-		</ATileFold>,
+	</ATileFold>,
 	keywords: ['tile', 'tile fold', 'fold'],
 	name: 'tilefold',
 	hideFromElementsPane: true,
@@ -71,10 +70,10 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: [],
-			code: ({ json, jsonToTemplate }) => {
+			code: ({ json, jsonToTemplate, fragments }) => {
 				return `<TileBelowTheFoldContent
 					${reactClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 					</TileBelowTheFoldContent>`;
 			}
 		}

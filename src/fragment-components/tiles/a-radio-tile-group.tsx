@@ -127,21 +127,23 @@ export const ARadioTileGroup = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	return <AComponent
-		componentObj={componentObj}
-		headingCss={css`display: block;`}
-		selected={selected}
-		{...rest}>
-		<fieldset
-			className={`bx--tile-group ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}`}
-			disabled={componentObj.disabled}>
-			{(componentObj.legend !== undefined && componentObj.legend !== '') &&
-				<legend className="bx--label">
-					{componentObj.legend}
-				</legend>}
-			{children}
-		</fieldset>
-	</AComponent>
+	return (
+		<AComponent
+			componentObj={componentObj}
+			headingCss={css`display: block;`}
+			selected={selected}
+			{...rest}>
+				<fieldset
+				className={`bx--tile-group ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}`}
+				disabled={componentObj.disabled}>
+					{(componentObj.legend !== undefined && componentObj.legend !== '') &&
+					<legend className="bx--label">
+						{componentObj.legend}
+					</legend>}
+					{children}
+				</fieldset>
+		</AComponent>
+	);
 };
 
 export const componentInfo: ComponentInfo = {
@@ -157,14 +159,15 @@ export const componentInfo: ComponentInfo = {
 		items: [
 			{
 				type: 'radiotile',
+				defaultChecked: false,
 				codeContext: {
 					value: 'Tile 1',
 				},
-
 				items: [{ type: 'text', text: 'Radio tile A' }]
 			},
 			{
 				type: 'radiotile',
+				defaultChecked: false,
 				codeContext: {
 					value: 'Tile 2',
 				},
@@ -172,6 +175,7 @@ export const componentInfo: ComponentInfo = {
 			},
 			{
 				type: 'radiotile',
+				defaultChecked: false,
 				codeContext: {
 					value: 'Tile 3',
 				},
@@ -186,14 +190,13 @@ export const componentInfo: ComponentInfo = {
 		selected={selected}
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
-		{componentObj.items.map((tile: any) => renderComponents(tile))}
+			{componentObj.items.map((tile: any) => renderComponents(tile))}
 	</ARadioTileGroup>,
 	image,
 	codeExport: {
 		angular: {
 			inputs: () => '',
-			outputs: ({ json }) =>
-				`@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<Event>();`,
+			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<Event>();`,
 			imports: ['TilesModule'],
 			code: ({ json, jsonToTemplate }) => {
 				return `<ibm-tile-group
@@ -206,7 +209,7 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: ['TileGroup'],
-			code: ({ json, jsonToTemplate }) => {
+			code: ({ json, jsonToTemplate, fragments }) => {
 				return `<TileGroup
 					${json.legend !== undefined && json.legend !== '' ? `legend="${json.legend}"` : ''}
 					name="${json.codeContext?.name}"
@@ -218,7 +221,7 @@ export const componentInfo: ComponentInfo = {
 							value: radio
 						}
 					})}>
-						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</TileGroup>`;
 			}
 		}

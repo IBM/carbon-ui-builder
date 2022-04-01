@@ -5,12 +5,15 @@ import {
 	RadioTile
 } from 'carbon-components-react';
 import { AComponent } from '../a-component';
-import { Add32 } from '@carbon/icons-react';
-import { getParentComponent, updatedState } from '../../components';
-import { css, cx } from 'emotion';
+import { css } from 'emotion';
 import { useFragment } from '../../context';
 import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { ComponentInfo } from '..';
+import {
+	Adder,
+	getParentComponent,
+	updatedState
+} from '../../components';
 import {
 	angularClassNamesFromComponentObj,
 	nameStringToVariableString,
@@ -95,33 +98,11 @@ export const ARadioTileCodeUI = ({ selectedComponent, setComponent }: any) => {
 	</>
 };
 
-const addStyle = css`
-	position: absolute;
-	margin-top: -2px;
-	background: white;
-	border: 2px solid #d8d8d8;
-	line-height: 21px;
-	z-index: 1;
-	display: block !important;
-`;
-
-const addStyleTop = cx(addStyle, css`
-	margin-top: -18px;
-`);
-
-const iconStyle = css`
-	height: 1rem;
-	width: 1rem;
-	float: right;
-	cursor: pointer;
-`;
-
 export const ARadioTile = ({
 	children,
 	componentObj,
 	onDrop,
 	selected,
-	renderComponents,
 	...rest
 }: any) => {
 	const [fragment, setFragment] = useFragment();
@@ -133,62 +114,56 @@ export const ARadioTile = ({
 		// Setting to empty instead of removing so users can select non-form elements within tile when a form element is present
 		// Although form elements should never be added within another
 		labelElement?.setAttribute('for', '');
-	}, [componentObj.codeContext?.name]);
+	}, [componentObj.codeContext]);
 
-	const addRadio = (offset = 0) => setFragment({
-		...fragment,
-		data: updatedState(
-			fragment.data,
-			{
-				type: 'insert',
-				component: {
-					type: 'radiotile',
-					codeContext: {
-						value: 'Tile',
-						formItemName: componentObj.formItemName
-					},
-					...(componentObj.light !== undefined ? { light: componentObj.light } : ''),
-					items: [{ type: 'text', text: 'New radio tile' }]
-				}
-			},
-			parentComponent.id,
-			parentComponent.items.indexOf(componentObj) + offset
-		)
-	});
+	const addRadio = (offset = 0) => {
+		setFragment({
+			...fragment,
+			data: updatedState(
+				fragment.data,
+				{
+					type: 'insert',
+					component: {
+						type: 'radiotile',
+						codeContext: {
+							value: 'Tile',
+							formItemName: componentObj.codeContext?.formItemName
+						},
+						...(componentObj.light !== undefined ? { light: componentObj.light } : ''),
+						items: [{ type: 'text', text: 'New radio tile' }]
+					}
+				},
+				parentComponent.id,
+				parentComponent.items.indexOf(componentObj) + offset
+			)
+		})
+	};
 
-	return <>
-		<span style={{ display: 'none' }} className={selected ? addStyleTop : ''}>
-			<Add32 onClick={(event: any) => {
-				event.stopPropagation();
-				addRadio();
-			}} className={iconStyle} />
-		</span>
-
-		<AComponent
+	return (
+		<Adder
+		active={selected}
+		topAction={() => addRadio()}
+		bottomAction={() => addRadio(1)}
+		key={componentObj.id}>
+			<AComponent
 			componentObj={componentObj}
 			headingCss={css`display: block;`}
 			selected={selected}
 			{...rest}>
-			<RadioTile
+				<RadioTile
 				id={componentObj.codeContext?.name}
-				name={parentComponent.codeContext?.formItemName}
+				name={componentObj.codeContext?.formItemName}
 				light={componentObj.light}
 				checked={componentObj.defaultChecked}
 				disabled={componentObj.disabled}
 				value={componentObj.codeContext?.value}
 				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
 				onDrop={onDrop}>
-				{children}
-			</RadioTile>
-		</AComponent>
-
-		<span style={{ display: 'none' }} className={selected ? addStyle : ''}>
-			<Add32 onClick={(event: any) => {
-				event.stopPropagation();
-				addRadio(1);
-			}} className={iconStyle} />
-		</span>
-	</>
+					{children}
+				</RadioTile>
+			</AComponent>
+		</Adder>
+	);
 };
 
 export const componentInfo: ComponentInfo = {
@@ -200,7 +175,7 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'radiotile',
 		disabled: false,
-		checked: false,
+		defaultChecked: false,
 		items: []
 	},
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <ARadioTile
@@ -210,7 +185,7 @@ export const componentInfo: ComponentInfo = {
 		selected={selected}
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
-		{componentObj.items.map((item: any) => renderComponents(item))}
+			{componentObj.items.map((item: any) => renderComponents(item))}
 	</ARadioTile>,
 	/**
 	 * Can only be added by adding tile-group or by clicking `plus` icon on top or bottom
@@ -220,8 +195,7 @@ export const componentInfo: ComponentInfo = {
 	image: undefined,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) =>
-				`@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${json.checked || false};
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${json.checked || false};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = '${json.value}';`,
 			outputs: () => '',
 			imports: ['TilesModule'],
@@ -240,14 +214,15 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: ['RadioTile'],
-			code: ({ json, jsonToTemplate }) => {
+			code: ({ json, jsonToTemplate, fragments }) => {
 				return `<RadioTile
 					${(json.codeContext?.formItemName !== undefined && json.codeContext?.formItemName !== '') ? `name="${json.codeContext?.formItemName}"` : ''}
 					${(json.codeContext?.value !== undefined && json.codeContext?.value !== '') ? `value="${json.codeContext?.value}"` : ''}
-					${json.light !== undefined ? `light="${json.light}"` : ''}
+					${json.light !== undefined ? `light={${json.light}}` : ''}
+					${json.defaultChecked ? `checked={${json.defaultChecked}}` : ''}
 					${json.disabled !== undefined && !!json.disabled ? `disabled={${json.disabled}}` : ''}
 					${reactClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</RadioTile>`;
 			}
 		}

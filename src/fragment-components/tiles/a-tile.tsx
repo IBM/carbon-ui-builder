@@ -58,18 +58,20 @@ export const ATile = ({
 	renderComponents,
 	...rest
 }: any) => {
-	return <AComponent
+	return (
+		<AComponent
 		componentObj={componentObj}
 		headingCss={css`display: block;`}
 		selected={selected}
 		{...rest}>
-		<Tile
+			<Tile
 			onDrop={onDrop}
 			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
 			light={componentObj.light}>
-			{children}
-		</Tile>
-	</AComponent>;
+				{children}
+			</Tile>
+		</AComponent>
+	);
 };
 
 export const componentInfo: ComponentInfo = {
@@ -108,11 +110,11 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: ['Tile'],
-			code: ({ json, jsonToTemplate }) => {
+			code: ({ json, jsonToTemplate, fragments }) => {
 				return `<Tile
 					${json.light !== undefined ? `light="${json.light}"` : ''}
 					${reactClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</Tile>`;
 			}
 		}

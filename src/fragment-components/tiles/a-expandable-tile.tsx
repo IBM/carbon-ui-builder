@@ -90,43 +90,35 @@ export const AExpandableTile = ({
 	selected,
 	...rest
 }: any) => {
-
-	// Splicing bottomFold from children so children can be appended to above the fold content
-	const foldIndex = children.findIndex(({ props }: any) => (props !== undefined ? (props.componentObj.type === 'tilefold') : false));
-	const bottomFold = children.splice(foldIndex, 1);
-
-	return <AComponent
+	return (
+		<AComponent
 		componentObj={componentObj}
 		selected={selected}
 		headingCss={css`display: block;`}
 		{...rest}>
-		<ExpandableTile
+			<ExpandableTile
 			light={componentObj.light}
 			className={`${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} ${componentObj.outline ? showOutlineStyle : ''}`}
 			expanded={componentObj.expanded}>
-			<TileAboveTheFoldContent onDrop={onDrop}>{children}</TileAboveTheFoldContent>
-			{
-				// Render bottom fold component
-				bottomFold
-			}
-		</ExpandableTile>
-	</AComponent>;
+				<TileAboveTheFoldContent onDrop={onDrop}>
+					{children.filter(({props}: any) => (props !== undefined ? (props.componentObj.type !== 'tilefold') : false))}
+				</TileAboveTheFoldContent>
+				{
+					// Renders bottom fold component
+					children.filter(({props}: any) => (props !== undefined ? (props.componentObj.type === 'tilefold') : false))
+				}
+			</ExpandableTile>
+		</AComponent>
+	);
 };
 
 // Splits data into folds - all exports will have a common approach
-const getFoldObjects = (json: any, jsonToTemplate: any) => {
-	// Destructuring existing items to prevent changing default object
-	const items = [...json.items];
-
-	// Find tileFold index & seperate from list from the list
-	const tileFoldIndex = items.findIndex((item: any) => item.type === 'tilefold');
-	const tileFoldItems = items.splice(tileFoldIndex, 1);
-
+const getFoldObjects = (json: any) => {
 	return [
-		`${items.map((element: any) => jsonToTemplate(element)).join('\n')}`,
-		`${jsonToTemplate(tileFoldItems[0])}`,
+		json.items.filter((item: any) => item.type !== 'tilefold'),
+		json.items.filter((item: any) => item.type === 'tilefold')
 	];
-};
+}
 
 export const componentInfo: ComponentInfo = {
 	component: AExpandableTile,
@@ -161,7 +153,7 @@ export const componentInfo: ComponentInfo = {
 		selected={selected}
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
-		{componentObj.items.map((fold: any) => renderComponents(fold))}
+			{componentObj.items.map((fold: any) => renderComponents(fold))}
 	</AExpandableTile>,
 	image,
 	codeExport: {
@@ -171,7 +163,7 @@ export const componentInfo: ComponentInfo = {
 			outputs: () => '',
 			imports: ['TilesModule'],
 			code: ({ json, jsonToTemplate }) => {
-				const folds = getFoldObjects(json, jsonToTemplate);
+				const folds = getFoldObjects(json);
 				/**
 				 * @todo - CCA does not support light
 				 * https://github.com/IBM/carbon-components-angular/issues/1999
@@ -180,24 +172,24 @@ export const componentInfo: ComponentInfo = {
 					${json.expanded !== undefined ? `[expanded]="${nameStringToVariableString(json.codeContext?.name)}Expanded"` : ''}
 					${angularClassNamesFromComponentObj(json)}>
 						<span class="bx--tile-content__above-the-fold">
-							${folds[0]}
+							${folds[0].map((element: any) => jsonToTemplate(element)).join('\n')}
 						</span>
-						${folds[1]}
+						${folds[1].map((element: any) => jsonToTemplate(element)).join('\n')}
 				</ibm-expandable-tile>`
 			}
 		},
 		react: {
 			imports: ['ExpandableTile', 'TileAboveTheFoldContent', 'TileBelowTheFoldContent'],
-			code: ({ json, jsonToTemplate }) => {
-				const folds = getFoldObjects(json, jsonToTemplate);
+			code: ({ json, jsonToTemplate, fragments }) => {
+				const folds = getFoldObjects(json);
 				return `<ExpandableTile
 					${json.light !== undefined && !!json.light ? `light={${json.light}}` : ''}
 					${json.expanded !== undefined && !!json.expanded ? `expanded={${json.expanded}}` : ''}
 					${reactClassNamesFromComponentObj(json)}>
 						<TileAboveTheFoldContent>
-							${folds[0]}
+							${folds[0].map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 						</TileAboveTheFoldContent>
-						${folds[1]}
+						${folds[1].map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</ExpandableTile>`;
 			}
 		}

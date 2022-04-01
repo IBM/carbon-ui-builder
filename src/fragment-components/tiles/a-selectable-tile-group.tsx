@@ -105,18 +105,20 @@ export const ASelectableTileGroup = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	return <AComponent
-		componentObj={componentObj}
-		headingCss={css`display: block;`}
-		selected={selected}
-		{...rest}>
-		<div
-			role="group"
-			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
-			aria-label="Selectable tiles">
-			{children}
-		</div>
-	</AComponent>;
+	return (
+		<AComponent
+			componentObj={componentObj}
+			headingCss={css`display: block;`}
+			selected={selected}
+			{...rest}>
+				<div
+				role="group"
+				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
+				aria-label="Selectable tiles">
+					{children}
+				</div>
+		</AComponent>
+	);
 };
 
 export const componentInfo: ComponentInfo = {
@@ -135,6 +137,7 @@ export const componentInfo: ComponentInfo = {
 					value: 'Tile 1',
 				},
 				standalone: false,
+				selected: false,
 				items: [{ type: 'text', text: 'Selectable tile A' }]
 			},
 			{
@@ -143,6 +146,7 @@ export const componentInfo: ComponentInfo = {
 					value: 'Tile 2',
 				},
 				standalone: false,
+				selected: false,
 				items: [{ type: 'text', text: 'Selectable tile B' }]
 			},
 			{
@@ -151,6 +155,7 @@ export const componentInfo: ComponentInfo = {
 					value: 'Tile 3',
 				},
 				standalone: false,
+				selected: false,
 				items: [{ type: 'text', text: 'Selectable tile C' }]
 			}
 		]
@@ -162,14 +167,13 @@ export const componentInfo: ComponentInfo = {
 		selected={selected}
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
-		{componentObj.items.map((tile: any) => renderComponents(tile))}
+			{componentObj.items.map((tile: any) => renderComponents(tile))}
 	</ASelectableTileGroup>,
 	image,
 	codeExport: {
 		angular: {
 			inputs: () => '',
-			outputs: ({ json }) =>
-				`@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<Event>();`,
+			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<Event>();`,
 			imports: ['TilesModule'],
 			code: ({ json, jsonToTemplate }) => {
 				return `<ibm-tile-group
@@ -182,10 +186,10 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: [],
-			code: ({ json, jsonToTemplate }) => {
+			code: ({ json, jsonToTemplate, fragments }) => {
 				return `<div role="group" aria-label="Selectable tiles"
 					${reactClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</div>`;
 			}
 		}

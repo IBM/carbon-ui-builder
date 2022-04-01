@@ -81,30 +81,30 @@ export const AClickableTile = ({
 	componentObj,
 	onDrop,
 	selected,
-	renderComponents,
 	...rest
 }: any) => {
-
 	// Prevent users from being redirected
 	const onClick = (event: any) => {
 		event.preventDefault();
 	}
 
-	return <AComponent
+	return (
+		<AComponent
 		componentObj={componentObj}
 		headingCss={css`display: block;`}
 		selected={selected}
 		{...rest}>
-		<ClickableTile
+			<ClickableTile
 			onClick={onClick}
 			onDrop={onDrop}
 			light={componentObj.light}
 			href={componentObj.codeContext?.href}
 			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
 			disabled={componentObj.disabled}>
-			{children}
-		</ClickableTile>
-	</AComponent>;
+				{children}
+			</ClickableTile>
+		</AComponent>
+	);
 };
 
 export const componentInfo: ComponentInfo = {
@@ -126,14 +126,14 @@ export const componentInfo: ComponentInfo = {
 		selected={selected}
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
-		{componentObj.items.map((item: any) => renderComponents(item))}
+			{componentObj.items.map((item: any) => renderComponents(item))}
 	</AClickableTile>,
 	image,
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Href = '${json.href}';
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled || false}`,
-			outputs: () => '',
+			outputs: (_) => '',
 			imports: ['TilesModule'],
 			code: ({ json, jsonToTemplate }) => {
 				/**
@@ -150,13 +150,13 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: ['ClickableTile'],
-			code: ({ json, jsonToTemplate }) => {
+			code: ({ json, jsonToTemplate, fragments }) => {
 				return `<ClickableTile
 					${json.codeContext?.href !== undefined && json.codeContext?.href !== '' ? `href='${json.codeContext?.href}'` : ''}
 					${json.light !== undefined ? `light="${json.light}"` : ''}
 					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
 					${reactClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</ClickableTile>`;
 			}
 		}

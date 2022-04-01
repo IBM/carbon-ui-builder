@@ -6,13 +6,16 @@ import {
 } from 'carbon-components-react';
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
-import { Add32 } from '@carbon/icons-react';
-import { getParentComponent, updatedState } from '../../components';
-import { css, cx } from 'emotion';
+import { css } from 'emotion';
 import { useFragment } from '../../context';
 import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { ComponentInfo } from '..';
 import image from '../../assets/component-icons/tile-selectable.svg';
+import {
+	Adder,
+	getParentComponent,
+	updatedState
+} from '../../components';
 import {
 	angularClassNamesFromComponentObj,
 	nameStringToVariableString,
@@ -106,25 +109,12 @@ export const ASelectableTileCodeUI = ({ selectedComponent, setComponent }: any) 
 	</>
 };
 
-const addStyle = css`
-	position: absolute;
-	margin-top: -2px;
-	background: white;
-	border: 2px solid #d8d8d8;
-	line-height: 21px;
-	z-index: 1;
-	display: block !important;
-`;
-
-const addStyleTop = cx(addStyle, css`
-	margin-top: -18px;
-`);
-
-const iconStyle = css`
-	height: 1rem;
-	width: 1rem;
-	float: right;
-	cursor: pointer;
+// Prevent users from clicking on the selectable tile
+const preventCheckEvent = css`
+	pointer-events: none;
+	.bx--tile-content {
+		pointer-events: initial;
+	}
 `;
 
 export const ASelectableTile = ({
@@ -132,7 +122,6 @@ export const ASelectableTile = ({
 	componentObj,
 	onDrop,
 	selected,
-	renderComponents,
 	...rest
 }: any) => {
 	const [fragment, setFragment] = useFragment();
@@ -161,46 +150,39 @@ export const ASelectableTile = ({
 
 	// Removing `for` attribute so users can select text and other non-form elements.
 	useEffect(() => {
-		const tileElement = document.getElementById(componentObj.codeContext?.name);
+		const tileElement = document.getElementById(componentObj.codeContext.name);
 		const labelElement = tileElement?.parentElement?.querySelector('label.bx--tile.bx--tile--selectable');
 		// Setting to empty instead of removing so users can select non-form elements within tile when a form element is present
 		// Although form elements should never be added within another
 		labelElement?.setAttribute('for', '');
-	}, [componentObj.codeContext?.name]);
+	}, [componentObj.codeContext]);
 
-	return <>
-		{parentComponent.tileGroup && <span style={{ display: 'none' }} className={selected ? addStyleTop : ''}>
-			<Add32 onClick={(event: any) => {
-				event.stopPropagation();
-				addTile();
-			}} className={iconStyle} />
-		</span>}
-
-		<AComponent
-			componentObj={componentObj}
-			headingCss={css`display: block;`}
-			selected={selected}
-			{...rest}>
-			<SelectableTile
-				id={componentObj.codeContext?.name}
-				title={componentObj.title}
-				value={componentObj.value}
-				light={componentObj.light}
-				selected={componentObj.selected}
-				disabled={componentObj.disabled}
-				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
-				onDrop={onDrop}>
-				{children}
-			</SelectableTile>
-		</AComponent>
-
-		{parentComponent.tileGroup && <span style={{ display: 'none' }} className={selected ? addStyle : ''}>
-			<Add32 onClick={(event: any) => {
-				event.stopPropagation();
-				addTile(1);
-			}} className={iconStyle} />
-		</span>}
-	</>;
+	return (
+		<Adder
+			active={parentComponent.tileGroup && selected}
+			topAction={() => addTile()}
+			bottomAction={() => addTile(1)}
+			key={componentObj.id}>
+			<AComponent
+				componentObj={componentObj}
+				headingCss={css`display: block;`}
+				className={css`cursor: pointer;`}
+				selected={selected}
+				{...rest}>
+					<SelectableTile
+					id={componentObj.codeContext?.name}
+					title={componentObj.title}
+					value={componentObj.value}
+					light={componentObj.light}
+					selected={componentObj.selected}
+					disabled={componentObj.disabled}
+					className={`${preventCheckEvent} ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}`}
+					onDrop={onDrop}>
+						{children}
+					</SelectableTile>
+			</AComponent>
+		</Adder>
+	);
 };
 
 export const componentInfo: ComponentInfo = {
@@ -225,16 +207,14 @@ export const componentInfo: ComponentInfo = {
 		selected={selected}
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
-		{componentObj.items.map((item: any) => renderComponents(item))}
+			{componentObj.items.map((item: any) => renderComponents(item))}
 	</ASelectableTile>,
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) =>
-				`@Input() ${nameStringToVariableString(json.codeContext?.name)}Selected = ${json.selected || false};
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Selected = ${json.selected || false};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = '${json.value}';`,
-			outputs: ({ json }) =>
-				`@Output() ${nameStringToVariableString(json.codeContext?.name)}Change = new EventEmitter<Event>();`,
+			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Change = new EventEmitter<Event>();`,
 			imports: ['TilesModule'],
 			code: ({ json, jsonToTemplate }) => {
 				/**
@@ -252,7 +232,7 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: ['SelectableTile'],
-			code: ({ json, jsonToTemplate }) => {
+			code: ({ json, jsonToTemplate, fragments }) => {
 				/**
 				 * @todo
 				 * This is a temporary solution until selectable tile gets a `TileGroup` parent
@@ -292,7 +272,7 @@ export const componentInfo: ComponentInfo = {
 					${json.disabled !== undefined && !!json.disabled ? `disabled={${json.disabled}}` : ''}
 					${reactClassNamesFromComponentObj(json)}
 					onClick={${stateFunction}}>
-						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</SelectableTile>`;
 			}
 		}
