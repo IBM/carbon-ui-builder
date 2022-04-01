@@ -23,7 +23,7 @@ export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: an
 		<TextInput
 			value={selectedComponent.legend}
 			labelText='Legend name'
-			placeholder='Fieldset header'
+			placeholder='Legend name'
 			onChange={(event: any) => {
 				setComponent({
 					...selectedComponent,
@@ -41,7 +41,6 @@ export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: an
 				...selectedComponent,
 				orientation: event.selectedItem.id
 		})}/>
-
         <Dropdown
 			label='Label position'
 			titleText='Label position'
@@ -52,9 +51,6 @@ export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: an
 				...selectedComponent,
 				labelPosition: event.selectedItem.id
 		})}/>
-
-
-
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>
 };
@@ -105,7 +101,7 @@ export const ARadioButtonGroup = ({
 				disabled= {componentObj.disabled}
 				orientation={componentObj.orientation}
 				defaultSelected={componentObj.defaultSelected}
-				valueSelected={componentObj.defaultSelected}
+				valueSelected={componentObj.valueSelected}
                 labelPosition={componentObj.labelPosition}
                 name={componentObj.codeContext?.formItemName}>
                     {children}
@@ -189,7 +185,7 @@ export const componentInfo: ComponentInfo = {
 					[labelPlacement]="${nameStringToVariableString(json.codeContext?.name)}LabelPosition"
 					${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
-					</ibm-radio-group>`
+				</ibm-radio-group>`
 			}
 		},
 		react: {

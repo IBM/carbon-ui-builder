@@ -6,7 +6,9 @@ import { useFragment } from '../context';
 import { css } from 'emotion';
 import { getParentComponent, updatedState, Adder } from '../components';
 import image from './../assets/component-icons/radiobutton.svg';
-import { nameStringToVariableString, angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
+import { nameStringToVariableString,
+		angularClassNamesFromComponentObj,
+		reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const ARadioButtonStyleUI = ({selectedComponent, setComponent}: any) => {
 	return <>
@@ -17,25 +19,14 @@ export const ARadioButtonStyleUI = ({selectedComponent, setComponent}: any) => {
 			onChange={(checked: boolean) => setComponent({
 				...selectedComponent,
 				disabled: checked
-			})} />
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
+			})}/>
+		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent}/>
 	</>
 };
 
 
 export const ARadioButtonCodeUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
-		<TextInput
-			value={selectedComponent.id || ''}
-			labelText='Radio button ID'
-			placeholder='Custom ID'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					id: event.currentTarget.value
-				});
-			}}
-		/>
 		<TextInput
 			value={selectedComponent.labelText || ''}
 			labelText='Radio button label'
@@ -124,17 +115,7 @@ export const componentInfo: ComponentInfo = {
 	keywords: ['radio','button'],
 	name: 'Radio button',
 	defaultComponentObj: {
-		type: 'radioButton',
-		items: [
-			{
-				type: 'radioButton',
-				codeContext: {
-					formItemName: 'radio-group'
-				},
-				labelText: "New option",
-				disabled: false
-			}
-		]
+		type: 'radioButton'
 	},
 	image: image,
 	hideFromElementsPane: true,
@@ -144,7 +125,7 @@ export const componentInfo: ComponentInfo = {
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Id = "${json.codeContext?.name}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value}";
-								@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = "${json.defaultChecked}";`,
+								@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${json.defaultChecked};`,
             outputs: ({json}) => ``,
             imports: ['RadioModule'],
 			code: ({json }) => {
