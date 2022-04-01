@@ -84,7 +84,6 @@ export const ARadioButton = ({
 			parentComponent.items.indexOf(componentObj) + offset
 		)
 	});
-	console.log(componentObj);
 	return (<>
 		<Adder
 			active={selected}
@@ -100,6 +99,7 @@ export const ARadioButton = ({
 						id={componentObj.id}
 						name={componentObj.codeContext?.formItemName}
 						labelText={componentObj.labelText}
+						defaultChecked={componentObj.defaultChecked}
 						value={componentObj.codeContext?.name}
 						disabled= {componentObj.disabled}/>
 			</AComponent>

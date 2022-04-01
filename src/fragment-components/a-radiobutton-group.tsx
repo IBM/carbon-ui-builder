@@ -108,7 +108,7 @@ export const componentInfo: ComponentInfo = {
 	styleUI: ARadioButtonGroupStyleUI,
 	codeUI: ARadioButtonGroupCodeUI,
 	keywords: ['radio', 'button', 'group'],
-	name: 'Radio button group',
+	name: 'Radio buttons',
 	defaultComponentObj: {
 		disabled: false,
 		type: 'radioButtonGroup',
@@ -125,7 +125,8 @@ export const componentInfo: ComponentInfo = {
 					formItemName: 'radio-group',
 				},
                 labelText: "Option 1",
-                disabled: false,
+				disabled: false,
+				defaultChecked: true,
 			},
 			{
                 type: 'radioButton',
@@ -133,7 +134,8 @@ export const componentInfo: ComponentInfo = {
 					formItemName: 'radio-group',
                 },
                 labelText: "Option 2",
-                disabled: false,
+				disabled: false,
+				defaultChecked: false,
 				
 			},
 			{
@@ -142,7 +144,8 @@ export const componentInfo: ComponentInfo = {
 					formItemName: 'radio-group'
                 },
                 labelText: "Option 3",
-                disabled: false
+				disabled: false,
+				defaultChecked: false,
 			}
 		]
 	},
