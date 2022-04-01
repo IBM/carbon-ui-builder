@@ -18,6 +18,17 @@ export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: an
 		{id: 'left', text: 'Left'},
 		{id: 'right', text: 'Right'},
 	];
+	let allItems = selectedComponent.items.map((item: any) => {
+		return {
+			text: item.labelText,
+			id: item.id,
+			defaultChecked: item.defaultChecked
+		}
+	});
+	selectedComponent.defaultSelected = `${selectedComponent.items.find(((item: any) => {
+		return item.defaultChecked	
+	})).id}`;
+	selectedComponent.valueSelected = selectedComponent.defaultSelected;
 	return <>
 		<TextInput
 			value={selectedComponent.legend}
@@ -51,6 +62,24 @@ export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: an
 				...selectedComponent,
 				labelPosition: event.selectedItem.id
 		})}/>
+
+
+		<Dropdown
+            label='Default selection'
+            titleText='Default selection'
+            items={allItems}
+            initialSelectedItem={allItems.find((item: any) => item.defaultChecked)}
+            itemToString={(item: any) => (item ? item.text : '')}
+            onChange={(event: any) => setComponent({
+				...selectedComponent,
+				defaultSelected: `${event.selectedItem.id}`,
+				valueSelected:`${event.selectedItem.id}`,
+                items: selectedComponent.items.map((item: any) => ({
+                        ...item, 
+                        defaultChecked: event.selectedItem.id === item.id ? true : false
+                }))
+                
+        })}/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>
 };
@@ -76,7 +105,7 @@ export const ARadioButtonGroupCodeUI = ({ selectedComponent, setComponent }: any
 					}))
 				});
 			}}
-		/>
+		/>   
 	</>
 };
 
@@ -94,7 +123,9 @@ export const ARadioButtonGroup = ({
 				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
 				legendText= {componentObj.legend}
 				disabled= {componentObj.disabled}
-                orientation={componentObj.orientation}
+				orientation={componentObj.orientation}
+				defaultSelected={componentObj.defaultSelected}
+				valueSelected={componentObj.defaultSelected}
                 labelPosition={componentObj.labelPosition}
                 name={componentObj.codeContext?.formItemName}>
                     {children}
@@ -115,7 +146,9 @@ export const componentInfo: ComponentInfo = {
 		legend: 'Radio Button Group',
 		codeContext: {
 			formItemName: 'radio-group'
-        },
+		},
+		defaultSelected: '',
+		valueSelected: '',
         labelPosition: 'left',
         orientation: 'horizontal',
 		items: [
@@ -132,7 +165,7 @@ export const componentInfo: ComponentInfo = {
                 type: 'radioButton',
 				codeContext: {
 					formItemName: 'radio-group',
-                },
+				},
                 labelText: "Option 2",
 				disabled: false,
 				defaultChecked: false,
@@ -142,7 +175,7 @@ export const componentInfo: ComponentInfo = {
                 type: 'radioButton',
 				codeContext: {
 					formItemName: 'radio-group'
-                },
+				},
                 labelText: "Option 3",
 				disabled: false,
 				defaultChecked: false,
@@ -162,7 +195,9 @@ export const componentInfo: ComponentInfo = {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}LegendText = "${json.legend}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Orientation = "${json.orientation}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}LabelPosition = "${json.labelPosition}";
-								@Input() ${nameStringToVariableString(json.codeContext?.name)}Name = "${json.codeContext?.formItemName}";`,
+								@Input() ${nameStringToVariableString(json.codeContext?.name)}Name = "${json.codeContext?.formItemName}";
+								@Input() ${nameStringToVariableString(json.codeContext?.name)}defaultSelected = "${json.defaultSelected}";
+								@Input() ${nameStringToVariableString(json.codeContext?.name)}valueSelected = "${json.valueSelected}";`,
 			outputs: ({ json }) => ``,
 			imports: ['RadioModule'],
 			code: ({ json, jsonToTemplate }) => {
@@ -171,6 +206,8 @@ export const componentInfo: ComponentInfo = {
 				<ibm-radio-group
 					[name]="${nameStringToVariableString(json.codeContext?.name)}Name"
 					[orientation]="${nameStringToVariableString(json.codeContext?.name)}Orientation"
+					[valueSelected]="${nameStringToVariableString(json.codeContext?.name)}defaultSelected"
+					[defaultSelected]"${nameStringToVariableString(json.codeContext?.name)}defaultSelected"
 					[labelPlacement]="${nameStringToVariableString(json.codeContext?.name)}LabelPosition"
 					${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
@@ -186,6 +223,8 @@ export const componentInfo: ComponentInfo = {
 					legendText="${json.legend}"
 					orientation="${json.orientation}"
 					labelPlacement="${json.labelPosition}"
+					valueSelected="${json.valueSelected}"
+					defaultSelected="${json.defaultSelected}"
 					${reactClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</RadioButtonGroup>`;

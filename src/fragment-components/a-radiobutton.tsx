@@ -72,7 +72,7 @@ export const ARadioButton = ({
 				type: 'insert',
 				component: {
 					type: 'radioButton',
-					value: componentObj.codeContext?.name,
+					value: `${componentObj.id}`,
 					codeContext: {
 						formItemName: componentObj.codeContext?.formItemName
 					},
@@ -84,6 +84,7 @@ export const ARadioButton = ({
 			parentComponent.items.indexOf(componentObj) + offset
 		)
 	});
+	componentObj.value = `${componentObj.id}`;
 	return (<>
 		<Adder
 			active={selected}
@@ -100,7 +101,8 @@ export const ARadioButton = ({
 						name={componentObj.codeContext?.formItemName}
 						labelText={componentObj.labelText}
 						defaultChecked={componentObj.defaultChecked}
-						value={componentObj.codeContext?.name}
+						checked={componentObj.defaultChecked}
+						value= {componentObj.value}
 						disabled= {componentObj.disabled}/>
 			</AComponent>
 		</Adder>
@@ -140,13 +142,16 @@ export const componentInfo: ComponentInfo = {
 		angular: {
 			inputs: ({json}) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
-								@Input() ${nameStringToVariableString(json.codeContext?.name)}Id = "${json.codeContext?.name}";`,
+								@Input() ${nameStringToVariableString(json.codeContext?.name)}Id = "${json.codeContext?.name}";
+								@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value}";
+								@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = "${json.defaultChecked}";`,
             outputs: ({json}) => ``,
             imports: ['RadioModule'],
 			code: ({json }) => {
 				return `<ibm-radio
 					[id]="${nameStringToVariableString(json.codeContext?.name)}Id"
 					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
+					[checked]="${nameStringToVariableString(json.codeContext?.name)}Checked"
 					[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
 					${angularClassNamesFromComponentObj(json)}>
 					{{${nameStringToVariableString(json.codeContext?.name)}Label}}
@@ -158,6 +163,8 @@ export const componentInfo: ComponentInfo = {
 			code: ({ json }) => {
 				return `<RadioButton
 					id="${json.codeContext?.name}"
+					value="${json.value}"
+					checked="${json.defaultChecked}"
 					labelText="${json.labelText}"
 					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
 					${reactClassNamesFromComponentObj(json)}/>`
