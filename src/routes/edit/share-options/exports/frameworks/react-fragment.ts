@@ -68,6 +68,31 @@ export const jsonToTemplate = (json: any, fragments: any[]) => {
     }
 };
 
+export const jsonToHelperFunction = (json: any, fragments: any[], dictionary: any = {}) => {
+	if (typeof json === "string" || !json) {
+		return json;
+	}
+
+	for (let [key, component] of Object.entries(allComponents)) {
+		if (json.type === key && !component.componentInfo.codeExport.react.isNotDirectExport) {
+			if (component.componentInfo.codeExport.react.helperFunction) {
+				const helperFunction = component.componentInfo.codeExport.react?.helperFunction({ json });
+				// Ignore if name or code is empty string
+				if (dictionary[helperFunction.name] === undefined && helperFunction.name !== '' && helperFunction.code !== '') {
+					dictionary[helperFunction.name] = helperFunction.code;
+					return `const ${helperFunction.name} = ${helperFunction.code}`;
+				} else {
+					return '';
+				}
+			}
+		}
+	}
+
+	if (json.items) {
+		return json.items.map((item: any) => jsonToHelperFunction(item, fragments, dictionary)).filter((element: any) => element !== "").join('\n');
+	}
+}
+
 const otherImportsFromComponentObj = (json: any, fragments?: any[]) => {
 	let imports = '';
 	for (let [key, component] of Object.entries(allComponents)) {
@@ -97,7 +122,8 @@ const generateTemplate = (json: any, fragments: any[]) => {
 	return {
 		imports: `import { ${carbonImportsString} } from 'carbon-components-react';
 			${otherImportsFromComponentObj(json, fragments)}`,
-		template: jsonToTemplate(json, fragments)
+		template: jsonToTemplate(json, fragments),
+		helperFunctions: jsonToHelperFunction(json, fragments, {})
 	};
 };
 
@@ -117,6 +143,8 @@ const jsonToSharedComponents = (json: any, fragments: any[]) => {
 				const handleInputChange = (event) => {
 					setState({...state, [event.target.name]: event.target.value});
 				};
+
+				${fragmentTemplate.helperFunctions}
 
 				return <>${fragmentTemplate.template}</>;
 			};
@@ -160,6 +188,8 @@ export const FragmentComponent = ({state, setState}) => {
 	const handleInputChange = (event) => {
 		setState({...state, [event.target.name]: event.target.value});
 	};
+
+	${fragmentTemplate.helperFunctions}
 
 	return <>${fragmentTemplate.template}</>;
 };
