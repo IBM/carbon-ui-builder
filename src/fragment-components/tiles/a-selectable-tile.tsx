@@ -159,7 +159,7 @@ export const ASelectableTile = ({
 
 	return (
 		<Adder
-			active={parentComponent.tileGroup && selected}
+			active={parentComponent?.tileGroup && selected}
 			topAction={() => addTile()}
 			bottomAction={() => addTile(1)}
 			key={componentObj.id}>
@@ -171,6 +171,7 @@ export const ASelectableTile = ({
 				{...rest}>
 					<SelectableTile
 					id={componentObj.codeContext?.name}
+					name={componentObj.codeContext?.formItemName || componentObj.codeContext?.name}
 					title={componentObj.title}
 					value={componentObj.value}
 					light={componentObj.light}
@@ -233,11 +234,6 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			imports: ['SelectableTile'],
 			code: ({ json, jsonToTemplate, fragments }) => {
-				/**
-				 * @todo
-				 * This is a temporary solution until selectable tile gets a `TileGroup` parent
-				 * that can return a meaning event onChange
-				 */
 				const stateFunction = json.standalone ?
 					`() => {
 						handleInputChange({
@@ -246,21 +242,12 @@ export const componentInfo: ComponentInfo = {
 								value: "${json.codeContext?.value}"
 							}
 				})}` :
-					`() => {
-						const obj = { ...state["${json.codeContext?.formItemName}"] };
-						if (obj["${json.codeContext?.name}"] !== undefined) {
-							delete obj["${json.codeContext?.name}"];
-						} else {
-							obj["${json.codeContext?.name}"] = "${json.codeContext?.value}";
-						}
-
-						handleInputChange({
-							target: {
-								name: "${json.codeContext?.formItemName}",
-								value: obj
-							}
-						});
-					}`;
+					`() =>
+						handleSelectableTileChange(
+							"${json.codeContext?.formItemName}",
+							"${json.codeContext?.name}"
+						)
+					`;
 
 				return `<SelectableTile
 					id="${json.codeContext?.name}"
@@ -274,6 +261,28 @@ export const componentInfo: ComponentInfo = {
 					onClick={${stateFunction}}>
 						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</SelectableTile>`;
+			},
+			helperFunction: ({json}) => {
+				if(json.standalone){
+					return {
+						name: '',
+						code: '',
+					}
+				}
+				return {
+					name: 'handleSelectableTileChange',
+					code: `(name, id) => {
+						handleInputChange({
+							target: {
+								name,
+								value: {
+									...state[name],
+									[id]: !state[name]?.[id]
+								}
+							}
+						});
+					};`,
+				}
 			}
 		}
 	}
