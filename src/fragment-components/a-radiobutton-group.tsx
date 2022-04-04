@@ -5,7 +5,11 @@ import { Dropdown,
 import { AComponent, ComponentInfo } from './a-component';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 import image from './../assets/component-icons/radiobutton-group.svg';
-import { nameStringToVariableString, angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
+import {
+	angularClassNamesFromComponentObj,
+	nameStringToVariableString,
+	reactClassNamesFromComponentObj
+} from '../../utils/fragment-tools';
 
 
 export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: any) => {
@@ -173,7 +177,7 @@ export const componentInfo: ComponentInfo = {
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Name = "${json.codeContext?.formItemName}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}defaultSelected = "${json.defaultSelected}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}valueSelected = "${json.valueSelected}";`,
-			outputs: ({ json }) => ``,
+			outputs: (_) => '',
 			imports: ['RadioModule'],
 			code: ({ json, jsonToTemplate }) => {
 				return `
