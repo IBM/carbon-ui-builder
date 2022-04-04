@@ -6,6 +6,7 @@ import * as checkbox from './a-checkbox';
 import * as column from './a-column';
 import * as fragment from './a-fragment';
 import * as grid from './a-grid';
+import * as icons from './a-icons';
 import * as numberinput from './a-numberinput';
 import * as row from './a-row';
 import * as tag from "./a-tag"
@@ -24,6 +25,7 @@ export { AColumn, AColumnStyleUI } from './a-column';
 export * from './a-component';
 export { AFragment, AFragmentStyleUI, AFragmentCodeUI } from './a-fragment';
 export { AGrid, AGridStyleUI } from './a-grid';
+export { AIcons, AIconsInputStyleUI } from './a-icons';
 export { ARow, ARowStyleUI } from './a-row';
 export { ATag, ATagStyleUI } from './a-tag';
 export { AText, ATextStyleUI } from './a-text';
@@ -41,6 +43,7 @@ export const allComponents = {
 	column,
 	fragment,
 	grid,
+	icons,
 	row,
 	tag,
 	text,
