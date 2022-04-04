@@ -124,9 +124,6 @@ export const componentInfo: ComponentInfo = {
 		disabled: false,
 		type: 'radioButtonGroup',
 		legend: 'Radio Button Group',
-		codeContext: {
-			formItemName: 'radio-group'
-		},
 		defaultSelected: '',
 		valueSelected: '',
 		labelPosition: 'left',
@@ -134,27 +131,18 @@ export const componentInfo: ComponentInfo = {
 		items: [
 			{
 				type: 'radioButton',
-				codeContext: {
-					formItemName: 'radio-group',
-				},
 				labelText: "Option 1",
 				disabled: false,
 				defaultChecked: true,
 			},
 			{
 				type: 'radioButton',
-				codeContext: {
-					formItemName: 'radio-group',
-				},
 				labelText: "Option 2",
 				disabled: false,
 				defaultChecked: false,
 			},
 			{
 				type: 'radioButton',
-				codeContext: {
-					formItemName: 'radio-group'
-				},
 				labelText: "Option 3",
 				disabled: false,
 				defaultChecked: false,

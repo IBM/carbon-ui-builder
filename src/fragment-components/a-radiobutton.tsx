@@ -57,9 +57,6 @@ export const ARadioButton = ({
 				component: {
 					type: 'radioButton',
 					value: `${componentObj.id}`,
-					codeContext: {
-						formItemName: componentObj.codeContext?.formItemName
-					},
 					labelText: 'New Option',
 					disabled: false
 				}
@@ -82,7 +79,7 @@ export const ARadioButton = ({
 				{...rest}> 
 					<RadioButton
 						id={componentObj.id}
-						name={componentObj.codeContext?.formItemName}
+						name={componentObj.codeContext?.name}
 						labelText={componentObj.labelText}
 						defaultChecked={componentObj.defaultChecked}
 						checked={componentObj.defaultChecked}
