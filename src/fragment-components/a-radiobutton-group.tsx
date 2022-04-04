@@ -5,7 +5,11 @@ import { Dropdown,
 import { AComponent, ComponentInfo } from './a-component';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 import image from './../assets/component-icons/radiobutton-group.svg';
-import { nameStringToVariableString, angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
+import {
+	angularClassNamesFromComponentObj,
+	nameStringToVariableString,
+	reactClassNamesFromComponentObj
+} from '../../utils/fragment-tools';
 
 
 export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: any) => {
