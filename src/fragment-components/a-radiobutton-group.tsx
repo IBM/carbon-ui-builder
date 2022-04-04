@@ -180,8 +180,7 @@ export const componentInfo: ComponentInfo = {
 			outputs: (_) => '',
 			imports: ['RadioModule'],
 			code: ({ json, jsonToTemplate }) => {
-				return `
-				<legend class="bx--label">{{${nameStringToVariableString(json.codeContext?.name)}LegendText}}</legend>
+				return `<legend class="bx--label">{{${nameStringToVariableString(json.codeContext?.name)}LegendText}}</legend>
 				<ibm-radio-group
 					[name]="${nameStringToVariableString(json.codeContext?.name)}Name"
 					[orientation]="${nameStringToVariableString(json.codeContext?.name)}Orientation"
