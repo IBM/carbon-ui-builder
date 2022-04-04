@@ -125,8 +125,7 @@ export const componentInfo: ComponentInfo = {
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Id = "${json.codeContext?.name}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${json.defaultChecked};`,
-            outputs: ({json}) => ``,
-            imports: ['RadioModule'],
+			outputs: (_) => '',
 			code: ({json }) => {
 				return `<ibm-radio
 					[id]="${nameStringToVariableString(json.codeContext?.name)}Id"
