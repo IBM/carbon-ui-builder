@@ -189,7 +189,13 @@ export const componentInfo: ComponentInfo = {
 					labelPlacement="${json.labelPosition}"
 					valueSelected="${json.valueSelected}"
 					defaultSelected="${json.defaultSelected}"
-					${reactClassNamesFromComponentObj(json)}>
+					${reactClassNamesFromComponentObj(json)}
+					onChange={(radio) => handleInputChange({
+						target: {
+							name: "${json.codeContext?.name}",
+							value: radio
+						}
+					})}>
 						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</RadioButtonGroup>`;
 			}
