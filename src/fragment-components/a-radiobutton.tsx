@@ -20,13 +20,6 @@ export const ARadioButtonStyleUI = ({selectedComponent, setComponent}: any) => {
 				...selectedComponent,
 				disabled: checked
 			})}/>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent}/>
-	</>
-};
-
-
-export const ARadioButtonCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
 		<TextInput
 			value={selectedComponent.labelText || ''}
 			labelText='Radio button label'
@@ -38,9 +31,9 @@ export const ARadioButtonCodeUI = ({ selectedComponent, setComponent }: any) => 
 				});
 			}}
 		/>
+		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent}/>
 	</>
 };
-
 
 const addButtonCss = css`
 	position: relative;
@@ -68,7 +61,7 @@ export const ARadioButton = ({
 						formItemName: componentObj.codeContext?.formItemName
 					},
 					labelText: 'New Option',
-					disabled: componentObj.disabled
+					disabled: false
 				}
 			},
 			parentComponent.id,
@@ -103,7 +96,6 @@ export const ARadioButton = ({
 export const componentInfo: ComponentInfo = {
 	component: ARadioButton,
 	styleUI: ARadioButtonStyleUI,
-	codeUI: ARadioButtonCodeUI,
 	render: ({ componentObj, select, remove, selected }) => <ARadioButton
 	componentObj={componentObj}
 	select={select}

@@ -9,7 +9,7 @@ import {
 	angularClassNamesFromComponentObj,
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
-} from '../../utils/fragment-tools';
+} from '../utils/fragment-tools';
 
 
 export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: any) => {
