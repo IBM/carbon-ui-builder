@@ -26,7 +26,7 @@ export { AColumn, AColumnStyleUI } from './a-column';
 export * from './a-component';
 export { AFragment, AFragmentStyleUI, AFragmentCodeUI } from './a-fragment';
 export { AGrid, AGridStyleUI } from './a-grid';
-export { ARadioButton, ARadioButtonStyleUI, ARadioButtonCodeUI } from "./a-radiobutton";
+export { ARadioButton, ARadioButtonStyleUI } from "./a-radiobutton";
 export { ARadioButtonGroup, ARadioButtonGroupStyleUI, ARadioButtonGroupCodeUI } from "./a-radiobutton-group"
 export { ARow, ARowStyleUI } from './a-row';
 export { ATag, ATagStyleUI } from './a-tag';

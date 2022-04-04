@@ -107,7 +107,7 @@ export const ARadioButtonGroup = ({
 				defaultSelected={componentObj.defaultSelected}
 				valueSelected={componentObj.valueSelected}
 				labelPosition={componentObj.labelPosition}
-				name={componentObj.codeContext?.formItemName}>
+				name={componentObj.codeContext?.name}>
 					{children}
 			</RadioButtonGroup>
 	</AComponent>
@@ -174,7 +174,7 @@ export const componentInfo: ComponentInfo = {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}LegendText = "${json.legend}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Orientation = "${json.orientation}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}LabelPosition = "${json.labelPosition}";
-								@Input() ${nameStringToVariableString(json.codeContext?.name)}Name = "${json.codeContext?.formItemName}";
+								@Input() ${nameStringToVariableString(json.codeContext?.name)}Name = "${json.codeContext?.name}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}defaultSelected = "${json.defaultSelected}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}valueSelected = "${json.valueSelected}";`,
 			outputs: (_) => '',
@@ -195,7 +195,7 @@ export const componentInfo: ComponentInfo = {
 			code: ({ json, fragments, jsonToTemplate }) => {
 				return `
 				<RadioButtonGroup
-					name="${json.codeContext?.formItemName}"
+					name="${json.codeContext?.name}"
 					legendText="${json.legend}"
 					orientation="${json.orientation}"
 					labelPlacement="${json.labelPosition}"
