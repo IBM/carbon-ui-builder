@@ -136,7 +136,7 @@ export const componentInfo: ComponentInfo = {
 				return `<RadioButton
 					id="${json.codeContext?.name}"
 					value="${json.value}"
-					checked="${json.defaultChecked}"
+					checked={${json.defaultChecked}}
 					labelText="${json.labelText}"
 					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
 					${reactClassNamesFromComponentObj(json)}/>`
