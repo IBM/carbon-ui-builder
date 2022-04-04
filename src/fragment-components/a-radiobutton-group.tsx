@@ -9,14 +9,14 @@ import { nameStringToVariableString, angularClassNamesFromComponentObj, reactCla
 
 
 export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: any) => {
-    const orientationItems = [
+	const orientationItems = [
 		{id: 'horizontal', text: 'Horizontal'},
-		{id: 'vertical', text: 'Vertical'},
-    ];
+		{id: 'vertical', text: 'Vertical'}
+	];
 
-    const labelPositions = [
+	const labelPositions = [
 		{id: 'left', text: 'Left'},
-		{id: 'right', text: 'Right'},
+		{id: 'right', text: 'Right'}
 	];
 	selectedComponent.valueSelected = selectedComponent.defaultSelected;
 	return <>
@@ -31,7 +31,7 @@ export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: an
 				});
 			}}
 		/>
-        <Dropdown
+		<Dropdown
 			label='Orientation'
 			titleText='Orientation'
 			items={orientationItems}
@@ -41,7 +41,7 @@ export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: an
 				...selectedComponent,
 				orientation: event.selectedItem.id
 		})}/>
-        <Dropdown
+		<Dropdown
 			label='Label position'
 			titleText='Label position'
 			items={labelPositions}
@@ -67,21 +67,21 @@ export const ARadioButtonGroupCodeUI = ({ selectedComponent, setComponent }: any
 		return item.defaultChecked	
 	})).id}`;
 	return <>
-			<Dropdown
-            label='Default selection'
-            titleText='Default selection'
-            items={allItems}
-            initialSelectedItem={allItems.find((item: any) => item.defaultChecked)}
-            itemToString={(item: any) => (item ? item.text : '')}
-            onChange={(event: any) => setComponent({
+		<Dropdown
+			label='Default selection'
+			titleText='Default selection'
+			items={allItems}
+			initialSelectedItem={allItems.find((item: any) => item.defaultChecked)}
+			itemToString={(item: any) => (item ? item.text : '')}
+			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				defaultSelected: `${event.selectedItem.id}`,
 				valueSelected:`${event.selectedItem.id}`,
-                items: selectedComponent.items.map((item: any) => ({
-                        ...item, 
-                        defaultChecked: event.selectedItem.id === item.id ? true : false
-                }))
-        })}/>
+				items: selectedComponent.items.map((item: any) => ({
+						...item, 
+						defaultChecked: event.selectedItem.id === item.id ? true : false
+				}))
+		})}/>
 	</>
 };
 
@@ -92,20 +92,20 @@ export const ARadioButtonGroup = ({
 	...rest
 }: any) => {
 	return (
-    <AComponent
+	<AComponent
 		componentObj={componentObj}
 		{...rest}>
-            <RadioButtonGroup
+			<RadioButtonGroup
 				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
 				legendText= {componentObj.legend}
 				disabled= {componentObj.disabled}
 				orientation={componentObj.orientation}
 				defaultSelected={componentObj.defaultSelected}
 				valueSelected={componentObj.valueSelected}
-                labelPosition={componentObj.labelPosition}
-                name={componentObj.codeContext?.formItemName}>
-                    {children}
-            </RadioButtonGroup>
+				labelPosition={componentObj.labelPosition}
+				name={componentObj.codeContext?.formItemName}>
+					{children}
+			</RadioButtonGroup>
 	</AComponent>
 	);
 };
@@ -125,34 +125,33 @@ export const componentInfo: ComponentInfo = {
 		},
 		defaultSelected: '',
 		valueSelected: '',
-        labelPosition: 'left',
-        orientation: 'horizontal',
+		labelPosition: 'left',
+		orientation: 'horizontal',
 		items: [
 			{
-                type: 'radioButton',
+				type: 'radioButton',
 				codeContext: {
 					formItemName: 'radio-group',
 				},
-                labelText: "Option 1",
+				labelText: "Option 1",
 				disabled: false,
 				defaultChecked: true,
 			},
 			{
-                type: 'radioButton',
+				type: 'radioButton',
 				codeContext: {
 					formItemName: 'radio-group',
 				},
-                labelText: "Option 2",
+				labelText: "Option 2",
 				disabled: false,
 				defaultChecked: false,
-				
 			},
 			{
-                type: 'radioButton',
+				type: 'radioButton',
 				codeContext: {
 					formItemName: 'radio-group'
 				},
-                labelText: "Option 3",
+				labelText: "Option 3",
 				disabled: false,
 				defaultChecked: false,
 			}
@@ -163,7 +162,7 @@ export const componentInfo: ComponentInfo = {
 		select={select}
 		remove={remove}
 		selected={selected}>
-		{componentObj.items.map((button: any) => (renderComponents(button)))}
+			{componentObj.items.map((button: any) => (renderComponents(button)))}
 	</ARadioButtonGroup>,
 	image,
 	codeExport: {

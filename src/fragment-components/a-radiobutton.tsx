@@ -76,7 +76,7 @@ export const ARadioButton = ({
 		)
 	});
 	componentObj.value = `${componentObj.id}`;
-	return (<>
+	return	(
 		<Adder
 			active={selected}
 			addButtonsCss={addButtonCss}
@@ -97,8 +97,7 @@ export const ARadioButton = ({
 						disabled= {componentObj.disabled}/>
 			</AComponent>
 		</Adder>
-	
-	</>);
+	)
 };
 
 export const componentInfo: ComponentInfo = {
