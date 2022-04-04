@@ -178,7 +178,7 @@ export const componentInfo: ComponentInfo = {
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Name = "${json.codeContext?.formItemName}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}defaultSelected = "${json.defaultSelected}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}valueSelected = "${json.valueSelected}";`,
-			outputs: ({ json }) => ``,
+			outputs: (_) => '',
 			imports: ['RadioModule'],
 			code: ({ json, jsonToTemplate }) => {
 				return `
