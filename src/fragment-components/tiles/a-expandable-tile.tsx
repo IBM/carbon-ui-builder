@@ -158,8 +158,7 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) =>
-				`@Input() ${nameStringToVariableString(json.codeContext?.name)}Expanded = ${json.expanded}`,
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Expanded = ${json.expanded}`,
 			outputs: () => '',
 			imports: ['TilesModule'],
 			code: ({ json, jsonToTemplate }) => {

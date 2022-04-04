@@ -187,7 +187,9 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			imports: [],
 			code: ({ json, jsonToTemplate, fragments }) => {
-				return `<div role="group" aria-label="Selectable tiles"
+				return `<div
+					role="group"
+					aria-label="Selectable tiles"
 					${reactClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</div>`;
