@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { Search, Button, Dropdown } from 'carbon-components-react';
 import { AComponent } from './a-component';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
-import { ComponentInfo, allComponents } from '.';
-import { allIcons } from './a-allIcons';
-import { Add32 } from '@carbon/icons-react';
+import { ComponentInfo } from '.';
+import * as Icons from '@carbon/icons-react';
 import image from './../assets/component-icons/button.svg';
 import { ElementTile } from '../components/element-tile';
 const searchStyle = css`
@@ -14,24 +13,43 @@ const searchStyle = css`
 
 const elementTileListStyle = css`
 	display: flex;
-	justify-content: space-between;
+    justify-content: space-between;
 	flex-wrap: wrap;
-	margin-top: 20px;
-	width: 270px;
+    margin-top: 20px;
 `;
+
+const titleStyle = css`
+    height: 30px;
+`;
+
 const sizeItems = [
-    {id: 'sm', text: 'Small'},
-    {id: 'md', text: 'Medium'},
-    {id: 'lg', text: 'Large'},
-    {id: 'xl', text: 'Extra large'}
+    {id: '16', text: 'Small'},
+    {id: '20', text: 'Medium'},
+    {id: '24', text: 'Large'},
+    {id: '32', text: 'Extra large'}
 ];
+
 
 export const AIconsInputStyleUI = ({selectedComponent, setComponent}: any) => {
     const [filterString, setFilterString] = useState('');
     const shouldShow = (matches: string[]) => {
 		return !filterString || matches.some((match) => match.includes(filterString));
     };
-
+    let items: any = [];
+    Object.entries(Icons).forEach(item => {        
+        const element = item[0].split(/(\d+)/);
+        const icon = element ? element[0] : '';
+        const size = element ? element[1] : '';
+        const sizeText = sizeItems.find((item) => item.id === size)?.text;
+        const object = {
+            keywords: [item[0], item[0].toLowerCase(), item[0].replace(/[0-9]/g, '')],
+            name: `${sizeText === undefined ? '' : sizeText} ${icon} `,
+            size: size,
+            icon: item[1],
+            id: item[0]
+        }
+        if(item[0] !== 'Icon') items.push(object);
+    });
 	return <>
         <Dropdown
             label='Size'
@@ -52,47 +70,37 @@ export const AIconsInputStyleUI = ({selectedComponent, setComponent}: any) => {
 			onChange={(event: any) => setFilterString(event.target.value)} />
         <div className={elementTileListStyle}>
             {
-                Object.values(allComponents)
-                .filter((component: any) =>
-                    shouldShow(component.componentInfo.keywords))
-                .map((component: any) =>
-                <ElementTile componentObj={component.componentInfo.defaultComponentObj}>
-                    <img src={component.componentInfo.image} alt={component.componentInfo.name} />
-                    <span className='title'>{component.componentInfo.name}</span>
-                </ElementTile>)
+                 items.filter((component: any) => shouldShow(component.keywords)).map((props: any) => 
+                    <ElementTile className={titleStyle} componentObj={props.icon}
+                    onChange={(event: any) => setComponent({
+                        ...selectedComponent,
+                        icon: event.selectedItem.id
+                    })}>
+                        <span className={cx(css`font-size:10px`)}>{props.name}</span>
+                        <props.icon></props.icon>
+                    </ElementTile>)
+                 
             }
         </div>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
     </>
 };
-
-const Icon = (selectedIcon: any) => {
-    return React.createElement(selectedIcon.icon,
-    {
-        size: sizeItems.find(item => item.id === selectedIcon.selectedSize),
-        disabled: selectedIcon.disabled
-    })
-}
-
 export const AIcons = ({
     componentObj,
 	...rest
 }: any) => {
-    componentObj.selectedIcon = allIcons.find(item => 
-        item.id === "Add" && item.size === componentObj.size)?.icon;
+    let icons = Object.entries(Icons).find(icon => icon[0] === `${componentObj.selectedIcon+ componentObj.size}`);
+    componentObj.icon = icons !== undefined ? icons[1] : '';
 	return (
 		<AComponent
 		componentObj={componentObj}
 		headingCss={css`display: block;`}
 		className={css`position: relative; display: flex`}
 		{...rest}>
-           <Button kind="ghost">
-                <Icon
-                    icon = {componentObj.selectedIcon}
-                    size= {componentObj.size}>
-                </Icon>
-           </Button>
-            
+             
+                <Button kind="ghost">
+                  
+                </Button>
 		</AComponent>
 	);
 };
@@ -105,8 +113,9 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'icons',
         label: 'Icons',
-        size: 'sm',
-        selectedIcon: Add32
+        size: '16',
+        selectedIcon: 'Add',
+        icon: ''
 	},
 	image,
 	codeExport: {
