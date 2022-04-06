@@ -7,6 +7,7 @@ import * as column from './a-column';
 import * as fragment from './a-fragment';
 import * as grid from './a-grid';
 import * as numberinput from './a-numberinput';
+import * as progressIndicator from './a-progress-indicator';
 import * as row from './a-row';
 import * as tag from "./a-tag"
 import * as searchinput from './a-searchinput';
@@ -24,14 +25,15 @@ export { AColumn, AColumnStyleUI } from './a-column';
 export * from './a-component';
 export { AFragment, AFragmentStyleUI, AFragmentCodeUI } from './a-fragment';
 export { AGrid, AGridStyleUI } from './a-grid';
-export { ARow, ARowStyleUI } from './a-row';
+export { ALink, ALinkStyleUI, ALinkCodeUI } from './a-link';
+export { ANumberInput, ANumberInputStyleUI, ANumberInputCodeUI } from './a-numberinput';
+export { AProgressIndicator, AProgressIndicatorCodeUI, AProgressIndicatorStyleUI } from './a-progress-indicator';
+export { ASearchInput, ASearchInputStyleUI, ASearchInputCodeUI } from './a-searchinput';
 export { ATag, ATagStyleUI } from './a-tag';
 export { AText, ATextStyleUI } from './a-text';
 export { ATextArea, ATextAreaStyleUI, ATextAreaCodeUI } from './a-textarea';
 export { ATextInput, ATextInputStyleUI, ATextInputCodeUI } from './a-textinput';
-export { ASearchInput, ASearchInputStyleUI, ASearchInputCodeUI } from './a-searchinput';
-export { ANumberInput, ANumberInputStyleUI, ANumberInputCodeUI } from './a-numberinput';
-export { ALink, ALinkStyleUI, ALinkCodeUI } from './a-link';
+export { ARow, ARowStyleUI } from './a-row';
 
 export const allComponents = {
 	accordion,
@@ -48,5 +50,6 @@ export const allComponents = {
 	textinput,
 	searchinput,
 	numberinput,
+	progressIndicator,
 	link
 };
