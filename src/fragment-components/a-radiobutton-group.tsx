@@ -11,7 +11,6 @@ import {
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 
-
 export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: any) => {
 	const orientationItems = [
 		{id: 'horizontal', text: 'Horizontal'},
