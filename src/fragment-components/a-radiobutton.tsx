@@ -8,7 +8,8 @@ import { getParentComponent, updatedState, Adder } from '../components';
 import image from './../assets/component-icons/radiobutton.svg';
 import { nameStringToVariableString,
 		angularClassNamesFromComponentObj,
-		reactClassNamesFromComponentObj } from '../utils/fragment-tools';
+		reactClassNamesFromComponentObj 
+} from '../utils/fragment-tools';
 
 export const ARadioButtonStyleUI = ({selectedComponent, setComponent}: any) => {
 	return <>
