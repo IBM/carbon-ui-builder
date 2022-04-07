@@ -7,6 +7,8 @@ import { ComponentInfo } from '.';
 import * as Icons from '@carbon/icons-react';
 import image from './../assets/component-icons/button.svg';
 import { ElementTile } from '../components/element-tile';
+import { Add16 } from '@carbon/icons-react';
+import _ from 'lodash';
 const searchStyle = css`
 	margin-top: 15px;
 `;
@@ -18,8 +20,15 @@ const elementTileListStyle = css`
     margin-top: 20px;
 `;
 
-const titleStyle = css`
-    height: 30px;
+const elementTileStyle = css`
+	border: 1px solid #d8d8d8;
+	min-width: 34px;
+	height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+	margin-bottom: 1rem;
+    flex-direction: column;
 `;
 
 const sizeItems = [
@@ -28,6 +37,8 @@ const sizeItems = [
     {id: '24', text: 'Large'},
     {id: '32', text: 'Extra large'}
 ];
+
+
 
 
 export const AIconsInputStyleUI = ({selectedComponent, setComponent}: any) => {
@@ -40,15 +51,28 @@ export const AIconsInputStyleUI = ({selectedComponent, setComponent}: any) => {
         const element = item[0].split(/(\d+)/);
         const icon = element ? element[0] : '';
         const size = element ? element[1] : '';
-        const sizeText = sizeItems.find((item) => item.id === size)?.text;
         const object = {
-            keywords: [item[0], item[0].toLowerCase(), item[0].replace(/[0-9]/g, '')],
-            name: `${sizeText === undefined ? '' : sizeText} ${icon} `,
-            size: size,
-            icon: item[1],
-            id: item[0]
+            key: icon,
+            children: item[1],
+            compoenentObj: {
+                keywords: [item[0], item[0].toLowerCase(), item[0].replace(/[0-9]/g, '')],
+                size: [size],
+                id: item[0],
+                label: `${icon} `,
+                type: 'icon',
+                className: elementTileStyle
+            }
         }
-        if(item[0] !== 'Icon') items.push(object);
+        if(item[0] !== 'Icon') {
+            const isIncluded = items.some((item: any) => item.key === object.key);
+            if(isIncluded) {
+               const current = items.find((item: any) => item.key === object.key);
+               current.compoenentObj.size.push(size);
+            } else {
+                items.push(object);
+            }
+        }
+        selectedComponent.items = items;
     });
 	return <>
         <Dropdown
@@ -70,14 +94,13 @@ export const AIconsInputStyleUI = ({selectedComponent, setComponent}: any) => {
 			onChange={(event: any) => setFilterString(event.target.value)} />
         <div className={elementTileListStyle}>
             {
-                 items.filter((component: any) => shouldShow(component.keywords)).map((props: any) => 
-                    <ElementTile className={titleStyle} componentObj={props.icon}
+                 items.filter((component: any) => shouldShow(component.compoenentObj.keywords)).map((props: any) => 
+                    <ElementTile componentObj={props.compoenentObj}
                     onChange={(event: any) => setComponent({
                         ...selectedComponent,
                         icon: event.selectedItem.id
                     })}>
-                        <span className={cx(css`font-size:10px`)}>{props.name}</span>
-                        <props.icon></props.icon>
+                        <props.children></props.children>
                     </ElementTile>)
                  
             }
@@ -89,17 +112,17 @@ export const AIcons = ({
     componentObj,
 	...rest
 }: any) => {
-    let icons = Object.entries(Icons).find(icon => icon[0] === `${componentObj.selectedIcon+ componentObj.size}`);
-    componentObj.icon = icons !== undefined ? icons[1] : '';
+    if(_.isEmpty(componentObj.selectedIcon)) { 
+        componentObj.selectedIcon = Add16;
+    }
 	return (
 		<AComponent
 		componentObj={componentObj}
 		headingCss={css`display: block;`}
 		className={css`position: relative; display: flex`}
 		{...rest}>
-             
                 <Button kind="ghost">
-                  
+                    <componentObj.selectedIcon></componentObj.selectedIcon>
                 </Button>
 		</AComponent>
 	);
@@ -114,8 +137,8 @@ export const componentInfo: ComponentInfo = {
 		type: 'icons',
         label: 'Icons',
         size: '16',
-        selectedIcon: 'Add',
-        icon: ''
+        selectedIcon: {},
+        items: []
 	},
 	image,
 	codeExport: {
