@@ -47,9 +47,9 @@ export const ACheckbox = ({
 }: any) => {
 	return (
 		<AComponent
-			componentObj={componentObj}
-			headingCss={css`display: block;`}
-			{...rest}>
+		componentObj={componentObj}
+		headingCss={css`display: block;`}
+		{...rest}>
 			<Checkbox
 				kind={componentObj.kind}
 				disabled={componentObj.disabled}

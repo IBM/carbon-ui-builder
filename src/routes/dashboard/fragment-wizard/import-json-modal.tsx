@@ -127,7 +127,7 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 		reader.onload = (event) => {
 			setJsonString(event.target?.result as string);
 		};
-		reader.onerror = function (evt) {
+		reader.onerror = function (_) {
 			console.log('oops');
 		};
 
@@ -234,6 +234,7 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 							}) => (
 								<FileUploaderItem
 									key={uid()}
+									{...rest}
 									uuid={uuid}
 									name={name}
 									filesize={filesize}
@@ -243,7 +244,6 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 									iconDescription={iconDescription}
 									invalid={invalid}
 									onDelete={handleFileUploaderItemClick}
-									{...rest}
 								/>
 							)
 						)}

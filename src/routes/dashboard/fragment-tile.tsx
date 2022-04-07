@@ -50,14 +50,10 @@ export const FragmentTile = ({
 							<span>{lastModified ? lastModified : 'Last modified date unknown'}</span>
 						</div>
 						<OverflowMenu
-							className='fragment-overflow'
-							ariaLabel='Fragment options'
-							iconDescription=''
-							onClick={
-								(event: { stopPropagation: () => void }) => {
-									event.stopPropagation();
-								}
-							}>
+						className='fragment-overflow'
+						ariaLabel='Fragment options'
+						iconDescription=''
+						onClick={(event: { stopPropagation: () => void }) => event.stopPropagation()}>
 							<OverflowMenuItem
 								itemText='Edit'
 								onClick={() => history.push(`/edit/${fragment.id}`)} />

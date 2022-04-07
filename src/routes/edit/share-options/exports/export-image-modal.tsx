@@ -137,19 +137,19 @@ const ExportModalSettings = ({ inputs, handleChange }: any) => {
 				defaultChecked={inputs.ratioLock}
 				onChange={(event: any) => handleChange('ratioLock', event)} />
 			<Select
-				className={selectInput}
-				value={inputs.unit}
-				id={'unit'}
-				onChange={inputChange}
-				labelText='Units'>
+			className={selectInput}
+			value={inputs.unit}
+			id={'unit'}
+			onChange={inputChange}
+			labelText='Units'>
 				<SelectItem text='pixels' value='pixels' />
 			</Select>
 			<Select
-				className={selectInput}
-				value={inputs.format}
-				id={'format'}
-				onChange={inputChange}
-				labelText='Format'>
+			className={selectInput}
+			value={inputs.format}
+			id={'format'}
+			onChange={inputChange}
+			labelText='Format'>
 				<SelectItem text='png' value='image/png' />
 				<SelectItem text='jpeg' value='image/jpeg' />
 				<SelectItem text='bmp' value='image/bmp' />
@@ -268,18 +268,18 @@ export const ExportImageModal = (props: ExportImageProps) => {
 
 	return (
 		<Modal
-			hasForm
-			onRequestSubmit={() => {
-				// TODO look into whether it's a better user experience to have the
-				// processing in the background, perhaps with the saving indication
-				onSubmit().then(dispatchModal({ type: ModalActionType.closeModal }));
-			}}
-			onSecondarySubmit={() => props.setDisplayedModal(ShareOptionsModals.SHARE_OPTIONS)}
-			open={modalState.ShowModal && props.displayedModal === ShareOptionsModals.IMAGE_EXPORTS}
-			onRequestClose={() => dispatchModal({ type: ModalActionType.closeModal })}
-			primaryButtonText='Export'
-			secondaryButtonText='Back to export options'
-			modalHeading={`Export '${props.fragment.title}' as image`}>
+		hasForm
+		onRequestSubmit={() => {
+			// TODO look into whether it's a better user experience to have the
+			// processing in the background, perhaps with the saving indication
+			onSubmit().then(dispatchModal({ type: ModalActionType.closeModal }));
+		}}
+		onSecondarySubmit={() => props.setDisplayedModal(ShareOptionsModals.SHARE_OPTIONS)}
+		open={modalState.ShowModal && props.displayedModal === ShareOptionsModals.IMAGE_EXPORTS}
+		onRequestClose={() => dispatchModal({ type: ModalActionType.closeModal })}
+		primaryButtonText='Export'
+		secondaryButtonText='Back to export options'
+		modalHeading={`Export '${props.fragment.title}' as image`}>
 			<p>
 				Export a static image of this fragment for use in presentation decks or designs.
 			</p>

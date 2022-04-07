@@ -79,9 +79,7 @@ export const DashboardSearch = ({
 			className={sortButton}
 			ariaLabel='Sort fragment'
 			renderIcon={() => <ArrowsVertical16 />}
-			onClick={(event: { stopPropagation: () => void }) => {
-				event.stopPropagation();
-			}}>
+			onClick={(event: { stopPropagation: () => void }) => event.stopPropagation()}>
 			<OverflowMenuItem
 				itemText={(
 					<div className={sortOverflowItem}>
@@ -110,9 +108,9 @@ export const DashboardSearch = ({
 		{/* 🏗️🏗️🏗️ Under construction, add in later 🏗️🏗️🏗️ */}
 		{/* <Button kind='ghost' className={shareButton}><SettingsAdjust16 /></Button> */}
 		<Button
-			onClick={() => setDisplayWizard(!displayWizard)}
-			title='Add new fragment'
-			aria-label='Add new fragment'>
+		onClick={() => setDisplayWizard(!displayWizard)}
+		title='Add new fragment'
+		aria-label='Add new fragment'>
 			New fragment
 			<Add16 className='bx--btn__icon' />
 		</Button>

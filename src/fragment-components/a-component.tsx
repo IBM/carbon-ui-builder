@@ -129,30 +129,30 @@ export const AComponent = ({
 
 	return (
 		<span
-			className={className}
-			ref={holderRef}
-			onClick={(event) => {
-				event.stopPropagation();
-				select();
-			}}
-			draggable='true' // TODO make Draggable32 the drag handle and this element as preview
-			onDragStart={(event: any) => drag(event, {
-				component: componentObj,
-				type: 'move'
-			})}
-			onDragEnter={(event: any) => {
-				event.stopPropagation();
-				setShowDragOverIndicator(true);
-			}}
-			onDragLeave={(event: any) => {
-				event.stopPropagation();
-				setShowDragOverIndicator(false);
-			}}
-			onDragOver={(event) => {
-				const rect = event.currentTarget.getBoundingClientRect();
-				setDragOverPosition([event.pageX - rect.left, event.pageY - rect.top]);
-			}}
-			onDrop={onDrop}>
+		className={className}
+		ref={holderRef}
+		onClick={(event) => {
+			event.stopPropagation();
+			select();
+		}}
+		draggable='true' // TODO make Draggable32 the drag handle and this element as preview
+		onDragStart={(event: any) => drag(event, {
+			component: componentObj,
+			type: 'move'
+		})}
+		onDragEnter={(event: any) => {
+			event.stopPropagation();
+			setShowDragOverIndicator(true);
+		}}
+		onDragLeave={(event: any) => {
+			event.stopPropagation();
+			setShowDragOverIndicator(false);
+		}}
+		onDragOver={(event) => {
+			const rect = event.currentTarget.getBoundingClientRect();
+			setDragOverPosition([event.pageX - rect.left, event.pageY - rect.top]);
+		}}
+		onDrop={onDrop}>
 			<span className={cx(
 				dropStyleBefore,
 				showDragOverIndicator && isDragOverBefore() ? css`` : css`display: none`

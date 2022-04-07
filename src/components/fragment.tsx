@@ -261,19 +261,21 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 		return null;
 	};
 
-	const styles = css`
-	${getAllFragmentStyleClasses(fragment, fragments).map((styleClass: any) => `.${styleClass.id} {${styleClass.content}}`)}
-	`;
+	const styles = css`${
+		getAllFragmentStyleClasses(fragment, fragments).map((styleClass: any) => `.${styleClass.id} {
+			${styleClass.content}
+		}`)
+	}`;
 	// TODO add fragment.width and fragment.height to database
 	return (
 		<div
-			className={cx(
-				canvas,
-				styles,
-				css`width: ${fragment.width || '800px'}; height: ${fragment.height || '600px'}`
-			)}
-			onDragOver={allowDrop}
-			onDrop={(event: any) => drop(event, fragment.data.id)}>
+		className={cx(
+			canvas,
+			styles,
+			css`width: ${fragment.width || '800px'}; height: ${fragment.height || '600px'}`
+		)}
+		onDragOver={allowDrop}
+		onDrop={(event: any) => drop(event, fragment.data.id)}>
 			<div className={`${fragment.cssClasses ? fragment.cssClasses.map((cc: any) => cc.id).join(' ') : ''}`}>
 				{renderComponents(fragment.data)}
 			</div>

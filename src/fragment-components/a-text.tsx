@@ -30,9 +30,9 @@ export const AText = ({
 }: any) => {
 	return (
 		<AComponent
-			componentObj={componentObj}
-			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
-			{...rest}>
+		componentObj={componentObj}
+		className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
+		{...rest}>
 			{children}
 		</AComponent>
 	);

@@ -117,10 +117,10 @@ export const StylePane = ({ isActive }: any) => {
 				{
 					styleClasses.filter(shouldShow).map((styleClass: any) => (
 						<Tag
-							key={styleClass.name}
-							filter
-							onClick={() => setSelectedStyleClassId(styleClass.id)}
-							onClose={() => removeStyleClass(styleClass.id)}>
+						key={styleClass.name}
+						filter
+						onClick={() => setSelectedStyleClassId(styleClass.id)}
+						onClose={() => removeStyleClass(styleClass.id)}>
 							{styleClass.name}
 						</Tag>
 					))

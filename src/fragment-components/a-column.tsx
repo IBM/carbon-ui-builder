@@ -48,10 +48,10 @@ export const AColumnStyleUI = ({ selectedComponent, setComponent }: any) => {
 
 	return <>
 		<a
-			href='https://www.carbondesignsystem.com/guidelines/2x-grid/implementation/'
-			target='_blank'
-			rel='noopener noreferrer'
-			className={helpIconStyle}>
+		href='https://www.carbondesignsystem.com/guidelines/2x-grid/implementation/'
+		target='_blank'
+		rel='noopener noreferrer'
+		className={helpIconStyle}>
 			<Help32 />
 		</a>
 		<Accordion align='start'>
@@ -201,28 +201,28 @@ export const AColumn = ({
 		// position: relative doesn't seem to affect the grid layout and it's needed atm
 		// to position right add icon
 		<Column
-			onDrop={onDrop}
-			className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`position: relative`)}
-			sm={{
-				span: componentObj.smallSpan || undefined,
-				offset: componentObj.smallOffset || undefined
-			}}
-			md={{
-				span: componentObj.mediumSpan || undefined,
-				offset: componentObj.mediumOffset || undefined
-			}}
-			lg={{
-				span: componentObj.largeSpan || undefined,
-				offset: componentObj.largeOffset || undefined
-			}}
-			xlg={{
-				span: componentObj.xLargeSpan || undefined,
-				offset: componentObj.xLargeOffset || undefined
-			}}
-			max={{
-				span: componentObj.maxSpan || undefined,
-				offset: componentObj.maxOffset || undefined
-			}}>
+		onDrop={onDrop}
+		className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`position: relative`)}
+		sm={{
+			span: componentObj.smallSpan || undefined,
+			offset: componentObj.smallOffset || undefined
+		}}
+		md={{
+			span: componentObj.mediumSpan || undefined,
+			offset: componentObj.mediumOffset || undefined
+		}}
+		lg={{
+			span: componentObj.largeSpan || undefined,
+			offset: componentObj.largeOffset || undefined
+		}}
+		xlg={{
+			span: componentObj.xLargeSpan || undefined,
+			offset: componentObj.xLargeOffset || undefined
+		}}
+		max={{
+			span: componentObj.maxSpan || undefined,
+			offset: componentObj.maxOffset || undefined
+		}}>
 			<span className={cx(addStyleLeft, selected ? css`` : css`display: none`)}>
 				<Add32 onClick={(event: any) => {
 					event.stopPropagation();
@@ -236,10 +236,10 @@ export const AColumn = ({
 				}} className={iconStyle}/>
 			</span>
 			<AComponent
-				componentObj={componentObj}
-				className={css`display: block;`}
-				selected={selected}
-				{...rest}>
+			componentObj={componentObj}
+			className={css`display: block;`}
+			selected={selected}
+			{...rest}>
 				{children}
 			</AComponent>
 		</Column>
@@ -256,9 +256,9 @@ export const componentInfo: ComponentInfo = {
 		selected={selected}
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
-		{componentObj.items.map((column: any) => (
-			renderComponents(column)
-		))}
+			{componentObj.items.map((column: any) => (
+				renderComponents(column)
+			))}
 	</AColumn>,
 	keywords: ['column', 'grid'],
 	name: 'Column',

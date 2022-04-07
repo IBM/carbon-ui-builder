@@ -71,14 +71,15 @@ export const AAccordionItem = ({
 		)
 	});
 
-	return (<Adder
+	return (
+		<Adder
 		active={selected}
 		topAction={() => addAccordionItem()}
 		bottomAction={() => addAccordionItem(1)}>
 			<AComponent
 			componentObj={componentObj}
-			{...rest}
-			selected={selected}>
+			selected={selected}
+			{...rest}>
 				<AccordionItem
 				title={componentObj.title}
 				disabled={componentObj.disabled}
@@ -86,7 +87,8 @@ export const AAccordionItem = ({
 					{children}
 				</AccordionItem>
 			</AComponent>
-		</Adder>);
+		</Adder>
+	);
 };
 
 export const componentInfo: ComponentInfo = {

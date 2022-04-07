@@ -52,8 +52,8 @@ export const ElementsPane = ({ isActive }: any) => {
 						.filter((component: any) =>
 							!component.componentInfo.hideFromElementsPane
 							&& shouldShow(component.componentInfo.keywords))
-						.map((component: any, index: number) =>
-							<ElementTile componentObj={component.componentInfo.defaultComponentObj} key={index}>
+						.map((component: any) =>
+							<ElementTile componentObj={component.componentInfo.defaultComponentObj} key={component.componentInfo.name}>
 								<img src={component.componentInfo.image} alt={component.componentInfo.name} />
 								<span className='title'>{component.componentInfo.name}</span>
 							</ElementTile>)
@@ -67,8 +67,8 @@ export const ElementsPane = ({ isActive }: any) => {
 							Object.values(microLayouts)
 								// TODO prevent recursive adding
 								.filter((component: any) => shouldShow([component.title, ...component.labels]))
-								.map((component: any, index: number) =>
-									<ElementTile componentObj={{ type: 'fragment', id: component.id }} key={index}>
+								.map((component: any) =>
+									<ElementTile componentObj={{ type: 'fragment', id: component.id }} key={component.id}>
 										{/* <img src={component.componentInfo.image} alt={component.title} /> */}
 										<span className='title'>{component.title}</span>
 									</ElementTile>)

@@ -41,17 +41,17 @@ export const SelectedComponentBreadcrumbs = ({ selectedComponent }: any) => {
 	return selectedComponent && <Breadcrumb noTrailingSlash>
 		{getAncestors(fragment.data, selectedComponent).map((component) =>
 			<BreadcrumbItem
-				href="#"
-				key={component.id}
-				isCurrentPage={!component.type}
-				onClick={(event: any) => {
-					event.nativeEvent.preventDefault();
-					if (!component.type) {
-						// happens when clicking root element
-						return;
-					}
-					selectComponent(component);
-				}}>
+			href="#"
+			key={component.id}
+			isCurrentPage={!component.type}
+			onClick={(event: any) => {
+				event.nativeEvent.preventDefault();
+				if (!component.type) {
+					// happens when clicking root element
+					return;
+				}
+				selectComponent(component);
+			}}>
 				{component.type || 'root'}
 			</BreadcrumbItem>
 		)}

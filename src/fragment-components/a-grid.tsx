@@ -60,13 +60,13 @@ export const AGrid = ({
 	return (
 		<AComponent componentObj={componentObj} {...rest}>
 			<Grid
-				className={cx(
-				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-				componentObj.showOutline ? showOutlineStyle : ''
-				)}
-				condensed={componentObj.condensed}
-				fullWidth={componentObj.fullWidth}
-				narrow={componentObj.narrow}>
+			className={cx(
+			componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+			componentObj.showOutline ? showOutlineStyle : ''
+			)}
+			condensed={componentObj.condensed}
+			fullWidth={componentObj.fullWidth}
+			narrow={componentObj.narrow}>
 				{children}
 			</Grid>
 		</AComponent>

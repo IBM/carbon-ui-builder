@@ -86,12 +86,12 @@ export const ALink = ({
 }: any) => {
 	return (
 		<AComponent
-			componentObj={componentObj}
-			{...rest}>
+		componentObj={componentObj}
+		{...rest}>
 			<Link
-				inline={componentObj.inline}
-				disabled={componentObj.disabled}
-				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+			inline={componentObj.inline}
+			disabled={componentObj.disabled}
+			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 				{children}
 			</Link>
 		</AComponent>
@@ -107,7 +107,7 @@ export const componentInfo: ComponentInfo = {
 		select={select}
 		remove={remove}
 		selected={selected}>
-		{componentObj.text}
+			{componentObj.text}
 	</ALink>,
 	keywords: ['link'],
 	name: 'Link',

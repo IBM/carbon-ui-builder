@@ -14,9 +14,6 @@ export const DeleteFragmentModal = ({ id }: any) => {
 	const fragment = fragments.find((fragment: any) => fragment.id === id);
 
 	const deleteFragment = () => {
-		const undoHideFragment = () => {
-			toggleFragmentVisibility(id, false);
-		};
 		toggleFragmentVisibility(id, true);
 		history.push('/');
 		dispatchNotification({
@@ -27,7 +24,7 @@ export const DeleteFragmentModal = ({ id }: any) => {
 				message: `Fragment '${fragment.title}' has been permanently deleted.`,
 				action: {
 					actionText: 'Undo',
-					actionFunction: undoHideFragment,
+					actionFunction: () => toggleFragmentVisibility(id, false),
 					onNotificationClose: () => removeFragment(id)
 				}
 			}
@@ -37,14 +34,14 @@ export const DeleteFragmentModal = ({ id }: any) => {
 
 	return (
 		<Modal
-			size='sm'
-			open={modalState.ShowModal}
-			onRequestClose={() => dispatchModal({ type: ModalActionType.closeModal })}
-			secondaryButtonText='Cancel'
-			modalHeading='Delete this fragment?'
-			danger
-			primaryButtonText='Delete'
-			onRequestSubmit={() => deleteFragment()}>
+		size='sm'
+		open={modalState.ShowModal}
+		onRequestClose={() => dispatchModal({ type: ModalActionType.closeModal })}
+		secondaryButtonText='Cancel'
+		modalHeading='Delete this fragment?'
+		danger
+		primaryButtonText='Delete'
+		onRequestSubmit={() => deleteFragment()}>
 			<p>
 				Click <strong>Cancel</strong> to go back to editing your fragment
 				or <strong>Delete</strong> to remove it permanently.

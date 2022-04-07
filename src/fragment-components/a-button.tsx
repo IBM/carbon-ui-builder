@@ -26,13 +26,10 @@ export const AButtonStyleUI = ({ selectedComponent, setComponent }: any) => {
 		<TextInput
 			value={selectedComponent.text}
 			labelText='Text'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					text: event.currentTarget.value
-				});
-			}}
-		/>
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				text: event.currentTarget.value
+			})} />
 		<Dropdown
 			label='Kind'
 			titleText='Kind'
@@ -42,7 +39,7 @@ export const AButtonStyleUI = ({ selectedComponent, setComponent }: any) => {
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				kind: event.selectedItem.id
-			})}/>
+			})} />
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
@@ -54,13 +51,13 @@ export const AButton = ({
 }: any) => {
 	return (
 		<AComponent
-			componentObj={componentObj}
-			className={css`position: relative; display: inline-flex`}
-			{...rest}>
+		componentObj={componentObj}
+		className={css`position: relative; display: inline-flex`}
+		{...rest}>
 			<Button
-				kind={componentObj.kind}
-				disabled={componentObj.disabled}
-				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+			kind={componentObj.kind}
+			disabled={componentObj.disabled}
+			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 				{children}
 			</Button>
 		</AComponent>
@@ -75,7 +72,7 @@ export const componentInfo: ComponentInfo = {
 		select={select}
 		remove={remove}
 		selected={selected}>
-		{componentObj.text}
+			{componentObj.text}
 	</AButton>,
 	keywords: ['button'],
 	name: 'Button',

@@ -151,10 +151,10 @@ export const ANumberInput = ({
 }: any) => {
 	return (
 		<AComponent
-			componentObj={componentObj}
-			headingCss={css`display: block;`}
-			className={css`position: relative; display: flex`}
-			{...rest}>
+		componentObj={componentObj}
+		headingCss={css`display: block;`}
+		className={css`position: relative; display: flex`}
+		{...rest}>
 			<NumberInput
 				size={componentObj.size}
 				helperText={componentObj.helperText}

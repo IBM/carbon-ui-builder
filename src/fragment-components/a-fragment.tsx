@@ -16,11 +16,11 @@ import { LinkButton } from '../components';
 export const AFragmentStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<LinkButton
-			kind='secondary'
-			size='sm'
-			renderIcon={Edit32}
-			className={css`margin-bottom: 1rem`}
-			to={selectedComponent.id}>
+		kind='secondary'
+		size='sm'
+		renderIcon={Edit32}
+		className={css`margin-bottom: 1rem`}
+		to={selectedComponent.id}>
 			Edit fragment
 		</LinkButton>
 		<Checkbox
@@ -63,15 +63,15 @@ export const AFragment = ({
 }: any) => {
 	return (
 		<AComponent
-			componentObj={componentObj}
-			className={css`position: relative; display: inline-flex`}
-			{...rest}>
+		componentObj={componentObj}
+		className={css`position: relative; display: inline-flex`}
+		{...rest}>
 			<div
-				style={{ pointerEvents: 'none' }}
-				className={cx(
-					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-					componentObj.showOutline ? showOutlineStyle : ''
-				)}>
+			style={{ pointerEvents: 'none' }}
+			className={cx(
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				componentObj.showOutline ? showOutlineStyle : ''
+			)}>
 				{children}
 			</div>
 		</AComponent>
@@ -95,7 +95,7 @@ export const componentInfo: ComponentInfo = {
 			select={select}
 			remove={remove}
 			selected={selected}>
-			{renderComponents(subFragment.data)}
+				{renderComponents(subFragment.data)}
 		</AFragment>;
 	},
 	keywords: ['fragment'],

@@ -94,10 +94,10 @@ export const ATextInput = ({
 }: any) => {
 	return (
 		<AComponent
-			componentObj={componentObj}
-			headingCss={css`display: block;`}
-			className={css`position: relative; display: flex`}
-			{...rest}>
+		componentObj={componentObj}
+		headingCss={css`display: block;`}
+		className={css`position: relative; display: flex`}
+		{...rest}>
 			<TextInput
 				type={componentObj.inputType}
 				labelText={componentObj.label}

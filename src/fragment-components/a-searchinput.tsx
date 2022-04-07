@@ -84,10 +84,10 @@ export const ASearchInput = ({
 }: any) => {
 	return (
 		<AComponent
-			componentObj={componentObj}
-			headingCss={css`display: block;`}
-			className={css`position: relative; display: flex`}
-			{...rest}>
+		componentObj={componentObj}
+		headingCss={css`display: block;`}
+		className={css`position: relative; display: flex`}
+		{...rest}>
 			<Search
 				size={componentObj.inputSize}
 				labelText={componentObj.label}
