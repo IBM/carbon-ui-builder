@@ -17,6 +17,7 @@ const elementTileListStyle = css`
 	justify-content: space-between;
 	flex-wrap: wrap;
 	margin-top: 100px;
+	width: 270px;
 `;
 
 export const ElementsPane = ({ isActive }: any) => {

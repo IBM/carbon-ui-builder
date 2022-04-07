@@ -95,6 +95,7 @@ export const leftPane = css`
 	box-shadow: inset -1px 0px #d8d8d8;
 	z-index: 999;
 	overflow-y: auto;
+	overflow-x: hidden;
 
 	&.is-active {
 		left: 0;
