@@ -66,28 +66,29 @@ export const ARadioButton = ({
 		)
 	});
 	componentObj.value = `${componentObj.id}`;
-	return	(
+
+	return (
 		<Adder
-			active={selected}
-			addButtonsCss={addButtonCss}
-			key={componentObj.id}
-			bottomAction={() => addRadio(1)}>
+		active={selected}
+		addButtonsCss={addButtonCss}
+		key={componentObj.id}
+		bottomAction={() => addRadio(1)}>
 			<AComponent
-				selected={selected}
-				headingCss={css`width: fit-content; min-width: 9rem;`}
-				componentObj={componentObj}
-				{...rest}> 
-					<RadioButton
-						id={componentObj.id}
-						name={componentObj.codeContext?.name}
-						labelText={componentObj.labelText}
-						defaultChecked={componentObj.defaultChecked}
-						checked={componentObj.defaultChecked}
-						value= {componentObj.value}
-						disabled= {componentObj.disabled}/>
+			selected={selected}
+			headingCss={css`width: fit-content; min-width: 9rem;`}
+			componentObj={componentObj}
+			{...rest}> 
+				<RadioButton
+					id={componentObj.id}
+					name={componentObj.codeContext?.name}
+					labelText={componentObj.labelText}
+					defaultChecked={componentObj.defaultChecked}
+					checked={componentObj.defaultChecked}
+					value= {componentObj.value}
+					disabled= {componentObj.disabled} />
 			</AComponent>
 		</Adder>
-	)
+	);
 };
 
 export const componentInfo: ComponentInfo = {
