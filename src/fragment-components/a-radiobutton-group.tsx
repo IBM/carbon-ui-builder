@@ -69,6 +69,7 @@ export const ARadioButtonGroupCodeUI = ({ selectedComponent, setComponent }: any
 	selectedComponent.defaultSelected = `${selectedComponent.items.find(((item: any) => {
 		return item.defaultChecked	
 	})).id}`;
+	
 	return <>
 		<Dropdown
 			label='Default selection'
