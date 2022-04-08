@@ -1,5 +1,9 @@
 import React from 'react';
-import { RadioButton, TextInput, Checkbox } from 'carbon-components-react';
+import {
+	RadioButton,
+	TextInput,
+	Checkbox
+} from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { useFragment } from '../context';
