@@ -1,7 +1,9 @@
 import React from 'react';
-import { Dropdown,
+import { 
+	Dropdown,
 	TextInput,
-	RadioButtonGroup } from 'carbon-components-react';
+	RadioButtonGroup
+} from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 import image from './../assets/component-icons/radiobutton-group.svg';
