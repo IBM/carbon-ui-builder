@@ -23,7 +23,6 @@ export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: an
 		{id: 'left', text: 'Left'},
 		{id: 'right', text: 'Right'}
 	];
-	selectedComponent.valueSelected = selectedComponent.defaultSelected;
 	return <>
 		<TextInput
 			value={selectedComponent.legend}
@@ -81,7 +80,6 @@ export const ARadioButtonGroupCodeUI = ({ selectedComponent, setComponent }: any
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
-				defaultSelected: `${event.selectedItem.id}`,
 				valueSelected:`${event.selectedItem.id}`,
 				items: selectedComponent.items.map((item: any) => ({
 						...item, 
@@ -107,7 +105,6 @@ return (
 			disabled= {componentObj.disabled}
 			orientation={componentObj.orientation}
 			defaultSelected={componentObj.defaultSelected}
-			valueSelected={componentObj.valueSelected}
 			labelPosition={componentObj.labelPosition}
 			name={componentObj.codeContext?.name}>
 					{children}
@@ -127,7 +124,6 @@ export const componentInfo: ComponentInfo = {
 		type: 'radioButtonGroup',
 		legend: 'Radio Button Group',
 		defaultSelected: '',
-		valueSelected: '',
 		labelPosition: 'left',
 		orientation: 'horizontal',
 		items: [
@@ -165,8 +161,7 @@ export const componentInfo: ComponentInfo = {
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Orientation = "${json.orientation}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}LabelPosition = "${json.labelPosition}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Name = "${json.codeContext?.name}";
-								@Input() ${nameStringToVariableString(json.codeContext?.name)}defaultSelected = "${json.defaultSelected}";
-								@Input() ${nameStringToVariableString(json.codeContext?.name)}valueSelected = "${json.valueSelected}";`,
+								@Input() ${nameStringToVariableString(json.codeContext?.name)}defaultSelected = "${json.defaultSelected}";`,
 			outputs: (_) => '',
 			imports: ['RadioModule'],
 			code: ({ json, jsonToTemplate }) => {
@@ -189,7 +184,6 @@ export const componentInfo: ComponentInfo = {
 					legendText="${json.legend}"
 					orientation="${json.orientation}"
 					labelPlacement="${json.labelPosition}"
-					valueSelected="${json.valueSelected}"
 					defaultSelected="${json.defaultSelected}"
 					${reactClassNamesFromComponentObj(json)}
 					onChange={(radio) => handleInputChange({
