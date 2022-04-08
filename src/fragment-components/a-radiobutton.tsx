@@ -93,7 +93,7 @@ export const ARadioButton = ({
 					labelText={componentObj.labelText}
 					defaultChecked={componentObj.defaultChecked}
 					checked={componentObj.defaultChecked}
-					value= {componentObj.value}
+					value={componentObj.value}
 					disabled= {componentObj.disabled} />
 			</AComponent>
 		</Adder>
