@@ -48,7 +48,7 @@ const getIcons = () => {
             key: icon,
             componentObj: {
                 keywords: [item[0], item[0].toLowerCase(), item[0].replace(/[0-9]/g, '')],
-                size: [{size: size, component: item[1]}],
+                size: [{size: size, text: sizeItems.find((sizeItem : any) => sizeItem.id === size)?.text, component: item[1]}],
                 key: icon,
                 label: `${icon}`,
                 type: 'icons',
@@ -60,7 +60,7 @@ const getIcons = () => {
             const isIncluded = items.some((item: any) => item.key === object.key);
             if(isIncluded) {
                const current = items.find((item: any) => item.key === object.key);
-               current.componentObj.size.push({size: size, component: item[1]});
+               current.componentObj.size.push({size: size, text: sizeItems.find((sizeItem : any) => sizeItem.id === size)?.text, component: item[1]});
             } else {
                 items.push(object);
             }
@@ -75,32 +75,16 @@ export const AIconsInputStyleUI = ({selectedComponent, setComponent}: any) => {
     const shouldShow = (matches: string[]) => {
 		return !filterString || matches.some((match) => match.includes(filterString));
     };
-    const getSize = () => {
-        return selectedComponent.size.map((sizeKey: any) => {
-            return {
-                id: sizeKey.size,
-                text: sizeItems.find((size : any) => size.id === sizeKey.size)?.text,
-                component: sizeKey.component
-            }
-        });
-    }  
 	return (<>
         <Dropdown
             label='Size'
             titleText='Size'
-            items={getSize()}
-            initialSelectedItem={getSize().find((item: any) =>  {
-                if(selectedComponent.selectedSize) {
-                    return item.id === selectedComponent.selectedSize
-                } else {
-                    return item.id === selectedComponent.size[0].size
-                }
-            })}
+            items={selectedComponent.size}
+            initialSelectedItem={selectedComponent.size.find((item: any) =>  item.size === selectedComponent.size[0].size)}
             itemToString={(item: any) => (item ? item.text : '')}
             onChange={(event: any) => setComponent({
                 ...selectedComponent,
-                selectedIcon: selectedComponent.size.find((item: any) => item.size === event.selectedItem.id).component,
-                selectedSize: selectedComponent.size.find((item: any) => item.size === event.selectedItem.id).size
+                selectedIcon: selectedComponent.size.find((item: any) => item.size === event.selectedItem.size).component
         })}/>
 		<Search
 		    id='icons-search'
@@ -165,9 +149,7 @@ export const componentInfo: ComponentInfo = {
 		type: 'icons',
         label: 'Icons',
         size: '',
-        selectedSize: '',
-        key: '',
-        initLoad: true,
+        key: ''
 	},
 	image,
 	codeExport: {
