@@ -77,9 +77,9 @@ export const AAccordionItem = ({
 		topAction={() => addAccordionItem()}
 		bottomAction={() => addAccordionItem(1)}>
 			<AComponent
+			{...rest}
 			componentObj={componentObj}
-			selected={selected}
-			{...rest}>
+			selected={selected}>
 				<AccordionItem
 				title={componentObj.title}
 				disabled={componentObj.disabled}

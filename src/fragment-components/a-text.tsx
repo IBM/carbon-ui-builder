@@ -46,7 +46,7 @@ export const componentInfo: ComponentInfo = {
 		select={select}
 		remove={remove}
 		selected={selected}>
-		{componentObj.text}
+			{componentObj.text}
 	</AText>,
 	keywords: ['text'],
 	name: 'Text',

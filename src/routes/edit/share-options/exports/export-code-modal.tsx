@@ -146,7 +146,7 @@ export const ExportCode = ({
 				label='Angular'
 				role='presentation'
 				tabIndex={0}>
-				<div className={titleWrapper}>
+					<div className={titleWrapper}>
 						<h3>Angular Code</h3>
 						<a
 						href={generateSandboxUrl(createFragmentSandbox(angularCode))}

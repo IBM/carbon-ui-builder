@@ -93,8 +93,8 @@ export const ARow = ({
 		<AComponent componentObj={componentObj} selected={selected} {...rest}>
 			<Row
 			className={cx(
-			componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-			css`position: relative`
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				css`position: relative`
 			)}
 			condensed={componentObj.condensed}
 			narrow={componentObj.narrow}>

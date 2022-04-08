@@ -249,7 +249,7 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 					select={() => select(componentObj)}
 					remove={() => remove(componentObj)}
 					selected={fragment.selectedComponentId === componentObj.id}>
-					{componentObj.items && componentObj.items.map((row: any) => renderComponents(row))}
+						{componentObj.items && componentObj.items.map((row: any) => renderComponents(row))}
 				</component.componentInfo.component>;
 			}
 		}
