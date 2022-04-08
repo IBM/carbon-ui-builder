@@ -103,8 +103,7 @@ export const AIconsInputStyleUI = ({selectedComponent, setComponent}: any) => {
                                         ...selectedComponent,
                                         selectedIcon: props.componentObj.selectedIcon,
                                         key: props.componentObj.key,
-                                        size: props.componentObj.size,
-                                        initLoad: false
+                                        size: props.componentObj.size
                                     })}>
                                 </Component>
                             </ElementTile>)
