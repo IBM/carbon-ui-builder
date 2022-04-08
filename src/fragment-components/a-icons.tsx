@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, Button, Dropdown } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css, cx } from 'emotion';
@@ -38,12 +38,7 @@ const sizeItems = [
     {id: '32', text: 'Extra large'}
 ];
 
-
-export const AIconsInputStyleUI = ({selectedComponent, setComponent}: any) => {
-    const [filterString, setFilterString] = useState('');
-    const shouldShow = (matches: string[]) => {
-		return !filterString || matches.some((match) => match.includes(filterString));
-    };
+const getIcons = () => {
     let items: any = [];
     Object.entries(Icons).forEach(item => {     
         const element = item[0].split(/(\d+)/);
@@ -71,8 +66,17 @@ export const AIconsInputStyleUI = ({selectedComponent, setComponent}: any) => {
             }
         }
     });
+    return items;
+}
+
+
+export const AIconsInputStyleUI = ({selectedComponent, setComponent}: any) => {
+    const [filterString, setFilterString] = useState('');
+    const shouldShow = (matches: string[]) => {
+		return !filterString || matches.some((match) => match.includes(filterString));
+    };
     const getSize = () => {
-        return items.find((item: any) => item.key === selectedComponent.key).componentObj?.size?.map((sizeKey: any) => {
+        return selectedComponent.size.map((sizeKey: any) => {
             return {
                 id: sizeKey.size,
                 text: sizeItems.find((size : any) => size.id === sizeKey.size)?.text,
@@ -85,12 +89,18 @@ export const AIconsInputStyleUI = ({selectedComponent, setComponent}: any) => {
             label='Size'
             titleText='Size'
             items={getSize()}
-            initialSelectedItem={getSize().find((item: any) => item.id === selectedComponent.size)}
+            initialSelectedItem={getSize().find((item: any) =>  {
+                if(selectedComponent.selectedSize) {
+                    return item.id === selectedComponent.selectedSize
+                } else {
+                    return item.id === selectedComponent.size[0].size
+                }
+            })}
             itemToString={(item: any) => (item ? item.text : '')}
             onChange={(event: any) => setComponent({
                 ...selectedComponent,
-                selectedIcon: getSize().find((item: any) => item.id === event.selectedItem.id).component,
-                size: getSize().find((item: any) => item.id === event.selectedItem.id).id
+                selectedIcon: selectedComponent.size.find((item: any) => item.size === event.selectedItem.id).component,
+                selectedSize: selectedComponent.size.find((item: any) => item.size === event.selectedItem.id).size
         })}/>
 		<Search
 		    id='icons-search'
@@ -101,7 +111,7 @@ export const AIconsInputStyleUI = ({selectedComponent, setComponent}: any) => {
 			onChange={(event: any) => setFilterString(event.target.value)} />
         <div className={elementTileListStyle}>
             {
-                 items.filter((component: any) => shouldShow(component.componentObj.keywords)).map((props: any) => {
+                 selectedComponent.items.filter((component: any) => shouldShow(component.componentObj.keywords)).map((props: any) => {
                     const Component = props.componentObj.selectedIcon;    
                    return (<ElementTile componentObj={props.componentObj}>
                                 <Component 
@@ -109,7 +119,8 @@ export const AIconsInputStyleUI = ({selectedComponent, setComponent}: any) => {
                                         ...selectedComponent,
                                         selectedIcon: props.componentObj.selectedIcon,
                                         key: props.componentObj.key,
-                                        size: props.componentObj.size
+                                        size: props.componentObj.size,
+                                        initLoad: false
                                     })}>
                                 </Component>
                             </ElementTile>)
@@ -123,11 +134,14 @@ export const AIcons = ({
     componentObj,
 	...rest
 }: any) => {
-    // debugger;
-    if(_.isEmpty(componentObj.selectedIcon)) { 
-        componentObj.selectedIcon = Add16;
-        componentObj.key = 'Add';
-        componentObj.size = '16';
+    componentObj.items = getIcons();
+    const component = componentObj.key === "" ?
+    componentObj.items.find((item: any) => item.key === 'Add').componentObj :
+    componentObj.items.find((item: any) => item.key === componentObj.key).componentObj;
+    if(_.isEmpty(componentObj.selectedIcon)) {
+        componentObj.selectedIcon = component.selectedIcon;
+        componentObj.key = component.key;
+        componentObj.size = component.size;
     }
 	return (
 		<AComponent
@@ -151,9 +165,9 @@ export const componentInfo: ComponentInfo = {
 		type: 'icons',
         label: 'Icons',
         size: '',
+        selectedSize: '',
         key: '',
-        selectedIcon: {},
-        allIcons: []
+        initLoad: true,
 	},
 	image,
 	codeExport: {
