@@ -45,7 +45,7 @@ export const AIconsInputStyleUI = ({selectedComponent, setComponent}: any) => {
 		return !filterString || matches.some((match) => match.includes(filterString));
     };
     let items: any = [];
-    Object.entries(Icons).forEach(item => {        
+    Object.entries(Icons).forEach(item => {     
         const element = item[0].split(/(\d+)/);
         const icon = element ? element[0] : '';
         const size = element ? element[1] : '';
@@ -54,7 +54,7 @@ export const AIconsInputStyleUI = ({selectedComponent, setComponent}: any) => {
             componentObj: {
                 keywords: [item[0], item[0].toLowerCase(), item[0].replace(/[0-9]/g, '')],
                 size: [{size: size, component: item[1]}],
-                id: icon,
+                key: icon,
                 label: `${icon}`,
                 type: 'icons',
                 className: elementTileStyle,
@@ -72,16 +72,15 @@ export const AIconsInputStyleUI = ({selectedComponent, setComponent}: any) => {
         }
     });
     const getSize = () => {
-        return items.find((item: any) => item.key === selectedComponent.id).componentObj?.size?.map((sizeKey: any) => {
+        return items.find((item: any) => item.key === selectedComponent.key).componentObj?.size?.map((sizeKey: any) => {
             return {
                 id: sizeKey.size,
                 text: sizeItems.find((size : any) => size.id === sizeKey.size)?.text,
                 component: sizeKey.component
             }
         });
-    }
- 
-	return <>
+    }  
+	return (<>
         <Dropdown
             label='Size'
             titleText='Size'
@@ -90,7 +89,8 @@ export const AIconsInputStyleUI = ({selectedComponent, setComponent}: any) => {
             itemToString={(item: any) => (item ? item.text : '')}
             onChange={(event: any) => setComponent({
                 ...selectedComponent,
-                selectedIcon: getSize().find((item: any) => item.id === event.selectedItem.id).component
+                selectedIcon: getSize().find((item: any) => item.id === event.selectedItem.id).component,
+                size: getSize().find((item: any) => item.id === event.selectedItem.id).id
         })}/>
 		<Search
 		    id='icons-search'
@@ -102,12 +102,14 @@ export const AIconsInputStyleUI = ({selectedComponent, setComponent}: any) => {
         <div className={elementTileListStyle}>
             {
                  items.filter((component: any) => shouldShow(component.componentObj.keywords)).map((props: any) => {
-                     const Component = props.componentObj.selectedIcon;
+                    const Component = props.componentObj.selectedIcon;    
                    return (<ElementTile componentObj={props.componentObj}>
                                 <Component 
-                                    onClick={() => setComponent({
+                                    onClick={() =>  setComponent({
                                         ...selectedComponent,
                                         selectedIcon: props.componentObj.selectedIcon,
+                                        key: props.componentObj.key,
+                                        size: props.componentObj.size
                                     })}>
                                 </Component>
                             </ElementTile>)
@@ -115,15 +117,16 @@ export const AIconsInputStyleUI = ({selectedComponent, setComponent}: any) => {
             }
         </div>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-    </>
+    </>);
 };
 export const AIcons = ({
     componentObj,
 	...rest
 }: any) => {
+    // debugger;
     if(_.isEmpty(componentObj.selectedIcon)) { 
         componentObj.selectedIcon = Add16;
-        componentObj.id = 'Add';
+        componentObj.key = 'Add';
         componentObj.size = '16';
     }
 	return (
@@ -147,8 +150,8 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'icons',
         label: 'Icons',
-        size: '16',
-        id: '',
+        size: '',
+        key: '',
         selectedIcon: {},
         allIcons: []
 	},
