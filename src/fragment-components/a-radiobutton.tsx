@@ -4,7 +4,11 @@ import { AComponent, ComponentInfo } from './a-component';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { useFragment } from '../context';
 import { css } from 'emotion';
-import { getParentComponent, updatedState, Adder } from '../components';
+import {
+	getParentComponent,
+	updatedState,
+	Adder
+} from '../components';
 import image from './../assets/component-icons/radiobutton.svg';
 import { nameStringToVariableString,
 		angularClassNamesFromComponentObj,
