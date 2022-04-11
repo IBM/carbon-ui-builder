@@ -42,7 +42,7 @@ export const AClickableTileStyleUI = ({ selectedComponent, setComponent }: any) 
 			}}
 		/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
 export const AClickableTileCodeUI = ({ selectedComponent, setComponent }: any) => {
@@ -73,7 +73,7 @@ export const AClickableTileCodeUI = ({ selectedComponent, setComponent }: any) =
 				});
 			}}
 		/>
-	</>
+	</>;
 };
 
 export const AClickableTile = ({
@@ -86,7 +86,7 @@ export const AClickableTile = ({
 	// Prevent users from being redirected
 	const onClick = (event: any) => {
 		event.preventDefault();
-	}
+	};
 
 	return (
 		<AComponent
@@ -116,7 +116,7 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'clickabletile',
 		items: [
-			{ type: 'text', text: 'A clickable tile' },
+			{ type: 'text', text: 'A clickable tile' }
 		]
 	},
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <AClickableTile

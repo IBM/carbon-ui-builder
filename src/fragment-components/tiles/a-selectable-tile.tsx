@@ -60,7 +60,7 @@ export const ASelectableTileStyleUI = ({ selectedComponent, setComponent }: any)
 			}}
 		/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
 export const ASelectableTileCodeUI = ({ selectedComponent, setComponent }: any) => {
@@ -106,7 +106,7 @@ export const ASelectableTileCodeUI = ({ selectedComponent, setComponent }: any) 
 				});
 			}}
 		/>
-	</>
+	</>;
 };
 
 // Prevent users from clicking on the selectable tile
@@ -228,7 +228,7 @@ export const componentInfo: ComponentInfo = {
 					${json.standalone ? `(change)="${nameStringToVariableString(json.codeContext?.name)}Change.emit($event)"` : ''}
 					${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
-					</ibm-selection-tile>`
+					</ibm-selection-tile>`;
 			}
 		},
 		react: {
@@ -253,7 +253,10 @@ export const componentInfo: ComponentInfo = {
 					id="${json.codeContext?.name}"
 					${(json.codeContext?.value !== undefined && json.codeContext?.value !== '') ? `value="${json.codeContext?.value}"` : ''}
 					${(json.codeContext?.title !== undefined && json.codeContext?.title !== '') ? `title="${json.codeContext?.title}"` : ''}
-					${(json.codeContext?.formItemName !== undefined && !json.standalone) ? `name="${json.codeContext?.formItemName}"` : `name="${json.codeContext?.name}"`}
+					${
+						(json.codeContext?.formItemName !== undefined && !json.standalone)
+							? `name="${json.codeContext?.formItemName}"` : `name="${json.codeContext?.name}"`
+					}
 					${json.selected !== undefined ? `selected={${json.selected}}` : ''}
 					${json.light !== undefined ? `light={${json.light}}` : ''}
 					${json.disabled !== undefined && !!json.disabled ? `disabled={${json.disabled}}` : ''}
@@ -262,12 +265,12 @@ export const componentInfo: ComponentInfo = {
 						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</SelectableTile>`;
 			},
-			helperFunction: ({json}) => {
-				if(json.standalone){
+			helperFunction: ({ json }) => {
+				if(json.standalone) {
 					return {
 						name: '',
-						code: '',
-					}
+						code: ''
+					};
 				}
 				return {
 					name: 'handleSelectableTileChange',
@@ -281,8 +284,8 @@ export const componentInfo: ComponentInfo = {
 								}
 							}
 						});
-					};`,
-				}
+					};`
+				};
 			}
 		}
 	}

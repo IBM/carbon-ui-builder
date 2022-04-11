@@ -10,14 +10,13 @@ import {
 } from '../../utils/fragment-tools';
 
 export const ATileFoldStyleUI = ({ selectedComponent, setComponent }: any) => {
-	return <ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
+	return <ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />;
 };
 
 export const ATileFold = ({
 	children,
 	componentObj,
 	onDrop,
-	selected,
 	...rest
 }: any) => {
 	return (
@@ -58,9 +57,9 @@ export const componentInfo: ComponentInfo = {
 				// Appends below the fold class to class list
 				let classes = angularClassNamesFromComponentObj(json);
 				if (classes) {
-					classes = classes.split('="').join(`="bx--tile-content__below-the-fold `);
+					classes = classes.split('="').join('="bx--tile-content__below-the-fold ');
 				} else {
-					classes = `class="bx--tile-content__below-the-fold"`;
+					classes = 'class="bx--tile-content__below-the-fold"';
 				}
 
 				return `<span ${classes}>

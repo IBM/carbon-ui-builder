@@ -54,12 +54,11 @@ export const AExpandableStyleUI = ({ selectedComponent, setComponent }: any) => 
 			}}
 		/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
 export const AExpandableTileCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
-		<TextInput
+	return <TextInput
 			value={selectedComponent.codeContext?.name}
 			labelText='Input name'
 			onChange={(event: any) => {
@@ -71,8 +70,7 @@ export const AExpandableTileCodeUI = ({ selectedComponent, setComponent }: any) 
 					}
 				});
 			}}
-		/>
-	</>
+		/>;
 };
 
 const showOutlineStyle = css`
@@ -101,11 +99,11 @@ export const AExpandableTile = ({
 			className={`${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} ${componentObj.outline ? showOutlineStyle : ''}`}
 			expanded={componentObj.expanded}>
 				<TileAboveTheFoldContent onDrop={onDrop}>
-					{children.filter(({props}: any) => (props !== undefined ? (props.componentObj.type !== 'tilefold') : false))}
+					{children.filter(({ props }: any) => (props !== undefined ? (props.componentObj.type !== 'tilefold') : false))}
 				</TileAboveTheFoldContent>
 				{
 					// Renders bottom fold component
-					children.filter(({props}: any) => (props !== undefined ? (props.componentObj.type === 'tilefold') : false))
+					children.filter(({ props }: any) => (props !== undefined ? (props.componentObj.type === 'tilefold') : false))
 				}
 			</ExpandableTile>
 		</AComponent>
@@ -118,7 +116,7 @@ const getFoldObjects = (json: any) => {
 		json.items.filter((item: any) => item.type !== 'tilefold'),
 		json.items.filter((item: any) => item.type === 'tilefold')
 	];
-}
+};
 
 export const componentInfo: ComponentInfo = {
 	component: AExpandableTile,
@@ -133,7 +131,7 @@ export const componentInfo: ComponentInfo = {
 		items: [
 			{
 				type: 'text',
-				text: 'Above fold',
+				text: 'Above fold'
 			},
 			{
 				type: 'tilefold',
@@ -174,7 +172,7 @@ export const componentInfo: ComponentInfo = {
 							${folds[0].map((element: any) => jsonToTemplate(element)).join('\n')}
 						</span>
 						${folds[1].map((element: any) => jsonToTemplate(element)).join('\n')}
-				</ibm-expandable-tile>`
+				</ibm-expandable-tile>`;
 			}
 		},
 		react: {

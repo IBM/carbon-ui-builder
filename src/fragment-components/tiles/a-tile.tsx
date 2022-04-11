@@ -31,7 +31,7 @@ export const ATileStyleUI = ({ selectedComponent, setComponent }: any) => {
 			}}
 		/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
 export const ATileCodeUI = ({ selectedComponent, setComponent }: any) => {
@@ -47,7 +47,7 @@ export const ATileCodeUI = ({ selectedComponent, setComponent }: any) => {
 				}
 			});
 		}}
-	/>
+	/>;
 };
 
 export const ATile = ({
@@ -55,7 +55,6 @@ export const ATile = ({
 	componentObj,
 	onDrop,
 	selected,
-	renderComponents,
 	...rest
 }: any) => {
 	return (
@@ -97,7 +96,7 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? "light" : ""}';`,
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : ''}';`,
 			outputs: (_) => '',
 			imports: ['TilesModule'],
 			code: ({ json, jsonToTemplate }) => {

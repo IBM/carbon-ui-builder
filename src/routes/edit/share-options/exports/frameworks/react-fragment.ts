@@ -69,11 +69,11 @@ export const jsonToTemplate = (json: any, fragments: any[]) => {
 };
 
 export const jsonToHelperFunction = (json: any, fragments: any[], dictionary: any = {}) => {
-	if (typeof json === "string" || !json) {
+	if (typeof json === 'string' || !json) {
 		return json;
 	}
 
-	for (let [key, component] of Object.entries(allComponents)) {
+	for (const [key, component] of Object.entries(allComponents)) {
 		if (json.type === key && !component.componentInfo.codeExport.react.isNotDirectExport) {
 			if (component.componentInfo.codeExport.react.helperFunction) {
 				const helperFunction = component.componentInfo.codeExport.react?.helperFunction({ json });
@@ -89,9 +89,9 @@ export const jsonToHelperFunction = (json: any, fragments: any[], dictionary: an
 	}
 
 	if (json.items) {
-		return json.items.map((item: any) => jsonToHelperFunction(item, fragments, dictionary)).filter((element: any) => element !== "").join('\n');
+		return json.items.map((item: any) => jsonToHelperFunction(item, fragments, dictionary)).filter((element: any) => element !== '').join('\n');
 	}
-}
+};
 
 const otherImportsFromComponentObj = (json: any, fragments?: any[]) => {
 	let imports = '';

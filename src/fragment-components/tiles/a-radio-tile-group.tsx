@@ -25,7 +25,7 @@ export const ARadioTileGroupStyleUI = ({ selectedComponent, setComponent }: any)
 			onChange={(event: any) => {
 				setComponent({
 					...selectedComponent,
-					legend: event.currentTarget.value,
+					legend: event.currentTarget.value
 				});
 			}}
 		/>
@@ -43,7 +43,7 @@ export const ARadioTileGroupStyleUI = ({ selectedComponent, setComponent }: any)
 					light: checked,
 					items: selectedComponent.items.map((tile: any) => ({
 						...tile,
-						light: checked,
+						light: checked
 					}))
 				});
 			}}
@@ -60,7 +60,7 @@ export const ARadioTileGroupStyleUI = ({ selectedComponent, setComponent }: any)
 			}}
 		/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
 export const ARadioTileGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
@@ -85,14 +85,13 @@ export const ARadioTileGroupCodeUI = ({ selectedComponent, setComponent }: any) 
 				}))
 			});
 		}}
-	/>
+	/>;
 };
 
 export const ARadioTileGroup = ({
 	children,
 	componentObj,
 	selected,
-	renderComponents,
 	...rest
 }: any) => {
 	const [fragment, setFragment] = useFragment();
@@ -120,7 +119,7 @@ export const ARadioTileGroup = ({
 				component: {
 					...parentComponent,
 					items
-				},
+				}
 			})
 		});
 		// Disabling since we want to call this only once to initialize children `formItemName` attribute in code context
@@ -161,7 +160,7 @@ export const componentInfo: ComponentInfo = {
 				type: 'radiotile',
 				defaultChecked: false,
 				codeContext: {
-					value: 'Tile 1',
+					value: 'Tile 1'
 				},
 				items: [{ type: 'text', text: 'Radio tile A' }]
 			},
@@ -169,7 +168,7 @@ export const componentInfo: ComponentInfo = {
 				type: 'radiotile',
 				defaultChecked: false,
 				codeContext: {
-					value: 'Tile 2',
+					value: 'Tile 2'
 				},
 				items: [{ type: 'text', text: 'Radio tile B' }]
 			},
@@ -177,7 +176,7 @@ export const componentInfo: ComponentInfo = {
 				type: 'radiotile',
 				defaultChecked: false,
 				codeContext: {
-					value: 'Tile 3',
+					value: 'Tile 3'
 				},
 				items: [{ type: 'text', text: 'Radio tile C' }]
 			}
@@ -204,7 +203,7 @@ export const componentInfo: ComponentInfo = {
 					[multiple]="false"
 					${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
-				</ibm-tile-group>`
+				</ibm-tile-group>`;
 			}
 		},
 		react: {

@@ -32,13 +32,13 @@ export const ASelectableTileGroupStyleUI = ({ selectedComponent, setComponent }:
 					light: checked,
 					items: selectedComponent.items.map((tile: any) => ({
 						...tile,
-						light: checked,
+						light: checked
 					}))
 				});
 			}}
 		/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
 export const ASelectableTileGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
@@ -63,14 +63,13 @@ export const ASelectableTileGroupCodeUI = ({ selectedComponent, setComponent }: 
 				}))
 			});
 		}}
-	/>
+	/>;
 };
 
 export const ASelectableTileGroup = ({
 	children,
 	componentObj,
 	selected,
-	renderComponents,
 	...rest
 }: any) => {
 	const [fragment, setFragment] = useFragment();
@@ -98,7 +97,7 @@ export const ASelectableTileGroup = ({
 				component: {
 					...parentComponent,
 					items
-				},
+				}
 			})
 		});
 		// Disabling since we want to call this only once to initialize children `formItemName` attribute in code context
@@ -134,7 +133,7 @@ export const componentInfo: ComponentInfo = {
 			{
 				type: 'selectabletile',
 				codeContext: {
-					value: 'Tile 1',
+					value: 'Tile 1'
 				},
 				standalone: false,
 				selected: false,
@@ -143,7 +142,7 @@ export const componentInfo: ComponentInfo = {
 			{
 				type: 'selectabletile',
 				codeContext: {
-					value: 'Tile 2',
+					value: 'Tile 2'
 				},
 				standalone: false,
 				selected: false,
@@ -152,7 +151,7 @@ export const componentInfo: ComponentInfo = {
 			{
 				type: 'selectabletile',
 				codeContext: {
-					value: 'Tile 3',
+					value: 'Tile 3'
 				},
 				standalone: false,
 				selected: false,
@@ -181,7 +180,7 @@ export const componentInfo: ComponentInfo = {
 					[multiple]="true"
 					${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
-				</ibm-tile-group>`
+				</ibm-tile-group>`;
 			}
 		},
 		react: {

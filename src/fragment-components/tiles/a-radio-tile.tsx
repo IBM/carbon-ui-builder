@@ -36,7 +36,7 @@ export const ARadioTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 
 			parentComponent.defaultChecked = selectedComponent.value;
 		}
-	}
+	};
 
 	return <>
 		<Checkbox
@@ -63,7 +63,7 @@ export const ARadioTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 			}}
 		/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
 export const ARadioTileCodeUI = ({ selectedComponent, setComponent }: any) => {
@@ -95,7 +95,7 @@ export const ARadioTileCodeUI = ({ selectedComponent, setComponent }: any) => {
 				});
 			}}
 		/>
-	</>
+	</>;
 };
 
 export const ARadioTile = ({
@@ -136,7 +136,7 @@ export const ARadioTile = ({
 				parentComponent.id,
 				parentComponent.items.indexOf(componentObj) + offset
 			)
-		})
+		});
 	};
 
 	return (
@@ -209,14 +209,17 @@ export const componentInfo: ComponentInfo = {
 					[selected]="${nameStringToVariableString(json.codeContext?.name)}Selected"
 					${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
-				</ibm-selection-tile>`
+				</ibm-selection-tile>`;
 			}
 		},
 		react: {
 			imports: ['RadioTile'],
 			code: ({ json, jsonToTemplate, fragments }) => {
 				return `<RadioTile
-					${(json.codeContext?.formItemName !== undefined && json.codeContext?.formItemName !== '') ? `name="${json.codeContext?.formItemName}"` : ''}
+					${
+						(json.codeContext?.formItemName !== undefined && json.codeContext?.formItemName !== '')
+							? `name="${json.codeContext?.formItemName}"` : ''
+					}
 					${(json.codeContext?.value !== undefined && json.codeContext?.value !== '') ? `value="${json.codeContext?.value}"` : ''}
 					${json.light !== undefined ? `light={${json.light}}` : ''}
 					${json.defaultChecked ? `checked={${json.defaultChecked}}` : ''}
