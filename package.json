@@ -59,8 +59,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "lint": "eslint --ext .js,.ts,.jsx,.tsx src/**",
-    "lint:fix": "eslint --ext .js,.ts,.jsx,.tsx src/** --fix",
+    "lint": "eslint --ext .js,.ts,.jsx,.tsx 'src/**'",
+    "lint:fix": "eslint --ext .js,.ts,.jsx,.tsx 'src/**' --fix",
     "test": "react-scripts test --env=jest-environment-jsdom-sixteen --testPathIgnorePatterns=.d.ts",
     "cypress": "cypress open",
     "eject": "react-scripts eject"
