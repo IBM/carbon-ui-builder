@@ -1,11 +1,11 @@
 import assign from 'lodash/assign';
 
-export const getFragmentHelpers = ({fragments, setFragments}: any) => {
+export const getFragmentHelpers = ({ fragments, setFragments }: any) => {
 	const addFragment = (fragment: any) => {
 		const duplicate = assign({}, fragment);
 		const expandedFragments = fragments.concat(duplicate);
 		setFragments(expandedFragments);
-	}
+	};
 
 	const getFragment = (fragmentId: string) => fragments.find((f: any) => f.id === fragmentId);
 
@@ -35,29 +35,29 @@ export const getFragmentHelpers = ({fragments, setFragments}: any) => {
 			)));
 
 		setFragments(updatedFragments);
-	}
+	};
 
 	const toggleFragmentVisibility = (id: string, hidden = false) => {
 		const updatedFragments = fragments.map((f: any) => {
 			if (f.id === id) {
-				return {...f, hidden}
+				return { ...f, hidden };
 			}
 			return f;
-		})
+		});
 
 		setFragments(updatedFragments);
-	}
+	};
 
 	const removeFragment = (id: string) => {
 		setFragments(fragments.filter((fragment: any) => fragment.id !== id));
-	}
+	};
 
 	const removeFragments = (ids: string[]) => {
 		const remainingFragments = fragments.filter((fragment: any) => (
 			!ids.some((actionFragment: any) => actionFragment.id === fragment.id)
 		));
 		setFragments(remainingFragments);
-	}
+	};
 
 	return {
 		addFragment,

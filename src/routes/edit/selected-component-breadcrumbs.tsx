@@ -18,13 +18,13 @@ const getAncestors = (state: any, component: any) => {
 
 	do {
 		parent = getParentComponent(state, parent);
-		ancestors.unshift(parent)
+		ancestors.unshift(parent);
 	} while (parent !== state);
 
 	return ancestors;
-}
+};
 
-export const SelectedComponentBreadcrumbs = ({selectedComponent}: any) => {
+export const SelectedComponentBreadcrumbs = ({ selectedComponent }: any) => {
 	const [fragment, setFragment] = useFragment();
 
 	if (!selectedComponent) {
@@ -39,9 +39,10 @@ export const SelectedComponentBreadcrumbs = ({selectedComponent}: any) => {
 	};
 
 	return selectedComponent && <Breadcrumb noTrailingSlash>
-		{getAncestors(fragment.data, selectedComponent).map(component =>
+		{getAncestors(fragment.data, selectedComponent).map((component) =>
 			<BreadcrumbItem
 			href="#"
+			key={component.id}
 			isCurrentPage={!component.type}
 			onClick={(event: any) => {
 				event.nativeEvent.preventDefault();
@@ -49,7 +50,7 @@ export const SelectedComponentBreadcrumbs = ({selectedComponent}: any) => {
 					// happens when clicking root element
 					return;
 				}
-				selectComponent(component)
+				selectComponent(component);
 			}}>
 				{component.type || 'root'}
 			</BreadcrumbItem>

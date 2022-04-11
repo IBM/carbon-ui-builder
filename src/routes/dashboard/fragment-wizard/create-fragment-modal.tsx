@@ -34,10 +34,10 @@ export enum CreateOptions {
 }
 
 export interface CreateFragmentModalProps {
-	shouldDisplay: boolean,
-	setShouldDisplay: (shouldDisplay: boolean) => void,
-	setDisplayedModal: (displayedModal: FragmentWizardModals | null) => void,
-	setLastVisitedModal: (lastVisitedModal: FragmentWizardModals) => void
+	shouldDisplay: boolean;
+	setShouldDisplay: (shouldDisplay: boolean) => void;
+	setDisplayedModal: (displayedModal: FragmentWizardModals | null) => void;
+	setLastVisitedModal: (lastVisitedModal: FragmentWizardModals) => void;
 }
 
 export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
@@ -92,19 +92,19 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 			<div className={createFragmentTiles}>
 				<SelectionTile
 					styles={createFragmentTile}
-					onChange={() => { setSelectedCreateOption(CreateOptions.IMPORT_JSON); }}
+					onChange={() => setSelectedCreateOption(CreateOptions.IMPORT_JSON)}
 					selected={selectedCreateOption === CreateOptions.IMPORT_JSON}
-					label='Import JSON'/>
+					label='Import JSON' />
 				<SelectionTile
 					styles={createFragmentTile}
-					onChange={() => { setSelectedCreateOption(CreateOptions.CHOOSE_TEMPLATE); }}
+					onChange={() => setSelectedCreateOption(CreateOptions.CHOOSE_TEMPLATE)}
 					selected={selectedCreateOption === CreateOptions.CHOOSE_TEMPLATE}
-					label='Pick a template'/>
+					label='Pick a template' />
 				<SelectionTile
 					styles={createFragmentTile}
-					onChange={() => { setSelectedCreateOption(CreateOptions.FROM_SCRATCH); }}
+					onChange={() => setSelectedCreateOption(CreateOptions.FROM_SCRATCH)}
 					selected={selectedCreateOption === CreateOptions.FROM_SCRATCH}
-					label='Start from scratch'/>
+					label='Start from scratch' />
 			</div>
 		</Modal>
 	);

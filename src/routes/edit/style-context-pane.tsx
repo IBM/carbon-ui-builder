@@ -8,21 +8,22 @@ import { allComponents } from '../../fragment-components';
 import { SelectedComponentBreadcrumbs } from './selected-component-breadcrumbs';
 
 const showComponentStyleOptions = (selectedComponent: any, setComponent: any) => {
-	for (let [key, component] of Object.entries(allComponents)) {
+	for (const [key, component] of Object.entries(allComponents)) {
 		// Find the UI for editing style for our component
 		if (selectedComponent.type === key) {
 			return <component.componentInfo.styleUI
 				selectedComponent={selectedComponent}
-				setComponent={setComponent} />
+				setComponent={setComponent} />;
 		}
 	}
 };
 
-export const StyleContextPane = ({fragment, setFragment}: any) => {
+export const StyleContextPane = ({ fragment, setFragment }: any) => {
 	const selectedComponent = getSelectedComponent(fragment);
 
 	const setComponent = (component: any, updateActionHistory = true) => {
-		setFragment({
+		setFragment(
+			{
 				...fragment,
 				data: updatedState(fragment.data, {
 					type: 'update',
@@ -48,9 +49,7 @@ export const StyleContextPane = ({fragment, setFragment}: any) => {
 				</>
 			}
 			{
-				!selectedComponent && <>
-					<ComponentCssClassSelector componentObj={fragment} setComponent={setFragment} />
-				</>
+				!selectedComponent && <ComponentCssClassSelector componentObj={fragment} setComponent={setFragment} />
 			}
 		</div>
 	);

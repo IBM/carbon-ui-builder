@@ -13,13 +13,16 @@ class HeaderMenuItemLinkBase extends Component<HeaderMenuItemLinkInterface> {
 		const {
 			history,
 			to,
-			staticContext,
 			...rest
 		} = this.props as any;
 		return (
 			<HeaderMenuItem
 				onClick={() => history.push(to)}
-				onKeyDown={(event: any) => {if (event.key === 'Enter') history.push(to);}}
+				onKeyDown={(event: any) => {
+					if (event.key === 'Enter') {
+						history.push(to);
+					}
+				}}
 				{...rest} />
 		);
 	}
@@ -28,7 +31,7 @@ class HeaderMenuItemLinkBase extends Component<HeaderMenuItemLinkInterface> {
 export const HeaderMenuItemLinkRouter = withRouter(HeaderMenuItemLinkBase);
 
 export const HeaderMenuItemLink = forwardRef<HTMLElement, HeaderMenuItemLinkInterface>(
-	(props, ref) => <HeaderMenuItemLinkRouter {...props} />
+	(props) => <HeaderMenuItemLinkRouter {...props} />
 );
 
 // explicitly set display name
