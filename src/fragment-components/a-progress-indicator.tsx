@@ -42,10 +42,10 @@ export const AProgressIndicatorStyleUI = ({ selectedComponent, setComponent }: a
 			progressSteps: [
 				...selectedComponent.progressSteps.slice(0, index),
 				step,
-				...selectedComponent.progressSteps.slice(index + 1),
+				...selectedComponent.progressSteps.slice(index + 1)
 			]
 		});
-	}
+	};
 
 	const addToStepsList = (event: any) => {
 		event.stopPropagation();
@@ -55,15 +55,15 @@ export const AProgressIndicatorStyleUI = ({ selectedComponent, setComponent }: a
 				...selectedComponent.progressSteps,
 				{
 					id: new Date().getTime().toString(),
-					label: `Step`,
-					description: "Description",
-					secondaryLabel: "Optional label",
+					label: 'Step',
+					description: 'Description',
+					secondaryLabel: 'Optional label',
 					invalid: false,
-					disabled: false,
+					disabled: false
 				}
 			]
 		});
-	}
+	};
 
 	const removeFromStepsList = (event: any, id: number) => {
 		event.stopPropagation();
@@ -71,20 +71,20 @@ export const AProgressIndicatorStyleUI = ({ selectedComponent, setComponent }: a
 			...selectedComponent,
 			progressSteps: selectedComponent.progressSteps.filter((step: any) => step.id !== id)
 		});
-	}
+	};
 
 	const dragStart = (event: any) => {
 		event.dataTransfer.setData('id', event.target.id);
-	}
+	};
 
 	const onDragOver = (event: any) => {
 		event.preventDefault();
 		event.currentTarget.classList.add(onDragStyle);
-	}
+	};
 
 	const onDragLeave = (event: any) => {
 		event.currentTarget.classList.remove(onDragStyle);
-	}
+	};
 
 	const onDrop = (event: any, index: number) => {
 		event.currentTarget.classList.remove(onDragStyle);
@@ -101,7 +101,7 @@ export const AProgressIndicatorStyleUI = ({ selectedComponent, setComponent }: a
 				...tiles.slice(index)
 			]
 		});
-	}
+	};
 
 	return <>
 		<Checkbox
@@ -112,7 +112,7 @@ export const AProgressIndicatorStyleUI = ({ selectedComponent, setComponent }: a
 				setComponent({
 					...selectedComponent,
 					isVertical: checked
-				})
+				});
 			}}
 		/>
 		<div>
@@ -175,12 +175,11 @@ export const AProgressIndicatorStyleUI = ({ selectedComponent, setComponent }: a
 			</Button>
 		</div>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
-}
+	</>;
+};
 
 export const AProgressIndicatorCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
-		<TextInput
+	return <TextInput
 			value={selectedComponent.codeContext?.name}
 			labelText='Input name'
 			onChange={(event: any) => {
@@ -192,8 +191,7 @@ export const AProgressIndicatorCodeUI = ({ selectedComponent, setComponent }: an
 					}
 				});
 			}}
-		/>
-	</>
+		/>;
 };
 
 export const AProgressIndicator = ({
@@ -218,8 +216,7 @@ export const AProgressIndicator = ({
 			</ProgressIndicator>
 		</AComponent>
 	);
-}
-
+};
 
 export const componentInfo: ComponentInfo = {
 	component: AProgressIndicator,
@@ -235,11 +232,11 @@ export const componentInfo: ComponentInfo = {
 		progressSteps: [
 			{
 				id: new Date().getTime().toString(),
-				label: "Step 0",
-				description: "Step 0: Getting started with carbon design system",
-				secondaryLabel: "Optional Label",
+				label: 'Step 0',
+				description: 'Step 0: Getting started with carbon design system',
+				secondaryLabel: 'Optional Label',
 				invalid: false,
-				disabled: false,
+				disabled: false
 			}
 		]
 	},
@@ -280,8 +277,7 @@ export const componentInfo: ComponentInfo = {
 							${step.disabled ? 'disabled' : ''}
 							${step.secondaryLabel !== undefined || step.secondaryLabel !== '' ? `secondaryLabel="${step.secondaryLabel}"` : ''}
 							${step.description !== undefined || step.description !== '' ? `description="${step.description}"` : ''}
-						/>`)).join('\n')
-					}
+						/>`)).join('\n')}
 					</ProgressIndicator>`;
 			}
 		}
