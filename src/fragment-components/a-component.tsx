@@ -20,10 +20,10 @@ const headerStyle = css`
 
 const iconStyle = css`height: 1rem; width: 1rem; float: right`;
 
-export const AComponentCodeUI = ({selectedComponent, setComponent}: any) => {
+export const AComponentCodeUI = ({ selectedComponent, setComponent }: any) => {
 	return <span className={css`overflow-wrap: anywhere`}>
 		{JSON.stringify(selectedComponent)}
-	</span>
+	</span>;
 };
 
 const dropBorderStyle = '2px solid #0f62fe';
@@ -51,41 +51,41 @@ const dropStyleAfter = cx(dropStyle, css`
 `);
 
 export interface ComponentInfo {
-	component: any,
-	keywords: string[],
-	name: string,
-	defaultComponentObj: any,
-	image: any, // whatever fits in the <img src="here">
-	styleUI: any,
-	codeUI?: any,
-	render?: (props: ComponentInfoRenderProps) => any,
-	hideFromElementsPane?: boolean,
+	component: any;
+	keywords: string[];
+	name: string;
+	defaultComponentObj: any;
+	image: any; // whatever fits in the <img src="here">
+	styleUI: any;
+	codeUI?: any;
+	render?: (props: ComponentInfoRenderProps) => any;
+	hideFromElementsPane?: boolean;
 	codeExport: {
 		angular: {
-			inputs: (props: {json: any}) => string,
-			outputs: (props: {json: any}) => string,
-			imports: string[],
-			isNotDirectExport?: boolean,
-			code: (props: {json: any, jsonToTemplate: (json: any) => string}) => string
-		},
+			inputs: (props: { json: any }) => string;
+			outputs: (props: { json: any }) => string;
+			imports: string[];
+			isNotDirectExport?: boolean;
+			code: (props: { json: any; jsonToTemplate: (json: any) => string }) => string;
+		};
 		react: {
-			imports: string[],
-			otherImports?: (props: {json: any, fragments?: any[]}) => string,
-			isNotDirectExport?: boolean,
-			code: (props: {json: any, jsonToTemplate: (json: any, fragments: any[]) => string, fragments: any[]}) => string,
-			helperFunction?: (props: {json: any}) => {name: string, code: string}
-		}
-	}
+			imports: string[];
+			otherImports?: (props: {json: any; fragments?: any[]}) => string;
+			isNotDirectExport?: boolean;
+			code: (props: {json: any; jsonToTemplate: (json: any, fragments: any[]) => string; fragments: any[]}) => string;
+			helperFunction?: (props: {json: any}) => {name: string; code: string};
+		};
+	};
 }
 
 export interface ComponentInfoRenderProps {
-	componentObj: any,
-	select: () => void,
-	remove: () => void,
-	selected: boolean,
-	onDragOver: (event: any) => void,
-	onDrop: (event: any) => any,
-	renderComponents: (componentObj: any) => any
+	componentObj: any;
+	select: () => void;
+	remove: () => void;
+	selected: boolean;
+	onDragOver: (event: any) => void;
+	onDrop: (event: any) => any;
+	renderComponents: (componentObj: any) => any;
 }
 
 export const AComponent = ({
@@ -103,9 +103,9 @@ export const AComponent = ({
 	const [dragOverPosition, setDragOverPosition] = useState([] as any[]);
 	const holderRef = useRef(null as any);
 
-	const isDragOverLeft = () => dragOverPosition[0] < holderRef.current.offsetWidth  / 2;
+	const isDragOverLeft = () => dragOverPosition[0] < holderRef.current.offsetWidth / 2;
 	// const isDragOverRight = () => !isDragOverLeft();
-	const isDragOverTop = () => dragOverPosition[1] < holderRef.current.offsetHeight  / 2;
+	const isDragOverTop = () => dragOverPosition[1] < holderRef.current.offsetHeight / 2;
 	// const isDragOverBottom = () => !isDragOverTop();
 	const isDragOverBefore = () => isDragOverLeft() || isDragOverTop();
 	const isDragOverAfter = () => !isDragOverBefore();
@@ -113,9 +113,9 @@ export const AComponent = ({
 	const onDrop = (event: any) => {
 		event.stopPropagation();
 		event.preventDefault();
-		setShowDragOverIndicator(false)
+		setShowDragOverIndicator(false);
 
-		const dragObj = JSON.parse(event.dataTransfer.getData("drag-object"));
+		const dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
 
 		setFragment({
 			...fragment,
@@ -166,13 +166,13 @@ export const AComponent = ({
 				<span className={css`margin-right: 1rem`}>
 					{componentObj && componentObj.type ? componentObj.type : 'Header'}
 				</span>
-				<Draggable32 className={iconStyle}/>
+				<Draggable32 className={iconStyle} />
 				<TrashCan32 onClick={(event: any) => {
 					event.stopPropagation();
 					if (remove) {
 						remove();
 					}
-				}} className={iconStyle}/>
+				}} className={iconStyle} />
 			</span>
 			{children}
 		</span>

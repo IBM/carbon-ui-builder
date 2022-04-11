@@ -7,7 +7,7 @@ export const createFragmentSandbox = (fragmentTemplate: any) => {
 		.forEach((filePath: string) => files[filePath] = { content: fragmentTemplate[filePath] });
 
 	return LZString.compressToBase64(JSON.stringify({ files }))
-		.replace(/\+/g, `-`) // '+' -> '-'
-		.replace(/\//g, `_`) // '/' -> '_'
-		.replace(/=+$/, ``); // Remove ending '='
+		.replace(/\+/g, '-') // '+' -> '-'
+		.replace(/\//g, '_') // '/' -> '_'
+		.replace(/=+$/, ''); // Remove ending '='
 };
