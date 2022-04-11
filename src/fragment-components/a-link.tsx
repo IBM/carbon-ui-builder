@@ -4,13 +4,13 @@ import { AComponent, ComponentInfo } from './a-component';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 
 import image from './../assets/component-icons/link.svg';
-import { 
-	angularClassNamesFromComponentObj, 
-	nameStringToVariableString, 
-	reactClassNamesFromComponentObj 
+import {
+	angularClassNamesFromComponentObj,
+	nameStringToVariableString,
+	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 
-export const ALinkStyleUI = ({selectedComponent, setComponent}: any) => {
+export const ALinkStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TextInput
 			value={selectedComponent.text}
@@ -45,10 +45,10 @@ export const ALinkStyleUI = ({selectedComponent, setComponent}: any) => {
 			}}
 		/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
-export const ALinkCodeUI = ({selectedComponent, setComponent}: any) => {
+export const ALinkCodeUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TextInput
 			value={selectedComponent.codeContext?.name}
@@ -76,7 +76,7 @@ export const ALinkCodeUI = ({selectedComponent, setComponent}: any) => {
 				});
 			}}
 		/>
-	</>
+	</>;
 };
 
 export const ALink = ({
@@ -116,20 +116,20 @@ export const componentInfo: ComponentInfo = {
 		text: 'Link',
 		inline: false,
 		disabled: false,
-		codeContext: { 
+		codeContext: {
 			href: '#'
 		}
 	},
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({json}) => `
+			inputs: ({ json }) => `
 			@Input() ${nameStringToVariableString(json.codeContext?.name)}Inline = ${json.inline};
 			@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
 			@Input() ${nameStringToVariableString(json.codeContext?.name)}Href = '${json.codeContext?.href}'`,
-			outputs: ({json}) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
+			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
 			imports: ['LinkModule'],
-			code: ({json }) => {
+			code: ({ json }) => {
 				return `<a
 					ibmLink
 					[inline]="${nameStringToVariableString(json.codeContext?.name)}Inline"

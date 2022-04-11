@@ -7,7 +7,7 @@ const fragmentTagMap: Record<string, string> = {
 	'scatter-fragment': 'ccv-scatter-fragment',
 	'pie-fragment': 'ccv-pie-fragment',
 	'donut-fragment': 'ccv-donut-fragment',
-	dataAndOptions: ':data=\'data\' :options=\'options\''
+	dataAndOptions: ":data='data' :options='options'"
 };
 
 export const createVueApp = (fragment: any) => {

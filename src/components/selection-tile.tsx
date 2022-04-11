@@ -17,25 +17,25 @@ const tileFooter = css`
 	}
 `;
 
-export interface SelectionTile {
-	styles?: any,
-	onChange?: any,
-	icon?: JSX.Element | null,
-	label?: string,
-	selected?: boolean,
-	tag?: JSX.Element | null
+export interface SelectionTileInterface {
+	styles?: any;
+	onChange?: any;
+	icon?: JSX.Element | null;
+	label?: string;
+	selected?: boolean;
+	tag?: JSX.Element | null;
 }
 
-export const SelectionTile = (props: SelectionTile) => (
+export const SelectionTile = (props: SelectionTileInterface) => (
 	<div className={props.styles}>
 		<SelectableTile
 			light={true}
-			onChange={() => {props.onChange();}}
+			onChange={() => props.onChange()}
 			selected={props.selected}>
-			{ props.icon }
+			{props.icon}
 			<div className={tileFooter}>
-				<p>{ props.label }</p>
-				{ props.tag }
+				<p>{props.label}</p>
+				{props.tag}
 			</div>
 		</SelectableTile>
 	</div>

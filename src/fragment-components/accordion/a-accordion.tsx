@@ -10,17 +10,17 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 
-export const AAccordionStyleUI = ({selectedComponent, setComponent}: any) => {
+export const AAccordionStyleUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
-		{id: 'sm', text: 'Small'},
-		{id: 'md', text: 'Medium'},
-		{id: 'lg', text: 'Large'}
+		{ id: 'sm', text: 'Small' },
+		{ id: 'md', text: 'Medium' },
+		{ id: 'lg', text: 'Large' }
 	];
 
 	const alignItems = [
-		{id: 'end', text: 'End'},
-		{id: 'start', text: 'Start'}
-	]
+		{ id: 'end', text: 'End' },
+		{ id: 'start', text: 'Start' }
+	];
 
 	return <>
 		<Dropdown
@@ -44,7 +44,7 @@ export const AAccordionStyleUI = ({selectedComponent, setComponent}: any) => {
 				align: event.selectedItem.id
 		})}/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
 export const AAccordion = ({
@@ -74,7 +74,7 @@ export const componentInfo: ComponentInfo = {
 		select={select}
 		remove={remove}
 		selected={selected}>
-		{componentObj.items.map((accordionItem: any) => renderComponents(accordionItem))}
+			{componentObj.items.map((accordionItem: any) => renderComponents(accordionItem))}
 	</AAccordion>,
 	keywords: ['accordion'],
 	name: 'Accordion',
@@ -93,8 +93,8 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({json}) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Align = "${json.align}";`,
-			outputs: ({json}) => ``,
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Align = "${json.align}";`,
+			outputs: () => '',
 			imports: ['AccordionModule'],
 			// NOTE: Angular accordion does not support size yet.
 			// Issue being tracked here: https://github.com/IBM/carbon-components-angular/issues/2022

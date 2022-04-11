@@ -21,17 +21,17 @@ export enum ModalType {
 	EXPORT
 }
 
-export type ModalAction = BaseModalAction
+export type ModalAction = BaseModalAction;
 
 export interface BaseModalAction {
-	type: ModalActionType,
-	id: string
+	type: ModalActionType;
+	id: string;
 }
 
 export interface ModalState {
-	ShowModal: boolean,
-	ModalType: any,
-	FragmentID: string
+	ShowModal: boolean;
+	ModalType: any;
+	FragmentID: string;
 }
 
 const initialState = {

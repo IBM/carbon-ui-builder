@@ -10,14 +10,14 @@ const compareClasses = (sc1: any, sc2: any) => sc1.name < sc2.name ? -1 : 1;
 export const CssClassSelector = ({ selectedClasses, setSelectedClasses }: any) => {
 	const { styleClasses } = useContext(GlobalStateContext);
 
-	const _getAvailableClasses = () => {
+	const getAvailableClasses = () => {
 		// available is anything in styleClasses, not yet in selecteClasses, sorted
 		return styleClasses
 			.filter((sc: any) => !selectedClasses?.find((ssc: any) => ssc.id === sc.id))
 			.sort(compareClasses);
 	};
 
-	const [availableClasses, setAvailableClasses] = useState(_getAvailableClasses());
+	const [availableClasses, setAvailableClasses] = useState(getAvailableClasses());
 
 	useEffect(() => {
 		if (!selectedClasses) {
@@ -27,8 +27,8 @@ export const CssClassSelector = ({ selectedClasses, setSelectedClasses }: any) =
 
 	useEffect(() => {
 		// update available classes based on styleClasses and selectedClasses
-		setAvailableClasses(_getAvailableClasses());
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		setAvailableClasses(getAvailableClasses());
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [styleClasses, selectedClasses]);
 
 	useEffect(() => {
@@ -37,12 +37,12 @@ export const CssClassSelector = ({ selectedClasses, setSelectedClasses }: any) =
 			styleClasses.filter((sc: any) => !!selectedClasses?.find((ssc: any) => ssc.id === sc.id)),
 			false
 		);
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [styleClasses]);
 
 	const selectStyleClass = (styleClass: any) => {
 		setSelectedClasses([...selectedClasses, styleClass]);
-		setAvailableClasses(availableClasses.filter((c: any) => c.id !== styleClass.id))
+		setAvailableClasses(availableClasses.filter((c: any) => c.id !== styleClass.id));
 	};
 
 	const deselectStyleClass = (styleClass: any) => {
@@ -51,13 +51,14 @@ export const CssClassSelector = ({ selectedClasses, setSelectedClasses }: any) =
 	};
 
 	return (
-		<div style={{marginTop: '1rem'}}>
+		<div style={{ marginTop: '1rem' }}>
 			<p>Custom CSS classes</p>
 			<FormLabel>Selected classes</FormLabel>
 			<br />
 			{
 				selectedClasses?.map((styleClass: any) => (
 					<Tag
+					key={styleClass.name}
 					filter
 					onClose={() => deselectStyleClass(styleClass)}>
 						{styleClass.name}
@@ -70,6 +71,7 @@ export const CssClassSelector = ({ selectedClasses, setSelectedClasses }: any) =
 			{
 				availableClasses.map((styleClass: any) => (
 					<Tag
+					key={styleClass.name}
 					onClick={() => selectStyleClass(styleClass)}>
 						{styleClass.name}
 					</Tag>
@@ -81,7 +83,8 @@ export const CssClassSelector = ({ selectedClasses, setSelectedClasses }: any) =
 
 export const ComponentCssClassSelector = ({ componentObj, setComponent }: any) => {
 	const setSelectedClasses = (cssClasses: any[], updateActionHistory = true) => {
-		setComponent({
+		setComponent(
+			{
 				...componentObj,
 				cssClasses
 			},

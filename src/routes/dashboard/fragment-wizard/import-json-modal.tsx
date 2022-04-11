@@ -29,14 +29,14 @@ const fragmentOptions = css`
 `;
 
 export interface ImportJsonModalProps {
-	shouldDisplay: boolean,
-	setShouldDisplay: (shouldDisplay: boolean) => void,
-	setDisplayedModal: (displayedModal: FragmentWizardModals | null) => void,
-	setLastVisitedModal: (lastVisitedModal: FragmentWizardModals) => void,
-	lastVisitedModal: FragmentWizardModals,
-	uploadedData: any,
-	setUploadedData: (uploadedData: any) => void,
-	multiple?: boolean
+	shouldDisplay: boolean;
+	setShouldDisplay: (shouldDisplay: boolean) => void;
+	setDisplayedModal: (displayedModal: FragmentWizardModals | null) => void;
+	setLastVisitedModal: (lastVisitedModal: FragmentWizardModals) => void;
+	lastVisitedModal: FragmentWizardModals;
+	uploadedData: any;
+	setUploadedData: (uploadedData: any) => void;
+	multiple?: boolean;
 }
 
 let lastId = 0;
@@ -44,7 +44,7 @@ let lastId = 0;
 const uid = (prefix = 'id') => {
 	lastId++;
 	return `${prefix}${lastId}`;
-}
+};
 
 export const ImportJsonModal = (props: ImportJsonModalProps) => {
 	const { addFragment } = useContext(GlobalStateContext);
@@ -93,7 +93,7 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 				iconDescription: 'Delete file',
 				invalid: true,
 				errorSubject: 'File size exceeds limit',
-				errorBody: '500kb max file size. Select a new file and try again.',
+				errorBody: '500kb max file size. Select a new file and try again.'
 			};
 			setFiles((files) =>
 				files.map((file) =>
@@ -111,7 +111,7 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 				iconDescription: 'Delete file',
 				invalid: true,
 				errorSubject: 'Invalid file type',
-				errorBody: `"${fileToUpload.name}" does not have a valid file type.`,
+				errorBody: `"${fileToUpload.name}" does not have a valid file type.`
 			};
 			setFiles((files) =>
 				files.map((file) =>
@@ -122,19 +122,19 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 		}
 
 		// reading
-		var reader = new FileReader();
-		reader.readAsText(fileToUpload.file, "UTF-8");
+		const reader = new FileReader();
+		reader.readAsText(fileToUpload.file, 'UTF-8');
 		reader.onload = (event) => {
 			setJsonString(event.target?.result as string);
-		}
-		reader.onerror = function (evt) {
-			console.log("oops")
-		}
+		};
+		reader.onerror = function (_) {
+			console.log('oops');
+		};
 
 		const updatedFile = {
 			...fileToUpload,
 			status: 'complete',
-			iconDescription: 'Upload complete',
+			iconDescription: 'Upload complete'
 		};
 		setFiles((files) =>
 			files.map((file) =>
@@ -147,7 +147,7 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 			const updatedFile = {
 				...fileToUpload,
 				status: 'edit',
-				iconDescription: 'Delete file',
+				iconDescription: 'Delete file'
 			};
 			setFiles((files) =>
 				files.map((file) =>
@@ -167,7 +167,7 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 				filesize: file.size,
 				status: 'uploading',
 				iconDescription: 'Uploading',
-				invalidFileType: file.invalidFileType,
+				invalidFileType: file.invalidFileType
 			}));
 			// eslint-disable-next-line react/prop-types
 			if (props.multiple) {
@@ -188,7 +188,6 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 		[files]
 	);
 
-
 	const generateFragment = () => {
 		const generatedFragment = generateNewFragment(fragmentJson);
 
@@ -205,7 +204,7 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 				generateFragment();
 				props.setLastVisitedModal(FragmentWizardModals.CHOOSE_FRAGMENT_MODAL);
 			}}
-			onRequestClose={() => { props.setShouldDisplay(false); }}
+			onRequestClose={() => props.setShouldDisplay(false)}
 			onSecondarySubmit={() => {
 				props.setDisplayedModal(props.lastVisitedModal);
 				props.setLastVisitedModal(FragmentWizardModals.CHOOSE_FRAGMENT_MODAL);
@@ -213,7 +212,7 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 			hasForm
 			modalHeading='Import JSON'
 			primaryButtonText='Done'
-			primaryButtonDisabled={ !jsonString || jsonParseError }
+			primaryButtonDisabled={!jsonString || jsonParseError}
 			secondaryButtonText='Back'>
 			<div className={fragmentOptions}>
 				<FormItem>
@@ -235,6 +234,7 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 							}) => (
 								<FileUploaderItem
 									key={uid()}
+									{...rest}
 									uuid={uuid}
 									name={name}
 									filesize={filesize}
@@ -250,7 +250,7 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 					</div>
 				</FormItem>
 				<code style={{ color: '#a00', marginBottom: '10pt', width: '100%' }}>
-					<pre>{ jsonParseError }</pre>
+					<pre>{jsonParseError}</pre>
 				</code>
 				<TextArea
 					labelText='JSON to load'
