@@ -136,12 +136,11 @@ export const AComboBoxStyleUI = ({ selectedComponent, setComponent }: any) => {
 				light: checked
 		})} />
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
 export const AComboBoxCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
-		<TextInput
+	return <TextInput
 			value={selectedComponent.codeContext?.name}
 			labelText='Input name'
 			onChange={(event: any) => {
@@ -153,8 +152,7 @@ export const AComboBoxCodeUI = ({ selectedComponent, setComponent }: any) => {
 					}
 				});
 			}}
-		/>
-	</>
+		/>;
 };
 
 export const AComboBox = ({
@@ -169,8 +167,8 @@ export const AComboBox = ({
 	const filterableProps = {
 		type: componentObj.isInline ? 'inline' : 'default',
 		hideLabel: componentObj.hideLabel,
-		selectionFeedback: componentObj.selectionFeedback,
-	}
+		selectionFeedback: componentObj.selectionFeedback
+	};
 
 	return (
 		<AComponent
@@ -212,7 +210,7 @@ export const componentInfo: ComponentInfo = {
 		direction: 'bottom',
 		size: 'md',
 		label: 'Label',
-		helperText: 'Optional helper text here',
+		helperText: 'Optional helper text here'
 	},
 	image,
 	codeExport: {
@@ -230,7 +228,7 @@ export const componentInfo: ComponentInfo = {
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${!!json.disabled};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}DropUp = ${json.direction !== 'bottom'};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}SelectionFeedback = "${json.selectionFeedback}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Type: "single" | "multi" = "${json.isMulti ? "multi" : "single"}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Type: "single" | "multi" = "${json.isMulti ? 'multi' : 'single'}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Items = [];`,
 			outputs: ({ json }) =>
 				`@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<any>();
@@ -269,11 +267,11 @@ export const componentInfo: ComponentInfo = {
 					Component = 'FilterableMultiSelect';
 				}
 
-				const filterableProps = `${json.isInline ? `type="inline"`: ''}
+				const filterableProps = `${json.isInline ? 'type="inline"': ''}
 					${json.hideLabel !== undefined ? `hideLabel={${json.hideLabel}}` : ''}
 					${json.selectionFeedback !== 'top-after-reopen' ? `selectionFeedback="${json.selectionFeedback}"`: ''}`;
 
-				//Items are required
+				// Items are required
 				return `<${Component}
 					id="${json.codeContext?.name}"
 					titleText="${json.label}"
