@@ -134,12 +134,11 @@ export const ADropdownStyleUI = ({ selectedComponent, setComponent }: any) => {
 				light: checked
 			})} />
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
 export const ADropdownCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
-		<TextInput
+	return <TextInput
 			value={selectedComponent.codeContext?.name}
 			labelText='Input name'
 			onChange={(event: any) => {
@@ -151,8 +150,7 @@ export const ADropdownCodeUI = ({ selectedComponent, setComponent }: any) => {
 					}
 				});
 			}}
-		/>
-	</>
+		/>;
 };
 
 export const ADropdown = ({
@@ -206,7 +204,7 @@ export const componentInfo: ComponentInfo = {
 		direction: 'bottom',
 		size: 'md',
 		label: 'Label',
-		helperText: 'Optional helper text',
+		helperText: 'Optional helper text'
 	},
 	image,
 	codeExport: {
@@ -224,7 +222,7 @@ export const componentInfo: ComponentInfo = {
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${!!json.disabled};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}DropUp = ${json.direction !== 'bottom'};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}SelectionFeedback = "${json.selectionFeedback}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Type: "single" | "multi" = "${json.isMulti ? "multi" : "single"}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Type: "single" | "multi" = "${json.isMulti ? 'multi' : 'single'}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Items = [];`,
 			outputs: ({ json }) =>
 				`@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<any>();
@@ -252,7 +250,7 @@ export const componentInfo: ComponentInfo = {
 			</ibm-dropdown>`
 		},
 		react: {
-			imports: ({json}) => [json.isMulti ? 'MultiSelect': 'Dropdown'],
+			imports: ({ json }) => [json.isMulti ? 'MultiSelect': 'Dropdown'],
 			code: ({ json }) => {
 				// Determine which React Component to render based on dropdownType
 				let Component = 'Dropdown';
@@ -260,13 +258,13 @@ export const componentInfo: ComponentInfo = {
 					Component = 'MultiSelect';
 				}
 
-				//Items are required
+				// Items are required
 				return `<${Component}
 					id="${json.codeContext?.name}"
 					titleText="${json.label}"
 					helperText="${json.helperText}"
 					label="${json.placeholder}"
-					${json.isInline ? `type="inline"`: ''}
+					${json.isInline ? 'type="inline"': ''}
 					${json.selectionFeedback !== 'top-after-reopen' && json.isMulti ? `selectionFeedback="${json.selectionFeedback}` : ''}
 					${json.hideLabel !== undefined ? `hideLabel={${json.hideLabel}}` : ''}
 					${json.direction !== 'bottom' ? `direction="${json.direction}"` : ''}
