@@ -8,11 +8,10 @@ export const UIShell = () => {
 	return (
 		<HeaderContainer
 			render={() => (
-				<>
-					<Header
-						isSideNavExpanded={isSideNavExpanded}
-						setIsSideNavExpanded={setIsSideNavExpanded} />
-				</>
-			)} />
+				<Header
+					isSideNavExpanded={isSideNavExpanded}
+					setIsSideNavExpanded={setIsSideNavExpanded} />
+			)}
+		/>
 	);
 };

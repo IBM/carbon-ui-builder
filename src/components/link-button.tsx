@@ -6,7 +6,6 @@ export const LinkButton = withRouter((props: any) => {
 	const {
 		history,
 		to,
-		staticContext,
 		...rest
 	} = props;
 	return <Button onClick={() => history.push(to)} {...rest} />;

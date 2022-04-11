@@ -11,7 +11,7 @@ import { useFragment } from '../context';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 
-export const ARowStyleUI = ({selectedComponent, setComponent}: any) => {
+export const ARowStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<Checkbox
 			labelText='Condensed'
@@ -30,7 +30,7 @@ export const ARowStyleUI = ({selectedComponent, setComponent}: any) => {
 				narrow: checked
 			})} />
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
 const addStyle = css`
@@ -77,10 +77,10 @@ export const ARow = ({
 				type: 'insert',
 				component: {
 					type: 'row', items: [
-						{ type: 'column', items: [{ type: 'text', text: 'Cell 1' }]},
-						{ type: 'column', items: [{ type: 'text', text: 'Cell 2' }]}
+						{ type: 'column', items: [{ type: 'text', text: 'Cell 1' }] },
+						{ type: 'column', items: [{ type: 'text', text: 'Cell 2' }] }
 					]
-				},
+				}
 			},
 			parentComponent.id,
 			parentComponent.items.indexOf(componentObj) + offset
