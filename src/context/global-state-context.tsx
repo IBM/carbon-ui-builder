@@ -20,7 +20,7 @@ export const useFragment = (id?: string) => {
 		// in AComponent to update the state of the whole fragment due to
 		// user interaction - functionality not needed for render only
 		console.info("Rendering only, won't be able to update context");
-		return [{}, (_: any) => {}];
+		return [{}, (_: any) => { }];
 	}
 
 	const { fragments, updateFragment } = context;
@@ -58,7 +58,7 @@ const GlobalStateContextProvider = ({ children }: any) => {
 	const setFragments = (frags: any[]) => {
 		_setFragments(frags);
 		localStorage.setItem('localFragments', JSON.stringify(frags));
-	}
+	};
 
 	const addAction = (action: any) => {
 		const newActionHistoryIndex = actionHistoryIndex + 1;
@@ -71,7 +71,7 @@ const GlobalStateContextProvider = ({ children }: any) => {
 
 	const setStyleClasses = (sc: any, updateActionHistory = true) => {
 		const csString = JSON.stringify(sc);
-		localStorage.setItem('globalStyleClasses', csString)
+		localStorage.setItem('globalStyleClasses', csString);
 		_setStyleClasses(sc);
 		if (updateActionHistory) {
 			addAction({
@@ -81,6 +81,27 @@ const GlobalStateContextProvider = ({ children }: any) => {
 	};
 
 	const canUndo = () => actionHistoryIndex > 0;
+
+	const updateFragment = (fragment: any, updateActionHistory = true) => {
+		if (!fragments.length) {
+			setFragments([fragment]);
+			return;
+		}
+		const updatedFragments = fragments.map((f: any) => {
+			if (f.id === fragment.id) {
+				// Cannot use merge because removing datasets or labels will not
+				// work since it keeps the values, while assign overwrites past values.
+				return assign({}, f, fragment);
+			}
+			return f;
+		});
+
+		setFragments(updatedFragments);
+
+		if (updateActionHistory) {
+			addAction({ fragment });
+		}
+	};
 
 	const setAction = (newIndex: number) => {
 		if (newIndex < 0 || newIndex > actionHistory.length - 1) {
@@ -106,7 +127,7 @@ const GlobalStateContextProvider = ({ children }: any) => {
 			return;
 		}
 
-		setAction(actionHistoryIndex - 1)
+		setAction(actionHistoryIndex - 1);
 	}
 
 	const canRedo = () => actionHistoryIndex < actionHistory.length - 1;
@@ -116,7 +137,7 @@ const GlobalStateContextProvider = ({ children }: any) => {
 			return;
 		}
 
-		setAction(actionHistoryIndex + 1)
+		setAction(actionHistoryIndex + 1);
 	};
 
 	const clearActionHistory = () => {
@@ -124,28 +145,7 @@ const GlobalStateContextProvider = ({ children }: any) => {
 		setActionHistory([]);
 	};
 
-	const updateFragment = (fragment: any, updateActionHistory = true) => {
-		if (!fragments.length) {
-			setFragments([fragment]);
-			return;
-		}
-		const updatedFragments = fragments.map((f: any) => {
-			if (f.id === fragment.id) {
-				// Cannot use merge because removing datasets or labels will not
-				// work since it keeps the values, while assign overwrites past values.
-				return assign({}, f, fragment);
-			}
-			return f;
-		});
-
-		setFragments(updatedFragments);
-
-		if (updateActionHistory) {
-			addAction({fragment});
-		}
-	};
-
-	const fragmentHelpers = getFragmentHelpers({fragments, setFragments});
+	const fragmentHelpers = getFragmentHelpers({ fragments, setFragments });
 
 	useEffect(() => {
 		const localFragments = JSON.parse(localStorage.getItem('localFragments') as string || '[]');
@@ -153,7 +153,7 @@ const GlobalStateContextProvider = ({ children }: any) => {
 		const filteredFragments = localFragments.filter((fragment: any) => !fragment.hidden);
 		fragmentHelpers.updateFragments(filteredFragments);
 		localStorage.setItem('localFragments', JSON.stringify(filteredFragments));
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (

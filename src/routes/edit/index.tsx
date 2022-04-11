@@ -36,7 +36,7 @@ import { CodeContextPane } from './code-context-pane';
 const leftPaneWidth = '300px';
 const rightPaneWidth = '302px';
 const railWidth = '48px';
-const transitionDetails = `0.11s cubic-bezier(0.2, 0, 1, 0.9)`;
+const transitionDetails = '0.11s cubic-bezier(0.2, 0, 1, 0.9)';
 
 const editPageContent = css`
 	position: absolute;
@@ -142,7 +142,7 @@ enum SelectedLeftPane {
 	STYLE = 'style',
 	CODE = 'code',
 	EXPORT = 'export'
-};
+}
 
 export const Edit = ({ match }: any) => {
 	const {
@@ -167,8 +167,8 @@ export const Edit = ({ match }: any) => {
 
 	useEffect(() => {
 		clearActionHistory();
-		addAction({fragment, styleClasses});
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		addAction({ fragment, styleClasses });
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const onRailClick = (clickedLeftPane: SelectedLeftPane) => {
@@ -177,13 +177,13 @@ export const Edit = ({ match }: any) => {
 		} else {
 			setSelectedLeftPane(clickedLeftPane);
 		}
-	}
+	};
 
 	return (
 		<div
 			id='edit-wrapper'
 			className={editPageContent}>
-			{ fragment && <EditHeader fragment={fragment}/> }
+			{fragment && <EditHeader fragment={fragment} />}
 			<ElementsPane isActive={selectedLeftPane === SelectedLeftPane.ELEMENTS} />
 			<StylePane isActive={selectedLeftPane === SelectedLeftPane.STYLE} />
 			<CodePane isActive={selectedLeftPane === SelectedLeftPane.CODE} />
@@ -221,12 +221,10 @@ export const Edit = ({ match }: any) => {
 			</SideNav>
 			<div
 			className={cx('edit-content', selectedLeftPane !== SelectedLeftPane.NONE ? 'is-side-panel-active' : '')}
-			onClick={(event: any) => { updateFragment({...fragment, selectedComponentId: 0}) }}>
+			onClick={() => updateFragment({ ...fragment, selectedComponentId: 0 })}>
 				{
-					fragment
-					&& <>
-						<Fragment fragment={fragment} setFragment={updateFragment} />
-					</>
+					// eslint-disable-next-line
+					fragment && <Fragment fragment={fragment} setFragment={updateFragment} />
 				}
 			</div>
 			<div className={rightPanel}>

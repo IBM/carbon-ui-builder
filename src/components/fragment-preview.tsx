@@ -31,23 +31,23 @@ export const FragmentPreview = ({ fragment, previewUrl, setPreviewUrl }: any) =>
 		if (setPreviewUrl) {
 			setPreviewUrl(await getFragmentPreviewUrl(fragment));
 		}
-	}
+	};
 
 	useEffect(() => {
 		updatePreviewUrl();
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [fragment])
+	}, [fragment]);
 
 	return (
 		<>
 			{
 				previewUrl
-				? <img
-					loading='lazy'
-					src={previewUrl}
-					className={fragmentImage}
-					alt={`fragment preview: ${fragment.title}`} />
-				: <div className={imagePlaceholderStyle} />
+					? <img
+						loading='lazy'
+						src={previewUrl}
+						className={fragmentImage}
+						alt={`fragment preview: ${fragment.title}`} />
+					: <div className={imagePlaceholderStyle} />
 			}
 			<div className={spinner}>
 				<Loading withOverlay={false} active={!previewUrl} />

@@ -7,7 +7,7 @@ import { ComponentInfo } from '.';
 import image from './../assets/component-icons/text-area.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
-export const ATextAreaStyleUI = ({selectedComponent, setComponent}: any) => {
+export const ATextAreaStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TextInput
 			value={selectedComponent.label}
@@ -40,12 +40,11 @@ export const ATextAreaStyleUI = ({selectedComponent, setComponent}: any) => {
 			}}
 		/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
-
-export const ATextAreaCodeUI = ({selectedComponent, setComponent}: any) => {
-	return <>
+export const ATextAreaCodeUI = ({ selectedComponent, setComponent }: any) => {
+	return (
 		<TextInput
 			value={selectedComponent.codeContext?.name}
 			labelText='Input name'
@@ -58,7 +57,7 @@ export const ATextAreaCodeUI = ({selectedComponent, setComponent}: any) => {
 				});
 			}}
 		/>
-	</>
+	);
 };
 
 export const ATextArea = ({
@@ -93,10 +92,10 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({json}) => ``,
-			outputs: ({json}) => ``,
+			inputs: (_) => '',
+			outputs: (_) => '',
 			imports: ['InputModule'],
-			code: ({json}) => {
+			code: ({ json }) => {
 				return `<ibm-label
 					helperText="${json.helperText}">
 						${json.label}
@@ -110,7 +109,7 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: ['TextArea'],
-			code: ({json}) => {
+			code: ({ json }) => {
 				return `<TextArea
 					labelText="${json.label}"
 					name="${json.codeContext?.name}"

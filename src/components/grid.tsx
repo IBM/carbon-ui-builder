@@ -3,7 +3,7 @@ import React, { PropsWithChildren } from 'react';
 import { cx } from 'emotion';
 
 export type RowProps = PropsWithChildren<{
-	styles?: any
+	styles?: any;
 }>;
 
 export const Row = ({ styles, children }: RowProps) => (
@@ -17,8 +17,8 @@ export interface ColDefinition {
 }
 
 export type ColProps = PropsWithChildren<{
-	cols?: ColDefinition,
-	render?: (props: PropsWithChildren<any>) => JSX.Element
+	cols?: ColDefinition;
+	render?: (props: PropsWithChildren<any>) => JSX.Element;
 }>;
 
 export const Col = ({ cols, render, children }: ColProps) => {

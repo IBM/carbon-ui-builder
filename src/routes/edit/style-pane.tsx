@@ -22,7 +22,7 @@ const searchContainerStyle = css`
 	}
 `;
 
-export const StylePane = ({isActive}: any) => {
+export const StylePane = ({ isActive }: any) => {
 	const [selectedStyleClassId, setSelectedStyleClassId] = useState('' as string);
 	const { styleClasses, setStyleClasses } = useContext(GlobalStateContext);
 	const [filterString, setFilterString] = useState('');
@@ -36,7 +36,7 @@ export const StylePane = ({isActive}: any) => {
 	};
 
 	const getUniqueClass = (): any => {
-		let className = uniqueNamesGenerator({
+		const className = uniqueNamesGenerator({
 			dictionaries: [adjectives, colors, animals],
 			separator: '-',
 			length: 3
@@ -108,7 +108,7 @@ export const StylePane = ({isActive}: any) => {
 						placeholder="Filter classes"
 						onChange={(event: any) => setFilterString(event.target.value)} />
 					<Button
-						kind="ghost"x
+						kind="ghost"
 						renderIcon={Add16}
 						iconDescription="Add new class"
 						hasIconOnly
@@ -117,6 +117,7 @@ export const StylePane = ({isActive}: any) => {
 				{
 					styleClasses.filter(shouldShow).map((styleClass: any) => (
 						<Tag
+						key={styleClass.name}
 						filter
 						onClick={() => setSelectedStyleClassId(styleClass.id)}
 						onClose={() => removeStyleClass(styleClass.id)}>
