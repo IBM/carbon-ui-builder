@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Search, Button, Dropdown } from 'carbon-components-react';
 import { AComponent } from './a-component';
-import { css, cx } from 'emotion';
+import { css } from 'emotion';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 import * as Icons from '@carbon/icons-react';
-import image from './../assets/component-icons/button.svg';
+import image from './../assets/component-icons/icons.svg';
 import { ElementTile } from '../components/element-tile';
-import { Add16 } from '@carbon/icons-react';
 import _ from 'lodash';
 const searchStyle = css`
 	margin-top: 15px;
