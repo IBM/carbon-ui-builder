@@ -40,7 +40,7 @@ const sizeItems = [
 
 const getIcons = () => {
     let items: any = [];
-    Object.entries(Icons).forEach((item: any) => {     
+    Object.entries(Icons).forEach((item: any) => {   
         const element = item[0].split(/(\d+)/);
         const icon = element ? element[0] : '';
         const size = element ? element[1] : '';
@@ -106,7 +106,8 @@ export const AIconsInputStyleUI = ({selectedComponent, setComponent}: any) => {
                                         ...selectedComponent,
                                         selectedIcon: props.componentObj.selectedIcon,
                                         key: props.componentObj.key,
-                                        size: props.componentObj.size
+                                        size: props.componentObj.size,
+                                        name: props.componentObj.name
                                     })}>
                                 </Component>
                             </ElementTile>)
@@ -156,7 +157,7 @@ export const componentInfo: ComponentInfo = {
         key: '',
         name: '',
         selectedSize: ''
-	},
+    },
 	image,
 	codeExport: {
 		angular: {
@@ -168,11 +169,10 @@ export const componentInfo: ComponentInfo = {
                     <button>
                         <svg
                             ${json.selectedSize ? `size='${json.selectedSize}'` : '16'}
-                            ${json.name ? `ibmIcon='${json.key.toLowerCase()}'` : ''}
+                            ${json.name ? `ibmIcon='${json.key}'` : ''}
                             ${angularClassNamesFromComponentObj(json)}>
                         </svg>
-                    </button>
-                `;
+                    </button>`;
 			}
 		},
 		react: {
@@ -185,8 +185,7 @@ export const componentInfo: ComponentInfo = {
                             <${json.name} 
                             ${json.key ? `aria-label='${json.key}'` : ''}
                             ${reactClassNamesFromComponentObj(json)}/>
-                        </Button>
-                        `
+                        </Button>`;
 			}
 		}
 	}
