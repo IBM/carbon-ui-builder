@@ -114,7 +114,7 @@ export const componentInfo: ComponentInfo = {
 	keywords: ['radio', 'button'],
 	name: 'Radio button',
 	defaultComponentObj: {
-		type: 'radioButton'
+		type: 'radio'
 	},
 	image: image,
 	hideFromElementsPane: true,
