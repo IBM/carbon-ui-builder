@@ -20,7 +20,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools'
 
-export const ARadioButtonStyleUI = ({selectedComponent, setComponent}: any) => {
+export const ARadioStyleUI = ({selectedComponent, setComponent}: any) => {
 	return <>
 		<Checkbox
 			labelText='Disable button'
@@ -49,7 +49,7 @@ const addButtonCss = css`
 	position: relative;
 `;
 
-export const ARadioButton = ({
+export const ARadio = ({
 	children,
 	componentObj,
 	selected,
@@ -102,16 +102,16 @@ export const ARadioButton = ({
 };
 
 export const componentInfo: ComponentInfo = {
-	component: ARadioButton,
-	styleUI: ARadioButtonStyleUI,
-	render: ({ componentObj, select, remove, selected }) => <ARadioButton
+	component: ARadio,
+	styleUI: ARadioStyleUI,
+	render: ({ componentObj, select, remove, selected }) => <ARadio
 	componentObj={componentObj}
 	select={select}
 	remove={remove}
 	selected={selected}>
 		{componentObj.labelText}
-	</ARadioButton>,
-	keywords: ['radio','button'],
+	</ARadio>,
+	keywords: ['radio', 'button'],
 	name: 'Radio button',
 	defaultComponentObj: {
 		type: 'radioButton'
@@ -125,7 +125,7 @@ export const componentInfo: ComponentInfo = {
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Id = "${json.codeContext?.name}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${json.defaultChecked};`,
-			outputs: (_) => '',
+			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 			imports: [],
 			code: ({json }) => {
 				return `<ibm-radio
@@ -133,6 +133,7 @@ export const componentInfo: ComponentInfo = {
 					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 					[checked]="${nameStringToVariableString(json.codeContext?.name)}Checked"
 					[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
+					(change)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
 					${angularClassNamesFromComponentObj(json)}>
 					{{${nameStringToVariableString(json.codeContext?.name)}Label}}
 				</ibm-radio>`;
@@ -146,6 +147,12 @@ export const componentInfo: ComponentInfo = {
 					value="${json.value}"
 					checked={${json.defaultChecked}}
 					labelText="${json.labelText}"
+					onChange={(radio) => handleInputChange({
+						target: {
+							name: "${json.codeContext?.name}",
+							value: radio
+						}
+					})}
 					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
 					${reactClassNamesFromComponentObj(json)}/>`
 			}

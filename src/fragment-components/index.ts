@@ -7,7 +7,7 @@ import * as column from './a-column';
 import * as fragment from './a-fragment';
 import * as grid from './a-grid';
 import * as numberinput from './a-numberinput';
-import * as radioButton from "./a-radiobutton";
+import * as radioButton from "./a-radio";
 import * as radioButtonGroup from "./a-radiobutton-group";
 import * as row from './a-row';
 import * as tag from "./a-tag"
@@ -26,7 +26,7 @@ export { AColumn, AColumnStyleUI } from './a-column';
 export * from './a-component';
 export { AFragment, AFragmentStyleUI, AFragmentCodeUI } from './a-fragment';
 export { AGrid, AGridStyleUI } from './a-grid';
-export { ARadioButton, ARadioButtonStyleUI } from "./a-radiobutton";
+export { ARadio, ARadioStyleUI } from "./a-radio";
 export { ARadioButtonGroup, ARadioButtonGroupStyleUI, ARadioButtonGroupCodeUI } from "./a-radiobutton-group"
 export { ARow, ARowStyleUI } from './a-row';
 export { ATag, ATagStyleUI } from './a-tag';

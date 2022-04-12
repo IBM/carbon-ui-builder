@@ -101,13 +101,13 @@ return (
 		componentObj={componentObj}
 		{...rest}>
 			<RadioButtonGroup
-			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
-			legendText= {componentObj.legend}
-			disabled= {componentObj.disabled}
-			orientation={componentObj.orientation}
-			defaultSelected={componentObj.defaultSelected}
-			labelPosition={componentObj.labelPosition}
-			name={componentObj.codeContext?.name}>
+				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
+				legendText= {componentObj.legend}
+				disabled= {componentObj.disabled}
+				orientation={componentObj.orientation}
+				defaultSelected={componentObj.defaultSelected}
+				labelPosition={componentObj.labelPosition}
+				name={componentObj.codeContext?.name}>
 					{children}
 			</RadioButtonGroup>
 		</AComponent>
@@ -163,7 +163,7 @@ export const componentInfo: ComponentInfo = {
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}LabelPosition = "${json.labelPosition}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Name = "${json.codeContext?.name}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}defaultSelected = "${json.defaultSelected}";`,
-			outputs: (_) => '',
+			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 			imports: ['RadioModule'],
 			code: ({ json, jsonToTemplate }) => {
 				return `<legend class="bx--label">{{${nameStringToVariableString(json.codeContext?.name)}LegendText}}</legend>
@@ -171,6 +171,7 @@ export const componentInfo: ComponentInfo = {
 					[name]="${nameStringToVariableString(json.codeContext?.name)}Name"
 					[orientation]="${nameStringToVariableString(json.codeContext?.name)}Orientation"
 					[labelPlacement]="${nameStringToVariableString(json.codeContext?.name)}LabelPosition"
+					(change)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
 					${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
 				</ibm-radio-group>`
@@ -186,6 +187,7 @@ export const componentInfo: ComponentInfo = {
 					orientation="${json.orientation}"
 					labelPlacement="${json.labelPosition}"
 					defaultSelected="${json.defaultSelected}"
+					valueChecked="${json.defaultSelected}"
 					${reactClassNamesFromComponentObj(json)}
 					onChange={(radio) => handleInputChange({
 						target: {
