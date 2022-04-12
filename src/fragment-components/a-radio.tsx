@@ -13,7 +13,7 @@ import {
 	updatedState,
 	Adder
 } from '../components';
-import image from './../assets/component-icons/radiobutton.svg';
+import image from './../assets/component-icons/radio.svg';
 import {
 	nameStringToVariableString,
 	angularClassNamesFromComponentObj,
