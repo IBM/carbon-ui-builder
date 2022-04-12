@@ -23,6 +23,7 @@ export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: an
 		{id: 'left', text: 'Left'},
 		{id: 'right', text: 'Right'}
 	];
+
 	return <>
 		<TextInput
 			value={selectedComponent.legend}
