@@ -8,6 +8,7 @@ import * as Icons from '@carbon/icons-react';
 import image from './../assets/component-icons/icons.svg';
 import { ElementTile } from '../components/element-tile';
 import _ from 'lodash';
+import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 const searchStyle = css`
 	margin-top: 15px;
 `;
@@ -39,7 +40,7 @@ const sizeItems = [
 
 const getIcons = () => {
     let items: any = [];
-    Object.entries(Icons).forEach(item => {     
+    Object.entries(Icons).forEach((item: any) => {     
         const element = item[0].split(/(\d+)/);
         const icon = element ? element[0] : '';
         const size = element ? element[1] : '';
@@ -50,9 +51,11 @@ const getIcons = () => {
                 size: [{size: size, text: sizeItems.find((sizeItem : any) => sizeItem.id === size)?.text, component: item[1]}],
                 key: icon,
                 label: `${icon}`,
+                name: item[1].render.name,
                 type: 'icons',
                 className: elementTileStyle,
-                selectedIcon: item[1]
+                selectedIcon: item[1],
+                selectedSize: size
             }
         }
         if(item[0] !== 'Icon') {
@@ -83,7 +86,8 @@ export const AIconsInputStyleUI = ({selectedComponent, setComponent}: any) => {
             itemToString={(item: any) => (item ? item.text : '')}
             onChange={(event: any) => setComponent({
                 ...selectedComponent,
-                selectedIcon: selectedComponent.size.find((item: any) => item.size === event.selectedItem.size).component
+                selectedIcon: selectedComponent.size.find((item: any) => item.size === event.selectedItem.size).component,
+                selectedSize: selectedComponent.size.find((item: any) => item.size === event.selectedItem.size).size
         })}/>
 		<Search
 		    id='icons-search'
@@ -124,6 +128,8 @@ export const AIcons = ({
         componentObj.selectedIcon = component.selectedIcon;
         componentObj.key = component.key;
         componentObj.size = component.size;
+        componentObj.name = component.name;
+        componentObj.selectedSize = component.selectedSize;
     }
 	return (
 		<AComponent
@@ -147,22 +153,40 @@ export const componentInfo: ComponentInfo = {
 		type: 'icons',
         label: 'Icons',
         size: '',
-        key: ''
+        key: '',
+        name: '',
+        selectedSize: ''
 	},
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({json}) => ``,
+			inputs: (_) => ``,
 			outputs: (_) => ``,
-			imports: [''],
+            imports: ['ButtonModule', 'IconModule'],
 			code: ({json}) => {
-				return ``;
+                return `
+                    <button>
+                        <svg
+                            ${json.selectedSize ? `size='${json.selectedSize}'` : '16'}
+                            ${json.name ? `ibmIcon='${json.key.toLowerCase()}'` : ''}
+                            ${angularClassNamesFromComponentObj(json)}>
+                        </svg>
+                    </button>
+                `;
 			}
 		},
 		react: {
-			imports: [''],
+            imports: ['Button'],
+            otherImports: ({ json }) => {
+				return `import {${json.name}} from "@carbon/icons-react";`;
+			},
 			code: ({json}) => {
-				return ``
+                return `<Button>
+                            <${json.name} 
+                            ${json.key ? `aria-label='${json.key}'` : ''}
+                            ${reactClassNamesFromComponentObj(json)}/>
+                        </Button>
+                        `
 			}
 		}
 	}
