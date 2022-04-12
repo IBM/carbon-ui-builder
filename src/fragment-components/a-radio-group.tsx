@@ -68,16 +68,23 @@ export const ARadioButtonGroupCodeUI = ({ selectedComponent, setComponent }: any
 			defaultChecked: item.defaultChecked
 		}
 	});
+	allItems.push({text: 'None', id: 'none', defaultChecked: ''})
 	selectedComponent.defaultSelected = `${selectedComponent.items.find(((item: any) => {
 		return item.defaultChecked	
-	})).id}`;
+	}))?.id}`;
 	
 	return <>
 		<Dropdown
 			label='Default selection'
 			titleText='Default selection'
 			items={allItems}
-			initialSelectedItem={allItems.find((item: any) => item.defaultChecked)}
+			initialSelectedItem={allItems.find((item: any) => { 
+				if(item.defaultChecked) {
+					return item
+				} else {
+					return item.id === 'none'
+				}
+			})}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
