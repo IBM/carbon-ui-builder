@@ -79,6 +79,7 @@ export const componentInfo: ComponentInfo = {
 	</AButton>,
 	keywords: ['button'],
 	name: 'Button',
+	type: 'button',
 	defaultComponentObj: {
 		type: 'button',
 		kind: 'primary',

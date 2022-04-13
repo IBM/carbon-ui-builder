@@ -78,6 +78,7 @@ export const componentInfo: ComponentInfo = {
 	</AAccordion>,
 	keywords: ['accordion'],
 	name: 'Accordion',
+	type: 'accordion',
 	defaultComponentObj: {
 		type: 'accordion',
 		align: 'end',

@@ -8,9 +8,9 @@ import {
 import { getSelectedComponent, updatedState } from '../../components/fragment';
 
 const showComponentCodeOptions = (selectedComponent: any, setComponent: any) => {
-	for (let [key, component] of Object.entries(allComponents)) {
+	for (const component of Object.values(allComponents)) {
 		// Find the UI for editing code props for our component
-		if (selectedComponent.type === key && component.componentInfo.codeUI) {
+		if (selectedComponent.type === component.componentInfo.type && component.componentInfo.codeUI) {
 			return <component.componentInfo.codeUI
 				selectedComponent={selectedComponent}
 				setComponent={setComponent} />

@@ -37,8 +37,8 @@ const addIfNotExist = (arr: any[], items: any[]) => {
 const jsonToCarbonImports = (json: any) => {
     const imports: any[] = [];
 
-	for (let [key, component] of Object.entries(allComponents)) {
-		if (json.type === key) {
+	for (const component of Object.values(allComponents)) {
+		if (json.type === component.componentInfo.type) {
 			addIfNotExist(imports, component.componentInfo.codeExport.react.imports);
 		}
 	}
@@ -57,8 +57,8 @@ export const jsonToTemplate = (json: any, fragments: any[]) => {
         return json;
     }
 
-	for (let [key, component] of Object.entries(allComponents)) {
-		if (json.type === key && !component.componentInfo.codeExport.react.isNotDirectExport) {
+	for (const component of Object.values(allComponents)) {
+		if (json.type === component.componentInfo.type && !component.componentInfo.codeExport.react.isNotDirectExport) {
 			return component.componentInfo.codeExport.react.code({json, jsonToTemplate, fragments});
 		}
 	}
@@ -70,8 +70,8 @@ export const jsonToTemplate = (json: any, fragments: any[]) => {
 
 const otherImportsFromComponentObj = (json: any, fragments?: any[]) => {
 	let imports = '';
-	for (let [key, component] of Object.entries(allComponents)) {
-		if (json.type === key) {
+	for (const component of Object.values(allComponents)) {
+		if (json.type === component.componentInfo.type) {
 			if (component.componentInfo.codeExport.react.otherImports) {
 				imports += component.componentInfo.codeExport.react.otherImports({json, fragments});
 				break;

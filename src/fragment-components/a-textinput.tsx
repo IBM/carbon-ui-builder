@@ -114,6 +114,7 @@ export const componentInfo: ComponentInfo = {
 	codeUI: ATextInputCodeUI,
 	keywords: ['text', 'text', 'input'],
 	name: 'Text input',
+	type: 'textinput',
 	defaultComponentObj: {
 		type: 'textinput',
 		label: 'Text input label',

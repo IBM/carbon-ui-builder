@@ -123,6 +123,7 @@ export const componentInfo: ComponentInfo = {
 	name: 'Row',
 	hideFromElementsPane: true,
 	defaultComponentObj: undefined,
+	type: 'row',
 	image: undefined,
 	codeExport: {
 		angular: {
