@@ -64,9 +64,10 @@ export const ARadio = ({
 			{
 				type: 'insert',
 				component: {
-					type: 'radioButton',
+					type: 'radio',
 					value: `${componentObj.id}`,
 					labelText: 'New Option',
+					defaultChecked: false,
 					disabled: false
 				}
 			},
@@ -74,8 +75,6 @@ export const ARadio = ({
 			parentComponent.items.indexOf(componentObj) + offset
 		)
 	});
-	componentObj.value = `${componentObj.id}`;
-
 	return (
 		<Adder
 		active={selected}
