@@ -7,8 +7,8 @@ import * as column from './a-column';
 import * as fragment from './a-fragment';
 import * as grid from './a-grid';
 import * as numberinput from './a-numberinput';
-import * as radioButton from "./a-radio";
-import * as radioButtonGroup from "./a-radio-group";
+import * as radio from "./a-radio";
+import * as radioGroup from "./a-radio-group";
 import * as row from './a-row';
 import * as tag from "./a-tag"
 import * as searchinput from './a-searchinput';
@@ -45,8 +45,8 @@ export const allComponents = {
 	column,
 	fragment,
 	grid,
-	radioButton,
-	radioButtonGroup,
+	radio,
+	radioGroup,
 	row,
 	tag,
 	text,

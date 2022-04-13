@@ -129,26 +129,26 @@ export const componentInfo: ComponentInfo = {
 	name: 'Radio buttons',
 	defaultComponentObj: {
 		disabled: false,
-		type: 'radioButtonGroup',
+		type: 'radioGroup',
 		legend: 'Radio Button Group',
 		defaultSelected: '',
 		labelPosition: 'right',
 		orientation: 'horizontal',
 		items: [
 			{
-				type: 'radioButton',
+				type: 'radio',
 				labelText: "Option 1",
 				disabled: false,
 				defaultChecked: true,
 			},
 			{
-				type: 'radioButton',
+				type: 'radio',
 				labelText: "Option 2",
 				disabled: false,
 				defaultChecked: false,
 			},
 			{
-				type: 'radioButton',
+				type: 'radio',
 				labelText: "Option 3",
 				disabled: false,
 				defaultChecked: false,
