@@ -13,16 +13,17 @@ const showComponentStyleOptions = (selectedComponent: any, setComponent: any) =>
 		if (selectedComponent.type === component.componentInfo.type) {
 			return <component.componentInfo.styleUI
 				selectedComponent={selectedComponent}
-				setComponent={setComponent} />
+				setComponent={setComponent} />;
 		}
 	}
 };
 
-export const StyleContextPane = ({fragment, setFragment}: any) => {
+export const StyleContextPane = ({ fragment, setFragment }: any) => {
 	const selectedComponent = getSelectedComponent(fragment);
 
 	const setComponent = (component: any, updateActionHistory = true) => {
-		setFragment({
+		setFragment(
+			{
 				...fragment,
 				data: updatedState(fragment.data, {
 					type: 'update',
@@ -48,9 +49,7 @@ export const StyleContextPane = ({fragment, setFragment}: any) => {
 				</>
 			}
 			{
-				!selectedComponent && <>
-					<ComponentCssClassSelector componentObj={fragment} setComponent={setFragment} />
-				</>
+				!selectedComponent && <ComponentCssClassSelector componentObj={fragment} setComponent={setFragment} />
 			}
 		</div>
 	);

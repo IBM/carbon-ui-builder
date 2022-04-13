@@ -8,7 +8,7 @@ import { ComponentInfo } from '.';
 import image from './../assets/component-icons/checkbox.svg';
 import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
-export const ACheckboxStyleUI = ({selectedComponent, setComponent}: any) => {
+export const ACheckboxStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TextInput
 			value={selectedComponent.label}
@@ -21,11 +21,11 @@ export const ACheckboxStyleUI = ({selectedComponent, setComponent}: any) => {
 			}}
 		/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
-export const ACheckboxCodeUI = ({selectedComponent, setComponent}: any) => {
-	return <>
+export const ACheckboxCodeUI = ({ selectedComponent, setComponent }: any) => {
+	return (
 		<TextInput
 			value={selectedComponent.codeContext?.name}
 			labelText='Input name'
@@ -38,7 +38,7 @@ export const ACheckboxCodeUI = ({selectedComponent, setComponent}: any) => {
 				});
 			}}
 		/>
-	</>
+	);
 };
 
 export const ACheckbox = ({
@@ -73,10 +73,10 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({json}) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked: boolean;`,
-			outputs: ({json}) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}CheckedChange = new EventEmitter<boolean>();`,
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked: boolean;`,
+			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}CheckedChange = new EventEmitter<boolean>();`,
 			imports: ['CheckboxModule'],
-			code: ({json}) => {
+			code: ({ json }) => {
 				return `<ibm-checkbox
 					name="${json.codeContext?.name}"
 					id="${json.codeContext?.name}"
@@ -89,7 +89,7 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: ['Checkbox'],
-			code: ({json}) => {
+			code: ({ json }) => {
 				return `<Checkbox
 					labelText="${json.label}"
 					name="${json.codeContext?.name}"

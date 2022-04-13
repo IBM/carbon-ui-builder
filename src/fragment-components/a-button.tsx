@@ -11,28 +11,25 @@ import { ComponentCssClassSelector } from '../components/css-class-selector';
 import image from './../assets/component-icons/button.svg';
 import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
-export const AButtonStyleUI = ({selectedComponent, setComponent}: any) => {
+export const AButtonStyleUI = ({ selectedComponent, setComponent }: any) => {
 	const kindItems = [
-		{id: 'primary', text: 'Primary'},
-		{id: 'secondary', text: 'Secondary'},
-		{id: 'tertiary', text: 'Tertiary'},
-		{id: 'danger', text: 'Danger'},
-		{id: 'danger--tertiary', text: 'Danger tertiary'},
-		{id: 'danger--ghost', text: 'Danger ghost'},
-		{id: 'ghost', text: 'Ghost'}
+		{ id: 'primary', text: 'Primary' },
+		{ id: 'secondary', text: 'Secondary' },
+		{ id: 'tertiary', text: 'Tertiary' },
+		{ id: 'danger', text: 'Danger' },
+		{ id: 'danger--tertiary', text: 'Danger tertiary' },
+		{ id: 'danger--ghost', text: 'Danger ghost' },
+		{ id: 'ghost', text: 'Ghost' }
 	];
 
 	return <>
 		<TextInput
 			value={selectedComponent.text}
 			labelText='Text'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					text: event.currentTarget.value
-				});
-			}}
-		/>
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				text: event.currentTarget.value
+			})} />
 		<Dropdown
 			label='Kind'
 			titleText='Kind'
@@ -42,9 +39,9 @@ export const AButtonStyleUI = ({selectedComponent, setComponent}: any) => {
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				kind: event.selectedItem.id
-		})}/>
+			})} />
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
 export const AButton = ({
@@ -88,10 +85,10 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({json}) => ``,
-			outputs: ({json}) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
+			inputs: (_) => '',
+			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
 			imports: ['ButtonModule'],
-			code: ({json}) => {
+			code: ({ json }) => {
 				return `<button
 					${json.kind ? `ibmButton='${json.kind}'` : 'ibmButton'}
 					(click)='${nameStringToVariableString(json.codeContext?.name)}Clicked.emit()'

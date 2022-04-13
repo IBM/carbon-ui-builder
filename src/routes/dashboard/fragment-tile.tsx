@@ -30,9 +30,7 @@ export const FragmentTile = ({
 		});
 	};
 
-	const resetPreview = async () => {
-		setPreviewUrl(await getFragmentPreviewUrl(fragment) as string);
-	}
+	const resetPreview = async () => setPreviewUrl(await getFragmentPreviewUrl(fragment) as string);
 
 	return (
 		<div className='tile-wrapper'>
@@ -42,7 +40,7 @@ export const FragmentTile = ({
 						<FragmentPreview
 							fragment={fragment}
 							previewUrl={previewUrl}
-							setPreviewUrl={setPreviewUrl}/>
+							setPreviewUrl={setPreviewUrl} />
 					</Link>
 					<div className='fragment-info'>
 						<div>
@@ -52,27 +50,25 @@ export const FragmentTile = ({
 							<span>{lastModified ? lastModified : 'Last modified date unknown'}</span>
 						</div>
 						<OverflowMenu
-							className='fragment-overflow'
-							ariaLabel='Fragment options'
-							iconDescription=''
-							onClick={
-								(event: { stopPropagation: () => void; }) => { event.stopPropagation(); }
-							}>
+						className='fragment-overflow'
+						ariaLabel='Fragment options'
+						iconDescription=''
+						onClick={(event: { stopPropagation: () => void }) => event.stopPropagation()}>
 							<OverflowMenuItem
 								itemText='Edit'
-								onClick={() => { history.push(`/edit/${fragment.id}`); }}/>
+								onClick={() => history.push(`/edit/${fragment.id}`)} />
 							<OverflowMenuItem
 								itemText='Export'
-								onClick={() => { handleModalState(ModalActionType.setShareModal); }}/>
+								onClick={() => handleModalState(ModalActionType.setShareModal)} />
 							<OverflowMenuItem
 								itemText='Duplicate'
-								onClick={() => { handleModalState(ModalActionType.setDuplicationModal); }}/>
+								onClick={() => handleModalState(ModalActionType.setDuplicationModal)} />
 							<OverflowMenuItem
 								itemText='Reset preview'
-								onClick={resetPreview}/>
+								onClick={resetPreview} />
 							<OverflowMenuItem
 								itemText='Remove'
-								onClick={() => { handleModalState(ModalActionType.setDeletionModal); }}
+								onClick={() => handleModalState(ModalActionType.setDeletionModal)}
 								isDelete />
 						</OverflowMenu>
 					</div>

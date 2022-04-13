@@ -7,7 +7,7 @@ import { ComponentInfo } from '.';
 import image from './../assets/component-icons/text.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
-export const ATextStyleUI = ({selectedComponent, setComponent}: any) => {
+export const ATextStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TextInput
 			value={selectedComponent.text}
@@ -20,7 +20,7 @@ export const ATextStyleUI = ({selectedComponent, setComponent}: any) => {
 			}}
 		/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
 export const AText = ({
@@ -41,7 +41,7 @@ export const AText = ({
 export const componentInfo: ComponentInfo = {
 	component: AText,
 	styleUI: ATextStyleUI,
-	render: ({componentObj, select, remove, selected}) => <AText
+	render: ({ componentObj, select, remove, selected }) => <AText
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
@@ -58,10 +58,10 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({json}) => ``,
-			outputs: ({json}) => ``,
+			inputs: (_) => '',
+			outputs: (_) => '',
 			imports: [],
-			code: ({json}) => {
+			code: ({ json }) => {
 				if (json.cssClasses) {
 					return `<span ${angularClassNamesFromComponentObj(json)}>${json.text}</span>`;
 				}
@@ -70,7 +70,7 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: [],
-			code: ({json}) => {
+			code: ({ json }) => {
 				if (json.cssClasses) {
 					return `<span ${reactClassNamesFromComponentObj(json)}>${json.text}</span>`;
 				}

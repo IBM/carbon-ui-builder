@@ -15,25 +15,25 @@ import {
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 
-export const ATagStyleUI = ({selectedComponent, setComponent}: any) => {
+export const ATagStyleUI = ({ selectedComponent, setComponent }: any) => {
 	const typeItems = [
-		{id: 'gray', text: 'Gray'},
-		{id: 'red', text: 'Red'},
-		{id: 'magenta', text: 'Magenta'},
-		{id: 'purple', text: 'Purple'},
-		{id: 'blue', text: 'Blue'},
-		{id: 'cyan', text: 'Cyan'},
-		{id: 'teal', text: 'Teal'},
-		{id: 'green', text: 'Green'},
-		{id: 'cool-gray', text: 'Cool gray'},
-		{id: 'warm-gray', text: 'Warm gray'},
-		{id: 'high-contrast', text: 'High contrast'},
-		{id: 'outline', text: 'Outline'},
+		{ id: 'gray', text: 'Gray' },
+		{ id: 'red', text: 'Red' },
+		{ id: 'magenta', text: 'Magenta' },
+		{ id: 'purple', text: 'Purple' },
+		{ id: 'blue', text: 'Blue' },
+		{ id: 'cyan', text: 'Cyan' },
+		{ id: 'teal', text: 'Teal' },
+		{ id: 'green', text: 'Green' },
+		{ id: 'cool-gray', text: 'Cool gray' },
+		{ id: 'warm-gray', text: 'Warm gray' },
+		{ id: 'high-contrast', text: 'High contrast' },
+		{ id: 'outline', text: 'Outline' }
 	];
 
 	const sizeItems = [
-		{id: 'md', text: 'Medium'},
-		{id: 'sm', text: 'Small'}
+		{ id: 'md', text: 'Medium' },
+		{ id: 'sm', text: 'Small' }
 	];
 
 	return <>
@@ -97,7 +97,7 @@ export const ATagStyleUI = ({selectedComponent, setComponent}: any) => {
 		/>
 
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
 export const ATag = ({
@@ -146,9 +146,9 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({json}) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Title = "${json.title}";
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Title = "${json.title}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Type = "${json.kind}";`,
-			outputs: ({json}) => `${json.filter
+			outputs: ({ json }) => `${json.filter
 				? `@Output() ${nameStringToVariableString(json.codeContext?.name)}Close = new EventEmitter();`
 				: ''
 			}`,
@@ -156,12 +156,12 @@ export const componentInfo: ComponentInfo = {
 			// NOTE: Angular tag does not support 'disabled' yet. Filtered tag is able to take in 'disabled' as an input
 			// but it doesn't do anything.
 			// Issue is being tracked here: https://github.com/IBM/carbon-components-angular/issues/2061
-			code: ({json}) => {
+			code: ({ json }) => {
 				const defaultProps = `
 					[type]="${nameStringToVariableString(json.codeContext?.name)}Type"
 					[title]="${nameStringToVariableString(json.codeContext?.name)}Title"
-					${`size='${json.size ? json.size : "md"}'`}
-				`
+					${`size='${json.size ? json.size : 'md'}'`}
+				`;
 				if (json.filter) {
 					return `<ibm-tag-filter
 						${defaultProps}
@@ -185,7 +185,7 @@ export const componentInfo: ComponentInfo = {
 			code: ({ json }) => {
 				return `<Tag
 					${json.kind && ` type="${json.kind}"`}
-					${`size='${json.size ? json.size : "md"}'`}
+					${`size='${json.size ? json.size : 'md'}'`}
 					disabled={${json.disabled}}
 					filter={${json.filter}}
 					${reactClassNamesFromComponentObj(json)}>

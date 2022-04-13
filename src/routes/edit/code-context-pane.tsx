@@ -13,13 +13,13 @@ const showComponentCodeOptions = (selectedComponent: any, setComponent: any) => 
 		if (selectedComponent.type === component.componentInfo.type && component.componentInfo.codeUI) {
 			return <component.componentInfo.codeUI
 				selectedComponent={selectedComponent}
-				setComponent={setComponent} />
+				setComponent={setComponent} />;
 		}
 	}
 	return <AComponentCodeUI selectedComponent={selectedComponent} setComponent={setComponent} />;
 };
 
-export const CodeContextPane = ({fragment, setFragment}: any) => {
+export const CodeContextPane = ({ fragment, setFragment }: any) => {
 	const selectedComponent = getSelectedComponent(fragment);
 
 	const setComponent = (component: any) => {

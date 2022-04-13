@@ -13,11 +13,11 @@ import { ComponentInfo } from '.';
 import image from './../assets/component-icons/number-input.svg';
 import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
-export const ANumberInputStyleUI = ({selectedComponent, setComponent}: any) => {
+export const ANumberInputStyleUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
-		{id: 'sm', text: 'Small'},
-		{id: 'md', text: 'Medium'},
-		{id: 'lg', text: 'Large'}
+		{ id: 'sm', text: 'Small' },
+		{ id: 'md', text: 'Medium' },
+		{ id: 'lg', text: 'Large' }
 	];
 
 	return <>
@@ -30,7 +30,7 @@ export const ANumberInputStyleUI = ({selectedComponent, setComponent}: any) => {
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				size: event.selectedItem.id
-		})}/>
+			})} />
 		<Checkbox
 			labelText='Hide label'
 			id='hide-label'
@@ -39,7 +39,7 @@ export const ANumberInputStyleUI = ({selectedComponent, setComponent}: any) => {
 				setComponent({
 					...selectedComponent,
 					hideLabel: checked
-				})
+				});
 			}}
 		/>
 		<TextInput
@@ -120,15 +120,15 @@ export const ANumberInputStyleUI = ({selectedComponent, setComponent}: any) => {
 				setComponent({
 					...selectedComponent,
 					light: checked
-				})
+				});
 			}}
 		/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
-export const ANumberInputCodeUI = ({selectedComponent, setComponent}: any) => {
-	return <>
+export const ANumberInputCodeUI = ({ selectedComponent, setComponent }: any) => {
+	return (
 		<TextInput
 			value={selectedComponent.codeContext?.name}
 			labelText='Input name'
@@ -142,7 +142,7 @@ export const ANumberInputCodeUI = ({selectedComponent, setComponent}: any) => {
 				});
 			}}
 		/>
-	</>
+	);
 };
 
 export const ANumberInput = ({
@@ -193,12 +193,12 @@ export const componentInfo: ComponentInfo = {
 		min: 0,
 		max: 100,
 		step: 10,
-		helperText: 'Helper text',
+		helperText: 'Helper text'
 	},
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({json}) =>
+			inputs: ({ json }) =>
 				`@Input() ${nameStringToVariableString(json.codeContext?.name)}HelperText = "${json.helperText}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = ${Math.round((json.min + json.max) / 2)};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.label}";
@@ -212,11 +212,11 @@ export const componentInfo: ComponentInfo = {
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}WarnText = ${json.warnText};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};`,
-			outputs: ({json}) =>
+			outputs: ({ json }) =>
 				`@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter<number>();
 				@Output() ${nameStringToVariableString(json.codeContext?.name)}Change = new EventEmitter<any>();`,
 			imports: ['NumberModule'],
-			code: ({json}) => {
+			code: ({ json }) => {
 				return `<ibm-number
 					[helperText]="${nameStringToVariableString(json.codeContext?.name)}HelperText"
 					name="${json.codeContext?.name}"
@@ -239,7 +239,7 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: ['NumberInput'],
-			code: ({json}) => {
+			code: ({ json }) => {
 				return `<NumberInput
 					size="${json.size}"
 					name="${json.codeContext?.name}"

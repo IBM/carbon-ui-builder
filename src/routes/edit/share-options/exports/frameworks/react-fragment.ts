@@ -26,16 +26,16 @@ const formatOptionsCss: Options = {
 };
 
 const addIfNotExist = (arr: any[], items: any[]) => {
-    items.forEach(item => {
-        if (!arr.includes(item)) {
-            arr.push(item);
-        }
-    });
-    return arr;
-}
+	items.forEach(item => {
+		if (!arr.includes(item)) {
+			arr.push(item);
+		}
+	});
+	return arr;
+};
 
 const jsonToCarbonImports = (json: any) => {
-    const imports: any[] = [];
+	const imports: any[] = [];
 
 	for (const component of Object.values(allComponents)) {
 		if (json.type === component.componentInfo.type) {
@@ -44,18 +44,18 @@ const jsonToCarbonImports = (json: any) => {
 	}
 
 	if (json.items) {
-        json.items.forEach((item: any) => {
-            addIfNotExist(imports, jsonToCarbonImports(item));
-        });
+		json.items.forEach((item: any) => {
+			addIfNotExist(imports, jsonToCarbonImports(item));
+		});
 	}
 
-    return imports;
+	return imports;
 };
 
 export const jsonToTemplate = (json: any, fragments: any[]) => {
-    if (typeof json === "string" || !json) {
-        return json;
-    }
+	if (typeof json === 'string' || !json) {
+		return json;
+	}
 
 	for (const component of Object.values(allComponents)) {
 		if (json.type === component.componentInfo.type && !component.componentInfo.codeExport.react.isNotDirectExport) {
@@ -63,9 +63,9 @@ export const jsonToTemplate = (json: any, fragments: any[]) => {
 		}
 	}
 
-    if (json.items) {
-        return json.items.map((item: any) => jsonToTemplate(item, fragments)).join('\n');
-    }
+	if (json.items) {
+		return json.items.map((item: any) => jsonToTemplate(item, fragments)).join('\n');
+	}
 };
 
 const otherImportsFromComponentObj = (json: any, fragments?: any[]) => {
@@ -73,21 +73,21 @@ const otherImportsFromComponentObj = (json: any, fragments?: any[]) => {
 	for (const component of Object.values(allComponents)) {
 		if (json.type === component.componentInfo.type) {
 			if (component.componentInfo.codeExport.react.otherImports) {
-				imports += component.componentInfo.codeExport.react.otherImports({json, fragments});
+				imports += component.componentInfo.codeExport.react.otherImports({ json, fragments });
 				break;
 			}
 		}
 	}
 
 	if (json.items) {
-        imports += json.items.map((item: any) => otherImportsFromComponentObj(item, fragments)).join('\n');
-    }
+		imports += json.items.map((item: any) => otherImportsFromComponentObj(item, fragments)).join('\n');
+	}
 
 	// remove duplicate imports
 	imports = sortedUniq(imports.split('\n')).join('\n');
 
 	return imports;
-}
+};
 
 const generateTemplate = (json: any, fragments: any[]) => {
 	const carbonImports = jsonToCarbonImports(json);
@@ -132,14 +132,14 @@ const jsonToSharedComponents = (json: any, fragments: any[]) => {
 		sharedComponents = {
 			...sharedComponents,
 			...jsonToSharedComponents(fragment.data, fragments)
-		}
+		};
 	}
 
 	json.items?.forEach((item: any) => {
 		sharedComponents = {
 			...sharedComponents,
 			...jsonToSharedComponents(item, fragments)
-		}
+		};
 	});
 
 	return sharedComponents;
