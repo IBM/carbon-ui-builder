@@ -138,9 +138,7 @@ export const AIcons = ({
 		headingCss={css`display: block;`}
 		className={css`position: relative; display: flex`}
 		{...rest}>
-                <Button kind="ghost">
-                    <componentObj.selectedIcon></componentObj.selectedIcon>
-                </Button>
+            <componentObj.selectedIcon></componentObj.selectedIcon>
 		</AComponent>
 	);
 };
@@ -163,29 +161,24 @@ export const componentInfo: ComponentInfo = {
 		angular: {
 			inputs: (_) => ``,
 			outputs: (_) => ``,
-            imports: ['ButtonModule', 'IconModule'],
+            imports: ['IconModule'],
 			code: ({json}) => {
-                return `
-                    <button>
-                        <svg
+                return `<svg
                             ${json.selectedSize ? `size='${json.selectedSize}'` : '16'}
                             ${json.name ? `ibmIcon='${json.key}'` : ''}
                             ${angularClassNamesFromComponentObj(json)}>
-                        </svg>
-                    </button>`;
+                        </svg>`;
 			}
 		},
 		react: {
-            imports: ['Button'],
+            imports: [''],
             otherImports: ({ json }) => {
 				return `import {${json.name}} from "@carbon/icons-react";`;
 			},
 			code: ({json}) => {
-                return `<Button>
-                            <${json.name} 
+                return `<${json.name} 
                             ${json.key ? `aria-label='${json.key}'` : ''}
-                            ${reactClassNamesFromComponentObj(json)}/>
-                        </Button>`;
+                        ${reactClassNamesFromComponentObj(json)}/>`;
 			}
 		}
 	}
