@@ -22,7 +22,7 @@ const elementTileStyle = css`
 	}
 `;
 
-export const ElementTile = ({children, componentObj}: any) => {
+export const ElementTile = ({ children, componentObj }: any) => {
 	return (<div
 		className={elementTileStyle}
 		draggable='true'

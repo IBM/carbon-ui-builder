@@ -24,28 +24,24 @@ export const DeleteFragmentModal = ({ id }: any) => {
 				message: `Fragment '${fragment.title}' has been permanently deleted.`,
 				action: {
 					actionText: 'Undo',
-					actionFunction: undoHideFragment,
-					onNotificationClose: () => { removeFragment(id) }
+					actionFunction: () => toggleFragmentVisibility(id, false),
+					onNotificationClose: () => removeFragment(id)
 				}
 			}
 		});
 		dispatchModal({ type: ModalActionType.closeModal });
 	};
 
-	const undoHideFragment = () => {
-		toggleFragmentVisibility(id, false);
-	};
-
 	return (
 		<Modal
-			size='sm'
-			open={modalState.ShowModal}
-			onRequestClose={() => { dispatchModal({ type: ModalActionType.closeModal }); }}
-			secondaryButtonText='Cancel'
-			modalHeading='Delete this fragment?'
-			danger
-			primaryButtonText='Delete'
-			onRequestSubmit={() => deleteFragment()}>
+		size='sm'
+		open={modalState.ShowModal}
+		onRequestClose={() => dispatchModal({ type: ModalActionType.closeModal })}
+		secondaryButtonText='Cancel'
+		modalHeading='Delete this fragment?'
+		danger
+		primaryButtonText='Delete'
+		onRequestSubmit={() => deleteFragment()}>
 			<p>
 				Click <strong>Cancel</strong> to go back to editing your fragment
 				or <strong>Delete</strong> to remove it permanently.

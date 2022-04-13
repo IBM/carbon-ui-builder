@@ -10,7 +10,7 @@ import * as numberinput from './a-numberinput';
 import * as radio from "./a-radio";
 import * as radioGroup from "./a-radio-group";
 import * as row from './a-row';
-import * as tag from "./a-tag"
+import * as tag from './a-tag';
 import * as searchinput from './a-searchinput';
 import * as text from './a-text';
 import * as textarea from './a-textarea';

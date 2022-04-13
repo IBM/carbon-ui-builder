@@ -1,4 +1,4 @@
 export interface FragmentPermission {
-    email: string,
-    permission: string
+	email: string;
+	permission: string;
 }
