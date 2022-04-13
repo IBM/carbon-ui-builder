@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Button, Dropdown } from 'carbon-components-react';
+import { Search, Dropdown } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
