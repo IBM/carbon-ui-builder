@@ -18,9 +18,9 @@ import {
 	nameStringToVariableString,
 	angularClassNamesFromComponentObj,
 	reactClassNamesFromComponentObj
-} from '../utils/fragment-tools'
+} from '../utils/fragment-tools';
 
-export const ARadioStyleUI = ({selectedComponent, setComponent}: any) => {
+export const ARadioStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<Checkbox
 			labelText='Disable button'
@@ -42,7 +42,7 @@ export const ARadioStyleUI = ({selectedComponent, setComponent}: any) => {
 			}}
 		/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent}/>
-	</>
+	</>;
 };
 
 const addButtonCss = css`
@@ -50,7 +50,6 @@ const addButtonCss = css`
 `;
 
 export const ARadio = ({
-	children,
 	componentObj,
 	selected,
 	...rest
@@ -87,7 +86,7 @@ export const ARadio = ({
 			selected={selected}
 			headingCss={css`width: fit-content; min-width: 9rem;`}
 			componentObj={componentObj}
-			{...rest}> 
+			{...rest}>
 				<RadioButton
 					id={componentObj.id}
 					name={componentObj.codeContext?.name}
@@ -120,14 +119,14 @@ export const componentInfo: ComponentInfo = {
 	hideFromElementsPane: true,
 	codeExport: {
 		angular: {
-			inputs: ({json}) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText}";
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Id = "${json.codeContext?.name}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${json.defaultChecked};`,
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 			imports: [],
-			code: ({json }) => {
+			code: ({ json }) => {
 				return `<ibm-radio
 					[id]="${nameStringToVariableString(json.codeContext?.name)}Id"
 					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
@@ -154,7 +153,7 @@ export const componentInfo: ComponentInfo = {
 						}
 					})}
 					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
-					${reactClassNamesFromComponentObj(json)}/>`
+					${reactClassNamesFromComponentObj(json)}/>`;
 			}
 		}
 	}

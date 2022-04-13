@@ -1,5 +1,5 @@
 import React from 'react';
-import { 
+import {
 	Dropdown,
 	TextInput,
 	RadioButtonGroup
@@ -15,13 +15,13 @@ import {
 
 export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: any) => {
 	const orientationItems = [
-		{id: 'horizontal', text: 'Horizontal'},
-		{id: 'vertical', text: 'Vertical'}
+		{ id: 'horizontal', text: 'Horizontal' },
+		{ id: 'vertical', text: 'Vertical' }
 	];
 
 	const labelPositions = [
-		{id: 'left', text: 'Left'},
-		{id: 'right', text: 'Right'}
+		{ id: 'left', text: 'Left' },
+		{ id: 'right', text: 'Right' }
 	];
 
 	return <>
@@ -57,7 +57,7 @@ export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: an
 				labelPosition: event.selectedItem.id
 		})}/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
 export const ARadioButtonGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
@@ -66,23 +66,22 @@ export const ARadioButtonGroupCodeUI = ({ selectedComponent, setComponent }: any
 			text: item.labelText,
 			id: item.id,
 			defaultChecked: item.defaultChecked
-		}
+		};
 	});
-	allItems.push({text: 'None', id: 'none', defaultChecked: ''})
+	allItems.push({ text: 'None', id: 'none', defaultChecked: '' });
 	selectedComponent.defaultSelected = `${selectedComponent.items.find(((item: any) => {
-		return item.defaultChecked	
+		return item.defaultChecked;
 	}))?.id}`;
-	
-	return <>
+	return (
 		<Dropdown
 			label='Default selection'
 			titleText='Default selection'
 			items={allItems}
-			initialSelectedItem={allItems.find((item: any) => { 
+			initialSelectedItem={allItems.find((item: any) => {
 				if(item.defaultChecked) {
-					return item
+					return item;
 				} else {
-					return item.id === 'none'
+					return item.id === 'none';
 				}
 			})}
 			itemToString={(item: any) => (item ? item.text : '')}
@@ -90,20 +89,18 @@ export const ARadioButtonGroupCodeUI = ({ selectedComponent, setComponent }: any
 				...selectedComponent,
 				valueSelected:`${event.selectedItem.id}`,
 				items: selectedComponent.items.map((item: any) => ({
-						...item, 
+						...item,
 						defaultChecked: event.selectedItem.id === item.id
 				}))
-		})}/>
-	</>
+		})}/>);
 };
-
 
 export const ARadioButtonGroup = ({
 	children,
 	componentObj,
 	...rest
 }: any) => {
-return (
+	return (
 		<AComponent
 		componentObj={componentObj}
 		{...rest}>
@@ -137,19 +134,19 @@ export const componentInfo: ComponentInfo = {
 		items: [
 			{
 				type: 'radio',
-				labelText: "Option 1",
+				labelText: 'Option 1',
 				disabled: false,
 				defaultChecked: true,
 			},
 			{
 				type: 'radio',
-				labelText: "Option 2",
+				labelText: 'Option 2',
 				disabled: false,
 				defaultChecked: false,
 			},
 			{
 				type: 'radio',
-				labelText: "Option 3",
+				labelText: 'Option 3',
 				disabled: false,
 				defaultChecked: false,
 			}
@@ -181,7 +178,7 @@ export const componentInfo: ComponentInfo = {
 					(change)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
 					${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
-				</ibm-radio-group>`
+				</ibm-radio-group>`;
 			}
 		},
 		react: {
