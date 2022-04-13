@@ -53,9 +53,9 @@ const codeSnippet = css`
 `;
 
 interface ExportCodeProps {
-    fragment: any,
-    displayedModal: ShareOptionsModals | null,
-    setDisplayedModal: (displayedModal: ShareOptionsModals | null) => void
+	fragment: any;
+	displayedModal: ShareOptionsModals | null;
+	setDisplayedModal: (displayedModal: ShareOptionsModals | null) => void;
 }
 
 export const ExportCode = ({
@@ -75,21 +75,21 @@ export const ExportCode = ({
 
 	return (
 		<Modal
-			hasForm
-			open={modalState.ShowModal && displayedModal === ShareOptionsModals.CODE_EXPORTS}
-			onRequestClose={() => dispatchModal({ type: ModalActionType.closeModal })}
-			primaryButtonText='Done'
-			secondaryButtonText='Back to export options'
-			onRequestSubmit={() => dispatchModal({ type: ModalActionType.closeModal })}
-			onSecondarySubmit={() => { setDisplayedModal(ShareOptionsModals.SHARE_OPTIONS); }}
-			modalHeading={`Export "${fragment.title}" code`}
-			className={exportCodeModalStyle}>
+		hasForm
+		open={modalState.ShowModal && displayedModal === ShareOptionsModals.CODE_EXPORTS}
+		onRequestClose={() => dispatchModal({ type: ModalActionType.closeModal })}
+		primaryButtonText='Done'
+		secondaryButtonText='Back to export options'
+		onRequestSubmit={() => dispatchModal({ type: ModalActionType.closeModal })}
+		onSecondarySubmit={() => setDisplayedModal(ShareOptionsModals.SHARE_OPTIONS)}
+		modalHeading={`Export "${fragment.title}" code`}
+		className={exportCodeModalStyle}>
 			<Tabs selected={3}>
 				<Tab
-					id='json'
-					label='JSON'
-					role='presentation'
-					tabIndex={0}>
+				id='json'
+				label='JSON'
+				role='presentation'
+				tabIndex={0}>
 					<div className={titleWrapper}>
 						<h3>JSON</h3>
 						<Button
@@ -99,25 +99,25 @@ export const ExportCode = ({
 						</Button>
 					</div>
 					<CodeSnippet
-						type='multi'
-						light
-						className={codeSnippet}
-						copyButtonDescription={`Copy JSON to clipboard`}>
-						{ jsonCode }
+					type='multi'
+					light
+					className={codeSnippet}
+					copyButtonDescription={'Copy JSON to clipboard'}>
+						{jsonCode}
 					</CodeSnippet>
 				</Tab>
 				<Tab
-					id='vanilla'
-					label='Vanilla JS'
-					role='presentation'
-					disabled
-					tabIndex={0}>
+				id='vanilla'
+				label='Vanilla JS'
+				role='presentation'
+				disabled
+				tabIndex={0}>
 					<div className={titleWrapper}>
 						<h3>Vanilla JS Code</h3>
 						<a
-							href={generateSandboxUrl(createFragmentSandbox(vanillaCode))}
-							target='_blank'
-							rel='noopener noreferrer'>
+						href={generateSandboxUrl(createFragmentSandbox(vanillaCode))}
+						target='_blank'
+						rel='noopener noreferrer'>
 							Edit on CodeSandbox
 						</a>
 					</div>
@@ -127,10 +127,10 @@ export const ExportCode = ({
 							<div className={codeSnippetWrapper} key={fileName}>
 								<p>{fileName}</p>
 								<CodeSnippet
-									type='multi'
-									light
-									className={codeSnippet}
-									copyButtonDescription={`Copy ${fileName} to clipboard`}>
+								type='multi'
+								light
+								className={codeSnippet}
+								copyButtonDescription={`Copy ${fileName} to clipboard`}>
 									{
 										fileName !== 'package.json'
 											? vanillaCode[fileName]
@@ -142,16 +142,16 @@ export const ExportCode = ({
 					}
 				</Tab>
 				<Tab
-					id='Angular'
-					label='Angular'
-					role='presentation'
-					tabIndex={0}>
+				id='Angular'
+				label='Angular'
+				role='presentation'
+				tabIndex={0}>
 					<div className={titleWrapper}>
 						<h3>Angular Code</h3>
 						<a
-							href={generateSandboxUrl(createFragmentSandbox(angularCode))}
-							target='_blank'
-							rel='noopener noreferrer'>
+						href={generateSandboxUrl(createFragmentSandbox(angularCode))}
+						target='_blank'
+						rel='noopener noreferrer'>
 							Edit on CodeSandbox
 						</a>
 					</div>
@@ -160,10 +160,10 @@ export const ExportCode = ({
 							<div className={codeSnippetWrapper} key={fileName}>
 								<p>{fileName}</p>
 								<CodeSnippet
-									type='multi'
-									light
-									className={codeSnippet}
-									copyButtonDescription={`Copy ${fileName} to clipboard`}>
+								type='multi'
+								light
+								className={codeSnippet}
+								copyButtonDescription={`Copy ${fileName} to clipboard`}>
 									{
 										fileName !== 'package.json'
 											? angularCode[fileName]
@@ -175,16 +175,16 @@ export const ExportCode = ({
 					}
 				</Tab>
 				<Tab
-					id='react'
-					label='React'
-					role='presentation'
-					tabIndex={0}>
+				id='react'
+				label='React'
+				role='presentation'
+				tabIndex={0}>
 					<div className={titleWrapper}>
 						<h3>React Code</h3>
 						<a
-							href={generateSandboxUrl(createFragmentSandbox(reactCode))}
-							target='_blank'
-							rel='noopener noreferrer'>
+						href={generateSandboxUrl(createFragmentSandbox(reactCode))}
+						target='_blank'
+						rel='noopener noreferrer'>
 							Edit on CodeSandbox
 						</a>
 					</div>
@@ -193,10 +193,10 @@ export const ExportCode = ({
 							<div className={codeSnippetWrapper} key={fileName}>
 								<p>{fileName}</p>
 								<CodeSnippet
-									type='multi'
-									light
-									className={codeSnippet}
-									copyButtonDescription={`Copy ${fileName} to clipboard`}>
+								type='multi'
+								light
+								className={codeSnippet}
+								copyButtonDescription={`Copy ${fileName} to clipboard`}>
 									{
 										fileName !== 'package.json'
 											? reactCode[fileName]
@@ -208,17 +208,17 @@ export const ExportCode = ({
 					}
 				</Tab>
 				<Tab
-					id='vue'
-					label='Vue'
-					role='presentation'
-					disabled
-					tabIndex={0}>
+				id='vue'
+				label='Vue'
+				role='presentation'
+				disabled
+				tabIndex={0}>
 					<div className={titleWrapper}>
 						<h3>Vue Code</h3>
 						<a
-							href={generateSandboxUrl(createFragmentSandbox(vueCode))}
-							target='_blank'
-							rel='noopener noreferrer'>
+						href={generateSandboxUrl(createFragmentSandbox(vueCode))}
+						target='_blank'
+						rel='noopener noreferrer'>
 							Edit on CodeSandbox
 						</a>
 					</div>
@@ -228,10 +228,10 @@ export const ExportCode = ({
 							<div className={codeSnippetWrapper} key={fileName}>
 								<p>{fileName}</p>
 								<CodeSnippet
-									type='multi'
-									light
-									className={codeSnippet}
-									copyButtonDescription={`Copy ${fileName} to clipboard`}>
+								type='multi'
+								light
+								className={codeSnippet}
+								copyButtonDescription={`Copy ${fileName} to clipboard`}>
 									{
 										fileName !== 'package.json'
 											? vueCode[fileName]

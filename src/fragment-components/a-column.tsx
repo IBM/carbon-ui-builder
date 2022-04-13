@@ -26,7 +26,7 @@ const helpIconStyle = css`
 	}
 `;
 
-export const AColumnStyleUI = ({selectedComponent, setComponent}: any) => {
+export const AColumnStyleUI = ({ selectedComponent, setComponent }: any) => {
 	const onNumInputchange = (event: any) => {
 		setComponent({
 			...selectedComponent,
@@ -42,7 +42,7 @@ export const AColumnStyleUI = ({selectedComponent, setComponent}: any) => {
 			medium: selectedComponent.mediumSpan || selectedComponent.mediumOffset,
 			large: selectedComponent.largeSpan || selectedComponent.largeOffset,
 			xLarge: selectedComponent.xLargeSpan || selectedComponent.xLargeOffset,
-			max: selectedComponent.maxSpan || selectedComponent.maxOffset,
+			max: selectedComponent.maxSpan || selectedComponent.maxOffset
 		});
 	}, [selectedComponent]);
 
@@ -141,7 +141,7 @@ export const AColumnStyleUI = ({selectedComponent, setComponent}: any) => {
 			</AccordionItem>
 		</Accordion>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
 const addStyle = css`

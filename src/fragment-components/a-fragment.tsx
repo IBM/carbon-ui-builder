@@ -13,7 +13,7 @@ import { GlobalStateContext } from '../context';
 import { classNameFromFragment, tagNameFromFragment } from '../utils/fragment-tools';
 import { LinkButton } from '../components';
 
-export const AFragmentStyleUI = ({selectedComponent, setComponent}: any) => {
+export const AFragmentStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<LinkButton
 		kind='secondary'
@@ -32,11 +32,11 @@ export const AFragmentStyleUI = ({selectedComponent, setComponent}: any) => {
 				showOutline: checked
 			})} />
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
-export const AFragmentCodeUI = ({selectedComponent, setComponent}: any) => {
-	return <>
+export const AFragmentCodeUI = ({ selectedComponent, setComponent }: any) => {
+	return (
 		<TextInput
 			value={selectedComponent.codeContext?.name}
 			labelText='Input name'
@@ -49,7 +49,7 @@ export const AFragmentCodeUI = ({selectedComponent, setComponent}: any) => {
 				});
 			}}
 		/>
-	</>
+	);
 };
 
 const showOutlineStyle = css`
@@ -67,7 +67,7 @@ export const AFragment = ({
 		className={css`position: relative; display: inline-flex`}
 		{...rest}>
 			<div
-			style={{pointerEvents: 'none'}}
+			style={{ pointerEvents: 'none' }}
 			className={cx(
 				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
 				componentObj.showOutline ? showOutlineStyle : ''
@@ -95,8 +95,8 @@ export const componentInfo: ComponentInfo = {
 			select={select}
 			remove={remove}
 			selected={selected}>
-				{ renderComponents(subFragment.data) }
-		</AFragment>
+				{renderComponents(subFragment.data)}
+		</AFragment>;
 	},
 	keywords: ['fragment'],
 	name: 'Fragment',
@@ -107,12 +107,10 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: { // TODO exports
 		angular: {
-			inputs: ({json}) => ``,
-			outputs: ({json}) => ``,
+			inputs: (_) => '',
+			outputs: (_) => '',
 			imports: [],
-			code: ({json}) => {
-				return ``;
-			}
+			code: (_) => ''
 		},
 		react: {
 			imports: [],

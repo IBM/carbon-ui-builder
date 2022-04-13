@@ -22,7 +22,7 @@ export const Notification = () => {
 	const [state, dispatch] = useContext(NotificationContext);
 	return (
 		<div className={notificationAreaStyle} role="alert">
-			{state.notifications.map((notification: NotificationData, index: number) => (
+			{state.notifications.map((notification: NotificationData) => (
 				<InlineNotification
 					lowContrast
 					aria-live="assertive"

@@ -8,11 +8,11 @@ import { ComponentInfo } from '.';
 import image from './../assets/component-icons/text-input.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
-export const ATextInputStyleUI = ({selectedComponent, setComponent}: any) => {
+export const ATextInputStyleUI = ({ selectedComponent, setComponent }: any) => {
 	const typeItems = [
-		{id: 'text', text: 'Text'},
-		{id: 'email', text: 'Email'},
-		{id: 'password', text: 'Password'}
+		{ id: 'text', text: 'Text' },
+		{ id: 'email', text: 'Email' },
+		{ id: 'password', text: 'Password' }
 	];
 
 	return <>
@@ -25,7 +25,7 @@ export const ATextInputStyleUI = ({selectedComponent, setComponent}: any) => {
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				inputType: event.selectedItem.id
-		})}/>
+			})} />
 		<TextInput
 			value={selectedComponent.label}
 			labelText='Label'
@@ -67,11 +67,11 @@ export const ATextInputStyleUI = ({selectedComponent, setComponent}: any) => {
 			}}
 		/>
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>
+	</>;
 };
 
-export const ATextInputCodeUI = ({selectedComponent, setComponent}: any) => {
-	return <>
+export const ATextInputCodeUI = ({ selectedComponent, setComponent }: any) => {
+	return (
 		<TextInput
 			value={selectedComponent.codeContext?.name}
 			labelText='Input name'
@@ -85,7 +85,7 @@ export const ATextInputCodeUI = ({selectedComponent, setComponent}: any) => {
 				});
 			}}
 		/>
-	</>
+	);
 };
 
 export const ATextInput = ({
@@ -124,10 +124,10 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({json}) => ``,
-			outputs: ({json}) => ``,
+			inputs: (_) => '',
+			outputs: (_) => '',
 			imports: ['InputModule'],
-			code: ({json}) => {
+			code: ({ json }) => {
 				return `<ibm-label
 					helperText="${json.helperText}">
 						${json.label}
@@ -141,7 +141,7 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: ['TextInput'],
-			code: ({json}) => {
+			code: ({ json }) => {
 				return `<TextInput
 					labelText="${json.label}"
 					name="${json.codeContext?.name}"

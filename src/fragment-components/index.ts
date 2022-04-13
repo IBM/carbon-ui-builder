@@ -9,7 +9,7 @@ import * as grid from './a-grid';
 import * as icons from './a-icons';
 import * as numberinput from './a-numberinput';
 import * as row from './a-row';
-import * as tag from "./a-tag"
+import * as tag from './a-tag';
 import * as searchinput from './a-searchinput';
 import * as text from './a-text';
 import * as textarea from './a-textarea';
