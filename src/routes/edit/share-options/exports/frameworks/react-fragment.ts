@@ -39,7 +39,10 @@ const jsonToCarbonImports = (json: any) => {
 
 	for (const [key, component] of Object.entries(allComponents)) {
 		if (json.type === key) {
-			addIfNotExist(imports, component.componentInfo.codeExport.react.imports({ json }));
+			const componentImport = Array.isArray(component.componentInfo.codeExport.react.imports) ?
+				component.componentInfo.codeExport.react.imports : component.componentInfo.codeExport.react.imports({ json });
+
+			addIfNotExist(imports, componentImport);
 		}
 	}
 
