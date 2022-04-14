@@ -45,7 +45,7 @@ export const ARadioStyleUI = ({ selectedComponent, setComponent }: any) => {
 	</>;
 };
 
-const addButtonCss = css`
+const addButtonStyle = css`
 	position: relative;
 `;
 
