@@ -141,7 +141,7 @@ export const componentInfo: ComponentInfo = {
 			}
 		},
 		react: {
-			imports: (_) => ['Link'],
+			imports: ['Link'],
 			code: ({ json }) => {
 				return `<Link
 					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}

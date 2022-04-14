@@ -237,7 +237,7 @@ export const componentInfo: ComponentInfo = {
 			}
 		},
 		react: {
-			imports: (_) => ['NumberInput'],
+			imports: ['NumberInput'],
 			code: ({ json }) => {
 				return `<NumberInput
 					size="${json.size}"

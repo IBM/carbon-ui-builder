@@ -140,7 +140,7 @@ export const componentInfo: ComponentInfo = {
 			}
 		},
 		react: {
-			imports: (_) => ['TextInput'],
+			imports: ['TextInput'],
 			code: ({ json }) => {
 				return `<TextInput
 					labelText="${json.label}"

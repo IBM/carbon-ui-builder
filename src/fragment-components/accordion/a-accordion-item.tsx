@@ -130,7 +130,7 @@ export const componentInfo: ComponentInfo = {
 			}
 		},
 		react: {
-			imports: (_) => ['AccordionItem'],
+			imports: ['AccordionItem'],
 			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<AccordionItem
 					title="${json.title || ''}"

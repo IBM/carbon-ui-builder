@@ -68,7 +68,7 @@ export const componentInfo: ComponentInfo = {
 			}
 		},
 		react: {
-			imports: (_) => [],
+			imports: [],
 			code: ({ json }) => {
 				if (json.cssClasses) {
 					return `<span ${reactClassNamesFromComponentObj(json)}>${json.text}</span>`;

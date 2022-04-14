@@ -97,7 +97,7 @@ export const componentInfo: ComponentInfo = {
 			}
 		},
 		react: {
-			imports: (_) => ['Button'],
+			imports: ['Button'],
 			code: ({ json }) => {
 				return `<Button${json.kind && ` kind="${json.kind}"`} ${reactClassNamesFromComponentObj(json)}>${json.text}</Button>`;
 			}

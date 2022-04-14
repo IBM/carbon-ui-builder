@@ -109,7 +109,7 @@ export const componentInfo: ComponentInfo = {
 			}
 		},
 		react: {
-			imports: (_) => ['Accordion'],
+			imports: ['Accordion'],
 			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<Accordion
 					${json.align !== undefined ? `align='${json.align}'` : ''}

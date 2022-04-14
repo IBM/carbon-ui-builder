@@ -274,7 +274,7 @@ export const componentInfo: ComponentInfo = {
 			code: (_) => ''
 		},
 		react: {
-			imports: (_) => ['Column'],
+			imports: ['Column'],
 			isNotDirectExport: true,
 			code: (_) => ''
 		}

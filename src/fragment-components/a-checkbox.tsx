@@ -87,7 +87,7 @@ export const componentInfo: ComponentInfo = {
 			}
 		},
 		react: {
-			imports: (_) => ['Checkbox'],
+			imports: ['Checkbox'],
 			code: ({ json }) => {
 				return `<Checkbox
 					labelText="${json.label}"
