@@ -106,7 +106,7 @@ export const componentInfo: ComponentInfo = {
 	</AAccordionItem>,
 	keywords: ['accordion', 'item'],
 	name: 'Accordion Item',
-	type: 'accordionitem',
+	type: 'accordion-item',
 	defaultComponentObj: {
 		type: 'accordionitem',
 		title: 'Accordion item',
