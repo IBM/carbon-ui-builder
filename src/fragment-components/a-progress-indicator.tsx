@@ -84,8 +84,8 @@ export const AProgressIndicatorStyleUI = ({ selectedComponent, setComponent }: a
 			}}
 		/>
 		<DraggableTileList
-			data={[...selectedComponent.progressSteps]}
-			setData={updateStepList}
+			dataList={[...selectedComponent.progressSteps]}
+			setListData={updateStepList}
 			handleStepUpdate={handleStepUpdate}
 			defaultObject={{
 				label: 'Step',
