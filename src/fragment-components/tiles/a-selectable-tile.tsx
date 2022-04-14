@@ -265,16 +265,12 @@ export const componentInfo: ComponentInfo = {
 						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</SelectableTile>`;
 			},
-			helperFunction: ({ json }) => {
+			additionalCode: (json) => {
 				if(json.standalone) {
-					return {
-						name: '',
-						code: ''
-					};
+					return {};
 				}
 				return {
-					name: 'handleSelectableTileChange',
-					code: `(name, id) => {
+					handleSelectableTileChange: `const handleSelectableTileChange = (name, id) => {
 						handleInputChange({
 							target: {
 								name,

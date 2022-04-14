@@ -68,29 +68,32 @@ export const jsonToTemplate = (json: any, fragments: any[]) => {
 	}
 };
 
-export const jsonToHelperFunction = (json: any, fragments: any[], dictionary: any = {}) => {
-	if (typeof json === 'string' || !json) {
-		return json;
+export const getAdditionalCode = (componentObj: any, fragments: any[]) => {
+	if (typeof componentObj === 'string' || !componentObj) {
+		return componentObj;
 	}
+	let collectedCode = {};
 
 	for (const [key, component] of Object.entries(allComponents)) {
-		if (json.type === key && !component.componentInfo.codeExport.react.isNotDirectExport) {
-			if (component.componentInfo.codeExport.react.helperFunction) {
-				const helperFunction = component.componentInfo.codeExport.react?.helperFunction({ json });
-				// Ignore if name or code is empty string
-				if (dictionary[helperFunction.name] === undefined && helperFunction.name !== '' && helperFunction.code !== '') {
-					dictionary[helperFunction.name] = helperFunction.code;
-					return `const ${helperFunction.name} = ${helperFunction.code}`;
-				} else {
-					return '';
-				}
+		if (componentObj.type === key && !component.componentInfo.codeExport.react.isNotDirectExport) {
+			if (component.componentInfo.codeExport.react.additionalCode) {
+				collectedCode = { ...collectedCode, ...component.componentInfo.codeExport.react.additionalCode(componentObj) };
 			}
 		}
 	}
 
-	if (json.items) {
-		return json.items.map((item: any) => jsonToHelperFunction(item, fragments, dictionary)).filter((element: any) => element !== '').join('\n');
+	if (componentObj.items) {
+		componentObj.items.forEach((item: any) => {
+			collectedCode = { ...collectedCode, ...getAdditionalCode(item, fragments) };
+		});
 	}
+
+	return collectedCode;
+};
+
+const getAdditionalCodeAsString = (componentObj: any, fragments: any[]) => {
+	const collectedCode = getAdditionalCode(componentObj, fragments);
+	return Object.values(collectedCode).join('\n');
 };
 
 const otherImportsFromComponentObj = (json: any, fragments?: any[]) => {
@@ -123,7 +126,7 @@ const generateTemplate = (json: any, fragments: any[]) => {
 		imports: `import { ${carbonImportsString} } from 'carbon-components-react';
 			${otherImportsFromComponentObj(json, fragments)}`,
 		template: jsonToTemplate(json, fragments),
-		helperFunctions: jsonToHelperFunction(json, fragments, {})
+		additionalCode: getAdditionalCodeAsString(json, fragments)
 	};
 };
 
@@ -144,7 +147,7 @@ const jsonToSharedComponents = (json: any, fragments: any[]) => {
 					setState({...state, [event.target.name]: event.target.value});
 				};
 
-				${fragmentTemplate.helperFunctions}
+				${fragmentTemplate.additionalCode}
 
 				return <>${fragmentTemplate.template}</>;
 			};
@@ -189,7 +192,7 @@ export const FragmentComponent = ({state, setState}) => {
 		setState({...state, [event.target.name]: event.target.value});
 	};
 
-	${fragmentTemplate.helperFunctions}
+	${fragmentTemplate.additionalCode}
 
 	return <>${fragmentTemplate.template}</>;
 };
