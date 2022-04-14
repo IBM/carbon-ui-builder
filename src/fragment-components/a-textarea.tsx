@@ -83,7 +83,7 @@ export const componentInfo: ComponentInfo = {
 	codeUI: ATextAreaCodeUI,
 	keywords: ['textarea', 'text area', 'input'],
 	name: 'Text area',
-	type: 'textarea',
+	type: 'text-area',
 	defaultComponentObj: {
 		type: 'textarea',
 		label: 'Text area label',
