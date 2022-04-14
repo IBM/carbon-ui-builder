@@ -32,7 +32,7 @@ export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: an
 			onChange={(event: any) => {
 				setComponent({
 					...selectedComponent,
-					legend: event.currentTarget.value,
+					legend: event.currentTarget.value
 				});
 			}}
 		/>
@@ -61,7 +61,7 @@ export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: an
 };
 
 export const ARadioButtonGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
-	let allItems = selectedComponent.items.map((item: any) => {
+	const allItems = selectedComponent.items.map((item: any) => {
 		return {
 			text: item.labelText,
 			id: item.id,
@@ -136,19 +136,19 @@ export const componentInfo: ComponentInfo = {
 				type: 'radio',
 				labelText: 'Option 1',
 				disabled: false,
-				defaultChecked: true,
+				defaultChecked: true
 			},
 			{
 				type: 'radio',
 				labelText: 'Option 2',
 				disabled: false,
-				defaultChecked: false,
+				defaultChecked: false
 			},
 			{
 				type: 'radio',
 				labelText: 'Option 3',
 				disabled: false,
-				defaultChecked: false,
+				defaultChecked: false
 			}
 		]
 	},

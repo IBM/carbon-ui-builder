@@ -65,6 +65,7 @@ export const getAllComponentStyleClasses = (componentObj: any, fragments: any[])
 
 			styleClasses = {
 				...styleClasses,
+				// eslint-disable-next-line @typescript-eslint/no-use-before-define
 				...getAllFragmentStyleClasses(fragment || {}, fragments)
 			};
 		}
