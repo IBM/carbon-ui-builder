@@ -20,7 +20,7 @@ const headerStyle = css`
 
 const iconStyle = css`height: 1rem; width: 1rem; float: right`;
 
-export const AComponentCodeUI = ({ selectedComponent, setComponent }: any) => {
+export const AComponentCodeUI = ({ selectedComponent }: any) => {
 	return <span className={css`overflow-wrap: anywhere`}>
 		{JSON.stringify(selectedComponent)}
 	</span>;
@@ -51,16 +51,16 @@ const dropStyleAfter = cx(dropStyle, css`
 `);
 
 export interface ComponentInfo {
-	type: any,
-	component: any,
-	keywords: string[],
-	name: string,
-	defaultComponentObj: any,
-	image: any, // whatever fits in the <img src="here">
-	styleUI: any,
-	codeUI?: any,
-	render?: (props: ComponentInfoRenderProps) => any,
-	hideFromElementsPane?: boolean,
+	type: any;
+	component: any;
+	keywords: string[];
+	name: string;
+	defaultComponentObj: any;
+	image: any; // whatever fits in the <img src="here">
+	styleUI: any;
+	codeUI?: any;
+	render?: (props: ComponentInfoRenderProps) => any;
+	hideFromElementsPane?: boolean;
 	codeExport: {
 		angular: {
 			inputs: (props: { json: any }) => string;

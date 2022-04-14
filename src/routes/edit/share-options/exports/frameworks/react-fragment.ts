@@ -59,7 +59,7 @@ export const jsonToTemplate = (json: any, fragments: any[]) => {
 
 	for (const component of Object.values(allComponents)) {
 		if (json.type === component.componentInfo.type && !component.componentInfo.codeExport.react.isNotDirectExport) {
-			return component.componentInfo.codeExport.react.code({json, jsonToTemplate, fragments});
+			return component.componentInfo.codeExport.react.code({ json, jsonToTemplate, fragments });
 		}
 	}
 

@@ -45,7 +45,7 @@ const getAngularInputsFromJson = (json: any): string => {
 	const getOne = (json: any) => {
 		for (const component of Object.values(allComponents)) {
 			if (json.type === component.componentInfo.type) {
-				return component.componentInfo.codeExport.angular?.inputs({json}) || '';
+				return component.componentInfo.codeExport.angular?.inputs({ json }) || '';
 			}
 		}
 		return '';
@@ -59,7 +59,7 @@ const getAngularOutputsFromJson = (json: any): string => {
 	const getOne = (json: any) => {
 		for (const component of Object.values(allComponents)) {
 			if (json.type === component.componentInfo.type) {
-				return component.componentInfo.codeExport.angular?.outputs({json}) || '';
+				return component.componentInfo.codeExport.angular?.outputs({ json }) || '';
 			}
 		}
 		return '';
@@ -76,7 +76,7 @@ export const jsonToTemplate = (json: any) => {
 
 	for (const component of Object.values(allComponents)) {
 		if (json.type === component.componentInfo.type && !component.componentInfo.codeExport.angular.isNotDirectExport) {
-			return component.componentInfo.codeExport.angular.code({json, jsonToTemplate});
+			return component.componentInfo.codeExport.angular.code({ json, jsonToTemplate });
 		}
 	}
 
