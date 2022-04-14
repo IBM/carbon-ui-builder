@@ -78,8 +78,9 @@ export const ARadio = ({
 	return (
 		<Adder
 		active={selected}
-		addButtonsCss={addButtonCss}
+		addButtonsCss={addButtonStyle}
 		key={componentObj.id}
+		leftAction= {() => addRadio(1)}
 		bottomAction={() => addRadio(1)}>
 			<AComponent
 			selected={selected}
