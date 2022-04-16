@@ -1,4 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React,
+{
+	useEffect,
+	useState,
+	useRef
+} from 'react';
 import { Button, Tile } from 'carbon-components-react';
 import {
 	AddAlt32,
@@ -7,14 +12,18 @@ import {
 } from '@carbon/icons-react';
 
 export const DraggableTileList = ({
+	// Functional component
 	template,
 	dataList,
 	setListData,
+	// Values in list being updated
 	handleStepUpdate,
+	// Default object created
 	defaultObject
 }: any) => {
 	const [list, setList] = useState<any[]>([]);
 	const [dragging, setDragging] = useState(false);
+	const draggedItem = useRef<HTMLDivElement>();
 
 	// Set initial list
 	useEffect(() => {
@@ -23,7 +32,8 @@ export const DraggableTileList = ({
 
 	const onDragStart = (event: any, index: number) => {
 		setDragging(true);
-		event.dataTransfer.setData('id', index);
+		event.dataTransfer.setData('index', index);
+		draggedItem.current = event.currentTarget;
 	};
 
 	const onDragEnd = (_: any) => {
@@ -32,10 +42,19 @@ export const DraggableTileList = ({
 
 	const onDragOver = (event: any) => {
 		event.preventDefault();
+		event.currentTarget.style.transition = 'height 0.15s ease-out';
+		event.currentTarget.style.height = `${(draggedItem.current?.clientHeight || 0)}px`;
+
+	};
+
+	const onDragLeave = (event: any) => {
+		console.log(event.currentTarget.class);
+		event.currentTarget.style.transition = 'height 0.15s ease-in';
+		event.currentTarget.style.height = '32px';
 	};
 
 	const onDrop = (event: any, index: number) => {
-		const previousIndex = event.dataTransfer.getData('id');
+		const previousIndex = event.dataTransfer.getData('index');
 		const item = { ...list[previousIndex] };
 		const newList = [...list];
 		newList.splice(previousIndex, 1);
@@ -65,21 +84,18 @@ export const DraggableTileList = ({
 	const AddButton = ({ index }: any) => {
 		return (
 			<div
-				onDrop={(event: any) => onDrop(event, index)}
-				onDragOver={(event: any) => onDragOver(event)}
-				style={{
-					/**
-					 * @todo - future
-					 * Change height to match tile that is dragging on drag over, reset on drag leave
-					 */
-					height: 32,
-					width: '100%',
-					display: 'flex',
-					justifyContent: 'center',
-					marginBottom: '0.5rem',
-					outline: dragging ? '1px dashed #1666fe' : '',
-					outlineOffset: -2
-				}}>
+			onDrop={(event: any) => onDrop(event, index)}
+			onDragOver={(event: any) => onDragOver(event)}
+			onDragLeave={(event: any) => onDragLeave(event)}
+			style={{
+				height: 32,
+				width: '100%',
+				display: 'flex',
+				justifyContent: 'center',
+				marginBottom: '0.5rem',
+				outline: dragging ? '1px dashed #1666fe' : '',
+				outlineOffset: -2
+			}}>
 				{!dragging &&
 					<Button
 						size="sm"
@@ -99,11 +115,11 @@ export const DraggableTileList = ({
 			{
 				list.map((step: any, index: number) => <>
 					<Tile
-						key={index || step.id}
-						draggable={true}
-						onDragStart={(event: any) => onDragStart(event, index)}
-						onDragEnd={(event: any) => onDragEnd(event)}
-						style={{ marginBottom: '0.5rem', position: 'relative' }}>
+					key={index || step.id}
+					draggable={true}
+					onDragStart={(event: any) => onDragStart(event, index)}
+					onDragEnd={(event: any) => onDragEnd(event)}
+					style={{ marginBottom: '0.5rem', position: 'relative' }}>
 						<Button
 							style={{ marginLeft: 12, top: 0, right: 0, position: 'absolute', borderColor: 'transparent' }}
 							align="left"
