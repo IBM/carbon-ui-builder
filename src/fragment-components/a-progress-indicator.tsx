@@ -34,7 +34,7 @@ export const AProgressIndicatorStyleUI = ({ selectedComponent, setComponent }: a
 		});
 	};
 
-	const template = (handleStepUpdate: any, item: any, index: number) => {
+	const template = (item: any, index: number) => {
 		return <>
 			<TextInput
 				light
@@ -84,8 +84,8 @@ export const AProgressIndicatorStyleUI = ({ selectedComponent, setComponent }: a
 		/>
 		<DraggableTileList
 			dataList={[...selectedComponent.progressSteps]}
-			setListData={updateStepList}
-			handleStepUpdate={handleStepUpdate}
+			setDataList={updateStepList}
+			updateItem={handleStepUpdate}
 			defaultObject={{
 				label: 'Step',
 				description: 'Description',
