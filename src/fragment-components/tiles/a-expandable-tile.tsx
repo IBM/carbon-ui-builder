@@ -99,11 +99,11 @@ export const AExpandableTile = ({
 			className={`${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} ${componentObj.outline ? showOutlineStyle : ''}`}
 			expanded={componentObj.expanded}>
 				<TileAboveTheFoldContent onDrop={onDrop}>
-					{children.filter(({ props }: any) => (props !== undefined ? (props.componentObj.type !== 'tilefold') : false))}
+					{children.filter(({ props }: any) => props && props.componentObj.type !== 'tilefold')}
 				</TileAboveTheFoldContent>
 				{
 					// Renders bottom fold component
-					children.filter(({ props }: any) => (props !== undefined ? (props.componentObj.type === 'tilefold') : false))
+					children.filter(({ props }: any) => props && props.componentObj.type !== 'tilefold')
 				}
 			</ExpandableTile>
 		</AComponent>
@@ -112,10 +112,10 @@ export const AExpandableTile = ({
 
 // Splits data into folds - all exports will have a common approach
 const getFoldObjects = (json: any) => {
-	return [
-		json.items.filter((item: any) => item.type !== 'tilefold'),
-		json.items.filter((item: any) => item.type === 'tilefold')
-	];
+	return {
+		aboveFold: json.items.filter((item: any) => item.type !== 'tilefold'),
+		belowFold: json.items.filter((item: any) => item.type === 'tilefold')
+	};
 };
 
 export const componentInfo: ComponentInfo = {
@@ -160,7 +160,7 @@ export const componentInfo: ComponentInfo = {
 			outputs: () => '',
 			imports: ['TilesModule'],
 			code: ({ json, jsonToTemplate }) => {
-				const folds = getFoldObjects(json);
+				const { aboveFold, belowFold } = getFoldObjects(json);
 				/**
 				 * @todo - CCA does not support light
 				 * https://github.com/IBM/carbon-components-angular/issues/1999
@@ -169,24 +169,24 @@ export const componentInfo: ComponentInfo = {
 					${json.expanded !== undefined ? `[expanded]="${nameStringToVariableString(json.codeContext?.name)}Expanded"` : ''}
 					${angularClassNamesFromComponentObj(json)}>
 						<span class="bx--tile-content__above-the-fold">
-							${folds[0].map((element: any) => jsonToTemplate(element)).join('\n')}
+							${aboveFold.map((element: any) => jsonToTemplate(element)).join('\n')}
 						</span>
-						${folds[1].map((element: any) => jsonToTemplate(element)).join('\n')}
+						${belowFold.map((element: any) => jsonToTemplate(element)).join('\n')}
 				</ibm-expandable-tile>`;
 			}
 		},
 		react: {
 			imports: ['ExpandableTile', 'TileAboveTheFoldContent', 'TileBelowTheFoldContent'],
 			code: ({ json, jsonToTemplate, fragments }) => {
-				const folds = getFoldObjects(json);
+				const { aboveFold, belowFold } = getFoldObjects(json);
 				return `<ExpandableTile
 					${json.light !== undefined && !!json.light ? `light={${json.light}}` : ''}
 					${json.expanded !== undefined && !!json.expanded ? `expanded={${json.expanded}}` : ''}
 					${reactClassNamesFromComponentObj(json)}>
 						<TileAboveTheFoldContent>
-							${folds[0].map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${aboveFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 						</TileAboveTheFoldContent>
-						${folds[1].map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+						${belowFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</ExpandableTile>`;
 			}
 		}
