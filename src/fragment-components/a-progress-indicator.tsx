@@ -38,7 +38,6 @@ export const AProgressIndicatorStyleUI = ({ selectedComponent, setComponent }: a
 		return <>
 			<TextInput
 				light
-				size="sm"
 				value={item.label}
 				labelText="Label"
 				onChange={(event: any) => handleStepUpdate('label', event.currentTarget.value, index)} />
