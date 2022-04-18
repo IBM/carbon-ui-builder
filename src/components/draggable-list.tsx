@@ -1,34 +1,59 @@
-import React,
-{
-	useEffect,
-	useState,
-	useRef
-} from 'react';
+import React, { useState,useRef } from 'react';
 import { Button, Tile } from 'carbon-components-react';
+import { css, cx } from 'emotion';
 import {
 	AddAlt32,
 	Draggable16,
 	TrashCan32
 } from '@carbon/icons-react';
 
+const addDragTargetStyle = css`
+	height: var(--drag-target-height, 32px);
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	outline-offset: -2px;
+	transition: height 0.15s ease-in-out;
+`;
+
+const addButtonDraggingStyle = css`
+	outline: var(--outline, 1px dashed #1666fe);
+`;
+
+const addButtonStyle = css`
+	width: 100%;
+	display: flex;
+	justify-content: center;
+`;
+
+const trashButtonStyle = css`
+	margin-left: 12px;
+	top: 0;
+	right: 0;
+	position: absolute !important;
+	border-color: transparent
+`;
+
+const draggableIconStyle = css`
+	position: absolute;
+	top: 50%;
+	left: 0;
+`;
+
+const tileStyle = css`
+	position: relative;
+`;
+
 export const DraggableTileList = ({
 	// Functional component
 	template,
 	dataList,
-	setListData,
-	// Values in list being updated
-	handleStepUpdate,
+	setDataList,
 	// Default object created
 	defaultObject
 }: any) => {
-	const [list, setList] = useState<any[]>([]);
 	const [dragging, setDragging] = useState(false);
 	const draggedItem = useRef<HTMLDivElement>();
-
-	// Set initial list
-	useEffect(() => {
-		setList(dataList);
-	}, [setList, dataList]);
 
 	const onDragStart = (event: any, index: number) => {
 		setDragging(true);
@@ -42,43 +67,40 @@ export const DraggableTileList = ({
 
 	const onDragOver = (event: any) => {
 		event.preventDefault();
-		event.currentTarget.style.transition = 'height 0.15s ease-out';
-		event.currentTarget.style.height = `${(draggedItem.current?.clientHeight || 0)}px`;
-
+		event.currentTarget.style.setProperty('--drag-target-height', `${(draggedItem.current?.clientHeight || 0)}px`);
+		event.currentTarget.style.setProperty('--outline', '2px dashed #0f62fe');
 	};
 
 	const onDragLeave = (event: any) => {
-		console.log(event.currentTarget.class);
-		event.currentTarget.style.transition = 'height 0.15s ease-in';
-		event.currentTarget.style.height = '32px';
+		event.currentTarget.style.setProperty('--drag-target-height', '');
+		event.currentTarget.style.setProperty('--outline', '');
 	};
 
 	const onDrop = (event: any, index: number) => {
 		const previousIndex = event.dataTransfer.getData('index');
-		const item = { ...list[previousIndex] };
-		const newList = [...list];
+		const item = { ...dataList[previousIndex] };
+		const newList = [...dataList];
+		// Splice makes it easier to remove & add to new position
 		newList.splice(previousIndex, 1);
 		newList.splice(index, 0, item);
-		setListData(newList);
+		setDataList(newList);
 	};
 
 	const addToList = (event: any, index: number) => {
 		event.stopPropagation();
-		const newList = [...list];
-		if (index) {
-			newList.splice(index, 0, defaultObject);
-		} else {
-			newList.splice(0, 0, defaultObject);
-		}
-
-		setListData(newList);
+		setDataList([
+			...dataList.slice(0, index),
+			{ ...defaultObject },
+			...dataList.slice(index)
+		]);
 	};
 
 	const removeFromList = (event: any, index: number) => {
 		event.stopPropagation();
-		const newList = [...list];
-		newList.splice(index, 1);
-		setListData(newList);
+		setDataList([
+			...dataList.slice(0, index),
+			...dataList.slice(index + 1)
+		]);
 	};
 
 	const AddButton = ({ index }: any) => {
@@ -87,20 +109,13 @@ export const DraggableTileList = ({
 			onDrop={(event: any) => onDrop(event, index)}
 			onDragOver={(event: any) => onDragOver(event)}
 			onDragLeave={(event: any) => onDragLeave(event)}
-			style={{
-				height: 32,
-				width: '100%',
-				display: 'flex',
-				justifyContent: 'center',
-				marginBottom: '0.5rem',
-				outline: dragging ? '1px dashed #1666fe' : '',
-				outlineOffset: -2
-			}}>
+			className={cx(addDragTargetStyle, (dragging ? addButtonDraggingStyle : css``))}>
 				{!dragging &&
 					<Button
+						className={addButtonStyle}
 						size="sm"
 						kind="ghost"
-						iconDescription="Add step"
+						iconDescription="Add item"
 						hasIconOnly
 						renderIcon={AddAlt32}
 						onClick={(event: any) => addToList(event, index)} />
@@ -113,15 +128,15 @@ export const DraggableTileList = ({
 		<div>
 			<AddButton index={0} />
 			{
-				list.map((step: any, index: number) => <>
+				dataList.map((item: any, index: number) => <>
 					<Tile
-					key={index || step.id}
+					key={item.id || index}
 					draggable={true}
 					onDragStart={(event: any) => onDragStart(event, index)}
 					onDragEnd={(event: any) => onDragEnd(event)}
-					style={{ marginBottom: '0.5rem', position: 'relative' }}>
+					className={tileStyle}>
 						<Button
-							style={{ marginLeft: 12, top: 0, right: 0, position: 'absolute', borderColor: 'transparent' }}
+							className={trashButtonStyle}
 							align="left"
 							size="sm"
 							kind="danger--tertiary"
@@ -129,8 +144,8 @@ export const DraggableTileList = ({
 							hasIconOnly
 							renderIcon={TrashCan32}
 							onClick={(event: any) => removeFromList(event, index)} />
-						<Draggable16 style={{ position: 'absolute', top: '50%', left: 0 }} />
-						{template(handleStepUpdate, step, index)}
+						<Draggable16 className={draggableIconStyle} />
+						{template(item, index)}
 					</Tile>
 					<AddButton
 						index={index + 1}
