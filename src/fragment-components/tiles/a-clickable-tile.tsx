@@ -116,7 +116,10 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'clickabletile',
 		items: [
-			{ type: 'text', text: 'A clickable tile' }
+			{
+				type: 'text',
+				text: 'A clickable tile'
+			}
 		]
 	},
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <AClickableTile
