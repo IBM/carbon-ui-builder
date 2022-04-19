@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="54.87" height="59" viewBox="0 0 54.87 59">
+	<defs>
+		<clipPath id="clip-path">
+			<path id="Path_5810" data-name="Path 5810" d="M795.888-1722a4.859,4.859,0,0,0-3.466,1.423,4.858,4.858,0,0,0-1.423,3.466,4.859,4.859,0,0,0,1.423,3.466,4.859,4.859,0,0,0,3.466,1.423,4.859,4.859,0,0,0,3.466-1.423,4.859,4.859,0,0,0,1.423-3.466,4.858,4.858,0,0,0-1.423-3.465,4.858,4.858,0,0,0-3.466-1.423Zm-.7,6.984L793.3-1716.9l.629-.559,1.257,1.258,2.793-2.723.629.559Z" transform="translate(-791 1722)" fill="#161616" />
+		</clipPath>
+		<clipPath id="clip-path-2">
+			<path id="Path_5809" data-name="Path 5809" d="M246-1644.027H648.254V-1827H246Z" transform="translate(-246 1827)" fill="#161616" />
+		</clipPath>
+	</defs>
+	<g id="Group_10690" data-name="Group 10690" transform="translate(4648 -6683.662)">
+		<g id="Group_10693" data-name="Group 10693" transform="translate(-4648 6683.662)">
+			<g id="tile" transform="translate(0 0)">
+				<rect id="Rectangle_312" data-name="Rectangle 312" width="54.87" height="20" fill="#f3f3f3" />
+			</g>
+			<g id="Group_5876" data-name="Group 5876" transform="translate(41.482 5.602)" clip-path="url(#clip-path)">
+				<g id="Group_5875" data-name="Group 5875" transform="translate(-380.605 -73.328)" clip-path="url(#clip-path-2)">
+					<path id="Path_5808" data-name="Path 5808" d="M786-1727h16.761v16.761H786Z" transform="translate(-408.886 1796.836)" fill="#161616" />
+				</g>
+			</g>
+		</g>
+		<g id="Group_10693-2" data-name="Group 10693" transform="translate(-4648 6703.662)">
+			<g id="tile-2" data-name="tile" transform="translate(0 0)">
+				<rect id="Rectangle_312-2" data-name="Rectangle 312" width="54.87" height="19" fill="#f3f3f3" />
+			</g>
+			<g id="Group_5876-2" data-name="Group 5876" transform="translate(41.482 5.157)" clip-path="url(#clip-path)">
+				<g id="Group_5875-2" data-name="Group 5875" transform="translate(-380.605 -73.328)" clip-path="url(#clip-path-2)">
+					<path id="Path_5808-2" data-name="Path 5808" d="M786-1727h16.761v16.761H786Z" transform="translate(-408.886 1796.836)" fill="#161616" />
+				</g>
+			</g>
+		</g>
+		<g id="Group_10693-3" data-name="Group 10693" transform="translate(-4648 6722.662)">
+			<g id="tile-3" data-name="tile" transform="translate(0 0)">
+				<rect id="Rectangle_312-3" data-name="Rectangle 312" width="54.87" height="20" fill="#f3f3f3" />
+			</g>
+			<g id="Group_5876-3" data-name="Group 5876" transform="translate(41.482 5.71)" clip-path="url(#clip-path)">
+				<g id="Group_5875-3" data-name="Group 5875" transform="translate(-380.605 -73.328)" clip-path="url(#clip-path-2)">
+					<path id="Path_5808-3" data-name="Path 5808" d="M786-1727h16.761v16.761H786Z" transform="translate(-408.886 1796.836)" fill="#161616" />
+				</g>
+			</g>
+		</g>
+		<line id="Line_3" data-name="Line 3" x2="54.87" transform="translate(-4648 6703.662)" fill="none" stroke="#707070" stroke-width="0.5" />
+		<line id="Line_4" data-name="Line 4" x2="54.87" transform="translate(-4648 6722.662)" fill="none" stroke="#707070" stroke-width="0.5" />
+	</g>
+</svg>

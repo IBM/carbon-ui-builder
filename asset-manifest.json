@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/carbon-components-builder/static/css/main.ad4c18d0.chunk.css",
-    "main.js": "/carbon-components-builder/static/js/main.90c3fa9b.chunk.js",
-    "main.js.map": "/carbon-components-builder/static/js/main.90c3fa9b.chunk.js.map",
+    "main.js": "/carbon-components-builder/static/js/main.07dd5e58.chunk.js",
+    "main.js.map": "/carbon-components-builder/static/js/main.07dd5e58.chunk.js.map",
     "runtime-main.js": "/carbon-components-builder/static/js/runtime-main.14a4950b.js",
     "runtime-main.js.map": "/carbon-components-builder/static/js/runtime-main.14a4950b.js.map",
-    "static/js/2.f4342748.chunk.js": "/carbon-components-builder/static/js/2.f4342748.chunk.js",
-    "static/js/2.f4342748.chunk.js.map": "/carbon-components-builder/static/js/2.f4342748.chunk.js.map",
+    "static/js/2.d085aa2f.chunk.js": "/carbon-components-builder/static/js/2.d085aa2f.chunk.js",
+    "static/js/2.d085aa2f.chunk.js.map": "/carbon-components-builder/static/js/2.d085aa2f.chunk.js.map",
     "index.html": "/carbon-components-builder/index.html",
-    "precache-manifest.58029f2ec874a786d0d1c7ab97209067.js": "/carbon-components-builder/precache-manifest.58029f2ec874a786d0d1c7ab97209067.js",
+    "precache-manifest.78d95d1551dea53c0284181b544f04c1.js": "/carbon-components-builder/precache-manifest.78d95d1551dea53c0284181b544f04c1.js",
     "service-worker.js": "/carbon-components-builder/service-worker.js",
     "static/css/main.ad4c18d0.chunk.css.map": "/carbon-components-builder/static/css/main.ad4c18d0.chunk.css.map",
-    "static/js/2.f4342748.chunk.js.LICENSE.txt": "/carbon-components-builder/static/js/2.f4342748.chunk.js.LICENSE.txt",
+    "static/js/2.d085aa2f.chunk.js.LICENSE.txt": "/carbon-components-builder/static/js/2.d085aa2f.chunk.js.LICENSE.txt",
     "static/media/accordion-item.svg": "/carbon-components-builder/static/media/accordion-item.9c9ebfb7.svg",
     "static/media/accordion.svg": "/carbon-components-builder/static/media/accordion.86ae9a9a.svg",
     "static/media/button.svg": "/carbon-components-builder/static/media/button.f75955a0.svg",
@@ -25,12 +25,18 @@
     "static/media/tag.svg": "/carbon-components-builder/static/media/tag.e8c392a4.svg",
     "static/media/text-area.svg": "/carbon-components-builder/static/media/text-area.947a0503.svg",
     "static/media/text-input.svg": "/carbon-components-builder/static/media/text-input.e389934c.svg",
-    "static/media/text.svg": "/carbon-components-builder/static/media/text.e9252250.svg"
+    "static/media/text.svg": "/carbon-components-builder/static/media/text.e9252250.svg",
+    "static/media/tile-clickable.svg": "/carbon-components-builder/static/media/tile-clickable.2c08592b.svg",
+    "static/media/tile-expandable.svg": "/carbon-components-builder/static/media/tile-expandable.84f6f4fb.svg",
+    "static/media/tile-radio.svg": "/carbon-components-builder/static/media/tile-radio.342a2a36.svg",
+    "static/media/tile-selectable-group.svg": "/carbon-components-builder/static/media/tile-selectable-group.bd4342ae.svg",
+    "static/media/tile-selectable.svg": "/carbon-components-builder/static/media/tile-selectable.cdaf5fdb.svg",
+    "static/media/tile.svg": "/carbon-components-builder/static/media/tile.3a252328.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.14a4950b.js",
-    "static/js/2.f4342748.chunk.js",
+    "static/js/2.d085aa2f.chunk.js",
     "static/css/main.ad4c18d0.chunk.css",
-    "static/js/main.90c3fa9b.chunk.js"
+    "static/js/main.07dd5e58.chunk.js"
   ]
 }
