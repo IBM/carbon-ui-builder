@@ -27,7 +27,7 @@ export * from './a-component';
 export { AFragment, AFragmentStyleUI, AFragmentCodeUI } from './a-fragment';
 export { AGrid, AGridStyleUI } from './a-grid';
 export { ARadio, ARadioStyleUI } from './a-radio';
-export { ARadioButtonGroup, ARadioButtonGroupStyleUI, ARadioButtonGroupCodeUI } from './a-radio-group';
+export { ARadioGroup, ARadioGroupStyleUI, ARadioGroupCodeUI } from './a-radio-group';
 export { ARow, ARowStyleUI } from './a-row';
 export { ATag, ATagStyleUI } from './a-tag';
 export { AText, ATextStyleUI } from './a-text';

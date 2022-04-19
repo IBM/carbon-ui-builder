@@ -13,7 +13,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 
-export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const ARadioGroupStyleUI = ({ selectedComponent, setComponent }: any) => {
 	const orientationItems = [
 		{ id: 'horizontal', text: 'Horizontal' },
 		{ id: 'vertical', text: 'Vertical' }
@@ -60,14 +60,12 @@ export const ARadioButtonGroupStyleUI = ({ selectedComponent, setComponent }: an
 	</>;
 };
 
-export const ARadioButtonGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
-	const allItems = selectedComponent.items.map((item: any) => {
-		return {
-			text: item.labelText,
-			id: item.id,
-			defaultChecked: item.defaultChecked
-		};
-	});
+export const ARadioGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
+	const allItems = selectedComponent.items.map((item: any) => ({
+		text: item.labelText,
+		id: item.id,
+		defaultChecked: item.defaultChecked
+	}));
 	allItems.push({ text: 'None', id: 'none', defaultChecked: '' });
 	selectedComponent.defaultSelected = `${selectedComponent.items.find(((item: any) => {
 		return item.defaultChecked;
@@ -77,13 +75,7 @@ export const ARadioButtonGroupCodeUI = ({ selectedComponent, setComponent }: any
 			label='Default selection'
 			titleText='Default selection'
 			items={allItems}
-			initialSelectedItem={allItems.find((item: any) => {
-				if(item.defaultChecked) {
-					return item;
-				} else {
-					return item.id === 'none';
-				}
-			})}
+			initialSelectedItem={allItems.find((item: any) => item.defaultChecked ? item : item.id === 'none')}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
@@ -95,7 +87,7 @@ export const ARadioButtonGroupCodeUI = ({ selectedComponent, setComponent }: any
 		})}/>);
 };
 
-export const ARadioButtonGroup = ({
+export const ARadioGroup = ({
 	children,
 	componentObj,
 	...rest
@@ -119,9 +111,9 @@ export const ARadioButtonGroup = ({
 };
 
 export const componentInfo: ComponentInfo = {
-	component: ARadioButtonGroup,
-	styleUI: ARadioButtonGroupStyleUI,
-	codeUI: ARadioButtonGroupCodeUI,
+	component: ARadioGroup,
+	styleUI: ARadioGroupStyleUI,
+	codeUI: ARadioGroupCodeUI,
 	keywords: ['radio', 'button', 'group'],
 	name: 'Radio buttons',
 	defaultComponentObj: {
@@ -152,21 +144,20 @@ export const componentInfo: ComponentInfo = {
 			}
 		]
 	},
-	render: ({ componentObj, select, remove, selected, renderComponents }) => <ARadioButtonGroup
+	render: ({ componentObj, select, remove, selected, renderComponents }) => <ARadioGroup
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
 		selected={selected}>
 			{componentObj.items.map((button: any) => (renderComponents(button)))}
-	</ARadioButtonGroup>,
+	</ARadioGroup>,
 	image,
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}LegendText = "${json.legend}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Orientation = "${json.orientation}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}LabelPosition = "${json.labelPosition}";
-								@Input() ${nameStringToVariableString(json.codeContext?.name)}Name = "${json.codeContext?.name}";
-								@Input() ${nameStringToVariableString(json.codeContext?.name)}defaultSelected = "${json.defaultSelected}";`,
+								@Input() ${nameStringToVariableString(json.codeContext?.name)}Name = "${json.codeContext?.name}";`,
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 			imports: ['RadioModule'],
 			code: ({ json, jsonToTemplate }) => {
@@ -189,7 +180,7 @@ export const componentInfo: ComponentInfo = {
 					name="${json.codeContext?.name}"
 					legendText="${json.legend}"
 					orientation="${json.orientation}"
-					labelPlacement="${json.labelPosition}"
+					labelPosition="${json.labelPosition}"
 					defaultSelected="${json.defaultSelected}"
 					valueChecked="${json.defaultSelected}"
 					${reactClassNamesFromComponentObj(json)}

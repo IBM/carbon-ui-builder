@@ -65,7 +65,7 @@ export const ARadio = ({
 				type: 'insert',
 				component: {
 					type: 'radio',
-					value: `${componentObj.id}`,
+					value: componentObj.id,
 					labelText: 'New option',
 					defaultChecked: false,
 					disabled: false
@@ -122,7 +122,7 @@ export const componentInfo: ComponentInfo = {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Id = "${json.codeContext?.name}";
-								@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value}";
+								@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.id}";
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${json.defaultChecked};`,
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 			imports: [],
@@ -143,7 +143,7 @@ export const componentInfo: ComponentInfo = {
 			code: ({ json }) => {
 				return `<RadioButton
 					id="${json.codeContext?.name}"
-					value="${json.value}"
+					value="${json.id}"
 					checked={${json.defaultChecked}}
 					labelText="${json.labelText}"
 					onChange={(radio) => handleInputChange({
