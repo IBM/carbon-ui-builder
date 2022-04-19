@@ -228,8 +228,8 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 			return componentObj;
 		}
 
-		for (const [key, component] of Object.entries(allComponents)) {
-			if (componentObj.type === key) {
+		for (const component of Object.values(allComponents)) {
+			if (componentObj.type === component.componentInfo.type) {
 				if (component.componentInfo.render) {
 					return component.componentInfo.render({
 						componentObj,

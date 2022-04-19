@@ -65,6 +65,7 @@ export const componentInfo: ComponentInfo = {
 	codeUI: ACheckboxCodeUI,
 	keywords: ['checkbox', 'check box'],
 	name: 'Checkbox',
+	type: 'checkbox',
 	defaultComponentObj: {
 		type: 'checkbox',
 		label: 'Checkbox'

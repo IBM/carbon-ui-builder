@@ -50,6 +50,7 @@ export const componentInfo: ComponentInfo = {
 	</AText>,
 	keywords: ['text'],
 	name: 'Text',
+	type: 'text',
 	defaultComponentObj: {
 		type: 'text',
 		text: 'Text'

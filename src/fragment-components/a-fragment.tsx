@@ -101,6 +101,7 @@ export const componentInfo: ComponentInfo = {
 	keywords: ['fragment'],
 	name: 'Fragment',
 	hideFromElementsPane: true,
+	type: 'fragment',
 	defaultComponentObj: {
 		type: 'fragment'
 	},
