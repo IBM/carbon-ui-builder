@@ -30,8 +30,11 @@ const trashButtonStyle = css`
 	margin-left: 12px;
 	top: 0;
 	right: 0;
-	position: absolute !important;
-	border-color: transparent
+	border-color: transparent;
+
+	&.bx--btn.bx--btn--icon-only.bx--tooltip__trigger {
+		position: absolute;
+	}
 `;
 
 const draggableIconStyle = css`
