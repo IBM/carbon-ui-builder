@@ -73,7 +73,6 @@ export const AOverflowMenuGroup = ({
 export const componentInfo: ComponentInfo = {
 	component: AOverflowMenuGroup,
 	styleUI: AOverflowMenuStyleUI,
-	// codeUI: ARadioButtonGroupCodeUI,
 	keywords: ['overflow', 'menu'],
 	name: 'Overflow menu',
 	defaultComponentObj: {
