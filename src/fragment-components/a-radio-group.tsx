@@ -116,6 +116,7 @@ export const componentInfo: ComponentInfo = {
 	codeUI: ARadioGroupCodeUI,
 	keywords: ['radio', 'button', 'group'],
 	name: 'Radio buttons',
+	type: 'radioGroup',
 	defaultComponentObj: {
 		disabled: false,
 		type: 'radioGroup',

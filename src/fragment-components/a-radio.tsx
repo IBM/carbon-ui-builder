@@ -129,6 +129,7 @@ export const componentInfo: ComponentInfo = {
 	</ARadio>,
 	keywords: ['radio', 'button'],
 	name: 'Radio button',
+	type: 'radio',
 	defaultComponentObj: {
 		type: 'radio'
 	},
