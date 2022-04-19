@@ -127,7 +127,7 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		disabled: false,
 		type: 'radioGroup',
-		legend: 'Radio Button Group',
+		legend: 'Radio group',
 		defaultSelected: '',
 		labelPosition: 'right',
 		orientation: 'horizontal',
