@@ -105,7 +105,7 @@ export const componentInfo: ComponentInfo = {
 			{componentObj.items.map((child: any) => renderComponents(child))}
 	</AAccordionItem>,
 	keywords: ['accordion', 'item'],
-	name: 'Accordion Item',
+	name: 'Accordion item',
 	type: 'accordion-item',
 	defaultComponentObj: {
 		type: 'accordionitem',
