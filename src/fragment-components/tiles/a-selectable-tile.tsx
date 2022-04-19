@@ -192,6 +192,7 @@ export const componentInfo: ComponentInfo = {
 	codeUI: ASelectableTileCodeUI,
 	keywords: ['tile', 'card', 'multi', 'selectable'],
 	name: 'Selectable tile',
+	type: 'selectabletile',
 	defaultComponentObj: {
 		type: 'selectabletile',
 		standalone: true,
