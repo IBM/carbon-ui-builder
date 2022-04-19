@@ -14,6 +14,8 @@ import * as text from './a-text';
 import * as textarea from './a-textarea';
 import * as textinput from './a-textinput';
 import * as link from './a-link';
+import * as overflowMenuItem from './a-overflow-menu-item';
+import * as overflowMenu from './a-overflow-menu';
 
 // Accordion
 export { AAccordion, AAccordionStyleUI } from './accordion/a-accordion';
@@ -32,6 +34,8 @@ export { ATextInput, ATextInputStyleUI, ATextInputCodeUI } from './a-textinput';
 export { ASearchInput, ASearchInputStyleUI, ASearchInputCodeUI } from './a-searchinput';
 export { ANumberInput, ANumberInputStyleUI, ANumberInputCodeUI } from './a-numberinput';
 export { ALink, ALinkStyleUI, ALinkCodeUI } from './a-link';
+export { AOverflowMenuItem, AOverflowMenuItemStyleUI } from './a-overflow-menu-item';
+export { AOverflowMenuGroup, AOverflowMenuStyleUI } from './a-overflow-menu';
 
 export const allComponents = {
 	accordion,
@@ -48,5 +52,7 @@ export const allComponents = {
 	textinput,
 	searchinput,
 	numberinput,
-	link
+	link,
+	overflowMenuItem,
+	overflowMenu
 };
