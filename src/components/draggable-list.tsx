@@ -48,12 +48,10 @@ const tileStyle = css`
 `;
 
 export const DraggableTileList = ({
-	// Functional component
-	template,
+	template, // Functional component
 	dataList,
 	setDataList,
-	// Default object created
-	defaultObject
+	defaultObject // Default object created
 }: any) => {
 	const [dragging, setDragging] = useState(false);
 	const draggedItem = useRef<HTMLDivElement>();
