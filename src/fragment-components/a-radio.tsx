@@ -66,7 +66,7 @@ export const ARadio = ({
 				component: {
 					type: 'radio',
 					value: `${componentObj.id}`,
-					labelText: 'New Option',
+					labelText: 'New option',
 					defaultChecked: false,
 					disabled: false
 				}
