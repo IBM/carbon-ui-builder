@@ -6,6 +6,7 @@ import { drag } from '../routes/edit/tools';
 const elementTileStyle = css`
 	border: 1px solid #d8d8d8;
 	min-width: 127px;
+	width: 127px;
 	height: 127px;
 	display: inline-flex;
 	margin-bottom: 1rem;
@@ -19,6 +20,7 @@ const elementTileStyle = css`
 		text-align: center;
 		width: 100%;
 		margin: 0 1rem auto auto;
+		overflow-wrap: break-word;
 	}
 `;
 
