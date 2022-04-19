@@ -31,7 +31,7 @@ export const ARadioStyleUI = ({ selectedComponent, setComponent }: any) => {
 			onChange={() => {
 				setComponent({
 					...parentComponent,
-					defaultSelected: selectedComponent.id,
+					defaultSelected: `${selectedComponent.id}`,
 					valueChecked: selectedComponent.id,
 					items: parentComponent.items.map((item: any) => ({
 						...item,
