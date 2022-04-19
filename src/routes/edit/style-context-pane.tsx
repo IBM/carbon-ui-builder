@@ -8,9 +8,9 @@ import { allComponents } from '../../fragment-components';
 import { SelectedComponentBreadcrumbs } from './selected-component-breadcrumbs';
 
 const showComponentStyleOptions = (selectedComponent: any, setComponent: any) => {
-	for (const [key, component] of Object.entries(allComponents)) {
+	for (const component of Object.values(allComponents)) {
 		// Find the UI for editing style for our component
-		if (selectedComponent.type === key) {
+		if (selectedComponent.type === component.componentInfo.type) {
 			return <component.componentInfo.styleUI
 				selectedComponent={selectedComponent}
 				setComponent={setComponent} />;

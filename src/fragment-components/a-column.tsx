@@ -262,6 +262,7 @@ export const componentInfo: ComponentInfo = {
 	</AColumn>,
 	keywords: ['column', 'grid'],
 	name: 'Column',
+	type: 'column',
 	hideFromElementsPane: true,
 	defaultComponentObj: undefined,
 	image: undefined,

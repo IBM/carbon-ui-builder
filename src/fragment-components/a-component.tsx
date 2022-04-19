@@ -20,7 +20,7 @@ const headerStyle = css`
 
 const iconStyle = css`height: 1rem; width: 1rem; float: right`;
 
-export const AComponentCodeUI = ({ selectedComponent, setComponent }: any) => {
+export const AComponentCodeUI = ({ selectedComponent }: any) => {
 	return <span className={css`overflow-wrap: anywhere`}>
 		{JSON.stringify(selectedComponent)}
 	</span>;
@@ -51,6 +51,7 @@ const dropStyleAfter = cx(dropStyle, css`
 `);
 
 export interface ComponentInfo {
+	type: string;
 	component: any;
 	keywords: string[];
 	name: string;

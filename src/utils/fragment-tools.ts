@@ -65,6 +65,8 @@ export const getAllComponentStyleClasses = (componentObj: any, fragments: any[])
 
 			styleClasses = {
 				...styleClasses,
+				// we can't avoid this without a messy declare+reassign+export
+				// eslint-disable-next-line @typescript-eslint/no-use-before-define
 				...getAllFragmentStyleClasses(fragment || {}, fragments)
 			};
 		}

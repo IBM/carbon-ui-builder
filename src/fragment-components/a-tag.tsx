@@ -133,6 +133,7 @@ export const componentInfo: ComponentInfo = {
 	</ATag>,
 	keywords: ['tag'],
 	name: 'Tag',
+	type: 'tag',
 	defaultComponentObj: {
 		type: 'tag',
 		// This field is `type` in the `Tag` component

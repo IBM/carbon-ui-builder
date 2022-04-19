@@ -107,6 +107,7 @@ export const componentInfo: ComponentInfo = {
 	styleUI: AGridStyleUI,
 	keywords: ['grid', 'row', 'column'],
 	name: 'Grid',
+	type: 'grid',
 	defaultComponentObj: {
 		type: 'grid',
 		items: [
