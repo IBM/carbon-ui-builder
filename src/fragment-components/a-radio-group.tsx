@@ -79,7 +79,7 @@ export const ARadioGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
-				valueSelected:`${event.selectedItem.id}`,
+				valueSelected: event.selectedItem.id,
 				items: selectedComponent.items.map((item: any) => ({
 						...item,
 						defaultChecked: event.selectedItem.id === item.id
