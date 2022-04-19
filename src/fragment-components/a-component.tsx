@@ -51,7 +51,7 @@ const dropStyleAfter = cx(dropStyle, css`
 `);
 
 export interface ComponentInfo {
-	type: any;
+	type: string;
 	component: any;
 	keywords: string[];
 	name: string;
