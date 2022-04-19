@@ -21,7 +21,24 @@ import {
 } from '../utils/fragment-tools';
 
 export const ARadioStyleUI = ({ selectedComponent, setComponent }: any) => {
+	const [fragment] = useFragment();
+	const parentComponent = getParentComponent(fragment.data, selectedComponent);
 	return <>
+		<Checkbox
+			labelText='Default selected'
+			id='defaultSelected'
+			checked={selectedComponent.defaultChecked}
+			onChange={() => {
+				setComponent({
+					...parentComponent,
+					defaultSelected: selectedComponent.id,
+					valueChecked: selectedComponent.id,
+					items: parentComponent.items.map((item: any) => ({
+						...item,
+						defaultChecked: selectedComponent.id === item.id
+					}))
+				});
+			}}/>
 		<Checkbox
 			labelText='Disable button'
 			id='disable'
@@ -80,7 +97,7 @@ export const ARadio = ({
 		active={selected}
 		addButtonsCss={addButtonStyle}
 		key={componentObj.id}
-		leftAction= {() => addRadio(1)}
+		leftAction= {() => addRadio(0)}
 		bottomAction={() => addRadio(1)}>
 			<AComponent
 			selected={selected}
