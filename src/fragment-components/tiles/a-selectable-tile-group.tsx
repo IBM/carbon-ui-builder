@@ -128,7 +128,7 @@ export const componentInfo: ComponentInfo = {
 	name: 'Selectable tile group',
 	type: 'selectable-tile-group',
 	defaultComponentObj: {
-		type: 'selectableTileGroup',
+		type: 'selectable-tile-group',
 		tileGroup: true,
 		items: [
 			{
