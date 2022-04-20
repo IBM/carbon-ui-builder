@@ -26,8 +26,8 @@ const addIfNotExist = (arr: any[], items: string[] | undefined) => {
 const jsonToAngularImports = (json: any) => {
 	const imports: any[] = [];
 
-	for (const [key, component] of Object.entries(allComponents)) {
-		if (json.type === key) {
+	for (const component of Object.values(allComponents)) {
+		if (json.type === component.componentInfo.type) {
 			addIfNotExist(imports, component.componentInfo.codeExport.angular?.imports);
 		}
 	}
@@ -43,8 +43,8 @@ const jsonToAngularImports = (json: any) => {
 
 const getAngularInputsFromJson = (json: any): string => {
 	const getOne = (json: any) => {
-		for (const [key, component] of Object.entries(allComponents)) {
-			if (json.type === key) {
+		for (const component of Object.values(allComponents)) {
+			if (json.type === component.componentInfo.type) {
 				return component.componentInfo.codeExport.angular?.inputs({ json }) || '';
 			}
 		}
@@ -57,8 +57,8 @@ const getAngularInputsFromJson = (json: any): string => {
 
 const getAngularOutputsFromJson = (json: any): string => {
 	const getOne = (json: any) => {
-		for (const [key, component] of Object.entries(allComponents)) {
-			if (json.type === key) {
+		for (const component of Object.values(allComponents)) {
+			if (json.type === component.componentInfo.type) {
 				return component.componentInfo.codeExport.angular?.outputs({ json }) || '';
 			}
 		}
@@ -74,8 +74,8 @@ export const jsonToTemplate = (json: any) => {
 		return json;
 	}
 
-	for (const [key, component] of Object.entries(allComponents)) {
-		if (json.type === key && !component.componentInfo.codeExport.angular.isNotDirectExport) {
+	for (const component of Object.values(allComponents)) {
+		if (json.type === component.componentInfo.type && !component.componentInfo.codeExport.angular.isNotDirectExport) {
 			return component.componentInfo.codeExport.angular.code({ json, jsonToTemplate });
 		}
 	}

@@ -105,6 +105,7 @@ export const componentInfo: ComponentInfo = {
 	codeUI: ASearchInputCodeUI,
 	keywords: ['search', 'search input'],
 	name: 'Search',
+	type: 'search',
 	defaultComponentObj: {
 		type: 'search',
 		label: 'Search',

@@ -185,6 +185,7 @@ export const componentInfo: ComponentInfo = {
 	codeUI: ANumberInputCodeUI,
 	keywords: ['number', 'input'],
 	name: 'Number input',
+	type: 'number-input',
 	defaultComponentObj: {
 		type: 'numberinput',
 		size: 'md',
