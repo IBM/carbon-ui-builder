@@ -148,7 +148,7 @@ export const componentInfo: ComponentInfo = {
 		select={select}
 		remove={remove}
 		selected={selected}>
-			{componentObj.items.map((button: any) => (renderComponents(button)))}
+			{componentObj.items.map((button: any) => renderComponents(button))}
 	</ARadioGroup>,
 	image,
 	codeExport: {
