@@ -49,27 +49,41 @@ const tileStyle = css`
 
 export const DraggableTileList = ({
 	template, // Functional component
+	dragOver = (_: any) => { },	// Override onDragOver event
 	dataList,
 	setDataList,
 	defaultObject // Default object created
 }: any) => {
 	const [dragging, setDragging] = useState(false);
 	const draggedItem = useRef<HTMLDivElement>();
+	const [draggedIndex, setDraggedIndex] = useState(-1);
 
 	const onDragStart = (event: any, index: number) => {
 		setDragging(true);
-		event.dataTransfer.setData('index', index);
+		setDraggedIndex(index);
+		event.dataTransfer.setData('item-data', JSON.stringify(dataList[index]));
 		draggedItem.current = event.currentTarget;
 	};
 
 	const onDragEnd = (_: any) => {
 		setDragging(false);
+		setDraggedIndex(-1);
+		draggedItem.current = undefined;
 	};
 
 	const onDragOver = (event: any) => {
+		// Prevent drop if user
+		if(dragOver(event) === false) {
+			return false;
+		}
+
 		event.preventDefault();
-		event.currentTarget.style.setProperty('--drag-target-height', `${(draggedItem.current?.clientHeight || 0)}px`);
-		event.currentTarget.style.setProperty('--outline', '2px dashed #0f62fe');
+		// Adds styles only if dragged item reference exists
+		// otherwise enters height adjustment loop
+		if(draggedItem.current?.clientHeight) {
+			event.currentTarget.style.setProperty('--drag-target-height', `${(draggedItem.current?.clientHeight)}px`);
+			event.currentTarget.style.setProperty('--outline', '2px dashed #0f62fe');
+		}
 	};
 
 	const onDragLeave = (event: any) => {
@@ -78,11 +92,21 @@ export const DraggableTileList = ({
 	};
 
 	const onDrop = (event: any, index: number) => {
-		const previousIndex = event.dataTransfer.getData('index');
-		const item = { ...dataList[previousIndex] };
+		event.preventDefault();
+
+		// parse only if data exists
+		const data = event.dataTransfer.getData('item-data');
+		if(!data) {
+			return false;
+		}
+		const item = JSON.parse(data);
 		const newList = [...dataList];
+
 		// Splice makes it easier to remove & add to new position
-		newList.splice(previousIndex, 1);
+		// Only remove item from list if item is part of list
+		if(draggedIndex !== -1) {
+			newList.splice(draggedIndex, 1);
+		}
 		newList.splice(index, 0, item);
 		setDataList(newList);
 	};
@@ -131,7 +155,7 @@ export const DraggableTileList = ({
 			{
 				dataList.map((item: any, index: number) => <>
 					<Tile
-					key={item.id || index}
+					key={item.id || `tile--${index}`}
 					draggable={true}
 					onDragStart={(event: any) => onDragStart(event, index)}
 					onDragEnd={(event: any) => onDragEnd(event)}
@@ -150,7 +174,7 @@ export const DraggableTileList = ({
 					</Tile>
 					<AddButton
 						index={index + 1}
-						key={index} />
+						key={`add-btn--${index + 1}`} />
 				</>)
 			}
 		</div>
