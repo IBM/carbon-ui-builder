@@ -126,7 +126,7 @@ export const componentInfo: ComponentInfo = {
 	codeUI: ASelectableTileGroupCodeUI,
 	keywords: ['tile', 'card', 'multi', 'select'],
 	name: 'Selectable tile group',
-	type: 'selectabletile',
+	type: 'selectable-tile-group',
 	defaultComponentObj: {
 		type: 'selectableTileGroup',
 		tileGroup: true,
