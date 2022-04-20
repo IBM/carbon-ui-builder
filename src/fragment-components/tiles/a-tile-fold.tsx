@@ -46,7 +46,7 @@ export const componentInfo: ComponentInfo = {
 	image: undefined,
 	type: 'tile-fold',
 	defaultComponentObj: {
-		type: 'tilefold',
+		type: 'tile-fold',
 		items: []
 	},
 	codeExport: {

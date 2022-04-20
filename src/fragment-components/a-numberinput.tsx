@@ -187,7 +187,7 @@ export const componentInfo: ComponentInfo = {
 	name: 'Number input',
 	type: 'number-input',
 	defaultComponentObj: {
-		type: 'numberinput',
+		type: 'number-input',
 		size: 'md',
 		label: 'Number input label',
 		min: 0,

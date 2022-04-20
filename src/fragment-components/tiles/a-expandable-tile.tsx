@@ -125,7 +125,7 @@ export const componentInfo: ComponentInfo = {
 	name: 'Expandable tile',
 	type: 'expandable-tile',
 	defaultComponentObj: {
-		type: 'expandabletile',
+		type: 'expandable-tile',
 		light: false,
 		expanded: true,
 		outline: false,
@@ -135,7 +135,7 @@ export const componentInfo: ComponentInfo = {
 				text: 'Above fold'
 			},
 			{
-				type: 'tilefold',
+				type: 'tile-fold',
 				items: [
 					{
 						type: 'text',

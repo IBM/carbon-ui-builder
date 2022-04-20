@@ -115,7 +115,7 @@ export const componentInfo: ComponentInfo = {
 	name: 'Clickable tile',
 	type: 'clickable-tile',
 	defaultComponentObj: {
-		type: 'clickabletile',
+		type: 'clickable-tile',
 		items: [
 			{
 				type: 'text',

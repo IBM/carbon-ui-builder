@@ -135,7 +135,7 @@ export const ASelectableTile = ({
 				type: 'insert',
 				component: {
 					standalone: false,
-					type: 'selectabletile',
+					type: 'selectable-tile',
 					codeContext: {
 						formItemName: componentObj.codeContext?.formItemName
 					},
@@ -194,7 +194,7 @@ export const componentInfo: ComponentInfo = {
 	name: 'Selectable tile',
 	type: 'selectable-tile',
 	defaultComponentObj: {
-		type: 'selectabletile',
+		type: 'selectable-tile',
 		standalone: true,
 		disabled: false,
 		selected: false,
