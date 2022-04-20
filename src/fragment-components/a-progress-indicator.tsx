@@ -142,6 +142,7 @@ export const componentInfo: ComponentInfo = {
 	component: AProgressIndicator,
 	styleUI: AProgressIndicatorStyleUI,
 	codeUI: AProgressIndicatorCodeUI,
+	type: 'progress-indicator',
 	keywords: ['progress', 'indicator'],
 	name: 'Progress indicator',
 	defaultComponentObj: {
