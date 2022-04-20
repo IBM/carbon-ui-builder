@@ -153,7 +153,7 @@ export const componentInfo: ComponentInfo = {
 	name: 'Radio tile group',
 	type: 'radio-tile-group',
 	defaultComponentObj: {
-		type: 'radioTileGroup',
+		type: 'radio-tile-group',
 		tileGroup: true,
 		legend: 'Radio Tile Group',
 		items: [
