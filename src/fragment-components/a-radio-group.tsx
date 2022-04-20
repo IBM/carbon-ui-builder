@@ -114,10 +114,10 @@ export const componentInfo: ComponentInfo = {
 	codeUI: ARadioGroupCodeUI,
 	keywords: ['radio', 'button', 'group'],
 	name: 'Radio buttons',
-	type: 'radioGroup',
+	type: 'radio-group',
 	defaultComponentObj: {
 		disabled: false,
-		type: 'radioGroup',
+		type: 'radio-group',
 		legend: 'Radio group',
 		defaultSelected: '',
 		labelPosition: 'right',
