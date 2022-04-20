@@ -7,8 +7,7 @@ import {
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
-import image from './../assets/component-icons/link.svg';
-
+import image from './../assets/component-icons/overflowMenu.svg';
 export const AOverflowMenuStyleUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
 		{ id: 'sm', text: 'Small' },
@@ -73,7 +72,7 @@ export const AOverflowMenuGroup = ({
 export const componentInfo: ComponentInfo = {
 	component: AOverflowMenuGroup,
 	styleUI: AOverflowMenuStyleUI,
-	keywords: ['overflow', 'menu'],
+	keywords: ['overflow', 'menu', 'context'],
 	name: 'Overflow menu',
 	defaultComponentObj: {
 		disabled: false,
@@ -108,7 +107,7 @@ export const componentInfo: ComponentInfo = {
 		selected={selected}>
 			{componentObj.items.map((button: any) => (renderComponents(button)))}
 	</AOverflowMenuGroup>,
-	image,
+	image: image,
 	codeExport: {
 		angular: {
 			inputs: (_) => '',

@@ -12,7 +12,7 @@ import {
 	updatedState,
 	Adder
 } from '../components';
-import image from './../assets/component-icons/link.svg';
+
 import { css } from 'emotion';
 
 export const AOverflowMenuItemStyleUI = ({ selectedComponent, setComponent }: any) => {
@@ -88,7 +88,7 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'overflowMenuItem'
 	},
-	image: image,
+	image: undefined,
 	hideFromElementsPane: true,
 	codeExport: {
 		angular: {
