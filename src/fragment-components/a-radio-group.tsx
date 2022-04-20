@@ -67,9 +67,7 @@ export const ARadioGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
 		defaultChecked: item.defaultChecked
 	}));
 	allItems.push({ text: 'None', id: 'none', defaultChecked: '' });
-	selectedComponent.defaultSelected = `${selectedComponent.items.find(((item: any) => {
-		return item.defaultChecked;
-	}))?.id}`;
+	selectedComponent.defaultSelected = selectedComponent.items.find(((item: any) => item.defaultChecked))?.id;
 	return (
 		<Dropdown
 			label='Default selection'
