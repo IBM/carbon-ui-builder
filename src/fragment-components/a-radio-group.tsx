@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
 	Dropdown,
 	TextInput,
@@ -67,7 +67,13 @@ export const ARadioGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
 		defaultChecked: item.defaultChecked
 	}));
 	allItems.push({ text: 'None', id: 'none', defaultChecked: '' });
-	selectedComponent.defaultSelected = selectedComponent.items.find(((item: any) => item.defaultChecked))?.id;
+	useEffect(() => {
+		setComponent({
+			...selectedComponent,
+			defaultSelected: selectedComponent.items.find(((item: any) => item.defaultChecked))?.id
+		});
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 	return (
 		<Dropdown
 			label='Default selection'
@@ -77,6 +83,7 @@ export const ARadioGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
+				defaultSelected: event.selectedItem.id,
 				valueSelected: event.selectedItem.id,
 				items: selectedComponent.items.map((item: any) => ({
 						...item,
