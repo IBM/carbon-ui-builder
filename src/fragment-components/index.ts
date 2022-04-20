@@ -34,7 +34,7 @@ export { ATextInput, ATextInputStyleUI, ATextInputCodeUI } from './a-textinput';
 export { ASearchInput, ASearchInputStyleUI, ASearchInputCodeUI } from './a-searchinput';
 export { ANumberInput, ANumberInputStyleUI, ANumberInputCodeUI } from './a-numberinput';
 export { ALink, ALinkStyleUI, ALinkCodeUI } from './a-link';
-export { AOverflowMenuItem, AOverflowMenuItemStyleUI } from './a-overflow-menu-item';
+export { AOverflowMenuItem, AOverflowMenuItemCodeUI, AOverflowMenuItemStyleUI } from './a-overflow-menu-item';
 export { AOverflowMenuGroup, AOverflowMenuStyleUI } from './a-overflow-menu';
 
 export const allComponents = {

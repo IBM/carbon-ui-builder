@@ -84,19 +84,25 @@ export const componentInfo: ComponentInfo = {
 				type: 'overflowMenuItem',
 				itemText: 'Option 1',
 				id: 'option-1',
-				disabled: false
+				disabled: false,
+				hasLink: false,
+				link: ''
 			},
 			{
 				type: 'overflowMenuItem',
 				itemText: 'Option 2',
 				id: 'option-2',
-				disabled: false
+				disabled: false,
+				hasLink: false,
+				link: ''
 			},
 			{
 				type: 'overflowMenuItem',
 				itemText: 'Option 3',
 				id: 'option-3',
-				disabled: false
+				disabled: false,
+				hasLink: false,
+				link: ''
 			}
 		]
 	},

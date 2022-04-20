@@ -2,7 +2,8 @@
 import React from 'react';
 import {
 	OverflowMenuItem,
-	Checkbox
+	Checkbox,
+	TextInput
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
@@ -29,6 +30,32 @@ export const AOverflowMenuItemStyleUI = ({ selectedComponent, setComponent }: an
 	</>;
 };
 
+export const AOverflowMenuItemCodeUI = ({ selectedComponent, setComponent }: any) => {
+	return <>
+		<Checkbox
+			labelText='Has link'
+			id='hasLink'
+			checked={selectedComponent.hasLink}
+			onChange={(checked: boolean) => setComponent({
+				...selectedComponent,
+				hasLink: checked
+		})} />
+		<TextInput
+			value={selectedComponent.codeContext?.name}
+			disabled= {!selectedComponent.hasLink}
+			labelText='Link'
+			onChange={(event: any) => {
+				setComponent({
+					codeContext: {
+						...selectedComponent.codeContext,
+						link: event.currentTarget.value
+					}
+				});
+			}}
+		/>
+	</>;
+};
+
 export const AOverflowMenuItem = ({
 	componentObj,
 	selected,
@@ -47,7 +74,9 @@ export const AOverflowMenuItem = ({
 					type: 'overflowMenuItem',
 					value: `${componentObj.id}`,
 					itemText: 'New Option',
-					disabled: false
+					disabled: false,
+					hasLink: false,
+					link: ''
 				}
 			},
 			parentComponent.id,
@@ -65,6 +94,7 @@ export const AOverflowMenuItem = ({
 			componentObj={componentObj}
 			{...rest}>
 				<OverflowMenuItem
+					href={componentObj.isLink ? componentObj.codeContext?.link : undefined}
 					itemText={componentObj.itemText}
 					disabled= {componentObj.disabled}
 					/>
@@ -76,6 +106,7 @@ export const AOverflowMenuItem = ({
 export const componentInfo: ComponentInfo = {
 	component: AOverflowMenuItem,
 	styleUI: AOverflowMenuItemStyleUI,
+	codeUI: AOverflowMenuItemCodeUI,
 	render: ({ componentObj, select, remove, selected }) => <AOverflowMenuItem
 	componentObj={componentObj}
 	select={select}
