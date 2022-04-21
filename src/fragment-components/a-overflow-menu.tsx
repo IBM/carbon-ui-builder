@@ -43,6 +43,7 @@ export const AOverflowMenuStyleUI = ({ selectedComponent, setComponent }: any) =
 export const AOverflowMenuGroup = ({
 	children,
 	componentObj,
+	onDrop,
 	...rest
 }: any) => {
 	const selectedItem = children.find((item: any) => item.props.selected === true)?.props.componentObj?.className;
@@ -50,9 +51,10 @@ export const AOverflowMenuGroup = ({
 		<AComponent
 		componentObj={componentObj}
 		headingCss={css`display: block;`}
-		className={css`position: relative; display: flex`}
+		className={css`position: relative; display: inline-flex`}
 		{...rest}>
 			<OverflowMenu
+				onDrop={onDrop}
 				selectorPrimaryFocus={'.' + (selectedItem ? selectedItem : 'option-1')}
                 className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
 				disabled= {componentObj.disabled}
@@ -104,10 +106,12 @@ export const componentInfo: ComponentInfo = {
 			}
 		]
 	},
-	render: ({ componentObj, select, remove, selected, renderComponents }) => <AOverflowMenuGroup
+	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <AOverflowMenuGroup
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
+		onDragOver={onDragOver}
+		onDrop={onDrop}
 		selected={selected}>
 			{componentObj.items.map((button: any) => (renderComponents(button)))}
 	</AOverflowMenuGroup>,

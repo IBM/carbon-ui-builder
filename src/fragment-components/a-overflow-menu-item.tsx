@@ -98,6 +98,10 @@ export const AOverflowMenuItem = ({
 			parentComponent.items.indexOf(componentObj) + offset
 		)
 	});
+	// Prevent users from being redirected
+	const onClick = (event: any) => {
+		event.preventDefault();
+	};
 	return (
 		<Adder
 		active={selected}
@@ -112,9 +116,10 @@ export const AOverflowMenuItem = ({
 			componentObj={componentObj}
 			{...rest}>
 				<OverflowMenuItem
+					onClick={onClick}
 					isDelete={componentObj.isDelete}
 					className={componentObj.className}
-					href={componentObj.hasLink ? '#' : undefined}
+					href={componentObj.hasLink ? componentObj.link : undefined}
 					itemText={componentObj.itemText}
 					disabled= {componentObj.disabled}
 					/>
