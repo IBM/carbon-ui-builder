@@ -29,7 +29,7 @@ export const SettingsFragmentModal = ({ fragment }: any) => {
 
 		// Add or remove 'template' label for the fragment if set template is checked
 		if (isTemplate) {
-			if(!labels.includes('template')) {
+			if (!labels.includes('template')) {
 				labels = [...labels, 'template'];
 			}
 		} else {
@@ -39,7 +39,7 @@ export const SettingsFragmentModal = ({ fragment }: any) => {
 
 		// Add or remove 'micro-layout' label for the fragment if set micro-layout is checked
 		if (isMicroLayout) {
-			if(!labels.includes('micro-layout')) {
+			if (!labels.includes('micro-layout')) {
 				labels = [...labels, 'micro-layout'];
 			}
 		} else {

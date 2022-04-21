@@ -266,7 +266,7 @@ export const componentInfo: ComponentInfo = {
 				</SelectableTile>`;
 			},
 			additionalCode: (json) => {
-				if(json.standalone) {
+				if (json.standalone) {
 					return {};
 				}
 				return {
