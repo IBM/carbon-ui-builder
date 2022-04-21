@@ -26,6 +26,14 @@ export const AOverflowMenuItemStyleUI = ({ selectedComponent, setComponent }: an
 				...selectedComponent,
 				disabled: checked
 		})} />
+		<Checkbox
+			labelText='Is delete'
+			id='isDelete'
+			checked={selectedComponent.isDelete}
+			onChange={(checked: boolean) => setComponent({
+				...selectedComponent,
+				isDelete: checked
+		})} />
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent}/>
 	</>;
 };
@@ -82,6 +90,7 @@ export const AOverflowMenuItem = ({
 					className: componentObj.id,
 					disabled: false,
 					hasLink: false,
+					isDelete: false,
 					link: ''
 				}
 			},
@@ -103,6 +112,7 @@ export const AOverflowMenuItem = ({
 			componentObj={componentObj}
 			{...rest}>
 				<OverflowMenuItem
+					isDelete={componentObj.isDelete}
 					className={componentObj.id}
 					href={componentObj.hasLink ? '#' : undefined}
 					itemText={componentObj.itemText}

@@ -85,6 +85,7 @@ export const componentInfo: ComponentInfo = {
 				id: 'option-1',
 				disabled: false,
 				hasLink: false,
+				isDelete: false,
 				link: ''
 			},
 			{
@@ -93,6 +94,7 @@ export const componentInfo: ComponentInfo = {
 				id: 'option-2',
 				disabled: false,
 				hasLink: false,
+				isDelete: false,
 				link: ''
 			},
 			{
@@ -101,6 +103,7 @@ export const componentInfo: ComponentInfo = {
 				id: 'option-3',
 				disabled: false,
 				hasLink: false,
+				isDelete: false,
 				link: ''
 			}
 		]
