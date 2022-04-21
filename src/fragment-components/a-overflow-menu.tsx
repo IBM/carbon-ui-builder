@@ -8,6 +8,7 @@ import {
 import { AComponent, ComponentInfo } from './a-component';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 import image from './../assets/component-icons/overflowMenu.svg';
+import { css } from 'emotion';
 
 export const AOverflowMenuStyleUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
@@ -18,6 +19,7 @@ export const AOverflowMenuStyleUI = ({ selectedComponent, setComponent }: any) =
 	return <>
 		<Dropdown
 			label='Size'
+			id='size'
 			titleText='Size'
 			items={sizeItems}
 			initialSelectedItem={sizeItems.find(item => item.id === selectedComponent.size)}
@@ -43,11 +45,19 @@ export const AOverflowMenuGroup = ({
 	componentObj,
 	...rest
 }: any) => {
+	const selectedItem = children.find((item: any) => {
+		if(item.props.selected) {
+			return item;
+		}
+	})?.props.componentObj?.id;
 	return (
 		<AComponent
 		componentObj={componentObj}
+		headingCss={css`display: block;`}
+		className={css`position: relative; display: flex`}
 		{...rest}>
 			<OverflowMenu
+				selectorPrimaryFocus={'.' + (selectedItem ? selectedItem : 'option-1')}
                 className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
 				disabled= {componentObj.disabled}
 				size= {componentObj.size}>

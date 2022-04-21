@@ -38,23 +38,29 @@ export const AOverflowMenuItemCodeUI = ({ selectedComponent, setComponent }: any
 			checked={selectedComponent.hasLink}
 			onChange={(checked: boolean) => setComponent({
 				...selectedComponent,
-				hasLink: checked
+				hasLink: checked,
+				link: checked ? selectedComponent.link : ''
 		})} />
 		<TextInput
-			value={selectedComponent.codeContext?.name}
+			value={selectedComponent.link}
 			disabled= {!selectedComponent.hasLink}
 			labelText='Link'
 			onChange={(event: any) => {
 				setComponent({
-					codeContext: {
-						...selectedComponent.codeContext,
+					...selectedComponent,
 						link: event.currentTarget.value
-					}
 				});
 			}}
 		/>
 	</>;
 };
+
+const addButtonStyle = css`
+	position: relative;
+`;
+const headingStyle = css`
+	width: 12rem;
+`;
 
 export const AOverflowMenuItem = ({
 	componentObj,
@@ -72,8 +78,8 @@ export const AOverflowMenuItem = ({
 				type: 'insert',
 				component: {
 					type: 'overflow-menu-item',
-					value: `${componentObj.id}`,
 					itemText: 'New Option',
+					className: componentObj.id,
 					disabled: false,
 					hasLink: false,
 					link: ''
@@ -87,14 +93,18 @@ export const AOverflowMenuItem = ({
 		<Adder
 		active={selected}
 		key={componentObj.id}
-		topAction={() => addItem(1)}>
+		addButtonsCss={addButtonStyle}
+		leftAction= {() => addItem(0)}
+		bottomAction={() => addItem(1)}>
 			<AComponent
+			headingCss={headingStyle}
 			selected={selected}
 			className={css`width: 100%;`}
 			componentObj={componentObj}
 			{...rest}>
 				<OverflowMenuItem
-					href={componentObj.isLink ? componentObj.codeContext?.link : undefined}
+					className={componentObj.id}
+					href={componentObj.hasLink ? '#' : undefined}
 					itemText={componentObj.itemText}
 					disabled= {componentObj.disabled}
 					/>
@@ -112,7 +122,6 @@ export const componentInfo: ComponentInfo = {
 	select={select}
 	remove={remove}
 	selected={selected}>
-		{componentObj.itemText}
 	</AOverflowMenuItem>,
 	keywords: ['overflow', 'item'],
 	name: 'Overflow menu item',
