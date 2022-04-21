@@ -151,6 +151,7 @@ export const componentInfo: ComponentInfo = {
 	codeUI: ARadioTileGroupCodeUI,
 	keywords: ['tile', 'card', 'radio', 'select'],
 	name: 'Radio tile group',
+	type: '',
 	defaultComponentObj: {
 		type: 'radioTileGroup',
 		tileGroup: true,

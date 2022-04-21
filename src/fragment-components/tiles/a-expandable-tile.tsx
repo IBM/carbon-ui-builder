@@ -123,6 +123,7 @@ export const componentInfo: ComponentInfo = {
 	styleUI: AExpandableStyleUI,
 	keywords: ['tile', 'fold', 'expandable'],
 	name: 'Expandable tile',
+	type: '',
 	defaultComponentObj: {
 		type: 'expandabletile',
 		light: false,

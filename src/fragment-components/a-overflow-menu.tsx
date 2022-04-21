@@ -45,11 +45,7 @@ export const AOverflowMenuGroup = ({
 	componentObj,
 	...rest
 }: any) => {
-	const selectedItem = children.find((item: any) => {
-		if(item.props.selected) {
-			return item;
-		}
-	})?.props.componentObj?.id;
+	const selectedItem = children.find((item: any) => item.props.selected === true)?.props.componentObj?.className;
 	return (
 		<AComponent
 		componentObj={componentObj}
@@ -82,7 +78,7 @@ export const componentInfo: ComponentInfo = {
 			{
 				type: 'overflow-menu-item',
 				itemText: 'Option 1',
-				id: 'option-1',
+				className: 'option-1',
 				disabled: false,
 				hasLink: false,
 				isDelete: false,
@@ -91,7 +87,7 @@ export const componentInfo: ComponentInfo = {
 			{
 				type: 'overflow-menu-item',
 				itemText: 'Option 2',
-				id: 'option-2',
+				className: 'option-2',
 				disabled: false,
 				hasLink: false,
 				isDelete: false,
@@ -100,7 +96,7 @@ export const componentInfo: ComponentInfo = {
 			{
 				type: 'overflow-menu-item',
 				itemText: 'Option 3',
-				id: 'option-3',
+				className: 'option-3',
 				disabled: false,
 				hasLink: false,
 				isDelete: false,

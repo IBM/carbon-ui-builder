@@ -113,6 +113,7 @@ export const componentInfo: ComponentInfo = {
 	codeUI: AClickableTileCodeUI,
 	keywords: ['tile', 'clickable', 'card'],
 	name: 'Clickable tile',
+	type: '',
 	defaultComponentObj: {
 		type: 'clickabletile',
 		items: [

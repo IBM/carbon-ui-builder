@@ -113,7 +113,7 @@ export const AOverflowMenuItem = ({
 			{...rest}>
 				<OverflowMenuItem
 					isDelete={componentObj.isDelete}
-					className={componentObj.id}
+					className={componentObj.className}
 					href={componentObj.hasLink ? '#' : undefined}
 					itemText={componentObj.itemText}
 					disabled= {componentObj.disabled}
