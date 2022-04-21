@@ -49,7 +49,8 @@ const tileStyle = css`
 
 export const DraggableTileList = ({
 	template, // Functional component
-	dragOver = (_: any) => { },	// Override onDragOver event
+	onDragOver: dragOver = (_: any) => true,	// Override onDragOver event
+	remoteItemFromList: removeFromList = (_: any) => true,	// Override removeItemFromList
 	dataList,
 	setDataList,
 	defaultObject // Default object created
@@ -73,14 +74,14 @@ export const DraggableTileList = ({
 
 	const onDragOver = (event: any) => {
 		// Prevent drop if user
-		if(dragOver(event) === false) {
+		if (dragOver(event) === false) {
 			return false;
 		}
 
 		event.preventDefault();
 		// Adds styles only if dragged item reference exists
 		// otherwise enters height adjustment loop
-		if(draggedItem.current?.clientHeight) {
+		if (draggedItem.current?.clientHeight) {
 			event.currentTarget.style.setProperty('--drag-target-height', `${(draggedItem.current?.clientHeight)}px`);
 			event.currentTarget.style.setProperty('--outline', '2px dashed #0f62fe');
 		}
@@ -96,15 +97,16 @@ export const DraggableTileList = ({
 
 		// parse only if data exists
 		const data = event.dataTransfer.getData('item-data');
-		if(!data) {
+		if (!data) {
 			return false;
 		}
 		const item = JSON.parse(data);
+		// Duplicate the list to perform splice operations
+		// Splice makes it easier to remove from previous position & add to new position
 		const newList = [...dataList];
 
-		// Splice makes it easier to remove & add to new position
 		// Only remove item from list if item is part of list
-		if(draggedIndex !== -1) {
+		if (draggedIndex >= 0) {
 			newList.splice(draggedIndex, 1);
 		}
 		newList.splice(index, 0, item);
@@ -120,7 +122,11 @@ export const DraggableTileList = ({
 		]);
 	};
 
-	const removeFromList = (event: any, index: number) => {
+	const removeItemFromList = (event: any, index: number) => {
+		if (removeFromList(event) === false) {
+			return false;
+		}
+
 		event.stopPropagation();
 		setDataList([
 			...dataList.slice(0, index),
@@ -128,7 +134,7 @@ export const DraggableTileList = ({
 		]);
 	};
 
-	const AddButton = ({ index }: any) => {
+	const AddButton = ({ index = 0 }: any) => {
 		return (
 			<div
 			onDrop={(event: any) => onDrop(event, index)}
@@ -168,7 +174,7 @@ export const DraggableTileList = ({
 							iconDescription="Delete item"
 							hasIconOnly
 							renderIcon={TrashCan32}
-							onClick={(event: any) => removeFromList(event, index)} />
+							onClick={(event: any) => removeItemFromList(event, index)} />
 						<Draggable16 className={draggableIconStyle} />
 						{template(item, index)}
 					</Tile>
