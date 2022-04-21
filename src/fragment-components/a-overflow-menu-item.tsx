@@ -71,7 +71,7 @@ export const AOverflowMenuItem = ({
 			{
 				type: 'insert',
 				component: {
-					type: 'overflowMenuItem',
+					type: 'overflow-menu-item',
 					value: `${componentObj.id}`,
 					itemText: 'New Option',
 					disabled: false,

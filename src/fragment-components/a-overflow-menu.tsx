@@ -8,6 +8,7 @@ import {
 import { AComponent, ComponentInfo } from './a-component';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 import image from './../assets/component-icons/overflowMenu.svg';
+
 export const AOverflowMenuStyleUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
 		{ id: 'sm', text: 'Small' },
@@ -36,19 +37,6 @@ export const AOverflowMenuStyleUI = ({ selectedComponent, setComponent }: any) =
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
-
-// export const AOverflowMenuCodeUI = ({ selectedComponent, setComponent }: any) => {
-// const allItems = selectedComponent.items.map((item: any) => {
-// 	return {
-// 		text: item.labelText,
-// 		id: item.id,
-// 		defaultChecked: item.defaultChecked
-// 	};
-// });
-// selectedComponent.defaultSelected = `${selectedComponent.items.find(((item: any) => {
-// 	return item.defaultChecked;
-// }))?.id}`;
-// };
 
 export const AOverflowMenuGroup = ({
 	children,
@@ -82,7 +70,7 @@ export const componentInfo: ComponentInfo = {
 		type: 'overflow-menu',
 		items: [
 			{
-				type: 'overflowMenuItem',
+				type: 'overflow-menu-item',
 				itemText: 'Option 1',
 				id: 'option-1',
 				disabled: false,
@@ -90,7 +78,7 @@ export const componentInfo: ComponentInfo = {
 				link: ''
 			},
 			{
-				type: 'overflowMenuItem',
+				type: 'overflow-menu-item',
 				itemText: 'Option 2',
 				id: 'option-2',
 				disabled: false,
@@ -98,7 +86,7 @@ export const componentInfo: ComponentInfo = {
 				link: ''
 			},
 			{
-				type: 'overflowMenuItem',
+				type: 'overflow-menu-item',
 				itemText: 'Option 3',
 				id: 'option-3',
 				disabled: false,
