@@ -7,7 +7,7 @@ import { useFragment } from '../../context';
 const getExpandableTileItems = (expandableTile: any) => {
 	const items: any = [];
 	expandableTile.items.forEach((item: any) => {
-		if (item.type === 'tilefold') {
+		if (item.type === 'tile-fold') {
 			items.push(...item.items);
 		} else {
 			items.push({ ...item });
@@ -77,7 +77,7 @@ const singleToGroup = (selectedItem: any, component: any) => {
 				codeContext: {
 					formItemName: component.codeContext?.name
 				},
-				items: (component.type === 'expandabletile') ? getExpandableTileItems(component) : [...component.items]
+				items: (component.type === 'expandable-tile') ? getExpandableTileItems(component) : [...component.items]
 			}
 		],
 		tileGroup: true
@@ -90,7 +90,7 @@ const singleToGroup = (selectedItem: any, component: any) => {
 const singleToSingle = (selectedItem: any, component: any) => {
 	const items = [];
 
-	if (component.type === 'expandabletile') {
+	if (component.type === 'expandable-tile') {
 		items.push(...getExpandableTileItems(component));
 	} else if (selectedItem.id === 'expandabletile') {
 		items.push(...component.items, ...selectedItem.defaultComponent.items);
@@ -113,6 +113,7 @@ export const TileMorphism = ({ component, setComponent }: any) => {
 		{
 			id: 'tile',
 			text: 'Tile',
+			type: 'tile',
 			defaultComponent: {
 				type: 'tile'
 			}
@@ -120,20 +121,22 @@ export const TileMorphism = ({ component, setComponent }: any) => {
 		{
 			id: 'clickabletile',
 			text: 'Clickable tile',
+			type: 'clickable-tile',
 			defaultComponent: {
-				type: 'clickabletile'
+				type: 'clickable-tile'
 			}
 		},
 		{
 			id: 'expandabletile',
 			text: 'Expandable tile',
+			type: 'expandable-tile',
 			defaultComponent: {
-				type: 'expandabletile',
+				type: 'expandable-tile',
 				expanded: true,
 				outline: false,
 				items: [
 					{
-						type: 'tilefold',
+						type: 'tile-fold',
 						items: []
 					}
 				]
@@ -142,8 +145,9 @@ export const TileMorphism = ({ component, setComponent }: any) => {
 		{
 			id: 'selectabletile',
 			text: 'Standalone selectable tile',
+			type: 'selectable-tile',
 			defaultComponent: {
-				type: 'selectabletile',
+				type: 'selectable-tile',
 				standalone: true,
 				disabled: false,
 				selected: false
@@ -152,12 +156,13 @@ export const TileMorphism = ({ component, setComponent }: any) => {
 		{
 			id: 'selectableTileGroup',
 			text: 'Multiselect tiles',
+			type: 'selectable-tile-group',
 			defaultComponent: {
-				type: 'selectableTileGroup',
+				type: 'selectable-tile-group',
 				tileGroup: true
 			},
 			childDefaultComponent: {
-				type: 'selectabletile',
+				type: 'selectable-tile',
 				selected: false,
 				standalone: false
 			}
@@ -165,13 +170,14 @@ export const TileMorphism = ({ component, setComponent }: any) => {
 		{
 			id: 'radioTileGroup',
 			text: 'Radio tiles',
+			type: 'radio-tile-group',
 			defaultComponent: {
-				type: 'radioTileGroup',
+				type: 'radio-tile-group',
 				legend: 'Radio Tile Group',
 				tileGroup: true
 			},
 			childDefaultComponent: {
-				type: 'radiotile'
+				type: 'radio-tile'
 			}
 		}
 	];
