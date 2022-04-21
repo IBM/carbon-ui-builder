@@ -113,7 +113,6 @@ export const TileMorphism = ({ component, setComponent }: any) => {
 		{
 			id: 'tile',
 			text: 'Tile',
-			type: 'tile',
 			defaultComponent: {
 				type: 'tile'
 			}
@@ -121,7 +120,6 @@ export const TileMorphism = ({ component, setComponent }: any) => {
 		{
 			id: 'clickabletile',
 			text: 'Clickable tile',
-			type: 'clickable-tile',
 			defaultComponent: {
 				type: 'clickable-tile'
 			}
@@ -129,7 +127,6 @@ export const TileMorphism = ({ component, setComponent }: any) => {
 		{
 			id: 'expandabletile',
 			text: 'Expandable tile',
-			type: 'expandable-tile',
 			defaultComponent: {
 				type: 'expandable-tile',
 				expanded: true,
@@ -145,7 +142,6 @@ export const TileMorphism = ({ component, setComponent }: any) => {
 		{
 			id: 'selectabletile',
 			text: 'Standalone selectable tile',
-			type: 'selectable-tile',
 			defaultComponent: {
 				type: 'selectable-tile',
 				standalone: true,
@@ -156,7 +152,6 @@ export const TileMorphism = ({ component, setComponent }: any) => {
 		{
 			id: 'selectableTileGroup',
 			text: 'Multiselect tiles',
-			type: 'selectable-tile-group',
 			defaultComponent: {
 				type: 'selectable-tile-group',
 				tileGroup: true
@@ -170,7 +165,6 @@ export const TileMorphism = ({ component, setComponent }: any) => {
 		{
 			id: 'radioTileGroup',
 			text: 'Radio tiles',
-			type: 'radio-tile-group',
 			defaultComponent: {
 				type: 'radio-tile-group',
 				legend: 'Radio Tile Group',
