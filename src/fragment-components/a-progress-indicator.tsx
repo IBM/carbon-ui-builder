@@ -143,18 +143,18 @@ export const componentInfo: ComponentInfo = {
 	styleUI: AProgressIndicatorStyleUI,
 	codeUI: AProgressIndicatorCodeUI,
 	type: 'progress-indicator',
-	keywords: ['progress', 'indicator'],
+	keywords: ['progress', 'indicator', 'step', 'wizard'],
 	name: 'Progress indicator',
 	defaultComponentObj: {
-		type: 'progressIndicator',
+		type: 'progress-indicator',
 		isVertical: true,
 		currentIndex: 0,
 		spacing: true,
 		progressSteps: [
 			{
-				label: 'Step 0',
-				description: 'Step 0: Getting started with carbon design system',
-				secondaryLabel: 'Optional Label',
+				label: 'Step 1',
+				description: 'Step 1 description',
+				secondaryLabel: 'Optional label',
 				invalid: false,
 				disabled: false
 			}
@@ -183,7 +183,7 @@ export const componentInfo: ComponentInfo = {
 			imports: ['ProgressIndicator', 'ProgressStep'],
 			code: ({ json }) => {
 				return `<ProgressIndicator
-					currentIndex={state["${json.codeContext?.name}"] | 0}
+					currentIndex={state["${json.codeContext?.name}StepIndex"] | 0}
 					${reactClassNamesFromComponentObj(json)}
 					onChange={(selectedStep) => handleInputChange({
 						target: {
