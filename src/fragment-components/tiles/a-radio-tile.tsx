@@ -172,7 +172,6 @@ export const componentInfo: ComponentInfo = {
 	codeUI: ARadioTileCodeUI,
 	keywords: ['tile', 'card', 'radio', 'selectable'],
 	name: 'Radio tile',
-	type: '',
 	defaultComponentObj: {
 		type: 'radiotile',
 		disabled: false,

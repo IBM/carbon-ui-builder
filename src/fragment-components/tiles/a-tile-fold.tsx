@@ -44,7 +44,6 @@ export const componentInfo: ComponentInfo = {
 	name: 'tilefold',
 	hideFromElementsPane: true,
 	image: undefined,
-	type: '',
 	defaultComponentObj: {
 		type: 'tilefold',
 		items: []

@@ -78,7 +78,6 @@ export const componentInfo: ComponentInfo = {
 	styleUI: ATileStyleUI,
 	keywords: ['tile', 'card'],
 	name: 'Tile',
-	type: '',
 	defaultComponentObj: {
 		type: 'tile',
 		items: [
