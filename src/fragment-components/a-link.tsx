@@ -111,6 +111,7 @@ export const componentInfo: ComponentInfo = {
 	</ALink>,
 	keywords: ['link'],
 	name: 'Link',
+	type: 'link',
 	defaultComponentObj: {
 		type: 'link',
 		text: 'Link',

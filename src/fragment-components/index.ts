@@ -16,6 +16,15 @@ import * as textinput from './a-textinput';
 import * as link from './a-link';
 import * as overflowMenuItem from './a-overflow-menu-item';
 import * as overflowMenu from './a-overflow-menu';
+// Tiles
+import * as tile from './tiles/a-tile';
+import * as clickabletile from './tiles/a-clickable-tile';
+import * as expandabletile from './tiles/a-expandable-tile';
+import * as tilefold from './tiles/a-tile-fold';
+import * as selectabletile from './tiles/a-selectable-tile';
+import * as selectableTileGroup from './tiles/a-selectable-tile-group';
+import * as radiotile from './tiles/a-radio-tile';
+import * as radioTileGroup from './tiles/a-radio-tile-group';
 
 // Accordion
 export { AAccordion, AAccordionStyleUI } from './accordion/a-accordion';
@@ -36,6 +45,15 @@ export { ANumberInput, ANumberInputStyleUI, ANumberInputCodeUI } from './a-numbe
 export { ALink, ALinkStyleUI, ALinkCodeUI } from './a-link';
 export { AOverflowMenuItem, AOverflowMenuItemCodeUI, AOverflowMenuItemStyleUI } from './a-overflow-menu-item';
 export { AOverflowMenuGroup, AOverflowMenuStyleUI } from './a-overflow-menu';
+// Tiles
+export { ATile, ATileCodeUI, ATileStyleUI } from './tiles/a-tile';
+export { AClickableTile, AClickableTileCodeUI, AClickableTileStyleUI } from './tiles/a-clickable-tile';
+export { AExpandableTile, AExpandableTileCodeUI, AExpandableStyleUI } from './tiles/a-expandable-tile';
+export { ATileFold, ATileFoldStyleUI } from './tiles/a-tile-fold';
+export { ASelectableTile, ASelectableTileCodeUI, ASelectableTileStyleUI } from './tiles/a-selectable-tile';
+export { ASelectableTileGroup, ASelectableTileGroupCodeUI, ASelectableTileGroupStyleUI } from './tiles/a-selectable-tile-group';
+export { ARadioTile, ARadioTileCodeUI, ARadioTileStyleUI } from './tiles/a-radio-tile';
+export { ARadioTileGroup, ARadioTileGroupCodeUI, ARadioTileGroupStyleUI } from './tiles/a-radio-tile-group';
 
 export const allComponents = {
 	accordion,
@@ -54,5 +72,14 @@ export const allComponents = {
 	numberinput,
 	link,
 	overflowMenuItem,
-	overflowMenu
+	overflowMenu,
+	// Tiles
+	tile,
+	clickabletile,
+	expandabletile,
+	tilefold,
+	selectabletile,
+	selectableTileGroup,
+	radiotile,
+	radioTileGroup
 };

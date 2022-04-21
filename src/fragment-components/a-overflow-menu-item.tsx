@@ -116,8 +116,9 @@ export const componentInfo: ComponentInfo = {
 	</AOverflowMenuItem>,
 	keywords: ['overflow', 'item'],
 	name: 'Overflow menu item',
+	type: 'overflow-menu-item',
 	defaultComponentObj: {
-		type: 'overflowMenuItem'
+		type: 'overflow-menu-item'
 	},
 	image: undefined,
 	hideFromElementsPane: true,

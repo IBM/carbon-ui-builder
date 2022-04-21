@@ -74,11 +74,12 @@ export const componentInfo: ComponentInfo = {
 	styleUI: AOverflowMenuStyleUI,
 	keywords: ['overflow', 'menu', 'context'],
 	name: 'Overflow menu',
+	type: 'overflow-menu',
 	defaultComponentObj: {
 		disabled: false,
 		isDelete: false,
 		size: 'md',
-		type: 'overflowMenu',
+		type: 'overflow-menu',
 		items: [
 			{
 				type: 'overflowMenuItem',
