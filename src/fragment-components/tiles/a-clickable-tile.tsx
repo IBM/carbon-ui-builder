@@ -113,8 +113,9 @@ export const componentInfo: ComponentInfo = {
 	codeUI: AClickableTileCodeUI,
 	keywords: ['tile', 'clickable', 'card'],
 	name: 'Clickable tile',
+	type: 'clickable-tile',
 	defaultComponentObj: {
-		type: 'clickabletile',
+		type: 'clickable-tile',
 		items: [
 			{
 				type: 'text',
@@ -138,7 +139,7 @@ export const componentInfo: ComponentInfo = {
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled || false}`,
 			outputs: (_) => '',
 			imports: ['TilesModule'],
-			code: ({ json, jsonToTemplate }) => {
+			code: ({ json, fragments, jsonToTemplate }) => {
 				/**
 				 * @todo - CCA does not support light
 				 * https://github.com/IBM/carbon-components-angular/issues/1999
@@ -147,13 +148,13 @@ export const componentInfo: ComponentInfo = {
 					[href]=${nameStringToVariableString(json.codeContext?.name)}Href
 					[disabled]=${nameStringToVariableString(json.codeContext?.name)}Disabled
 					${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</ibm-clickable-tile>`;
 			}
 		},
 		react: {
 			imports: ['ClickableTile'],
-			code: ({ json, jsonToTemplate, fragments }) => {
+			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<ClickableTile
 					${json.codeContext?.href !== undefined && json.codeContext?.href !== '' ? `href='${json.codeContext?.href}'` : ''}
 					${json.light !== undefined ? `light="${json.light}"` : ''}

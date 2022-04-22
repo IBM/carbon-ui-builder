@@ -172,8 +172,9 @@ export const componentInfo: ComponentInfo = {
 	codeUI: ARadioTileCodeUI,
 	keywords: ['tile', 'card', 'radio', 'selectable'],
 	name: 'Radio tile',
+	type: 'radio-tile',
 	defaultComponentObj: {
-		type: 'radiotile',
+		type: 'radio-tile',
 		disabled: false,
 		defaultChecked: false,
 		items: []
@@ -199,7 +200,7 @@ export const componentInfo: ComponentInfo = {
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = '${json.value}';`,
 			outputs: () => '',
 			imports: ['TilesModule'],
-			code: ({ json, jsonToTemplate }) => {
+			code: ({ json, fragments, jsonToTemplate }) => {
 				/**
 				 * @todo - CCA does not support light & disabled
 				 * https://github.com/IBM/carbon-components-angular/issues/1999
@@ -208,7 +209,7 @@ export const componentInfo: ComponentInfo = {
 					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 					[selected]="${nameStringToVariableString(json.codeContext?.name)}Selected"
 					${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</ibm-selection-tile>`;
 			}
 		},

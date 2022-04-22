@@ -126,8 +126,9 @@ export const componentInfo: ComponentInfo = {
 	codeUI: ASelectableTileGroupCodeUI,
 	keywords: ['tile', 'card', 'multi', 'select'],
 	name: 'Selectable tile group',
+	type: 'selectable-tile-group',
 	defaultComponentObj: {
-		type: 'selectableTileGroup',
+		type: 'selectable-tile-group',
 		tileGroup: true,
 		items: [
 			{
@@ -174,12 +175,12 @@ export const componentInfo: ComponentInfo = {
 			inputs: () => '',
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<Event>();`,
 			imports: ['TilesModule'],
-			code: ({ json, jsonToTemplate }) => {
+			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<ibm-tile-group
 					(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
 					[multiple]="true"
 					${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</ibm-tile-group>`;
 			}
 		},

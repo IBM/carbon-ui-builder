@@ -123,8 +123,9 @@ export const componentInfo: ComponentInfo = {
 	styleUI: AExpandableStyleUI,
 	keywords: ['tile', 'fold', 'expandable'],
 	name: 'Expandable tile',
+	type: 'expandable-tile',
 	defaultComponentObj: {
-		type: 'expandabletile',
+		type: 'expandable-tile',
 		light: false,
 		expanded: true,
 		outline: false,
@@ -151,7 +152,7 @@ export const componentInfo: ComponentInfo = {
 		selected={selected}
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
-			{componentObj.items.map((fold: any) => renderComponents(fold))}
+		{componentObj.items.map((fold: any) => renderComponents(fold))}
 	</AExpandableTile>,
 	image,
 	codeExport: {
@@ -159,7 +160,7 @@ export const componentInfo: ComponentInfo = {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Expanded = ${json.expanded}`,
 			outputs: () => '',
 			imports: ['TilesModule'],
-			code: ({ json, jsonToTemplate }) => {
+			code: ({ json, fragments, jsonToTemplate }) => {
 				const { aboveFold, belowFold } = getFoldObjects(json);
 				/**
 				 * @todo - CCA does not support light
@@ -169,9 +170,9 @@ export const componentInfo: ComponentInfo = {
 					${json.expanded !== undefined ? `[expanded]="${nameStringToVariableString(json.codeContext?.name)}Expanded"` : ''}
 					${angularClassNamesFromComponentObj(json)}>
 						<span class="bx--tile-content__above-the-fold">
-							${aboveFold.map((element: any) => jsonToTemplate(element)).join('\n')}
+							${aboveFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 						</span>
-						${belowFold.map((element: any) => jsonToTemplate(element)).join('\n')}
+						${belowFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</ibm-expandable-tile>`;
 			}
 		},

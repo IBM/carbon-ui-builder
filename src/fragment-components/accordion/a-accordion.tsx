@@ -101,11 +101,11 @@ export const componentInfo: ComponentInfo = {
 			// Issue being tracked here: https://github.com/IBM/carbon-components-angular/issues/2022
 			// NOTE: Angular accordion align end does not behave as expected.
 			// Issue being tracked here: https://github.com/IBM/carbon-components-angular/issues/2023
-			code: ({ json, jsonToTemplate }) => {
+			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<ibm-accordion
 					[align]="${nameStringToVariableString(json.codeContext?.name)}Align"
 					${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</ibm-accordion>`;
 			}
 		},

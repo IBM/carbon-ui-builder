@@ -68,7 +68,7 @@ export const ExportCode = ({
 	const jsonCode: any = JSON.stringify(fragment.data, null, 2);
 	const vanillaCode: any = createVanillaApp(fragment);
 	const reactCode: any = createReactApp(fragment, fragments);
-	const angularCode: any = createAngularApp(fragment);
+	const angularCode: any = createAngularApp(fragment, fragments);
 	const vueCode: any = createVueApp(fragment);
 
 	const generateSandboxUrl = (parameters: any) => (`https://codesandbox.io/api/v1/sandboxes/define?parameters=${parameters}`);
