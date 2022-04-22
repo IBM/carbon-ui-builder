@@ -113,8 +113,7 @@ export const DraggableTileList = ({
 		setDataList(newList);
 	};
 
-	const addToList = (event: any, index: number) => {
-		event.stopPropagation();
+	const addToList = (index: number) => {
 		setDataList([
 			...dataList.slice(0, index),
 			{ ...defaultObject },
@@ -122,12 +121,11 @@ export const DraggableTileList = ({
 		]);
 	};
 
-	const removeItemFromList = (event: any, index: number) => {
-		if (removeFromList(event) === false) {
+	const removeItemFromList = (index: number) => {
+		if (removeFromList(index) === false) {
 			return false;
 		}
 
-		event.stopPropagation();
 		setDataList([
 			...dataList.slice(0, index),
 			...dataList.slice(index + 1)
@@ -149,7 +147,10 @@ export const DraggableTileList = ({
 						iconDescription="Add item"
 						hasIconOnly
 						renderIcon={AddAlt32}
-						onClick={(event: any) => addToList(event, index)} />
+						onClick={(event: any) => {
+							event.stopPropagation();
+							addToList(index);
+						}} />
 				}
 			</div>
 		);
@@ -174,7 +175,10 @@ export const DraggableTileList = ({
 							iconDescription="Delete item"
 							hasIconOnly
 							renderIcon={TrashCan32}
-							onClick={(event: any) => removeItemFromList(event, index)} />
+							onClick={(event: any) => {
+									event.stopPropagation();
+									removeItemFromList(index);
+							}} />
 						<Draggable16 className={draggableIconStyle} />
 						{template(item, index)}
 					</Tile>
