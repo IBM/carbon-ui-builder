@@ -24,19 +24,22 @@ import {
 
 export const ASelectableTileStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
-		{selectedComponent.standalone &&
-			<TileMorphism component={selectedComponent} setComponent={setComponent} /> &&
-			<Checkbox
-				labelText='Light theme'
-				id='theme-select'
-				checked={selectedComponent.light}
-				onChange={(checked: any) => {
-					setComponent({
-						...selectedComponent,
-						light: checked
-					});
-				}}
-			/>}
+		{
+			selectedComponent.standalone && <>
+				<TileMorphism component={selectedComponent} setComponent={setComponent} />
+				<Checkbox
+					labelText='Light theme'
+					id='theme-select'
+					checked={selectedComponent.light}
+					onChange={(checked: any) => {
+						setComponent({
+							...selectedComponent,
+							light: checked
+						});
+					}}
+				/>
+			</>
+		}
 		<Checkbox
 			labelText='Selected'
 			id='selected'
