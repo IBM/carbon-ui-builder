@@ -126,12 +126,13 @@ export const componentInfo: ComponentInfo = {
 	codeUI: ASelectableTileGroupCodeUI,
 	keywords: ['tile', 'card', 'multi', 'select'],
 	name: 'Selectable tile group',
+	type: 'selectable-tile-group',
 	defaultComponentObj: {
-		type: 'selectableTileGroup',
+		type: 'selectable-tile-group',
 		tileGroup: true,
 		items: [
 			{
-				type: 'selectabletile',
+				type: 'selectable-tile',
 				codeContext: {
 					value: 'Tile 1'
 				},
@@ -140,7 +141,7 @@ export const componentInfo: ComponentInfo = {
 				items: [{ type: 'text', text: 'Selectable tile A' }]
 			},
 			{
-				type: 'selectabletile',
+				type: 'selectable-tile',
 				codeContext: {
 					value: 'Tile 2'
 				},
@@ -149,7 +150,7 @@ export const componentInfo: ComponentInfo = {
 				items: [{ type: 'text', text: 'Selectable tile B' }]
 			},
 			{
-				type: 'selectabletile',
+				type: 'selectable-tile',
 				codeContext: {
 					value: 'Tile 3'
 				},
@@ -174,12 +175,12 @@ export const componentInfo: ComponentInfo = {
 			inputs: () => '',
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<Event>();`,
 			imports: ['TilesModule'],
-			code: ({ json, jsonToTemplate }) => {
+			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<ibm-tile-group
 					(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
 					[multiple]="true"
 					${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</ibm-tile-group>`;
 			}
 		},

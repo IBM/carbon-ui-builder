@@ -78,6 +78,7 @@ export const componentInfo: ComponentInfo = {
 	styleUI: ATileStyleUI,
 	keywords: ['tile', 'card'],
 	name: 'Tile',
+	type: 'tile',
 	defaultComponentObj: {
 		type: 'tile',
 		items: [
@@ -99,11 +100,11 @@ export const componentInfo: ComponentInfo = {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : ''}';`,
 			outputs: (_) => '',
 			imports: ['TilesModule'],
-			code: ({ json, jsonToTemplate }) => {
+			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<ibm-tile
 					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 					${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</ibm-tile>`;
 			}
 		},

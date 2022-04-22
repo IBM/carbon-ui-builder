@@ -85,7 +85,7 @@ export const componentInfo: ComponentInfo = {
 	name: 'Text area',
 	type: 'text-area',
 	defaultComponentObj: {
-		type: 'textarea',
+		type: 'text-area',
 		label: 'Text area label',
 		placeholder: 'Text area placeholder',
 		helperText: 'Helper text'

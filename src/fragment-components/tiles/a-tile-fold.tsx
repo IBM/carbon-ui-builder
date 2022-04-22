@@ -44,8 +44,9 @@ export const componentInfo: ComponentInfo = {
 	name: 'tilefold',
 	hideFromElementsPane: true,
 	image: undefined,
+	type: 'tile-fold',
 	defaultComponentObj: {
-		type: 'tilefold',
+		type: 'tile-fold',
 		items: []
 	},
 	codeExport: {
@@ -53,7 +54,7 @@ export const componentInfo: ComponentInfo = {
 			inputs: () => '',
 			outputs: () => '',
 			imports: [],
-			code: ({ json, jsonToTemplate }) => {
+			code: ({ json, fragments, jsonToTemplate }) => {
 				// Appends below the fold class to class list
 				let classes = angularClassNamesFromComponentObj(json);
 				if (classes) {
@@ -63,7 +64,7 @@ export const componentInfo: ComponentInfo = {
 				}
 
 				return `<span ${classes}>
-						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</span>`;
 			}
 		},
