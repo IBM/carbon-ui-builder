@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/carbon-components-builder/static/css/main.ad4c18d0.chunk.css",
-    "main.js": "/carbon-components-builder/static/js/main.c8f41ff0.chunk.js",
-    "main.js.map": "/carbon-components-builder/static/js/main.c8f41ff0.chunk.js.map",
+    "main.js": "/carbon-components-builder/static/js/main.3c291461.chunk.js",
+    "main.js.map": "/carbon-components-builder/static/js/main.3c291461.chunk.js.map",
     "runtime-main.js": "/carbon-components-builder/static/js/runtime-main.14a4950b.js",
     "runtime-main.js.map": "/carbon-components-builder/static/js/runtime-main.14a4950b.js.map",
-    "static/js/2.e1e0d47f.chunk.js": "/carbon-components-builder/static/js/2.e1e0d47f.chunk.js",
-    "static/js/2.e1e0d47f.chunk.js.map": "/carbon-components-builder/static/js/2.e1e0d47f.chunk.js.map",
+    "static/js/2.e945c16e.chunk.js": "/carbon-components-builder/static/js/2.e945c16e.chunk.js",
+    "static/js/2.e945c16e.chunk.js.map": "/carbon-components-builder/static/js/2.e945c16e.chunk.js.map",
     "index.html": "/carbon-components-builder/index.html",
-    "precache-manifest.1a3ef95abbe39d65e5b085ae0ca37842.js": "/carbon-components-builder/precache-manifest.1a3ef95abbe39d65e5b085ae0ca37842.js",
+    "precache-manifest.0ea749c3162974b8f9b23fb30ac42386.js": "/carbon-components-builder/precache-manifest.0ea749c3162974b8f9b23fb30ac42386.js",
     "service-worker.js": "/carbon-components-builder/service-worker.js",
     "static/css/main.ad4c18d0.chunk.css.map": "/carbon-components-builder/static/css/main.ad4c18d0.chunk.css.map",
-    "static/js/2.e1e0d47f.chunk.js.LICENSE.txt": "/carbon-components-builder/static/js/2.e1e0d47f.chunk.js.LICENSE.txt",
+    "static/js/2.e945c16e.chunk.js.LICENSE.txt": "/carbon-components-builder/static/js/2.e945c16e.chunk.js.LICENSE.txt",
     "static/media/accordion-item.svg": "/carbon-components-builder/static/media/accordion-item.9c9ebfb7.svg",
     "static/media/accordion.svg": "/carbon-components-builder/static/media/accordion.86ae9a9a.svg",
     "static/media/button.svg": "/carbon-components-builder/static/media/button.f75955a0.svg",
@@ -35,8 +35,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.14a4950b.js",
-    "static/js/2.e1e0d47f.chunk.js",
+    "static/js/2.e945c16e.chunk.js",
     "static/css/main.ad4c18d0.chunk.css",
-    "static/js/main.c8f41ff0.chunk.js"
+    "static/js/main.3c291461.chunk.js"
   ]
 }
