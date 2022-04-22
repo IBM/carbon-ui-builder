@@ -103,7 +103,7 @@ export const AExpandableTile = ({
 				</TileAboveTheFoldContent>
 				{
 					// Renders bottom fold component
-					children.filter(({ props }: any) => props && props.componentObj.type !== 'tilefold')
+					children.filter(({ props }: any) => props && props.componentObj.type === 'tilefold')
 				}
 			</ExpandableTile>
 		</AComponent>
