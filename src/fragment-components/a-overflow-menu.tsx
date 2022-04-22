@@ -51,15 +51,14 @@ export const AOverflowMenuGroup = ({
 		<AComponent
 		componentObj={componentObj}
 		headingCss={css`display: block;`}
-		className={css`position: relative; display: inline-flex`}
 		{...rest}>
 			<OverflowMenu
-				onDrop={onDrop}
-				selectorPrimaryFocus={'.' + (selectedItem ? selectedItem : 'option-1')}
-                className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
-				disabled= {componentObj.disabled}
-				size= {componentObj.size}>
-					{children}
+					onDrop={onDrop}
+					selectorPrimaryFocus={'.' + (selectedItem ? selectedItem : 'option-1')}
+					className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
+					disabled= {componentObj.disabled}
+					size= {componentObj.size}>
+						{children}
 			</OverflowMenu>
 		</AComponent>
 	);
