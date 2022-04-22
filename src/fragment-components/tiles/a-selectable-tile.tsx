@@ -135,7 +135,7 @@ export const ASelectableTile = ({
 				type: 'insert',
 				component: {
 					standalone: false,
-					type: 'selectabletile',
+					type: 'selectable-tile',
 					codeContext: {
 						formItemName: componentObj.codeContext?.formItemName
 					},

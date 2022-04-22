@@ -124,7 +124,7 @@ export const ARadioTile = ({
 				{
 					type: 'insert',
 					component: {
-						type: 'radiotile',
+						type: 'radio-tile',
 						codeContext: {
 							value: 'Tile',
 							formItemName: componentObj.codeContext?.formItemName

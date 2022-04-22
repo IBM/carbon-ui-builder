@@ -132,7 +132,7 @@ export const componentInfo: ComponentInfo = {
 		tileGroup: true,
 		items: [
 			{
-				type: 'selectabletile',
+				type: 'selectable-tile',
 				codeContext: {
 					value: 'Tile 1'
 				},
@@ -141,7 +141,7 @@ export const componentInfo: ComponentInfo = {
 				items: [{ type: 'text', text: 'Selectable tile A' }]
 			},
 			{
-				type: 'selectabletile',
+				type: 'selectable-tile',
 				codeContext: {
 					value: 'Tile 2'
 				},
@@ -150,7 +150,7 @@ export const componentInfo: ComponentInfo = {
 				items: [{ type: 'text', text: 'Selectable tile B' }]
 			},
 			{
-				type: 'selectabletile',
+				type: 'selectable-tile',
 				codeContext: {
 					value: 'Tile 3'
 				},

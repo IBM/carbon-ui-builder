@@ -135,7 +135,7 @@ export const componentInfo: ComponentInfo = {
 				text: 'Above fold'
 			},
 			{
-				type: 'tilefold',
+				type: 'tile-fold',
 				items: [
 					{
 						type: 'text',
