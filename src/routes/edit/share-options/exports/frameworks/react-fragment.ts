@@ -176,7 +176,7 @@ const jsonToSharedComponents = (json: any, fragments: any[]) => {
 	return sharedComponents;
 };
 
-export const createReactApp = (fragment: any, fragments = []) => {
+export const createReactApp = (fragment: any, fragments: any[]) => {
 	const fragmentTemplate = generateTemplate(fragment.data, fragments);
 
 	const sharedComponents = jsonToSharedComponents(fragment.data, fragments);

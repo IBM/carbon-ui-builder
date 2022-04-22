@@ -121,12 +121,12 @@ export const componentInfo: ComponentInfo = {
 			imports: ['AccordionModule'],
 			// NOTE: Angular accordion item currently does not support 'disabled'.
 			// issue being tracked here: https://github.com/IBM/carbon-components-angular/issues/2021
-			code: ({ json, jsonToTemplate }) => {
+			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<ibm-accordion-item
 					[title]="${nameStringToVariableString(json.codeContext?.name)}Title"
 					(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
 					${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</ibm-accordion-item>`;
 			}
 		},
