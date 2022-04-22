@@ -124,7 +124,7 @@ export const ARadioTile = ({
 				{
 					type: 'insert',
 					component: {
-						type: 'radiotile',
+						type: 'radio-tile',
 						codeContext: {
 							value: 'Tile',
 							formItemName: componentObj.codeContext?.formItemName
@@ -172,8 +172,9 @@ export const componentInfo: ComponentInfo = {
 	codeUI: ARadioTileCodeUI,
 	keywords: ['tile', 'card', 'radio', 'selectable'],
 	name: 'Radio tile',
+	type: 'radio-tile',
 	defaultComponentObj: {
-		type: 'radiotile',
+		type: 'radio-tile',
 		disabled: false,
 		defaultChecked: false,
 		items: []

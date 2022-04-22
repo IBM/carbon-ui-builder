@@ -116,7 +116,7 @@ export const componentInfo: ComponentInfo = {
 	name: 'Text input',
 	type: 'text-input',
 	defaultComponentObj: {
-		type: 'textinput',
+		type: 'text-input',
 		label: 'Text input label',
 		placeholder: 'Text input placeholder',
 		helperText: 'Helper text',
