@@ -4,7 +4,7 @@ import React, {
 	useState
 } from 'react';
 import { css, cx } from 'emotion';
-import { Fragment } from '../../components';
+import { Fragment, stateWithoutComponent } from '../../components';
 import { EditHeader } from './edit-header';
 import { GlobalStateContext } from '../../context/global-state-context';
 import {
@@ -254,9 +254,15 @@ export const Edit = ({ match }: any) => {
 						Duplicate
 					</Button>
 					<Button
-					disabled
 					kind='danger'
-					renderIcon={TrashCan32}>
+					disabled={fragment.selectedComponentId === 0} // disabled for fragment
+					renderIcon={TrashCan32}
+					onClick={
+						() => updateFragment({
+							...fragment,
+							data: stateWithoutComponent(fragment.data, fragment.selectedComponentId)
+						})
+					}>
 						Delete
 					</Button>
 				</div>
