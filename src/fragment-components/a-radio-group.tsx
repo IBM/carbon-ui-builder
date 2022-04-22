@@ -68,11 +68,11 @@ export const ARadioGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
 	}));
 	allItems.push({ text: 'None', id: 'none', defaultChecked: '' });
 	useEffect(() => {
+		const defaultSelected = selectedComponent.items.find(((item: any) => item.defaultChecked))?.id;
 		setComponent({
 			...selectedComponent,
-			defaultSelected: selectedComponent.items.find(((item: any) => item.defaultChecked))?.id
+			defaultSelected: defaultSelected
 		});
-	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	return (
 		<Dropdown
@@ -166,7 +166,7 @@ export const componentInfo: ComponentInfo = {
 								@Input() ${nameStringToVariableString(json.codeContext?.name)}Name = "${json.codeContext?.name}";`,
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 			imports: ['RadioModule'],
-			code: ({ json, jsonToTemplate }) => {
+			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<legend class="bx--label">{{${nameStringToVariableString(json.codeContext?.name)}LegendText}}</legend>
 				<ibm-radio-group
 					[name]="${nameStringToVariableString(json.codeContext?.name)}Name"
@@ -174,7 +174,7 @@ export const componentInfo: ComponentInfo = {
 					[labelPlacement]="${nameStringToVariableString(json.codeContext?.name)}LabelPosition"
 					(change)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
 					${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</ibm-radio-group>`;
 			}
 		},
