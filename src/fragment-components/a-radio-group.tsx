@@ -73,6 +73,7 @@ export const ARadioGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
 			...selectedComponent,
 			defaultSelected: defaultSelected
 		});
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	return (
 		<Dropdown
