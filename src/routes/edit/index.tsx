@@ -109,7 +109,6 @@ export const leftPane = css`
 
 export const leftPaneHeader = css`
 	position: fixed;
-	padding-top: 15px;
 	width: 270px;
 	background: white;
 `;
