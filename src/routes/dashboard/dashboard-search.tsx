@@ -48,13 +48,6 @@ const sortOverflowItem = css`
 	}
 `;
 
-// 🏗️🏗️🏗️ Under construction, add in later 🏗️🏗️🏗️
-// const shareButton = css`
-// 	height: 3rem;
-// 	width: 3rem;
-// 	background-color: #f4f4f4;
-// `;
-
 export enum SortDirection {
 	Ascending,
 	Descending
