@@ -27,7 +27,6 @@ import {
 	ColorPalette16,
 	Copy32,
 	Development16,
-	Export16,
 	Information16,
 	TrashCan32
 } from '@carbon/icons-react';
@@ -35,7 +34,6 @@ import {
 import { ElementsPane } from './elements-pane';
 import { StylePane } from './style-pane';
 import { CodePane } from './code-pane';
-import { ExportPane } from './export-pane';
 
 import { StyleContextPane } from './style-context-pane';
 import { CodeContextPane } from './code-context-pane';
@@ -197,7 +195,6 @@ export const Edit = ({ match }: any) => {
 			<ElementsPane isActive={selectedLeftPane === SelectedLeftPane.ELEMENTS} />
 			<StylePane isActive={selectedLeftPane === SelectedLeftPane.STYLE} />
 			<CodePane isActive={selectedLeftPane === SelectedLeftPane.CODE} />
-			<ExportPane isActive={selectedLeftPane === SelectedLeftPane.EXPORT} />
 			<SideNav
 			aria-label='Side navigation'
 			className={cx(sideRail, selectedLeftPane !== SelectedLeftPane.NONE ? 'is-active' : '')}
@@ -220,12 +217,6 @@ export const Edit = ({ match }: any) => {
 					onClick={() => onRailClick(SelectedLeftPane.CODE)}
 					isActive={selectedLeftPane === SelectedLeftPane.CODE}>
 						Code
-					</SideNavLink>
-					<SideNavLink
-					renderIcon={Export16}
-					onClick={() => onRailClick(SelectedLeftPane.EXPORT)}
-					isActive={selectedLeftPane === SelectedLeftPane.EXPORT}>
-						Export
 					</SideNavLink>
 				</SideNavItems>
 			</SideNav>
