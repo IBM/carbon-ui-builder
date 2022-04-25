@@ -77,7 +77,7 @@ export const ShareOptionsModal = ({ fragment }: any) => {
 						primaryButtonText='Done'
 						primaryButtonDisabled={shareOptionsState.selectedExportOption === null}
 						secondaryButtonText='Cancel'
-						modalHeading={`Share '${fragment.title}'`}>
+						modalHeading={`Export '${fragment.title}'`}>
 						<div className={exportOptionsWrapper}>
 							<SelectionTile
 								styles={exportOptionTileWrapper}
