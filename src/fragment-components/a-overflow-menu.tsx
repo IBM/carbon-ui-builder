@@ -1,43 +1,15 @@
-/* eslint-disable react/jsx-indent-props */
 import React from 'react';
 import {
-	Dropdown,
-	Checkbox,
 	OverflowMenu
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 import image from './../assets/component-icons/overflowMenu.svg';
 import { css } from 'emotion';
+import { reactClassNamesFromComponentObj, angularClassNamesFromComponentObj } from '../utils/fragment-tools';
+import { ComponentCssClassSelector } from '../components/css-class-selector';
 
 export const AOverflowMenuStyleUI = ({ selectedComponent, setComponent }: any) => {
-	const sizeItems = [
-		{ id: 'sm', text: 'Small' },
-		{ id: 'md', text: 'Medium' },
-		{ id: 'lg', text: 'Large' }
-	];
-	return <>
-		<Dropdown
-			label='Size'
-			id='size'
-			titleText='Size'
-			items={sizeItems}
-			initialSelectedItem={sizeItems.find(item => item.id === selectedComponent.size)}
-			itemToString={(item: any) => (item ? item.text : '')}
-			onChange={(event: any) => setComponent({
-				...selectedComponent,
-				size: event.selectedItem.id
-			})} />
-		<Checkbox
-			labelText='Disabled'
-			id='disabled'
-			checked={selectedComponent.disabled}
-			onChange={(checked: boolean) => setComponent({
-				...selectedComponent,
-				disabled: selectedComponent.items.forEach((item: any) => item.disabled = checked)
-		})} />
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>;
+	return(<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent}/>);
 };
 
 export const AOverflowMenuGroup = ({
@@ -119,15 +91,21 @@ export const componentInfo: ComponentInfo = {
 		angular: {
 			inputs: (_) => '',
 			outputs: (_) => '',
-			imports: [''],
-			code: (_) => {
-				return '';
+			imports: ['DialogModule'],
+			code: ({ json, fragments, jsonToTemplate }) => {
+				return `<ibm-overflow-menu
+							${angularClassNamesFromComponentObj(json)}>
+								${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+						</ibm-overflow-menu>`;
 			}
 		},
 		react: {
-			imports: [''],
-			code: () => {
-				return '';
+			imports: ['OverflowMenu'],
+			code: ({ json, fragments, jsonToTemplate }) => {
+				return `<OverflowMenu
+							${reactClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+						</OverflowMenu>`;
 			}
 		}
 	}

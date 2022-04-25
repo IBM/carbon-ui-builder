@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-indent-props */
 import React from 'react';
 import {
 	OverflowMenuItem,
@@ -15,6 +14,9 @@ import {
 } from '../components';
 
 import { css } from 'emotion';
+import { reactClassNamesFromComponentObj,
+	nameStringToVariableString,
+	angularClassNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const AOverflowMenuItemStyleUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -158,17 +160,32 @@ export const componentInfo: ComponentInfo = {
 	hideFromElementsPane: true,
 	codeExport: {
 		angular: {
-			inputs: (_) => '',
-			outputs: (_) => '',
-			imports: [],
-			code: () => {
-				return '';
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
+									@Input() ${nameStringToVariableString(json.codeContext?.name)}Link = "${json.link}"`,
+			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter();
+									@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
+			imports: [''],
+			code: ({ json }) => {
+				return `<ibm-overflow-menu-option
+							${json.isDelete ? "type='danger'" : ''}
+							${json.hasLink ? `href="${nameStringToVariableString(json.codeContext?.name)}Link"` : ''}
+							${json.disabled ? `disabled="${nameStringToVariableString(json.codeContext?.name)}Disabled"` : '' }
+							(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)" 
+							(click)="${nameStringToVariableString(json.codeContext?.name)}Clicked.emit($event)"
+							${angularClassNamesFromComponentObj(json)}>
+								${json.itemText}
+					</ibm-overflow-menu-option>`;
 			}
 		},
 		react: {
-			imports: [''],
-			code: () => {
-				return '';
+			imports: ['OverflowMenuItem'],
+			code: ({ json }) => {
+				return `<OverflowMenuItem 
+							${json.hasLink ? `href="${json.link}"` : ''}
+							${json.isDelete !== undefined ? `isDelete={${json.isDelete}}` : ''}
+							disabled={${json.disabled}}
+							itemText="${json.itemText}" 
+							${reactClassNamesFromComponentObj(json)}/>`;
 			}
 		}
 	}
