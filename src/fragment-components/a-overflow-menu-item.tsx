@@ -50,6 +50,16 @@ export const AOverflowMenuItemCodeUI = ({ selectedComponent, setComponent }: any
 				link: checked ? selectedComponent.link : ''
 		})} />
 		<TextInput
+			value={selectedComponent.itemText}
+			labelText='Label'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					itemText: event.currentTarget.value
+				});
+			}}
+		/>
+		<TextInput
 			value={selectedComponent.link}
 			disabled= {!selectedComponent.hasLink}
 			labelText='Link'
