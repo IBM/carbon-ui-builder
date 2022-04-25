@@ -2,7 +2,6 @@ import { ModalType, ModalContext } from '../../context/modal-context';
 import { ShareOptionsModal } from './share-options/share-options-modal';
 import { DuplicateFragmentModal } from './duplicate-fragment-modal';
 import { DeleteFragmentModal } from './delete-fragment-modal';
-import { SettingsFragmentModal } from './settings-fragment-modal';
 import React, { useContext } from 'react';
 
 // eslint-disable-next-line react/prop-types
@@ -26,11 +25,6 @@ export const FragmentModal = ({ fragment }: any) => {
 			return (
 			// eslint-disable-next-line react/prop-types
 				<DeleteFragmentModal id={fragment.id} />
-			);
-		case ModalType.SETTINGS:
-			return (
-			// eslint-disable-next-line react/prop-types
-				<SettingsFragmentModal fragment={fragment} />
 			);
 		default:
 			return null;

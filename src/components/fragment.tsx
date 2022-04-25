@@ -3,7 +3,7 @@ import { SkeletonPlaceholder } from 'carbon-components-react';
 import './fragment-preview.scss';
 import { css, cx } from 'emotion';
 import { allComponents, ComponentInfoRenderProps } from '../fragment-components';
-import { getAllFragmentStyleClasses } from '../utils/fragment-tools';
+import { getAllFragmentStyleClasses, getRandomId } from '../utils/fragment-tools';
 import { GlobalStateContext } from '../context';
 
 const canvas = css`
@@ -15,8 +15,6 @@ const canvas = css`
 const allowDrop = (event: any) => {
 	event.preventDefault();
 };
-
-let componentCounter = 2; // actually initialized (again) in Fragment
 
 export const getComponentById = (componentObj: any, id: number) => {
 	if (!componentObj || !id) {
@@ -47,18 +45,6 @@ export const getSelectedComponent = (fragment: any) => {
 	return getComponentById(fragment.data, fragment.selectedComponentId);
 };
 
-export const getHighestId = (componentObj: any) => {
-	if (!componentObj) {
-		return 0;
-	}
-
-	if (!componentObj.items || !componentObj.items.length) {
-		return componentObj.id || 0;
-	}
-
-	return Math.max(...componentObj.items.map((item: any) => getHighestId(item)), (componentObj.id || 0));
-};
-
 export const stateWithoutComponent = (state: any, componentId: number) => {
 	if (state.items) {
 		const componentIndex = state.items.findIndex((component: any) => component.id === componentId);
@@ -78,8 +64,12 @@ export const stateWithoutComponent = (state: any, componentId: number) => {
 	return { ...state };
 };
 
-export const initializeIds = (componentObj: any) => {
-	const id = componentObj.id || componentCounter++;
+export const initializeIds = (componentObj: any, forceNewIds = false) => {
+	let id = null;
+	if (forceNewIds) {
+		id = getRandomId();
+	}
+	id = id || componentObj.id || getRandomId();
 	// name is used in form items and for angular inputs and outputs variable names
 	const name = componentObj.codeContext?.name || `${componentObj.type}-${id}`;
 
@@ -154,7 +144,7 @@ export const updatedState = (state: any, dragObj: any, dropInId?: number, dropIn
 		// convert into a list of components, move current component into list
 		return {
 			// TODO should this be a `type: container`?
-			id: componentCounter++,
+			id: getRandomId(),
 			items: updatedList([{ ...state }], dragObj.component, dropInIndex)
 		};
 	}
@@ -194,9 +184,6 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 	}
 
 	const { fragments } = globalState || {};
-
-	// initialize component counter
-	componentCounter = getHighestId(fragment.data) + 1;
 
 	const drop = (event: any, dropInId?: number) => {
 		event.preventDefault();

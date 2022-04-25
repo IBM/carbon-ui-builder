@@ -56,7 +56,7 @@ export const SelectedComponentBreadcrumbs = ({ selectedComponent }: any) => {
 			</BreadcrumbItem>
 		)}
 		<BreadcrumbItem href="#" onClick={(event: any) => event.nativeEvent.preventDefault()} isCurrentPage>
-			{selectedComponent.type}
+			{selectedComponent.type || 'container'}
 		</BreadcrumbItem>
 	</Breadcrumb>;
 };

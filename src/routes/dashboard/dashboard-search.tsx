@@ -11,8 +11,6 @@ import {
 	Add16,
 	ArrowsVertical16,
 	CheckmarkFilled16
-	// 🏗️🏗️🏗️ Under construction, add in later 🏗️🏗️🏗️
-	// SettingsAdjust16
 } from '@carbon/icons-react';
 
 import { css } from 'emotion';
@@ -105,8 +103,6 @@ export const DashboardSearch = ({
 				)}
 				onClick={() => onSortHandler(SortDirection.Descending)} />
 		</OverflowMenu>
-		{/* 🏗️🏗️🏗️ Under construction, add in later 🏗️🏗️🏗️ */}
-		{/* <Button kind='ghost' className={shareButton}><SettingsAdjust16 /></Button> */}
 		<Button
 		onClick={() => setDisplayWizard(!displayWizard)}
 		title='Add new fragment'

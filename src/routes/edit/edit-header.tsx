@@ -4,7 +4,6 @@ import { Button } from 'carbon-components-react';
 import {
 	Copy16,
 	Delete16,
-	Settings16,
 	Share16,
 	Undo16,
 	Redo16
@@ -217,16 +216,6 @@ export const EditHeader = ({ fragment }: any) => {
 								id: fragment.id
 							})}>
 							<Share16 className={actionIconStyle} />
-						</Button>
-						<Button
-							kind='ghost'
-							aria-label='Fragment settings'
-							title='Fragment settings'
-							onClick={() => dispatchModal({
-								type: ModalActionType.setSettingsModal,
-								id: fragment.id
-							})}>
-							<Settings16 className={actionIconStyle} />
 						</Button>
 					</div>
 				</div>

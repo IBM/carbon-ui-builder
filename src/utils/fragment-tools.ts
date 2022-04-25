@@ -154,11 +154,13 @@ export const getUniqueFragmentName = (fragments: Array<any>, baseName: string) =
 	return `${nameBase} copy ${highestNumber && count < highestNumber ? highestNumber + 1 : count + 1}`;
 };
 
+export const getRandomId = () => `${Math.random().toString().slice(2)}${Math.random().toString().slice(2)}`;
+
 export const getFragmentDuplicate = (fragments: any, fragment: any, overrides = {}) => {
 	// copy current fragment and change fragment title
 	const fragmentCopy = JSON.parse(JSON.stringify(fragment));
 	fragmentCopy.title = getUniqueFragmentName(fragments, fragmentCopy.title);
-	fragmentCopy.id = `${Math.random().toString().slice(2)}${Math.random().toString().slice(2)}`;
+	fragmentCopy.id = getRandomId();
 	return { ...fragmentCopy, ...overrides };
 };
 

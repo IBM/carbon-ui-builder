@@ -4,7 +4,14 @@ import React, {
 	useState
 } from 'react';
 import { css, cx } from 'emotion';
-import { Fragment } from '../../components';
+import {
+	Fragment,
+	getParentComponent,
+	getSelectedComponent,
+	initializeIds,
+	stateWithoutComponent,
+	updatedState
+} from '../../components';
 import { EditHeader } from './edit-header';
 import { GlobalStateContext } from '../../context/global-state-context';
 import {
@@ -179,6 +186,9 @@ export const Edit = ({ match }: any) => {
 		}
 	};
 
+	const selectedComponent = getSelectedComponent(fragment);
+	const parentComponent = getParentComponent(fragment.data, selectedComponent);
+
 	return (
 		<div
 			id='edit-wrapper'
@@ -221,7 +231,7 @@ export const Edit = ({ match }: any) => {
 			</SideNav>
 			<div
 			className={cx('edit-content', selectedLeftPane !== SelectedLeftPane.NONE ? 'is-side-panel-active' : '')}
-			onClick={() => updateFragment({ ...fragment, selectedComponentId: 0 })}>
+			onClick={() => updateFragment({ ...fragment, selectedComponentId: null })}>
 				{
 					// eslint-disable-next-line
 					fragment && <Fragment fragment={fragment} setFragment={updateFragment} />
@@ -247,16 +257,35 @@ export const Edit = ({ match }: any) => {
 				</Tabs>
 				<div className={actionsStyle}>
 					<Button
-					disabled
 					kind='secondary'
+					disabled={!fragment.selectedComponentId} // disabled for fragment
 					renderIcon={Copy32}
-					className={css`margin-right: 8px`}>
+					className={css`margin-right: 8px`}
+					onClick={
+						() => updateFragment({
+							...fragment,
+							data: updatedState(
+								fragment.data, {
+									type: 'insert',
+									component: JSON.parse(JSON.stringify(initializeIds(selectedComponent, true))) // full clone, new Ids
+								},
+								parentComponent.id,
+								parentComponent.items.indexOf(selectedComponent) + 1
+							)
+						})
+					}>
 						Duplicate
 					</Button>
 					<Button
-					disabled
 					kind='danger'
-					renderIcon={TrashCan32}>
+					disabled={!fragment.selectedComponentId} // disabled for fragment
+					renderIcon={TrashCan32}
+					onClick={
+						() => updateFragment({
+							...fragment,
+							data: stateWithoutComponent(fragment.data, fragment.selectedComponentId)
+						})
+					}>
 						Delete
 					</Button>
 				</div>
