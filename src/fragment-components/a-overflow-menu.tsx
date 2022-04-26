@@ -27,9 +27,7 @@ export const AOverflowMenuGroup = ({
 			<OverflowMenu
 					onDrop={onDrop}
 					selectorPrimaryFocus={'.' + (selectedItem ? selectedItem : 'option-1')}
-					className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
-					disabled= {componentObj.disabled}
-					size= {componentObj.size}>
+					className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 						{children}
 			</OverflowMenu>
 		</AComponent>
@@ -43,9 +41,7 @@ export const componentInfo: ComponentInfo = {
 	name: 'Overflow menu',
 	type: 'overflow-menu',
 	defaultComponentObj: {
-		disabled: false,
 		isDelete: false,
-		size: 'md',
 		type: 'overflow-menu',
 		items: [
 			{
@@ -55,6 +51,7 @@ export const componentInfo: ComponentInfo = {
 				disabled: false,
 				hasLink: false,
 				isDelete: false,
+				hasDivider: false,
 				link: ''
 			},
 			{
@@ -64,6 +61,7 @@ export const componentInfo: ComponentInfo = {
 				disabled: false,
 				hasLink: false,
 				isDelete: false,
+				hasDivider: false,
 				link: ''
 			},
 			{
@@ -73,6 +71,7 @@ export const componentInfo: ComponentInfo = {
 				disabled: false,
 				hasLink: false,
 				isDelete: false,
+				hasDivider: false,
 				link: ''
 			}
 		]

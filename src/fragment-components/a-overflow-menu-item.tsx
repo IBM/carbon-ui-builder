@@ -36,6 +36,14 @@ export const AOverflowMenuItemStyleUI = ({ selectedComponent, setComponent }: an
 				...selectedComponent,
 				isDelete: checked
 		})} />
+		<Checkbox
+			labelText='has divider'
+			id='hasDivider'
+			checked={selectedComponent.hasDivider}
+			onChange={(checked: boolean) => setComponent({
+				...selectedComponent,
+				hasDivider: checked
+		})} />
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent}/>
 	</>;
 };
@@ -81,6 +89,9 @@ const addButtonStyle = css`
 const headingStyle = css`
 	width: 12rem;
 `;
+const overflowDivider = css`
+	border-top: 1px solid #e0e0e0;
+`;
 
 export const AOverflowMenuItem = ({
 	componentObj,
@@ -103,6 +114,7 @@ export const AOverflowMenuItem = ({
 					disabled: false,
 					hasLink: false,
 					isDelete: false,
+					hasDivider: false,
 					link: ''
 				}
 			},
@@ -124,7 +136,7 @@ export const AOverflowMenuItem = ({
 			<AComponent
 			headingCss={headingStyle}
 			selected={selected}
-			className={css`width: 100%;`}
+			className={`${css`width: 100%;`} ${componentObj.hasDivider ? overflowDivider : ''}`}
 			componentObj={componentObj}
 			{...rest}>
 				<OverflowMenuItem
@@ -133,8 +145,7 @@ export const AOverflowMenuItem = ({
 					className={componentObj.className}
 					href={componentObj.hasLink ? componentObj.link : undefined}
 					itemText={componentObj.itemText}
-					disabled= {componentObj.disabled}
-					/>
+					disabled={componentObj.disabled}/>
 			</AComponent>
 		</Adder>
 	);
@@ -161,6 +172,7 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
+									@Input() ${nameStringToVariableString(json.codeContext?.name)}HasDivider = ${json.hasDivider};
 									@Input() ${nameStringToVariableString(json.codeContext?.name)}Link = "${json.link}"`,
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter();
 									@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
@@ -168,6 +180,7 @@ export const componentInfo: ComponentInfo = {
 			code: ({ json }) => {
 				return `<ibm-overflow-menu-option
 							${json.isDelete ? "type='danger'" : ''}
+							${json.hasDivider ? `[divider]="${nameStringToVariableString(json.codeContext?.name)}HasDivider"` : ''}
 							${json.hasLink ? `href="${nameStringToVariableString(json.codeContext?.name)}Link"` : ''}
 							${json.disabled ? `disabled="${nameStringToVariableString(json.codeContext?.name)}Disabled"` : '' }
 							(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)" 
@@ -183,6 +196,7 @@ export const componentInfo: ComponentInfo = {
 				return `<OverflowMenuItem 
 							${json.hasLink ? `href="${json.link}"` : ''}
 							${json.isDelete !== undefined ? `isDelete={${json.isDelete}}` : ''}
+							${json.hasDivider !== false ? 'hasDivider': ''}
 							disabled={${json.disabled}}
 							itemText="${json.itemText}" 
 							${reactClassNamesFromComponentObj(json)}/>`;
