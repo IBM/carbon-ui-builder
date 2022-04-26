@@ -1,15 +1,43 @@
 import React from 'react';
 import {
+	Checkbox,
+	Dropdown,
 	OverflowMenu
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
 import image from './../assets/component-icons/overflowMenu.svg';
 import { css } from 'emotion';
-import { reactClassNamesFromComponentObj, angularClassNamesFromComponentObj } from '../utils/fragment-tools';
+import { reactClassNamesFromComponentObj,
+	angularClassNamesFromComponentObj,
+	nameStringToVariableString } from '../utils/fragment-tools';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 
 export const AOverflowMenuStyleUI = ({ selectedComponent, setComponent }: any) => {
-	return(<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent}/>);
+	const placementItems = [
+		{ id: 'top', text: 'Top' },
+		{ id: 'bottom', text: 'Bottom' }
+	];
+	return <>
+	<Dropdown
+			label='Placement'
+			titleText='Placement'
+			items={placementItems}
+			initialSelectedItem={placementItems.find(item => item.id === selectedComponent.placement)}
+			itemToString={(item: any) => (item ? item.text : '')}
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				placement: event.selectedItem.id
+			})} />
+	<Checkbox
+			labelText='Flip'
+			id='flipped'
+			checked={selectedComponent.flipped}
+			onChange={(checked: boolean) => setComponent({
+				...selectedComponent,
+				flipped: checked
+		})} />
+	<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent}/>
+	</>;
 };
 
 export const AOverflowMenuGroup = ({
@@ -26,6 +54,8 @@ export const AOverflowMenuGroup = ({
 		{...rest}>
 			<OverflowMenu
 					onDrop={onDrop}
+					flipped={componentObj.flipped}
+					direction={componentObj.placement}
 					selectorPrimaryFocus={'.' + (selectedItem ? selectedItem : 'option-1')}
 					className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 						{children}
@@ -42,6 +72,8 @@ export const componentInfo: ComponentInfo = {
 	type: 'overflow-menu',
 	defaultComponentObj: {
 		isDelete: false,
+		flipped: false,
+		placement: 'bottom',
 		type: 'overflow-menu',
 		items: [
 			{
@@ -88,11 +120,14 @@ export const componentInfo: ComponentInfo = {
 	image: image,
 	codeExport: {
 		angular: {
-			inputs: (_) => '',
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Flipped = ${json.flipped};
+									@Input() ${nameStringToVariableString(json.codeContext?.name)}Placement = "${json.placement}";`,
 			outputs: (_) => '',
 			imports: ['DialogModule'],
 			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<ibm-overflow-menu
+							[placement]="${nameStringToVariableString(json.codeContext?.name)}Placement"
+							[flip]="${nameStringToVariableString(json.codeContext?.name)}Flipped"
 							${angularClassNamesFromComponentObj(json)}>
 								${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 						</ibm-overflow-menu>`;
@@ -102,6 +137,8 @@ export const componentInfo: ComponentInfo = {
 			imports: ['OverflowMenu'],
 			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<OverflowMenu
+							direction="${json.placement}"
+							flipped={${json.flipped}}
 							${reactClassNamesFromComponentObj(json)}>
 							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 						</OverflowMenu>`;
