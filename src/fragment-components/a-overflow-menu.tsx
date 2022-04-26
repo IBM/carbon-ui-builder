@@ -6,7 +6,6 @@ import {
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
 import image from './../assets/component-icons/overflowMenu.svg';
-import { css } from 'emotion';
 import { reactClassNamesFromComponentObj,
 	angularClassNamesFromComponentObj,
 	nameStringToVariableString } from '../utils/fragment-tools';
@@ -50,7 +49,6 @@ export const AOverflowMenuGroup = ({
 	return (
 		<AComponent
 		componentObj={componentObj}
-		headingCss={css`display: block;`}
 		{...rest}>
 			<OverflowMenu
 					onDrop={onDrop}
