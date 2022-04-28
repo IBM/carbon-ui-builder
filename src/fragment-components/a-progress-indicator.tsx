@@ -17,7 +17,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 
-export const AProgressIndicatorStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const AProgressIndicatorSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const handleStepUpdate = (key: string, value: any, index: number) => {
 		const step = {
 			...selectedComponent.progressSteps[index],
@@ -140,7 +140,7 @@ export const AProgressIndicator = ({
 
 export const componentInfo: ComponentInfo = {
 	component: AProgressIndicator,
-	styleUI: AProgressIndicatorStyleUI,
+	settingsUI: AProgressIndicatorSettingsUI,
 	codeUI: AProgressIndicatorCodeUI,
 	type: 'progress-indicator',
 	keywords: ['progress', 'indicator', 'step', 'wizard'],
