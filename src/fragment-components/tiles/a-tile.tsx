@@ -16,7 +16,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 
-export const ATileStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const ATileSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TileMorphism component={selectedComponent} setComponent={setComponent} />
 		<Checkbox
@@ -75,7 +75,7 @@ export const ATile = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ATile,
-	styleUI: ATileStyleUI,
+	settingsUI: ATileSettingsUI,
 	keywords: ['tile', 'card'],
 	name: 'Tile',
 	type: 'tile',

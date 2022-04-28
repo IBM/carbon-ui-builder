@@ -17,7 +17,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 
-export const AExpandableStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const AExpandableSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TileMorphism component={selectedComponent} setComponent={setComponent} />
 		<Checkbox
@@ -120,7 +120,7 @@ const getFoldObjects = (json: any) => {
 
 export const componentInfo: ComponentInfo = {
 	component: AExpandableTile,
-	styleUI: AExpandableStyleUI,
+	settingsUI: AExpandableSettingsUI,
 	keywords: ['tile', 'fold', 'expandable'],
 	name: 'Expandable tile',
 	type: 'expandable-tile',

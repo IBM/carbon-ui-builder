@@ -26,7 +26,7 @@ const helpIconStyle = css`
 	}
 `;
 
-export const AColumnStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const onNumInputchange = (event: any) => {
 		setComponent({
 			...selectedComponent,
@@ -248,7 +248,7 @@ export const AColumn = ({
 
 export const componentInfo: ComponentInfo = {
 	component: AColumn,
-	styleUI: AColumnStyleUI,
+	settingsUI: AColumnSettingsUI,
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <AColumn
 		componentObj={componentObj}
 		select={select}

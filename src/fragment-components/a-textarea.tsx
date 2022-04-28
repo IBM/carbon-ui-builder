@@ -7,7 +7,7 @@ import { ComponentInfo } from '.';
 import image from './../assets/component-icons/text-area.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
-export const ATextAreaStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const ATextAreaSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TextInput
 			value={selectedComponent.label}
@@ -79,7 +79,7 @@ export const ATextArea = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ATextArea,
-	styleUI: ATextAreaStyleUI,
+	settingsUI: ATextAreaSettingsUI,
 	codeUI: ATextAreaCodeUI,
 	keywords: ['textarea', 'text area', 'input'],
 	name: 'Text area',

@@ -25,6 +25,7 @@ import {
 import {
 	Code16,
 	ColorPalette16,
+	SettingsAdjust16,
 	Copy32,
 	Development16,
 	Information16,
@@ -35,7 +36,7 @@ import { ElementsPane } from './elements-pane';
 import { StylePane } from './style-pane';
 import { CodePane } from './code-pane';
 
-import { StyleContextPane } from './style-context-pane';
+import { SettingsContextPane } from './settings-context-pane';
 import { CodeContextPane } from './code-context-pane';
 
 const leftPaneWidth = '300px';
@@ -229,9 +230,9 @@ export const Edit = ({ match }: any) => {
 			<div className={rightPanel}>
 				<Tabs>
 					<Tab
-					id='properties-style'
-					label={<ColorPalette16 />}>
-						<StyleContextPane fragment={fragment} setFragment={updateFragment} />
+					id='properties-settings'
+					label={<SettingsAdjust16 />}>
+						<SettingsContextPane fragment={fragment} setFragment={updateFragment} />
 					</Tab>
 					<Tab
 					id='properties-code'

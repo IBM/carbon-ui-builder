@@ -11,7 +11,7 @@ import { useFragment } from '../context';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 
-export const ARowStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const ARowSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<Checkbox
 			labelText='Condensed'
@@ -118,7 +118,7 @@ export const ARow = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ARow,
-	styleUI: ARowStyleUI,
+	settingsUI: ARowSettingsUI,
 	keywords: ['grid', 'row'],
 	name: 'Row',
 	hideFromElementsPane: true,

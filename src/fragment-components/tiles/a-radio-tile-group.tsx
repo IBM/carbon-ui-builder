@@ -15,7 +15,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 
-export const ARadioTileGroupStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const ARadioTileGroupSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TileMorphism component={selectedComponent} setComponent={setComponent} />
 		<TextInput
@@ -147,7 +147,7 @@ export const ARadioTileGroup = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ARadioTileGroup,
-	styleUI: ARadioTileGroupStyleUI,
+	settingsUI: ARadioTileGroupSettingsUI,
 	codeUI: ARadioTileGroupCodeUI,
 	keywords: ['tile', 'card', 'radio', 'select'],
 	name: 'Radio tile group',
