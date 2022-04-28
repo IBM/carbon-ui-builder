@@ -17,7 +17,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 
-export const ADropdownStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
 		{ id: 'sm', text: 'Small' },
 		{ id: 'md', text: 'Medium' },
@@ -190,8 +190,9 @@ export const ADropdown = ({
 };
 
 export const componentInfo: ComponentInfo = {
+	type: 'dropdown',
 	component: ADropdown,
-	styleUI: ADropdownStyleUI,
+	settingsUI: ADropdownSettingsUI,
 	codeUI: ADropdownCodeUI,
 	keywords: ['dropdown', 'multiselect', 'select'],
 	name: 'Dropdown',
