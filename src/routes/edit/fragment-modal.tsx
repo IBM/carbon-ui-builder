@@ -1,8 +1,8 @@
+import React, { useContext } from 'react';
 import { ModalType, ModalContext } from '../../context/modal-context';
-import { ShareOptionsModal } from './share-options/share-options-modal';
 import { DuplicateFragmentModal } from './duplicate-fragment-modal';
 import { DeleteFragmentModal } from './delete-fragment-modal';
-import React, { useContext } from 'react';
+import { ExportModal } from './share-options/exports/export-modal';
 
 // eslint-disable-next-line react/prop-types
 export const FragmentModal = ({ fragment }: any) => {
@@ -16,10 +16,10 @@ export const FragmentModal = ({ fragment }: any) => {
 			// eslint-disable-next-line react/prop-types
 				<DuplicateFragmentModal id={fragment.id}/>
 			);
-		case ModalType.SHARING:
+		case ModalType.EXPORT:
 			return (
 			// eslint-disable-next-line react/prop-types
-				<ShareOptionsModal fragment={fragment} />
+				<ExportModal fragment={fragment} />
 			);
 		case ModalType.DELETION:
 			return (

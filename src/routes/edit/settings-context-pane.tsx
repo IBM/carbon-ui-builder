@@ -17,18 +17,18 @@ const styleContextPaneStyle = css`
 }
 `;
 
-const showComponentStyleOptions = (selectedComponent: any, setComponent: any) => {
+const showComponentSettingsUI = (selectedComponent: any, setComponent: any) => {
 	for (const component of Object.values(allComponents)) {
 		// Find the UI for editing style for our component
 		if (selectedComponent.type === component.componentInfo.type) {
-			return <component.componentInfo.styleUI
+			return <component.componentInfo.settingsUI
 				selectedComponent={selectedComponent}
 				setComponent={setComponent} />;
 		}
 	}
 };
 
-export const StyleContextPane = ({ fragment, setFragment }: any) => {
+export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 	const selectedComponent = getSelectedComponent(fragment);
 
 	const setComponent = (component: any, updateActionHistory = true) => {
@@ -54,7 +54,7 @@ export const StyleContextPane = ({ fragment, setFragment }: any) => {
 						setFragment={setFragment} />
 					<hr />
 					<div className='context-pane-content'>
-						{showComponentStyleOptions(selectedComponent, setComponent)}
+						{showComponentSettingsUI(selectedComponent, setComponent)}
 					</div>
 				</>
 			}

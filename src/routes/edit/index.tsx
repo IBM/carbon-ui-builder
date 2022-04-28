@@ -25,9 +25,9 @@ import {
 import {
 	Code16,
 	ColorPalette16,
+	SettingsAdjust16,
 	Copy32,
 	Development16,
-	Export16,
 	Information16,
 	TrashCan32
 } from '@carbon/icons-react';
@@ -35,9 +35,8 @@ import {
 import { ElementsPane } from './elements-pane';
 import { StylePane } from './style-pane';
 import { CodePane } from './code-pane';
-import { ExportPane } from './export-pane';
 
-import { StyleContextPane } from './style-context-pane';
+import { SettingsContextPane } from './settings-context-pane';
 import { CodeContextPane } from './code-context-pane';
 
 const leftPaneWidth = '300px';
@@ -111,7 +110,6 @@ export const leftPane = css`
 
 export const leftPaneHeader = css`
 	position: fixed;
-	padding-top: 15px;
 	width: 270px;
 	background: white;
 `;
@@ -147,8 +145,7 @@ enum SelectedLeftPane {
 	NONE = 'none',
 	ELEMENTS = 'elements',
 	STYLE = 'style',
-	CODE = 'code',
-	EXPORT = 'export'
+	CODE = 'code'
 }
 
 export const Edit = ({ match }: any) => {
@@ -197,7 +194,6 @@ export const Edit = ({ match }: any) => {
 			<ElementsPane isActive={selectedLeftPane === SelectedLeftPane.ELEMENTS} />
 			<StylePane isActive={selectedLeftPane === SelectedLeftPane.STYLE} />
 			<CodePane isActive={selectedLeftPane === SelectedLeftPane.CODE} />
-			<ExportPane isActive={selectedLeftPane === SelectedLeftPane.EXPORT} />
 			<SideNav
 			aria-label='Side navigation'
 			className={cx(sideRail, selectedLeftPane !== SelectedLeftPane.NONE ? 'is-active' : '')}
@@ -221,12 +217,6 @@ export const Edit = ({ match }: any) => {
 					isActive={selectedLeftPane === SelectedLeftPane.CODE}>
 						Code
 					</SideNavLink>
-					<SideNavLink
-					renderIcon={Export16}
-					onClick={() => onRailClick(SelectedLeftPane.EXPORT)}
-					isActive={selectedLeftPane === SelectedLeftPane.EXPORT}>
-						Export
-					</SideNavLink>
 				</SideNavItems>
 			</SideNav>
 			<div
@@ -240,9 +230,9 @@ export const Edit = ({ match }: any) => {
 			<div className={rightPanel}>
 				<Tabs>
 					<Tab
-					id='properties-style'
-					label={<ColorPalette16 />}>
-						<StyleContextPane fragment={fragment} setFragment={updateFragment} />
+					id='properties-settings'
+					label={<SettingsAdjust16 />}>
+						<SettingsContextPane fragment={fragment} setFragment={updateFragment} />
 					</Tab>
 					<Tab
 					id='properties-code'

@@ -7,7 +7,6 @@ ModalContext.displayName = 'ModalContext';
 export enum ModalActionType {
 	setDuplicationModal,
 	setDeletionModal,
-	setShareModal,
 	setExportModal,
 	closeModal
 }
@@ -15,7 +14,6 @@ export enum ModalActionType {
 export enum ModalType {
 	DUPLICATION,
 	DELETION,
-	SHARING,
 	EXPORT
 }
 
@@ -52,13 +50,6 @@ const modalReducer = (state: ModalState, action: BaseModalAction) => {
 				...state,
 				ShowModal: true,
 				ModalType: ModalType.DELETION,
-				FragmentID: action.id
-			};
-		case ModalActionType.setShareModal:
-			return {
-				...state,
-				ShowModal: true,
-				ModalType: ModalType.SHARING,
 				FragmentID: action.id
 			};
 		case ModalActionType.setExportModal:

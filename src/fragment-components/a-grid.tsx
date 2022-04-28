@@ -8,7 +8,7 @@ import { ComponentInfo } from '.';
 import image from './../assets/component-icons/grid.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
-export const AGridStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const AGridSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<Checkbox
 			labelText='Show outline'
@@ -104,7 +104,7 @@ const getCellParamsString = (cell: any) => {
 
 export const componentInfo: ComponentInfo = {
 	component: AGrid,
-	styleUI: AGridStyleUI,
+	settingsUI: AGridSettingsUI,
 	keywords: ['grid', 'row', 'column'],
 	name: 'Grid',
 	type: 'grid',

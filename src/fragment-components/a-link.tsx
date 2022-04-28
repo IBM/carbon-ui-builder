@@ -10,7 +10,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 
-export const ALinkStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const ALinkSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TextInput
 			value={selectedComponent.text}
@@ -100,7 +100,7 @@ export const ALink = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ALink,
-	styleUI: ALinkStyleUI,
+	settingsUI: ALinkSettingsUI,
 	codeUI: ALinkCodeUI,
 	render: ({ componentObj, select, remove, selected }) => <ALink
 		componentObj={componentObj}

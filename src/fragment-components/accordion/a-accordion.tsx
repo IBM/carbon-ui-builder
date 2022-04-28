@@ -10,7 +10,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 
-export const AAccordionStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const AAccordionSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
 		{ id: 'sm', text: 'Small' },
 		{ id: 'md', text: 'Medium' },
@@ -68,7 +68,7 @@ export const AAccordion = ({
 
 export const componentInfo: ComponentInfo = {
 	component: AAccordion,
-	styleUI: AAccordionStyleUI,
+	settingsUI: AAccordionSettingsUI,
 	render: ({ componentObj, select, remove, selected, renderComponents }) => <AAccordion
 		componentObj={componentObj}
 		select={select}

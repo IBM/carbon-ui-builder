@@ -22,7 +22,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 
-export const ASelectableTileStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const ASelectableTileSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		{
 			selectedComponent.standalone && <>
@@ -191,7 +191,7 @@ export const ASelectableTile = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ASelectableTile,
-	styleUI: ASelectableTileStyleUI,
+	settingsUI: ASelectableTileSettingsUI,
 	codeUI: ASelectableTileCodeUI,
 	keywords: ['tile', 'card', 'multi', 'selectable'],
 	name: 'Selectable tile',

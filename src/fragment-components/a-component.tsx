@@ -57,7 +57,7 @@ export interface ComponentInfo {
 	name: string;
 	defaultComponentObj: any;
 	image: any; // whatever fits in the <img src="here">
-	styleUI: any;
+	settingsUI: any;
 	codeUI?: any;
 	render?: (props: ComponentInfoRenderProps) => any;
 	hideFromElementsPane?: boolean;
