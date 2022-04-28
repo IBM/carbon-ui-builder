@@ -144,8 +144,7 @@ enum SelectedLeftPane {
 	NONE = 'none',
 	ELEMENTS = 'elements',
 	STYLE = 'style',
-	CODE = 'code',
-	EXPORT = 'export'
+	CODE = 'code'
 }
 
 export const Edit = ({ match }: any) => {
