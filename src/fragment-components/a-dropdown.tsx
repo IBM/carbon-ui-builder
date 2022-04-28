@@ -153,6 +153,10 @@ export const ADropdownCodeUI = ({ selectedComponent, setComponent }: any) => {
 		/>;
 };
 
+const preventClickStyle = css`
+	pointer-events: none;
+`;
+
 export const ADropdown = ({
 	componentObj,
 	...rest
@@ -184,7 +188,7 @@ export const ADropdown = ({
 			invalidText={componentObj.invalidText}
 			direction={componentObj.direction}
 			items={[]}
-			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
+			className={`${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} ${preventClickStyle}`} />
 		</AComponent>
 	);
 };
