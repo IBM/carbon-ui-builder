@@ -13,7 +13,7 @@ import { ComponentInfo } from '.';
 import image from './../assets/component-icons/number-input.svg';
 import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
-export const ANumberInputStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const ANumberInputSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
 		{ id: 'sm', text: 'Small' },
 		{ id: 'md', text: 'Medium' },
@@ -181,12 +181,13 @@ export const ANumberInput = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ANumberInput,
-	styleUI: ANumberInputStyleUI,
+	settingsUI: ANumberInputSettingsUI,
 	codeUI: ANumberInputCodeUI,
 	keywords: ['number', 'input'],
 	name: 'Number input',
+	type: 'number-input',
 	defaultComponentObj: {
-		type: 'numberinput',
+		type: 'number-input',
 		size: 'md',
 		label: 'Number input label',
 		min: 0,

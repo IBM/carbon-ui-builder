@@ -15,7 +15,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 
-export const ATagStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const ATagSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const typeItems = [
 		{ id: 'gray', text: 'Gray' },
 		{ id: 'red', text: 'Red' },
@@ -123,7 +123,7 @@ export const ATag = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ATag,
-	styleUI: ATagStyleUI,
+	settingsUI: ATagSettingsUI,
 	render: ({ componentObj, select, remove, selected }) => <ATag
 		componentObj={componentObj}
 		select={select}
@@ -133,6 +133,7 @@ export const componentInfo: ComponentInfo = {
 	</ATag>,
 	keywords: ['tag'],
 	name: 'Tag',
+	type: 'tag',
 	defaultComponentObj: {
 		type: 'tag',
 		// This field is `type` in the `Tag` component

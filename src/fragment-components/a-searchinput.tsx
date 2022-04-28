@@ -8,7 +8,7 @@ import { ComponentInfo } from '.';
 import image from './../assets/component-icons/search.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
-export const ASearchInputStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const ASearchInputSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
 		{ id: 'sm', text: 'Small' },
 		{ id: 'lg', text: 'Large' },
@@ -101,10 +101,11 @@ export const ASearchInput = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ASearchInput,
-	styleUI: ASearchInputStyleUI,
+	settingsUI: ASearchInputSettingsUI,
 	codeUI: ASearchInputCodeUI,
 	keywords: ['search', 'search input'],
 	name: 'Search',
+	type: 'search',
 	defaultComponentObj: {
 		type: 'search',
 		label: 'Search',

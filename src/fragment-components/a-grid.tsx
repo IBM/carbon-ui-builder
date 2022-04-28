@@ -8,7 +8,7 @@ import { ComponentInfo } from '.';
 import image from './../assets/component-icons/grid.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
-export const AGridStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const AGridSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<Checkbox
 			labelText='Show outline'
@@ -104,9 +104,10 @@ const getCellParamsString = (cell: any) => {
 
 export const componentInfo: ComponentInfo = {
 	component: AGrid,
-	styleUI: AGridStyleUI,
+	settingsUI: AGridSettingsUI,
 	keywords: ['grid', 'row', 'column'],
 	name: 'Grid',
+	type: 'grid',
 	defaultComponentObj: {
 		type: 'grid',
 		items: [
@@ -130,11 +131,11 @@ export const componentInfo: ComponentInfo = {
 			inputs: (_) => '',
 			outputs: (_) => '',
 			imports: ['GridModule'],
-			code: ({ json, jsonToTemplate }) => {
+			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<div ibmGrid ${angularClassNamesFromComponentObj(json)}>
 					${json.items.map((row: any) => `<div ibmRow ${angularClassNamesFromComponentObj(row)}>
 						${row.items.map((cell: any) => `<div ibmCol ${angularClassNamesFromComponentObj(cell)}>
-								${jsonToTemplate(cell)}
+								${jsonToTemplate(cell, fragments)}
 						</div>`).join('\n')}
 					</div>`).join('\n')}
 				</div>`;
