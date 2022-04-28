@@ -54,6 +54,7 @@ const GlobalStateContextProvider = ({ children }: any) => {
 	const [actionHistoryIndex, setActionHistoryIndex] = useState(-1);
 
 	const [styleClasses, _setStyleClasses] = useState(JSON.parse(localStorage.getItem('globalStyleClasses') as string || '[]') as any[]);
+	const [settings, _setSettings] = useState(JSON.parse(localStorage.getItem('globalSettings') as string || '[]') as any[]);
 
 	const setFragments = (frags: any[]) => {
 		_setFragments(frags);
@@ -78,6 +79,12 @@ const GlobalStateContextProvider = ({ children }: any) => {
 				styleClasses: JSON.parse(csString)
 			});
 		}
+	};
+
+	const setSettings = (sc: any) => {
+		const csString = JSON.stringify(sc);
+		localStorage.setItem('globalSettings', csString);
+		_setSettings(sc);
 	};
 
 	const canUndo = () => actionHistoryIndex > 0;
@@ -167,6 +174,10 @@ const GlobalStateContextProvider = ({ children }: any) => {
 			// STYLE CLASSES
 			styleClasses,
 			setStyleClasses,
+
+			// SETTINGS
+			settings,
+			setSettings,
 
 			// ACTION HISTORY
 			actionHistory,
