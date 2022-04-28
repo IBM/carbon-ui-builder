@@ -20,7 +20,7 @@ import {
 	updatedState
 } from '../../components';
 
-export const AAccordionItemStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const AAccordionItemSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TextInput
 			value={selectedComponent.title}
@@ -94,7 +94,7 @@ export const AAccordionItem = ({
 export const componentInfo: ComponentInfo = {
 	component: AAccordionItem,
 	hideFromElementsPane: true,
-	styleUI: AAccordionItemStyleUI,
+	settingsUI: AAccordionItemSettingsUI,
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <AAccordionItem
 		componentObj={componentObj}
 		select={select}
@@ -105,7 +105,8 @@ export const componentInfo: ComponentInfo = {
 			{componentObj.items.map((child: any) => renderComponents(child))}
 	</AAccordionItem>,
 	keywords: ['accordion', 'item'],
-	name: 'Accordion Item',
+	name: 'Accordion item',
+	type: 'accordion-item',
 	defaultComponentObj: {
 		type: 'accordionitem',
 		title: 'Accordion item',
@@ -120,12 +121,12 @@ export const componentInfo: ComponentInfo = {
 			imports: ['AccordionModule'],
 			// NOTE: Angular accordion item currently does not support 'disabled'.
 			// issue being tracked here: https://github.com/IBM/carbon-components-angular/issues/2021
-			code: ({ json, jsonToTemplate }) => {
+			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<ibm-accordion-item
 					[title]="${nameStringToVariableString(json.codeContext?.name)}Title"
 					(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
 					${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</ibm-accordion-item>`;
 			}
 		},

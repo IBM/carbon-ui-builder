@@ -7,7 +7,7 @@ import { ComponentInfo } from '.';
 import image from './../assets/component-icons/text.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
-export const ATextStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const ATextSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TextInput
 			value={selectedComponent.text}
@@ -40,7 +40,7 @@ export const AText = ({
 
 export const componentInfo: ComponentInfo = {
 	component: AText,
-	styleUI: ATextStyleUI,
+	settingsUI: ATextSettingsUI,
 	render: ({ componentObj, select, remove, selected }) => <AText
 		componentObj={componentObj}
 		select={select}
@@ -50,6 +50,7 @@ export const componentInfo: ComponentInfo = {
 	</AText>,
 	keywords: ['text'],
 	name: 'Text',
+	type: 'text',
 	defaultComponentObj: {
 		type: 'text',
 		text: 'Text'

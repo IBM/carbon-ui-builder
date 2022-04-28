@@ -37,8 +37,8 @@ const addIfNotExist = (arr: any[], items: any[]) => {
 const jsonToCarbonImports = (json: any) => {
 	const imports: any[] = [];
 
-	for (const [key, component] of Object.entries(allComponents)) {
-		if (json.type === key) {
+	for (const component of Object.values(allComponents)) {
+		if (json.type === component.componentInfo.type) {
 			addIfNotExist(imports, component.componentInfo.codeExport.react.imports);
 		}
 	}
@@ -57,8 +57,8 @@ export const jsonToTemplate = (json: any, fragments: any[]) => {
 		return json;
 	}
 
-	for (const [key, component] of Object.entries(allComponents)) {
-		if (json.type === key && !component.componentInfo.codeExport.react.isNotDirectExport) {
+	for (const component of Object.values(allComponents)) {
+		if (json.type === component.componentInfo.type && !component.componentInfo.codeExport.react.isNotDirectExport) {
 			return component.componentInfo.codeExport.react.code({ json, jsonToTemplate, fragments });
 		}
 	}
@@ -68,10 +68,38 @@ export const jsonToTemplate = (json: any, fragments: any[]) => {
 	}
 };
 
+export const getAdditionalCode = (componentObj: any, fragments: any[]) => {
+	if (typeof componentObj === 'string' || !componentObj) {
+		return componentObj;
+	}
+	let collectedCode = {};
+
+	for (const [key, component] of Object.entries(allComponents)) {
+		if (componentObj.type === key && !component.componentInfo.codeExport.react.isNotDirectExport) {
+			if (component.componentInfo.codeExport.react.additionalCode) {
+				collectedCode = { ...collectedCode, ...component.componentInfo.codeExport.react.additionalCode(componentObj) };
+			}
+		}
+	}
+
+	if (componentObj.items) {
+		componentObj.items.forEach((item: any) => {
+			collectedCode = { ...collectedCode, ...getAdditionalCode(item, fragments) };
+		});
+	}
+
+	return collectedCode;
+};
+
+const getAdditionalCodeAsString = (componentObj: any, fragments: any[]) => {
+	const collectedCode = getAdditionalCode(componentObj, fragments);
+	return Object.values(collectedCode).join('\n');
+};
+
 const otherImportsFromComponentObj = (json: any, fragments?: any[]) => {
 	let imports = '';
-	for (const [key, component] of Object.entries(allComponents)) {
-		if (json.type === key) {
+	for (const component of Object.values(allComponents)) {
+		if (json.type === component.componentInfo.type) {
 			if (component.componentInfo.codeExport.react.otherImports) {
 				imports += component.componentInfo.codeExport.react.otherImports({ json, fragments });
 				break;
@@ -97,7 +125,8 @@ const generateTemplate = (json: any, fragments: any[]) => {
 	return {
 		imports: `import { ${carbonImportsString} } from 'carbon-components-react';
 			${otherImportsFromComponentObj(json, fragments)}`,
-		template: jsonToTemplate(json, fragments)
+		template: jsonToTemplate(json, fragments),
+		additionalCode: getAdditionalCodeAsString(json, fragments)
 	};
 };
 
@@ -117,6 +146,8 @@ const jsonToSharedComponents = (json: any, fragments: any[]) => {
 				const handleInputChange = (event) => {
 					setState({...state, [event.target.name]: event.target.value});
 				};
+
+				${fragmentTemplate.additionalCode}
 
 				return <>${fragmentTemplate.template}</>;
 			};
@@ -145,7 +176,7 @@ const jsonToSharedComponents = (json: any, fragments: any[]) => {
 	return sharedComponents;
 };
 
-export const createReactApp = (fragment: any, fragments = []) => {
+export const createReactApp = (fragment: any, fragments: any[]) => {
 	const fragmentTemplate = generateTemplate(fragment.data, fragments);
 
 	const sharedComponents = jsonToSharedComponents(fragment.data, fragments);
@@ -160,6 +191,8 @@ export const FragmentComponent = ({state, setState}) => {
 	const handleInputChange = (event) => {
 		setState({...state, [event.target.name]: event.target.value});
 	};
+
+	${fragmentTemplate.additionalCode}
 
 	return <>${fragmentTemplate.template}</>;
 };

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="72" height="26" viewBox="0 0 72 26">
+	<defs>
+		<clipPath id="clip-path">
+			<path id="Path_3" data-name="Path 3" d="M446-17l-5-5,.7-.7,4.3,4.3,4.3-4.3.7.7Z" transform="translate(-441 22.7)" fill="none" clip-rule="evenodd" />
+		</clipPath>
+		<clipPath id="clip-path-2">
+			<path id="Path_2" data-name="Path 2" d="M438-12h16V-28H438Z" transform="translate(-438 28)" fill="none" />
+		</clipPath>
+	</defs>
+	<g id="Group_10692" data-name="Group 10692" transform="translate(-1102 -649)">
+		<path id="Path_6670" data-name="Path 6670" d="M192-1290h72v26H192Z" transform="translate(910 1939)" fill="#f3f3f3" fill-rule="evenodd" />
+		<g id="Icon_-_Chevon--Down_16" data-name="Icon - Chevon--Down / 16" transform="translate(1159 665)">
+			<g id="Group_2" data-name="Group 2" clip-path="url(#clip-path)">
+				<g id="Group_1" data-name="Group 1" transform="translate(-3 -5.3)" clip-path="url(#clip-path-2)">
+					<path id="Path_1" data-name="Path 1" d="M436-27.7h20V-12H436Z" transform="translate(-438 28)" fill="#161616" />
+				</g>
+			</g>
+		</g>
+	</g>
+</svg>

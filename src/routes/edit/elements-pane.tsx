@@ -38,7 +38,6 @@ export const ElementsPane = ({ isActive }: any) => {
 	return (
 		<div className={cx(leftPane, isActive ? 'is-active' : '')}>
 			<div className={leftPaneHeader}>
-				Elements
 				<Search
 					id='elements-search'
 					className={searchStyle}

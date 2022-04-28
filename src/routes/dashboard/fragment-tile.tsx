@@ -59,7 +59,7 @@ export const FragmentTile = ({
 								onClick={() => history.push(`/edit/${fragment.id}`)} />
 							<OverflowMenuItem
 								itemText='Export'
-								onClick={() => handleModalState(ModalActionType.setShareModal)} />
+								onClick={() => handleModalState(ModalActionType.setExportModal)} />
 							<OverflowMenuItem
 								itemText='Duplicate'
 								onClick={() => handleModalState(ModalActionType.setDuplicationModal)} />

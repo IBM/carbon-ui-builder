@@ -1,11 +1,10 @@
 import React, {
 	useState,
 	useEffect,
-	useRef,
-	useContext
+	useRef
 } from 'react';
 import {
-	Modal,
+	Button,
 	TextInput,
 	Form,
 	Select,
@@ -14,13 +13,11 @@ import {
 	NumberInput,
 	Loading
 } from 'carbon-components-react';
+import { Save32 } from '@carbon/icons-react';
 import { css } from 'emotion';
 import debounce from 'lodash/debounce';
 import { saveBlob, getFullFileName } from '../../../../utils/file-tools';
-import { ShareOptionsModals } from '../share-options-modal';
-import { ModalContext, ModalActionType } from '../../../../context/modal-context';
 import { getFragmentPreview, RenderProps } from '../../../../utils/fragment-tools';
-import { GlobalStateContext } from '../../../../context';
 
 const exportSettingForm = css`
 	width: 23rem;
@@ -34,7 +31,6 @@ const previewContainer = css`
 	background-color: #e0e0e0;
 	width: 100%;
 	height: 100%;
-	margin-top: 3rem;
 	margin-left: 1rem;
 	display: flex;
 	align-items: center;
@@ -56,18 +52,12 @@ const fragmentImage = css`
 	margin: 0;
 `;
 
-export interface ExportImageProps {
-	fragment: any;
-	displayedModal: ShareOptionsModals | null;
-	setDisplayedModal: (displayedModal: ShareOptionsModals | null) => void;
-}
-
 let updatePreviewUrl = async () => console.log('updatePreviewUrl not initialized yet');
 let handleResize = () => console.log('handleResize not initialized yet');
 const doInputChange = debounce(() => updatePreviewUrl(), 400);
 const doUpdatePreviewSize = debounce(() => handleResize(), 200);
 
-const ExportModalSettings = ({ inputs, handleChange }: any) => {
+const ExportImageSettings = ({ inputs, handleChange, onSave }: any) => {
 	// We assume that a working ratio is never 0 (no 1D fragments)
 	const getRatio = () => (inputs.width / inputs.height).toFixed(2);
 
@@ -155,27 +145,23 @@ const ExportModalSettings = ({ inputs, handleChange }: any) => {
 				<SelectItem text='bmp' value='image/bmp' />
 				<SelectItem text='gif' value='image/gif' />
 			</Select>
+			<Button renderIcon={Save32} onClick={onSave}>Save image</Button>
 		</Form>
 	);
 };
 
-export const ExportImageModal = (props: ExportImageProps) => {
-	const [modalState, dispatchModal] = useContext(ModalContext);
-	const { fragments } = useContext(GlobalStateContext);
-
-	const fragment = fragments.find((fragment: any) => fragment.id === props.fragment.id);
-
+export const ExportImageComponent = ({ fragment }: any) => {
 	const exportSettings = {
 		width: 800,
 		height: 400,
 		unit: 'pixels',
 		ratioLock: false,
-		fragmentName: props.fragment.title,
+		fragmentName: fragment.title,
 		format: 'image/png',
 		curRatio: 0
 	};
 	const [inputs, setInputs] = useState(exportSettings);
-	const [previewUrl, setPreviewUrl] = useState(props.fragment.preview);
+	const [previewUrl, setPreviewUrl] = useState(fragment.preview);
 	const [isPerformingAction, setIsPerformingAction] = useState(false);
 	const previewContainerRef = useRef<HTMLDivElement>(null);
 	const [imageContainerSize, setImageContainerSize] = useState<any>();
@@ -217,7 +203,7 @@ export const ExportImageModal = (props: ExportImageProps) => {
 	updatePreviewUrl = async () => {
 		const previewSize = getPreviewSize(inputs.width, inputs.height);
 		const renderProps: RenderProps = {
-			id: props.fragment.id,
+			id: fragment.id,
 			name: inputs.fragmentName,
 			width: inputs.width,
 			height: inputs.height,
@@ -236,13 +222,13 @@ export const ExportImageModal = (props: ExportImageProps) => {
 		};
 	};
 
-	const onSubmit = async () => {
+	const onSave = async () => {
 		if (isPerformingAction) {
 			return;
 		}
 		setIsPerformingAction(true);
 		const renderProps: RenderProps = {
-			id: props.fragment.id,
+			id: fragment.id,
 			name: inputs.fragmentName,
 			width: inputs.width,
 			height: inputs.height,
@@ -267,19 +253,7 @@ export const ExportImageModal = (props: ExportImageProps) => {
 	}, []);
 
 	return (
-		<Modal
-		hasForm
-		onRequestSubmit={() => {
-			// TODO look into whether it's a better user experience to have the
-			// processing in the background, perhaps with the saving indication
-			onSubmit().then(dispatchModal({ type: ModalActionType.closeModal }));
-		}}
-		onSecondarySubmit={() => props.setDisplayedModal(ShareOptionsModals.SHARE_OPTIONS)}
-		open={modalState.ShowModal && props.displayedModal === ShareOptionsModals.IMAGE_EXPORTS}
-		onRequestClose={() => dispatchModal({ type: ModalActionType.closeModal })}
-		primaryButtonText='Export'
-		secondaryButtonText='Back to export options'
-		modalHeading={`Export '${props.fragment.title}' as image`}>
+		<div>
 			<p>
 				Export a static image of this fragment for use in presentation decks or designs.
 			</p>
@@ -287,17 +261,16 @@ export const ExportImageModal = (props: ExportImageProps) => {
 				display: 'flex',
 				marginTop: '3rem'
 			}}>
-				<ExportModalSettings inputs={inputs} handleChange={handleChange} />
+				<ExportImageSettings inputs={inputs} handleChange={handleChange} onSave={onSave} />
 				<div className={previewContainer} ref={previewContainerRef}>
 					<img
 						id="previewimg"
 						className={fragmentImage}
 						src={previewUrl}
-						alt={`fragment preview: ${props.fragment.title}`} />
+						alt={`fragment preview: ${fragment.title}`} />
 				</div>
 			</div>
 			<Loading active={isPerformingAction} />
-		</Modal>
+		</div>
 	);
 };
-

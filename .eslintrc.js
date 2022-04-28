@@ -53,7 +53,7 @@ module.exports = {
 			{
 				'SwitchCase': 1,
 				// Going to use manual & JSX Indent
-				'ignoredNodes': ['JSXElement *', 'JSXElement']
+				'ignoredNodes': ['JSXElement *', 'JSXElement', 'TemplateLiteral *']
 			}
 		],
 		'@typescript-eslint/naming-convention': [
