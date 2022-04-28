@@ -213,7 +213,7 @@ export const EditHeader = ({ fragment }: any) => {
 							title='Export fragment'
 							renderIcon={Export16}
 							onClick={() => dispatchModal({
-								type: ModalActionType.setShareModal,
+								type: ModalActionType.setExportModal,
 								id: fragment.id
 							})}>
 							Export
