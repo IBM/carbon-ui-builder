@@ -18,7 +18,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 
-export const AComboBoxStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const AComboBoxSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
 		{ id: 'sm', text: 'Small' },
 		{ id: 'md', text: 'Medium' },
@@ -155,6 +155,10 @@ export const AComboBoxCodeUI = ({ selectedComponent, setComponent }: any) => {
 		/>;
 };
 
+const preventClickStyle = css`
+	pointer-events: none;
+`;
+
 export const AComboBox = ({
 	componentObj,
 	...rest
@@ -190,14 +194,15 @@ export const AComboBox = ({
 			direction={componentObj.direction}
 			placeholder={componentObj.placeholder}
 			items={[]}
-			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
+			className={`${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} ${preventClickStyle}`} />
 		</AComponent>
 	);
 };
 
 export const componentInfo: ComponentInfo = {
+	type: 'combobox',
 	component: AComboBox,
-	styleUI: AComboBoxStyleUI,
+	settingsUI: AComboBoxSettingsUI,
 	codeUI: AComboBoxCodeUI,
 	keywords: ['ComboBox', 'filterable', 'multiselect'],
 	name: 'ComboBox',

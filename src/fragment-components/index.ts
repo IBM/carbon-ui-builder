@@ -31,7 +31,7 @@ export { AAccordionItem, AAccordionItemSettingsUI } from './accordion/a-accordio
 export { AButton, AButtonSettingsUI } from './a-button';
 export { ACheckbox, ACheckboxSettingsUI, ACheckboxCodeUI } from './a-checkbox';
 export { AColumn, AColumnSettingsUI } from './a-column';
-export { AComboBox, AComboBoxStyleUI, AComboBoxCodeUI } from './a-combobox';
+export { AComboBox, AComboBoxSettingsUI, AComboBoxCodeUI } from './a-combobox';
 export * from './a-component';
 export { AFragment, AFragmentSettingsUI, AFragmentCodeUI } from './a-fragment';
 export { AGrid, AGridSettingsUI } from './a-grid';
