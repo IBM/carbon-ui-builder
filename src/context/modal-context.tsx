@@ -37,7 +37,7 @@ const initialState = {
 };
 
 const modalReducer = (state: ModalState, action: BaseModalAction) => {
-	switch(action.type) {
+	switch (action.type) {
 		case ModalActionType.setDuplicationModal:
 			return {
 				...state,

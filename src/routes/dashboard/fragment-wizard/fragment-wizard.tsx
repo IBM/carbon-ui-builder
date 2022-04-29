@@ -24,7 +24,7 @@ export const FragmentWizard = ({ shouldDisplay, setShouldDisplay }: any) => {
 		if (!shouldDisplay) {
 			return null;
 		}
-		switch(displayedModal) {
+		switch (displayedModal) {
 			case FragmentWizardModals.IMPORT_JSON_MODAL:
 				return (
 					<ImportJsonModal
