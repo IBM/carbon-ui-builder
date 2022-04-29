@@ -5,6 +5,7 @@ import * as button from './a-button';
 import * as checkbox from './a-checkbox';
 import * as column from './a-column';
 import * as combobox from './a-combobox';
+import * as dropdown from './a-dropdown';
 import * as fragment from './a-fragment';
 import * as grid from './a-grid';
 import * as numberinput from './a-numberinput';
@@ -33,6 +34,7 @@ export { AButton, AButtonSettingsUI } from './a-button';
 export { ACheckbox, ACheckboxSettingsUI, ACheckboxCodeUI } from './a-checkbox';
 export { AColumn, AColumnSettingsUI } from './a-column';
 export { AComboBox, AComboBoxSettingsUI, AComboBoxCodeUI } from './a-combobox';
+export { ADropdown, ADropdownSettingsUI, ADropdownCodeUI } from './a-dropdown';
 export * from './a-component';
 export { AFragment, AFragmentSettingsUI, AFragmentCodeUI } from './a-fragment';
 export { AGrid, AGridSettingsUI } from './a-grid';
@@ -63,6 +65,7 @@ export const allComponents = {
 	checkbox,
 	combobox,
 	column,
+	dropdown,
 	fragment,
 	grid,
 	link,
