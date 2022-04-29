@@ -86,8 +86,8 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 			id='multiselect-label'
 			checked={selectedComponent.isMulti}
 			onChange={(checked: any) => setComponent({
-					...selectedComponent,
-					isMulti: checked
+				...selectedComponent,
+				isMulti: checked
 			})} />
 		<Checkbox
 			labelText='Is inline'
@@ -218,9 +218,9 @@ export const ADropdown = ({
 	...rest
 }: any) => {
 	// Determine which React Component to render based on dropdownType
-	let Component = Dropdown;
+	let DropdownOrMultiSelect = Dropdown;
 	if (componentObj.isMulti) {
-		Component = MultiSelect;
+		DropdownOrMultiSelect = MultiSelect;
 	}
 
 	return (
@@ -228,23 +228,23 @@ export const ADropdown = ({
 		componentObj={componentObj}
 		headingCss={css`display: block;`}
 		{...rest}>
-			<Component
-			id={componentObj.codeContext?.name}
-			label={componentObj.placeholder}
-			titleText={componentObj.label}
-			size={componentObj.size}
-			light={componentObj.light}
-			disabled={componentObj.disabled}
-			helperText={componentObj.helperText}
-			type={componentObj.isInline ? 'inline' : 'default'}
-			warn={componentObj.warn}
-			warnText={componentObj.warnText}
-			hideLabel={componentObj.hideLabel}
-			invalid={componentObj.invalid}
-			invalidText={componentObj.invalidText}
-			direction={componentObj.direction}
-			items={[]}
-			className={`${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} ${preventClickStyle}`} />
+			<DropdownOrMultiSelect
+				id={componentObj.codeContext?.name}
+				label={componentObj.placeholder}
+				titleText={componentObj.label}
+				size={componentObj.size}
+				light={componentObj.light}
+				disabled={componentObj.disabled}
+				helperText={componentObj.helperText}
+				type={componentObj.isInline ? 'inline' : 'default'}
+				warn={componentObj.warn}
+				warnText={componentObj.warnText}
+				hideLabel={componentObj.hideLabel}
+				invalid={componentObj.invalid}
+				invalidText={componentObj.invalidText}
+				direction={componentObj.direction}
+				items={[]}
+				className={`${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} ${preventClickStyle}`} />
 		</AComponent>
 	);
 };
