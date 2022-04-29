@@ -268,7 +268,7 @@ export const componentInfo: ComponentInfo = {
 		helperText: 'Optional helper text',
 		listItems: [
 			{
-				text: 'text'
+				text: 'Text'
 			}
 		]
 	},
