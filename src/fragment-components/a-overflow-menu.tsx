@@ -10,6 +10,7 @@ import { reactClassNamesFromComponentObj,
 	angularClassNamesFromComponentObj,
 	nameStringToVariableString } from '../utils/fragment-tools';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
+import { css } from 'emotion';
 
 export const AOverflowMenuStyleUI = ({ selectedComponent, setComponent }: any) => {
 	const placementItems = [
@@ -39,25 +40,30 @@ export const AOverflowMenuStyleUI = ({ selectedComponent, setComponent }: any) =
 	</>;
 };
 
+const preventCheckEvent = css`
+	pointer-events: none;
+`;
+
 export const AOverflowMenuGroup = ({
 	children,
 	componentObj,
-	onDrop,
+	selected,
 	...rest
 }: any) => {
 	const selectedItem = children.find((item: any) => item.props.selected === true)?.props.componentObj?.className;
 	return (
 		<AComponent
 		componentObj={componentObj}
+		selected = {selected}
 		{...rest}>
-			<OverflowMenu
-					onDrop={onDrop}
-					flipped={componentObj.flipped}
-					direction={componentObj.placement}
-					selectorPrimaryFocus={'.' + (selectedItem ? selectedItem : 'option-1')}
-					className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
-						{children}
-			</OverflowMenu>
+				<OverflowMenu
+						onClick={() => selected = true}
+						flipped={componentObj.flipped}
+						direction={componentObj.placement}
+						selectorPrimaryFocus={'.' + (selectedItem ? selectedItem : 'option-1')}
+						className={` ${preventCheckEvent} ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} `}>
+							{children}
+				</OverflowMenu>
 		</AComponent>
 	);
 };
