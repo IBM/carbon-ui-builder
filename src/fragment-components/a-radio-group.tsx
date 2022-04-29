@@ -13,7 +13,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 
-export const ARadioGroupStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const ARadioGroupSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const orientationItems = [
 		{ id: 'horizontal', text: 'Horizontal' },
 		{ id: 'vertical', text: 'Vertical' }
@@ -118,7 +118,7 @@ export const ARadioGroup = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ARadioGroup,
-	settingsUI: ARadioGroupStyleUI,
+	settingsUI: ARadioGroupSettingsUI,
 	codeUI: ARadioGroupCodeUI,
 	keywords: ['radio', 'button', 'group'],
 	name: 'Radio buttons',

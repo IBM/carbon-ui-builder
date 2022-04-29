@@ -45,8 +45,8 @@ export { ATag, ATagSettingsUI } from './a-tag';
 export { AText, ATextSettingsUI } from './a-text';
 export { ATextArea, ATextAreaSettingsUI, ATextAreaCodeUI } from './a-textarea';
 export { ATextInput, ATextInputSettingsUI, ATextInputCodeUI } from './a-textinput';
-export { ARadio, ARadioStyleUI } from './a-radio';
-export { ARadioGroup, ARadioGroupStyleUI, ARadioGroupCodeUI } from './a-radio-group';
+export { ARadio, ARadioSettingsUI } from './a-radio';
+export { ARadioGroup, ARadioGroupSettingsUI, ARadioGroupCodeUI } from './a-radio-group';
 
 // Tiles
 export { ATile, ATileCodeUI, ATileSettingsUI } from './tiles/a-tile';

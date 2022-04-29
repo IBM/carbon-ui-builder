@@ -20,7 +20,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 
-export const ARadioStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const ARadioSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const [fragment] = useFragment();
 	const parentComponent = getParentComponent(fragment.data, selectedComponent);
 	return <>
@@ -119,7 +119,7 @@ export const ARadio = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ARadio,
-	settingsUI: ARadioStyleUI,
+	settingsUI: ARadioSettingsUI,
 	render: ({ componentObj, select, remove, selected }) => <ARadio
 	componentObj={componentObj}
 	select={select}
