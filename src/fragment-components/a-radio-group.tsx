@@ -118,7 +118,7 @@ export const ARadioGroup = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ARadioGroup,
-	styleUI: ARadioGroupStyleUI,
+	settingsUI: ARadioGroupStyleUI,
 	codeUI: ARadioGroupCodeUI,
 	keywords: ['radio', 'button', 'group'],
 	name: 'Radio buttons',

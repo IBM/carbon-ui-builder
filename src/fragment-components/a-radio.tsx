@@ -119,7 +119,7 @@ export const ARadio = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ARadio,
-	styleUI: ARadioStyleUI,
+	settingsUI: ARadioStyleUI,
 	render: ({ componentObj, select, remove, selected }) => <ARadio
 	componentObj={componentObj}
 	select={select}
