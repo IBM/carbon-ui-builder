@@ -308,7 +308,7 @@ export const componentInfo: ComponentInfo = {
 			outputs: ({ json }) => {
 				const name = nameStringToVariableString(json.codeContext?.name);
 				return `@Output() ${name}Selected = new EventEmitter<any>();
-				@Output() ${name}onClose = new EventEmitter<any>();
+				@Output() ${name}OnClose = new EventEmitter<any>();
 				@Output() ${name}Search = new EventEmitter<string>();`;
 			},
 			imports: ['ComboBoxModule'],
@@ -331,7 +331,7 @@ export const componentInfo: ComponentInfo = {
 					[items]="${name}Items"
 					(selected)="${name}Selected.emit(event)"
 					(search)="${name}Search.emit(event)"
-					(close)="${name}onClose.emit(event)"
+					(close)="${name}OnClose.emit(event)"
 					${angularClassNamesFromComponentObj(json)}>
 					<ibm-dropdown-list></ibm-dropdown-list>
 				</ibm-combo-box>`;
