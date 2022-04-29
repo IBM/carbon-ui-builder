@@ -103,6 +103,8 @@ module.exports = {
 		'@typescript-eslint/type-annotation-spacing': 'error',
 		'brace-style': 'off',
 		'@typescript-eslint/brace-style': ['error'], // Using default 1tbs
+		'keyword-spacing': 'off',
+  		'@typescript-eslint/keyword-spacing': ['error'],
 		'curly': 'error',
 		'default-case': 'error',
 		'eol-last': [
