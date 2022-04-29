@@ -8,7 +8,7 @@ import { ComponentInfo } from '.';
 import image from './../assets/component-icons/text-input.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
-export const ATextInputStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const ATextInputSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const typeItems = [
 		{ id: 'text', text: 'Text' },
 		{ id: 'email', text: 'Email' },
@@ -110,7 +110,7 @@ export const ATextInput = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ATextInput,
-	styleUI: ATextInputStyleUI,
+	settingsUI: ATextInputSettingsUI,
 	codeUI: ATextInputCodeUI,
 	keywords: ['text', 'text', 'input'],
 	name: 'Text input',

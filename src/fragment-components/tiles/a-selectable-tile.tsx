@@ -22,21 +22,24 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 
-export const ASelectableTileStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const ASelectableTileSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
-		{selectedComponent.standalone &&
-			<TileMorphism component={selectedComponent} setComponent={setComponent} /> &&
-			<Checkbox
-				labelText='Light theme'
-				id='theme-select'
-				checked={selectedComponent.light}
-				onChange={(checked: any) => {
-					setComponent({
-						...selectedComponent,
-						light: checked
-					});
-				}}
-			/>}
+		{
+			selectedComponent.standalone && <>
+				<TileMorphism component={selectedComponent} setComponent={setComponent} />
+				<Checkbox
+					labelText='Light theme'
+					id='theme-select'
+					checked={selectedComponent.light}
+					onChange={(checked: any) => {
+						setComponent({
+							...selectedComponent,
+							light: checked
+						});
+					}}
+				/>
+			</>
+		}
 		<Checkbox
 			labelText='Selected'
 			id='selected'
@@ -188,7 +191,7 @@ export const ASelectableTile = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ASelectableTile,
-	styleUI: ASelectableTileStyleUI,
+	settingsUI: ASelectableTileSettingsUI,
 	codeUI: ASelectableTileCodeUI,
 	keywords: ['tile', 'card', 'multi', 'selectable'],
 	name: 'Selectable tile',
@@ -267,7 +270,7 @@ export const componentInfo: ComponentInfo = {
 				</SelectableTile>`;
 			},
 			additionalCode: (json) => {
-				if(json.standalone) {
+				if (json.standalone) {
 					return {};
 				}
 				return {

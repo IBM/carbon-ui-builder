@@ -16,7 +16,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 
-export const AClickableTileStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const AClickableTileSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TileMorphism component={selectedComponent} setComponent={setComponent} />
 		<Checkbox
@@ -109,7 +109,7 @@ export const AClickableTile = ({
 
 export const componentInfo: ComponentInfo = {
 	component: AClickableTile,
-	styleUI: AClickableTileStyleUI,
+	settingsUI: AClickableTileSettingsUI,
 	codeUI: AClickableTileCodeUI,
 	keywords: ['tile', 'clickable', 'card'],
 	name: 'Clickable tile',

@@ -9,7 +9,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 
-export const ATileFoldStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const ATileFoldSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />;
 };
 
@@ -30,7 +30,7 @@ export const ATileFold = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ATileFold,
-	styleUI: ATileFoldStyleUI,
+	settingsUI: ATileFoldSettingsUI,
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <ATileFold
 		componentObj={componentObj}
 		select={select}

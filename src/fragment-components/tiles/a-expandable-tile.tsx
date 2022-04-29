@@ -17,7 +17,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 
-export const AExpandableStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const AExpandableSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TileMorphism component={selectedComponent} setComponent={setComponent} />
 		<Checkbox
@@ -103,7 +103,7 @@ export const AExpandableTile = ({
 				</TileAboveTheFoldContent>
 				{
 					// Renders bottom fold component
-					children.filter(({ props }: any) => props && props.componentObj.type !== 'tilefold')
+					children.filter(({ props }: any) => props && props.componentObj.type === 'tilefold')
 				}
 			</ExpandableTile>
 		</AComponent>
@@ -120,7 +120,7 @@ const getFoldObjects = (json: any) => {
 
 export const componentInfo: ComponentInfo = {
 	component: AExpandableTile,
-	styleUI: AExpandableStyleUI,
+	settingsUI: AExpandableSettingsUI,
 	keywords: ['tile', 'fold', 'expandable'],
 	name: 'Expandable tile',
 	type: 'expandable-tile',

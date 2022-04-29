@@ -9,6 +9,7 @@ import * as grid from './a-grid';
 import * as numberinput from './a-numberinput';
 import * as radio from './a-radio';
 import * as radioGroup from './a-radio-group';
+import * as progressIndicator from './a-progress-indicator';
 import * as row from './a-row';
 import * as tag from './a-tag';
 import * as searchinput from './a-searchinput';
@@ -27,33 +28,35 @@ import * as radiotile from './tiles/a-radio-tile';
 import * as radioTileGroup from './tiles/a-radio-tile-group';
 
 // Accordion
-export { AAccordion, AAccordionStyleUI } from './accordion/a-accordion';
-export { AAccordionItem, AAccordionItemStyleUI } from './accordion/a-accordion-item';
-export { AButton, AButtonStyleUI } from './a-button';
-export { ACheckbox, ACheckboxStyleUI, ACheckboxCodeUI } from './a-checkbox';
-export { AColumn, AColumnStyleUI } from './a-column';
+export { AAccordion, AAccordionSettingsUI } from './accordion/a-accordion';
+export { AAccordionItem, AAccordionItemSettingsUI } from './accordion/a-accordion-item';
+export { AButton, AButtonSettingsUI } from './a-button';
+export { ACheckbox, ACheckboxSettingsUI, ACheckboxCodeUI } from './a-checkbox';
+export { AColumn, AColumnSettingsUI } from './a-column';
 export * from './a-component';
-export { AFragment, AFragmentStyleUI, AFragmentCodeUI } from './a-fragment';
-export { AGrid, AGridStyleUI } from './a-grid';
+export { AFragment, AFragmentSettingsUI, AFragmentCodeUI } from './a-fragment';
+export { AGrid, AGridSettingsUI } from './a-grid';
+export { ALink, ALinkSettingsUI, ALinkCodeUI } from './a-link';
+export { ANumberInput, ANumberInputSettingsUI, ANumberInputCodeUI } from './a-numberinput';
+export { AProgressIndicator, AProgressIndicatorSettingsUI, AProgressIndicatorCodeUI } from './a-progress-indicator';
+export { ARow, ARowSettingsUI } from './a-row';
+export { ASearchInput, ASearchInputSettingsUI, ASearchInputCodeUI } from './a-searchinput';
+export { ATag, ATagSettingsUI } from './a-tag';
+export { AText, ATextSettingsUI } from './a-text';
+export { ATextArea, ATextAreaSettingsUI, ATextAreaCodeUI } from './a-textarea';
+export { ATextInput, ATextInputSettingsUI, ATextInputCodeUI } from './a-textinput';
 export { ARadio, ARadioStyleUI } from './a-radio';
 export { ARadioGroup, ARadioGroupStyleUI, ARadioGroupCodeUI } from './a-radio-group';
-export { ARow, ARowStyleUI } from './a-row';
-export { ATag, ATagStyleUI } from './a-tag';
-export { AText, ATextStyleUI } from './a-text';
-export { ATextArea, ATextAreaStyleUI, ATextAreaCodeUI } from './a-textarea';
-export { ATextInput, ATextInputStyleUI, ATextInputCodeUI } from './a-textinput';
-export { ASearchInput, ASearchInputStyleUI, ASearchInputCodeUI } from './a-searchinput';
-export { ANumberInput, ANumberInputStyleUI, ANumberInputCodeUI } from './a-numberinput';
-export { ALink, ALinkStyleUI, ALinkCodeUI } from './a-link';
+
 // Tiles
-export { ATile, ATileCodeUI, ATileStyleUI } from './tiles/a-tile';
-export { AClickableTile, AClickableTileCodeUI, AClickableTileStyleUI } from './tiles/a-clickable-tile';
-export { AExpandableTile, AExpandableTileCodeUI, AExpandableStyleUI } from './tiles/a-expandable-tile';
-export { ATileFold, ATileFoldStyleUI } from './tiles/a-tile-fold';
-export { ASelectableTile, ASelectableTileCodeUI, ASelectableTileStyleUI } from './tiles/a-selectable-tile';
-export { ASelectableTileGroup, ASelectableTileGroupCodeUI, ASelectableTileGroupStyleUI } from './tiles/a-selectable-tile-group';
-export { ARadioTile, ARadioTileCodeUI, ARadioTileStyleUI } from './tiles/a-radio-tile';
-export { ARadioTileGroup, ARadioTileGroupCodeUI, ARadioTileGroupStyleUI } from './tiles/a-radio-tile-group';
+export { ATile, ATileCodeUI, ATileSettingsUI } from './tiles/a-tile';
+export { AClickableTile, AClickableTileCodeUI, AClickableTileSettingsUI } from './tiles/a-clickable-tile';
+export { AExpandableTile, AExpandableTileCodeUI, AExpandableSettingsUI } from './tiles/a-expandable-tile';
+export { ATileFold, ATileFoldSettingsUI } from './tiles/a-tile-fold';
+export { ASelectableTile, ASelectableTileCodeUI, ASelectableTileSettingsUI } from './tiles/a-selectable-tile';
+export { ASelectableTileGroup, ASelectableTileGroupCodeUI, ASelectableTileGroupSettingsUI } from './tiles/a-selectable-tile-group';
+export { ARadioTile, ARadioTileCodeUI, ARadioTileSettingsUI } from './tiles/a-radio-tile';
+export { ARadioTileGroup, ARadioTileGroupCodeUI, ARadioTileGroupSettingsUI } from './tiles/a-radio-tile-group';
 
 export const allComponents = {
 	accordion,
@@ -65,14 +68,15 @@ export const allComponents = {
 	grid,
 	radio,
 	radioGroup,
+	link,
+	numberinput,
+	progressIndicator,
 	row,
+	searchinput,
 	tag,
 	text,
 	textarea,
 	textinput,
-	searchinput,
-	numberinput,
-	link,
 	// Tiles
 	tile,
 	clickabletile,
