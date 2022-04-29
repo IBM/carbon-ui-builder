@@ -276,7 +276,7 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => {
-				const nameString = nameStringToVariableString(json.codeContext?.name);
+				const name = nameStringToVariableString(json.codeContext?.name);
 				const items = json.listItems.map((item: any) => {
 					return {
 						content: item.text,
@@ -284,54 +284,54 @@ export const componentInfo: ComponentInfo = {
 					};
 				});
 
-				return `@Input() ${nameString}Label = "${json.label}";
-				@Input() ${nameString}HelperText = "${json.helperText}";
-				@Input() ${nameString}Placeholder = "${json.placeholder}";
-				@Input() ${nameString}Theme = "${json.light ? 'light' : 'dark'}";
-				@Input() ${nameString}Invalid = ${!!json.invalid};
-				@Input() ${nameString}InvalidText = "${json.invalidText ? json.invalidText : ''}";
-				@Input() ${nameString}Size = "${json.size}";
-				@Input() ${nameString}Warn = ${!!json.warn};
-				@Input() ${nameString}WarnText = "${json.warnText ? json.warnText : ''}";
-				@Input() ${nameString}Disabled = ${!!json.disabled};
-				@Input() ${nameString}DropUp = ${json.direction !== 'bottom'};
-				@Input() ${nameString}SelectionFeedback = "${json.selectionFeedback}";
-				@Input() ${nameString}Type: "single" | "multi" = "${json.isMulti ? 'multi' : 'single'}";
-				@Input() ${nameString}Items = ${JSON.stringify(items)};`;
+				return `@Input() ${name}Label = "${json.label}";
+				@Input() ${name}HelperText = "${json.helperText}";
+				@Input() ${name}Placeholder = "${json.placeholder}";
+				@Input() ${name}Theme = "${json.light ? 'light' : 'dark'}";
+				@Input() ${name}Invalid = ${!!json.invalid};
+				@Input() ${name}InvalidText = "${json.invalidText ? json.invalidText : ''}";
+				@Input() ${name}Size = "${json.size}";
+				@Input() ${name}Warn = ${!!json.warn};
+				@Input() ${name}WarnText = "${json.warnText ? json.warnText : ''}";
+				@Input() ${name}Disabled = ${!!json.disabled};
+				@Input() ${name}DropUp = ${json.direction !== 'bottom'};
+				@Input() ${name}SelectionFeedback = "${json.selectionFeedback}";
+				@Input() ${name}Type: "single" | "multi" = "${json.isMulti ? 'multi' : 'single'}";
+				@Input() ${name}Items = ${JSON.stringify(items)};`;
 			},
 			outputs: ({ json }) =>{
-				const nameString = nameStringToVariableString(json.codeContext?.name);
-				return `@Output() ${nameString}Selected = new EventEmitter<any>();
-					@Output() ${nameString}Close = new EventEmitter<any>();`;
+				const name = nameStringToVariableString(json.codeContext?.name);
+				return `@Output() ${name}Selected = new EventEmitter<any>();
+					@Output() ${name}Close = new EventEmitter<any>();`;
 			},
 			imports: ['DropdownModule'],
 			code: ({ json }) => {
-				const nameString = nameStringToVariableString(json.codeContext?.name);
+				const name = nameStringToVariableString(json.codeContext?.name);
 				return `<ibm-dropdown
-					[label]="${nameString}Label"
-					[helperText]="${nameString}HelperText"
-					[placeholder]="${nameString}Placeholder"
-					[theme]="${nameString}Theme"
-					[invalid]="${nameString}Invalid"
-					[invalidText]="${nameString}InvalidText"
-					[size]="${nameString}Size"
-					[warn]="${nameString}Warn"
-					[warnText]="${nameString}WarnText"
-					[disabled]="${nameString}Disabled"
-					[dropUp]="${nameString}DropUp"
-					[selectionFeedback]="${nameString}SelectionFeedback"
-					[type]="${nameString}Type"
-					(selected)="${nameString}Selected.emit(event)"
-					(close)="${nameString}Close.emit(event)"
+					[label]="${name}Label"
+					[helperText]="${name}HelperText"
+					[placeholder]="${name}Placeholder"
+					[theme]="${name}Theme"
+					[invalid]="${name}Invalid"
+					[invalidText]="${name}InvalidText"
+					[size]="${name}Size"
+					[warn]="${name}Warn"
+					[warnText]="${name}WarnText"
+					[disabled]="${name}Disabled"
+					[dropUp]="${name}DropUp"
+					[selectionFeedback]="${name}SelectionFeedback"
+					[type]="${name}Type"
+					(selected)="${name}Selected.emit(event)"
+					(close)="${name}Close.emit(event)"
 					${angularClassNamesFromComponentObj(json)}>
-					<ibm-dropdown-list [items]="${nameString}Items"></ibm-dropdown-list>
+					<ibm-dropdown-list [items]="${name}Items"></ibm-dropdown-list>
 				</ibm-dropdown>`;
 			}
 		},
 		react: {
 			imports: ({ json }) => [json.isMulti ? 'MultiSelect': 'Dropdown'],
 			code: ({ json }) => {
-				const nameString = nameStringToVariableString(json.codeContext?.name);
+				const name = nameStringToVariableString(json.codeContext?.name);
 				// Determine which React Component to render based on dropdownType
 				let Component = 'Dropdown';
 				if (json.isMulti) {
@@ -340,7 +340,7 @@ export const componentInfo: ComponentInfo = {
 
 				// Items are required
 				return `<${Component}
-					id="${nameString}"
+					id="${name}"
 					titleText="${json.label}"
 					helperText="${json.helperText}"
 					label="${json.placeholder}"
@@ -350,12 +350,12 @@ export const componentInfo: ComponentInfo = {
 					${json.direction !== 'bottom' ? `direction="${json.direction}"` : ''}
 					${json.light ? `light="${json.light}"` : ''}
 					${json.size !== 'md' ? `size="${json.size}"` : ''}
-					items={${nameString}Items}
-					itemToString={${nameString}ItemsToString}
-					initialSelectedItem${json.isMulti ? 's' : ''}={${nameString}DefaultSelected}
+					items={${name}Items}
+					itemToString={${name}ItemsToString}
+					initialSelectedItem${json.isMulti ? 's' : ''}={${name}DefaultSelected}
 					onChange={(selectedItem) => handleInputChange({
 						target: {
-							name: "${nameString}",
+							name: "${name}",
 							value: selectedItem
 						}
 					})}
@@ -363,15 +363,15 @@ export const componentInfo: ComponentInfo = {
 				/>`;
 			},
 			additionalCode: (json) => {
-				const nameString = nameStringToVariableString(json.codeContext?.name);
-				const itemsKey = `${nameString}Items`;
-				const itemsToStringKey = `${nameString}ItemsToString`;
-				const itemsDefaultSelectedKey = `${nameString}DefaultSelected`;
+				const name = nameStringToVariableString(json.codeContext?.name);
+				const itemsKey = `${name}Items`;
+				const itemsToStringKey = `${name}ItemsToString`;
+				const itemsDefaultSelectedKey = `${name}DefaultSelected`;
 				return {
-					[itemsKey]: `const ${itemsKey} = state["${nameString}Items"] || ${json.listItems ?
+					[itemsKey]: `const ${itemsKey} = state["${name}Items"] || ${json.listItems ?
 						JSON.stringify(json.listItems) : '[]'};`,
-					[itemsToStringKey]: `const ${itemsToStringKey} = state["${nameString}ItemToString"] || ((item) => (item ? item.text : ""));`,
-					[itemsDefaultSelectedKey]: `const ${itemsDefaultSelectedKey} = state["${nameString}initialSelectedItems"] || ${json.isMulti ?
+					[itemsToStringKey]: `const ${itemsToStringKey} = state["${name}ItemToString"] || ((item) => (item ? item.text : ""));`,
+					[itemsDefaultSelectedKey]: `const ${itemsDefaultSelectedKey} = state["${name}initialSelectedItems"] || ${json.isMulti ?
 						`(${itemsKey}.filter(item => item.selected))`: `(${itemsKey}.find(item => item.selected))`};`
 				};
 			}
