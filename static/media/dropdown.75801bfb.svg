@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="72" height="26" viewBox="0 0 72 26">
+	<g id="Group_10692" data-name="Group 10692" transform="translate(-427 -333)">
+		<g id="Editing-Patterns-White" transform="translate(427 333)" opacity="0.65">
+			<g id="_05.2" data-name="05.2" transform="translate(-157 -395)">
+				<g id="Group-10" transform="translate(15 170)">
+					<g id="dropdown-_-01-default-_-01-label-_-closed-_-01-enabled" data-name="dropdown-/-01-default-/-01-label-/-closed-/-01-enabled" transform="translate(142 225)">
+						<path id="Field-color" d="M0,0H72V26H0Z" fill="#f4f4f4" fill-rule="evenodd" />
+						<rect id="Border-bottom" width="72" height="1" transform="translate(0 25)" fill="#8d8d8d" />
+						<text id="Input-text" transform="translate(6 18)" fill="#161616" font-size="13" font-family="IBMPlexSans, IBM Plex Sans" letter-spacing="0.011em">
+							<tspan x="0" y="0">Option</tspan>
+						</text>
+						<g id="icon-_-navigation-_-chevron-_-down-_-16" data-name="icon-/-navigation-/-chevron-/-down-/-16" transform="translate(54 9.85)">
+							<path id="Fill" d="M5,6,0,1,.7.3,5,4.6,9.3.3,10,1Z" fill="#161616" fill-rule="evenodd" />
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+</svg>
