@@ -15,7 +15,6 @@ import * as text from './a-text';
 import * as textarea from './a-textarea';
 import * as textinput from './a-textinput';
 import * as link from './a-link';
-import * as overflowMenuItem from './a-overflow-menu-item';
 import * as overflowMenu from './a-overflow-menu';
 // Tiles
 import * as tile from './tiles/a-tile';
@@ -45,8 +44,7 @@ export { ATag, ATagSettingsUI } from './a-tag';
 export { AText, ATextSettingsUI } from './a-text';
 export { ATextArea, ATextAreaSettingsUI, ATextAreaCodeUI } from './a-textarea';
 export { ATextInput, ATextInputSettingsUI, ATextInputCodeUI } from './a-textinput';
-export { AOverflowMenuItem, AOverflowMenuItemCodeUI, AOverflowMenuItemStyleUI } from './a-overflow-menu-item';
-export { AOverflowMenuGroup, AOverflowMenuStyleUI } from './a-overflow-menu';
+export { AOverflowMenuGroup, AOverflowMenuSettingsUI } from './a-overflow-menu';
 
 // Tiles
 export { ATile, ATileCodeUI, ATileSettingsUI } from './tiles/a-tile';
@@ -75,7 +73,6 @@ export const allComponents = {
 	text,
 	textarea,
 	textinput,
-	overflowMenuItem,
 	overflowMenu,
 	// Tiles
 	tile,

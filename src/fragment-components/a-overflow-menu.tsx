@@ -2,7 +2,9 @@ import React from 'react';
 import {
 	Checkbox,
 	Dropdown,
-	OverflowMenu
+	OverflowMenu,
+	TextInput,
+	OverflowMenuItem
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
 import image from './../assets/component-icons/overflowMenu.svg';
@@ -10,13 +12,81 @@ import { reactClassNamesFromComponentObj,
 	angularClassNamesFromComponentObj,
 	nameStringToVariableString } from '../utils/fragment-tools';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
+import { DraggableTileList } from '../components';
 import { css } from 'emotion';
 
-export const AOverflowMenuStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const placementItems = [
 		{ id: 'top', text: 'Top' },
 		{ id: 'bottom', text: 'Bottom' }
 	];
+
+	const handleStepUpdate = (key: string, value: any, index: number) => {
+		const step = {
+			...selectedComponent.items[index],
+			[key]: value
+		};
+
+		setComponent({
+			...selectedComponent,
+			items: [
+				...selectedComponent.items.slice(0, index),
+				step,
+				...selectedComponent.items.slice(index + 1)
+			]
+		});
+	};
+
+	const template = (item: any, index: number) => {
+		return <>
+			<TextInput
+				light
+				value={item.itemText}
+				labelText='Label'
+				onChange={(event: any) => {
+					handleStepUpdate('itemText', event.currentTarget.value, index);
+				}}
+			/>
+			<TextInput
+				light
+				value={item.link}
+				disabled= {!item.hasLink}
+				labelText='Link'
+				onChange={(event: any) => {
+					handleStepUpdate('link', event.currentTarget.value, index);
+				}}
+			/>
+			<div style={{ display: 'flex', flexWrap: 'wrap' }}>
+				<Checkbox
+				labelText='Has link'
+				id='hasLink'
+				checked={item.hasLink}
+				onChange={(checked: boolean) => handleStepUpdate('hasLink', checked, index) }/>
+				<Checkbox
+					labelText='Disabled'
+					id='disabled'
+					checked={item.disabled}
+					onChange={(checked: boolean) => handleStepUpdate('disabled', checked, index)}/>
+				<Checkbox
+					labelText='Is delete'
+					id='isDelete'
+					checked={item.isDelete}
+					onChange={(checked: boolean) => handleStepUpdate('isDelete', checked, index)} />
+				<Checkbox
+					labelText='has divider'
+					id='hasDivider'
+					checked={item.hasDivider}
+					onChange={(checked: boolean) => handleStepUpdate('hasDivider', checked, index)} />
+			</div>
+		</>;
+	};
+	const updateStepList = (newList: any[]) => {
+		setComponent({
+			...selectedComponent,
+			items: newList
+		});
+	};
+
 	return <>
 	<Dropdown
 			label='Placement'
@@ -36,6 +106,20 @@ export const AOverflowMenuStyleUI = ({ selectedComponent, setComponent }: any) =
 				...selectedComponent,
 				flipped: checked
 		})} />
+	<DraggableTileList
+			dataList={[...selectedComponent.items]}
+			setDataList={updateStepList}
+			updateItem={handleStepUpdate}
+			defaultObject={{
+				itemText: 'New Option',
+				className: selectedComponent.id,
+				disabled: false,
+				hasLink: false,
+				isDelete: false,
+				hasDivider: false,
+				link: ''
+			}}
+			template={template} />
 	<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent}/>
 	</>;
 };
@@ -45,24 +129,27 @@ const preventCheckEvent = css`
 `;
 
 export const AOverflowMenuGroup = ({
-	children,
 	componentObj,
-	selected,
 	...rest
 }: any) => {
-	const selectedItem = children.find((item: any) => item.props.selected === true)?.props.componentObj?.className;
 	return (
 		<AComponent
 		componentObj={componentObj}
-		selected = {selected}
 		{...rest}>
 				<OverflowMenu
-						onClick={() => selected = true}
 						flipped={componentObj.flipped}
 						direction={componentObj.placement}
-						selectorPrimaryFocus={'.' + (selectedItem ? selectedItem : 'option-1')}
 						className={` ${preventCheckEvent} ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} `}>
-							{children}
+							{
+							componentObj.items.map((step: any, index: number) => (
+								<OverflowMenuItem
+									className={step.className}
+									href={step.hasLink ? step.link : undefined}
+									itemText={step.itemText}
+									disabled={step.disabled}
+									isDelete={step.isDelete}
+									key={index} />))
+							}
 				</OverflowMenu>
 		</AComponent>
 	);
@@ -70,7 +157,7 @@ export const AOverflowMenuGroup = ({
 
 export const componentInfo: ComponentInfo = {
 	component: AOverflowMenuGroup,
-	settingsUI: AOverflowMenuStyleUI,
+	settingsUI: AOverflowMenuSettingsUI,
 	keywords: ['overflow', 'menu', 'context'],
 	name: 'Overflow menu',
 	type: 'overflow-menu',
@@ -81,29 +168,8 @@ export const componentInfo: ComponentInfo = {
 		type: 'overflow-menu',
 		items: [
 			{
-				type: 'overflow-menu-item',
 				itemText: 'Option 1',
 				className: 'option-1',
-				disabled: false,
-				hasLink: false,
-				isDelete: false,
-				hasDivider: false,
-				link: ''
-			},
-			{
-				type: 'overflow-menu-item',
-				itemText: 'Option 2',
-				className: 'option-2',
-				disabled: false,
-				hasLink: false,
-				isDelete: false,
-				hasDivider: false,
-				link: ''
-			},
-			{
-				type: 'overflow-menu-item',
-				itemText: 'Option 3',
-				className: 'option-3',
 				disabled: false,
 				hasLink: false,
 				isDelete: false,
@@ -112,39 +178,48 @@ export const componentInfo: ComponentInfo = {
 			}
 		]
 	},
-	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <AOverflowMenuGroup
-		componentObj={componentObj}
-		select={select}
-		remove={remove}
-		onDragOver={onDragOver}
-		onDrop={onDrop}
-		selected={selected}>
-			{componentObj.items.map((button: any) => (renderComponents(button)))}
-	</AOverflowMenuGroup>,
 	image: image,
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Flipped = ${json.flipped};
 									@Input() ${nameStringToVariableString(json.codeContext?.name)}Placement = "${json.placement}";`,
-			outputs: (_) => '',
+			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter();
+							@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
 			imports: ['DialogModule'],
-			code: ({ json, fragments, jsonToTemplate }) => {
+			code: ({ json }) => {
 				return `<ibm-overflow-menu
 							[placement]="${nameStringToVariableString(json.codeContext?.name)}Placement"
 							[flip]="${nameStringToVariableString(json.codeContext?.name)}Flipped"
 							${angularClassNamesFromComponentObj(json)}>
-								${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+								${json.items.map((step: any) => (
+								`<ibm-overflow-menu-option
+									${step.isDelete ? "type='danger'" : ''}
+									${step.hasDivider ? `[divider]="${step.hasDivider}"` : ''}
+									${step.hasLink ? `href="${step.link}"` : ''}
+									${step.disabled ? `disabled="${step.disabled}"` : '' }
+									(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)" 
+									(click)="${nameStringToVariableString(json.codeContext?.name)}Clicked.emit($event)">
+										${step.itemText}
+							</ibm-overflow-menu-option>`
+							)).join('\n')}
 						</ibm-overflow-menu>`;
 			}
 		},
 		react: {
-			imports: ['OverflowMenu'],
-			code: ({ json, fragments, jsonToTemplate }) => {
+			imports: ['OverflowMenu', 'OverflowMenuItem'],
+			code: ({ json }) => {
 				return `<OverflowMenu
 							direction="${json.placement}"
 							flipped={${json.flipped}}
 							${reactClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((step: any) => (
+								`<OverflowMenuItem 
+									${step.hasLink ? `href="${step.link}"` : ''}
+									${step.isDelete !== undefined ? `isDelete={${step.isDelete}}` : ''}
+									${step.hasDivider !== false ? 'hasDivider': ''}
+									disabled={${step.disabled}}
+									itemText="${step.itemText}"/>`
+							)).join('\n')}
 						</OverflowMenu>`;
 			}
 		}
