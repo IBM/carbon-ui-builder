@@ -50,7 +50,7 @@ const tileStyle = css`
 export const DraggableTileList = ({
 	template, // Functional component
 	onDragOver: dragOver = (_: any) => true,	// Override onDragOver event
-	remoteItemFromList: removeFromList = (_: any) => true,	// Override removeItemFromList
+	removeItemFromList: removeFromList = (_: any) => true,	// Override removeItemFromList
 	dataList,
 	setDataList,
 	defaultObject // Default object created
