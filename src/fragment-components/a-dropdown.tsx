@@ -277,12 +277,10 @@ export const componentInfo: ComponentInfo = {
 		angular: {
 			inputs: ({ json }) => {
 				const name = nameStringToVariableString(json.codeContext?.name);
-				const items = json.listItems.map((item: any) => {
-					return {
-						content: item.text,
-						...(json.isMulti && item.selected) && { selected: item.selected }
-					};
-				});
+				const items = json.listItems.map((item: any) => ({
+					content: item.text,
+					...(json.isMulti && item.selected) && { selected: item.selected }
+				}));
 
 				return `@Input() ${name}Label = "${json.label}";
 				@Input() ${name}HelperText = "${json.helperText}";
