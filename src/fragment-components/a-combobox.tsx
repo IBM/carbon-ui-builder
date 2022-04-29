@@ -10,6 +10,7 @@ import { AComponent } from './a-component';
 import { css } from 'emotion';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
+import { DraggableTileList } from '../components';
 
 import image from './../assets/component-icons/combobox.svg';
 import {
@@ -36,6 +37,50 @@ export const AComboBoxSettingsUI = ({ selectedComponent, setComponent }: any) =>
 		{ id: 'top-after-reopen' }
 	];
 
+	const handleItemUpdate = (key: string, value: any, index: number) => {
+		const item = {
+			...selectedComponent.listItems[index],
+			[key]: value
+		};
+
+		setComponent({
+			...selectedComponent,
+			listItems: [
+				...selectedComponent.listItems.slice(0, index),
+				item,
+				...selectedComponent.listItems.slice(index + 1)
+			]
+		});
+	};
+
+	const template = (item: any, index: number) => {
+		return <>
+			<TextInput
+				light
+				value={item.text}
+				labelText='Display text'
+				onChange={(event: any) => handleItemUpdate('text', event.currentTarget.value, index)} />
+			{
+				selectedComponent.isMulti &&
+				<div style={{ display: 'flex' }}>
+					<Checkbox
+						style={{ display: 'inline-flex' }}
+						labelText='Is default selected'
+						id={`invalid-select-${index}`}
+						checked={item.selected}
+						onChange={(checked: any) => handleItemUpdate('selected', checked, index)} />
+				</div>
+			}
+		</>;
+	};
+
+	const updateStepList = (newList: any[]) => {
+		setComponent({
+			...selectedComponent,
+			listItems: newList
+		});
+	};
+
 	return <>
 		<Checkbox
 			labelText='Is multiselect'
@@ -45,15 +90,17 @@ export const AComboBoxSettingsUI = ({ selectedComponent, setComponent }: any) =>
 				...selectedComponent,
 				isMulti: checked
 			})} />
-		{selectedComponent.isMulti && <Checkbox
-			labelText='Is inline'
-			id='inline-label'
-			checked={selectedComponent.isInline}
-			onChange={(checked: any) => setComponent({
-				...selectedComponent,
-				isInline: checked
-			})}
-		/>}
+		{
+			selectedComponent.isMulti && <Checkbox
+				labelText='Is inline'
+				id='inline-label'
+				checked={selectedComponent.isInline}
+				onChange={(checked: any) => setComponent({
+					...selectedComponent,
+					isInline: checked
+				})}
+			/>
+		}
 		<Dropdown
 			label='Size'
 			titleText='Size'
@@ -135,6 +182,17 @@ export const AComboBoxSettingsUI = ({ selectedComponent, setComponent }: any) =>
 				...selectedComponent,
 				light: checked
 		})} />
+		<hr />
+		<h4>Items</h4>
+		<DraggableTileList
+			dataList={[...selectedComponent.listItems]}
+			setDataList={updateStepList}
+			updateItem={handleItemUpdate}
+			defaultObject={{
+				text: 'Text'
+			}}
+			template={template} />
+		<hr />
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
@@ -164,9 +222,9 @@ export const AComboBox = ({
 	...rest
 }: any) => {
 	// Determine which React Component to render based on dropdownType
-	let Component = ComboBox;
+	let ComboboxOrFilterableMultiSelect = ComboBox;
 	if (componentObj.isMulti) {
-		Component = FilterableMultiSelect;
+		ComboboxOrFilterableMultiSelect = FilterableMultiSelect;
 	}
 	const filterableProps = {
 		type: componentObj.isInline ? 'inline' : 'default',
@@ -179,22 +237,22 @@ export const AComboBox = ({
 		componentObj={componentObj}
 		headingCss={css`display: block;`}
 		{...rest}>
-			<Component
-			{...componentObj.isMulti ? filterableProps: {}}
-			id={componentObj.codeContext?.name}
-			titleText={componentObj.label}
-			size={componentObj.size}
-			light={componentObj.light}
-			disabled={componentObj.disabled}
-			helperText={componentObj.helperText}
-			warn={componentObj.warn}
-			warnText={componentObj.warnText}
-			invalid={componentObj.invalid}
-			invalidText={componentObj.invalidText}
-			direction={componentObj.direction}
-			placeholder={componentObj.placeholder}
-			items={[]}
-			className={`${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} ${preventClickStyle}`} />
+			<ComboboxOrFilterableMultiSelect
+				{...componentObj.isMulti ? filterableProps: {}}
+				id={componentObj.codeContext?.name}
+				titleText={componentObj.label}
+				size={componentObj.size}
+				light={componentObj.light}
+				disabled={componentObj.disabled}
+				helperText={componentObj.helperText}
+				warn={componentObj.warn}
+				warnText={componentObj.warnText}
+				invalid={componentObj.invalid}
+				invalidText={componentObj.invalidText}
+				direction={componentObj.direction}
+				placeholder={componentObj.placeholder}
+				items={[]}
+				className={`${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} ${preventClickStyle}`} />
 		</AComponent>
 	);
 };
@@ -215,70 +273,81 @@ export const componentInfo: ComponentInfo = {
 		direction: 'bottom',
 		size: 'md',
 		label: 'Label',
-		helperText: 'Optional helper text here'
+		helperText: 'Optional helper text here',
+		listItems: [
+			{
+				text: 'Text'
+			}
+		]
 	},
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) =>
-				`@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.label}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}HelperText = "${json.helperText}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Invalid = ${!!json.invalid};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Warn = ${!!json.warn};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}WarnText = "${json.warnText}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${!!json.disabled};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}DropUp = ${json.direction !== 'bottom'};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}SelectionFeedback = "${json.selectionFeedback}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Type: "single" | "multi" = "${json.isMulti ? 'multi' : 'single'}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Items = [];`,
-			outputs: ({ json }) =>
-				`@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<any>();
-				@Output() ${nameStringToVariableString(json.codeContext?.name)}onClose = new EventEmitter<any>();
-				@Output() ${nameStringToVariableString(json.codeContext?.name)}Search = new EventEmitter<string>();`,
+			inputs: ({ json }) =>{
+				const name = nameStringToVariableString(json.codeContext?.name);
+				const items = json.listItems.map((item: any) => ({
+					content: item.text,
+					...(json.isMulti && item.selected) && { selected: item.selected }
+				}));
+
+				return `@Input() ${name}Label = "${json.label}";
+				@Input() ${name}HelperText = "${json.helperText}";
+				@Input() ${name}Placeholder = "${json.placeholder}";
+				@Input() ${name}Theme = "${json.light ? 'light' : 'dark'}";
+				@Input() ${name}Invalid = ${!!json.invalid};
+				@Input() ${name}InvalidText = "${json.invalidText ? json.invalidText : ''}";
+				@Input() ${name}Size = "${json.size}";
+				@Input() ${name}Warn = ${!!json.warn};
+				@Input() ${name}WarnText = "${json.warnText ? json.warnText : ''}";
+				@Input() ${name}Disabled = ${!!json.disabled};
+				@Input() ${name}DropUp = ${json.direction !== 'bottom'};
+				@Input() ${name}SelectionFeedback = "${json.selectionFeedback}";
+				@Input() ${name}Type: "single" | "multi" = "${json.isMulti ? 'multi' : 'single'}";
+				@Input() ${name}Items = ${JSON.stringify(items)};`;
+			},
+			outputs: ({ json }) => {
+				const name = nameStringToVariableString(json.codeContext?.name);
+				return `@Output() ${name}Selected = new EventEmitter<any>();
+				@Output() ${name}onClose = new EventEmitter<any>();
+				@Output() ${name}Search = new EventEmitter<string>();`;
+			},
 			imports: ['ComboBoxModule'],
-			code: ({ json }) =>
-				`<ibm-combo-box
-				[label]="${nameStringToVariableString(json.codeContext?.name)}Label"
-				[helperText]="${nameStringToVariableString(json.codeContext?.name)}HelperText"
-				[placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
-				[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
-				[invalid]="${nameStringToVariableString(json.codeContext?.name)}Invalid"
-				[invalidText]="${nameStringToVariableString(json.codeContext?.name)}InvalidText"
-				[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
-				[warn]="${nameStringToVariableString(json.codeContext?.name)}Warn"
-				[warnText]="${nameStringToVariableString(json.codeContext?.name)}WarnText"
-				[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
-				[dropUp]="${nameStringToVariableString(json.codeContext?.name)}DropUp"
-				[selectionFeedback]="${nameStringToVariableString(json.codeContext?.name)}SelectionFeedback"
-				[type]="${nameStringToVariableString(json.codeContext?.name)}Type"
-				[items]="${nameStringToVariableString(json.codeContext?.name)}Items"
-				(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit(event)"
-				(search)="${nameStringToVariableString(json.codeContext?.name)}Search.emit(event)"
-				(close)="${nameStringToVariableString(json.codeContext?.name)}onClose.emit(event)"
-				${angularClassNamesFromComponentObj(json)}>
-				<ibm-dropdown-list></ibm-dropdown-list>
-			</ibm-combo-box>`
+			code: ({ json }) =>{
+				const name = nameStringToVariableString(json.codeContext?.name);
+				return `<ibm-combo-box
+					[label]="${name}Label"
+					[helperText]="${name}HelperText"
+					[placeholder]="${name}Placeholder"
+					[theme]="${name}Theme"
+					[invalid]="${name}Invalid"
+					[invalidText]="${name}InvalidText"
+					[size]="${name}Size"
+					[warn]="${name}Warn"
+					[warnText]="${name}WarnText"
+					[disabled]="${name}Disabled"
+					[dropUp]="${name}DropUp"
+					[selectionFeedback]="${name}SelectionFeedback"
+					[type]="${name}Type"
+					[items]="${name}Items"
+					(selected)="${name}Selected.emit(event)"
+					(search)="${name}Search.emit(event)"
+					(close)="${name}onClose.emit(event)"
+					${angularClassNamesFromComponentObj(json)}>
+					<ibm-dropdown-list></ibm-dropdown-list>
+				</ibm-combo-box>`;
+			}
 		},
 		react: {
-			imports: ['FilterableMultiSelect', 'ComboBox'],
+			imports: ({ json }) => [json.isMulti ? 'FilterableMultiSelect' : 'ComboBox'],
 			code: ({ json }) => {
-				// Determine which React Component to render based on dropdownType
-				let Component = 'ComboBox';
-				if (json.isMulti) {
-					Component = 'FilterableMultiSelect';
-				}
-
+				const name = nameStringToVariableString(json.codeContext?.name);
 				const filterableProps = `${json.isInline ? 'type="inline"': ''}
 					${json.hideLabel !== undefined ? `hideLabel={${json.hideLabel}}` : ''}
 					${json.selectionFeedback !== 'top-after-reopen' ? `selectionFeedback="${json.selectionFeedback}"`: ''}`;
 
 				// Items are required
-				return `<${Component}
-					id="${json.codeContext?.name}"
+				return `<${json.isMulti ? 'FilterableMultiSelect' : 'ComboBox'}
+					id="${name}"
 					titleText="${json.label}"
 					helperText="${json.helperText}"
 					placeholder="${json.placeholder}"
@@ -286,16 +355,30 @@ export const componentInfo: ComponentInfo = {
 					${json.direction !== 'bottom' ? `direction="${json.direction}"` : ''}
 					${json.light ? `light="${json.light}"` : ''}
 					${json.size !== 'md' ? `size="${json.size}"` : ''}
-					items={state["${json.codeContext?.name}Items"] || []}
-					itemToString={state["${json.codeContext?.name}ItemToString"]}
+					items={${name}Items}
+					itemToString={${name}ItemsToString}
+					initialSelectedItem${json.isMulti ? 's' : ''}={${name}DefaultSelected}
 					onChange={(selectedItem) => handleInputChange({
 						target: {
-							name: "${json.codeContext?.name}",
+							name: "${name}",
 							value: selectedItem
 						}
 					})}
 					${reactClassNamesFromComponentObj(json)}
 				/>`;
+			},
+			additionalCode: (json) => {
+				const name = nameStringToVariableString(json.codeContext?.name);
+				const itemsKey = `${name}Items`;
+				const itemsToStringKey = `${name}ItemsToString`;
+				const itemsDefaultSelectedKey = `${name}DefaultSelected`;
+				return {
+					[itemsKey]: `const ${itemsKey} = state["${name}Items"] || ${json.listItems ?
+						JSON.stringify(json.listItems) : '[]'};`,
+					[itemsToStringKey]: `const ${itemsToStringKey} = state["${name}ItemToString"] || ((item) => (item ? item.text : ""));`,
+					[itemsDefaultSelectedKey]: `const ${itemsDefaultSelectedKey} = state["${name}initialSelectedItems"] || ${json.isMulti ?
+						`(${itemsKey}.filter(item => item.selected))`: `(${itemsKey}.find(item => item.selected))`};`
+				};
 			}
 		}
 	}
