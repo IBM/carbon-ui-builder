@@ -9,6 +9,7 @@ import { AComponent } from './a-component';
 import { css } from 'emotion';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
+import { DraggableTileList } from '../components';
 
 import image from './../assets/component-icons/dropdown.svg';
 import {
@@ -34,6 +35,50 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 		{ id: 'fixed' },
 		{ id: 'top-after-reopen' }
 	];
+
+	const handleItemUpdate = (key: string, value: any, index: number) => {
+		const item = {
+			...selectedComponent.listItems[index],
+			[key]: value
+		};
+
+		setComponent({
+			...selectedComponent,
+			listItems: [
+				...selectedComponent.listItems.slice(0, index),
+				item,
+				...selectedComponent.listItems.slice(index + 1)
+			]
+		});
+	};
+
+	const template = (item: any, index: number) => {
+		return <>
+			<TextInput
+				light
+				value={item.text}
+				labelText='Display text'
+				onChange={(event: any) => handleItemUpdate('text', event.currentTarget.value, index)} />
+			{
+				selectedComponent.isMulti &&
+				<div style={{ display: 'flex' }}>
+					<Checkbox
+						style={{ display: 'inline-flex' }}
+						labelText='Is default selected'
+						id={`invalid-select-${index}`}
+						checked={item.selected}
+						onChange={(checked: any) => handleItemUpdate('selected', checked, index)} />
+				</div>
+			}
+		</>;
+	};
+
+	const updateStepList = (newList: any[]) => {
+		setComponent({
+			...selectedComponent,
+			listItems: newList
+		});
+	};
 
 	return <>
 		<Checkbox
@@ -133,6 +178,17 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 				...selectedComponent,
 				light: checked
 			})} />
+		<hr />
+		<h4>Items</h4>
+		<DraggableTileList
+			dataList={[...selectedComponent.listItems]}
+			setDataList={updateStepList}
+			updateItem={handleItemUpdate}
+			defaultObject={{
+				text: 'Text'
+			}}
+			template={template} />
+		<hr />
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
@@ -209,54 +265,73 @@ export const componentInfo: ComponentInfo = {
 		direction: 'bottom',
 		size: 'md',
 		label: 'Label',
-		helperText: 'Optional helper text'
+		helperText: 'Optional helper text',
+		listItems: [
+			{
+				text: 'text'
+			}
+		]
 	},
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) =>
-				`@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.label}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}HelperText = "${json.helperText}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Invalid = ${!!json.invalid};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Warn = ${!!json.warn};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}WarnText = "${json.warnText}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${!!json.disabled};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}DropUp = ${json.direction !== 'bottom'};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}SelectionFeedback = "${json.selectionFeedback}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Type: "single" | "multi" = "${json.isMulti ? 'multi' : 'single'}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Items = [];`,
-			outputs: ({ json }) =>
-				`@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<any>();
-				@Output() ${nameStringToVariableString(json.codeContext?.name)}Close = new EventEmitter<any>();`,
+			inputs: ({ json }) => {
+				const nameString = nameStringToVariableString(json.codeContext?.name);
+				const items = json.listItems.map((item: any) => {
+					return {
+						content: item.text,
+						...(json.isMulti && item.selected) && { selected: item.selected }
+					};
+				});
+
+				return `@Input() ${nameString}Label = "${json.label}";
+				@Input() ${nameString}HelperText = "${json.helperText}";
+				@Input() ${nameString}Placeholder = "${json.placeholder}";
+				@Input() ${nameString}Theme = "${json.light ? 'light' : 'dark'}";
+				@Input() ${nameString}Invalid = ${!!json.invalid};
+				@Input() ${nameString}InvalidText = "${json.invalidText ? json.invalidText : ''}";
+				@Input() ${nameString}Size = "${json.size}";
+				@Input() ${nameString}Warn = ${!!json.warn};
+				@Input() ${nameString}WarnText = "${json.warnText ? json.warnText : ''}";
+				@Input() ${nameString}Disabled = ${!!json.disabled};
+				@Input() ${nameString}DropUp = ${json.direction !== 'bottom'};
+				@Input() ${nameString}SelectionFeedback = "${json.selectionFeedback}";
+				@Input() ${nameString}Type: "single" | "multi" = "${json.isMulti ? 'multi' : 'single'}";
+				@Input() ${nameString}Items = ${JSON.stringify(items)};`;
+			},
+			outputs: ({ json }) =>{
+				const nameString = nameStringToVariableString(json.codeContext?.name);
+				return `@Output() ${nameString}Selected = new EventEmitter<any>();
+					@Output() ${nameString}Close = new EventEmitter<any>();`;
+			},
 			imports: ['DropdownModule'],
-			code: ({ json }) =>
-				`<ibm-dropdown
-				[label]="${nameStringToVariableString(json.codeContext?.name)}Label"
-				[helperText]="${nameStringToVariableString(json.codeContext?.name)}HelperText"
-				[placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
-				[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
-				[invalid]="${nameStringToVariableString(json.codeContext?.name)}Invalid"
-				[invalidText]="${nameStringToVariableString(json.codeContext?.name)}InvalidText"
-				[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
-				[warn]="${nameStringToVariableString(json.codeContext?.name)}Warn"
-				[warnText]="${nameStringToVariableString(json.codeContext?.name)}WarnText"
-				[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
-				[dropUp]="${nameStringToVariableString(json.codeContext?.name)}DropUp"
-				[selectionFeedback]="${nameStringToVariableString(json.codeContext?.name)}SelectionFeedback"
-				[type]="${nameStringToVariableString(json.codeContext?.name)}Type"
-				(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit(event)"
-				(close)="${nameStringToVariableString(json.codeContext?.name)}Close.emit(event)"
-				${angularClassNamesFromComponentObj(json)}>
-				<ibm-dropdown-list [items]="${nameStringToVariableString(json.codeContext?.name)}Items"></ibm-dropdown-list>
-			</ibm-dropdown>`
+			code: ({ json }) => {
+				const nameString = nameStringToVariableString(json.codeContext?.name);
+				return `<ibm-dropdown
+					[label]="${nameString}Label"
+					[helperText]="${nameString}HelperText"
+					[placeholder]="${nameString}Placeholder"
+					[theme]="${nameString}Theme"
+					[invalid]="${nameString}Invalid"
+					[invalidText]="${nameString}InvalidText"
+					[size]="${nameString}Size"
+					[warn]="${nameString}Warn"
+					[warnText]="${nameString}WarnText"
+					[disabled]="${nameString}Disabled"
+					[dropUp]="${nameString}DropUp"
+					[selectionFeedback]="${nameString}SelectionFeedback"
+					[type]="${nameString}Type"
+					(selected)="${nameString}Selected.emit(event)"
+					(close)="${nameString}Close.emit(event)"
+					${angularClassNamesFromComponentObj(json)}>
+					<ibm-dropdown-list [items]="${nameString}Items"></ibm-dropdown-list>
+				</ibm-dropdown>`;
+			}
 		},
 		react: {
 			imports: ({ json }) => [json.isMulti ? 'MultiSelect': 'Dropdown'],
 			code: ({ json }) => {
+				const nameString = nameStringToVariableString(json.codeContext?.name);
 				// Determine which React Component to render based on dropdownType
 				let Component = 'Dropdown';
 				if (json.isMulti) {
@@ -265,7 +340,7 @@ export const componentInfo: ComponentInfo = {
 
 				// Items are required
 				return `<${Component}
-					id="${json.codeContext?.name}"
+					id="${nameString}"
 					titleText="${json.label}"
 					helperText="${json.helperText}"
 					label="${json.placeholder}"
@@ -275,16 +350,30 @@ export const componentInfo: ComponentInfo = {
 					${json.direction !== 'bottom' ? `direction="${json.direction}"` : ''}
 					${json.light ? `light="${json.light}"` : ''}
 					${json.size !== 'md' ? `size="${json.size}"` : ''}
-					items={state["${json.codeContext?.name}Items"] || []}
-					itemToString={state["${json.codeContext?.name}ItemToString"]}
+					items={${nameString}Items}
+					itemToString={${nameString}ItemsToString}
+					initialSelectedItem${json.isMulti ? 's' : ''}={${nameString}DefaultSelected}
 					onChange={(selectedItem) => handleInputChange({
 						target: {
-							name: "${json.codeContext?.name}",
+							name: "${nameString}",
 							value: selectedItem
 						}
 					})}
 					${reactClassNamesFromComponentObj(json)}
 				/>`;
+			},
+			additionalCode: (json) => {
+				const nameString = nameStringToVariableString(json.codeContext?.name);
+				const itemsKey = `${nameString}Items`;
+				const itemsToStringKey = `${nameString}ItemsToString`;
+				const itemsDefaultSelectedKey = `${nameString}DefaultSelected`;
+				return {
+					[itemsKey]: `const ${itemsKey} = state["${nameString}Items"] || ${json.listItems ?
+						JSON.stringify(json.listItems) : '[]'};`,
+					[itemsToStringKey]: `const ${itemsToStringKey} = state["${nameString}ItemToString"] || ((item) => (item ? item.text : ""));`,
+					[itemsDefaultSelectedKey]: `const ${itemsDefaultSelectedKey} = state["${nameString}initialSelectedItems"] || ${json.isMulti ?
+						`(${itemsKey}.filter(item => item.selected))`: `(${itemsKey}.find(item => item.selected))`};`
+				};
 			}
 		}
 	}
