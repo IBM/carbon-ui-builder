@@ -332,14 +332,9 @@ export const componentInfo: ComponentInfo = {
 			imports: ({ json }) => [json.isMulti ? 'MultiSelect': 'Dropdown'],
 			code: ({ json }) => {
 				const name = nameStringToVariableString(json.codeContext?.name);
-				// Determine which React Component to render based on dropdownType
-				let Component = 'Dropdown';
-				if (json.isMulti) {
-					Component = 'MultiSelect';
-				}
 
 				// Items are required
-				return `<${Component}
+				return `<${json.isMulti ? 'MultiSelect' : 'Dropdown'}
 					id="${name}"
 					titleText="${json.label}"
 					helperText="${json.helperText}"
