@@ -13,7 +13,7 @@ import { GlobalStateContext } from '../context';
 import { classNameFromFragment, tagNameFromFragment } from '../utils/fragment-tools';
 import { LinkButton } from '../components';
 
-export const AFragmentStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const AFragmentSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<LinkButton
 		kind='secondary'
@@ -80,7 +80,7 @@ export const AFragment = ({
 
 export const componentInfo: ComponentInfo = {
 	component: AFragment,
-	styleUI: AFragmentStyleUI,
+	settingsUI: AFragmentSettingsUI,
 	render: ({ componentObj, select, remove, selected, renderComponents }) => {
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const globalState = useContext(GlobalStateContext); // used for fetching subcomponents/microlayouts

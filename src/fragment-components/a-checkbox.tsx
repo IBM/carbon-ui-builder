@@ -8,7 +8,7 @@ import { ComponentInfo } from '.';
 import image from './../assets/component-icons/checkbox.svg';
 import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
-export const ACheckboxStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const ACheckboxSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TextInput
 			value={selectedComponent.label}
@@ -61,7 +61,7 @@ export const ACheckbox = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ACheckbox,
-	styleUI: ACheckboxStyleUI,
+	settingsUI: ACheckboxSettingsUI,
 	codeUI: ACheckboxCodeUI,
 	keywords: ['checkbox', 'check box'],
 	name: 'Checkbox',

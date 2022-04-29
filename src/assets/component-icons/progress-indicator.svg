@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="75" height="35" viewBox="0 0 75 35">
+	<g id="Group_12156" data-name="Group 12156" transform="translate(-418 -3041)">
+		<rect id="border-right" width="2" height="35" transform="translate(418 3041)" fill="#e0e0e0" />
+		<g id="Text_state" data-name="Text state" transform="translate(453 3046)">
+			<rect id="label_text" data-name="label text" width="40" height="8" fill="#e8e8e8" />
+		</g>
+		<g id="progress_indicator_pieces_icon_01_active" data-name="progress indicator / pieces / icon / 01 active" transform="translate(428 3042)">
+			<g id="icon_toggle_radio-button_filled_16" data-name="icon/toggle/radio-button/filled/16">
+				<rect id="BG" width="16" height="16" fill="#0f62fe" opacity="0" />
+				<circle id="icon_color" data-name="icon color" cx="7" cy="7" r="7" transform="translate(1 1)" fill="#0f62fe" />
+			</g>
+		</g>
+	</g>
+</svg>

@@ -20,7 +20,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 
-export const ARadioTileStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const ARadioTileSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const [fragment] = useFragment();
 	const parentComponent = getParentComponent(fragment.data, selectedComponent);
 
@@ -168,7 +168,7 @@ export const ARadioTile = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ARadioTile,
-	styleUI: ARadioTileStyleUI,
+	settingsUI: ARadioTileSettingsUI,
 	codeUI: ARadioTileCodeUI,
 	keywords: ['tile', 'card', 'radio', 'selectable'],
 	name: 'Radio tile',

@@ -11,7 +11,7 @@ import { ComponentCssClassSelector } from '../components/css-class-selector';
 import image from './../assets/component-icons/button.svg';
 import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
-export const AButtonStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const kindItems = [
 		{ id: 'primary', text: 'Primary' },
 		{ id: 'secondary', text: 'Secondary' },
@@ -66,7 +66,7 @@ export const AButton = ({
 
 export const componentInfo: ComponentInfo = {
 	component: AButton,
-	styleUI: AButtonStyleUI,
+	settingsUI: AButtonSettingsUI,
 	render: ({ componentObj, select, remove, selected }) => <AButton
 		componentObj={componentObj}
 		select={select}

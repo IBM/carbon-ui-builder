@@ -20,7 +20,7 @@ import {
 	updatedState
 } from '../../components';
 
-export const AAccordionItemStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const AAccordionItemSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TextInput
 			value={selectedComponent.title}
@@ -94,7 +94,7 @@ export const AAccordionItem = ({
 export const componentInfo: ComponentInfo = {
 	component: AAccordionItem,
 	hideFromElementsPane: true,
-	styleUI: AAccordionItemStyleUI,
+	settingsUI: AAccordionItemSettingsUI,
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <AAccordionItem
 		componentObj={componentObj}
 		select={select}

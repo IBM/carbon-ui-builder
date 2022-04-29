@@ -15,7 +15,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 
-export const ASelectableTileGroupStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const ASelectableTileGroupSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TileMorphism component={selectedComponent} setComponent={setComponent} />
 		<Checkbox
@@ -122,7 +122,7 @@ export const ASelectableTileGroup = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ASelectableTileGroup,
-	styleUI: ASelectableTileGroupStyleUI,
+	settingsUI: ASelectableTileGroupSettingsUI,
 	codeUI: ASelectableTileGroupCodeUI,
 	keywords: ['tile', 'card', 'multi', 'select'],
 	name: 'Selectable tile group',
