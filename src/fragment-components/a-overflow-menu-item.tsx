@@ -9,8 +9,7 @@ import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { useFragment } from '../context';
 import {
 	getParentComponent,
-	updatedState,
-	Adder
+	updatedState
 } from '../components';
 
 import { css } from 'emotion';
@@ -83,9 +82,6 @@ export const AOverflowMenuItemCodeUI = ({ selectedComponent, setComponent }: any
 	</>;
 };
 
-const addButtonStyle = css`
-	position: relative;
-`;
 const headingStyle = css`
 	width: 12rem;
 `;
@@ -122,38 +118,26 @@ export const AOverflowMenuItem = ({
 			parentComponent.items.indexOf(componentObj) + offset
 		)
 	});
-	// Prevent users from being redirected
-	const onClick = (event: any) => {
-		event.preventDefault();
-	};
 	return (
-		<Adder
-		active={selected}
-		key={componentObj.id}
-		addButtonsCss={addButtonStyle}
-		leftAction= {() => addItem(0)}
-		bottomAction={() => addItem(1)}>
 			<AComponent
 			headingCss={headingStyle}
 			selected={selected}
-			className={`${css`width: 100%;`} ${componentObj.hasDivider ? overflowDivider : ''}`}
+			className={componentObj.hasDivider ? overflowDivider : ''}
 			componentObj={componentObj}
 			{...rest}>
 				<OverflowMenuItem
-					onClick={onClick}
 					isDelete={componentObj.isDelete}
 					className={componentObj.className}
 					href={componentObj.hasLink ? componentObj.link : undefined}
 					itemText={componentObj.itemText}
 					disabled={componentObj.disabled}/>
 			</AComponent>
-		</Adder>
 	);
 };
 
 export const componentInfo: ComponentInfo = {
 	component: AOverflowMenuItem,
-	styleUI: AOverflowMenuItemStyleUI,
+	settingsUI: AOverflowMenuItemStyleUI,
 	codeUI: AOverflowMenuItemCodeUI,
 	render: ({ componentObj, select, remove, selected }) => <AOverflowMenuItem
 	componentObj={componentObj}

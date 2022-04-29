@@ -70,7 +70,7 @@ export const AOverflowMenuGroup = ({
 
 export const componentInfo: ComponentInfo = {
 	component: AOverflowMenuGroup,
-	styleUI: AOverflowMenuStyleUI,
+	settingsUI: AOverflowMenuStyleUI,
 	keywords: ['overflow', 'menu', 'context'],
 	name: 'Overflow menu',
 	type: 'overflow-menu',
