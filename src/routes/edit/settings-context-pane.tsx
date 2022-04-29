@@ -77,7 +77,7 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 						labelText='Make this fragment a &nbsp;'
 						onChange={(checked: boolean) => {
 							if (checked) {
-								if(!fragment.labels?.includes('template')) {
+								if (!fragment.labels?.includes('template')) {
 									setFragment({
 										...fragment,
 										labels: [...(fragment.labels || []), 'template']
@@ -103,7 +103,7 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 						labelText='Make this fragment a &nbsp;'
 						onChange={(checked: boolean) => {
 							if (checked) {
-								if(!fragment.labels?.includes('micro-layout')) {
+								if (!fragment.labels?.includes('micro-layout')) {
 									setFragment({
 										...fragment,
 										labels: [...(fragment.labels || []), 'micro-layout']
