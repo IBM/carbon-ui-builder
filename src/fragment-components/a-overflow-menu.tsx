@@ -13,7 +13,6 @@ import { reactClassNamesFromComponentObj,
 	nameStringToVariableString } from '../utils/fragment-tools';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { DraggableTileList } from '../components';
-import { css } from 'emotion';
 
 export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const placementItems = [
@@ -124,10 +123,6 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 	</>;
 };
 
-const preventCheckEvent = css`
-	pointer-events: none;
-`;
-
 export const AOverflowMenuGroup = ({
 	componentObj,
 	...rest
@@ -139,7 +134,7 @@ export const AOverflowMenuGroup = ({
 				<OverflowMenu
 						flipped={componentObj.flipped}
 						direction={componentObj.placement}
-						className={` ${preventCheckEvent} ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} `}>
+						className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 							{
 							componentObj.items.map((step: any, index: number) => (
 								<OverflowMenuItem
