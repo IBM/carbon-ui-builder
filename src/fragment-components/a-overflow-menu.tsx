@@ -13,7 +13,11 @@ import { reactClassNamesFromComponentObj,
 	nameStringToVariableString } from '../utils/fragment-tools';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { DraggableTileList } from '../components';
+import { css } from 'emotion';
 
+const preventCheckEvent = css`
+	pointer-events: none;
+`;
 export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const placementItems = [
 		{ id: 'top', text: 'Top' },
@@ -57,23 +61,23 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 			/>
 			<div style={{ display: 'flex', flexWrap: 'wrap' }}>
 				<Checkbox
-				labelText='Has link'
-				id='hasLink'
-				checked={item.hasLink}
-				onChange={(checked: boolean) => handleStepUpdate('hasLink', checked, index) }/>
+					labelText='Has link'
+					id={`hasLink-${index}`}
+					checked={item.hasLink}
+					onChange={(checked: boolean) => handleStepUpdate('hasLink', checked, index) }/>
 				<Checkbox
 					labelText='Disabled'
-					id='disabled'
+					id={`disabled-${index}`}
 					checked={item.disabled}
 					onChange={(checked: boolean) => handleStepUpdate('disabled', checked, index)}/>
 				<Checkbox
 					labelText='Is delete'
-					id='isDelete'
+					id={`isDelete-${index}`}
 					checked={item.isDelete}
 					onChange={(checked: boolean) => handleStepUpdate('isDelete', checked, index)} />
 				<Checkbox
 					labelText='has divider'
-					id='hasDivider'
+					id={`hasDivider-${index}`}
 					checked={item.hasDivider}
 					onChange={(checked: boolean) => handleStepUpdate('hasDivider', checked, index)} />
 			</div>
@@ -111,7 +115,6 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 			updateItem={handleStepUpdate}
 			defaultObject={{
 				itemText: 'New Option',
-				className: selectedComponent.id,
 				disabled: false,
 				hasLink: false,
 				isDelete: false,
@@ -134,7 +137,7 @@ export const AOverflowMenuGroup = ({
 				<OverflowMenu
 						flipped={componentObj.flipped}
 						direction={componentObj.placement}
-						className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+						className={` ${preventCheckEvent} ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} `}>
 							{
 							componentObj.items.map((step: any, index: number) => (
 								<OverflowMenuItem
