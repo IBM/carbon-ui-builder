@@ -44,11 +44,11 @@ export const ALoading = ({
 }: any) => {
 	return (
 		<AComponent
-componentObj={componentObj}
-headingCss={css`display: block;`}
-{...rest}>
+            componentObj={componentObj}
+            headingCss={css`display: block;`}
+            {...rest}>
 			<Loading
-withOverlay={false}
+                withOverlay={false}
 				small={componentObj.small}
 				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
 		</AComponent>
