@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-indent-props */
 import React from 'react';
 import { Checkbox, Loading } from 'carbon-components-react';
 import { AComponent } from './a-component';
