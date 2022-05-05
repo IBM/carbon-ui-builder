@@ -71,7 +71,7 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Overlay: boolean = "${json.overlay}";`,
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Overlay = ${json.overlay};`,
 			outputs: (_) => '',
 			imports: ['LoadingModule'],
 			code: ({ json }) => {
