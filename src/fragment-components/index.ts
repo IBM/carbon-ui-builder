@@ -17,6 +17,7 @@ import * as text from './a-text';
 import * as textarea from './a-textarea';
 import * as textinput from './a-textinput';
 import * as link from './a-link';
+import * as loading from './a-loading';
 // Tiles
 import * as tile from './tiles/a-tile';
 import * as clickabletile from './tiles/a-clickable-tile';
@@ -38,6 +39,7 @@ export { ADropdown, ADropdownSettingsUI, ADropdownCodeUI } from './a-dropdown';
 export * from './a-component';
 export { AFragment, AFragmentSettingsUI, AFragmentCodeUI } from './a-fragment';
 export { AGrid, AGridSettingsUI } from './a-grid';
+export { ALoading, ALoadingSettingsUI } from './a-loading';
 export { ALink, ALinkSettingsUI, ALinkCodeUI } from './a-link';
 export { ANumberInput, ANumberInputSettingsUI, ANumberInputCodeUI } from './a-numberinput';
 export { AProgressIndicator, AProgressIndicatorSettingsUI, AProgressIndicatorCodeUI } from './a-progress-indicator';
@@ -68,6 +70,7 @@ export const allComponents = {
 	dropdown,
 	fragment,
 	grid,
+	loading,
 	link,
 	numberinput,
 	progressIndicator,
