@@ -62,6 +62,22 @@ export const ARadioSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	</>;
 };
 
+export const ARadioCodeUI = ({ selectedComponent, setComponent }: any) => {
+	return <TextInput
+			value={selectedComponent.codeContext?.name}
+			labelText='Input name'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						name: event.currentTarget.value
+					}
+				});
+			}}
+		/>;
+};
+
 const addButtonStyle = css`
 	position: relative;
 `;
@@ -111,7 +127,7 @@ export const ARadio = ({
 					defaultChecked={componentObj.defaultChecked}
 					checked={componentObj.defaultChecked}
 					value={componentObj.value}
-					disabled= {componentObj.disabled} />
+					disabled={componentObj.disabled} />
 			</AComponent>
 		</Adder>
 	);
@@ -120,6 +136,7 @@ export const ARadio = ({
 export const componentInfo: ComponentInfo = {
 	component: ARadio,
 	settingsUI: ARadioSettingsUI,
+	codeUI: ARadioCodeUI,
 	render: ({ componentObj, select, remove, selected }) => <ARadio
 	componentObj={componentObj}
 	select={select}

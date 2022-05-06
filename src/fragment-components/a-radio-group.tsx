@@ -67,7 +67,20 @@ export const ARadioGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
 		defaultChecked: item.defaultChecked
 	}));
 	allItems.push({ text: 'None', id: 'none', defaultChecked: true });
-	return (
+	return <>
+		<TextInput
+			value={selectedComponent.codeContext?.name}
+			labelText='Input name'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						name: event.currentTarget.value
+					}
+				});
+			}}
+		/>
 		<Dropdown
 			label='Default selection'
 			titleText='Default selection'
@@ -83,7 +96,7 @@ export const ARadioGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
 					defaultChecked: event.selectedItem.id === item.id
 				}))
 		})}/>
-	);
+	</>;
 };
 
 export const ARadioGroup = ({
