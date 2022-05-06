@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
 	Dropdown,
 	TextInput,
@@ -66,15 +66,7 @@ export const ARadioGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
 		id: item.id,
 		defaultChecked: item.defaultChecked
 	}));
-	allItems.push({ text: 'None', id: 'none', defaultChecked: '' });
-	useEffect(() => {
-		const defaultSelected = selectedComponent.items.find(((item: any) => item.defaultChecked))?.id;
-		setComponent({
-			...selectedComponent,
-			defaultSelected: defaultSelected
-		});
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	allItems.push({ text: 'None', id: 'none', defaultChecked: true });
 	return (
 		<Dropdown
 			label='Default selection'
@@ -87,10 +79,11 @@ export const ARadioGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
 				defaultSelected: event.selectedItem.id,
 				valueSelected: event.selectedItem.id,
 				items: selectedComponent.items.map((item: any) => ({
-						...item,
-						defaultChecked: event.selectedItem.id === item.id
+					...item,
+					defaultChecked: event.selectedItem.id === item.id
 				}))
-		})}/>);
+		})}/>
+	);
 };
 
 export const ARadioGroup = ({
@@ -135,7 +128,7 @@ export const componentInfo: ComponentInfo = {
 				type: 'radio',
 				labelText: 'Option 1',
 				disabled: false,
-				defaultChecked: true
+				defaultChecked: false
 			},
 			{
 				type: 'radio',
@@ -162,9 +155,9 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}LegendText = "${json.legend}";
-								@Input() ${nameStringToVariableString(json.codeContext?.name)}Orientation = "${json.orientation}";
-								@Input() ${nameStringToVariableString(json.codeContext?.name)}LabelPosition = "${json.labelPosition}";
-								@Input() ${nameStringToVariableString(json.codeContext?.name)}Name = "${json.codeContext?.name}";`,
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Orientation = "${json.orientation}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}LabelPosition = "${json.labelPosition}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Name = "${json.codeContext?.name}";`,
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 			imports: ['RadioModule'],
 			code: ({ json, fragments, jsonToTemplate }) => {
@@ -182,8 +175,7 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			imports: ['RadioButtonGroup'],
 			code: ({ json, fragments, jsonToTemplate }) => {
-				return `
-				<RadioButtonGroup
+				return `<RadioButtonGroup
 					name="${json.codeContext?.name}"
 					legendText="${json.legend}"
 					orientation="${json.orientation}"
