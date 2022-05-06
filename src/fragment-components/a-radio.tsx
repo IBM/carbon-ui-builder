@@ -162,7 +162,6 @@ export const componentInfo: ComponentInfo = {
 				return `<RadioButton
 					id="${json.codeContext?.name}"
 					value="${json.id}"
-					checked={${json.defaultChecked}}
 					labelText="${json.labelText}"
 					onChange={(radio) => handleInputChange({
 						target: {
