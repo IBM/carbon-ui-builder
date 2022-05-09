@@ -162,7 +162,8 @@ export const AOverflowMenu = ({
 									itemText={step.itemText}
 									disabled={step.disabled}
 									isDelete={step.isDelete}
-									key={index} />))
+									key={index}
+								/>))
 							}
 				</OverflowMenu>
 		</AComponent>
