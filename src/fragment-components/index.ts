@@ -39,7 +39,7 @@ export { ADropdown, ADropdownSettingsUI, ADropdownCodeUI } from './a-dropdown';
 export * from './a-component';
 export { AFragment, AFragmentSettingsUI, AFragmentCodeUI } from './a-fragment';
 export { AGrid, AGridSettingsUI } from './a-grid';
-export { ALoading, ALoadingSettingsUI } from './a-loading';
+export { ALoading, ALoadingCodeUI, ALoadingSettingsUI } from './a-loading';
 export { ALink, ALinkSettingsUI, ALinkCodeUI } from './a-link';
 export { ANumberInput, ANumberInputSettingsUI, ANumberInputCodeUI } from './a-numberinput';
 export { AProgressIndicator, AProgressIndicatorSettingsUI, AProgressIndicatorCodeUI } from './a-progress-indicator';
