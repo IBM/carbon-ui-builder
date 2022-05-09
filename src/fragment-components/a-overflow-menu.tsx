@@ -126,7 +126,23 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 	</>;
 };
 
-export const AOverflowMenuGroup = ({
+export const AOverflowMenuCodeUI = ({ selectedComponent, setComponent }: any) => {
+	return <TextInput
+			value={selectedComponent.codeContext?.name}
+			labelText='Input name'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						name: event.currentTarget.value
+					}
+				});
+			}}
+		/>;
+};
+
+export const AOverflowMenu = ({
 	componentObj,
 	...rest
 }: any) => {
@@ -154,7 +170,8 @@ export const AOverflowMenuGroup = ({
 };
 
 export const componentInfo: ComponentInfo = {
-	component: AOverflowMenuGroup,
+	component: AOverflowMenu,
+	codeUI: AOverflowMenuCodeUI,
 	settingsUI: AOverflowMenuSettingsUI,
 	keywords: ['overflow', 'menu', 'context'],
 	name: 'Overflow menu',
@@ -195,7 +212,7 @@ export const componentInfo: ComponentInfo = {
 									${step.hasDivider ? `[divider]="${step.hasDivider}"` : ''}
 									${step.hasLink ? `href="${step.link}"` : ''}
 									${step.disabled ? `disabled="${step.disabled}"` : '' }
-									(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)" 
+									(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
 									(click)="${nameStringToVariableString(json.codeContext?.name)}Clicked.emit($event)">
 										${step.itemText}
 							</ibm-overflow-menu-option>`
@@ -211,7 +228,7 @@ export const componentInfo: ComponentInfo = {
 							flipped={${json.flipped}}
 							${reactClassNamesFromComponentObj(json)}>
 							${json.items.map((step: any) => (
-								`<OverflowMenuItem 
+								`<OverflowMenuItem
 									${step.hasLink ? `href="${step.link}"` : ''}
 									${step.isDelete !== undefined ? `isDelete={${step.isDelete}}` : ''}
 									${step.hasDivider !== false ? 'hasDivider': ''}

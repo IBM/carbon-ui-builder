@@ -48,7 +48,7 @@ export { ATag, ATagSettingsUI } from './a-tag';
 export { AText, ATextSettingsUI } from './a-text';
 export { ATextArea, ATextAreaSettingsUI, ATextAreaCodeUI } from './a-textarea';
 export { ATextInput, ATextInputSettingsUI, ATextInputCodeUI } from './a-textinput';
-export { AOverflowMenuGroup, AOverflowMenuSettingsUI } from './a-overflow-menu';
+export { AOverflowMenuGroup, AOverflowMenuCodeUI, AOverflowMenuSettingsUI } from './a-overflow-menu';
 
 // Tiles
 export { ATile, ATileCodeUI, ATileSettingsUI } from './tiles/a-tile';
