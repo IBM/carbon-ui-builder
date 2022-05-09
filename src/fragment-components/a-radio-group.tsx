@@ -109,14 +109,14 @@ export const ARadioGroup = ({
 		componentObj={componentObj}
 		{...rest}>
 			<RadioButtonGroup
-				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
-				legendText= {componentObj.legend}
-				disabled= {componentObj.disabled}
-				orientation={componentObj.orientation}
-				defaultSelected={componentObj.defaultSelected}
-				labelPosition={componentObj.labelPosition}
-				name={componentObj.codeContext?.name}>
-					{children}
+			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
+			legendText= {componentObj.legend}
+			disabled= {componentObj.disabled}
+			orientation={componentObj.orientation}
+			defaultSelected={componentObj.defaultSelected}
+			labelPosition={componentObj.labelPosition}
+			name={componentObj.codeContext?.name}>
+				{children}
 			</RadioButtonGroup>
 		</AComponent>
 	);

@@ -155,10 +155,10 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText}";
-								@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
-								@Input() ${nameStringToVariableString(json.codeContext?.name)}Id = "${json.codeContext?.name}";
-								@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.id}";
-								@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${json.defaultChecked};`,
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Id = "${json.codeContext?.name}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.id}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${json.defaultChecked};`,
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 			imports: [],
 			code: ({ json }) => {
@@ -169,7 +169,7 @@ export const componentInfo: ComponentInfo = {
 					[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
 					(change)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
 					${angularClassNamesFromComponentObj(json)}>
-					{{${nameStringToVariableString(json.codeContext?.name)}Label}}
+						{{${nameStringToVariableString(json.codeContext?.name)}Label}}
 				</ibm-radio>`;
 			}
 		},
