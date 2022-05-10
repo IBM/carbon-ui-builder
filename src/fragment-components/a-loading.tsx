@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-indent-props */
 import React from 'react';
 import { Checkbox, Loading, TextInput } from 'carbon-components-react';
 import { AComponent } from './a-component';
@@ -36,13 +35,13 @@ export const ALoadingSettingsUI = ({ selectedComponent, setComponent }: any) => 
 			}}
 		/>
 		<Checkbox
-        labelText='Active'
-        id='active'
-        checked={selectedComponent.active}
-        onChange={(checked: any) => {
-				setComponent({
-					...selectedComponent,
-					active: checked
+		labelText='Active'
+		id='active'
+		checked={selectedComponent.active}
+		onChange={(checked: any) => {
+			setComponent({
+				...selectedComponent,
+				active: checked
 				});
 			}}
 		/>
@@ -72,14 +71,14 @@ export const ALoading = ({
 }: any) => {
 	return (
 		<AComponent
-            componentObj={componentObj}
-            headingCss={css`display: block;`}
-            {...rest}>
+		componentObj={componentObj}
+		headingCss={css`display: block;`}
+		{...rest}>
 			<Loading
-				active={componentObj.active}
-                withOverlay={false}
-				small={componentObj.small}
-				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
+			active={componentObj.active}
+			withOverlay={false}
+			small={componentObj.small}
+			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
 		</AComponent>
 	);
 };
@@ -107,10 +106,10 @@ export const componentInfo: ComponentInfo = {
 			imports: ['LoadingModule'],
 			code: ({ json }) => {
 				return `<ibm-loading
-								[size]="${json.small ? 'sm' : 'normal'}"
-								[isActive]="${nameStringToVariableString(json.codeContext?.name)}Active"
-                                [overlay]="${nameStringToVariableString(json.codeContext?.name)}Overlay"
-                                ${angularClassNamesFromComponentObj(json)}>
+							[size]="${json.small ? 'sm' : 'normal'}"
+							[isActive]="${nameStringToVariableString(json.codeContext?.name)}Active"
+                            [overlay]="${nameStringToVariableString(json.codeContext?.name)}Overlay"
+                            ${angularClassNamesFromComponentObj(json)}>
                         </ibm-loading>`;
 			}
 		},
