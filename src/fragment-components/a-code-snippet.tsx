@@ -89,7 +89,7 @@ export const componentInfo: ComponentInfo = {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Type = "${json.varient}"`,
 			outputs: () => '',
-			imports: ['CodeSnippetModule, ButtonModule'],
+			imports: ['CodeSnippetModule'],
 			code: ({ json }) => {
 				return `<ibm-code-snippet
 					display={{${nameStringToVariableString(json.codeContext?.name)}Type}} >
