@@ -1,10 +1,10 @@
 import React from 'react';
-import { Dropdown, TextArea, TextInput, CodeSnippet } from 'carbon-components-react';
+import { Dropdown, TextInput, CodeSnippet } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
-
+import Editor from '@monaco-editor/react';
 import image from './../assets/component-icons/checkbox.svg';
 import { nameStringToVariableString } from '../utils/fragment-tools';
 
@@ -15,6 +15,13 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 		{ id: 'inline', text: 'Inline' }
 	];
 	return <>
+		<label className="bx--label">Code</label>
+		<Editor defaultLanguage="json" height="25vh"
+			value={selectedComponent.code}
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				code: event
+		})}></Editor>
 		<Dropdown
 			label='Variant selector'
 			titleText='Variant selector'
@@ -25,13 +32,6 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 				...selectedComponent,
 				varient: event.selectedItem.id
 		})}/>
-		<TextArea
-			value={selectedComponent.code}
-			labelText='Code'
-			onChange={(event: any) => setComponent({
-				...selectedComponent,
-				code: event.currentTarget.value
-		})} />
 		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
@@ -76,7 +76,7 @@ export const componentInfo: ComponentInfo = {
 	settingsUI: ACodeSnippetSettingsUI,
 	codeUI: ACodeSnippetCodeUI,
 	keywords: ['code', 'snippet', 'code snippet'],
-	name: 'CodeSnippet',
+	name: 'Code Snippet',
 	type: 'code-snippet',
 	defaultComponentObj: {
 		type: 'code-snippet',
