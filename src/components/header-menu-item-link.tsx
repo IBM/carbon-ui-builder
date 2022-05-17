@@ -4,7 +4,7 @@ import React, {
 	forwardRef
 } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { HeaderMenuItem } from 'carbon-components-react/lib/components/UIShell';
+import { HeaderMenuItem } from 'carbon-components-react';
 
 interface HeaderMenuItemLinkInterface extends RouteComponentProps, ComponentPropsWithRef<any> { }
 

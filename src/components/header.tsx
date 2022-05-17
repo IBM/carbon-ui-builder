@@ -3,7 +3,7 @@ import {
 	HeaderMenuButton,
 	HeaderName,
 	Header as ShellHeader
-} from 'carbon-components-react/lib/components/UIShell';
+} from 'carbon-components-react';
 import { css } from 'emotion';
 import { useHistory } from 'react-router-dom';
 
