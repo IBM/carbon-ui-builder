@@ -5,7 +5,7 @@ import { css } from 'emotion';
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 import Editor from '@monaco-editor/react';
-import image from './../assets/component-icons/checkbox.svg';
+import image from './../assets/component-icons/code-snippet.svg';
 import { nameStringToVariableString } from '../utils/fragment-tools';
 
 export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any) => {
