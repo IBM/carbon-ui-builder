@@ -110,6 +110,7 @@ export const componentInfo: ComponentInfo = {
 	type: 'grid',
 	defaultComponentObj: {
 		type: 'grid',
+		showOutline: true,
 		items: [
 			{
 				type: 'row', items: [
