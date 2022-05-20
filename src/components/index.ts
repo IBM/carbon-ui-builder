@@ -1,6 +1,5 @@
 export * from './adder';
 export * from './header';
-export * from './header-menu-item-link';
 export * from './link-button';
 export * from './main';
 export * from './fragment';
