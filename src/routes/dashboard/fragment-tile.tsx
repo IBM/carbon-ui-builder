@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
 	OverflowMenu,
 	OverflowMenuItem,
@@ -18,7 +18,7 @@ export const FragmentTile = ({
 	lastModified,
 	setModalFragment
 }: any) => {
-	const history = useHistory();
+	const navigate = useNavigate();
 	const [, dispatchModal] = useContext(ModalContext);
 	const [previewUrl, setPreviewUrl] = useState('');
 	const handleModalState = (modalAction: ModalActionType) => {
@@ -55,7 +55,7 @@ export const FragmentTile = ({
 						onClick={(event: { stopPropagation: () => void }) => event.stopPropagation()}>
 							<OverflowMenuItem
 								itemText='Edit'
-								onClick={() => history.push(`/edit/${fragment.id}`)} />
+								onClick={() => navigate(`/edit/${fragment.id}`)} />
 							<OverflowMenuItem
 								itemText='Export'
 								onClick={() => handleModalState(ModalActionType.setExportModal)} />
