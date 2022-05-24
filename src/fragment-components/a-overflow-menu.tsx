@@ -50,15 +50,16 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 					handleStepUpdate('itemText', event.currentTarget.value, index);
 				}}
 			/>
+			{ item.hasLink &&
 			<TextInput
 				light
 				value={item.link}
-				disabled= {!item.hasLink}
 				labelText='Link'
 				onChange={(event: any) => {
 					handleStepUpdate('link', event.currentTarget.value, index);
 				}}
 			/>
+			}
 			<div style={{ display: 'flex', flexWrap: 'wrap' }}>
 				<Checkbox
 					labelText='Has link'
@@ -76,7 +77,7 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 					checked={item.isDelete}
 					onChange={(checked: boolean) => handleStepUpdate('isDelete', checked, index)} />
 				<Checkbox
-					labelText='has divider'
+					labelText='Has divider'
 					id={`hasDivider-${index}`}
 					checked={item.hasDivider}
 					onChange={(checked: boolean) => handleStepUpdate('hasDivider', checked, index)} />
@@ -102,7 +103,7 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 				placement: event.selectedItem.id
 			})} />
 	<Checkbox
-			labelText='Flip'
+			labelText='Flip left'
 			id='flipped'
 			checked={selectedComponent.flipped}
 			onChange={(checked: boolean) => setComponent({
@@ -186,6 +187,15 @@ export const componentInfo: ComponentInfo = {
 			{
 				itemText: 'Option 1',
 				className: 'option-1',
+				disabled: false,
+				hasLink: false,
+				isDelete: false,
+				hasDivider: false,
+				link: ''
+			},
+			{
+				itemText: 'Option 2',
+				className: 'option-2',
 				disabled: false,
 				hasLink: false,
 				isDelete: false,
