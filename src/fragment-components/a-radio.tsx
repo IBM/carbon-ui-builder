@@ -182,11 +182,10 @@ export const componentInfo: ComponentInfo = {
 					labelText="${json.labelText}"
 					onChange={(radio) => handleInputChange({
 						target: {
-							name: "${json.codeContext?.name}",
-							value: radio
+							name: "${json.codeContext?.name}"
 						}
 					})}
-					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
+					${json.disabled ? `disabled={${json.disabled}}` : ''}
 					${reactClassNamesFromComponentObj(json)}/>`;
 			}
 		}

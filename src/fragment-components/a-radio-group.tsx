@@ -24,6 +24,12 @@ export const ARadioGroupSettingsUI = ({ selectedComponent, setComponent }: any) 
 		{ id: 'right', text: 'Right' }
 	];
 
+	const allItems = selectedComponent.items.map((item: any) => ({
+		text: item.labelText,
+		id: item.id,
+		defaultChecked: item.defaultChecked
+	}));
+	allItems.push({ text: 'None', id: 'none', defaultChecked: true });
 	return <>
 		<TextInput
 			value={selectedComponent.legend}
@@ -56,31 +62,6 @@ export const ARadioGroupSettingsUI = ({ selectedComponent, setComponent }: any) 
 				...selectedComponent,
 				labelPosition: event.selectedItem.id
 		})}/>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>;
-};
-
-export const ARadioGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
-	const allItems = selectedComponent.items.map((item: any) => ({
-		text: item.labelText,
-		id: item.id,
-		defaultChecked: item.defaultChecked
-	}));
-	allItems.push({ text: 'None', id: 'none', defaultChecked: true });
-	return <>
-		<TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>
 		<Dropdown
 			label='Default selection'
 			titleText='Default selection'
@@ -96,7 +77,26 @@ export const ARadioGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
 					defaultChecked: event.selectedItem.id === item.id
 				}))
 		})}/>
+		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
+};
+
+export const ARadioGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
+	return (
+		<TextInput
+			value={selectedComponent.codeContext?.name}
+			labelText='Input name'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						name: event.currentTarget.value
+					}
+				});
+			}}
+		/>
+	);
 };
 
 export const ARadioGroup = ({
@@ -193,13 +193,12 @@ export const componentInfo: ComponentInfo = {
 					legendText="${json.legend}"
 					orientation="${json.orientation}"
 					labelPosition="${json.labelPosition}"
-					defaultSelected="${json.defaultSelected}"
-					valueChecked="${json.defaultSelected}"
+					${json.defaultSelected !== undefined && json.defaultSelected !== '' ? `defaultSelected="${json.defaultSelected}"` : ''}
+					${json.defaultSelected !== undefined && json.defaultSelected !== '' ? `valueChecked="${json.defaultSelected}"` : ''}
 					${reactClassNamesFromComponentObj(json)}
 					onChange={(radio) => handleInputChange({
 						target: {
-							name: "${json.codeContext?.name}",
-							value: radio
+							name: "${json.codeContext?.name}"
 						}
 					})}>
 						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
