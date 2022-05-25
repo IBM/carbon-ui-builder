@@ -4,9 +4,12 @@ import * as accordionitem from './accordion/a-accordion-item';
 import * as button from './a-button';
 import * as checkbox from './a-checkbox';
 import * as column from './a-column';
+import * as combobox from './a-combobox';
+import * as dropdown from './a-dropdown';
 import * as fragment from './a-fragment';
 import * as grid from './a-grid';
 import * as numberinput from './a-numberinput';
+import * as progressIndicator from './a-progress-indicator';
 import * as row from './a-row';
 import * as tag from './a-tag';
 import * as searchinput from './a-searchinput';
@@ -30,17 +33,21 @@ export { AAccordionItem, AAccordionItemSettingsUI } from './accordion/a-accordio
 export { AButton, AButtonSettingsUI } from './a-button';
 export { ACheckbox, ACheckboxSettingsUI, ACheckboxCodeUI } from './a-checkbox';
 export { AColumn, AColumnSettingsUI } from './a-column';
+export { AComboBox, AComboBoxSettingsUI, AComboBoxCodeUI } from './a-combobox';
+export { ADropdown, ADropdownSettingsUI, ADropdownCodeUI } from './a-dropdown';
 export * from './a-component';
 export { AFragment, AFragmentSettingsUI, AFragmentCodeUI } from './a-fragment';
 export { AGrid, AGridSettingsUI } from './a-grid';
+export { ALink, ALinkSettingsUI, ALinkCodeUI } from './a-link';
+export { ANumberInput, ANumberInputSettingsUI, ANumberInputCodeUI } from './a-numberinput';
+export { AProgressIndicator, AProgressIndicatorSettingsUI, AProgressIndicatorCodeUI } from './a-progress-indicator';
 export { ARow, ARowSettingsUI } from './a-row';
+export { ASearchInput, ASearchInputSettingsUI, ASearchInputCodeUI } from './a-searchinput';
 export { ATag, ATagSettingsUI } from './a-tag';
 export { AText, ATextSettingsUI } from './a-text';
 export { ATextArea, ATextAreaSettingsUI, ATextAreaCodeUI } from './a-textarea';
 export { ATextInput, ATextInputSettingsUI, ATextInputCodeUI } from './a-textinput';
-export { ASearchInput, ASearchInputSettingsUI, ASearchInputCodeUI } from './a-searchinput';
-export { ANumberInput, ANumberInputSettingsUI, ANumberInputCodeUI } from './a-numberinput';
-export { ALink, ALinkSettingsUI, ALinkCodeUI } from './a-link';
+
 // Tiles
 export { ATile, ATileCodeUI, ATileSettingsUI } from './tiles/a-tile';
 export { AClickableTile, AClickableTileCodeUI, AClickableTileSettingsUI } from './tiles/a-clickable-tile';
@@ -56,17 +63,20 @@ export const allComponents = {
 	accordionitem,
 	button,
 	checkbox,
+	combobox,
 	column,
+	dropdown,
 	fragment,
 	grid,
+	link,
+	numberinput,
+	progressIndicator,
 	row,
+	searchinput,
 	tag,
 	text,
 	textarea,
 	textinput,
-	searchinput,
-	numberinput,
-	link,
 	// Tiles
 	tile,
 	clickabletile,

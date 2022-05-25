@@ -70,7 +70,7 @@ export interface ComponentInfo {
 			code: (props: {json: any; jsonToTemplate: (json: any, fragments: any[]) => string; fragments: any[]}) => string;
 		};
 		react: {
-			imports: string[];
+			imports: ((props: {json: any}) => string[]) | string[];
 			otherImports?: (props: {json: any; fragments?: any[]}) => string;
 			isNotDirectExport?: boolean;
 			code: (props: {json: any; jsonToTemplate: (json: any, fragments: any[]) => string; fragments: any[]}) => string;
