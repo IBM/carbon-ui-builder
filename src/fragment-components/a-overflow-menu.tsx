@@ -1,11 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
 	Checkbox,
 	Dropdown,
 	OverflowMenu,
 	TextInput,
-	Button,
-	Modal,
 	OverflowMenuItem
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
@@ -16,67 +14,12 @@ import { reactClassNamesFromComponentObj,
 import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { DraggableTileList } from '../components';
 import { css } from 'emotion';
-import { ModalActionType, ModalContext } from '../context/modal-context';
-import * as Icons from '@carbon/icons-react';
 
 const preventCheckEvent = css`
 	pointer-events: none;
 `;
-const elementTileStyle = css`
-	border: 1px solid #d8d8d8;
-	min-width: 34px;
-	height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-	margin-bottom: 1rem;
-    flex-direction: column;
-`;
-
-const sizeItems = [
-	{ id: '16', text: 'Small' },
-	{ id: '20', text: 'Medium' },
-	{ id: '24', text: 'Large' },
-	{ id: '32', text: 'Extra large' }
-];
-
-const getIcons = () => {
-	const items: any = [];
-	Object.entries(Icons).forEach((item: any) => {
-		const element = item[0].split(/(\d+)/);
-		const icon = element ? element[0] : '';
-		const size = element ? element[1] : '';
-		const object = {
-			key: icon,
-			componentObj: {
-				keywords: [item[0], item[0].toLowerCase(), item[0].replace(/[0-9]/g, '')],
-				size: [{ size: size, text: sizeItems.find((sizeItem: any) => sizeItem.id === size)?.text, component: item[1] }],
-				key: icon,
-				label: `${icon}`,
-				name: item[1].render.name,
-				type: 'icons',
-				className: elementTileStyle,
-				selectedIcon: item[1],
-				selectedSize: size
-			}
-		};
-		if (item[0] !== 'Icon') {
-			const isIncluded = items.some((item: any) => item.key === object.key);
-			if (isIncluded) {
-				const current = items.find((item: any) => item.key === object.key);
-				current.componentObj.size.push({ size: size,
-					text: sizeItems.find((sizeItem: any) => sizeItem.id === size)?.text, component: item[1] });
-			} else {
-				items.push(object);
-			}
-		}
-	});
-	return items;
-};
 
 export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any) => {
-	const [modalState, dispatchModal] = useContext(ModalContext);
-	// const [filterString, setFilterString] = useState('');
 	const placementItems = [
 		{ id: 'top', text: 'Top' },
 		{ id: 'bottom', text: 'Bottom' }
@@ -148,33 +91,15 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 			items: newList
 		});
 	};
-
-	const openIconModal = () => {
-		selectedComponent.icons = getIcons();
-		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
-		return (
-			<Modal
-				size='md'
-				open={modalState.ShowModal}
-				onRequestClose={() => dispatchModal({ type: ModalActionType.closeModal })}
-				secondaryButtonText='Cancel'
-				primaryButtonText='Select'
-				modalHeading='Select new icon'>
-					<p>
-						test
-					</p>
-			</Modal>
-		);
-	};
 	return <>
-		<Button
-		kind='ghost'
-		onClick={() => openIconModal()}
-		title='Select icons'
-		aria-label='Select icons'>
-			Select icons
-		</Button>
-
+	<Checkbox
+			labelText='Flip left'
+			id='flipped'
+			checked={selectedComponent.flipped}
+			onChange={(checked: boolean) => setComponent({
+				...selectedComponent,
+				flipped: checked
+		})} />
 	<Dropdown
 			label='Placement'
 			titleText='Placement'
@@ -184,15 +109,7 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				placement: event.selectedItem.id
-			})} />
-	<Checkbox
-			labelText='Flip left'
-			id='flipped'
-			checked={selectedComponent.flipped}
-			onChange={(checked: boolean) => setComponent({
-				...selectedComponent,
-				flipped: checked
-		})} />
+	})} />
 	<DraggableTileList
 			dataList={[...selectedComponent.items]}
 			setDataList={updateStepList}
