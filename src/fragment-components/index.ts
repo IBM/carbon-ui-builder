@@ -19,6 +19,7 @@ import * as textinput from './a-textinput';
 import * as link from './a-link';
 // Tiles
 import * as tile from './tiles/a-tile';
+import * as toggle from './a-toggle';
 import * as clickabletile from './tiles/a-clickable-tile';
 import * as expandabletile from './tiles/a-expandable-tile';
 import * as tilefold from './tiles/a-tile-fold';
@@ -50,6 +51,7 @@ export { ATextInput, ATextInputSettingsUI, ATextInputCodeUI } from './a-textinpu
 
 // Tiles
 export { ATile, ATileCodeUI, ATileSettingsUI } from './tiles/a-tile';
+export { AToggle, AToggleSettingsUI, AToggleCodeUI } from './a-toggle';
 export { AClickableTile, AClickableTileCodeUI, AClickableTileSettingsUI } from './tiles/a-clickable-tile';
 export { AExpandableTile, AExpandableTileCodeUI, AExpandableSettingsUI } from './tiles/a-expandable-tile';
 export { ATileFold, ATileFoldSettingsUI } from './tiles/a-tile-fold';
@@ -79,6 +81,7 @@ export const allComponents = {
 	textinput,
 	// Tiles
 	tile,
+	toggle,
 	clickabletile,
 	expandabletile,
 	tilefold,
