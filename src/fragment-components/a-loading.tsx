@@ -75,10 +75,10 @@ export const ALoading = ({
 		headingCss={css`display: block;`}
 		{...rest}>
 			<Loading
-			active={componentObj.active}
-			withOverlay={false}
-			small={componentObj.small}
-			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
+				active={componentObj.active}
+				withOverlay={componentObj.overlay}
+				small={componentObj.small}
+				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
 		</AComponent>
 	);
 };
