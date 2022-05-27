@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/carbon-components-builder/static/css/main.a263ba94.chunk.css",
-    "main.js": "/carbon-components-builder/static/js/main.c73f6afb.chunk.js",
-    "main.js.map": "/carbon-components-builder/static/js/main.c73f6afb.chunk.js.map",
+    "main.js": "/carbon-components-builder/static/js/main.edee27e1.chunk.js",
+    "main.js.map": "/carbon-components-builder/static/js/main.edee27e1.chunk.js.map",
     "runtime-main.js": "/carbon-components-builder/static/js/runtime-main.14a4950b.js",
     "runtime-main.js.map": "/carbon-components-builder/static/js/runtime-main.14a4950b.js.map",
     "static/js/2.d13b4e4c.chunk.js": "/carbon-components-builder/static/js/2.d13b4e4c.chunk.js",
     "static/js/2.d13b4e4c.chunk.js.map": "/carbon-components-builder/static/js/2.d13b4e4c.chunk.js.map",
     "index.html": "/carbon-components-builder/index.html",
-    "precache-manifest.64094c610f414fcb3a1a0349f6b622a3.js": "/carbon-components-builder/precache-manifest.64094c610f414fcb3a1a0349f6b622a3.js",
+    "precache-manifest.2177f83e265a5e10311396d319eb4d64.js": "/carbon-components-builder/precache-manifest.2177f83e265a5e10311396d319eb4d64.js",
     "service-worker.js": "/carbon-components-builder/service-worker.js",
     "static/css/main.a263ba94.chunk.css.map": "/carbon-components-builder/static/css/main.a263ba94.chunk.css.map",
     "static/js/2.d13b4e4c.chunk.js.LICENSE.txt": "/carbon-components-builder/static/js/2.d13b4e4c.chunk.js.LICENSE.txt",
@@ -40,6 +40,6 @@
     "static/js/runtime-main.14a4950b.js",
     "static/js/2.d13b4e4c.chunk.js",
     "static/css/main.a263ba94.chunk.css",
-    "static/js/main.c73f6afb.chunk.js"
+    "static/js/main.edee27e1.chunk.js"
   ]
 }
