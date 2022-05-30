@@ -31,6 +31,7 @@ export const AText = ({
 	return (
 		<AComponent
 		componentObj={componentObj}
+		rejectDrop={true}
 		className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
 		{...rest}>
 			{children}

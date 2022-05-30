@@ -65,6 +65,7 @@ export const AFragment = ({
 		<AComponent
 		componentObj={componentObj}
 		className={css`position: relative; display: inline-flex`}
+		rejectDrop={true}
 		{...rest}>
 			<div
 			style={{ pointerEvents: 'none' }}
