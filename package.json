@@ -11,7 +11,7 @@
     "carbon-components-react": "7.57.1",
     "carbon-icons": "7.0.7",
     "dom-to-image": "2.6.0",
-	"emotion": "10.0.27",
+    "emotion": "10.0.27",
     "jspdf": "2.5.1",
     "lodash": "4.17.21",
     "lz-string": "1.4.4",
