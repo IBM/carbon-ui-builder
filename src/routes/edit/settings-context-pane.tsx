@@ -9,7 +9,8 @@ import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { getSelectedComponent, updatedState } from '../../components/fragment';
 import { allComponents } from '../../fragment-components';
 import { SelectedComponentBreadcrumbs } from './selected-component-breadcrumbs';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
+import { FragmentLayers } from '../../components/fragment-layers';
 
 const styleContextPaneStyle = css`
 .bx--form-item.bx--checkbox-wrapper {
@@ -45,7 +46,7 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 	};
 
 	return (
-		<div className={styleContextPaneStyle}>
+		<div className={cx(styleContextPaneStyle, 'context-pane-content')}>
 			{
 				selectedComponent && <>
 					<SelectedComponentBreadcrumbs
@@ -53,9 +54,7 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 						selectedComponent={selectedComponent}
 						setFragment={setFragment} />
 					<hr />
-					<div className='context-pane-content'>
-						{showComponentSettingsUI(selectedComponent, setComponent)}
-					</div>
+					{showComponentSettingsUI(selectedComponent, setComponent)}
 				</>
 			}
 			{
@@ -127,6 +126,7 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 			{
 				!selectedComponent && <ComponentCssClassSelector componentObj={fragment} setComponent={setFragment} />
 			}
+			<FragmentLayers fragment={fragment} setFragment={setFragment} />
 		</div>
 	);
 };

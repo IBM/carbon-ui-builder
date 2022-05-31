@@ -132,7 +132,7 @@ const rightPanel = css`
 
 	.context-pane-content {
 		overflow: auto;
-		height: calc(100vh - 17rem);
+		height: calc(100vh - 15rem);
 	}
 `;
 
