@@ -14,9 +14,26 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 		{ id: 'multi', text: 'Multi line' },
 		{ id: 'inline', text: 'Inline' }
 	];
+	const languages = [
+		{ id: 'json', text: 'JSON' },
+		{ id: 'html', text: 'HTML' },
+		{ id: 'css', text: 'CSS' },
+		{ id: 'javascript', text: 'Javascript' }
+	];
 	return <>
+		<Dropdown
+			label='Code language selector'
+			titleText='Code language selector'
+			items={languages}
+			initialSelectedItem={languages.find(item => item.id === selectedComponent.language)}
+			itemToString={(item: any) => (item ? item.text : '')}
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				language: event.selectedItem.id
+		})}/>
 		<label className="bx--label">Code</label>
-		<Editor defaultLanguage="json" height="25vh"
+		<Editor
+			language={selectedComponent.language} height="25vh"
 			value={selectedComponent.code}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
@@ -82,18 +99,20 @@ export const componentInfo: ComponentInfo = {
 		type: 'code-snippet',
 		label: 'CodeSnippet',
 		varient: 'single',
-		code: ''
+		code: '',
+		language: 'html'
 	},
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Type = "${json.varient}"`,
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Type = "${json.varient}"
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Code = ${JSON.stringify(json.code)}`,
 			outputs: () => '',
 			imports: ['CodeSnippetModule'],
 			code: ({ json }) => {
 				return `<ibm-code-snippet
-					display={{${nameStringToVariableString(json.codeContext?.name)}Type}} >
-						${json.code}
+					display={{${nameStringToVariableString(json.codeContext?.name)}Type}}>
+						{{${nameStringToVariableString(json.codeContext?.name)}Code}}
 					</ibm-code-snippet>`;
 			}
 		},
@@ -102,7 +121,7 @@ export const componentInfo: ComponentInfo = {
 			code: ({ json }) => {
 				return `<CodeSnippet
 					type="${json.varient}">
-						${json.code}
+						{${JSON.stringify(json.code)}}
 					</CodeSnippet>`;
 			}
 		}
