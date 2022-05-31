@@ -10,6 +10,11 @@ import { nameStringToVariableString,
 	angularClassNamesFromComponentObj } from '../utils/fragment-tools';
 import { css } from 'emotion';
 
+const overlayStyle = css`
+.bx--loading-overlay {
+	position: absolute;
+};`;
+
 export const ALoadingSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<Checkbox
@@ -37,6 +42,7 @@ export const ALoadingSettingsUI = ({ selectedComponent, setComponent }: any) => 
 		<Checkbox
 		labelText='Active'
 		id='active'
+		disabled
 		checked={selectedComponent.active}
 		onChange={(checked: any) => {
 			setComponent({
@@ -72,6 +78,7 @@ export const ALoading = ({
 	return (
 		<AComponent
 		componentObj={componentObj}
+		className={`${componentObj.overlay ? overlayStyle : ''}`}
 		headingCss={css`display: block;`}
 		{...rest}>
 			<Loading
