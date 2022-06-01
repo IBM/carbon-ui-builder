@@ -117,7 +117,7 @@ export const AToggle = ({
 				checked={componentObj.checked}
 				id={componentObj.id}
 				labelA={componentObj.offText}
-				labelB={componentObj.OnText}
+				labelB={componentObj.onText}
 				labelText={componentObj.header}
 				className={` ${preventCheckEvent} ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} `}
 				/>
