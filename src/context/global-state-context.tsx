@@ -4,7 +4,6 @@ import React, {
 	useContext,
 	useState
 } from 'react';
-import { useLocation } from 'react-router-dom';
 import assign from 'lodash/assign';
 import { getFragmentHelpers } from './fragments-context-helper';
 
@@ -13,7 +12,6 @@ GlobalStateContext.displayName = 'GlobalStateContext';
 
 export const useFragment = (id?: string) => {
 	const context = useContext(GlobalStateContext);
-	const location = useLocation();
 
 	if (!context) {
 		// this happens when rendering, which is fine because it's used
@@ -26,7 +24,7 @@ export const useFragment = (id?: string) => {
 	const { fragments, updateFragment } = context;
 
 	if (!id) {
-		const pathSegments = location.pathname.split('/');
+		const pathSegments = window.location.pathname.split('/');
 		id = pathSegments[pathSegments.length - 1];
 	}
 
