@@ -5,7 +5,6 @@ import {
 	Checkbox
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { useFragment } from '../context';
 import { css } from 'emotion';
 import {
@@ -58,7 +57,6 @@ export const ARadioSettingsUI = ({ selectedComponent, setComponent }: any) => {
 				});
 			}}
 		/>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent}/>
 	</>;
 };
 

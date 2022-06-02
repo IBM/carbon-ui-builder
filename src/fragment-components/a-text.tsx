@@ -1,15 +1,13 @@
 import React from 'react';
 import { TextInput } from 'carbon-components-react';
 import { AComponent } from './a-component';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/text.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const ATextSettingsUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
-		<TextInput
+	return <TextInput
 			value={selectedComponent.text}
 			labelText='Text'
 			onChange={(event: any) => {
@@ -18,9 +16,7 @@ export const ATextSettingsUI = ({ selectedComponent, setComponent }: any) => {
 					text: event.currentTarget.value
 				});
 			}}
-		/>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>;
+		/>;
 };
 
 export const AText = ({
@@ -31,6 +27,7 @@ export const AText = ({
 	return (
 		<AComponent
 		componentObj={componentObj}
+		rejectDrop={true}
 		className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
 		{...rest}>
 			{children}

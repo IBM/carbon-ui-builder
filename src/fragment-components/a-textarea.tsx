@@ -1,7 +1,6 @@
 import React from 'react';
 import { TextArea, TextInput } from 'carbon-components-react';
 import { AComponent } from './a-component';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/text-area.svg';
@@ -39,7 +38,6 @@ export const ATextAreaSettingsUI = ({ selectedComponent, setComponent }: any) =>
 				});
 			}}
 		/>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 
@@ -65,7 +63,7 @@ export const ATextArea = ({
 	...rest
 }: any) => {
 	return (
-		<AComponent componentObj={componentObj} {...rest}>
+		<AComponent componentObj={componentObj} rejectDrop={true} {...rest}>
 			<TextArea
 				kind={componentObj.kind}
 				disabled={componentObj.disabled}

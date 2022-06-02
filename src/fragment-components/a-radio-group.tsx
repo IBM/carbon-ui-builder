@@ -5,7 +5,6 @@ import {
 	RadioButtonGroup
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 import image from './../assets/component-icons/radio-group.svg';
 import {
 	angularClassNamesFromComponentObj,
@@ -77,7 +76,6 @@ export const ARadioGroupSettingsUI = ({ selectedComponent, setComponent }: any) 
 					defaultChecked: event.selectedItem.id === item.id
 				}))
 		})}/>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 

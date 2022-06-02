@@ -2,7 +2,6 @@ import React from 'react';
 import { TextInput, Dropdown } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/text-input.svg';
@@ -66,7 +65,6 @@ export const ATextInputSettingsUI = ({ selectedComponent, setComponent }: any) =
 				});
 			}}
 		/>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 
@@ -97,6 +95,7 @@ export const ATextInput = ({
 		componentObj={componentObj}
 		headingCss={css`display: block;`}
 		className={css`position: relative; display: flex`}
+		rejectDrop={true}
 		{...rest}>
 			<TextInput
 				type={componentObj.inputType}
