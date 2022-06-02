@@ -5,7 +5,6 @@ import {
 	TextInput
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from '../a-component';
-import { ComponentCssClassSelector } from '../../components/css-class-selector';
 
 import image from '../../assets/component-icons/accordion-item.svg';
 import {
@@ -41,7 +40,6 @@ export const AAccordionItemSettingsUI = ({ selectedComponent, setComponent }: an
 					disabled: checked
 				});
 			}} />
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Checkbox, Loading, TextInput } from 'carbon-components-react';
 import { AComponent } from './a-component';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/loading.svg';
@@ -51,7 +50,6 @@ export const ALoadingSettingsUI = ({ selectedComponent, setComponent }: any) => 
 				});
 			}}
 		/>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 

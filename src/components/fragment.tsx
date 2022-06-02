@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { SkeletonPlaceholder } from 'carbon-components-react';
 import './fragment-preview.scss';
 import { css, cx } from 'emotion';
 import { allComponents, ComponentInfoRenderProps } from '../fragment-components';
 import { getAllFragmentStyleClasses, getRandomId } from '../utils/fragment-tools';
 import { GlobalStateContext } from '../context';
+import { getDropIndex } from '../routes/edit/tools';
 
 const canvas = css`
 	border: 2px solid #d8d8d8;
@@ -13,6 +14,7 @@ const canvas = css`
 `;
 
 const allowDrop = (event: any) => {
+	event.stopPropagation();
 	event.preventDefault();
 };
 
@@ -71,7 +73,10 @@ export const initializeIds = (componentObj: any, forceNewIds = false) => {
 	}
 	id = id || componentObj.id || getRandomId();
 	// name is used in form items and for angular inputs and outputs variable names
-	const name = componentObj.codeContext?.name || `${componentObj.type}-${id}`;
+	let name = componentObj.codeContext?.name;
+	if (name === undefined) {
+		name = `${componentObj.type}-${id}`;
+	}
 
 	return {
 		...componentObj,
@@ -178,6 +183,8 @@ export const getParentComponent = (state: any, child: any) => {
 
 export const Fragment = ({ fragment, setFragment }: any) => {
 	const globalState = useContext(GlobalStateContext);
+	const [showDragOverIndicator, setShowDragOverIndicator] = useState(false);
+	const holderRef = useRef(null as any);
 
 	if (!fragment || !fragment.data) {
 		return <SkeletonPlaceholder />;
@@ -185,14 +192,21 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 
 	const { fragments } = globalState || {};
 
-	const drop = (event: any, dropInId?: number) => {
+	const drop = (event: any) => {
+		event.stopPropagation();
 		event.preventDefault();
+		setShowDragOverIndicator(false);
 
 		const dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
 
 		setFragment({
 			...fragment,
-			data: updatedState(fragment.data, dragObj, dropInId)
+			data: updatedState(
+				fragment.data,
+				dragObj,
+				fragment.data.id,
+				getDropIndex(event, holderRef.current)
+			)
 		});
 	};
 
@@ -216,6 +230,14 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 		}
 
 		for (const component of Object.values(allComponents)) {
+		// TODO fragment should have overwritable properties
+		// overwritten properties are in componentObj in the same level as id, but can go deep, they merge
+		//     with subFragment before rendering
+		// overwriting happens when you select something in the fragment and change its value (a button to reverse to default?)
+		//     default value can be set as placeholder in context?
+		// also provide a clone/duplicate functionality/button that essentially copies the
+		//     componentObj of subFragment in place in our fragment?
+		// JSON export should include json of the subFragment
 			if (componentObj.type === component.componentInfo.type) {
 				if (component.componentInfo.render) {
 					return component.componentInfo.render({
@@ -223,11 +245,6 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 						select: () => select(componentObj),
 						remove: () => remove(componentObj),
 						selected: fragment.selectedComponentId === componentObj.id,
-						onDragOver: allowDrop,
-						onDrop: (event: any) => {
-							event.stopPropagation();
-							drop(event, componentObj.id);
-						},
 						renderComponents
 					} as ComponentInfoRenderProps);
 				}
@@ -261,9 +278,22 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 			styles,
 			css`width: ${fragment.width || '800px'}; height: ${fragment.height || '600px'}`
 		)}
+		style={{
+			background: showDragOverIndicator ? '#0001' : ''
+		}}
+		onDragEnter={(event: any) => {
+			event.stopPropagation();
+			event.preventDefault();
+			setShowDragOverIndicator(true);
+		}}
+		onDragLeave={(event: any) => {
+			event.stopPropagation();
+			event.preventDefault();
+			setShowDragOverIndicator(false);
+		}}
 		onDragOver={allowDrop}
-		onDrop={(event: any) => drop(event, fragment.data.id)}>
-			<div className={`${fragment.cssClasses ? fragment.cssClasses.map((cc: any) => cc.id).join(' ') : ''}`}>
+		onDrop={drop}>
+			<div ref={holderRef} className={`${fragment.cssClasses ? fragment.cssClasses.map((cc: any) => cc.id).join(' ') : ''}`}>
 				{renderComponents(fragment.data)}
 			</div>
 		</div>

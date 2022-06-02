@@ -6,7 +6,6 @@ import {
 import { Edit32 } from '@carbon/icons-react';
 import { css, cx } from 'emotion';
 import { AComponent, ComponentInfo } from './a-component';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 
 import image from './../assets/component-icons/button.svg';
 import { GlobalStateContext } from '../context';
@@ -20,7 +19,7 @@ export const AFragmentSettingsUI = ({ selectedComponent, setComponent }: any) =>
 		size='sm'
 		renderIcon={Edit32}
 		className={css`margin-bottom: 1rem`}
-		to={selectedComponent.id}>
+		to={`/edit/${selectedComponent.id}`}>
 			Edit fragment
 		</LinkButton>
 		<Checkbox
@@ -31,7 +30,6 @@ export const AFragmentSettingsUI = ({ selectedComponent, setComponent }: any) =>
 				...selectedComponent,
 				showOutline: checked
 			})} />
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 
@@ -65,6 +63,7 @@ export const AFragment = ({
 		<AComponent
 		componentObj={componentObj}
 		className={css`position: relative; display: inline-flex`}
+		rejectDrop={true}
 		{...rest}>
 			<div
 			style={{ pointerEvents: 'none' }}

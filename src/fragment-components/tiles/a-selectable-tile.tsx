@@ -8,7 +8,6 @@ import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
 import { css } from 'emotion';
 import { useFragment } from '../../context';
-import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { ComponentInfo } from '..';
 import image from '../../assets/component-icons/tile-selectable.svg';
 import {
@@ -62,7 +61,6 @@ export const ASelectableTileSettingsUI = ({ selectedComponent, setComponent }: a
 				});
 			}}
 		/>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 

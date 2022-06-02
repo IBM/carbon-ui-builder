@@ -7,7 +7,6 @@ import {
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
 import { css } from 'emotion';
-import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { ComponentInfo } from '../';
 import image from '../../assets/component-icons/tile.svg';
 import {
@@ -30,7 +29,6 @@ export const ATileSettingsUI = ({ selectedComponent, setComponent }: any) => {
 				});
 			}}
 		/>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 
@@ -92,7 +90,7 @@ export const componentInfo: ComponentInfo = {
 		selected={selected}
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
-		{componentObj.items.map((tile: any) => renderComponents(tile))}
+		{componentObj.items?.map((tile: any) => renderComponents(tile))}
 	</ATile>,
 	image,
 	codeExport: {
