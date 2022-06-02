@@ -7,7 +7,6 @@ import {
 } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/number-input.svg';
@@ -123,7 +122,6 @@ export const ANumberInputSettingsUI = ({ selectedComponent, setComponent }: any)
 				});
 			}}
 		/>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 
@@ -154,6 +152,7 @@ export const ANumberInput = ({
 		componentObj={componentObj}
 		headingCss={css`display: block;`}
 		className={css`position: relative; display: flex`}
+		rejectDrop={true}
 		{...rest}>
 			<NumberInput
 				size={componentObj.size}

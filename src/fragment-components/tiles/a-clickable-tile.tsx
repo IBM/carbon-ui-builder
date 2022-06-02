@@ -7,7 +7,6 @@ import {
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
 import { css } from 'emotion';
-import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { ComponentInfo } from '..';
 import image from '../../assets/component-icons/tile-clickable.svg';
 import {
@@ -41,7 +40,6 @@ export const AClickableTileSettingsUI = ({ selectedComponent, setComponent }: an
 				});
 			}}
 		/>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 

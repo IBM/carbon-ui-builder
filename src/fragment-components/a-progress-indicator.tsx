@@ -7,7 +7,6 @@ import {
 } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 import image from './../assets/component-icons/progress-indicator.svg';
 import { DraggableTileList } from '../components';
@@ -94,7 +93,6 @@ export const AProgressIndicatorSettingsUI = ({ selectedComponent, setComponent }
 				disabled: false
 			}}
 			template={template} />
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 
@@ -163,10 +161,18 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Steps = ${json.progressSteps};
-			@Input() ${nameStringToVariableString(json.codeContext?.name)}Vertical = ${json.isVertical || false}
-			@Input() ${nameStringToVariableString(json.codeContext?.name)}Spacing = ${json.spacing || false}
-			@Input() ${nameStringToVariableString(json.codeContext?.name)}Current = ${json.currentIndex}`,
+			inputs: ({ json }) => {
+				const steps = json.progressSteps.map((step: any) => ({
+					text: step.label,
+					description: step.secondaryLabel,
+					state: ['incomplete'],
+					...(step.disabled ? { disabled: step.disabled } : {})
+				}));
+				return `@Input() ${nameStringToVariableString(json.codeContext?.name)}Steps = ${JSON.stringify(steps)};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Vertical = ${json.isVertical || false}
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Spacing = ${json.spacing || false}
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Current = ${json.currentIndex}`;
+			},
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}StepSelected = new EventEmitter<Event>();`,
 			imports: ['ProgressIndicatorModule'],
 			code: ({ json }) => {

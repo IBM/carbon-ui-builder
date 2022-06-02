@@ -163,7 +163,7 @@ export const DraggableTileList = ({
 				dataList.map((item: any, index: number) => <>
 					<Tile
 					key={`tile--${index}`}
-					draggable={true}
+					draggable='true'
 					onDragStart={(event: any) => onDragStart(event, index)}
 					onDragEnd={(event: any) => onDragEnd(event)}
 					className={tileStyle}>

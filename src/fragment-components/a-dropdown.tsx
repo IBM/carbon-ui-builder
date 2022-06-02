@@ -7,7 +7,6 @@ import {
 } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 import { DraggableTileList } from '../components';
 
@@ -189,7 +188,6 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 			}}
 			template={template} />
 		<hr />
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 

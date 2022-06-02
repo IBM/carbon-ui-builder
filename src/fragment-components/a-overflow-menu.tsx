@@ -11,7 +11,6 @@ import image from './../assets/component-icons/overflowMenu.svg';
 import { reactClassNamesFromComponentObj,
 	angularClassNamesFromComponentObj,
 	nameStringToVariableString } from '../utils/fragment-tools';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { DraggableTileList } from '../components';
 import { css } from 'emotion';
 
@@ -123,7 +122,6 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 				link: ''
 			}}
 			template={template} />
-	<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent}/>
 	</>;
 };
 

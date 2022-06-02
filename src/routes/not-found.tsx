@@ -1,7 +1,7 @@
 import React from 'react';
 import { css } from 'emotion';
 import { Button } from 'carbon-components-react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/header';
 // import the img placeholder svg
 import placeholder from '../assets/chart-404.svg';
@@ -24,7 +24,7 @@ const placeholderContainer = css`
 `;
 
 export const NotFound = () => {
-	const history = useHistory();
+	const navigate = useNavigate();
 	return (
 		<>
 			<Header />
@@ -35,7 +35,7 @@ export const NotFound = () => {
 					<p style={{ marginTop: '0.5em' }}>
 						This page does not exist, click  <strong>Go back</strong><br /> to return.
 					</p>
-					<Button style={{ marginTop: '1rem' }} onClick={() => history.goBack()}>Go back</Button>
+					<Button style={{ marginTop: '1rem' }} onClick={() => navigate(-1)}>Go back</Button>
 				</div>
 			</div>
 		</>
