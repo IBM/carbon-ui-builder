@@ -34,6 +34,11 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 		<Editor
 			language={selectedComponent.language} height="25vh"
 			value={selectedComponent.code}
+			onChange={(event: any) => {
+				setComponent({
+				...selectedComponent,
+				code: event
+			})}}
 		></Editor>
 		<Dropdown
 			label='Variant selector'

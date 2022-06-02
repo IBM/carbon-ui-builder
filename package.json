@@ -6,6 +6,7 @@
   "dependencies": {
     "@carbon/colors": "10.7.2",
     "@carbon/icons-react": "10.49.0",
+    "@monaco-editor/react": "^4.4.5",
     "carbon-addons-iot-react": "2.148.0",
     "carbon-components": "10.50.0",
     "carbon-components-react": "7.57.1",
