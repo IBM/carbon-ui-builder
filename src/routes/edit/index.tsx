@@ -115,6 +115,14 @@ export const leftPaneHeader = css`
 	background: white;
 `;
 
+export const actionIconStyle = css`
+	color: black;
+
+	.bx--btn--ghost:disabled & {
+		color: #8d8d8d;
+	}
+`;
+
 const rightPanel = css`
 	width: ${rightPaneWidth};
 	position: absolute;
@@ -134,10 +142,30 @@ const rightPanel = css`
 		overflow: auto;
 		height: calc(100vh - 15rem);
 
+		div[title='Drag handle'] {
+			width: 15px;
+		}
+
 		.bx--accordion__content {
 			padding-left: 1rem;
 			padding-right: 1rem;
 			margin-left: 0;
+		}
+
+		.layers-widget .bx--accordion__content {
+			padding: 1px;
+		}
+
+		.iot--list-item {
+			padding-right: 0;
+		}
+
+		.iot--list-item--content--row-actions {
+			margin-right: 0;
+
+			.bx--btn--ghost {
+				padding: 0.5rem;
+			}
 		}
 	}
 
