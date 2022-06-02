@@ -97,6 +97,7 @@ export const ATextInput = ({
 		componentObj={componentObj}
 		headingCss={css`display: block;`}
 		className={css`position: relative; display: flex`}
+		rejectDrop={true}
 		{...rest}>
 			<TextInput
 				type={componentObj.inputType}

@@ -7,7 +7,7 @@ import { css } from 'emotion';
 import { SelectionTile } from '../../../components/selection-tile';
 import { generateNewFragment } from './generate-new-fragment';
 import { GlobalStateContext } from '../../../context';
-import { useHistory } from 'react-router-dom';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
 
 const createFragmentTiles = css`
 	display: flex;
@@ -45,7 +45,7 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 
 	const { addFragment } = useContext(GlobalStateContext);
 
-	const history = useHistory();
+	const navigate: NavigateFunction = useNavigate();
 
 	const generateFragment = () => {
 		const generatedFragment = generateNewFragment(
@@ -53,7 +53,7 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 		);
 
 		addFragment(generatedFragment);
-		history.push(`/edit/${generatedFragment.id}`);
+		navigate(`/edit/${generatedFragment.id}`);
 	};
 
 	return (

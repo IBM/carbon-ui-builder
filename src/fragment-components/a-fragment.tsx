@@ -20,7 +20,7 @@ export const AFragmentSettingsUI = ({ selectedComponent, setComponent }: any) =>
 		size='sm'
 		renderIcon={Edit32}
 		className={css`margin-bottom: 1rem`}
-		to={selectedComponent.id}>
+		to={`/edit/${selectedComponent.id}`}>
 			Edit fragment
 		</LinkButton>
 		<Checkbox
@@ -65,6 +65,7 @@ export const AFragment = ({
 		<AComponent
 		componentObj={componentObj}
 		className={css`position: relative; display: inline-flex`}
+		rejectDrop={true}
 		{...rest}>
 			<div
 			style={{ pointerEvents: 'none' }}

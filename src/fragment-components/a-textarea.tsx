@@ -65,7 +65,7 @@ export const ATextArea = ({
 	...rest
 }: any) => {
 	return (
-		<AComponent componentObj={componentObj} {...rest}>
+		<AComponent componentObj={componentObj} rejectDrop={true} {...rest}>
 			<TextArea
 				kind={componentObj.kind}
 				disabled={componentObj.disabled}

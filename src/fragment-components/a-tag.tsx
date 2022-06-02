@@ -108,6 +108,7 @@ export const ATag = ({
 	return (
 		<AComponent
 		componentObj={componentObj}
+		rejectDrop={true}
 		{...rest}>
 			<Tag
 			type={componentObj.kind}

@@ -49,6 +49,7 @@ export const ACheckbox = ({
 		<AComponent
 		componentObj={componentObj}
 		headingCss={css`display: block;`}
+		rejectDrop={true}
 		{...rest}>
 			<Checkbox
 				kind={componentObj.kind}

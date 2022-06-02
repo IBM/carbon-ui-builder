@@ -154,6 +154,7 @@ export const ANumberInput = ({
 		componentObj={componentObj}
 		headingCss={css`display: block;`}
 		className={css`position: relative; display: flex`}
+		rejectDrop={true}
 		{...rest}>
 			<NumberInput
 				size={componentObj.size}

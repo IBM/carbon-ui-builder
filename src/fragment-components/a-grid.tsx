@@ -58,7 +58,7 @@ export const AGrid = ({
 	...rest
 }: any) => {
 	return (
-		<AComponent componentObj={componentObj} {...rest}>
+		<AComponent componentObj={componentObj} rejectDrop={true} {...rest}>
 			<Grid
 			className={cx(
 			componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
@@ -110,6 +110,7 @@ export const componentInfo: ComponentInfo = {
 	type: 'grid',
 	defaultComponentObj: {
 		type: 'grid',
+		showOutline: true,
 		items: [
 			{
 				type: 'row', items: [

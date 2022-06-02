@@ -8,7 +8,7 @@ import {
 import { FragmentWizardModals } from './fragment-wizard';
 
 import { GlobalStateContext } from '../../../context';
-import { useHistory } from 'react-router-dom';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { warningNotificationProps } from '../../../utils/file-tools';
 import { Col } from '../../../components';
 import { getFragmentDuplicate, getFragmentTemplates } from '../../../utils/fragment-tools';
@@ -29,7 +29,7 @@ export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 	const [selectedFragment, setSelectedFragment] = useState<any>(null);
 	const { fragments, addFragment } = useContext(GlobalStateContext);
 
-	const history = useHistory();
+	const navigate: NavigateFunction = useNavigate();
 
 	const generateFragment = () => {
 		if (selectedFragment === null) {
@@ -45,7 +45,7 @@ export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 		);
 
 		addFragment(fragmentCopy);
-		history.push(`/edit/${fragmentCopy.id}`);
+		navigate(`/edit/${fragmentCopy.id}`);
 	};
 
 	return (

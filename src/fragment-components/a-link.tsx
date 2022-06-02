@@ -87,6 +87,7 @@ export const ALink = ({
 	return (
 		<AComponent
 		componentObj={componentObj}
+		rejectDrop={true}
 		{...rest}>
 			<Link
 			inline={componentObj.inline}
