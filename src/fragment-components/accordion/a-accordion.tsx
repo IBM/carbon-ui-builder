@@ -1,7 +1,6 @@
 import React from 'react';
 import { Accordion, Dropdown } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from '../a-component';
-import { ComponentCssClassSelector } from '../../components/css-class-selector';
 
 import image from '../../assets/component-icons/accordion.svg';
 import {
@@ -43,7 +42,6 @@ export const AAccordionSettingsUI = ({ selectedComponent, setComponent }: any) =
 				...selectedComponent,
 				align: event.selectedItem.id
 		})}/>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 

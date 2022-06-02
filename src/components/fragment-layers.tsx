@@ -57,9 +57,9 @@ const getReorderedComponentObjFromHierarchyListItem = (hierchyListItem: any, com
 	};
 };
 
-export const FragmentLayers = ({ fragment, setFragment }: any) => {
+export const FragmentLayers = ({ fragment, setFragment, title }: any) => {
 	return <HierarchyList
-		title="Layers"
+		title={title}
 		className={fragmentLayersStyle}
 		items={getHierarchyListItemsFromComponentObj(fragment.data)?.children}
 		onListUpdated={(updatedItems: any[]) => {
@@ -68,6 +68,6 @@ export const FragmentLayers = ({ fragment, setFragment }: any) => {
 				data: getReorderedComponentObjFromHierarchyListItem({ id: 1, children: updatedItems }, fragment.data)
 			});
 		}}
-		editingStyle="single"
+		editingStyle='single'
 	/>;
 };

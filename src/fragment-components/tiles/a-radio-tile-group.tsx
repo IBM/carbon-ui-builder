@@ -5,7 +5,6 @@ import { TileMorphism } from './tile-morphism';
 import { getParentComponent, updatedState } from '../../components';
 import { css } from 'emotion';
 import { useFragment } from '../../context';
-import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { ComponentInfo } from '../';
 
 import image from '../../assets/component-icons/tile-radio.svg';
@@ -59,7 +58,6 @@ export const ARadioTileGroupSettingsUI = ({ selectedComponent, setComponent }: a
 				});
 			}}
 		/>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 

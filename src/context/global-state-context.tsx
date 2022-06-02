@@ -53,7 +53,7 @@ const GlobalStateContextProvider = ({ children }: any) => {
 	const [actionHistoryIndex, setActionHistoryIndex] = useState(-1);
 
 	const [styleClasses, _setStyleClasses] = useState(JSON.parse(localStorage.getItem('globalStyleClasses') as string || '[]') as any[]);
-	const [settings, _setSettings] = useState(JSON.parse(localStorage.getItem('globalSettings') as string || '[]') as any[]);
+	const [settings, _setSettings] = useState(JSON.parse(localStorage.getItem('globalSettings') as string || '{}') as any);
 
 	const setFragments = (frags: any[]) => {
 		_setFragments(frags);

@@ -8,7 +8,6 @@ import { AComponent } from './a-component';
 import { getParentComponent, updatedState } from '../components';
 import { css, cx } from 'emotion';
 import { useFragment } from '../context';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 
 export const ARowSettingsUI = ({ selectedComponent, setComponent }: any) => {
@@ -29,7 +28,6 @@ export const ARowSettingsUI = ({ selectedComponent, setComponent }: any) => {
 				...selectedComponent,
 				narrow: checked
 			})} />
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 

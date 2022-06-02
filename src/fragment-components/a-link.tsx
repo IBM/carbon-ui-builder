@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, Checkbox, TextInput } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 
 import image from './../assets/component-icons/link.svg';
 import {
@@ -44,7 +43,6 @@ export const ALinkSettingsUI = ({ selectedComponent, setComponent }: any) => {
 				});
 			}}
 		/>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 

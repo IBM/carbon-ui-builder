@@ -6,7 +6,6 @@ import {
 import { Edit32 } from '@carbon/icons-react';
 import { css, cx } from 'emotion';
 import { AComponent, ComponentInfo } from './a-component';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 
 import image from './../assets/component-icons/button.svg';
 import { GlobalStateContext } from '../context';
@@ -31,7 +30,6 @@ export const AFragmentSettingsUI = ({ selectedComponent, setComponent }: any) =>
 				...selectedComponent,
 				showOutline: checked
 			})} />
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 

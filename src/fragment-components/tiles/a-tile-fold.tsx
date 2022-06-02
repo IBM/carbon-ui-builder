@@ -3,14 +3,13 @@ import {
 	TileBelowTheFoldContent
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from '../a-component';
-import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import {
 	angularClassNamesFromComponentObj,
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 
-export const ATileFoldSettingsUI = ({ selectedComponent, setComponent }: any) => {
-	return <ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />;
+export const ATileFoldSettingsUI = ({ _selectedComponent, _setComponent }: any) => {
+	return '';
 };
 
 export const ATileFold = ({

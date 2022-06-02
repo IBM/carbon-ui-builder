@@ -2,7 +2,6 @@ import React from 'react';
 import { Checkbox, Grid } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css, cx } from 'emotion';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/grid.svg';
@@ -42,7 +41,6 @@ export const AGridSettingsUI = ({ selectedComponent, setComponent }: any) => {
 				...selectedComponent,
 				narrow: checked
 			})} />
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 

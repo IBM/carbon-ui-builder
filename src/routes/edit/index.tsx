@@ -133,6 +133,16 @@ const rightPanel = css`
 	.context-pane-content {
 		overflow: auto;
 		height: calc(100vh - 15rem);
+
+		.bx--accordion__content {
+			padding-left: 1rem;
+			padding-right: 1rem;
+			margin-left: 0;
+		}
+	}
+
+	#properties-settings__panel {
+		padding: 0;
 	}
 `;
 

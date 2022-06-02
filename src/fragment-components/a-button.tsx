@@ -6,7 +6,6 @@ import {
 } from 'carbon-components-react';
 import { css } from 'emotion';
 import { AComponent, ComponentInfo } from './a-component';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 
 import image from './../assets/component-icons/button.svg';
 import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
@@ -40,7 +39,6 @@ export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 				...selectedComponent,
 				kind: event.selectedItem.id
 			})} />
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 
