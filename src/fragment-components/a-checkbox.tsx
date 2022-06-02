@@ -2,26 +2,22 @@ import React from 'react';
 import { Checkbox, TextInput } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/checkbox.svg';
 import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const ACheckboxSettingsUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
-		<TextInput
-			value={selectedComponent.label}
-			labelText='Label'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					label: event.currentTarget.value
-				});
-			}}
-		/>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-	</>;
+	return <TextInput
+		value={selectedComponent.label}
+		labelText='Label'
+		onChange={(event: any) => {
+			setComponent({
+				...selectedComponent,
+				label: event.currentTarget.value
+			});
+		}}
+	/>;
 };
 
 export const ACheckboxCodeUI = ({ selectedComponent, setComponent }: any) => {
@@ -49,6 +45,7 @@ export const ACheckbox = ({
 		<AComponent
 		componentObj={componentObj}
 		headingCss={css`display: block;`}
+		rejectDrop={true}
 		{...rest}>
 			<Checkbox
 				kind={componentObj.kind}

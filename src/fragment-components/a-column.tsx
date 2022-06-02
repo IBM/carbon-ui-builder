@@ -10,7 +10,6 @@ import { css, cx } from 'emotion';
 import { AComponent } from './a-component';
 import { useFragment } from '../context';
 import { getParentComponent, updatedState } from '../components';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 
 const helpIconStyle = css`
@@ -140,7 +139,6 @@ export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
 					onChange={onNumInputchange} />
 			</AccordionItem>
 		</Accordion>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 

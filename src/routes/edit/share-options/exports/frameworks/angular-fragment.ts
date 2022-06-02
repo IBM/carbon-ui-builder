@@ -148,7 +148,7 @@ const getComponentCode = (fragment: any, fragments: any[]) => {
 
 	// component.html
 	componentCode[`src/app/components/${tagNameFromFragment(fragment)}/${tagNameFromFragment(fragment)}.component.html`] =
-		jsonToTemplate(fragment.data, fragments);
+		format(jsonToTemplate(fragment.data, fragments), formatOptionsHtml);
 
 	// module.ts
 	componentCode[`src/app/components/${tagNameFromFragment(fragment)}/${tagNameFromFragment(fragment)}.module.ts`] = format(

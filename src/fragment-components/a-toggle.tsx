@@ -1,7 +1,6 @@
 import React from 'react';
 import { Checkbox, Dropdown, Toggle, TextInput } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 import image from './../assets/component-icons/toggle.svg';
 import {
 	angularClassNamesFromComponentObj,
@@ -81,7 +80,6 @@ export const AToggleSettingsUI = ({ selectedComponent, setComponent }: any) => {
 				});
 			}}
 		/>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 

@@ -38,6 +38,7 @@ import { CodePane } from './code-pane';
 
 import { SettingsContextPane } from './settings-context-pane';
 import { CodeContextPane } from './code-context-pane';
+import { useParams } from 'react-router-dom';
 
 const leftPaneWidth = '300px';
 const rightPaneWidth = '302px';
@@ -131,7 +132,17 @@ const rightPanel = css`
 
 	.context-pane-content {
 		overflow: auto;
-		height: calc(100vh - 17rem);
+		height: calc(100vh - 15rem);
+
+		.bx--accordion__content {
+			padding-left: 1rem;
+			padding-right: 1rem;
+			margin-left: 0;
+		}
+	}
+
+	#properties-settings__panel {
+		padding: 0;
 	}
 `;
 
@@ -148,7 +159,7 @@ enum SelectedLeftPane {
 	CODE = 'code'
 }
 
-export const Edit = ({ match }: any) => {
+export const Edit = () => {
 	const {
 		fragments,
 		updateFragment,
@@ -157,7 +168,9 @@ export const Edit = ({ match }: any) => {
 		styleClasses
 	} = useContext(GlobalStateContext);
 
-	const fragment = fragments.find((fragment: any) => fragment.id === match.params.id);
+	const params = useParams();
+
+	const fragment = fragments.find((fragment: any) => fragment.id === params.id);
 
 	const [selectedLeftPane, setSelectedLeftPane] = useState(SelectedLeftPane.NONE);
 

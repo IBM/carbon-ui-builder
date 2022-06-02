@@ -7,7 +7,6 @@ import {
 import { AComponent } from '../a-component';
 import { css } from 'emotion';
 import { useFragment } from '../../context';
-import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { ComponentInfo } from '..';
 import {
 	Adder,
@@ -62,7 +61,6 @@ export const ARadioTileSettingsUI = ({ selectedComponent, setComponent }: any) =
 				});
 			}}
 		/>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 

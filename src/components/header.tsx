@@ -3,12 +3,12 @@ import {
 	HeaderMenuButton,
 	HeaderName,
 	Header as ShellHeader
-} from 'carbon-components-react/lib/components/UIShell';
+} from 'carbon-components-react';
 import { css } from 'emotion';
-import { useHistory } from 'react-router-dom';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
 
 export const Header = ({ isSideNavExpanded, setIsSideNavExpanded }: any) => {
-	const history = useHistory();
+	const navigate: NavigateFunction = useNavigate();
 
 	const headerName = css`
 		&:hover {
@@ -27,8 +27,8 @@ export const Header = ({ isSideNavExpanded, setIsSideNavExpanded }: any) => {
 				tabIndex={0}
 				title='Carbon Components Builder home'
 				className={headerName}
-				onClick={() => history.push('/')}
-				onKeyDown={(event: any) => event.key === 'Enter' && history.push('/')}>
+				onClick={() => navigate('/')}
+				onKeyDown={(event: any) => event.key === 'Enter' && navigate('/')}>
 				Carbon Components Builder {process.env.NODE_ENV === 'development' ? 'Dev' : ''}
 			</HeaderName>
 		</ShellHeader>
