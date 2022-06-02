@@ -7,7 +7,6 @@ import {
 } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 import image from './../assets/component-icons/progress-indicator.svg';
 import { DraggableTileList } from '../components';
@@ -94,7 +93,6 @@ export const AProgressIndicatorSettingsUI = ({ selectedComponent, setComponent }
 				disabled: false
 			}}
 			template={template} />
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 

@@ -2,7 +2,6 @@ import React from 'react';
 import { TextInput, Dropdown, Search } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/search.svg';
@@ -56,7 +55,6 @@ export const ASearchInputSettingsUI = ({ selectedComponent, setComponent }: any)
 				});
 			}}
 		/>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 
@@ -87,6 +85,7 @@ export const ASearchInput = ({
 		componentObj={componentObj}
 		headingCss={css`display: block;`}
 		className={css`position: relative; display: flex`}
+		rejectDrop={true}
 		{...rest}>
 			<Search
 				size={componentObj.inputSize}

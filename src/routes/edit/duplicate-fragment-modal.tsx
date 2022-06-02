@@ -3,7 +3,7 @@ import { NotificationActionType, NotificationContext } from '../../context/notif
 import { Modal } from 'carbon-components-react';
 import { ModalActionType, ModalContext } from '../../context/modal-context';
 import { GlobalStateContext } from '../../context/global-state-context';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, NavigateFunction } from 'react-router-dom';
 
 import { getFragmentDuplicate } from '../../utils/fragment-tools';
 
@@ -14,7 +14,7 @@ export const DuplicateFragmentModal = ({ id }: any) => {
 	const [, dispatchNotification] = useContext(NotificationContext);
 	const { fragments, addFragment } = useContext(GlobalStateContext);
 
-	const history = useHistory();
+	const navigate: NavigateFunction = useNavigate();
 	const location = useLocation();
 
 	const fragment = fragments.find((fragment: any) => fragment.id === id);
@@ -30,7 +30,7 @@ export const DuplicateFragmentModal = ({ id }: any) => {
 
 		addFragment(fragmentCopy);
 		if (location.pathname !== '/') {
-			history.push(`/edit/${fragmentCopy.id}`);
+			navigate(`/edit/${fragmentCopy.id}`);
 		}
 		dispatchNotification({
 			type: NotificationActionType.ADD_NOTIFICATION,

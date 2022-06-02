@@ -2,9 +2,9 @@ import { css, cx } from 'emotion';
 import React, { useRef, useState } from 'react';
 
 import { Draggable32, TrashCan32 } from '@carbon/icons-react';
-import { drag } from '../routes/edit/tools';
+import { drag, getDropIndex } from '../routes/edit/tools';
 import { useFragment } from '../context';
-import { getParentComponent, updatedState } from '../components';
+import { updatedState } from '../components';
 
 export const componentHeaderZIndex = 999;
 
@@ -26,29 +26,9 @@ export const AComponentCodeUI = ({ selectedComponent }: any) => {
 	</span>;
 };
 
-const dropBorderStyle = '2px solid #0f62fe';
-
-const dropStyle = css`
-	position: absolute;
-	width: 15px;
-	height: 15px;
-	line-height: 21px;
-	z-index: 2;
+const dropIndicatorStyle = css`
+	background: #0001;
 `;
-
-const dropStyleBefore = cx(dropStyle, css`
-	margin-left: -4px;
-	margin-top: -4px;
-	border-left: ${dropBorderStyle};
-	border-top: ${dropBorderStyle};
-`);
-
-const dropStyleAfter = cx(dropStyle, css`
-	margin-left: calc(100% - 11px);
-	border-right: ${dropBorderStyle};
-	border-bottom: ${dropBorderStyle};
-	bottom: -4px;
-`);
 
 export interface ComponentInfo {
 	type: string;
@@ -92,6 +72,7 @@ export interface ComponentInfoRenderProps {
 export const AComponent = ({
 	children,
 	componentObj,
+	rejectDrop,
 	select,
 	selected,
 	remove,
@@ -101,17 +82,12 @@ export const AComponent = ({
 	// TODO use fragments context instead of passing in `remove`?
 	const [fragment, setFragment] = useFragment();
 	const [showDragOverIndicator, setShowDragOverIndicator] = useState(false);
-	const [dragOverPosition, setDragOverPosition] = useState([] as any[]);
 	const holderRef = useRef(null as any);
 
-	const isDragOverLeft = () => dragOverPosition[0] < holderRef.current.offsetWidth / 2;
-	// const isDragOverRight = () => !isDragOverLeft();
-	const isDragOverTop = () => dragOverPosition[1] < holderRef.current.offsetHeight / 2;
-	// const isDragOverBottom = () => !isDragOverTop();
-	const isDragOverBefore = () => isDragOverLeft() || isDragOverTop();
-	const isDragOverAfter = () => !isDragOverBefore();
-
 	const onDrop = (event: any) => {
+		if (rejectDrop) {
+			return;
+		}
 		event.stopPropagation();
 		event.preventDefault();
 		setShowDragOverIndicator(false);
@@ -124,14 +100,14 @@ export const AComponent = ({
 				fragment.data,
 				dragObj,
 				componentObj.id,
-				getParentComponent(fragment.data, componentObj).items.indexOf(componentObj) + (isDragOverBefore() ? 0 : 1)
+				getDropIndex(event, holderRef.current)
 			)
 		});
 	};
 
 	return (
 		<span
-		className={className}
+		className={cx(className, showDragOverIndicator ? dropIndicatorStyle : '')}
 		ref={holderRef}
 		onClick={(event) => {
 			event.stopPropagation();
@@ -143,26 +119,29 @@ export const AComponent = ({
 			type: 'move'
 		})}
 		onDragEnter={(event: any) => {
+			if (rejectDrop) {
+				return true;
+			}
 			event.stopPropagation();
+			event.preventDefault();
 			setShowDragOverIndicator(true);
 		}}
 		onDragLeave={(event: any) => {
+			if (rejectDrop) {
+				return true;
+			}
 			event.stopPropagation();
+			event.preventDefault();
 			setShowDragOverIndicator(false);
 		}}
 		onDragOver={(event) => {
-			const rect = event.currentTarget.getBoundingClientRect();
-			setDragOverPosition([event.pageX - rect.left, event.pageY - rect.top]);
+			if (rejectDrop) {
+				return true;
+			}
+			event.stopPropagation();
+			event.preventDefault();
 		}}
 		onDrop={onDrop}>
-			<span className={cx(
-				dropStyleBefore,
-				showDragOverIndicator && isDragOverBefore() ? css`` : css`display: none`
-			)} />
-			<span className={cx(
-				dropStyleAfter,
-				showDragOverIndicator && isDragOverAfter() ? css`` : css`display: none`
-			)} />
 			<span className={cx(headerStyle, headingCss, selected ? css`` : css`display: none`)}>
 				<span className={css`margin-right: 1rem`}>
 					{componentObj && componentObj.type ? componentObj.type : 'Header'}

@@ -12,7 +12,7 @@ import { FragmentWizardModals } from './fragment-wizard';
 import { generateNewFragment } from './generate-new-fragment';
 
 import { GlobalStateContext } from '../../../context';
-import { useHistory } from 'react-router-dom';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
 
 const fragmentOptions = css`
 	margin-left: 30px;
@@ -83,7 +83,7 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 		};
 	}, []);
 
-	const history = useHistory();
+	const navigate: NavigateFunction = useNavigate();
 	const uploadFile = async (fileToUpload: any) => {
 		// file size validation
 		if (fileToUpload.filesize > 512000) {
@@ -192,7 +192,7 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 		const generatedFragment = generateNewFragment(fragmentJson);
 
 		addFragment(generateFragment);
-		history.push(`/edit/${generatedFragment.id}`);
+		navigate(`/edit/${generatedFragment.id}`);
 	};
 
 	return (

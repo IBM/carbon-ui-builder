@@ -2,7 +2,6 @@ import React from 'react';
 import { Dropdown, TextInput, CodeSnippet } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 import Editor from '@monaco-editor/react';
 import image from './../assets/component-icons/code-snippet.svg';
@@ -35,10 +34,7 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 		<Editor
 			language={selectedComponent.language} height="25vh"
 			value={selectedComponent.code}
-			onChange={(event: any) => setComponent({
-				...selectedComponent,
-				code: event
-		})}></Editor>
+		></Editor>
 		<Dropdown
 			label='Variant selector'
 			titleText='Variant selector'
@@ -49,7 +45,6 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 				...selectedComponent,
 				varient: event.selectedItem.id
 		})}/>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 
