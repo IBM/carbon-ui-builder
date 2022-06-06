@@ -60,6 +60,17 @@ export const ABreadcumbSettingsUI = ({ selectedComponent, setComponent }: any) =
 		});
 	};
 	return <>
+	<Checkbox
+		labelText='No trailing slash'
+		id='no-trailing-slash'
+		checked={selectedComponent.noTrailingSlash}
+		onChange={(checked: boolean) => {
+			setComponent({
+				...selectedComponent,
+				noTrailingSlash: checked
+			});
+		}}
+	/>
 	<DraggableTileList
 			dataList={[...selectedComponent.items]}
 			setDataList={updateStepList}
@@ -84,6 +95,7 @@ export const ABreadcrumb = ({
 		rejectDrop={true}
 		{...rest}>
 			<Breadcrumb
+				noTrailingSlash={componentObj.noTrailingSlash}
 				className={` ${preventCheckEvent} ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} `}>
 				{
 					componentObj.items.map((step: any, index: number) => (
@@ -106,6 +118,7 @@ export const componentInfo: ComponentInfo = {
 	type: 'breadcrumb',
 	defaultComponentObj: {
 		type: 'breadcrumb',
+		noTrailingSlash: false,
 		items: [
 			{
 				itemText: 'Breadcrumb 1',
