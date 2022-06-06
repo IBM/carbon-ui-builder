@@ -3,7 +3,7 @@ import parserBabel from 'prettier/parser-babel';
 import parserHtml from 'prettier/parser-html';
 import parserCss from 'prettier/parser-postcss';
 import { allComponents } from '../../../../../fragment-components';
-import { getAllFragmentStyleClasses, hasFragmentStyleClasses } from '../../../../../utils/fragment-tools';
+import { classNameFromFragment, getAllFragmentStyleClasses, hasFragmentStyleClasses, tagNameFromFragment } from '../../../../../utils/fragment-tools';
 
 const format = (source: string, options?: Options | undefined) => {
 	// we're catching and ignorring errors so live editing doesn't throw errors
@@ -12,6 +12,25 @@ const format = (source: string, options?: Options | undefined) => {
 	} catch (_) {
 		return source;
 	}
+};
+
+const formatOptionsTypescript: Options = {
+	plugins: [parserBabel],
+	trailingComma: 'none',
+	useTabs: true,
+	parser: 'babel-ts'
+};
+
+const formatOptionsHtml: Options = {
+	plugins: [parserHtml],
+	trailingComma: 'none',
+	useTabs: true,
+	parser: 'html'
+};
+
+const formatOptionsCss: Options = {
+	parser: 'css',
+	plugins: [parserCss]
 };
 
 const addIfNotExist = (arr: any[], items: string[] | undefined) => {
@@ -26,8 +45,8 @@ const addIfNotExist = (arr: any[], items: string[] | undefined) => {
 const jsonToAngularImports = (json: any) => {
 	const imports: any[] = [];
 
-	for (const [key, component] of Object.entries(allComponents)) {
-		if (json.type === key) {
+	for (const component of Object.values(allComponents)) {
+		if (json.type === component.componentInfo.type) {
 			addIfNotExist(imports, component.componentInfo.codeExport.angular?.imports);
 		}
 	}
@@ -43,8 +62,8 @@ const jsonToAngularImports = (json: any) => {
 
 const getAngularInputsFromJson = (json: any): string => {
 	const getOne = (json: any) => {
-		for (const [key, component] of Object.entries(allComponents)) {
-			if (json.type === key) {
+		for (const component of Object.values(allComponents)) {
+			if (json.type === component.componentInfo.type) {
 				return component.componentInfo.codeExport.angular?.inputs({ json }) || '';
 			}
 		}
@@ -57,8 +76,8 @@ const getAngularInputsFromJson = (json: any): string => {
 
 const getAngularOutputsFromJson = (json: any): string => {
 	const getOne = (json: any) => {
-		for (const [key, component] of Object.entries(allComponents)) {
-			if (json.type === key) {
+		for (const component of Object.values(allComponents)) {
+			if (json.type === component.componentInfo.type) {
 				return component.componentInfo.codeExport.angular?.outputs({ json }) || '';
 			}
 		}
@@ -69,42 +88,139 @@ const getAngularOutputsFromJson = (json: any): string => {
 	`;
 };
 
-export const jsonToTemplate = (json: any) => {
+export const jsonToTemplate = (json: any, fragments: any[]) => {
 	if (typeof json === 'string' || !json) {
 		return json;
 	}
 
-	for (const [key, component] of Object.entries(allComponents)) {
-		if (json.type === key && !component.componentInfo.codeExport.angular.isNotDirectExport) {
-			return component.componentInfo.codeExport.angular.code({ json, jsonToTemplate });
+	for (const component of Object.values(allComponents)) {
+		if (json.type === component.componentInfo.type && !component.componentInfo.codeExport.angular.isNotDirectExport) {
+			return component.componentInfo.codeExport.angular.code({ json, jsonToTemplate, fragments });
 		}
 	}
 
 	if (json.items) {
-		return json.items.map((item: any) => jsonToTemplate(item)).join('\n');
+		return json.items.map((item: any) => jsonToTemplate(item, fragments)).join('\n');
 	}
 };
 
-export const createAngularApp = (fragment: any) => {
-	const formatOptionsTypescript: Options = {
-		plugins: [parserBabel],
-		trailingComma: 'none',
-		useTabs: true,
-		parser: 'babel-ts'
-	};
-	const formatOptionsHtml: Options = {
-		plugins: [parserHtml],
-		trailingComma: 'none',
-		useTabs: true,
-		parser: 'html'
-	};
-	const formatOptionsCss: Options = {
-		parser: 'css',
-		plugins: [parserCss]
-	};
+const getAllSubfragments = (json: any, fragments: any[]) => {
+	let sharedComponents: any = {};
+
+	if (json.type === 'fragment') {
+		const fragment = fragments.find(f => f.id === json.id);
+
+		sharedComponents[tagNameFromFragment(fragment)] = fragment;
+
+		sharedComponents = {
+			...sharedComponents,
+			...getAllSubfragments(fragment.data, fragments)
+		};
+	}
+
+	json.items?.forEach((item: any) => {
+		sharedComponents = {
+			...sharedComponents,
+			...getAllSubfragments(item, fragments)
+		};
+	});
+
+	return sharedComponents;
+};
+
+const getComponentCode = (fragment: any, fragments: any[]) => {
+	const componentCode: any = {};
+	const subFragments = getAllSubfragments(fragment.data, fragments);
+
+	// component.ts
+	componentCode[`src/app/components/${tagNameFromFragment(fragment)}/${tagNameFromFragment(fragment)}.component.ts`] = format(
+		`import { Component, Input, Output, EventEmitter } from '@angular/core';
+		@Component({
+			selector: 'app-${tagNameFromFragment(fragment)}',
+			templateUrl: './${tagNameFromFragment(fragment)}.component.html'${hasFragmentStyleClasses(fragment) ? `,
+			styleUrls: ['./${tagNameFromFragment(fragment)}.component.scss']` : ''}
+		})
+		export class ${classNameFromFragment(fragment)} {
+			${getAngularInputsFromJson(fragment.data)}
+			${getAngularOutputsFromJson(fragment.data)}
+		}
+	`, formatOptionsTypescript);
+
+	// component.html
+	componentCode[`src/app/components/${tagNameFromFragment(fragment)}/${tagNameFromFragment(fragment)}.component.html`] =
+		format(jsonToTemplate(fragment.data, fragments), formatOptionsHtml);
+
+	// module.ts
+	componentCode[`src/app/components/${tagNameFromFragment(fragment)}/${tagNameFromFragment(fragment)}.module.ts`] = format(
+		`import { NgModule } from "@angular/core";
+		import { ${jsonToAngularImports(fragment.data).join(', ')} } from 'carbon-components-angular';
+		import { ${classNameFromFragment(fragment)} } from "./${tagNameFromFragment(fragment)}.component";
+		${
+			Object.values(subFragments).map((f) =>
+				`import { ${classNameFromFragment(f)}Module} from "../${tagNameFromFragment(f)}/${tagNameFromFragment(f)}.module";`).join('\n')
+		}
+
+		@NgModule({
+			imports: [${[
+				...jsonToAngularImports(fragment.data),
+				...Object.values(subFragments).map((fragment) => `${classNameFromFragment(fragment)}Module`)
+			].join(', ')}],
+			declarations: [${classNameFromFragment(fragment)}],
+			exports: [${classNameFromFragment(fragment)}]
+		})
+		export class ${classNameFromFragment(fragment)}Module {}
+	`, formatOptionsTypescript);
+
+	// component.scss
+	componentCode[`src/app/components/${tagNameFromFragment(fragment)}/${tagNameFromFragment(fragment)}.component.scss`] = format(
+		`${getAllFragmentStyleClasses(fragment).map((styleClass: any) => `.${styleClass.id} {
+			${styleClass.content}
+		}`).join('\n')}`,
+		formatOptionsCss
+	);
+
+	return componentCode;
+};
+
+const getAllComponentsCode = (json: any, fragments: any[]) => {
+	let allComponents: any = {};
+
+	if (json.data) {
+		allComponents = {
+			...allComponents,
+			...getComponentCode(json, fragments),
+			...getAllComponentsCode(json.data, fragments)
+		};
+	}
+
+	if (json.type === 'fragment') {
+		const fragment = fragments.find(f => f.id === json.id);
+
+		allComponents = {
+			...allComponents,
+			...getComponentCode(fragment, fragments),
+			...getAllComponentsCode(fragment.data, fragments)
+		};
+	}
+
+	json.items?.forEach((item: any) => {
+		allComponents = {
+			...allComponents,
+			...getAllComponentsCode(item, fragments)
+		};
+	});
+
+	return allComponents;
+};
+
+export const createAngularApp = (fragment: any, fragments: any[]) => {
+	const tagName = tagNameFromFragment(fragment);
+	const className = classNameFromFragment(fragment);
+
+	const allComponents = getAllComponentsCode(fragment, fragments);
 
 	const appComponentHtml =
-		`<app-fragment></app-fragment>
+		`<app-${tagName}></app-${tagName}>
 		`;
 
 	const appComponentTs =
@@ -121,46 +237,15 @@ export const createAngularApp = (fragment: any) => {
 		`import { NgModule } from '@angular/core';
 		import { BrowserModule } from '@angular/platform-browser';
 		import { AppComponent } from './app.component';
-		import { FragmentModule } from './components/fragment/fragment.module';
+		import { ${className}Module } from './components/${tagName}/${tagName}.module';
 
 		@NgModule({
-			imports: [BrowserModule, FragmentModule],
+			imports: [BrowserModule, ${className}Module],
 			declarations: [AppComponent],
 			bootstrap: [AppComponent]
 		})
 		export class AppModule {}
 		`;
-
-	const fragmentModuleTs =
-		`import { NgModule } from '@angular/core';
-		import { ${jsonToAngularImports(fragment.data).join(', ')} } from 'carbon-components-angular';
-		import { FragmentComponent } from './fragment.component';
-
-		@NgModule({
-			imports: [${jsonToAngularImports(fragment.data).join(', ')}],
-			declarations: [FragmentComponent],
-			exports: [FragmentComponent]
-		})
-		export class FragmentModule {}
-		`;
-
-	const fragmentComponentTs =
-		`import { Component, Input, Output, EventEmitter } from '@angular/core';
-		@Component({
-			selector: 'app-fragment',
-			templateUrl: './fragment.component.html'${hasFragmentStyleClasses(fragment) ? `,
-			styleUrls: ['./fragment.component.scss']` : ''}
-		})
-		export class FragmentComponent {
-			${getAngularInputsFromJson(fragment.data)}
-			${getAngularOutputsFromJson(fragment.data)}
-		}`;
-
-	const fragmentComponentHtml = jsonToTemplate(fragment.data);
-
-	const fragmentComponentScss = getAllFragmentStyleClasses(fragment).map((styleClass: any) => `.${styleClass.id} {
-		${styleClass.content}
-	}`).join('\n');
 
 	const indexHtml =
 		`<!DOCTYPE html>
@@ -236,12 +321,7 @@ export const createAngularApp = (fragment: any) => {
 		'src/app/app.component.html': format(appComponentHtml, formatOptionsHtml),
 		'src/app/app.component.ts': format(appComponentTs, formatOptionsTypescript),
 		'src/app/app.module.ts': format(appModule, formatOptionsTypescript),
-		'src/app/components/fragment/fragment.module.ts': format(fragmentModuleTs, formatOptionsTypescript),
-		'src/app/components/fragment/fragment.component.ts': format(fragmentComponentTs, formatOptionsTypescript),
-		'src/app/components/fragment/fragment.component.html': format(fragmentComponentHtml, formatOptionsHtml),
-		'src/app/components/fragment/fragment.component.scss': hasFragmentStyleClasses(fragment)
-			? format(fragmentComponentScss, formatOptionsCss)
-			: undefined,
+		...allComponents,
 		'.angular-cli.json': angularCliJson,
 		'package.json': packageJson
 	};

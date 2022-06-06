@@ -2,13 +2,12 @@ import React from 'react';
 import { TextInput, Dropdown } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/text-input.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
-export const ATextInputStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const ATextInputSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const typeItems = [
 		{ id: 'text', text: 'Text' },
 		{ id: 'email', text: 'Email' },
@@ -66,7 +65,6 @@ export const ATextInputStyleUI = ({ selectedComponent, setComponent }: any) => {
 				});
 			}}
 		/>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 
@@ -97,6 +95,7 @@ export const ATextInput = ({
 		componentObj={componentObj}
 		headingCss={css`display: block;`}
 		className={css`position: relative; display: flex`}
+		rejectDrop={true}
 		{...rest}>
 			<TextInput
 				type={componentObj.inputType}
@@ -110,12 +109,13 @@ export const ATextInput = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ATextInput,
-	styleUI: ATextInputStyleUI,
+	settingsUI: ATextInputSettingsUI,
 	codeUI: ATextInputCodeUI,
 	keywords: ['text', 'text', 'input'],
 	name: 'Text input',
+	type: 'text-input',
 	defaultComponentObj: {
-		type: 'textinput',
+		type: 'text-input',
 		label: 'Text input label',
 		placeholder: 'Text input placeholder',
 		helperText: 'Helper text',

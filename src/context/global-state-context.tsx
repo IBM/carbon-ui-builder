@@ -4,7 +4,7 @@ import React, {
 	useContext,
 	useState
 } from 'react';
-import { useHistory } from 'react-router';
+import { useLocation } from 'react-router-dom';
 import assign from 'lodash/assign';
 import { getFragmentHelpers } from './fragments-context-helper';
 
@@ -13,7 +13,7 @@ GlobalStateContext.displayName = 'GlobalStateContext';
 
 export const useFragment = (id?: string) => {
 	const context = useContext(GlobalStateContext);
-	const history = useHistory();
+	const location = useLocation();
 
 	if (!context) {
 		// this happens when rendering, which is fine because it's used
@@ -26,8 +26,7 @@ export const useFragment = (id?: string) => {
 	const { fragments, updateFragment } = context;
 
 	if (!id) {
-		const location = history.location.pathname;
-		const pathSegments = location.split('/');
+		const pathSegments = location.pathname.split('/');
 		id = pathSegments[pathSegments.length - 1];
 	}
 
@@ -54,6 +53,7 @@ const GlobalStateContextProvider = ({ children }: any) => {
 	const [actionHistoryIndex, setActionHistoryIndex] = useState(-1);
 
 	const [styleClasses, _setStyleClasses] = useState(JSON.parse(localStorage.getItem('globalStyleClasses') as string || '[]') as any[]);
+	const [settings, _setSettings] = useState(JSON.parse(localStorage.getItem('globalSettings') as string || '{}') as any);
 
 	const setFragments = (frags: any[]) => {
 		_setFragments(frags);
@@ -78,6 +78,12 @@ const GlobalStateContextProvider = ({ children }: any) => {
 				styleClasses: JSON.parse(csString)
 			});
 		}
+	};
+
+	const setSettings = (sc: any) => {
+		const csString = JSON.stringify(sc);
+		localStorage.setItem('globalSettings', csString);
+		_setSettings(sc);
 	};
 
 	const canUndo = () => actionHistoryIndex > 0;
@@ -167,6 +173,10 @@ const GlobalStateContextProvider = ({ children }: any) => {
 			// STYLE CLASSES
 			styleClasses,
 			setStyleClasses,
+
+			// SETTINGS
+			settings,
+			setSettings,
 
 			// ACTION HISTORY
 			actionHistory,

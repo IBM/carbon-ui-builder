@@ -4,6 +4,7 @@ import { Breadcrumb, BreadcrumbItem } from 'carbon-components-react';
 
 import { getParentComponent, getSelectedComponent } from '../../components/fragment';
 import { useFragment } from '../../context';
+import { css } from 'emotion';
 
 const getAncestors = (state: any, component: any) => {
 	const ancestors: any[] = [];
@@ -38,7 +39,7 @@ export const SelectedComponentBreadcrumbs = ({ selectedComponent }: any) => {
 		}, true);
 	};
 
-	return selectedComponent && <Breadcrumb noTrailingSlash>
+	return selectedComponent && <Breadcrumb className={css`padding: 1rem`} noTrailingSlash>
 		{getAncestors(fragment.data, selectedComponent).map((component) =>
 			<BreadcrumbItem
 			href="#"
@@ -56,7 +57,7 @@ export const SelectedComponentBreadcrumbs = ({ selectedComponent }: any) => {
 			</BreadcrumbItem>
 		)}
 		<BreadcrumbItem href="#" onClick={(event: any) => event.nativeEvent.preventDefault()} isCurrentPage>
-			{selectedComponent.type}
+			{selectedComponent.type || 'container'}
 		</BreadcrumbItem>
 	</Breadcrumb>;
 };

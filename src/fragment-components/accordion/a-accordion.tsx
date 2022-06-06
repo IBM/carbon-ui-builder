@@ -1,7 +1,6 @@
 import React from 'react';
 import { Accordion, Dropdown } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from '../a-component';
-import { ComponentCssClassSelector } from '../../components/css-class-selector';
 
 import image from '../../assets/component-icons/accordion.svg';
 import {
@@ -10,7 +9,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 
-export const AAccordionStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const AAccordionSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
 		{ id: 'sm', text: 'Small' },
 		{ id: 'md', text: 'Medium' },
@@ -43,7 +42,6 @@ export const AAccordionStyleUI = ({ selectedComponent, setComponent }: any) => {
 				...selectedComponent,
 				align: event.selectedItem.id
 		})}/>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 
@@ -68,7 +66,7 @@ export const AAccordion = ({
 
 export const componentInfo: ComponentInfo = {
 	component: AAccordion,
-	styleUI: AAccordionStyleUI,
+	settingsUI: AAccordionSettingsUI,
 	render: ({ componentObj, select, remove, selected, renderComponents }) => <AAccordion
 		componentObj={componentObj}
 		select={select}
@@ -78,13 +76,14 @@ export const componentInfo: ComponentInfo = {
 	</AAccordion>,
 	keywords: ['accordion'],
 	name: 'Accordion',
+	type: 'accordion',
 	defaultComponentObj: {
 		type: 'accordion',
 		align: 'end',
 		size: 'md',
 		items: [
 			{
-				type: 'accordionitem',
+				type: 'accordion-item',
 				title: 'Accordion item',
 				items: [{ type: 'text', text: 'Accordion item content' }]
 			}
@@ -100,11 +99,11 @@ export const componentInfo: ComponentInfo = {
 			// Issue being tracked here: https://github.com/IBM/carbon-components-angular/issues/2022
 			// NOTE: Angular accordion align end does not behave as expected.
 			// Issue being tracked here: https://github.com/IBM/carbon-components-angular/issues/2023
-			code: ({ json, jsonToTemplate }) => {
+			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<ibm-accordion
 					[align]="${nameStringToVariableString(json.codeContext?.name)}Align"
 					${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 				</ibm-accordion>`;
 			}
 		},

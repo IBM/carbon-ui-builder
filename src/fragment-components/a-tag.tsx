@@ -6,7 +6,6 @@ import {
 	TextInput
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 
 import image from './../assets/component-icons/tag.svg';
 import {
@@ -15,7 +14,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 
-export const ATagStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const ATagSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const typeItems = [
 		{ id: 'gray', text: 'Gray' },
 		{ id: 'red', text: 'Red' },
@@ -95,8 +94,6 @@ export const ATagStyleUI = ({ selectedComponent, setComponent }: any) => {
 				});
 			}}
 		/>
-
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 
@@ -108,6 +105,7 @@ export const ATag = ({
 	return (
 		<AComponent
 		componentObj={componentObj}
+		rejectDrop={true}
 		{...rest}>
 			<Tag
 			type={componentObj.kind}
@@ -123,7 +121,7 @@ export const ATag = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ATag,
-	styleUI: ATagStyleUI,
+	settingsUI: ATagSettingsUI,
 	render: ({ componentObj, select, remove, selected }) => <ATag
 		componentObj={componentObj}
 		select={select}
@@ -133,6 +131,7 @@ export const componentInfo: ComponentInfo = {
 	</ATag>,
 	keywords: ['tag'],
 	name: 'Tag',
+	type: 'tag',
 	defaultComponentObj: {
 		type: 'tag',
 		// This field is `type` in the `Tag` component

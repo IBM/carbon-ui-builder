@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { SkeletonPlaceholder } from 'carbon-components-react';
 import './fragment-preview.scss';
 import { css, cx } from 'emotion';
 import { allComponents, ComponentInfoRenderProps } from '../fragment-components';
-import { getAllFragmentStyleClasses } from '../utils/fragment-tools';
+import { getAllFragmentStyleClasses, getRandomId } from '../utils/fragment-tools';
 import { GlobalStateContext } from '../context';
+import { getDropIndex } from '../routes/edit/tools';
 
 const canvas = css`
 	border: 2px solid #d8d8d8;
@@ -13,10 +14,9 @@ const canvas = css`
 `;
 
 const allowDrop = (event: any) => {
+	event.stopPropagation();
 	event.preventDefault();
 };
-
-let componentCounter = 2; // actually initialized (again) in Fragment
 
 export const getComponentById = (componentObj: any, id: number) => {
 	if (!componentObj || !id) {
@@ -47,18 +47,6 @@ export const getSelectedComponent = (fragment: any) => {
 	return getComponentById(fragment.data, fragment.selectedComponentId);
 };
 
-export const getHighestId = (componentObj: any) => {
-	if (!componentObj) {
-		return 0;
-	}
-
-	if (!componentObj.items || !componentObj.items.length) {
-		return componentObj.id || 0;
-	}
-
-	return Math.max(...componentObj.items.map((item: any) => getHighestId(item)), (componentObj.id || 0));
-};
-
 export const stateWithoutComponent = (state: any, componentId: number) => {
 	if (state.items) {
 		const componentIndex = state.items.findIndex((component: any) => component.id === componentId);
@@ -78,10 +66,17 @@ export const stateWithoutComponent = (state: any, componentId: number) => {
 	return { ...state };
 };
 
-export const initializeIds = (componentObj: any) => {
-	const id = componentObj.id || componentCounter++;
+export const initializeIds = (componentObj: any, forceNewIds = false) => {
+	let id = null;
+	if (forceNewIds) {
+		id = getRandomId();
+	}
+	id = id || componentObj.id || getRandomId();
 	// name is used in form items and for angular inputs and outputs variable names
-	const name = componentObj.codeContext?.name || `${componentObj.type}-${id}`;
+	let name = componentObj.codeContext?.name;
+	if (name === undefined) {
+		name = `${componentObj.type}-${id}`;
+	}
 
 	return {
 		...componentObj,
@@ -154,7 +149,7 @@ export const updatedState = (state: any, dragObj: any, dropInId?: number, dropIn
 		// convert into a list of components, move current component into list
 		return {
 			// TODO should this be a `type: container`?
-			id: componentCounter++,
+			id: getRandomId(),
 			items: updatedList([{ ...state }], dragObj.component, dropInIndex)
 		};
 	}
@@ -188,6 +183,8 @@ export const getParentComponent = (state: any, child: any) => {
 
 export const Fragment = ({ fragment, setFragment }: any) => {
 	const globalState = useContext(GlobalStateContext);
+	const [showDragOverIndicator, setShowDragOverIndicator] = useState(false);
+	const holderRef = useRef(null as any);
 
 	if (!fragment || !fragment.data) {
 		return <SkeletonPlaceholder />;
@@ -195,17 +192,21 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 
 	const { fragments } = globalState || {};
 
-	// initialize component counter
-	componentCounter = getHighestId(fragment.data) + 1;
-
-	const drop = (event: any, dropInId?: number) => {
+	const drop = (event: any) => {
+		event.stopPropagation();
 		event.preventDefault();
+		setShowDragOverIndicator(false);
 
 		const dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
 
 		setFragment({
 			...fragment,
-			data: updatedState(fragment.data, dragObj, dropInId)
+			data: updatedState(
+				fragment.data,
+				dragObj,
+				fragment.data.id,
+				getDropIndex(event, holderRef.current)
+			)
 		});
 	};
 
@@ -228,19 +229,22 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 			return componentObj;
 		}
 
-		for (const [key, component] of Object.entries(allComponents)) {
-			if (componentObj.type === key) {
+		for (const component of Object.values(allComponents)) {
+		// TODO fragment should have overwritable properties
+		// overwritten properties are in componentObj in the same level as id, but can go deep, they merge
+		//     with subFragment before rendering
+		// overwriting happens when you select something in the fragment and change its value (a button to reverse to default?)
+		//     default value can be set as placeholder in context?
+		// also provide a clone/duplicate functionality/button that essentially copies the
+		//     componentObj of subFragment in place in our fragment?
+		// JSON export should include json of the subFragment
+			if (componentObj.type === component.componentInfo.type) {
 				if (component.componentInfo.render) {
 					return component.componentInfo.render({
 						componentObj,
 						select: () => select(componentObj),
 						remove: () => remove(componentObj),
 						selected: fragment.selectedComponentId === componentObj.id,
-						onDragOver: allowDrop,
-						onDrop: (event: any) => {
-							event.stopPropagation();
-							drop(event, componentObj.id);
-						},
 						renderComponents
 					} as ComponentInfoRenderProps);
 				}
@@ -274,9 +278,22 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 			styles,
 			css`width: ${fragment.width || '800px'}; height: ${fragment.height || '600px'}`
 		)}
+		style={{
+			background: showDragOverIndicator ? '#0001' : ''
+		}}
+		onDragEnter={(event: any) => {
+			event.stopPropagation();
+			event.preventDefault();
+			setShowDragOverIndicator(true);
+		}}
+		onDragLeave={(event: any) => {
+			event.stopPropagation();
+			event.preventDefault();
+			setShowDragOverIndicator(false);
+		}}
 		onDragOver={allowDrop}
-		onDrop={(event: any) => drop(event, fragment.data.id)}>
-			<div className={`${fragment.cssClasses ? fragment.cssClasses.map((cc: any) => cc.id).join(' ') : ''}`}>
+		onDrop={drop}>
+			<div ref={holderRef} className={`${fragment.cssClasses ? fragment.cssClasses.map((cc: any) => cc.id).join(' ') : ''}`}>
 				{renderComponents(fragment.data)}
 			</div>
 		</div>

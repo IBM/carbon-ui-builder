@@ -53,7 +53,7 @@ module.exports = {
 			{
 				'SwitchCase': 1,
 				// Going to use manual & JSX Indent
-				'ignoredNodes': ['JSXElement *', 'JSXElement']
+				'ignoredNodes': ['JSXElement *', 'JSXElement', 'TemplateLiteral *']
 			}
 		],
 		'@typescript-eslint/naming-convention': [
@@ -103,6 +103,8 @@ module.exports = {
 		'@typescript-eslint/type-annotation-spacing': 'error',
 		'brace-style': 'off',
 		'@typescript-eslint/brace-style': ['error'], // Using default 1tbs
+		'keyword-spacing': 'off',
+  		'@typescript-eslint/keyword-spacing': ['error'],
 		'curly': 'error',
 		'default-case': 'error',
 		'eol-last': [

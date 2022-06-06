@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Search, Dropdown } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 import * as Icons from '@carbon/icons-react';
 import image from './../assets/component-icons/icons.svg';
@@ -72,7 +71,7 @@ const getIcons = () => {
 	return items;
 };
 
-export const AIconsInputStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const AIconsSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const [filterString, setFilterString] = useState('');
 	const shouldShow = (matches: string[]) => {
 		return !filterString || matches.some((match) => match.includes(filterString));
@@ -114,7 +113,6 @@ export const AIconsInputStyleUI = ({ selectedComponent, setComponent }: any) => 
                  })
             }
         </div>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>);
 };
 export const AIcons = ({
@@ -145,9 +143,10 @@ export const AIcons = ({
 
 export const componentInfo: ComponentInfo = {
 	component: AIcons,
-	styleUI: AIconsInputStyleUI,
+	settingsUI: AIconsSettingsUI,
 	keywords: ['icons'],
 	name: 'Icons',
+	type: 'icons',
 	defaultComponentObj: {
 		type: 'icons',
 		label: 'Icons',
@@ -176,7 +175,7 @@ export const componentInfo: ComponentInfo = {
 				return `import {${json.name}} from "@carbon/icons-react";`;
 			},
 			code: ({ json }) => {
-				return `<${json.name} 
+				return `<${json.name}
                             ${json.key ? `aria-label='${json.key}'` : ''}
                         ${reactClassNamesFromComponentObj(json)}/>`;
 			}

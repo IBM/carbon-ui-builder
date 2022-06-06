@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="72" height="26" viewBox="0 0 72 26">
+	<defs>
+		<clipPath id="clip-path">
+			<path id="Path_7087" data-name="Path 7087" d="M264.042-982h12.083a6.042,6.042,0,0,1,6.042,6.042,6.042,6.042,0,0,1-6.042,6.042H264.042A6.042,6.042,0,0,1,258-975.958,6.042,6.042,0,0,1,264.042-982Z" transform="translate(-258 982)" fill="#393939" clip-rule="evenodd" />
+		</clipPath>
+		<clipPath id="clip-path-2">
+			<path id="Path_7086" data-name="Path 7086" d="M256-996.243h29.2V-1015H256Z" transform="translate(-256 1015)" fill="#393939" />
+		</clipPath>
+	</defs>
+	<g id="Group_10690" data-name="Group 10690" transform="translate(-256 -688)">
+		<g id="Group_10692" data-name="Group 10692" transform="translate(-171 355)">
+			<g id="Editing-Patterns-White" transform="translate(427 333)" opacity="0.65">
+				<g id="_05.2" data-name="05.2" transform="translate(-157 -395)">
+					<g id="Group-10" transform="translate(15 170)">
+						<g id="dropdown-_-01-default-_-01-label-_-closed-_-01-enabled" data-name="dropdown-/-01-default-/-01-label-/-closed-/-01-enabled" transform="translate(142 225)">
+							<path id="Field-color" d="M0,0H72V26H0Z" fill="#f4f4f4" fill-rule="evenodd" />
+							<rect id="Border-bottom" width="72" height="1" transform="translate(0 25)" fill="#8d8d8d" />
+							<g id="icon-_-navigation-_-chevron-_-down-_-16" data-name="icon-/-navigation-/-chevron-/-down-/-16" transform="translate(54 9.85)">
+								<path id="Fill" d="M5,6,0,1,.7.3,5,4.6,9.3.3,10,1Z" fill="#161616" fill-rule="evenodd" />
+							</g>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+		<g id="Group_7286" data-name="Group 7286" transform="translate(259 694.958)" clip-path="url(#clip-path)">
+			<g id="Group_7285" data-name="Group 7285" transform="translate(-2.517 -3.524)" clip-path="url(#clip-path-2)">
+				<path id="Path_7085" data-name="Path 7085" d="M253-987h29.2v17.118H253Z" transform="translate(-253 988.007)" fill="#393939" />
+			</g>
+		</g>
+		<text id="_3" data-name="3" transform="translate(269 704)" fill="#fff" font-size="8" font-family="IBMPlexSans, IBM Plex Sans" letter-spacing="0.011em">
+			<tspan x="0" y="0">3</tspan>
+		</text>
+	</g>
+</svg>

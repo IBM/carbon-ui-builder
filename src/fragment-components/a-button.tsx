@@ -6,12 +6,11 @@ import {
 } from 'carbon-components-react';
 import { css } from 'emotion';
 import { AComponent, ComponentInfo } from './a-component';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 
 import image from './../assets/component-icons/button.svg';
 import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
-export const AButtonStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const kindItems = [
 		{ id: 'primary', text: 'Primary' },
 		{ id: 'secondary', text: 'Secondary' },
@@ -40,7 +39,6 @@ export const AButtonStyleUI = ({ selectedComponent, setComponent }: any) => {
 				...selectedComponent,
 				kind: event.selectedItem.id
 			})} />
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 
@@ -52,6 +50,7 @@ export const AButton = ({
 	return (
 		<AComponent
 		componentObj={componentObj}
+		rejectDrop={true}
 		className={css`position: relative; display: inline-flex`}
 		{...rest}>
 			<Button
@@ -66,7 +65,7 @@ export const AButton = ({
 
 export const componentInfo: ComponentInfo = {
 	component: AButton,
-	styleUI: AButtonStyleUI,
+	settingsUI: AButtonSettingsUI,
 	render: ({ componentObj, select, remove, selected }) => <AButton
 		componentObj={componentObj}
 		select={select}
@@ -76,6 +75,7 @@ export const componentInfo: ComponentInfo = {
 	</AButton>,
 	keywords: ['button'],
 	name: 'Button',
+	type: 'button',
 	defaultComponentObj: {
 		type: 'button',
 		kind: 'primary',

@@ -2,13 +2,12 @@ import React from 'react';
 import { Checkbox, Grid } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css, cx } from 'emotion';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/grid.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
-export const AGridStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const AGridSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<Checkbox
 			labelText='Show outline'
@@ -42,7 +41,6 @@ export const AGridStyleUI = ({ selectedComponent, setComponent }: any) => {
 				...selectedComponent,
 				narrow: checked
 			})} />
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 
@@ -58,7 +56,7 @@ export const AGrid = ({
 	...rest
 }: any) => {
 	return (
-		<AComponent componentObj={componentObj} {...rest}>
+		<AComponent componentObj={componentObj} rejectDrop={true} {...rest}>
 			<Grid
 			className={cx(
 			componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
@@ -104,11 +102,13 @@ const getCellParamsString = (cell: any) => {
 
 export const componentInfo: ComponentInfo = {
 	component: AGrid,
-	styleUI: AGridStyleUI,
+	settingsUI: AGridSettingsUI,
 	keywords: ['grid', 'row', 'column'],
 	name: 'Grid',
+	type: 'grid',
 	defaultComponentObj: {
 		type: 'grid',
+		showOutline: true,
 		items: [
 			{
 				type: 'row', items: [
@@ -130,11 +130,11 @@ export const componentInfo: ComponentInfo = {
 			inputs: (_) => '',
 			outputs: (_) => '',
 			imports: ['GridModule'],
-			code: ({ json, jsonToTemplate }) => {
+			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<div ibmGrid ${angularClassNamesFromComponentObj(json)}>
 					${json.items.map((row: any) => `<div ibmRow ${angularClassNamesFromComponentObj(row)}>
 						${row.items.map((cell: any) => `<div ibmCol ${angularClassNamesFromComponentObj(cell)}>
-								${jsonToTemplate(cell)}
+								${jsonToTemplate(cell, fragments)}
 						</div>`).join('\n')}
 					</div>`).join('\n')}
 				</div>`;

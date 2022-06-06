@@ -4,8 +4,7 @@ import { Button } from 'carbon-components-react';
 import {
 	Copy16,
 	Delete16,
-	Settings16,
-	Share16,
+	Export16,
 	Undo16,
 	Redo16
 } from '@carbon/icons-react';
@@ -209,24 +208,15 @@ export const EditHeader = ({ fragment }: any) => {
 							<Delete16 className={actionIconStyle} />
 						</Button>
 						<Button
-							kind='ghost'
-							aria-label='Share fragment'
-							title='Share fragment'
+							kind='primary'
+							aria-label='Export fragment'
+							title='Export fragment'
+							renderIcon={Export16}
 							onClick={() => dispatchModal({
-								type: ModalActionType.setShareModal,
+								type: ModalActionType.setExportModal,
 								id: fragment.id
 							})}>
-							<Share16 className={actionIconStyle} />
-						</Button>
-						<Button
-							kind='ghost'
-							aria-label='Fragment settings'
-							title='Fragment settings'
-							onClick={() => dispatchModal({
-								type: ModalActionType.setSettingsModal,
-								id: fragment.id
-							})}>
-							<Settings16 className={actionIconStyle} />
+							Export
 						</Button>
 					</div>
 				</div>

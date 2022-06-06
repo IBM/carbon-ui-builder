@@ -6,21 +6,20 @@ import {
 import { Edit32 } from '@carbon/icons-react';
 import { css, cx } from 'emotion';
 import { AComponent, ComponentInfo } from './a-component';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 
 import image from './../assets/component-icons/button.svg';
 import { GlobalStateContext } from '../context';
 import { classNameFromFragment, tagNameFromFragment } from '../utils/fragment-tools';
 import { LinkButton } from '../components';
 
-export const AFragmentStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const AFragmentSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<LinkButton
 		kind='secondary'
 		size='sm'
 		renderIcon={Edit32}
 		className={css`margin-bottom: 1rem`}
-		to={selectedComponent.id}>
+		to={`/edit/${selectedComponent.id}`}>
 			Edit fragment
 		</LinkButton>
 		<Checkbox
@@ -31,7 +30,6 @@ export const AFragmentStyleUI = ({ selectedComponent, setComponent }: any) => {
 				...selectedComponent,
 				showOutline: checked
 			})} />
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 
@@ -65,6 +63,7 @@ export const AFragment = ({
 		<AComponent
 		componentObj={componentObj}
 		className={css`position: relative; display: inline-flex`}
+		rejectDrop={true}
 		{...rest}>
 			<div
 			style={{ pointerEvents: 'none' }}
@@ -80,7 +79,7 @@ export const AFragment = ({
 
 export const componentInfo: ComponentInfo = {
 	component: AFragment,
-	styleUI: AFragmentStyleUI,
+	settingsUI: AFragmentSettingsUI,
 	render: ({ componentObj, select, remove, selected, renderComponents }) => {
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const globalState = useContext(GlobalStateContext); // used for fetching subcomponents/microlayouts
@@ -101,6 +100,7 @@ export const componentInfo: ComponentInfo = {
 	keywords: ['fragment'],
 	name: 'Fragment',
 	hideFromElementsPane: true,
+	type: 'fragment',
 	defaultComponentObj: {
 		type: 'fragment'
 	},
@@ -110,7 +110,10 @@ export const componentInfo: ComponentInfo = {
 			inputs: (_) => '',
 			outputs: (_) => '',
 			imports: [],
-			code: (_) => ''
+			code: ({ json, fragments }) => {
+				const fragment = fragments?.find(f => f.id === json.id);
+				return `<app-${tagNameFromFragment(fragment)}></app-${tagNameFromFragment(fragment)}>`;
+			}
 		},
 		react: {
 			imports: [],

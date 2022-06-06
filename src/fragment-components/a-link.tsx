@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, Checkbox, TextInput } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
-import { ComponentCssClassSelector } from '../components/css-class-selector';
 
 import image from './../assets/component-icons/link.svg';
 import {
@@ -10,7 +9,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 
-export const ALinkStyleUI = ({ selectedComponent, setComponent }: any) => {
+export const ALinkSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TextInput
 			value={selectedComponent.text}
@@ -44,7 +43,6 @@ export const ALinkStyleUI = ({ selectedComponent, setComponent }: any) => {
 				});
 			}}
 		/>
-		<ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 	</>;
 };
 
@@ -87,6 +85,7 @@ export const ALink = ({
 	return (
 		<AComponent
 		componentObj={componentObj}
+		rejectDrop={true}
 		{...rest}>
 			<Link
 			inline={componentObj.inline}
@@ -100,7 +99,7 @@ export const ALink = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ALink,
-	styleUI: ALinkStyleUI,
+	settingsUI: ALinkSettingsUI,
 	codeUI: ALinkCodeUI,
 	render: ({ componentObj, select, remove, selected }) => <ALink
 		componentObj={componentObj}
@@ -111,6 +110,7 @@ export const componentInfo: ComponentInfo = {
 	</ALink>,
 	keywords: ['link'],
 	name: 'Link',
+	type: 'link',
 	defaultComponentObj: {
 		type: 'link',
 		text: 'Link',

@@ -16,6 +16,7 @@ import { GlobalStateContext } from '../../context';
 const searchContainerStyle = css`
 	display: flex;
 	margin-bottom: 1rem;
+	padding-top: 1rem;
 
 	button {
 		border-bottom: 1px solid #8d8d8d;
@@ -98,7 +99,6 @@ export const StylePane = ({ isActive }: any) => {
 
 	return (
 		<div className={cx(leftPane, isActive ? 'is-active' : '')}>
-			Style <br /><br />
 			<Form>
 				<div className={searchContainerStyle}>
 					<Search
