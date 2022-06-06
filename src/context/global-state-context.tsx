@@ -17,7 +17,6 @@ export const useFragment = (id?: string) => {
 		// this happens when rendering, which is fine because it's used
 		// in AComponent to update the state of the whole fragment due to
 		// user interaction - functionality not needed for render only
-		console.info("Rendering only, won't be able to update context");
 		return [{}, (_: any) => { }];
 	}
 
@@ -87,15 +86,19 @@ const GlobalStateContextProvider = ({ children }: any) => {
 	const canUndo = () => actionHistoryIndex > 0;
 
 	const updateFragment = (fragment: any, updateActionHistory = true) => {
+		const fragmentToUpdate = {
+			...fragment,
+			lastModified: updateActionHistory ? new Date().toISOString() : fragment.lastModified
+		};
 		if (!fragments.length) {
-			setFragments([fragment]);
+			setFragments([fragmentToUpdate]);
 			return;
 		}
 		const updatedFragments = fragments.map((f: any) => {
-			if (f.id === fragment.id) {
+			if (f.id === fragmentToUpdate.id) {
 				// Cannot use merge because removing datasets or labels will not
 				// work since it keeps the values, while assign overwrites past values.
-				return assign({}, f, fragment);
+				return assign({}, f, fragmentToUpdate);
 			}
 			return f;
 		});
@@ -103,7 +106,7 @@ const GlobalStateContextProvider = ({ children }: any) => {
 		setFragments(updatedFragments);
 
 		if (updateActionHistory) {
-			addAction({ fragment });
+			addAction({ fragmentToUpdate });
 		}
 	};
 
