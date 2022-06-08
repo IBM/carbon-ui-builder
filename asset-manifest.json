@@ -1,16 +1,18 @@
 {
   "files": {
     "main.css": "/carbon-components-builder/static/css/main.75de33ce.css",
-    "main.js": "/carbon-components-builder/static/js/main.455e13e2.js",
+    "main.js": "/carbon-components-builder/static/js/main.d922dccd.js",
     "static/media/dashboard-empty-state.svg": "/carbon-components-builder/static/media/dashboard-empty-state.68a2dbad53e66c2560c18c7cae63b988.svg",
     "static/media/chart-404.svg": "/carbon-components-builder/static/media/chart-404.0cbc4226f4ef1a83fbdfe88bf5f398d3.svg",
     "static/media/tile-clickable.svg": "/carbon-components-builder/static/media/tile-clickable.dc9f4bb46dc5a7a320bb0b1cf8f6354c.svg",
+    "static/media/radio-group.svg": "/carbon-components-builder/static/media/radio-group.93fc8a5f4f9dc549cfb9ac9ca2081156.svg",
     "static/media/tile-radio.svg": "/carbon-components-builder/static/media/tile-radio.08b6852d0e94d60a150be574a66691ae.svg",
     "static/media/tile-selectable-group.svg": "/carbon-components-builder/static/media/tile-selectable-group.fd0ed2463b4c4342d198c33d92d102b4.svg",
     "static/media/search.svg": "/carbon-components-builder/static/media/search.04acd04a6db200ffb1fe29f478750559.svg",
     "static/media/number-input.svg": "/carbon-components-builder/static/media/number-input.26fae273e32b4d1bfe6018486d7383aa.svg",
     "static/media/combobox.svg": "/carbon-components-builder/static/media/combobox.226b02e2ddec9f43591f16cb38b67a04.svg",
     "static/media/button.svg": "/carbon-components-builder/static/media/button.46d9a9f2529f0e4b8b32fa0b56b14a56.svg",
+    "static/media/radio.svg": "/carbon-components-builder/static/media/radio.5d70d2bbda78f6d89b54d918841b14ae.svg",
     "static/media/accordion.svg": "/carbon-components-builder/static/media/accordion.4ea92de4d0dd899007fa6c1dbbd4fffd.svg",
     "index.html": "/carbon-components-builder/index.html",
     "static/media/text.svg": "/carbon-components-builder/static/media/text.9c0ca1260ea2c0b9bfaee20d8e6e2ef8.svg",
@@ -27,10 +29,10 @@
     "static/media/link.svg": "/carbon-components-builder/static/media/link.5ba53267de54fe9b222ec6f9c0cfd292.svg",
     "static/media/tile.svg": "/carbon-components-builder/static/media/tile.faa170c0e2c6e37d9135ee12f6fc8e41.svg",
     "main.75de33ce.css.map": "/carbon-components-builder/static/css/main.75de33ce.css.map",
-    "main.455e13e2.js.map": "/carbon-components-builder/static/js/main.455e13e2.js.map"
+    "main.d922dccd.js.map": "/carbon-components-builder/static/js/main.d922dccd.js.map"
   },
   "entrypoints": [
     "static/css/main.75de33ce.css",
-    "static/js/main.455e13e2.js"
+    "static/js/main.d922dccd.js"
   ]
 }
