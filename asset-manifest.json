@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/carbon-components-builder/static/css/main.75de33ce.css",
-    "main.js": "/carbon-components-builder/static/js/main.f5c3e32c.js",
+    "main.js": "/carbon-components-builder/static/js/main.455e13e2.js",
     "static/media/dashboard-empty-state.svg": "/carbon-components-builder/static/media/dashboard-empty-state.68a2dbad53e66c2560c18c7cae63b988.svg",
     "static/media/chart-404.svg": "/carbon-components-builder/static/media/chart-404.0cbc4226f4ef1a83fbdfe88bf5f398d3.svg",
     "static/media/tile-clickable.svg": "/carbon-components-builder/static/media/tile-clickable.dc9f4bb46dc5a7a320bb0b1cf8f6354c.svg",
@@ -12,6 +12,7 @@
     "static/media/combobox.svg": "/carbon-components-builder/static/media/combobox.226b02e2ddec9f43591f16cb38b67a04.svg",
     "static/media/button.svg": "/carbon-components-builder/static/media/button.46d9a9f2529f0e4b8b32fa0b56b14a56.svg",
     "static/media/accordion.svg": "/carbon-components-builder/static/media/accordion.4ea92de4d0dd899007fa6c1dbbd4fffd.svg",
+    "index.html": "/carbon-components-builder/index.html",
     "static/media/text.svg": "/carbon-components-builder/static/media/text.9c0ca1260ea2c0b9bfaee20d8e6e2ef8.svg",
     "static/media/dropdown.svg": "/carbon-components-builder/static/media/dropdown.cd5ea48731032566f6dead2c34d81740.svg",
     "static/media/text-area.svg": "/carbon-components-builder/static/media/text-area.35dbec3b58b36cb8448644cb0d96d133.svg",
@@ -19,7 +20,6 @@
     "static/media/tile-expandable.svg": "/carbon-components-builder/static/media/tile-expandable.69447d3b849ebf6786106a6ffe419c1e.svg",
     "static/media/grid.svg": "/carbon-components-builder/static/media/grid.18226eb23016a50647e5c51ec68846cc.svg",
     "static/media/checkbox.svg": "/carbon-components-builder/static/media/checkbox.c5a6dbd4c062310a59c849039bd30b82.svg",
-    "index.html": "/carbon-components-builder/index.html",
     "static/media/tile-selectable.svg": "/carbon-components-builder/static/media/tile-selectable.b8c9ac53c42a2ce3845e7d8ea0d5b36d.svg",
     "static/media/progress-indicator.svg": "/carbon-components-builder/static/media/progress-indicator.444a6e25448fed4a61c90ddb1fdf4b00.svg",
     "static/media/tag.svg": "/carbon-components-builder/static/media/tag.4420658244edc54ef6419e8f497c29da.svg",
@@ -27,10 +27,10 @@
     "static/media/link.svg": "/carbon-components-builder/static/media/link.5ba53267de54fe9b222ec6f9c0cfd292.svg",
     "static/media/tile.svg": "/carbon-components-builder/static/media/tile.faa170c0e2c6e37d9135ee12f6fc8e41.svg",
     "main.75de33ce.css.map": "/carbon-components-builder/static/css/main.75de33ce.css.map",
-    "main.f5c3e32c.js.map": "/carbon-components-builder/static/js/main.f5c3e32c.js.map"
+    "main.455e13e2.js.map": "/carbon-components-builder/static/js/main.455e13e2.js.map"
   },
   "entrypoints": [
     "static/css/main.75de33ce.css",
-    "static/js/main.f5c3e32c.js"
+    "static/js/main.455e13e2.js"
   ]
 }
