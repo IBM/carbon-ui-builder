@@ -15,7 +15,6 @@ const fragmentLayersStyle = css`
 	}
 `;
 
-
 const getComponentObjById = (id: string, componentObj: any) => {
 	if (componentObj.id === id) {
 		return componentObj;
