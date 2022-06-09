@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { Fragment } from '../components';
 import { camelCase, kebabCase, upperFirst } from 'lodash';
 
-const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+export const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export interface RenderProps {
 	id: string;
@@ -164,6 +164,14 @@ export const getFragmentDuplicate = (fragments: any, fragment: any, overrides = 
 	return { ...fragmentCopy, ...overrides };
 };
 
+export const getUrlFromBlob = async (blob: any) => {
+	return new Promise((resolve) => {
+		const reader = new FileReader();
+		reader.readAsDataURL(blob ? blob : new Blob());
+		reader.onloadend = () => resolve(reader.result ? reader.result.toString() : '');
+	});
+};
+
 export const getFragmentPreviewUrl = async (fragment: any) => {
 	const renderProps: RenderProps = {
 		id: fragment.id,
@@ -178,11 +186,7 @@ export const getFragmentPreviewUrl = async (fragment: any) => {
 	};
 
 	const imageBlob = await getFragmentPreview(fragment, renderProps);
-	return new Promise((resolve) => {
-		const reader = new FileReader();
-		reader.readAsDataURL(imageBlob ? imageBlob : new Blob());
-		reader.onloadend = () => resolve(reader.result ? reader.result.toString() : '');
-	});
+	return getUrlFromBlob(imageBlob);
 };
 
 export const reactClassNamesFromComponentObj = (componentObj: any) =>
