@@ -84,6 +84,24 @@ export const ABreadcumbSettingsUI = ({ selectedComponent, setComponent }: any) =
 
 };
 
+export const ABreadcrumbCodeUI = ({ selectedComponent, setComponent }: any) => {
+	return <>
+		<TextInput
+			value={selectedComponent.codeContext?.name}
+			labelText='Input name'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						name: event.currentTarget.value
+					}
+				});
+			}}
+		/>
+	</>;
+};
+
 export const ABreadcrumb = ({
 	children,
 	componentObj,
@@ -113,6 +131,7 @@ export const ABreadcrumb = ({
 export const componentInfo: ComponentInfo = {
 	component: ABreadcrumb,
 	settingsUI: ABreadcumbSettingsUI,
+	codeUI: ABreadcrumbCodeUI,
 	keywords: ['link'],
 	name: 'Breadcrumb',
 	type: 'breadcrumb',
@@ -130,18 +149,36 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `
-			@Input() ${nameStringToVariableString(json.codeContext?.name)}CurrentPage = ${json.currentPage};`,
+			@Input() ${nameStringToVariableString(json.codeContext?.name)}noTrailingSlash = ${json.noTrailingSlash};`,
 			outputs: (_) => ``,
 			imports: ['BreadcrumbModule'],
 			code: ({ json }) => {
-				return ``;
+				return `<ibm-breadcrumb
+					[noTrailingSlash]="${nameStringToVariableString(json.codeContext?.name)}noTrailingSlash"
+					${angularClassNamesFromComponentObj(json)}>
+					${json.items.map((step: any) => (
+						`<ibm-breadcrumb-item
+							href="${step.href}">
+								${step.itemText}
+						</ibm-breadcrumb-item>`
+					)).join('\n')}
+				</ibm-breadcrumb>`;
 			}
 		},
 		react: {
 			imports: ['Breadcrumb', 'BreadcrumbItem'],
 			code: ({ json }) => {
-				return ``;
-			}
+				return `<Breadcrumb
+					noTrailingSlash={${json.noTrailingSlash }}
+					${reactClassNamesFromComponentObj(json)}>
+					${json.items.map((step: any) => (
+						`<BreadcrumbItem
+							href="${step.href}">
+								${step.itemText}
+						</BreadcrumbItem>`
+						)).join('\n')}
+					</Breadcrumb>`;
+				}
 		}
 	}
 };
