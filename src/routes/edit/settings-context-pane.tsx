@@ -18,8 +18,7 @@ import { GlobalStateContext } from '../../context';
 const styleContextPaneStyle = css`
 .bx--form-item.bx--checkbox-wrapper {
 	display: inline-flex;
-}
-`;
+}`;
 
 const showComponentSettingsUI = (selectedComponent: any, setComponent: any) => {
 	for (const component of Object.values(allComponents)) {
@@ -165,6 +164,7 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 				</AccordionItem>
 				<AccordionItem
 				title='Layers'
+				className='layers-widget'
 				open={settings.contextPane?.settings?.fragmentLayersAccordionOpen}
 				onHeadingClick={() => updateContextPaneSettings({
 					fragmentLayersAccordionOpen: !settings.contextPane?.settings?.fragmentLayersAccordionOpen
