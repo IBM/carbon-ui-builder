@@ -28,15 +28,15 @@ export const ARadioSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			id='defaultSelected'
 			checked={selectedComponent.defaultChecked}
 			onChange={(checked: any) => {
-					setComponent({
-						...parentComponent,
-						defaultSelected: checked ? `${selectedComponent.id}` : '',
-						valueChecked: checked ? selectedComponent.id : '',
-						items: parentComponent.items.map((item: any) => ({
-							...item,
-							defaultChecked: checked ? selectedComponent.id === item.id : item.id === 'none'
-						}))
-					});
+				setComponent({
+					...parentComponent,
+					defaultSelected: checked ? `${selectedComponent.id}` : '',
+					valueChecked: checked ? selectedComponent.id : '',
+					items: parentComponent.items.map((item: any) => ({
+						...item,
+						defaultChecked: checked ? selectedComponent.id === item.id : item.id === 'none'
+					}))
+				});
 			}}/>
 		<Checkbox
 			labelText='Disable button'
