@@ -15,19 +15,6 @@ const fragmentLayersStyle = css`
 	}
 `;
 
-const getHierarchyListItemsFromComponentObj = (componentObj: any) => {
-	if (!componentObj) {
-		return null;
-	}
-
-	return {
-		id: componentObj.id,
-		content: {
-			value: componentObj.type
-		},
-		children: componentObj.items?.map((item: any) => getHierarchyListItemsFromComponentObj(item))
-	};
-};
 
 const getComponentObjById = (id: string, componentObj: any) => {
 	if (componentObj.id === id) {
