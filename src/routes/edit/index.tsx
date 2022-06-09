@@ -152,7 +152,7 @@ const rightPanel = css`
 			margin-left: 0;
 		}
 
-		.layers-widget .bx--accordion__content {
+		.layout-widget .bx--accordion__content {
 			padding: 1px;
 		}
 
