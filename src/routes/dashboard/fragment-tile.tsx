@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
 	OverflowMenu,
@@ -8,7 +8,6 @@ import {
 } from 'carbon-components-react';
 import { ModalContext, ModalActionType } from '../../context/modal-context';
 import { FragmentPreview } from '../../components/fragment-preview';
-import { getFragmentPreviewUrl } from '../../utils/fragment-tools';
 import './fragment-tile.scss';
 
 export const FragmentTile = ({
@@ -20,7 +19,8 @@ export const FragmentTile = ({
 }: any) => {
 	const navigate = useNavigate();
 	const [, dispatchModal] = useContext(ModalContext);
-	const [previewUrl, setPreviewUrl] = useState('');
+	const resetPreview = useRef(null);
+
 	const handleModalState = (modalAction: ModalActionType) => {
 		setModalFragment(fragment);
 		dispatchModal({
@@ -29,17 +29,12 @@ export const FragmentTile = ({
 		});
 	};
 
-	const resetPreview = async () => setPreviewUrl(await getFragmentPreviewUrl(fragment) as string);
-
 	return (
 		<div className='tile-wrapper'>
 			<Tile className='tile-style' >
 				<div className='tile-inner-wrapper'>
 					<Link to={to}>
-						<FragmentPreview
-							fragment={fragment}
-							previewUrl={previewUrl}
-							setPreviewUrl={setPreviewUrl} />
+						<FragmentPreview fragment={fragment} resetPreview={resetPreview} />
 					</Link>
 					<div className='fragment-info'>
 						<div>
@@ -64,7 +59,7 @@ export const FragmentTile = ({
 								onClick={() => handleModalState(ModalActionType.setDuplicationModal)} />
 							<OverflowMenuItem
 								itemText='Reset preview'
-								onClick={resetPreview} />
+								onClick={resetPreview.current} />
 							<OverflowMenuItem
 								itemText='Remove'
 								onClick={() => handleModalState(ModalActionType.setDeletionModal)}

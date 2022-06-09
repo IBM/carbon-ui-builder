@@ -23,6 +23,9 @@
 	<title>Carbon Components Builder</title>
 	<!-- Start Single Page Apps for GitHub Pages -->
 	<script type="text/javascript">
+		window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+		window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction || {READ_WRITE: "readwrite"};
+		window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
 		// Single Page Apps for GitHub Pages (edited for carbon-components-builder)
 		// MIT License
 		// https://github.com/rafgraph/spa-github-pages
