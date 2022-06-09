@@ -9,6 +9,8 @@ import * as dropdown from './a-dropdown';
 import * as fragment from './a-fragment';
 import * as grid from './a-grid';
 import * as numberinput from './a-numberinput';
+import * as radio from './a-radio';
+import * as radioGroup from './a-radio-group';
 import * as progressIndicator from './a-progress-indicator';
 import * as row from './a-row';
 import * as tag from './a-tag';
@@ -48,6 +50,8 @@ export { ATag, ATagSettingsUI } from './a-tag';
 export { AText, ATextSettingsUI } from './a-text';
 export { ATextArea, ATextAreaSettingsUI, ATextAreaCodeUI } from './a-textarea';
 export { ATextInput, ATextInputSettingsUI, ATextInputCodeUI } from './a-textinput';
+export { ARadio, ARadioSettingsUI, ARadioCodeUI } from './a-radio';
+export { ARadioGroup, ARadioGroupSettingsUI, ARadioGroupCodeUI } from './a-radio-group';
 
 // Tiles
 export { ATile, ATileCodeUI, ATileSettingsUI } from './tiles/a-tile';
@@ -70,6 +74,8 @@ export const allComponents = {
 	dropdown,
 	fragment,
 	grid,
+	radio,
+	radioGroup,
 	link,
 	numberinput,
 	progressIndicator,

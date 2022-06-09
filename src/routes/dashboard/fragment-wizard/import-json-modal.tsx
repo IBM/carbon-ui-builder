@@ -190,8 +190,7 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 
 	const generateFragment = () => {
 		const generatedFragment = generateNewFragment(fragmentJson);
-
-		addFragment(generateFragment);
+		addFragment(generatedFragment);
 		navigate(`/edit/${generatedFragment.id}`);
 	};
 
