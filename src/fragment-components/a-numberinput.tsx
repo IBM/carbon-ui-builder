@@ -171,8 +171,6 @@ export const ANumberInput = ({
 				light={componentObj.light}
 				allowEmpty={componentObj.allowEmpty}
 				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
-				{...componentObj}
-				{...rest}
 				type='number' />
 		</AComponent>
 	);
