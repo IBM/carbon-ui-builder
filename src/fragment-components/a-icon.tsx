@@ -140,6 +140,7 @@ export const AIcon = ({
 	}
 	return (
 		<AComponent
+		rejectDrop={true}
 		componentObj={componentObj}
 		headingCss={css`display: block;`}
 		className={css`position: relative; display: flex`}
