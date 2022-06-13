@@ -11,7 +11,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 import { DraggableTileList } from '../components';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 
 const preventCheckEvent = css`
 	pointer-events: none;
@@ -114,7 +114,7 @@ export const ABreadcrumb = ({
 		{...rest}>
 			<Breadcrumb
 				noTrailingSlash={componentObj.noTrailingSlash}
-				className={` ${preventCheckEvent} ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} `}>
+				className={cx(preventCheckEvent, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}>
 				{
 					componentObj.items.map((step: any, index: number) => (
 						<BreadcrumbItem
