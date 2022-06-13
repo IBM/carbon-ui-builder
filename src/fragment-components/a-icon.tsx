@@ -8,6 +8,7 @@ import image from './../assets/component-icons/icons.svg';
 import { ElementTile } from '../components/element-tile';
 import isEmpty from 'lodash/isEmpty';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
+
 const searchStyle = css`
 	margin-top: 15px;
 `;
