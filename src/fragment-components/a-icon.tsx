@@ -44,28 +44,31 @@ const getIcons = () => {
 		const element = item[0].split(/(\d+)/);
 		const icon = element ? element[0] : '';
 		const size = element ? element[1] : '';
-		const object = {
+		const iconItem = {
 			key: icon,
 			componentObj: {
 				keywords: [item[0], item[0].toLowerCase(), item[0].replace(/[0-9]/g, '')],
-				size: [{ size: size, text: sizeItems.find((sizeItem: any) => sizeItem.id === size)?.text, component: item[1] }],
+				// size list for each selected icon is used in the Sizes dropdown
+				size: [{ size: size, text: sizeItems.find((sizeItem: any) => sizeItem.id === size)?.text, component: size }],
 				key: icon,
-				label: `${icon}`,
+				label: String(icon),
 				name: item[1].render.name,
 				type: 'icons',
+				// custom tile class for tiles in the modal
 				className: elementTileStyle,
 				selectedIcon: item[1],
 				selectedSize: size
 			}
 		};
 		if (item[0] !== 'Icon') {
-			const isIncluded = items.some((item: any) => item.key === object.key);
+			const isIncluded = items.some((item: any) => item.key === iconItem.key);
 			if (isIncluded) {
-				const current = items.find((item: any) => item.key === object.key);
+				const current = items.find((item: any) => item.key === iconItem.key);
 				current.componentObj.size.push({ size: size,
-					text: sizeItems.find((sizeItem: any) => sizeItem.id === size)?.text, component: item[1] });
+					text: sizeItems.find((sizeItem: any) => sizeItem.id === size)?.text, component: size });
 			} else {
-				items.push(object);
+				// push the icons into a list which is displayed in the modal
+				items.push(iconItem);
 			}
 		}
 	});
