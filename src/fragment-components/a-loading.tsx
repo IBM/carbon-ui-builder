@@ -27,23 +27,21 @@ export const ALoadingSettingsUI = ({ selectedComponent, setComponent }: any) => 
 			id='small'
 			checked={selectedComponent.small}
 			onChange={(checked: any) => {
-				setComponent({
-					...selectedComponent,
-					small: checked
-				});
-			}}
-		/>
+			setComponent({
+				...selectedComponent,
+				small: checked
+			});
+		}}/>
 		<Checkbox
 		labelText='With overlay'
 		id='with-overlay'
 		checked={selectedComponent.overlay}
 		onChange={(checked: any) => {
-				setComponent({
-					...selectedComponent,
-					overlay: checked
-				});
-			}}
-		/>
+			setComponent({
+				...selectedComponent,
+				overlay: checked
+			});
+		}}/>
 		<Checkbox
 		labelText='Active'
 		id='active'
@@ -53,9 +51,8 @@ export const ALoadingSettingsUI = ({ selectedComponent, setComponent }: any) => 
 			setComponent({
 				...selectedComponent,
 				active: checked
-				});
-			}}
-		/>
+			});
+		}}/>
 	</>;
 };
 
