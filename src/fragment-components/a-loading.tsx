@@ -4,9 +4,11 @@ import { AComponent } from './a-component';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/loading.svg';
-import { nameStringToVariableString,
+import {
+	nameStringToVariableString,
 	reactClassNamesFromComponentObj,
-	angularClassNamesFromComponentObj } from '../utils/fragment-tools';
+	angularClassNamesFromComponentObj
+} from '../utils/fragment-tools';
 import { css } from 'emotion';
 
 const overlayStyle = css`
