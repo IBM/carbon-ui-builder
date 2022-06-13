@@ -91,7 +91,7 @@ export const AIconSettingsUI = ({ selectedComponent, setComponent }: any) => {
 				selectedSize: selectedComponent.size.find((item: any) => item.size === event.selectedItem.size).size
 		})}/>
 		<ModalWrapper
-		buttonTriggerText="More Icons"
+		buttonTriggerText="More icons"
 		modalHeading="Select an icon"
 		modalLabel="Icons"
 		passiveModal>
