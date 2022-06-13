@@ -80,6 +80,7 @@ export const ALoading = ({
 		componentObj={componentObj}
 		className={`${componentObj.overlay ? overlayStyle : ''}`}
 		headingCss={css`display: block;`}
+		rejectDrop={true}
 		{...rest}>
 			<Loading
 				active={componentObj.active}
