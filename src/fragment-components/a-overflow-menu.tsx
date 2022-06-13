@@ -114,7 +114,7 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 			setDataList={updateStepList}
 			updateItem={handleStepUpdate}
 			defaultObject={{
-				itemText: 'New Option',
+				itemText: 'New option',
 				disabled: false,
 				hasLink: false,
 				isDelete: false,
