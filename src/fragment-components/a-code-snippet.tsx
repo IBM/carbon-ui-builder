@@ -78,6 +78,7 @@ export const ACodeSnippet = ({
 		<AComponent
 		componentObj={componentObj}
 		headingCss={css`display: block;`}
+		rejectDrop={true}
 		{...rest}>
 			<CodeSnippet
 			type={componentObj.varient}
