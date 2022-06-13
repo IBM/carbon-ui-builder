@@ -1,15 +1,19 @@
 import React from 'react';
-import { Checkbox, Loading, TextInput } from 'carbon-components-react';
+import {
+	Checkbox,
+	Loading,
+	TextInput
+} from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { ComponentInfo } from '.';
-
+import { css } from 'emotion';
 import image from './../assets/component-icons/loading.svg';
 import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj,
 	angularClassNamesFromComponentObj
 } from '../utils/fragment-tools';
-import { css } from 'emotion';
+
 
 const overlayStyle = css`
 .bx--loading-overlay {
@@ -29,11 +33,11 @@ export const ALoadingSettingsUI = ({ selectedComponent, setComponent }: any) => 
 				});
 			}}
 		/>
-        <Checkbox
-        labelText='With overlay'
-        id='with-overlay'
-        checked={selectedComponent.overlay}
-        onChange={(checked: any) => {
+		<Checkbox
+		labelText='With overlay'
+		id='with-overlay'
+		checked={selectedComponent.overlay}
+		onChange={(checked: any) => {
 				setComponent({
 					...selectedComponent,
 					overlay: checked
@@ -116,9 +120,9 @@ export const componentInfo: ComponentInfo = {
 				return `<ibm-loading
 							[size]="${json.small ? 'sm' : 'normal'}"
 							[isActive]="${nameStringToVariableString(json.codeContext?.name)}Active"
-                            [overlay]="${nameStringToVariableString(json.codeContext?.name)}Overlay"
-                            ${angularClassNamesFromComponentObj(json)}>
-                        </ibm-loading>`;
+							[overlay]="${nameStringToVariableString(json.codeContext?.name)}Overlay"
+							${angularClassNamesFromComponentObj(json)}>
+						</ibm-loading>`;
 			}
 		},
 		react: {
@@ -126,9 +130,9 @@ export const componentInfo: ComponentInfo = {
 			code: ({ json }) => {
 				return `<Loading
 							active={${json.active}}
-                            withOverlay={${json.overlay}}
-                            ${json.small ? `small={${json.small}}` : ''}
-                            ${reactClassNamesFromComponentObj(json)} />`;
+							withOverlay={${json.overlay}}
+							${json.small ? `small={${json.small}}` : ''}
+							${reactClassNamesFromComponentObj(json)} />`;
 			}
 		}
 	}
