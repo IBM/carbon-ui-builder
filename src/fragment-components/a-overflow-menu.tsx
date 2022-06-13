@@ -8,11 +8,13 @@ import {
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
 import image from './../assets/component-icons/overflowMenu.svg';
-import { reactClassNamesFromComponentObj,
+import {
+	reactClassNamesFromComponentObj,
 	angularClassNamesFromComponentObj,
-	nameStringToVariableString } from '../utils/fragment-tools';
+	nameStringToVariableString
+} from '../utils/fragment-tools';
 import { DraggableTileList } from '../components';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 
 const preventCheckEvent = css`
 	pointer-events: none;
@@ -152,8 +154,9 @@ export const AOverflowMenu = ({
 				<OverflowMenu
 						flipped={componentObj.flipped}
 						direction={componentObj.placement}
-						className={` ${preventCheckEvent} ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} `}>
-							{
+						className={cx(preventCheckEvent,
+							componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}>
+						{
 							componentObj.items.map((step: any, index: number) => (
 								<OverflowMenuItem
 									className={step.className}
@@ -163,7 +166,7 @@ export const AOverflowMenu = ({
 									isDelete={step.isDelete}
 									key={index}
 								/>))
-							}
+						}
 				</OverflowMenu>
 		</AComponent>
 	);
