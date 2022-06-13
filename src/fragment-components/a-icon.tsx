@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Dropdown } from 'carbon-components-react';
+import { Search, Dropdown, ModalWrapper } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
 import { ComponentInfo } from '.';
@@ -78,6 +78,7 @@ export const AIconSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	};
 	return (<>
 		<Dropdown
+		className={css`margin-bottom: 1rem;`}
 		label='Size'
 		titleText='Size'
 		items={selectedComponent.size}
@@ -88,31 +89,37 @@ export const AIconSettingsUI = ({ selectedComponent, setComponent }: any) => {
 				selectedIcon: selectedComponent.size.find((item: any) => item.size === event.selectedItem.size).component,
 				selectedSize: selectedComponent.size.find((item: any) => item.size === event.selectedItem.size).size
 		})}/>
-		<Search id='icons-search'
-			className={searchStyle}
-			light
-			labelText='Filter icons'
-			placeholder='Filter icons'
-			onChange={(event: any) => setFilterString(event.target.value)} />
-		<div className={elementTileListStyle}>
-			{
-				selectedComponent.items.filter((component: any) => shouldShow(component.componentObj.keywords)).map((props: any) => {
-					const Component = props.componentObj.selectedIcon;
-					// eslint-disable-next-line react/jsx-key
-					return (<ElementTile componentObj={props.componentObj}>
-								<Component
-									onClick={() => setComponent({
-										...selectedComponent,
-										selectedIcon: props.componentObj.selectedIcon,
-										key: props.componentObj.key,
-										size: props.componentObj.size,
-										name: props.componentObj.name
-									})}>
-								</Component>
-					</ElementTile>);
-				})
-			}
-		</div>
+		<ModalWrapper
+		buttonTriggerText="More Icons"
+		modalHeading="Select an icon"
+		modalLabel="Icons"
+		passiveModal>
+			<Search id='icons-search'
+				className={searchStyle}
+				light
+				labelText='Filter icons'
+				placeholder='Filter icons'
+				onChange={(event: any) => setFilterString(event.target.value)} />
+			<div className={elementTileListStyle}>
+				{
+					selectedComponent.items.filter((component: any) => shouldShow(component.componentObj.keywords)).map((props: any) => {
+						const Component = props.componentObj.selectedIcon;
+						// eslint-disable-next-line react/jsx-key
+						return (<ElementTile componentObj={props.componentObj}>
+									<Component
+										onClick={() => setComponent({
+											...selectedComponent,
+											selectedIcon: props.componentObj.selectedIcon,
+											key: props.componentObj.key,
+											size: props.componentObj.size,
+											name: props.componentObj.name
+										})}>
+									</Component>
+						</ElementTile>);
+					})
+				}
+			</div>
+		</ModalWrapper>
 	</>);
 };
 export const AIcon = ({
