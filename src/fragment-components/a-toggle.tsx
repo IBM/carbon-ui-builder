@@ -108,6 +108,7 @@ export const AToggle = ({
 	return (
 		<AComponent
 		componentObj={componentObj}
+		rejectDrop={true}
 		{...rest}>
 			<Toggle
 				size={componentObj.size}
