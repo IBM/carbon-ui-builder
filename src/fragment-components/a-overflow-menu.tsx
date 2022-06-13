@@ -52,7 +52,6 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 					handleStepUpdate('itemText', event.currentTarget.value, index);
 				}}
 			/>
-			{ item.hasLink &&
 			<TextInput
 				light
 				value={item.link}
@@ -61,13 +60,7 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 					handleStepUpdate('link', event.currentTarget.value, index);
 				}}
 			/>
-			}
 			<div style={{ display: 'flex', flexWrap: 'wrap' }}>
-				<Checkbox
-					labelText='Has link'
-					id={`hasLink-${index}`}
-					checked={item.hasLink}
-					onChange={(checked: boolean) => handleStepUpdate('hasLink', checked, index) }/>
 				<Checkbox
 					labelText='Disabled'
 					id={`disabled-${index}`}
@@ -121,7 +114,7 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 				hasLink: false,
 				isDelete: false,
 				hasDivider: false,
-				link: ''
+				link: undefined
 			}}
 			template={template} />
 	</>;
@@ -160,7 +153,7 @@ export const AOverflowMenu = ({
 							componentObj.items.map((step: any, index: number) => (
 								<OverflowMenuItem
 									className={step.className}
-									href={step.hasLink ? step.link : undefined}
+									href={step.link !== undefined ? step.link : undefined}
 									itemText={step.itemText}
 									disabled={step.disabled}
 									isDelete={step.isDelete}
@@ -194,7 +187,7 @@ export const componentInfo: ComponentInfo = {
 				hasLink: false,
 				isDelete: false,
 				hasDivider: false,
-				link: ''
+				link: undefined
 			},
 			{
 				itemText: 'Option 2',
@@ -203,7 +196,7 @@ export const componentInfo: ComponentInfo = {
 				hasLink: false,
 				isDelete: false,
 				hasDivider: false,
-				link: ''
+				link: undefined
 			}
 		]
 	},
@@ -224,7 +217,7 @@ export const componentInfo: ComponentInfo = {
 								`<ibm-overflow-menu-option
 									${step.isDelete ? "type='danger'" : ''}
 									${step.hasDivider ? `[divider]="${step.hasDivider}"` : ''}
-									${step.hasLink ? `href="${step.link}"` : ''}
+									${step.link !== undefined ? `href="${step.link}"` : ''}
 									${step.disabled ? `disabled="${step.disabled}"` : '' }
 									(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
 									(click)="${nameStringToVariableString(json.codeContext?.name)}Clicked.emit($event)">
@@ -243,7 +236,7 @@ export const componentInfo: ComponentInfo = {
 							${reactClassNamesFromComponentObj(json)}>
 							${json.items.map((step: any) => (
 								`<OverflowMenuItem
-									${step.hasLink ? `href="${step.link}"` : ''}
+									${step.link !== undefined ? `href="${step.link}"` : ''}
 									${step.isDelete !== undefined ? `isDelete={${step.isDelete}}` : ''}
 									${step.hasDivider !== false ? 'hasDivider': ''}
 									disabled={${step.disabled}}
