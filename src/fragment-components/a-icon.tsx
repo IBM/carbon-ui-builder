@@ -6,7 +6,7 @@ import { ComponentInfo } from '.';
 import * as Icons from '@carbon/icons-react';
 import image from './../assets/component-icons/icons.svg';
 import { ElementTile } from '../components/element-tile';
-import _ from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 const searchStyle = css`
 	margin-top: 15px;
@@ -14,20 +14,20 @@ const searchStyle = css`
 
 const elementTileListStyle = css`
 	display: flex;
-    justify-content: space-between;
+	justify-content: space-between;
 	flex-wrap: wrap;
-    margin-top: 20px;
+	margin-top: 20px;
 `;
 
 const elementTileStyle = css`
 	border: 1px solid #d8d8d8;
 	min-width: 34px;
 	height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	margin-bottom: 1rem;
-    flex-direction: column;
+	flex-direction: column;
 `;
 
 const sizeItems = [
@@ -38,7 +38,7 @@ const sizeItems = [
 ];
 
 const getIcons = () => {
-	let items: any = [];
+	const items: any = [];
 	Object.entries(Icons).forEach((item: any) => {
 		const element = item[0].split(/(\d+)/);
 		const icon = element ? element[0] : '';
@@ -57,9 +57,9 @@ const getIcons = () => {
 				selectedSize: size
 			}
 		};
-		if(item[0] !== 'Icon') {
+		if (item[0] !== 'Icon') {
 			const isIncluded = items.some((item: any) => item.key === object.key);
-			if(isIncluded) {
+			if (isIncluded) {
 				const current = items.find((item: any) => item.key === object.key);
 				current.componentObj.size.push({ size: size,
 					text: sizeItems.find((sizeItem: any) => sizeItem.id === size)?.text, component: item[1] });
@@ -71,51 +71,51 @@ const getIcons = () => {
 	return items;
 };
 
-export const AIconsSettingsUI = ({ selectedComponent, setComponent }: any) => {
+export const AIconSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const [filterString, setFilterString] = useState('');
 	const shouldShow = (matches: string[]) => {
 		return !filterString || matches.some((match) => match.includes(filterString));
 	};
 	return (<>
-        <Dropdown
-        label='Size'
-        titleText='Size'
-        items={selectedComponent.size}
-        initialSelectedItem={selectedComponent.size.find((item: any) => item.size === selectedComponent.size[0].size)}
-        itemToString={(item: any) => (item ? item.text : '')}
-        onChange={(event: any) => setComponent({
-                ...selectedComponent,
-                selectedIcon: selectedComponent.size.find((item: any) => item.size === event.selectedItem.size).component,
-                selectedSize: selectedComponent.size.find((item: any) => item.size === event.selectedItem.size).size
-        })}/>
+		<Dropdown
+		label='Size'
+		titleText='Size'
+		items={selectedComponent.size}
+		initialSelectedItem={selectedComponent.size.find((item: any) => item.size === selectedComponent.size[0].size)}
+		itemToString={(item: any) => (item ? item.text : '')}
+		onChange={(event: any) => setComponent({
+				...selectedComponent,
+				selectedIcon: selectedComponent.size.find((item: any) => item.size === event.selectedItem.size).component,
+				selectedSize: selectedComponent.size.find((item: any) => item.size === event.selectedItem.size).size
+		})}/>
 		<Search id='icons-search'
 			className={searchStyle}
 			light
 			labelText='Filter icons'
 			placeholder='Filter icons'
 			onChange={(event: any) => setFilterString(event.target.value)} />
-        <div className={elementTileListStyle}>
-            {
-                 selectedComponent.items.filter((component: any) => shouldShow(component.componentObj.keywords)).map((props: any) => {
-                    const Component = props.componentObj.selectedIcon;
-                   // eslint-disable-next-line react/jsx-key
-                   return (<ElementTile componentObj={props.componentObj}>
-                                <Component
-                                onClick={() => setComponent({
-                                        ...selectedComponent,
-                                        selectedIcon: props.componentObj.selectedIcon,
-                                        key: props.componentObj.key,
-                                        size: props.componentObj.size,
-                                        name: props.componentObj.name
-                                    })}>
-                                </Component>
-                            </ElementTile>);
-                 })
-            }
-        </div>
+		<div className={elementTileListStyle}>
+			{
+				selectedComponent.items.filter((component: any) => shouldShow(component.componentObj.keywords)).map((props: any) => {
+					const Component = props.componentObj.selectedIcon;
+					// eslint-disable-next-line react/jsx-key
+					return (<ElementTile componentObj={props.componentObj}>
+								<Component
+									onClick={() => setComponent({
+										...selectedComponent,
+										selectedIcon: props.componentObj.selectedIcon,
+										key: props.componentObj.key,
+										size: props.componentObj.size,
+										name: props.componentObj.name
+									})}>
+								</Component>
+					</ElementTile>);
+				})
+			}
+		</div>
 	</>);
 };
-export const AIcons = ({
+export const AIcon = ({
 	componentObj,
 	...rest
 }: any) => {
@@ -123,7 +123,7 @@ export const AIcons = ({
 	const component = componentObj.key === '' ?
 		componentObj.items.find((item: any) => item.key === 'Add').componentObj :
 		componentObj.items.find((item: any) => item.key === componentObj.key).componentObj;
-	if(_.isEmpty(componentObj.selectedIcon)) {
+	if (isEmpty(componentObj.selectedIcon)) {
 		componentObj.selectedIcon = component.selectedIcon;
 		componentObj.key = component.key;
 		componentObj.size = component.size;
@@ -136,20 +136,20 @@ export const AIcons = ({
 		headingCss={css`display: block;`}
 		className={css`position: relative; display: flex`}
 		{...rest}>
-            <componentObj.selectedIcon></componentObj.selectedIcon>
+			<componentObj.selectedIcon></componentObj.selectedIcon>
 		</AComponent>
 	);
 };
 
 export const componentInfo: ComponentInfo = {
-	component: AIcons,
-	settingsUI: AIconsSettingsUI,
-	keywords: ['icons'],
-	name: 'Icons',
-	type: 'icons',
+	component: AIcon,
+	settingsUI: AIconSettingsUI,
+	keywords: ['icon'],
+	name: 'Icon',
+	type: 'icon',
 	defaultComponentObj: {
-		type: 'icons',
-		label: 'Icons',
+		type: 'icon',
+		label: 'Icon',
 		size: '',
 		key: '',
 		name: '',
@@ -163,10 +163,10 @@ export const componentInfo: ComponentInfo = {
 			imports: ['IconModule'],
 			code: ({ json }) => {
 				return `<svg
-                            ${json.selectedSize ? `size='${json.selectedSize}'` : '16'}
-                            ${json.name ? `ibmIcon='${json.key}'` : ''}
-                            ${angularClassNamesFromComponentObj(json)}>
-                        </svg>`;
+							${json.selectedSize ? `size='${json.selectedSize}'` : '16'}
+							${json.name ? `ibmIcon='${json.key}'` : ''}
+							${angularClassNamesFromComponentObj(json)}>
+						</svg>`;
 			}
 		},
 		react: {
@@ -176,8 +176,8 @@ export const componentInfo: ComponentInfo = {
 			},
 			code: ({ json }) => {
 				return `<${json.name}
-                            ${json.key ? `aria-label='${json.key}'` : ''}
-                        ${reactClassNamesFromComponentObj(json)}/>`;
+							${json.key ? `aria-label='${json.key}'` : ''}
+						${reactClassNamesFromComponentObj(json)}/>`;
 			}
 		}
 	}

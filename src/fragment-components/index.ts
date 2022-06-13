@@ -8,7 +8,7 @@ import * as combobox from './a-combobox';
 import * as dropdown from './a-dropdown';
 import * as fragment from './a-fragment';
 import * as grid from './a-grid';
-import * as icons from './a-icons';
+import * as icon from './a-icon';
 import * as numberinput from './a-numberinput';
 import * as radio from './a-radio';
 import * as radioGroup from './a-radio-group';
@@ -41,7 +41,7 @@ export { ADropdown, ADropdownSettingsUI, ADropdownCodeUI } from './a-dropdown';
 export * from './a-component';
 export { AFragment, AFragmentSettingsUI, AFragmentCodeUI } from './a-fragment';
 export { AGrid, AGridSettingsUI } from './a-grid';
-export { AIcons, AIconsSettingsUI } from './a-icons';
+export { AIcon, AIconSettingsUI } from './a-icon';
 export { ALink, ALinkSettingsUI, ALinkCodeUI } from './a-link';
 export { ANumberInput, ANumberInputSettingsUI, ANumberInputCodeUI } from './a-numberinput';
 export { AProgressIndicator, AProgressIndicatorSettingsUI, AProgressIndicatorCodeUI } from './a-progress-indicator';
@@ -74,7 +74,7 @@ export const allComponents = {
 	dropdown,
 	fragment,
 	grid,
-	icons,
+	icon,
 	radio,
 	radioGroup,
 	link,
