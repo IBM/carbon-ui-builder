@@ -204,7 +204,7 @@ export const componentInfo: ComponentInfo = {
 			}
 		]
 	},
-	image: image,
+	image,
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Flipped = ${json.flipped};
