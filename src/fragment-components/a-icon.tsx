@@ -107,6 +107,7 @@ export const AIconSettingsUI = ({ selectedComponent, setComponent }: any) => {
 						// eslint-disable-next-line react/jsx-key
 						return (<ElementTile componentObj={props.componentObj}>
 									<Component
+										className={css`cursor: pointer;`}
 										onClick={() => setComponent({
 											...selectedComponent,
 											selectedIcon: props.componentObj.selectedIcon,
