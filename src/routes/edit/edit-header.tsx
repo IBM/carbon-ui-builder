@@ -6,12 +6,14 @@ import {
 	Delete16,
 	Export16,
 	Undo16,
-	Redo16
+	Redo16,
+	ChevronLeft24
 } from '@carbon/icons-react';
 import { ModalContext, ModalActionType } from '../../context/modal-context';
 import { FragmentModal } from './fragment-modal';
 import { GlobalStateContext } from '../../context';
 import { actionIconStyle } from '.';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
 
 const editHeader = css`
 	left: 16rem;
@@ -24,7 +26,7 @@ const editHeader = css`
 		justify-content: space-between;
 		.title-wrap {
 			height: 3rem;
-			margin-left: 3rem;
+			margin-left: 0;
 			display: flex;
 			align-self: center;
 			flex-flow: column;
@@ -139,6 +141,7 @@ const fragmentEditToolBar = css`
 `;
 
 export const EditHeader = ({ fragment }: any) => {
+	const navigate: NavigateFunction = useNavigate();
 	const [, dispatchModal] = useContext(ModalContext);
 	const {
 		canUndo,
@@ -154,11 +157,20 @@ export const EditHeader = ({ fragment }: any) => {
 			role='banner'
 			tabIndex={0}>
 			<div className='edit-wrapper'>
-				<div className='title-wrap'>
-					<p className='fragment-title'>{fragment.title}</p>
+				<div className={css`display: flex;`}>
+					<Button
+						kind='ghost'
+						aria-label='Back to dashboard'
+						title='Back to dashboard'
+						onClick={() => navigate('/')}>
+						<ChevronLeft24 className={actionIconStyle} />
+					</Button>
+					<div className='title-wrap'>
+						<p className='fragment-title'>{fragment.title}</p>
 
-					<div className='title-subheading'>
-						<div className='date-wrap'>{`Last modified ${ fragment.lastModified}`}</div>
+						<div className='title-subheading'>
+							<div className='date-wrap'>{`Last modified ${ fragment.lastModified}`}</div>
+						</div>
 					</div>
 				</div>
 				<div className={fragmentEditToolBar}>
