@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 
 import { drag } from '../routes/edit/tools';
 
@@ -24,9 +24,9 @@ const elementTileStyle = css`
 	}
 `;
 
-export const ElementTile = ({ children, componentObj }: any) => {
+export const ElementTile = ({ children, componentObj, className }: any) => {
 	return (<div
-		className={componentObj.className === undefined ? elementTileStyle: componentObj.className }
+		className={cx(elementTileStyle, className)}
 		draggable='true'
 		onDragStart={(event: any) => drag(event, {
 			component: componentObj

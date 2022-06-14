@@ -24,6 +24,7 @@ const elementTileStyle = css`
 	border: 1px solid #d8d8d8;
 	min-width: 34px;
 	height: 30px;
+	width: 44px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -39,40 +40,37 @@ const sizeItems = [
 ];
 
 const getIcons = () => {
-	const items: any = [];
-	Object.entries(Icons).forEach((item: any) => {
-		const element = item[0].split(/(\d+)/);
-		const icon = element ? element[0] : '';
-		const size = element ? element[1] : '';
+	const allIcons: any = [];
+	Object.entries(Icons).forEach(([iconValue, iconObj] : any[]) => {
+		const icon = iconValue.split(/(\d+)/);
+		const [iconName, sizeValue] = [icon[0], icon[1]];
 		const iconItem = {
-			key: icon,
+			key: iconName,
 			componentObj: {
-				keywords: [item[0], item[0].toLowerCase(), item[0].replace(/[0-9]/g, '')],
+				keywords: [iconValue, iconValue.toLowerCase(), iconValue.replace(/[0-9]/g, '')],
 				// size list for each selected icon is used in the Sizes dropdown
-				size: [{ size: size, text: sizeItems.find((sizeItem: any) => sizeItem.id === size)?.text, component: size }],
-				key: icon,
-				label: String(icon),
-				name: item[1].render.name,
-				type: 'icons',
-				// custom tile class for tiles in the modal
-				className: elementTileStyle,
-				selectedIcon: item[1],
-				selectedSize: size
+				size: [{ size: sizeValue, text: sizeItems.find((sizeItem: any) => sizeItem.id === sizeValue)?.text, component: iconObj }],
+				key: iconName,
+				label: String(iconName),
+				name: iconObj.render.name,
+				type: 'icon',
+				selectedIcon: iconObj,
+				selectedSize: sizeValue
 			}
 		};
-		if (item[0] !== 'Icon') {
-			const isIncluded = items.some((item: any) => item.key === iconItem.key);
+		if (iconValue !== 'Icon') {
+			const isIncluded = allIcons.some((item: any) => item.key === iconItem.key);
 			if (isIncluded) {
-				const current = items.find((item: any) => item.key === iconItem.key);
-				current.componentObj.size.push({ size: size,
-					text: sizeItems.find((sizeItem: any) => sizeItem.id === size)?.text, component: size });
+				const current = allIcons.find((item: any) => item.key === iconItem.key);
+				current.componentObj.size.push({ size: sizeValue,
+					text: sizeItems.find((sizeItem: any) => sizeItem.id === sizeValue)?.text, component: iconObj });
 			} else {
 				// push the icons into a list which is displayed in the modal
-				items.push(iconItem);
+				allIcons.push(iconItem);
 			}
 		}
 	});
-	return items;
+	return allIcons;
 };
 
 export const AIconSettingsUI = ({ selectedComponent, setComponent }: any) => {
@@ -91,7 +89,8 @@ export const AIconSettingsUI = ({ selectedComponent, setComponent }: any) => {
 		onChange={(event: any) => setComponent({
 				...selectedComponent,
 				selectedIcon: selectedComponent.size.find((item: any) => item.size === event.selectedItem.size).component,
-				selectedSize: selectedComponent.size.find((item: any) => item.size === event.selectedItem.size).size
+				selectedSize: selectedComponent.size.find((item: any) => item.size === event.selectedItem.size).size,
+				name: selectedComponent.size.find((item: any) => item.size === event.selectedItem.size).component.render.name
 		})}/>
 		<ModalWrapper
 		buttonTriggerText="More icons"
@@ -109,7 +108,7 @@ export const AIconSettingsUI = ({ selectedComponent, setComponent }: any) => {
 					selectedComponent.items.filter((component: any) => shouldShow(component.componentObj.keywords)).map((props: any) => {
 						const Component = props.componentObj.selectedIcon;
 						// eslint-disable-next-line react/jsx-key
-						return (<ElementTile componentObj={props.componentObj}>
+						return (<ElementTile className={elementTileStyle} componentObj={props.componentObj}>
 									<Component
 										className={css`cursor: pointer;`}
 										onClick={() => setComponent({
@@ -183,7 +182,7 @@ export const componentInfo: ComponentInfo = {
 			}
 		},
 		react: {
-			imports: [''],
+			imports: [],
 			otherImports: ({ json }) => {
 				return `import {${json.name}} from "@carbon/icons-react";`;
 			},
