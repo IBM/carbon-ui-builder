@@ -122,14 +122,14 @@ export const componentInfo: ComponentInfo = {
 		items: [
 			{
 				type: 'row', items: [
-					{ type: 'column', items: [{ type: 'text', text: 'A' }] },
-					{ type: 'column', items: [{ type: 'text', text: 'B' }] }
+					{ type: 'column', items: [] },
+					{ type: 'column', items: [] }
 				]
 			},
 			{
 				type: 'row', items: [
-					{ type: 'column', items: [{ type: 'text', text: 'C' }] },
-					{ type: 'column', items: [{ type: 'text', text: 'D' }] }
+					{ type: 'column', items: [] },
+					{ type: 'column', items: [] }
 				]
 			}
 		]
