@@ -59,7 +59,7 @@ export const AAccordionItem = ({
 			{
 				type: 'insert',
 				component: {
-					type: 'accordionitem',
+					type: 'accordion-item',
 					title: 'New accordion item',
 					items: [{ type: 'text', text: 'New accordion item content' }]
 				}
