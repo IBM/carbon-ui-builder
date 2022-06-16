@@ -136,7 +136,7 @@ export const componentInfo: ComponentInfo = {
 				},
 				standalone: false,
 				selected: false,
-				items: [{ type: 'text', text: 'Selectable tile A' }]
+				items: []
 			},
 			{
 				type: 'selectable-tile',
@@ -145,7 +145,7 @@ export const componentInfo: ComponentInfo = {
 				},
 				standalone: false,
 				selected: false,
-				items: [{ type: 'text', text: 'Selectable tile B' }]
+				items: []
 			},
 			{
 				type: 'selectable-tile',
@@ -154,7 +154,7 @@ export const componentInfo: ComponentInfo = {
 				},
 				standalone: false,
 				selected: false,
-				items: [{ type: 'text', text: 'Selectable tile C' }]
+				items: []
 			}
 		]
 	},

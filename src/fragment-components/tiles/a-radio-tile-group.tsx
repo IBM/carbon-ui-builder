@@ -161,7 +161,7 @@ export const componentInfo: ComponentInfo = {
 				codeContext: {
 					value: 'Tile 1'
 				},
-				items: [{ type: 'text', text: 'Radio tile A' }]
+				items: []
 			},
 			{
 				type: 'radio-tile',
@@ -169,7 +169,7 @@ export const componentInfo: ComponentInfo = {
 				codeContext: {
 					value: 'Tile 2'
 				},
-				items: [{ type: 'text', text: 'Radio tile B' }]
+				items: []
 			},
 			{
 				type: 'radio-tile',
@@ -177,7 +177,7 @@ export const componentInfo: ComponentInfo = {
 				codeContext: {
 					value: 'Tile 3'
 				},
-				items: [{ type: 'text', text: 'Radio tile C' }]
+				items: []
 			}
 		]
 	},

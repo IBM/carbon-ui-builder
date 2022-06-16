@@ -20,6 +20,7 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
+import { APlaceholder } from '../a-placeholder';
 
 export const ASelectableTileSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -141,7 +142,7 @@ export const ASelectableTile = ({
 						formItemName: componentObj.codeContext?.formItemName
 					},
 					...(componentObj.light !== undefined ? { light: componentObj.light } : ''),
-					items: [{ type: 'text', text: 'New selectable tile' }]
+					items: []
 				}
 			},
 			parentComponent.id,
@@ -180,7 +181,9 @@ export const ASelectableTile = ({
 					disabled={componentObj.disabled}
 					className={`${preventCheckEvent} ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}`}
 					onDrop={onDrop}>
-						{children}
+						{
+							children && children.length > 0 ? children : <APlaceholder componentObj={componentObj} select={rest.select} />
+						}
 					</SelectableTile>
 			</AComponent>
 		</Adder>
@@ -199,9 +202,7 @@ export const componentInfo: ComponentInfo = {
 		standalone: true,
 		disabled: false,
 		selected: false,
-		items: [
-			{ type: 'text', text: 'A standalone selectable tile' }
-		]
+		items: []
 	},
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <ASelectableTile
 		componentObj={componentObj}
