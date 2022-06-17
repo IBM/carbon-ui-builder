@@ -6,6 +6,7 @@
   "dependencies": {
     "@carbon/colors": "10.7.2",
     "@carbon/icons-react": "10.49.0",
+    "axios": "0.27.2",
     "carbon-addons-iot-react": "2.148.0",
     "carbon-components": "10.50.0",
     "carbon-components-react": "7.57.1",
@@ -20,6 +21,7 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-hook-form": "7.31.1",
+    "react-markdown": "8.0.3",
     "react-resizable": "3.0.4",
     "react-router-dom": "6.3.0",
     "react-scripts": "5.0.1",

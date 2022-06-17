@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+	HeaderMenu,
 	HeaderMenuItem,
 	HeaderNavigation,
 	HeaderName,
@@ -40,6 +41,16 @@ export const Header = () => {
 				onClick={() => navigate('/')}>
 					Home
 				</HeaderMenuItem>
+				<HeaderMenu
+				aria-label='help'
+				menuLinkName='Help'
+				className={headerName}>
+					<HeaderMenuItem
+					className={headerName}
+					onClick={() => navigate('/help/introduction')}>
+						Introduction
+					</HeaderMenuItem>
+				</HeaderMenu>
 			</HeaderNavigation>
 		</ShellHeader>
 	);
