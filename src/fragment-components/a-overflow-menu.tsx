@@ -142,23 +142,21 @@ export const AOverflowMenu = ({
 		<AComponent
 		componentObj={componentObj}
 		{...rest}>
-				<OverflowMenu
-						flipped={componentObj.flipped}
-						direction={componentObj.placement}
-						className={cx(preventCheckEvent,
-							componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}>
-						{
-							componentObj.items.map((step: any, index: number) => (
-								<OverflowMenuItem
-									className={step.className}
-									href={step.link !== undefined ? step.link : undefined}
-									itemText={step.itemText}
-									disabled={step.disabled}
-									isDelete={step.isDelete}
-									key={index}
-								/>))
-						}
-				</OverflowMenu>
+			<OverflowMenu
+				flipped={componentObj.flipped}
+				direction={componentObj.placement}
+				className={cx(preventCheckEvent, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}>
+				{
+					componentObj.items.map((step: any, index: number) => <OverflowMenuItem
+						className={step.className}
+						href={step.link}
+						itemText={step.itemText}
+						disabled={step.disabled}
+						isDelete={step.isDelete}
+						key={index}
+					/>)
+				}
+			</OverflowMenu>
 		</AComponent>
 	);
 };
