@@ -50,6 +50,11 @@ export const Header = () => {
 					onClick={() => navigate('/help/introduction')}>
 						Introduction
 					</HeaderMenuItem>
+					<HeaderMenuItem
+					className={headerName}
+					onClick={() => navigate('/help/hotkeys')}>
+						Hotkeys / Shortcuts
+					</HeaderMenuItem>
 				</HeaderMenu>
 			</HeaderNavigation>
 		</ShellHeader>

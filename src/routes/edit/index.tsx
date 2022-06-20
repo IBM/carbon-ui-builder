@@ -39,6 +39,7 @@ import { CodePane } from './code-pane';
 import { SettingsContextPane } from './settings-context-pane';
 import { CodeContextPane } from './code-context-pane';
 import { useParams } from 'react-router-dom';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 const leftPaneWidth = '300px';
 const rightPaneWidth = '302px';
@@ -230,10 +231,55 @@ export const Edit = () => {
 	const selectedComponent = getSelectedComponent(fragment);
 	const parentComponent = getParentComponent(fragment.data, selectedComponent);
 
+	const duplicateSelectedComponent = () => {
+		if (!selectedComponent) {
+			return;
+		}
+		updateFragment({
+			...fragment,
+			data: updatedState(
+				fragment.data, {
+					type: 'insert',
+					component: JSON.parse(JSON.stringify(initializeIds(selectedComponent, true))) // full clone, new Ids
+				},
+				parentComponent.id,
+				parentComponent.items.indexOf(selectedComponent) + 1
+			)
+		});
+	};
+
+	const deleteSelectedComponent = (f = fragment) => {
+		if (!f.selectedComponentId) {
+			return;
+		}
+
+		updateFragment({
+			...f,
+			data: stateWithoutComponent(f.data, f.selectedComponentId),
+			selectedComponentId: 0
+		});
+	};
+
+	useHotkeys('ctrl+d, alt+d, option+d', (event) => {
+		event.preventDefault();
+		duplicateSelectedComponent();
+	},
+	{
+		keyup: true
+	}, fragment);
+
+	useHotkeys('delete, backspace', (event) => {
+		event.preventDefault();
+		deleteSelectedComponent(fragment);
+	},
+	{
+		keyup: true
+	}, fragment);
+
 	return (
 		<div
-			id='edit-wrapper'
-			className={editPageContent}>
+		id='edit-wrapper'
+		className={editPageContent}>
 			{fragment && <EditHeader fragment={fragment} />}
 			<ElementsPane isActive={selectedLeftPane === SelectedLeftPane.ELEMENTS} />
 			<StylePane isActive={selectedLeftPane === SelectedLeftPane.STYLE} />
@@ -295,31 +341,14 @@ export const Edit = () => {
 					disabled={!fragment.selectedComponentId} // disabled for fragment
 					renderIcon={Copy32}
 					className={css`margin-right: 8px`}
-					onClick={
-						() => updateFragment({
-							...fragment,
-							data: updatedState(
-								fragment.data, {
-									type: 'insert',
-									component: JSON.parse(JSON.stringify(initializeIds(selectedComponent, true))) // full clone, new Ids
-								},
-								parentComponent.id,
-								parentComponent.items.indexOf(selectedComponent) + 1
-							)
-						})
-					}>
+					onClick={duplicateSelectedComponent}>
 						Duplicate
 					</Button>
 					<Button
 					kind='danger'
 					disabled={!fragment.selectedComponentId} // disabled for fragment
 					renderIcon={TrashCan32}
-					onClick={
-						() => updateFragment({
-							...fragment,
-							data: stateWithoutComponent(fragment.data, fragment.selectedComponentId)
-						})
-					}>
+					onClick={deleteSelectedComponent}>
 						Delete
 					</Button>
 				</div>
