@@ -111,10 +111,8 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 			defaultObject={{
 				itemText: 'New option',
 				disabled: false,
-				hasLink: false,
 				isDelete: false,
-				hasDivider: false,
-				link: undefined
+				hasDivider: false
 			}}
 			template={template} />
 	</>;
@@ -173,30 +171,21 @@ export const componentInfo: ComponentInfo = {
 	name: 'Overflow menu',
 	type: 'overflow-menu',
 	defaultComponentObj: {
-		isDelete: false,
 		flipped: false,
 		placement: 'bottom',
 		type: 'overflow-menu',
-		icons: [],
-		selectedIcon: '',
 		items: [
 			{
 				itemText: 'Option 1',
-				className: 'option-1',
 				disabled: false,
-				hasLink: false,
 				isDelete: false,
-				hasDivider: false,
-				link: undefined
+				hasDivider: false
 			},
 			{
 				itemText: 'Option 2',
-				className: 'option-2',
 				disabled: false,
-				hasLink: false,
 				isDelete: false,
-				hasDivider: false,
-				link: undefined
+				hasDivider: false
 			}
 		]
 	},
