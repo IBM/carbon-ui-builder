@@ -6,7 +6,7 @@ import {
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
 import { useFragment } from '../context';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import {
 	getParentComponent,
 	updatedState,
@@ -116,7 +116,8 @@ export const ARadio = ({
 		bottomAction={() => addRadio(1)}>
 			<AComponent
 			selected={selected}
-			headingCss={css`width: fit-content; min-width: 9rem;`}
+			headingCss={cx(parentComponent.orientation === 'vertical' ? css`margin-left: 20px;` : ``,
+				css`width: fit-content; min-width: 9rem;`)}
 			componentObj={componentObj}
 			{...rest}>
 				<RadioButton
