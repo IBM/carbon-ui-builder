@@ -1,5 +1,5 @@
 import React from 'react';
-import { Accordion, Dropdown } from 'carbon-components-react';
+import { Accordion, Dropdown, TextInput } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from '../a-component';
 
 import image from '../../assets/component-icons/accordion.svg';
@@ -45,6 +45,22 @@ export const AAccordionSettingsUI = ({ selectedComponent, setComponent }: any) =
 	</>;
 };
 
+export const AAccordionCodeUI = ({ selectedComponent, setComponent }: any) => {
+	return <TextInput
+			value={selectedComponent.codeContext?.name}
+			labelText='Input name'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						name: event.currentTarget.value
+					}
+				});
+			}}
+		/>;
+};
+
 export const AAccordion = ({
 	children,
 	componentObj,
@@ -67,6 +83,7 @@ export const AAccordion = ({
 export const componentInfo: ComponentInfo = {
 	component: AAccordion,
 	settingsUI: AAccordionSettingsUI,
+	codeUI: AAccordionCodeUI,
 	render: ({ componentObj, select, remove, selected, renderComponents }) => <AAccordion
 		componentObj={componentObj}
 		select={select}

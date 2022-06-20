@@ -42,6 +42,22 @@ export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	</>;
 };
 
+export const AButtonCodeUI = ({ selectedComponent, setComponent }: any) => {
+	return <TextInput
+			value={selectedComponent.codeContext?.name}
+			labelText='Input name'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						name: event.currentTarget.value
+					}
+				});
+			}}
+		/>;
+};
+
 export const AButton = ({
 	children,
 	componentObj,
@@ -66,6 +82,7 @@ export const AButton = ({
 export const componentInfo: ComponentInfo = {
 	component: AButton,
 	settingsUI: AButtonSettingsUI,
+	codeUI: AButtonCodeUI,
 	render: ({ componentObj, select, remove, selected }) => <AButton
 		componentObj={componentObj}
 		select={select}

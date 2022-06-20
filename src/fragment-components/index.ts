@@ -32,7 +32,7 @@ import * as radioTileGroup from './tiles/a-radio-tile-group';
 // Accordion
 export { AAccordion, AAccordionSettingsUI } from './accordion/a-accordion';
 export { AAccordionItem, AAccordionItemSettingsUI } from './accordion/a-accordion-item';
-export { AButton, AButtonSettingsUI } from './a-button';
+export { AButton, AButtonCodeUI, AButtonSettingsUI } from './a-button';
 export { ACheckbox, ACheckboxSettingsUI, ACheckboxCodeUI } from './a-checkbox';
 export { AColumn, AColumnSettingsUI } from './a-column';
 export { AComboBox, AComboBoxSettingsUI, AComboBoxCodeUI } from './a-combobox';
