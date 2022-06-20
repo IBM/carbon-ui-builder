@@ -97,11 +97,11 @@ export const AExpandableTile = ({
 			className={`${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} ${componentObj.outline ? showOutlineStyle : ''}`}
 			expanded={componentObj.expanded}>
 				<TileAboveTheFoldContent onDrop={onDrop}>
-					{children.filter(({ props }: any) => props && props.componentObj.type !== 'tilefold')}
+					{children.filter(({ props }: any) => props && props.componentObj.type !== 'tile-fold')}
 				</TileAboveTheFoldContent>
 				{
 					// Renders bottom fold component
-					children.filter(({ props }: any) => props && props.componentObj.type === 'tilefold')
+					children.filter(({ props }: any) => props && props.componentObj.type === 'tile-fold')
 				}
 			</ExpandableTile>
 		</AComponent>
@@ -111,8 +111,8 @@ export const AExpandableTile = ({
 // Splits data into folds - all exports will have a common approach
 const getFoldObjects = (json: any) => {
 	return {
-		aboveFold: json.items.filter((item: any) => item.type !== 'tilefold'),
-		belowFold: json.items.filter((item: any) => item.type === 'tilefold')
+		aboveFold: json.items.filter((item: any) => item.type !== 'tile-fold'),
+		belowFold: json.items.filter((item: any) => item.type === 'tile-fold')
 	};
 };
 

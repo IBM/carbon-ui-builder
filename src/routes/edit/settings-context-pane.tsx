@@ -12,7 +12,7 @@ import { getSelectedComponent, updatedState } from '../../components/fragment';
 import { allComponents } from '../../fragment-components';
 import { SelectedComponentBreadcrumbs } from './selected-component-breadcrumbs';
 import { css, cx } from 'emotion';
-import { FragmentLayers } from '../../components/fragment-layers';
+import { FragmentLayoutWidget } from '../../components/fragment-layout-widget';
 import { GlobalStateContext } from '../../context';
 
 const styleContextPaneStyle = css`
@@ -163,13 +163,13 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 					}
 				</AccordionItem>
 				<AccordionItem
-				title='Layers'
-				className='layers-widget'
-				open={settings.contextPane?.settings?.fragmentLayersAccordionOpen}
+				title='Layout'
+				className='layout-widget'
+				open={settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen}
 				onHeadingClick={() => updateContextPaneSettings({
-					fragmentLayersAccordionOpen: !settings.contextPane?.settings?.fragmentLayersAccordionOpen
+					fragmentLayoutWidgetAccordionOpen: !settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen
 				})}>
-					<FragmentLayers fragment={fragment} setFragment={setFragment} />
+					<FragmentLayoutWidget fragment={fragment} setFragment={setFragment} />
 				</AccordionItem>
 			</Accordion>
 		</div>

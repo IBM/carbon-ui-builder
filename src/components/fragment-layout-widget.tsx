@@ -9,7 +9,7 @@ import { css } from 'emotion';
 import { actionIconStyle } from '../routes';
 import { stateWithoutComponent } from './fragment';
 
-const fragmentLayersStyle = css`
+const fragmentLayoutStyle = css`
 	.iot--list--page {
 		display: none;
 	}
@@ -50,7 +50,7 @@ const getReorderedComponentObjFromHierarchyListItem = (hierchyListItem: any, com
 	};
 };
 
-export const FragmentLayers = ({ fragment, setFragment, title }: any) => {
+export const FragmentLayoutWidget = ({ fragment, setFragment, title }: any) => {
 	const getHierarchyListItemsFromComponentObj = (componentObj: any) => {
 		if (!componentObj) {
 			return null;
@@ -91,7 +91,7 @@ export const FragmentLayers = ({ fragment, setFragment, title }: any) => {
 
 	return <HierarchyList
 		title={title}
-		className={fragmentLayersStyle}
+		className={fragmentLayoutStyle}
 		items={getHierarchyListItemsFromComponentObj(fragment.data)?.children}
 		onListUpdated={(updatedItems: any[]) => {
 			setFragment({

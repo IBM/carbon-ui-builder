@@ -14,6 +14,7 @@ import { ModalContextProvider } from './context/modal-context';
 import { NotificationContextProvider } from './context/notification-context';
 import { UIShell } from './components/ui-shell';
 import { css } from 'emotion';
+import { Help } from './routes/help';
 
 const app = css`
 	nav.bx--side-nav--expanded + div#edit-content {
@@ -41,6 +42,9 @@ export const App = () => (
 								<Route
 									path='/edit/:id'
 									element={<Edit />} />
+								<Route
+									path='/help/:id'
+									element={<Help />} />
 								<Route path="*" element={<NotFound />} />
 							</Routes>
 						</ModalContextProvider>

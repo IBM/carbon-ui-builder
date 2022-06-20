@@ -44,8 +44,18 @@ export const AGridSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	</>;
 };
 
+// there must be a better way to do this...
 const showOutlineStyle = css`
-	.bx--col {
+	.bx--col,
+	.bx--col-sm-1, .bx--col-sm-2, .bx--col-sm-3, .bx--col-sm-4,
+	.bx--col-md-1, .bx--col-md-2, .bx--col-md-3, .bx--col-md-4, .bx--col-md-5, .bx--col-md-6, .bx--col-md-7, .bx--col-md-8,
+	.bx--col-lg-1, .bx--col-lg-2, .bx--col-lg-3, .bx--col-lg-4, .bx--col-lg-5, .bx--col-lg-6, .bx--col-lg-7, .bx--col-lg-8,
+	.bx--col-lg-9, .bx--col-lg-10, .bx--col-lg-11, .bx--col-lg-12, .bx--col-lg-13, .bx--col-lg-14, .bx--col-lg-15, .bx--col-lg-16,
+	.bx--offset-sm-1, .bx--offset-sm-2, .bx--offset-sm-3,
+	.bx--offset-md-1, .bx--offset-md-2, .bx--offset-md-3, .bx--offset-md-4, .bx--offset-md-5, .bx--offset-md-6, .bx--offset-md-7,
+	.bx--offset-lg-1, .bx--offset-lg-2, .bx--offset-lg-3, .bx--offset-lg-4, .bx--offset-lg-5, .bx--offset-lg-6, .bx--offset-lg-7,
+	.bx--offset-lg-8, .bx--offset-lg-9, .bx--offset-lg-10, .bx--offset-lg-11, .bx--offset-lg-12, .bx--offset-lg-13, .bx--offset-lg-14,
+	.bx--offset-lg-15 {
 		outline: 1px dashed #78a9ff;
 	}
 `;
@@ -112,14 +122,14 @@ export const componentInfo: ComponentInfo = {
 		items: [
 			{
 				type: 'row', items: [
-					{ type: 'column', items: [{ type: 'text', text: 'A' }] },
-					{ type: 'column', items: [{ type: 'text', text: 'B' }] }
+					{ type: 'column', items: [] },
+					{ type: 'column', items: [] }
 				]
 			},
 			{
 				type: 'row', items: [
-					{ type: 'column', items: [{ type: 'text', text: 'C' }] },
-					{ type: 'column', items: [{ type: 'text', text: 'D' }] }
+					{ type: 'column', items: [] },
+					{ type: 'column', items: [] }
 				]
 			}
 		]
