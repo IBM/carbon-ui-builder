@@ -1,10 +1,11 @@
 {
   "files": {
     "main.css": "/carbon-components-builder/static/css/main.75de33ce.css",
-    "main.js": "/carbon-components-builder/static/js/main.ab7c6355.js",
+    "main.js": "/carbon-components-builder/static/js/main.35389cc7.js",
     "static/media/dashboard-empty-state.svg": "/carbon-components-builder/static/media/dashboard-empty-state.68a2dbad53e66c2560c18c7cae63b988.svg",
     "static/media/chart-404.svg": "/carbon-components-builder/static/media/chart-404.0cbc4226f4ef1a83fbdfe88bf5f398d3.svg",
     "static/media/tile-clickable.svg": "/carbon-components-builder/static/media/tile-clickable.dc9f4bb46dc5a7a320bb0b1cf8f6354c.svg",
+    "static/media/overflowMenu.svg": "/carbon-components-builder/static/media/overflowMenu.fb1228933b92077c0c9baba8b0c2ed18.svg",
     "static/media/radio-group.svg": "/carbon-components-builder/static/media/radio-group.93fc8a5f4f9dc549cfb9ac9ca2081156.svg",
     "static/media/tile-radio.svg": "/carbon-components-builder/static/media/tile-radio.08b6852d0e94d60a150be574a66691ae.svg",
     "static/media/tile-selectable-group.svg": "/carbon-components-builder/static/media/tile-selectable-group.fd0ed2463b4c4342d198c33d92d102b4.svg",
@@ -31,10 +32,10 @@
     "static/media/tile.svg": "/carbon-components-builder/static/media/tile.faa170c0e2c6e37d9135ee12f6fc8e41.svg",
     "static/media/hotkeys.md": "/carbon-components-builder/static/media/hotkeys.4363bd29ce30dea62c45.md",
     "main.75de33ce.css.map": "/carbon-components-builder/static/css/main.75de33ce.css.map",
-    "main.ab7c6355.js.map": "/carbon-components-builder/static/js/main.ab7c6355.js.map"
+    "main.35389cc7.js.map": "/carbon-components-builder/static/js/main.35389cc7.js.map"
   },
   "entrypoints": [
     "static/css/main.75de33ce.css",
-    "static/js/main.ab7c6355.js"
+    "static/js/main.35389cc7.js"
   ]
 }
