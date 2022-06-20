@@ -92,8 +92,14 @@ export const ASearchInput = ({
 				labelText={componentObj.label}
 				placeholder={componentObj.placeholder}
 				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
-				{...componentObj}
-				{...rest} />
+				id={componentObj.id}
+				autoComplete={componentObj.autoComplete || 'off'}
+				closeButtonLabelText={componentObj.closeButtonLabelText || 'Clear search input'}
+				defaultValue={componentObj.defaultValue}
+				disabled={componentObj.disabled}
+				light={componentObj.light}
+				role={componentObj.role || 'searchbox'}
+				type={componentObj.type || 'text'} />
 		</AComponent>
 	);
 };

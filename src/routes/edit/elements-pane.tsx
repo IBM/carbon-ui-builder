@@ -4,19 +4,15 @@ import { Search } from 'carbon-components-react';
 
 import { ElementTile } from '../../components/element-tile';
 
-import { leftPane, leftPaneHeader } from '.';
+import { leftPane, leftPaneContent, leftPaneHeader } from '.';
 import { allComponents } from '../../fragment-components';
 import { GlobalStateContext } from '../../context';
-
-const searchStyle = css`
-	margin-top: 15px;
-`;
 
 const elementTileListStyle = css`
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: wrap;
-	margin-top: 100px;
+	margin-top: 63px;
 	width: 270px;
 `;
 
@@ -40,42 +36,43 @@ export const ElementsPane = ({ isActive }: any) => {
 			<div className={leftPaneHeader}>
 				<Search
 					id='elements-search'
-					className={searchStyle}
 					light
 					labelText='Filter elements'
 					placeholder='Filter elements'
 					onChange={(event: any) => setFilterString(event.target.value)} />
 			</div>
-			<div className={elementTileListStyle}>
+			<div className={leftPaneContent}>
+				<div className={elementTileListStyle}>
+					{
+						Object.values(allComponents)
+							.filter((component: any) =>
+								!component.componentInfo.hideFromElementsPane
+								&& shouldShow(component.componentInfo.keywords))
+							.map((component: any) =>
+								<ElementTile componentObj={component.componentInfo.defaultComponentObj} key={component.componentInfo.name}>
+									<img src={component.componentInfo.image} alt={component.componentInfo.name} />
+									<span className='title'>{component.componentInfo.name}</span>
+								</ElementTile>)
+					}
+				</div>
 				{
-					Object.values(allComponents)
-						.filter((component: any) =>
-							!component.componentInfo.hideFromElementsPane
-							&& shouldShow(component.componentInfo.keywords))
-						.map((component: any) =>
-							<ElementTile componentObj={component.componentInfo.defaultComponentObj} key={component.componentInfo.name}>
-								<img src={component.componentInfo.image} alt={component.componentInfo.name} />
-								<span className='title'>{component.componentInfo.name}</span>
-							</ElementTile>)
+					microLayouts && microLayouts.length > 0 && <>
+						<h4>Micro layouts</h4>
+						<div className={elementTileListStyle}>
+							{
+								Object.values(microLayouts)
+									// TODO prevent recursive adding
+									.filter((component: any) => shouldShow([component.title, ...component.labels]))
+									.map((component: any) =>
+										<ElementTile componentObj={{ type: 'fragment', id: component.id }} key={component.id}>
+											{/* <img src={component.componentInfo.image} alt={component.title} /> */}
+											<span className='title'>{component.title}</span>
+										</ElementTile>)
+							}
+						</div>
+					</>
 				}
 			</div>
-			{
-				microLayouts && microLayouts.length > 0 && <>
-					<h4>Micro layouts</h4>
-					<div className={elementTileListStyle}>
-						{
-							Object.values(microLayouts)
-								// TODO prevent recursive adding
-								.filter((component: any) => shouldShow([component.title, ...component.labels]))
-								.map((component: any) =>
-									<ElementTile componentObj={{ type: 'fragment', id: component.id }} key={component.id}>
-										{/* <img src={component.componentInfo.image} alt={component.title} /> */}
-										<span className='title'>{component.title}</span>
-									</ElementTile>)
-						}
-					</div>
-				</>
-			}
 		</div>
 	);
 };

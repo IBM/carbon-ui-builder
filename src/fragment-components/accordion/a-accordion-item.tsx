@@ -18,6 +18,7 @@ import {
 	getParentComponent,
 	updatedState
 } from '../../components';
+import { APlaceholder } from '../a-placeholder';
 
 export const AAccordionItemSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -59,9 +60,9 @@ export const AAccordionItem = ({
 			{
 				type: 'insert',
 				component: {
-					type: 'accordionitem',
+					type: 'accordion-item',
 					title: 'New accordion item',
-					items: [{ type: 'text', text: 'New accordion item content' }]
+					items: []
 				}
 			},
 			parentComponent.id,
@@ -82,7 +83,9 @@ export const AAccordionItem = ({
 				title={componentObj.title}
 				disabled={componentObj.disabled}
 				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
-					{children}
+					{
+						children && children.length > 0 ? children : <APlaceholder componentObj={componentObj} select={rest.select} />
+					}
 				</AccordionItem>
 			</AComponent>
 		</Adder>
@@ -109,7 +112,7 @@ export const componentInfo: ComponentInfo = {
 		type: 'accordionitem',
 		title: 'Accordion item',
 		disabled: false,
-		items: [{ type: 'text', text: 'Accordion item content' }]
+		items: []
 	},
 	image,
 	codeExport: {

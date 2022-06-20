@@ -85,7 +85,7 @@ export const componentInfo: ComponentInfo = {
 			{
 				type: 'accordion-item',
 				title: 'Accordion item',
-				items: [{ type: 'text', text: 'Accordion item content' }]
+				items: []
 			}
 		]
 	},

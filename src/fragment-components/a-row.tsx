@@ -75,8 +75,8 @@ export const ARow = ({
 				type: 'insert',
 				component: {
 					type: 'row', items: [
-						{ type: 'column', items: [{ type: 'text', text: 'Cell 1' }] },
-						{ type: 'column', items: [{ type: 'text', text: 'Cell 2' }] }
+						{ type: 'column', items: [] },
+						{ type: 'column', items: [] }
 					]
 				}
 			},
