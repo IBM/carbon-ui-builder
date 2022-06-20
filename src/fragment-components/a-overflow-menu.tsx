@@ -26,7 +26,7 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 		{ id: 'bottom', text: 'Bottom' }
 	];
 
-	const handleStepUpdate = (key: string, value: any, index: number) => {
+	const updateListItems = (key: string, value: any, index: number) => {
 		const step = {
 			...selectedComponent.items[index],
 			[key]: value
@@ -49,7 +49,7 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 				value={item.itemText}
 				labelText='Label'
 				onChange={(event: any) => {
-					handleStepUpdate('itemText', event.currentTarget.value, index);
+					updateListItems('itemText', event.currentTarget.value, index);
 				}}
 			/>
 			<TextInput
@@ -57,7 +57,7 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 				value={item.link}
 				labelText='Link'
 				onChange={(event: any) => {
-					handleStepUpdate('link', event.currentTarget.value, index);
+					updateListItems('link', event.currentTarget.value, index);
 				}}
 			/>
 			<div style={{ display: 'flex', flexWrap: 'wrap' }}>
@@ -65,17 +65,17 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 					labelText='Disabled'
 					id={`disabled-${index}`}
 					checked={item.disabled}
-					onChange={(checked: boolean) => handleStepUpdate('disabled', checked, index)}/>
+					onChange={(checked: boolean) => updateListItems('disabled', checked, index)}/>
 				<Checkbox
 					labelText='Is delete'
 					id={`isDelete-${index}`}
 					checked={item.isDelete}
-					onChange={(checked: boolean) => handleStepUpdate('isDelete', checked, index)} />
+					onChange={(checked: boolean) => updateListItems('isDelete', checked, index)} />
 				<Checkbox
 					labelText='Has divider'
 					id={`hasDivider-${index}`}
 					checked={item.hasDivider}
-					onChange={(checked: boolean) => handleStepUpdate('hasDivider', checked, index)} />
+					onChange={(checked: boolean) => updateListItems('hasDivider', checked, index)} />
 			</div>
 		</>;
 	};
@@ -107,7 +107,7 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 	<DraggableTileList
 			dataList={[...selectedComponent.items]}
 			setDataList={updateStepList}
-			updateItem={handleStepUpdate}
+			updateItem={updateListItems}
 			defaultObject={{
 				itemText: 'New option',
 				disabled: false,
