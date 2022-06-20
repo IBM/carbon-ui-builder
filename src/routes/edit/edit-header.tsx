@@ -11,6 +11,7 @@ import {
 import { ModalContext, ModalActionType } from '../../context/modal-context';
 import { FragmentModal } from './fragment-modal';
 import { GlobalStateContext } from '../../context';
+import { actionIconStyle } from '.';
 
 const editHeader = css`
 	left: 16rem;
@@ -107,14 +108,6 @@ const toolBarSeparator = css`
 	width: 1px;
 	display: inline-block;
     margin: auto 6px;
-`;
-
-const actionIconStyle = css`
-	color: black;
-
-	.bx--btn--ghost:disabled & {
-		color: #8d8d8d;
-	}
 `;
 
 const fragmentEditToolBar = css`
