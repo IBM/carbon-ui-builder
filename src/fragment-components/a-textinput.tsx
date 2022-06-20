@@ -14,6 +14,12 @@ export const ATextInputSettingsUI = ({ selectedComponent, setComponent }: any) =
 		{ id: 'password', text: 'Password' }
 	];
 
+	const sizeItems = [
+		{ id: 'sm', text: 'Small' },
+		{ id: 'md', text: 'Medium' },
+		{ id: 'lg', text: 'Large' }
+	];
+
 	return <>
 		<Dropdown
 			label='Type'
@@ -35,6 +41,16 @@ export const ATextInputSettingsUI = ({ selectedComponent, setComponent }: any) =
 				});
 			}}
 		/>
+		<Dropdown
+			label='Size'
+			titleText='Size'
+			items={sizeItems}
+			initialSelectedItem={sizeItems.find(item => item.id === selectedComponent.size) || sizeItems[1]}
+			itemToString={(item: any) => (item ? item.text : '')}
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				size: event.selectedItem.id
+		})} />
 		<TextInput
 			value={selectedComponent.helperText}
 			labelText='Helper text'
@@ -147,6 +163,7 @@ export const componentInfo: ComponentInfo = {
 							ibmText
 							${angularClassNamesFromComponentObj(json)}
 							name="${json.codeContext?.name}"
+							${json.size ? `size="${json.size}"` : ''}
 							placeholder="${json.placeholder}">
 				</ibm-label>`;
 			}
@@ -159,6 +176,7 @@ export const componentInfo: ComponentInfo = {
 					name="${json.codeContext?.name}"
 					helperText="${json.helperText}"
 					placeholder="${json.placeholder}"
+					${json.size ? `size="${json.size}"` : ''}
 					value={state["${json.codeContext?.name}"]}
 					${reactClassNamesFromComponentObj(json)}
 					onChange={handleInputChange} />`;
