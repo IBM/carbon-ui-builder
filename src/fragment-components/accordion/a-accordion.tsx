@@ -1,5 +1,5 @@
 import React from 'react';
-import { Accordion, Dropdown, TextInput } from 'carbon-components-react';
+import { Accordion, Dropdown } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from '../a-component';
 
 import image from '../../assets/component-icons/accordion.svg';
@@ -44,7 +44,6 @@ export const AAccordionSettingsUI = ({ selectedComponent, setComponent }: any) =
 		})}/>
 	</>;
 };
-
 
 export const AAccordion = ({
 	children,
