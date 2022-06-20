@@ -45,21 +45,6 @@ export const AAccordionSettingsUI = ({ selectedComponent, setComponent }: any) =
 	</>;
 };
 
-export const AAccordionCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>;
-};
 
 export const AAccordion = ({
 	children,
@@ -83,7 +68,6 @@ export const AAccordion = ({
 export const componentInfo: ComponentInfo = {
 	component: AAccordion,
 	settingsUI: AAccordionSettingsUI,
-	codeUI: AAccordionCodeUI,
 	render: ({ componentObj, select, remove, selected, renderComponents }) => <AAccordion
 		componentObj={componentObj}
 		select={select}
