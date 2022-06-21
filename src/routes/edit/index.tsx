@@ -197,6 +197,8 @@ export const Edit = () => {
 		updateFragment,
 		clearActionHistory,
 		addAction,
+		undoAction,
+		redoAction,
 		styleClasses
 	} = useContext(GlobalStateContext);
 
@@ -266,7 +268,7 @@ export const Edit = () => {
 	},
 	{
 		keyup: true
-	}, fragment);
+	}, [fragment]);
 
 	useHotkeys('delete, backspace', (event) => {
 		event.preventDefault();
@@ -274,7 +276,10 @@ export const Edit = () => {
 	},
 	{
 		keyup: true
-	}, fragment);
+	}, [fragment]);
+
+	useHotkeys('ctrl+z, cmd+z, alt+z, option+z', undoAction, { keyup: true }, [undoAction]);
+	useHotkeys('ctrl+shift+z, cmd+shift+z, alt+shift+z, option+shift+z', redoAction, { keyup: true }, [redoAction]);
 
 	return (
 		<div
