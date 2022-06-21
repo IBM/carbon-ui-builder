@@ -8,13 +8,21 @@ import { leftPane, leftPaneContent, leftPaneHeader } from '.';
 import { allComponents } from '../../fragment-components';
 import { GlobalStateContext } from '../../context';
 
-const elementTileListStyle = css`
+const elementTileListStyleBase = css`
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: wrap;
-	margin-top: 63px;
 	width: 270px;
 `;
+
+const elementTileListStyle = cx(elementTileListStyleBase, css`
+	margin-top: 63px;
+	margin-bottom: 2rem
+`);
+
+const elementTileListStyleMicroLayouts = cx(elementTileListStyleBase, css`
+	margin-top: 1rem;
+`);
 
 export const ElementsPane = ({ isActive }: any) => {
 	const [filterString, setFilterString] = useState('');
@@ -58,7 +66,7 @@ export const ElementsPane = ({ isActive }: any) => {
 				{
 					microLayouts && microLayouts.length > 0 && <>
 						<h4>Micro layouts</h4>
-						<div className={elementTileListStyle}>
+						<div className={elementTileListStyleMicroLayouts}>
 							{
 								Object.values(microLayouts)
 									// TODO prevent recursive adding
