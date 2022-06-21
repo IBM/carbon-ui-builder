@@ -54,8 +54,7 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 };
 
 export const ACodeSnippetCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return (
-		<TextInput
+	return <TextInput
 			value={selectedComponent.codeContext?.name}
 			labelText='Input name'
 			onChange={(event: any) => {
@@ -67,7 +66,6 @@ export const ACodeSnippetCodeUI = ({ selectedComponent, setComponent }: any) => 
 				});
 			}}
 		/>
-	);
 };
 
 export const ACodeSnippet = ({
