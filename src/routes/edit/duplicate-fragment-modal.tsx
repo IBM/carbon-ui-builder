@@ -28,7 +28,13 @@ export const DuplicateFragmentModal = ({ id }: any) => {
 			{ labels: fragment?.labels?.filter((label: string) => label !== 'template') }
 		);
 
+		// close all notifications
+		dispatchNotification({
+			type: NotificationActionType.CLOSE_ALL_NOTIFICATIONS
+		});
+
 		addFragment(fragmentCopy);
+
 		if (location.pathname !== '/') {
 			navigate(`/edit/${fragmentCopy.id}`);
 		}
