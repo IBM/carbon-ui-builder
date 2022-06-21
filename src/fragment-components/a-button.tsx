@@ -42,7 +42,6 @@ export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	</>;
 };
 
-
 export const AButton = ({
 	children,
 	componentObj,

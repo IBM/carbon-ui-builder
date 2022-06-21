@@ -43,7 +43,6 @@ export const AAccordionItemSettingsUI = ({ selectedComponent, setComponent }: an
 	</>;
 };
 
-
 export const AAccordionItem = ({
 	children,
 	componentObj,
