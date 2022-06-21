@@ -3,6 +3,7 @@ import { css, cx } from 'emotion';
 import { Search } from 'carbon-components-react';
 
 import { ElementTile } from '../../components/element-tile';
+import { FragmentPreview } from '../../components/fragment-preview';
 
 import { leftPane, leftPaneContent, leftPaneHeader } from '.';
 import { allComponents } from '../../fragment-components';
@@ -22,6 +23,11 @@ const elementTileListStyle = cx(elementTileListStyleBase, css`
 
 const elementTileListStyleMicroLayouts = cx(elementTileListStyleBase, css`
 	margin-top: 1rem;
+
+	img {
+		max-height: 100px;
+		max-width: 123px;
+	}
 `);
 
 export const ElementsPane = ({ isActive }: any) => {
@@ -73,7 +79,7 @@ export const ElementsPane = ({ isActive }: any) => {
 									.filter((component: any) => shouldShow([component.title, ...component.labels]))
 									.map((component: any) =>
 										<ElementTile componentObj={{ type: 'fragment', id: component.id }} key={component.id}>
-											{/* <img src={component.componentInfo.image} alt={component.title} /> */}
+											<FragmentPreview fragment={component} />
 											<span className='title'>{component.title}</span>
 										</ElementTile>)
 							}
