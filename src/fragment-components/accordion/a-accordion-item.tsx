@@ -43,21 +43,6 @@ export const AAccordionItemSettingsUI = ({ selectedComponent, setComponent }: an
 	</>;
 };
 
-export const AAccordionItemCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>;
-};
 
 export const AAccordionItem = ({
 	children,
@@ -109,7 +94,6 @@ export const componentInfo: ComponentInfo = {
 	component: AAccordionItem,
 	hideFromElementsPane: true,
 	settingsUI: AAccordionItemSettingsUI,
-	codeUI: AAccordionItemCodeUI,
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <AAccordionItem
 		componentObj={componentObj}
 		select={select}
