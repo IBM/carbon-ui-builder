@@ -2,9 +2,7 @@ import assign from 'lodash/assign';
 
 export const getFragmentHelpers = ({ fragments, setFragments }: any) => {
 	const addFragment = (fragment: any) => {
-		const duplicate = assign({}, fragment);
-		const expandedFragments = fragments.concat(duplicate);
-		setFragments(expandedFragments);
+		setFragments([...fragments, { ...fragment }]);
 	};
 
 	const getFragment = (fragmentId: string) => fragments.find((f: any) => f.id === fragmentId);
