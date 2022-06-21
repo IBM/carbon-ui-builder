@@ -33,7 +33,7 @@ export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			label='Kind'
 			titleText='Kind'
 			items={kindItems}
-			initialSelectedItem={kindItems.find(item => item.id === selectedComponent.kind)}
+			selectedItem={kindItems.find(item => item.id === selectedComponent.kind)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,

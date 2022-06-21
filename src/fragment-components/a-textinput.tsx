@@ -25,7 +25,7 @@ export const ATextInputSettingsUI = ({ selectedComponent, setComponent }: any) =
 			label='Type'
 			titleText='Type'
 			items={typeItems}
-			initialSelectedItem={typeItems.find(item => item.id === selectedComponent.inputType)}
+			selectedItem={typeItems.find(item => item.id === selectedComponent.inputType)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
@@ -45,7 +45,7 @@ export const ATextInputSettingsUI = ({ selectedComponent, setComponent }: any) =
 			label='Size'
 			titleText='Size'
 			items={sizeItems}
-			initialSelectedItem={sizeItems.find(item => item.id === selectedComponent.size) || sizeItems[1]}
+			selectedItem={sizeItems.find(item => item.id === selectedComponent.size) || sizeItems[1]}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
