@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react';
 
 import {
 	Button,
-	CodeSnippet,
 	Modal,
 	Tab,
 	Tabs
@@ -32,12 +31,6 @@ const titleWrapper = css`
     margin-top: 30px;
     a, button {
         margin-left: auto;
-    }
-`;
-
-const codeSnippet = css`
-    .bx--copy-btn {
-        background: white;
     }
 `;
 
@@ -134,14 +127,14 @@ const FileNames = ({ code, setSelectedFilename }: any) => <div className={fileNa
 	}
 </div>;
 
+const copyToClipboard = (codeString: string) => {
+	navigator.clipboard.writeText(codeString);
+};
+
 const CodeView = ({ code, selectedFilename }: any) => {
 	const codeString = selectedFilename !== 'package.json'
 		? code[selectedFilename]
 		: JSON.stringify(code[selectedFilename], null, '\t');
-
-	const copyToClipboard = () => {
-		navigator.clipboard.writeText(codeString);
-	};
 
 	return <div className={codeSnippetWrapperStyle}>
 		<p>
@@ -151,7 +144,7 @@ const CodeView = ({ code, selectedFilename }: any) => {
 				size='sm'
 				hasIconOnly
 				iconDescription='Copy to clipboard'
-				onClick={copyToClipboard}
+				onClick={() => copyToClipboard(codeString)}
 				renderIcon={Copy16}/>
 		</p>
 		<Editor
@@ -228,20 +221,27 @@ export const ExportModal = ({ fragment }: any) => {
 				role='presentation'
 				tabIndex={0}>
 					<div className={titleWrapper}>
-						<h3>JSON</h3>
+						<h3>
+							JSON
+							<Button
+								kind='ghost'
+								className={css`margin-top: -6px;`}
+								hasIconOnly
+								iconDescription='Copy to clipboard'
+								onClick={() => copyToClipboard(jsonCode)}
+								renderIcon={Copy16}/>
+						</h3>
 						<Button
 						kind='ghost'
 						onClick={() => saveBlob(new Blob([jsonCode]), `${fragment.title}.json`)}>
 							Download JSON
 						</Button>
 					</div>
-					<CodeSnippet
-					type='multi'
-					light
-					className={codeSnippet}
-					copyButtonDescription={'Copy JSON to clipboard'}>
-						{jsonCode}
-					</CodeSnippet>
+					<Editor
+						height={contentHeight}
+						language='json'
+						value={jsonCode}
+					/>
 				</Tab>
 				<Tab
 				id='image'
