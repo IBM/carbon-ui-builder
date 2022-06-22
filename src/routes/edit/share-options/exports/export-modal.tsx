@@ -1,8 +1,4 @@
-import React, { useContext } from 'react';
-
-import { createFragmentSandbox } from './create-fragment-sandbox';
-import { createReactApp } from './frameworks/react-fragment';
-import { createAngularApp } from './frameworks/angular-fragment';
+import React, { useContext, useState } from 'react';
 
 import {
 	Button,
@@ -11,7 +7,14 @@ import {
 	Tab,
 	Tabs
 } from 'carbon-components-react';
+import { Document16 } from '@carbon/icons-react';
 import { css } from 'emotion';
+import Editor from '@monaco-editor/react';
+
+import { createFragmentSandbox } from './create-fragment-sandbox';
+import { createReactApp } from './frameworks/react-fragment';
+import { createAngularApp } from './frameworks/angular-fragment';
+
 import { ModalContext, ModalActionType } from '../../../../context/modal-context';
 import { saveBlob } from '../../../../utils/file-tools';
 import { GlobalStateContext } from '../../../../context';
@@ -20,15 +23,8 @@ import { ExportImageComponent } from './export-image-component';
 const exportCodeModalStyle = css`
 	.bx--tab-content {
 		height: calc(100% - 40px);
-		overflow: auto;
+		overflow: hidden;
 	}
-`;
-
-const codeSnippetWrapper = css`
-    margin-top: 20px;
-    p {
-        margin-bottom: 7px;
-    }
 `;
 
 const titleWrapper = css`
@@ -45,14 +41,131 @@ const codeSnippet = css`
     }
 `;
 
+const tabContentStyle = css`
+	display: grid;
+	grid-template-columns: 1fr 8fr;
+	margin-top: 20px;
+`;
+
+const contentHeight = 'calc(100vh - 287px)';
+
+const codeSnippetWrapperStyle = css`
+	height: ${contentHeight};
+
+    p {
+        margin-bottom: 7px;
+    }
+`;
+
+const fileNamesContainerStyle = css`
+	display: inline-block;
+	min-width: 240px;
+	overflow-y: auto;
+	height: ${contentHeight};
+`;
+
+const fileNameStyle = css`
+	display: block;
+	width: 100%;
+
+	&.bx--btn--ghost.bx--btn--sm {
+		padding-left: 2rem;
+	}
+
+	svg.bx--btn__icon {
+		position: absolute;
+		top: 7px;
+		left: 0;
+	}
+`;
+
+const filenameToLanguage = (filename: string) => {
+	const filenameLowercase = filename.toLowerCase();
+
+	if (
+		filenameLowercase.endsWith('ts') ||
+		filenameLowercase.endsWith('tsx')
+	) {
+		return 'typescript';
+	}
+
+	if (
+		filenameLowercase.endsWith('js') ||
+		filenameLowercase.endsWith('jsx')
+	) {
+		return 'javascript';
+	}
+
+	if (
+		filenameLowercase.endsWith('css') ||
+		filenameLowercase.endsWith('scss')
+	) {
+		return 'scss';
+	}
+
+	if (
+		filenameLowercase.endsWith('json')
+	) {
+		return 'json';
+	}
+
+	if (
+		filenameLowercase.endsWith('html')
+	) {
+		return 'html';
+	}
+
+	return 'text';
+};
+
+const FileNames = ({ code, setSelectedFilename }: any) => <div className={fileNamesContainerStyle}>
+	{
+		Object.keys(code).map((fileName: string) => (
+			<Button
+			key={fileName}
+			className={fileNameStyle}
+			kind='ghost'
+			renderIcon={Document16}
+			size='sm'
+			onClick={() => setSelectedFilename(fileName)}>
+				{fileName}
+			</Button>
+		))
+	}
+</div>;
+
+// TODO add a copy to clipboard button next to title
+const CodeView = ({ code, selectedFilename }: any) => <div className={codeSnippetWrapperStyle}>
+	<p>{selectedFilename}</p>
+	<Editor
+		height='calc(100% - 27px)'
+		language={filenameToLanguage(selectedFilename)}
+		value={
+			selectedFilename !== 'package.json'
+				? code[selectedFilename]
+				: JSON.stringify(code[selectedFilename], null, '\t')
+		}
+	/>
+</div>;
+
+const generateSandboxUrl = (parameters: any) => (`https://codesandbox.io/api/v1/sandboxes/define?parameters=${parameters}`);
+
+const EditOnCodeSandboxLink = (code: any) => <a
+	href={generateSandboxUrl(createFragmentSandbox(code))}
+	target='_blank'
+	rel='noopener noreferrer'>
+		Edit on CodeSandbox
+</a>;
+
 export const ExportModal = ({ fragment }: any) => {
 	const { fragments, settings, setSettings } = useContext(GlobalStateContext);
 	const [modalState, dispatchModal] = useContext(ModalContext);
+	const [selectedAngularFilename, setSelectedAngularFilename] = useState('src/app/app.component.ts' as string);
+	const [selectedReactFilename, setSelectedReactFilename] = useState('src/component.js' as string);
+
 	const jsonCode: any = JSON.stringify(fragment.data, null, 2);
 	const reactCode: any = createReactApp(fragment, fragments);
 	const angularCode: any = createAngularApp(fragment, fragments);
-
-	const generateSandboxUrl = (parameters: any) => (`https://codesandbox.io/api/v1/sandboxes/define?parameters=${parameters}`);
 
 	return (
 		<Modal
@@ -64,7 +177,9 @@ export const ExportModal = ({ fragment }: any) => {
 		className={exportCodeModalStyle}>
 			<Tabs
 			selected={settings.selectedExportTabIndex || 0}
-			onSelectionChange={(tabIndex: number) => setSettings({ ...settings, selectedExportTabIndex: tabIndex })}>
+			onSelectionChange={(tabIndex: number) => {
+				setSettings({ ...settings, selectedExportTabIndex: tabIndex });
+			}}>
 				<Tab
 				id='Angular'
 				label='Angular'
@@ -72,31 +187,12 @@ export const ExportModal = ({ fragment }: any) => {
 				tabIndex={0}>
 					<div className={titleWrapper}>
 						<h3>Angular Code</h3>
-						<a
-						href={generateSandboxUrl(createFragmentSandbox(angularCode))}
-						target='_blank'
-						rel='noopener noreferrer'>
-							Edit on CodeSandbox
-						</a>
+						<EditOnCodeSandboxLink code={angularCode} />
 					</div>
-					{
-						Object.keys(angularCode).map((fileName: string) => (
-							<div className={codeSnippetWrapper} key={fileName}>
-								<p>{fileName}</p>
-								<CodeSnippet
-								type='multi'
-								light
-								className={codeSnippet}
-								copyButtonDescription={`Copy ${fileName} to clipboard`}>
-									{
-										fileName !== 'package.json'
-											? angularCode[fileName]
-											: JSON.stringify(angularCode[fileName], null, '\t')
-									}
-								</CodeSnippet>
-							</div>
-						))
-					}
+					<div className={tabContentStyle}>
+						<FileNames code={angularCode} setSelectedFilename={setSelectedAngularFilename} />
+						<CodeView code={angularCode} selectedFilename={selectedAngularFilename} />
+					</div>
 				</Tab>
 				<Tab
 				id='react'
@@ -105,31 +201,12 @@ export const ExportModal = ({ fragment }: any) => {
 				tabIndex={0}>
 					<div className={titleWrapper}>
 						<h3>React Code</h3>
-						<a
-						href={generateSandboxUrl(createFragmentSandbox(reactCode))}
-						target='_blank'
-						rel='noopener noreferrer'>
-							Edit on CodeSandbox
-						</a>
+						<EditOnCodeSandboxLink code={reactCode} />
 					</div>
-					{
-						Object.keys(reactCode).map((fileName: string) => (
-							<div className={codeSnippetWrapper} key={fileName}>
-								<p>{fileName}</p>
-								<CodeSnippet
-								type='multi'
-								light
-								className={codeSnippet}
-								copyButtonDescription={`Copy ${fileName} to clipboard`}>
-									{
-										fileName !== 'package.json'
-											? reactCode[fileName]
-											: JSON.stringify(reactCode[fileName], null, '\t')
-									}
-								</CodeSnippet>
-							</div>
-						))
-					}
+					<div className={tabContentStyle}>
+						<FileNames code={reactCode} setSelectedFilename={setSelectedReactFilename} />
+						<CodeView code={reactCode} selectedFilename={selectedReactFilename} />
+					</div>
 				</Tab>
 				<Tab
 				id='json'
