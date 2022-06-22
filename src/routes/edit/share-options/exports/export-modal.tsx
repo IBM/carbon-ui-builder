@@ -7,7 +7,7 @@ import {
 	Tab,
 	Tabs
 } from 'carbon-components-react';
-import { Document16 } from '@carbon/icons-react';
+import { Copy16, Document16 } from '@carbon/icons-react';
 import { css } from 'emotion';
 import Editor from '@monaco-editor/react';
 
@@ -53,7 +53,7 @@ const codeSnippetWrapperStyle = css`
 	height: ${contentHeight};
 
     p {
-        margin-bottom: 7px;
+        line-height: 2rem;
     }
 `;
 
@@ -134,19 +134,33 @@ const FileNames = ({ code, setSelectedFilename }: any) => <div className={fileNa
 	}
 </div>;
 
-// TODO add a copy to clipboard button next to title
-const CodeView = ({ code, selectedFilename }: any) => <div className={codeSnippetWrapperStyle}>
-	<p>{selectedFilename}</p>
-	<Editor
-		height='calc(100% - 27px)'
-		language={filenameToLanguage(selectedFilename)}
-		value={
-			selectedFilename !== 'package.json'
-				? code[selectedFilename]
-				: JSON.stringify(code[selectedFilename], null, '\t')
-		}
-	/>
-</div>;
+const CodeView = ({ code, selectedFilename }: any) => {
+	const codeString = selectedFilename !== 'package.json'
+		? code[selectedFilename]
+		: JSON.stringify(code[selectedFilename], null, '\t');
+
+	const copyToClipboard = () => {
+		navigator.clipboard.writeText(codeString);
+	};
+
+	return <div className={codeSnippetWrapperStyle}>
+		<p>
+			{selectedFilename}
+			<Button
+				kind='ghost'
+				size='sm'
+				hasIconOnly
+				iconDescription='Copy to clipboard'
+				onClick={copyToClipboard}
+				renderIcon={Copy16}/>
+		</p>
+		<Editor
+			height='calc(100% - 32px)'
+			language={filenameToLanguage(selectedFilename)}
+			value={codeString}
+		/>
+	</div>;
+};
 
 const generateSandboxUrl = (parameters: any) => (`https://codesandbox.io/api/v1/sandboxes/define?parameters=${parameters}`);
 
