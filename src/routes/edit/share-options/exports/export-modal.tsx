@@ -28,7 +28,6 @@ const exportCodeModalStyle = css`
 
 const titleWrapper = css`
     display: flex;
-    margin-top: 30px;
     a, button {
         margin-left: auto;
     }
@@ -40,7 +39,7 @@ const tabContentStyle = css`
 	margin-top: 20px;
 `;
 
-const contentHeight = 'calc(100vh - 287px)';
+const contentHeight = 'calc(100vh - 257px)';
 
 const codeSnippetWrapperStyle = css`
 	height: ${contentHeight};
