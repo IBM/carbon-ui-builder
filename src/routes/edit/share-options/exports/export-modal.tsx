@@ -156,13 +156,6 @@ const CodeView = ({ code, selectedFilename }: any) => {
 
 const generateSandboxUrl = (parameters: any) => (`https://codesandbox.io/api/v1/sandboxes/define?parameters=${parameters}`);
 
-const EditOnCodeSandboxLink = (code: any) => <a
-	href={generateSandboxUrl(createFragmentSandbox(code))}
-	target='_blank'
-	rel='noopener noreferrer'>
-		Edit on CodeSandbox
-</a>;
-
 export const ExportModal = ({ fragment }: any) => {
 	const { fragments, settings, setSettings } = useContext(GlobalStateContext);
 	const [modalState, dispatchModal] = useContext(ModalContext);
@@ -193,7 +186,12 @@ export const ExportModal = ({ fragment }: any) => {
 				tabIndex={0}>
 					<div className={titleWrapper}>
 						<h3>Angular Code</h3>
-						<EditOnCodeSandboxLink code={angularCode} />
+						<a
+							href={generateSandboxUrl(createFragmentSandbox(angularCode))}
+							target='_blank'
+							rel='noopener noreferrer'>
+								Edit on CodeSandbox
+						</a>
 					</div>
 					<div className={tabContentStyle}>
 						<FileNames code={angularCode} setSelectedFilename={setSelectedAngularFilename} />
@@ -207,7 +205,12 @@ export const ExportModal = ({ fragment }: any) => {
 				tabIndex={0}>
 					<div className={titleWrapper}>
 						<h3>React Code</h3>
-						<EditOnCodeSandboxLink code={reactCode} />
+						<a
+							href={generateSandboxUrl(createFragmentSandbox(reactCode))}
+							target='_blank'
+							rel='noopener noreferrer'>
+								Edit on CodeSandbox
+						</a>
 					</div>
 					<div className={tabContentStyle}>
 						<FileNames code={reactCode} setSelectedFilename={setSelectedReactFilename} />
