@@ -2,7 +2,8 @@ import React from 'react';
 import {
 	Checkbox,
 	Loading,
-	TextInput
+	TextInput,
+	Dropdown
 } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { ComponentInfo } from '.';
@@ -19,17 +20,21 @@ const overlayStyle = css`
 };`;
 
 export const ALoadingSettingsUI = ({ selectedComponent, setComponent }: any) => {
+	const sizeItems = [
+		{ id: 'small', text: 'Small' },
+		{ id: 'normal', text: 'Normal' },
+	];
 	return <>
-		<Checkbox
-			labelText='Small'
-			id='small'
-			checked={selectedComponent.small}
-			onChange={(checked: any) => {
-				setComponent({
-					...selectedComponent,
-					small: checked
-				});
-			}} />
+		<Dropdown
+			label='Size'
+			titleText='Size'
+			items={sizeItems}
+			initialSelectedItem={sizeItems.find(item => item.id === selectedComponent.size)}
+			itemToString={(item: any) => (item ? item.text : '')}
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				size: event.selectedItem.id
+			})} />
 		<Checkbox
 			labelText='With overlay'
 			id='with-overlay'
@@ -81,7 +86,7 @@ export const ALoading = ({
 			<Loading
 				active={componentObj.active}
 				withOverlay={componentObj.overlay}
-				small={componentObj.small}
+				small={componentObj.size === 'small'}
 				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
 		</AComponent>
 	);
@@ -98,7 +103,7 @@ export const componentInfo: ComponentInfo = {
 		type: 'loading',
 		label: 'Loading',
 		overlay: false,
-		small: false,
+		size: 'normal',
 		active: true
 	},
 	image,
@@ -110,7 +115,7 @@ export const componentInfo: ComponentInfo = {
 			imports: ['LoadingModule'],
 			code: ({ json }) => {
 				return `<ibm-loading
-							[size]="${json.small ? 'sm' : 'normal'}"
+							size="${json.size === 'small' ? 'sm' : 'normal'}"
 							[isActive]="${nameStringToVariableString(json.codeContext?.name)}Active"
 							[overlay]="${nameStringToVariableString(json.codeContext?.name)}Overlay"
 							${angularClassNamesFromComponentObj(json)}>
@@ -123,7 +128,7 @@ export const componentInfo: ComponentInfo = {
 				return `<Loading
 							active={${json.active}}
 							withOverlay={${json.overlay}}
-							${json.small ? `small={${json.small}}` : ''}
+							small={${json.size === 'small'}}
 							${reactClassNamesFromComponentObj(json)} />`;
 			}
 		}
