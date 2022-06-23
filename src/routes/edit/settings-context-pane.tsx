@@ -84,17 +84,6 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 					}
 					{
 						!selectedComponent && <>
-							<TextInput
-								id='fragmentName'
-								labelText='Fragment name'
-								defaultValue={fragment.title}
-								onChange={(event: any) => setFragment({
-									...fragment,
-									title: event.target.value
-								})}/>
-
-							<br />
-
 							<Checkbox
 								id='setFragmentAsTemplate'
 								checked={fragment.labels && fragment.labels.includes('template')}

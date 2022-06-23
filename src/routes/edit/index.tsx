@@ -285,7 +285,7 @@ export const Edit = () => {
 		<div
 		id='edit-wrapper'
 		className={editPageContent}>
-			{fragment && <EditHeader fragment={fragment} />}
+			{fragment && <EditHeader fragment={fragment} setFragment={updateFragment} />}
 			<ElementsPane isActive={selectedLeftPane === SelectedLeftPane.ELEMENTS} />
 			<StylePane isActive={selectedLeftPane === SelectedLeftPane.STYLE} />
 			<CodePane isActive={selectedLeftPane === SelectedLeftPane.CODE} />
