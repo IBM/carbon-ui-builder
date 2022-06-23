@@ -176,7 +176,7 @@ export const componentInfo: ComponentInfo = {
 					size="${json.size}"
 					id="${json.id}"
 					${reactClassNamesFromComponentObj(json)}
-					/>`;
+				/>`;
 			}
 		}
 	}
