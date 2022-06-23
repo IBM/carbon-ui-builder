@@ -336,7 +336,7 @@ export const componentInfo: ComponentInfo = {
 					helperText="${json.helperText}"
 					label="${json.placeholder}"
 					${json.isInline ? 'type="inline"': ''}
-					${json.selectionFeedback !== 'top-after-reopen' && json.isMulti ? `selectionFeedback="${json.selectionFeedback}` : ''}
+					${json.selectionFeedback !== 'top-after-reopen' && json.isMulti ? `selectionFeedback="${json.selectionFeedback}"` : ''}
 					${json.hideLabel !== undefined ? `hideLabel={${json.hideLabel}}` : ''}
 					${json.direction !== 'bottom' ? `direction="${json.direction}"` : ''}
 					${json.light ? `light="${json.light}"` : ''}
