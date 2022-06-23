@@ -118,8 +118,7 @@ export const AToggle = ({
 				labelA={componentObj.offText}
 				labelB={componentObj.onText}
 				labelText={componentObj.header}
-				className={` ${preventCheckEvent} ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} `}
-				/>
+				className={` ${preventCheckEvent} ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} `} />
 		</AComponent>
 	);
 };
@@ -175,8 +174,7 @@ export const componentInfo: ComponentInfo = {
 					${json.checked ? `toggled="${json.checked}"` : ''}
 					size="${json.size}"
 					id="${json.id}"
-					${reactClassNamesFromComponentObj(json)}
-				/>`;
+					${reactClassNamesFromComponentObj(json)} />`;
 			}
 		}
 	}
