@@ -67,7 +67,6 @@ export const ALoadingCodeUI = ({ selectedComponent, setComponent }: any) => <Tex
 		});
 	}} />;
 
-
 export const ALoading = ({
 	componentObj,
 	...rest
