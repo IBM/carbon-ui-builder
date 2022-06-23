@@ -14,7 +14,6 @@ import {
 	angularClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 
-
 const overlayStyle = css`
 .bx--loading-overlay {
 	position: absolute;
@@ -27,50 +26,48 @@ export const ALoadingSettingsUI = ({ selectedComponent, setComponent }: any) => 
 			id='small'
 			checked={selectedComponent.small}
 			onChange={(checked: any) => {
-			setComponent({
-				...selectedComponent,
-				small: checked
-			});
-		}}/>
+				setComponent({
+					...selectedComponent,
+					small: checked
+				});
+			}} />
 		<Checkbox
-		labelText='With overlay'
-		id='with-overlay'
-		checked={selectedComponent.overlay}
-		onChange={(checked: any) => {
-			setComponent({
-				...selectedComponent,
-				overlay: checked
-			});
-		}}/>
+			labelText='With overlay'
+			id='with-overlay'
+			checked={selectedComponent.overlay}
+			onChange={(checked: any) => {
+				setComponent({
+					...selectedComponent,
+					overlay: checked
+				});
+			}} />
 		<Checkbox
-		labelText='Active'
-		id='active'
-		disabled
-		checked={selectedComponent.active}
-		onChange={(checked: any) => {
-			setComponent({
-				...selectedComponent,
-				active: checked
-			});
-		}}/>
+			labelText='Active'
+			id='active'
+			disabled
+			checked={selectedComponent.active}
+			onChange={(checked: any) => {
+				setComponent({
+					...selectedComponent,
+					active: checked
+				});
+			}} />
 	</>;
 };
 
-export const ALoadingCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>;
-};
+export const ALoadingCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
+
 
 export const ALoading = ({
 	componentObj,
