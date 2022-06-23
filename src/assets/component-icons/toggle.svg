@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="toggle_small_item_06_disabled-off" data-name="toggle / small / item / 06 disabled-off" xmlns="http://www.w3.org/2000/svg" width="32" height="16" viewBox="0 0 32 16">
+  <rect id="pill" width="32" height="16" rx="8" fill="#f4f4f4"/>
+  <circle id="handle" cx="5" cy="5" r="5" transform="translate(3 3)" fill="#c6c6c6"/>
+</svg>
