@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import {
 	Accordion,
 	AccordionItem,
-	TextInput,
 	Checkbox,
 	TooltipDefinition
 } from 'carbon-components-react';
