@@ -133,7 +133,7 @@ export const componentInfo: ComponentInfo = {
 	type: 'toggle',
 	defaultComponentObj: {
 		type: 'toggle',
-		header: 'Toggle header label',
+		header: 'Toggle',
 		offText: 'Off',
 		onText: 'On',
 		disabled: false,
