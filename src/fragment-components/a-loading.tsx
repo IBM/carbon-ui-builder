@@ -13,8 +13,6 @@ import {
 	reactClassNamesFromComponentObj,
 	angularClassNamesFromComponentObj
 } from '../utils/fragment-tools';
-
-
 const overlayStyle = css`
 .bx--loading-overlay {
 	position: absolute;
