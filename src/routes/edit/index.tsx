@@ -353,7 +353,7 @@ export const Edit = () => {
 					kind='danger'
 					disabled={!fragment.selectedComponentId} // disabled for fragment
 					renderIcon={TrashCan32}
-					onClick={deleteSelectedComponent}>
+					onClick={() => deleteSelectedComponent()}>
 						Delete
 					</Button>
 				</div>
