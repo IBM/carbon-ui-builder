@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="Link_-_Default" data-name="Link - Default" xmlns="http://www.w3.org/2000/svg" width="27" height="18" viewBox="0 0 27 18">
-  <text id="Link" transform="translate(0 14)" fill="#0f61fd" font-size="14" font-family="IBMPlexSans, IBM Plex Sans" letter-spacing="0.011em"><tspan x="0" y="0">Link</tspan></text>
+<svg xmlns="http://www.w3.org/2000/svg" width="65" height="15" viewBox="0 0 65 15">
+  <g id="breadcrumb_item" data-name="breadcrumb / item" transform="translate(-140 -117)">
+    <g id="breadcrumb_item-2" data-name="breadcrumb / item" transform="translate(140 117)">
+      <rect id="Bounds" width="64" height="15" fill="none"/>
+      <g id="Stack" transform="translate(0 1.818)">
+        <text id="_" data-name="/" transform="translate(61 9.182)" fill="#161616" font-size="9" font-family="IBMPlexSans, IBM Plex Sans"><tspan x="0" y="0">/</tspan></text>
+        <g id="Padding_Group" data-name="Padding Group" transform="translate(0 3.03)">
+          <path id="skeleton" d="M0-15H55.15v4.848H0Z" transform="translate(0 15)" fill="#e8e8e8" fill-rule="evenodd"/>
+        </g>
+      </g>
+    </g>
+  </g>
 </svg>
