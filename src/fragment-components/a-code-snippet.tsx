@@ -38,8 +38,8 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 				setComponent({
 				...selectedComponent,
 				code: event
-			})}}
-		></Editor>
+			})}}>
+		</Editor>
 		<Dropdown
 			label='Variant selector'
 			titleText='Variant selector'
