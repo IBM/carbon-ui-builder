@@ -19,10 +19,12 @@ export interface BaseNotificationAction {
 
 export type NotificationAction =
 	NotificationActionAdd |
-	NotificationActionRemove;
+	NotificationActionRemove |
+	NotificationActionCloseAll;
 
 export enum NotificationActionType {
 	ADD_NOTIFICATION,
+	CLOSE_ALL_NOTIFICATIONS,
 	REMOVE_NOTIFICATION
 }
 
@@ -32,6 +34,10 @@ export interface NotificationActionAdd extends BaseNotificationAction {
 
 export interface NotificationActionRemove extends BaseNotificationAction {
 	type: NotificationActionType.REMOVE_NOTIFICATION;
+}
+
+export interface NotificationActionCloseAll extends BaseNotificationAction {
+	type: NotificationActionType.CLOSE_ALL_NOTIFICATIONS;
 }
 
 interface Action {
@@ -55,6 +61,16 @@ const NotificationReducer = (state: NotificationState, action: NotificationActio
 				notifications: state.notifications.filter(
 					(notification: NotificationData) => notification.id !== action.data.id
 				)
+			};
+		case NotificationActionType.CLOSE_ALL_NOTIFICATIONS:
+			state.notifications.forEach((notification: any) => {
+				if (notification.action) {
+					notification.action.onNotificationClose();
+				}
+			});
+			return {
+				...state,
+				notifications: []
 			};
 		case NotificationActionType.ADD_NOTIFICATION:
 			return {

@@ -7,7 +7,7 @@ import {
 } from 'carbon-components-react';
 import { FragmentWizardModals } from './fragment-wizard';
 
-import { GlobalStateContext } from '../../../context';
+import { GlobalStateContext, NotificationActionType, NotificationContext } from '../../../context';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { warningNotificationProps } from '../../../utils/file-tools';
 import { Col } from '../../../components';
@@ -28,6 +28,7 @@ export interface ChooseFragmentModalProps {
 export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 	const [selectedFragment, setSelectedFragment] = useState<any>(null);
 	const { fragments, addFragment } = useContext(GlobalStateContext);
+	const [, dispatchNotification] = useContext(NotificationContext);
 
 	const navigate: NavigateFunction = useNavigate();
 
@@ -44,7 +45,13 @@ export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 			{ labels: selectedFragment?.labels?.filter((label: string) => label !== 'template') }
 		);
 
+		// close all notifications
+		dispatchNotification({
+			type: NotificationActionType.CLOSE_ALL_NOTIFICATIONS
+		});
+
 		addFragment(fragmentCopy);
+
 		navigate(`/edit/${fragmentCopy.id}`);
 	};
 

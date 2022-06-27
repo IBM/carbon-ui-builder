@@ -19,7 +19,7 @@ export const ASearchInputSettingsUI = ({ selectedComponent, setComponent }: any)
 			label='Size'
 			titleText='Size'
 			items={sizeItems}
-			initialSelectedItem={sizeItems.find(item => item.id === selectedComponent.inputSize)}
+			selectedItem={sizeItems.find(item => item.id === selectedComponent.inputSize)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,

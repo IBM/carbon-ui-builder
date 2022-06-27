@@ -98,7 +98,7 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 			label='Placement'
 			titleText='Placement'
 			items={placementItems}
-			initialSelectedItem={placementItems.find(item => item.id === selectedComponent.placement)}
+			selectedItem={placementItems.find(item => item.id === selectedComponent.placement)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,

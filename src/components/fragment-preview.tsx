@@ -150,6 +150,10 @@ export const FragmentPreview = ({ fragment, resetPreview }: any) => {
 	}, []);
 
 	useEffect(() => {
+		if (!resetPreview) {
+			return;
+		}
+
 		resetPreview.current = updatePreviewUrl;
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [resetPreview]);

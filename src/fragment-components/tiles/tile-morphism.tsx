@@ -209,7 +209,7 @@ export const TileMorphism = ({ component, setComponent }: any) => {
 		id="tile-morpher"
 		label="Convert to another tile type"
 		titleText="Tile type"
-		initialSelectedItem={tileTypes.find(item => item.id === component.type)}
+		selectedItem={tileTypes.find(item => item.id === component.type)}
 		items={tileTypes}
 		itemToString={(item: any) => (item ? item.text : '')}
 		onChange={convert}

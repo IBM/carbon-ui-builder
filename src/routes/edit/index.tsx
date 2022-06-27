@@ -197,6 +197,8 @@ export const Edit = () => {
 		updateFragment,
 		clearActionHistory,
 		addAction,
+		undoAction,
+		redoAction,
 		styleClasses
 	} = useContext(GlobalStateContext);
 
@@ -266,7 +268,7 @@ export const Edit = () => {
 	},
 	{
 		keyup: true
-	}, fragment);
+	}, [fragment]);
 
 	useHotkeys('delete, backspace', (event) => {
 		event.preventDefault();
@@ -274,13 +276,16 @@ export const Edit = () => {
 	},
 	{
 		keyup: true
-	}, fragment);
+	}, [fragment]);
+
+	useHotkeys('ctrl+z, cmd+z, alt+z, option+z', undoAction, { keyup: true }, [undoAction]);
+	useHotkeys('ctrl+shift+z, cmd+shift+z, alt+shift+z, option+shift+z', redoAction, { keyup: true }, [redoAction]);
 
 	return (
 		<div
 		id='edit-wrapper'
 		className={editPageContent}>
-			{fragment && <EditHeader fragment={fragment} />}
+			{fragment && <EditHeader fragment={fragment} setFragment={updateFragment} />}
 			<ElementsPane isActive={selectedLeftPane === SelectedLeftPane.ELEMENTS} />
 			<StylePane isActive={selectedLeftPane === SelectedLeftPane.STYLE} />
 			<CodePane isActive={selectedLeftPane === SelectedLeftPane.CODE} />
@@ -348,7 +353,7 @@ export const Edit = () => {
 					kind='danger'
 					disabled={!fragment.selectedComponentId} // disabled for fragment
 					renderIcon={TrashCan32}
-					onClick={deleteSelectedComponent}>
+					onClick={() => deleteSelectedComponent()}>
 						Delete
 					</Button>
 				</div>

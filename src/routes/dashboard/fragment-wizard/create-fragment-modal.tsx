@@ -6,7 +6,7 @@ import { Modal } from 'carbon-components-react';
 import { css } from 'emotion';
 import { SelectionTile } from '../../../components/selection-tile';
 import { generateNewFragment } from './generate-new-fragment';
-import { GlobalStateContext } from '../../../context';
+import { GlobalStateContext, NotificationActionType, NotificationContext } from '../../../context';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 
 const createFragmentTiles = css`
@@ -44,6 +44,7 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 	const [selectedCreateOption, setSelectedCreateOption] = useState<CreateOptions | null>(null);
 
 	const { addFragment } = useContext(GlobalStateContext);
+	const [, dispatchNotification] = useContext(NotificationContext);
 
 	const navigate: NavigateFunction = useNavigate();
 
@@ -52,7 +53,13 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 			{ items: [], id: 1 }
 		);
 
+		// close all notifications
+		dispatchNotification({
+			type: NotificationActionType.CLOSE_ALL_NOTIFICATIONS
+		});
+
 		addFragment(generatedFragment);
+
 		navigate(`/edit/${generatedFragment.id}`);
 	};
 

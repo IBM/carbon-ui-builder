@@ -1,9 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { css } from 'emotion';
-import { Button } from 'carbon-components-react';
+import { Button, TextInput } from 'carbon-components-react';
 import {
+	Checkmark16,
 	Copy16,
 	Delete16,
+	Edit16,
 	Export16,
 	Undo16,
 	Redo16,
@@ -51,6 +53,8 @@ const editHeader = css`
 			font-weight: bold;
 			padding-left: 12px;
 			padding-right: 16px;
+			line-height: 2rem;
+
 			float: left;
 		}
 		.fragment-edit {
@@ -140,9 +144,11 @@ const fragmentEditToolBar = css`
 	}
 `;
 
-export const EditHeader = ({ fragment }: any) => {
+export const EditHeader = ({ fragment, setFragment }: any) => {
 	const navigate: NavigateFunction = useNavigate();
 	const [, dispatchModal] = useContext(ModalContext);
+	const [isEditingTitle, setIsEditingTitle] = useState(false);
+	const titleTextInputRef = useRef(null as any);
 	const {
 		canUndo,
 		undoAction,
@@ -166,7 +172,39 @@ export const EditHeader = ({ fragment }: any) => {
 						<ChevronLeft24 className={actionIconStyle} />
 					</Button>
 					<div className='title-wrap'>
-						<p className='fragment-title'>{fragment.title}</p>
+						<p className='fragment-title'>
+							{
+								<div className={isEditingTitle ? css`display: inline-block` : css`display: none`}>
+									<TextInput
+										ref={titleTextInputRef}
+										value={fragment.title}
+										onChange={(event: any) => setFragment({ ...fragment, title: event.target.value })}
+										onKeyDown={(event: any) => {
+											if (event.key === 'Enter') {
+												setIsEditingTitle(false);
+											}
+										}}
+										onBlur={() => setIsEditingTitle(false)}
+										size='sm'
+										light={true} />
+								</div>
+							}
+							{ !isEditingTitle && fragment.title }
+							<Button
+								kind='ghost'
+								size='sm'
+								hasIconOnly
+								renderIcon={isEditingTitle ? Checkmark16 : Edit16}
+								onClick={() => {
+									setIsEditingTitle(!isEditingTitle);
+									// isEditingTitle won't be changed until next render so checking for opposite
+									if (!isEditingTitle) {
+										setTimeout(() => {
+											titleTextInputRef.current?.focus();
+										});
+									}
+								}} />
+						</p>
 
 						<div className='title-subheading'>
 							<div className='date-wrap'>{`Last modified ${ fragment.lastModified}`}</div>

@@ -26,7 +26,7 @@ export const AAccordionSettingsUI = ({ selectedComponent, setComponent }: any) =
 			label='Size'
 			titleText='Size'
 			items={sizeItems}
-			initialSelectedItem={sizeItems.find(item => item.id === selectedComponent.size)}
+			selectedItem={sizeItems.find(item => item.id === selectedComponent.size)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
@@ -36,7 +36,7 @@ export const AAccordionSettingsUI = ({ selectedComponent, setComponent }: any) =
 			label='Alignment of accordion heading'
 			titleText='Alignment'
 			items={alignItems}
-			initialSelectedItem={alignItems.find(item => item.id === selectedComponent.align)}
+			selectedItem={alignItems.find(item => item.id === selectedComponent.align)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,

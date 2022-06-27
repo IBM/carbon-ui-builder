@@ -33,13 +33,29 @@ export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			label='Kind'
 			titleText='Kind'
 			items={kindItems}
-			initialSelectedItem={kindItems.find(item => item.id === selectedComponent.kind)}
+			selectedItem={kindItems.find(item => item.id === selectedComponent.kind)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				kind: event.selectedItem.id
 			})} />
 	</>;
+};
+
+export const AButtonCodeUI = ({ selectedComponent, setComponent }: any) => {
+	return <TextInput
+			value={selectedComponent.codeContext?.name}
+			labelText='Input name'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						name: event.currentTarget.value
+					}
+				});
+			}}
+		/>;
 };
 
 export const AButton = ({
@@ -66,6 +82,7 @@ export const AButton = ({
 export const componentInfo: ComponentInfo = {
 	component: AButton,
 	settingsUI: AButtonSettingsUI,
+	codeUI: AButtonCodeUI,
 	render: ({ componentObj, select, remove, selected }) => <AButton
 		componentObj={componentObj}
 		select={select}

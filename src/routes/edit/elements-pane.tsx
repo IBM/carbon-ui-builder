@@ -3,18 +3,32 @@ import { css, cx } from 'emotion';
 import { Search } from 'carbon-components-react';
 
 import { ElementTile } from '../../components/element-tile';
+import { FragmentPreview } from '../../components/fragment-preview';
 
 import { leftPane, leftPaneContent, leftPaneHeader } from '.';
 import { allComponents } from '../../fragment-components';
 import { GlobalStateContext } from '../../context';
 
-const elementTileListStyle = css`
+const elementTileListStyleBase = css`
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: wrap;
-	margin-top: 63px;
 	width: 270px;
 `;
+
+const elementTileListStyle = cx(elementTileListStyleBase, css`
+	margin-top: 63px;
+	margin-bottom: 2rem
+`);
+
+const elementTileListStyleMicroLayouts = cx(elementTileListStyleBase, css`
+	margin-top: 1rem;
+
+	img {
+		max-height: 100px;
+		max-width: 123px;
+	}
+`);
 
 export const ElementsPane = ({ isActive }: any) => {
 	const [filterString, setFilterString] = useState('');
@@ -58,14 +72,14 @@ export const ElementsPane = ({ isActive }: any) => {
 				{
 					microLayouts && microLayouts.length > 0 && <>
 						<h4>Micro layouts</h4>
-						<div className={elementTileListStyle}>
+						<div className={elementTileListStyleMicroLayouts}>
 							{
 								Object.values(microLayouts)
 									// TODO prevent recursive adding
 									.filter((component: any) => shouldShow([component.title, ...component.labels]))
 									.map((component: any) =>
 										<ElementTile componentObj={{ type: 'fragment', id: component.id }} key={component.id}>
-											{/* <img src={component.componentInfo.image} alt={component.title} /> */}
+											<FragmentPreview fragment={component} />
 											<span className='title'>{component.title}</span>
 										</ElementTile>)
 							}

@@ -24,7 +24,7 @@ export const ANumberInputSettingsUI = ({ selectedComponent, setComponent }: any)
 			label='Size'
 			titleText='Size'
 			items={sizeItems}
-			initialSelectedItem={sizeItems.find(item => item.id === selectedComponent.size)}
+			selectedItem={sizeItems.find(item => item.id === selectedComponent.size)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
