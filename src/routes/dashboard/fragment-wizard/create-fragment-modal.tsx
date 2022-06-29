@@ -82,6 +82,7 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 				}
 				if (selectedCreateOption === CreateOptions.FROM_SCRATCH) {
 					generateFragment();
+					props.setShouldDisplay(false);
 					return;
 				}
 				props.setDisplayedModal(FragmentWizardModals.CHOOSE_FRAGMENT_MODAL);
