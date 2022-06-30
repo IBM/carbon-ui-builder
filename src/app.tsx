@@ -15,7 +15,7 @@ import { NotificationContextProvider } from './context/notification-context';
 import { UIShell } from './components/ui-shell';
 import { css } from 'emotion';
 import { Help } from './routes/help';
-import { FragmentWizard } from './routes/dashboard/fragment-wizard/fragment-wizard';
+import { FragmentWizard, FragmentWizardModals } from './routes/dashboard/fragment-wizard/fragment-wizard';
 import { FragmentModal } from './routes/edit/fragment-modal';
 
 const app = css`
@@ -33,18 +33,24 @@ const app = css`
 export const App = () => {
 	const [modalFragment, setModalFragment] = useState<any>(null);
 	const [displayWizard, setDisplayWizard] = useState(false);
+	// These are states which are shared amongst the three modals.
+	const [displayedModal, setDisplayedModal] = useState<FragmentWizardModals | null>(FragmentWizardModals.CREATE_FRAGMENT_MODAL);
 
 	return <Router basename='carbon-components-builder'>
 		<div className={app}>
 			<ErrorBoundary>
 				<GlobalStateContextProvider>
 					<NotificationContextProvider>
-						<UIShell />
+						<UIShell
+							setDisplayedModal={setDisplayedModal}
+							displayWizard={displayWizard}
+							setDisplayWizard={setDisplayWizard} />
 						<Notification />
 						<ModalContextProvider>
 							<Routes>
 								<Route path='/' element={
-									<Dashboard displayWizard={displayWizard}
+									<Dashboard
+										displayWizard={displayWizard}
 										setDisplayWizard={setDisplayWizard}
 										setModalFragment={setModalFragment} />
 								} />
@@ -57,6 +63,8 @@ export const App = () => {
 								<Route path="*" element={<NotFound />} />
 							</Routes>
 							<FragmentWizard
+								displayedModal={displayedModal}
+								setDisplayedModal={setDisplayedModal}
 								shouldDisplay={displayWizard}
 								setShouldDisplay={setDisplayWizard} />
 							{modalFragment && <FragmentModal fragment={modalFragment} />}
