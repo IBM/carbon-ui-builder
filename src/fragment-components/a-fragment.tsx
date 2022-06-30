@@ -19,7 +19,7 @@ export const AFragmentSettingsUI = ({ selectedComponent, setComponent }: any) =>
 		size='sm'
 		renderIcon={Edit32}
 		className={css`margin-bottom: 1rem`}
-		to={`/edit/${selectedComponent.id}`}>
+		to={`/edit/${selectedComponent.fragmentId}`}>
 			Edit fragment
 		</LinkButton>
 		<Checkbox
@@ -83,7 +83,7 @@ export const componentInfo: ComponentInfo = {
 	render: ({ componentObj, select, remove, selected, renderComponents }) => {
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const globalState = useContext(GlobalStateContext); // used for fetching subcomponents/microlayouts
-		const subFragment = globalState?.getFragment(componentObj.id);
+		const subFragment = globalState?.getFragment(componentObj.fragmentId);
 
 		if (!subFragment) {
 			return ''; // NOTE should we also remove it from the fragment?
@@ -111,18 +111,18 @@ export const componentInfo: ComponentInfo = {
 			outputs: (_) => '',
 			imports: [],
 			code: ({ json, fragments }) => {
-				const fragment = fragments?.find(f => f.id === json.id);
+				const fragment = fragments?.find(f => f.id === json.fragmentId);
 				return `<app-${tagNameFromFragment(fragment)}></app-${tagNameFromFragment(fragment)}>`;
 			}
 		},
 		react: {
 			imports: [],
 			otherImports: ({ json, fragments }) => {
-				const fragment = fragments?.find(f => f.id === json.id);
+				const fragment = fragments?.find(f => f.id === json.fragmentId);
 				return `import {${classNameFromFragment(fragment)}} from "/src/shared/${tagNameFromFragment(fragment)}.js";`;
 			},
 			code: ({ json, fragments }) => {
-				const fragment = fragments?.find(f => f.id === json.id);
+				const fragment = fragments?.find(f => f.id === json.fragmentId);
 				return `<${classNameFromFragment(fragment)} state={state} setState={setState} />`;
 			}
 		}

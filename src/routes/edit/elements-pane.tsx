@@ -78,7 +78,7 @@ export const ElementsPane = ({ isActive }: any) => {
 									// TODO prevent recursive adding
 									.filter((component: any) => shouldShow([component.title, ...component.labels]))
 									.map((component: any) =>
-										<ElementTile componentObj={{ type: 'fragment', id: component.id }} key={component.id}>
+										<ElementTile componentObj={{ type: 'fragment', fragmentId: component.id }} key={component.id}>
 											<FragmentPreview fragment={component} />
 											<span className='title'>{component.title}</span>
 										</ElementTile>)

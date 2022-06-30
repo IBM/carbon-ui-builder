@@ -108,7 +108,7 @@ const getAllSubfragments = (json: any, fragments: any[]) => {
 	let sharedComponents: any = {};
 
 	if (json.type === 'fragment') {
-		const fragment = fragments.find(f => f.id === json.id);
+		const fragment = fragments.find(f => f.id === json.fragmentId);
 
 		sharedComponents[tagNameFromFragment(fragment)] = fragment;
 
@@ -194,7 +194,7 @@ const getAllComponentsCode = (json: any, fragments: any[]) => {
 	}
 
 	if (json.type === 'fragment') {
-		const fragment = fragments.find(f => f.id === json.id);
+		const fragment = fragments.find(f => f.id === json.fragmentId);
 
 		allComponents = {
 			...allComponents,

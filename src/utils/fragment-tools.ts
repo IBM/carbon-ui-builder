@@ -61,7 +61,7 @@ export const getAllComponentStyleClasses = (componentObj: any, fragments: any[])
 		};
 
 		if (co.type === 'fragment') {
-			const fragment = fragments.find(f => f.id === co.id);
+			const fragment = fragments.find(f => f.id === co.fragmentId);
 
 			styleClasses = {
 				...styleClasses,
