@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/carbon-components-builder/static/css/main.75de33ce.css",
-    "main.js": "/carbon-components-builder/static/js/main.ebf5ac25.js",
+    "main.css": "/carbon-components-builder/static/css/main.75e57b13.css",
+    "main.js": "/carbon-components-builder/static/js/main.fefdea13.js",
     "static/media/dashboard-empty-state.svg": "/carbon-components-builder/static/media/dashboard-empty-state.68a2dbad53e66c2560c18c7cae63b988.svg",
     "static/media/chart-404.svg": "/carbon-components-builder/static/media/chart-404.0cbc4226f4ef1a83fbdfe88bf5f398d3.svg",
     "static/media/tile-clickable.svg": "/carbon-components-builder/static/media/tile-clickable.dc9f4bb46dc5a7a320bb0b1cf8f6354c.svg",
@@ -26,17 +26,18 @@
     "static/media/tile-selectable.svg": "/carbon-components-builder/static/media/tile-selectable.b8c9ac53c42a2ce3845e7d8ea0d5b36d.svg",
     "static/media/progress-indicator.svg": "/carbon-components-builder/static/media/progress-indicator.444a6e25448fed4a61c90ddb1fdf4b00.svg",
     "static/media/tag.svg": "/carbon-components-builder/static/media/tag.4420658244edc54ef6419e8f497c29da.svg",
+    "static/media/loading.svg": "/carbon-components-builder/static/media/loading.bc2d5fd98975e58b042ba634c1518c90.svg",
     "static/media/accordion-item.svg": "/carbon-components-builder/static/media/accordion-item.79af529acde3999cf74cd64f7004cc7a.svg",
     "static/media/introduction.md": "/carbon-components-builder/static/media/introduction.fa70059dea0400525b8e.md",
     "static/media/toggle.svg": "/carbon-components-builder/static/media/toggle.ece519372c13d6603c1f3d48f1ed7a98.svg",
     "static/media/link.svg": "/carbon-components-builder/static/media/link.5ba53267de54fe9b222ec6f9c0cfd292.svg",
     "static/media/tile.svg": "/carbon-components-builder/static/media/tile.faa170c0e2c6e37d9135ee12f6fc8e41.svg",
     "static/media/hotkeys.md": "/carbon-components-builder/static/media/hotkeys.c48756993ac57912057b.md",
-    "main.75de33ce.css.map": "/carbon-components-builder/static/css/main.75de33ce.css.map",
-    "main.ebf5ac25.js.map": "/carbon-components-builder/static/js/main.ebf5ac25.js.map"
+    "main.75e57b13.css.map": "/carbon-components-builder/static/css/main.75e57b13.css.map",
+    "main.fefdea13.js.map": "/carbon-components-builder/static/js/main.fefdea13.js.map"
   },
   "entrypoints": [
-    "static/css/main.75de33ce.css",
-    "static/js/main.ebf5ac25.js"
+    "static/css/main.75e57b13.css",
+    "static/js/main.fefdea13.js"
   ]
 }
