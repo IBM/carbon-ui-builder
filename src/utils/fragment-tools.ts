@@ -3,6 +3,7 @@ import domtoimage from 'dom-to-image';
 import ReactDOM from 'react-dom';
 import { Fragment } from '../components';
 import { camelCase, kebabCase, upperFirst } from 'lodash';
+import { matchPath } from 'react-router-dom';
 
 export const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -95,6 +96,10 @@ export const getAllFragmentStyleClasses = (fragment: any, fragments: any[] = [])
 		...getAllComponentStyleClasses(fragment.data, fragments)
 	};
 	return Object.values(allClasses);
+};
+
+export const getEditScreenParams = () => {
+	return matchPath('/edit/:id', window.location.pathname.split('/carbon-components-builder').join(''))?.params;
 };
 
 export const hasComponentStyleClasses = (componentObj: any) => {

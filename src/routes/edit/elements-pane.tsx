@@ -8,6 +8,7 @@ import { FragmentPreview } from '../../components/fragment-preview';
 import { leftPane, leftPaneContent, leftPaneHeader } from '.';
 import { allComponents } from '../../fragment-components';
 import { GlobalStateContext } from '../../context';
+import { getEditScreenParams } from '../../utils/fragment-tools';
 
 const elementTileListStyleBase = css`
 	display: flex;
@@ -45,6 +46,12 @@ export const ElementsPane = ({ isActive }: any) => {
 		return !filterString || matches.some((match) => match.includes(filterString));
 	};
 
+	const editScreenParams = getEditScreenParams();
+
+	const visibleMicroLayouts = microLayouts?.filter((component: any) =>
+		shouldShow([component.title, ...component.labels])
+		&& component.id !== editScreenParams?.id);
+
 	return (
 		<div className={cx(leftPane, isActive ? 'is-active' : '')}>
 			<div className={leftPaneHeader}>
@@ -70,18 +77,15 @@ export const ElementsPane = ({ isActive }: any) => {
 					}
 				</div>
 				{
-					microLayouts && microLayouts.length > 0 && <>
+					visibleMicroLayouts && visibleMicroLayouts.length > 0 && <>
 						<h4>Micro layouts</h4>
 						<div className={elementTileListStyleMicroLayouts}>
 							{
-								Object.values(microLayouts)
-									// TODO prevent recursive adding
-									.filter((component: any) => shouldShow([component.title, ...component.labels]))
-									.map((component: any) =>
-										<ElementTile componentObj={{ type: 'fragment', fragmentId: component.id }} key={component.id}>
-											<FragmentPreview fragment={component} />
-											<span className='title'>{component.title}</span>
-										</ElementTile>)
+								visibleMicroLayouts.map((component: any) =>
+									<ElementTile componentObj={{ type: 'fragment', fragmentId: component.id }} key={component.id}>
+										<FragmentPreview fragment={component} />
+										<span className='title'>{component.title}</span>
+									</ElementTile>)
 							}
 						</div>
 					</>

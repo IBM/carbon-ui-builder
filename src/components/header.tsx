@@ -14,11 +14,12 @@ import {
 	DocumentExport16
 } from '@carbon/icons-react';
 import { css } from 'emotion';
-import { matchPath, NavigateFunction, useNavigate } from 'react-router-dom';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { FragmentWizardModals } from '../routes/dashboard/fragment-wizard/fragment-wizard';
 import { saveBlob } from '../utils/file-tools';
 import { GlobalStateContext } from '../context';
 import { ModalActionType, ModalContext } from '../context/modal-context';
+import { getEditScreenParams } from '../utils/fragment-tools';
 
 export const Header = ({
 	setDisplayedModal,
@@ -28,7 +29,7 @@ export const Header = ({
 	const navigate: NavigateFunction = useNavigate();
 	const globalState = useContext(GlobalStateContext);
 	const [, dispatchModal] = useContext(ModalContext);
-	const params = matchPath('/edit/:id', window.location.pathname.split('/carbon-components-builder').join(''))?.params;
+	const params = getEditScreenParams();
 	const fragment = globalState?.fragments.find((fragment: any) => fragment.id === params?.id);
 
 	const headerName = css`
