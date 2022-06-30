@@ -41,12 +41,12 @@ export const App = () => {
 			<ErrorBoundary>
 				<GlobalStateContextProvider>
 					<NotificationContextProvider>
-						<UIShell
-							setDisplayedModal={setDisplayedModal}
-							displayWizard={displayWizard}
-							setDisplayWizard={setDisplayWizard} />
-						<Notification />
 						<ModalContextProvider>
+							<UIShell
+								setDisplayedModal={setDisplayedModal}
+								displayWizard={displayWizard}
+								setDisplayWizard={setDisplayWizard} />
+							<Notification />
 							<Routes>
 								<Route path='/' element={
 									<Dashboard
