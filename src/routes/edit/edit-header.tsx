@@ -6,7 +6,7 @@ import {
 	Copy16,
 	TrashCan16,
 	Edit16,
-	Export16,
+	DocumentExport16,
 	Undo16,
 	Redo16,
 	ChevronLeft24
@@ -254,7 +254,7 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 							kind='primary'
 							aria-label='Export fragment'
 							title='Export fragment'
-							renderIcon={Export16}
+							renderIcon={DocumentExport16}
 							onClick={() => dispatchModal({
 								type: ModalActionType.setExportModal,
 								id: fragment.id
