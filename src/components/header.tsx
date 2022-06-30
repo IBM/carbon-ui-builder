@@ -24,9 +24,9 @@ export const Header = ({
 	setDisplayWizard
 }: any) => {
 	const navigate: NavigateFunction = useNavigate();
-	const { fragments } = useContext(GlobalStateContext);
+	const globalState = useContext(GlobalStateContext);
 	const params = matchPath('/edit/:id', window.location.pathname.split('/carbon-components-builder').join(''))?.params;
-	const fragment = fragments.find((fragment: any) => fragment.id === params?.id);
+	const fragment = globalState?.fragments.find((fragment: any) => fragment.id === params?.id);
 
 	const headerName = css`
 		&:hover {
@@ -76,7 +76,7 @@ export const Header = ({
 						<DocumentAdd16 /> New
 					</HeaderMenuItem>
 					{
-						!!params?.id &&
+						params?.id && fragment?.data &&
 						<HeaderMenuItem
 						className={headerName}
 						onClick={() => saveBlob(new Blob([JSON.stringify(fragment.data, null, 2)]), `${fragment.title}.json`)}>
