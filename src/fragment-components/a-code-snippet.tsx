@@ -29,7 +29,7 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				language: event.selectedItem.id
-		})}/>
+		})} />
 		<label className="bx--label">Code</label>
 		<Editor
 			language={selectedComponent.language} height="25vh"
@@ -38,7 +38,8 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 				setComponent({
 				...selectedComponent,
 				code: event
-			})}}>
+			});
+		}} >
 		</Editor>
 		<Dropdown
 			label='Variant selector'
@@ -49,24 +50,21 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				varient: event.selectedItem.id
-		})}/>
+		})} />
 	</>;
 };
 
-export const ACodeSnippetCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>
-};
+export const ACodeSnippetCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const ACodeSnippet = ({
 	componentObj,
