@@ -29,7 +29,7 @@ const createFragmentTile = css`
 
 export enum CreateOptions {
 	CHOOSE_TEMPLATE,
-	FROM_SCRATCH,
+	EMPTY_FRAGMENT,
 	IMPORT_JSON
 }
 
@@ -80,7 +80,7 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 					props.setLastVisitedModal(FragmentWizardModals.CREATE_FRAGMENT_MODAL);
 					return;
 				}
-				if (selectedCreateOption === CreateOptions.FROM_SCRATCH) {
+				if (selectedCreateOption === CreateOptions.EMPTY_FRAGMENT) {
 					generateFragment();
 					props.setShouldDisplay(false);
 					return;
@@ -110,9 +110,9 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 					label='Pick a template' />
 				<SelectionTile
 					styles={createFragmentTile}
-					onChange={() => setSelectedCreateOption(CreateOptions.FROM_SCRATCH)}
-					selected={selectedCreateOption === CreateOptions.FROM_SCRATCH}
-					label='Start from scratch' />
+					onChange={() => setSelectedCreateOption(CreateOptions.EMPTY_FRAGMENT)}
+					selected={selectedCreateOption === CreateOptions.EMPTY_FRAGMENT}
+					label='Empty fragment' />
 			</div>
 		</Modal>
 	);
