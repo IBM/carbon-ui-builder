@@ -117,6 +117,10 @@ export const leftPaneHeader = css`
 
 export const leftPaneContent = css`
 	padding: 0 15px;
+
+	.bx--form-item {
+		margin-top: 1rem;
+	}
 `;
 
 export const actionIconStyle = css`
