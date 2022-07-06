@@ -1,8 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { css, cx } from 'emotion';
 import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-generator';
 import {
 	Button,
+	Checkbox,
 	Form,
 	Search,
 	TextArea,
@@ -12,6 +13,7 @@ import {
 import { Add16 } from '@carbon/icons-react';
 import { leftPane, leftPaneContent } from '.';
 import { GlobalStateContext } from '../../context';
+import { kebabCase } from 'lodash';
 
 const searchContainerStyle = css`
 	display: flex;
@@ -26,6 +28,12 @@ export const StylePane = ({ isActive }: any) => {
 	const [selectedStyleClassId, setSelectedStyleClassId] = useState('' as string);
 	const { styleClasses, setStyleClasses } = useContext(GlobalStateContext);
 	const [filterString, setFilterString] = useState('');
+	const [_hasDescriptiveName, _setHasDescriptiveName] = useState(false);
+
+	useEffect(() => {
+		// reset state when a different class is selected
+		_setHasDescriptiveName(false);
+	}, [selectedStyleClassId]);
 
 	const getSelectedClass = () => styleClasses.find((c: any) => c.id === selectedStyleClassId) || {};
 	const getSelectedClassIndex = () => styleClasses.findIndex((c: any) => c.id === selectedStyleClassId);
@@ -33,6 +41,11 @@ export const StylePane = ({ isActive }: any) => {
 	const shouldShow = (styleClass: any) => {
 		const matches = [styleClass.name, styleClass.id];
 		return !filterString || matches.some((match) => match.includes(filterString));
+	};
+
+	const hasDescriptiveName = () => {
+		const selectedClass = getSelectedClass();
+		return _hasDescriptiveName || selectedClass.name !== selectedClass.id;
 	};
 
 	const getUniqueClass = (): any => {
@@ -72,16 +85,21 @@ export const StylePane = ({ isActive }: any) => {
 	};
 
 	const updateSelectedClassName = (name: string) => {
+		const selectedClass = getSelectedClass();
+
 		updateSelectedClass({
-			...getSelectedClass(),
+			...selectedClass,
 			name
 		});
 	};
 
 	const updateSelectedClassId = (id: string) => {
+		const selectedClass = getSelectedClass();
+
 		updateSelectedClass({
-			...getSelectedClass(),
-			id
+			...selectedClass,
+			id,
+			name: hasDescriptiveName() ? selectedClass.name : id
 		});
 		setSelectedStyleClassId(id);
 	};
@@ -94,6 +112,13 @@ export const StylePane = ({ isActive }: any) => {
 
 	const removeStyleClass = (styleClassId: string) => {
 		setStyleClasses(styleClasses.filter((sc: any) => sc.id !== styleClassId));
+	};
+
+	const setHasDescriptiveName = (hasName: boolean) => {
+		if (!hasName) {
+			updateSelectedClassName(getSelectedClass().id);
+		}
+		_setHasDescriptiveName(hasName);
 	};
 
 	return (
@@ -127,15 +152,6 @@ export const StylePane = ({ isActive }: any) => {
 						))
 					} <br />
 					<TextInput
-						labelText='Descriptive name'
-						helperText='Name that appears in tags and search'
-						value={getSelectedClass().name || ''}
-						disabled={!getSelectedClass().id}
-						onChange={(event: any) => {
-							updateSelectedClassName(event.currentTarget.value);
-						}}
-					/>
-					<TextInput
 						labelText='CSS selector'
 						helperText='Value used in development'
 						value={getSelectedClass().id || ''}
@@ -143,7 +159,27 @@ export const StylePane = ({ isActive }: any) => {
 						onChange={(event: any) => {
 							updateSelectedClassId(event.currentTarget.value);
 						}}
+						onBlur={() => {
+							updateSelectedClassId(kebabCase(getSelectedClass().id));
+						}}
 					/>
+					<Checkbox
+						id='has-descriptive-name-checkbox'
+						labelText='Add descriptive name'
+						disabled={!getSelectedClass().id}
+						checked={hasDescriptiveName()}
+						onChange={(event: any) => setHasDescriptiveName(event)} />
+					{
+						hasDescriptiveName() && <TextInput
+							labelText='Descriptive name'
+							helperText='Name that appears in tags and search'
+							value={getSelectedClass().name || ''}
+							disabled={!getSelectedClass().id}
+							onChange={(event: any) => {
+								updateSelectedClassName(event.currentTarget.value);
+							}}
+						/>
+					}
 					<TextArea
 						value={getSelectedClass().content || ''}
 						labelText={getSelectedClass().id || 'Select a class first'}
