@@ -162,6 +162,7 @@ export const StylePane = ({ isActive }: any) => {
 						onBlur={() => {
 							updateSelectedClassId(kebabCase(getSelectedClass().id));
 						}}
+						onFocus={(event: any) => event.target.select()}
 					/>
 					<Checkbox
 						id='has-descriptive-name-checkbox'
