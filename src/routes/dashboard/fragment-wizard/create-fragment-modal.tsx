@@ -12,7 +12,6 @@ import { initializeIds } from '../../../components';
 
 const createFragmentTiles = css`
 	display: flex;
-	margin-top: 30px;
 	margin-left: 15px;
 	margin-right: 15px;
 	flex-direction: row;
@@ -23,6 +22,8 @@ const createFragmentTiles = css`
 const createFragmentTileStyle = css`
 	width: 48%;
 	height: 200px;
+	margin-top: 25px;
+
 	.bx--tile {
 		height: 100%;
 	}
