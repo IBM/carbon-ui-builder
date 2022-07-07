@@ -208,18 +208,18 @@ export const AList = ({
 	...rest
 }: any) => {
 	return (
-			<AComponent
-			selected={selected}
-			headingCss={css`width: fit-content; min-width: 9rem;`}
-			componentObj={componentObj}
-			{...rest}>
-				<legend className={cx(css`margin-left: 3px;`, 'bx--label')}>
-					{componentObj.legendName}
-				</legend>
-				<OrderedList className={OrderedListStyle}>
-					{children}
-				</OrderedList>
-			</AComponent>
+		<AComponent
+		selected={selected}
+		headingCss={css`width: fit-content; min-width: 9rem;`}
+		componentObj={componentObj}
+		{...rest}>
+			<legend className={cx(css`margin-left: 3px;`, 'bx--label')}>
+				{componentObj.legendName}
+			</legend>
+			<OrderedList className={OrderedListStyle}>
+				{children}
+			</OrderedList>
+		</AComponent>
 	);
 };
 
