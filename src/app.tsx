@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	Route, BrowserRouter as Router, Routes
 } from 'react-router-dom';
@@ -15,6 +15,8 @@ import { NotificationContextProvider } from './context/notification-context';
 import { UIShell } from './components/ui-shell';
 import { css } from 'emotion';
 import { Help } from './routes/help';
+import { FragmentWizard, FragmentWizardModals } from './routes/dashboard/fragment-wizard/fragment-wizard';
+import { FragmentModal } from './routes/edit/fragment-modal';
 
 const app = css`
 	nav.bx--side-nav--expanded + div#edit-content {
@@ -28,17 +30,30 @@ const app = css`
 	}
 `;
 
-export const App = () => (
-	<Router basename='carbon-components-builder'>
+export const App = () => {
+	const [modalFragment, setModalFragment] = useState<any>(null);
+	const [displayWizard, setDisplayWizard] = useState(false);
+	// These are states which are shared amongst the three modals.
+	const [displayedModal, setDisplayedModal] = useState<FragmentWizardModals | null>(FragmentWizardModals.CREATE_FRAGMENT_MODAL);
+
+	return <Router basename='carbon-components-builder'>
 		<div className={app}>
 			<ErrorBoundary>
 				<GlobalStateContextProvider>
 					<NotificationContextProvider>
-						<UIShell />
-						<Notification />
 						<ModalContextProvider>
+							<UIShell
+								setDisplayedModal={setDisplayedModal}
+								displayWizard={displayWizard}
+								setDisplayWizard={setDisplayWizard} />
+							<Notification />
 							<Routes>
-								<Route path='/' element={<Dashboard />} />
+								<Route path='/' element={
+									<Dashboard
+										displayWizard={displayWizard}
+										setDisplayWizard={setDisplayWizard}
+										setModalFragment={setModalFragment} />
+								} />
 								<Route
 									path='/edit/:id'
 									element={<Edit />} />
@@ -47,6 +62,12 @@ export const App = () => (
 									element={<Help />} />
 								<Route path="*" element={<NotFound />} />
 							</Routes>
+							<FragmentWizard
+								displayedModal={displayedModal}
+								setDisplayedModal={setDisplayedModal}
+								shouldDisplay={displayWizard}
+								setShouldDisplay={setDisplayWizard} />
+							{modalFragment && <FragmentModal fragment={modalFragment} />}
 						</ModalContextProvider>
 					</NotificationContextProvider>
 				</GlobalStateContextProvider>
@@ -55,5 +76,5 @@ export const App = () => (
 				<a href="https://github.com/IBM/carbon-components-builder">Fork on GitHub</a>
 			</span>
 		</div>
-	</Router>
-);
+	</Router>;
+};

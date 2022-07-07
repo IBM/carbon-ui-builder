@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
 	HeaderMenu,
 	HeaderMenuItem,
@@ -7,15 +7,42 @@ import {
 	Header as ShellHeader,
 	SkipToContent
 } from 'carbon-components-react';
+import {
+	DocumentAdd16,
+	Download16,
+	DocumentImport16,
+	DocumentExport16
+} from '@carbon/icons-react';
 import { css } from 'emotion';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { FragmentWizardModals } from '../routes/dashboard/fragment-wizard/fragment-wizard';
+import { saveBlob } from '../utils/file-tools';
+import { GlobalStateContext } from '../context';
+import { ModalActionType, ModalContext } from '../context/modal-context';
+import { getEditScreenParams } from '../utils/fragment-tools';
 
-export const Header = () => {
+export const Header = ({
+	setDisplayedModal,
+	displayWizard,
+	setDisplayWizard
+}: any) => {
 	const navigate: NavigateFunction = useNavigate();
+	const globalState = useContext(GlobalStateContext);
+	const [, dispatchModal] = useContext(ModalContext);
+	const params = getEditScreenParams();
+	const fragment = globalState?.fragments.find((fragment: any) => fragment.id === params?.id);
 
 	const headerName = css`
 		&:hover {
 			cursor: pointer;
+		}
+
+		.bx--text-truncate--end {
+			display: inline-flex;
+
+			svg {
+				margin-right: 0.5rem;
+			}
 		}
 	`;
 
@@ -41,6 +68,47 @@ export const Header = () => {
 				onClick={() => navigate('/')}>
 					Home
 				</HeaderMenuItem>
+
+				{/*         FILE MENU        */}
+				<HeaderMenu
+				aria-label='file'
+				menuLinkName='File'
+				className={headerName}>
+					<HeaderMenuItem
+					className={headerName}
+					onClick={() => setDisplayWizard(!displayWizard)}>
+						<DocumentAdd16 /> New
+					</HeaderMenuItem>
+					{
+						params?.id && fragment?.data &&
+						<HeaderMenuItem
+						className={headerName}
+						onClick={() => saveBlob(new Blob([JSON.stringify(fragment.data, null, 2)]), `${fragment.title}.json`)}>
+							<Download16 /> Save as .json
+						</HeaderMenuItem>
+					}
+					{
+						params?.id && fragment?.data &&
+						<HeaderMenuItem
+						className={headerName}
+						onClick={() => dispatchModal({
+							type: ModalActionType.setExportModal,
+							id: fragment.id
+						})}>
+							<DocumentExport16 /> Export
+						</HeaderMenuItem>
+					}
+					<HeaderMenuItem
+					className={headerName}
+					onClick={() => {
+						setDisplayWizard(!displayWizard);
+						setDisplayedModal(FragmentWizardModals.IMPORT_JSON_MODAL);
+					}}>
+						<DocumentImport16 /> Open .json
+					</HeaderMenuItem>
+				</HeaderMenu>
+
+				{/*         HELP MENU        */}
 				<HeaderMenu
 				aria-label='help'
 				menuLinkName='Help'

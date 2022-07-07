@@ -4,9 +4,9 @@ import { Button, TextInput } from 'carbon-components-react';
 import {
 	Checkmark16,
 	Copy16,
-	Delete16,
+	TrashCan16,
 	Edit16,
-	Export16,
+	DocumentExport16,
 	Undo16,
 	Redo16,
 	ChevronLeft24
@@ -248,13 +248,13 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 								type: ModalActionType.setDeletionModal,
 								id: fragment.id
 							})}>
-							<Delete16 className={actionIconStyle} />
+							<TrashCan16 className={actionIconStyle} />
 						</Button>
 						<Button
 							kind='primary'
 							aria-label='Export fragment'
 							title='Export fragment'
-							renderIcon={Export16}
+							renderIcon={DocumentExport16}
 							onClick={() => dispatchModal({
 								type: ModalActionType.setExportModal,
 								id: fragment.id
