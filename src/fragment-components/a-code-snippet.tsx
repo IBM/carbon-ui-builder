@@ -3,7 +3,7 @@ import { Dropdown, TextInput, CodeSnippet } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
 import { ComponentInfo } from '.';
-import Editor from '@monaco-editor/react';
+import { ControlledEditor } from '@monaco-editor/react';
 import image from './../assets/component-icons/code-snippet.svg';
 import { nameStringToVariableString } from '../utils/fragment-tools';
 
@@ -31,25 +31,26 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 				language: event.selectedItem.id
 		})} />
 		<label className="bx--label">Code</label>
-		<Editor
-			language={selectedComponent.language} height="25vh"
+		<ControlledEditor
+			language={selectedComponent.language} height="10rem"
 			value={selectedComponent.code}
-			onChange={(event: any) => {
+			options= {{ quickSuggestions: false }}
+			onChange= {(_, value: any) => {
 				setComponent({
 				...selectedComponent,
-				code: event
+				code: value
 			});
 		}} >
-		</Editor>
+		</ControlledEditor>
 		<Dropdown
 			label='Variant selector'
 			titleText='Variant selector'
 			items={variantItems}
-			initialSelectedItem={variantItems.find(item => item.id === selectedComponent.varient)}
+			initialSelectedItem={variantItems.find(item => item.id === selectedComponent.variant)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
-				varient: event.selectedItem.id
+				variant: event.selectedItem.id
 		})} />
 	</>;
 };
@@ -77,7 +78,7 @@ export const ACodeSnippet = ({
 		rejectDrop={true}
 		{...rest}>
 			<CodeSnippet
-			type={componentObj.varient}
+			type={componentObj.variant}
 			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 				{componentObj.code}
 			</CodeSnippet>
@@ -95,14 +96,14 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'code-snippet',
 		label: 'CodeSnippet',
-		varient: 'single',
+		variant: 'single',
 		code: '',
 		language: 'html'
 	},
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Type = "${json.varient}"
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Type = "${json.variant}"
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Code = ${JSON.stringify(json.code)}`,
 			outputs: () => '',
 			imports: ['CodeSnippetModule'],
@@ -117,7 +118,7 @@ export const componentInfo: ComponentInfo = {
 			imports: ['CodeSnippet'],
 			code: ({ json }) => {
 				return `<CodeSnippet
-					type="${json.varient}">
+					type="${json.variant}">
 						{${JSON.stringify(json.code)}}
 					</CodeSnippet>`;
 			}
