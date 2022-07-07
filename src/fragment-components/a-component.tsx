@@ -84,8 +84,25 @@ export const AComponent = ({
 	const [showDragOverIndicator, setShowDragOverIndicator] = useState(false);
 	const holderRef = useRef(null as any);
 
+	const shouldRejectDrop = (event: any) => {
+		if (!rejectDrop) {
+			return false;
+		}
+
+		if (typeof rejectDrop === 'boolean' && rejectDrop) {
+			return true;
+		}
+
+		if (typeof rejectDrop === 'function') {
+			const dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
+			return rejectDrop(dragObj);
+		}
+
+		return !!rejectDrop;
+	};
+
 	const onDrop = (event: any) => {
-		if (rejectDrop) {
+		if (shouldRejectDrop(event)) {
 			return;
 		}
 		event.stopPropagation();
@@ -119,7 +136,7 @@ export const AComponent = ({
 			type: 'move'
 		})}
 		onDragEnter={(event: any) => {
-			if (rejectDrop) {
+			if (shouldRejectDrop(event)) {
 				return true;
 			}
 			event.stopPropagation();
@@ -127,7 +144,7 @@ export const AComponent = ({
 			setShowDragOverIndicator(true);
 		}}
 		onDragLeave={(event: any) => {
-			if (rejectDrop) {
+			if (shouldRejectDrop(event)) {
 				return true;
 			}
 			event.stopPropagation();
@@ -135,7 +152,7 @@ export const AComponent = ({
 			setShowDragOverIndicator(false);
 		}}
 		onDragOver={(event) => {
-			if (rejectDrop) {
+			if (shouldRejectDrop(event)) {
 				return true;
 			}
 			event.stopPropagation();
