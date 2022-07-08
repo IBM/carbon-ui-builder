@@ -81,11 +81,11 @@ export const AGrid = ({
 	);
 };
 
-const getCellAttributeString = (cell: any, sizeShort: string, sizeLong: string) => {
+const getCellAttributeStringReact = (cell: any, sizeShort: string, sizeLong: string) => {
 	const span = cell[`${sizeLong}Span`];
 	const offset = cell[`${sizeLong}Offset`];
 
-	if (!span && ! offset) {
+	if (!span && !offset) {
 		return '';
 	}
 
@@ -100,14 +100,52 @@ const getCellAttributeString = (cell: any, sizeShort: string, sizeLong: string) 
 	return `${sizeShort}={${!offset ? span : spanAndOffset}}`;
 };
 
-const getCellParamsString = (cell: any) => {
+const getCellParamsStringReact = (cell: any) => {
 	return `
-		${getCellAttributeString(cell, 'sm', 'small')}
-		${getCellAttributeString(cell, 'md', 'medium')}
-		${getCellAttributeString(cell, 'lg', 'large')}
-		${getCellAttributeString(cell, 'xlg', 'xLarge')}
-		${getCellAttributeString(cell, 'max', 'max')}
+		${getCellAttributeStringReact(cell, 'sm', 'small')}
+		${getCellAttributeStringReact(cell, 'md', 'medium')}
+		${getCellAttributeStringReact(cell, 'lg', 'large')}
+		${getCellAttributeStringReact(cell, 'xlg', 'xLarge')}
+		${getCellAttributeStringReact(cell, 'max', 'max')}
 	`;
+};
+
+const getCellAttributeStringAngular = (cell: any, sizeShort: string, sizeLong: string, attributeType: string) => {
+	const attribute = cell[`${sizeLong}${attributeType}`];
+
+	if (!attribute) {
+		return '';
+	}
+
+	return `'${sizeShort}': ${attribute}`;
+};
+
+const getColumnNumbersString = (cell: any) => {
+	if (!(cell.smallSpan || cell.mediumSpan || cell.largeSpan || cell.xLargeSpan || cell.maxSpan)) {
+		return ''; // no offset
+	}
+
+	return `[columnNumbers]="{
+		${getCellAttributeStringAngular(cell, 'sm', 'small', 'Span')}
+		${getCellAttributeStringAngular(cell, 'md', 'medium', 'Span')}
+		${getCellAttributeStringAngular(cell, 'lg', 'large', 'Span')}
+		${getCellAttributeStringAngular(cell, 'xlg', 'xLarge', 'Span')}
+		${getCellAttributeStringAngular(cell, 'max', 'max', 'Span')}
+	}"`;
+};
+
+const getOffsetsString = (cell: any) => {
+	if (!(cell.smallOffset || cell.mediumOffset || cell.largeOffset || cell.xLargeOffset || cell.maxOffset)) {
+		return ''; // no offset
+	}
+
+	return `[offsets]="{
+		${getCellAttributeStringAngular(cell, 'sm', 'small', 'Offset')}
+		${getCellAttributeStringAngular(cell, 'md', 'medium', 'Offset')}
+		${getCellAttributeStringAngular(cell, 'lg', 'large', 'Offset')}
+		${getCellAttributeStringAngular(cell, 'xlg', 'xLarge', 'Offset')}
+		${getCellAttributeStringAngular(cell, 'max', 'max', 'Offset')}
+	}"`;
 };
 
 export const componentInfo: ComponentInfo = {
@@ -143,7 +181,8 @@ export const componentInfo: ComponentInfo = {
 			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<div ibmGrid ${angularClassNamesFromComponentObj(json)}>
 					${json.items.map((row: any) => `<div ibmRow ${angularClassNamesFromComponentObj(row)}>
-						${row.items.map((cell: any) => `<div ibmCol ${angularClassNamesFromComponentObj(cell)}>
+						${row.items.map((cell: any) =>
+							`<div ibmCol ${getColumnNumbersString(cell)} ${getOffsetsString(cell)} ${angularClassNamesFromComponentObj(cell)}>
 								${jsonToTemplate(cell, fragments)}
 						</div>`).join('\n')}
 					</div>`).join('\n')}
@@ -155,7 +194,7 @@ export const componentInfo: ComponentInfo = {
 			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<Grid ${reactClassNamesFromComponentObj(json)}>
 					${json.items.map((row: any) => `<Row ${reactClassNamesFromComponentObj(row)}>
-						${row.items.map((cell: any) => `<Column ${getCellParamsString(cell)} ${reactClassNamesFromComponentObj(cell)}>
+						${row.items.map((cell: any) => `<Column ${getCellParamsStringReact(cell)} ${reactClassNamesFromComponentObj(cell)}>
 								${jsonToTemplate(cell, fragments)}
 						</Column>`).join('\n')}
 					</Row>`).join('\n')}
