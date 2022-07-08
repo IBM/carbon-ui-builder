@@ -10,6 +10,8 @@ import { actionIconStyle } from '../routes';
 import { stateWithoutComponent } from './fragment';
 
 const fragmentLayoutStyle = css`
+	margin-left: 1px;
+
 	.iot--list--page {
 		display: none;
 	}
