@@ -77,6 +77,7 @@ export const AComponent = ({
 	selected,
 	remove,
 	headingCss,
+	handleDrop,
 	className
 }: any) => {
 	// TODO use fragments context instead of passing in `remove`?
@@ -108,6 +109,11 @@ export const AComponent = ({
 		event.stopPropagation();
 		event.preventDefault();
 		setShowDragOverIndicator(false);
+
+		if (handleDrop) {
+			handleDrop(event);
+			return;
+		}
 
 		const dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
 
