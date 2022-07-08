@@ -238,6 +238,15 @@ export const AColumn = ({
 			componentObj={componentObj}
 			className={css`display: block; height: 100%;`}
 			selected={selected}
+			rejectDrop={(dragObj: any) => {
+				// don't allow dropping columns directly into other columns
+				// row drop handler will take over
+				if (dragObj.component.type === 'column') {
+					return true;
+				}
+
+				return false;
+			}}
 			{...rest}>
 				{
 					children && children.length > 0 ? children : <APlaceholder componentObj={componentObj} select={rest.select} />
