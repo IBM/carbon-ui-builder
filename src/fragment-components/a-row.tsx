@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
 	Row,
 	Checkbox
@@ -9,6 +9,7 @@ import { getParentComponent, updatedState } from '../components';
 import { css, cx } from 'emotion';
 import { useFragment } from '../context';
 import { ComponentInfo } from '.';
+import { getDropIndex } from '../routes/edit/tools';
 
 export const ARowSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -61,6 +62,7 @@ export const ARow = ({
 	...rest
 }: any) => {
 	const [fragment, setFragment] = useFragment();
+	const holderRef = useRef(null as any);
 
 	const parentComponent = getParentComponent(fragment.data, componentObj);
 
@@ -88,7 +90,38 @@ export const ARow = ({
 	return (
 		// position: relative doesn't seem to affect the grid layout and it's needed atm
 		// to position right add icon
-		<AComponent componentObj={componentObj} selected={selected} {...rest}>
+		<AComponent
+		componentObj={componentObj}
+		selected={selected}
+		handleDrop={(event: any) => {
+			const dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
+
+			const dropIndex = getDropIndex(event, holderRef.current);
+			// if type is column, drop in place in row,
+			// if it's anything else, drop in closest column
+			if (dragObj.component.type === 'column') {
+				setFragment({
+					...fragment,
+					data: updatedState(
+						fragment.data,
+						dragObj,
+						componentObj.id,
+						dropIndex
+					)
+				});
+			} else {
+				setFragment({
+					...fragment,
+					data: updatedState(
+						fragment.data,
+						dragObj,
+						componentObj.items[dropIndex].id,
+						0
+					)
+				});
+			}
+		}}
+		{...rest}>
 			<Row
 			className={cx(
 				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
@@ -108,7 +141,9 @@ export const ARow = ({
 						addRow(1);
 					}} className={iconStyle}/>
 				</span>
-				{children}
+				<section ref={holderRef} className={css`display: contents`}>
+					{children}
+				</section>
 			</Row>
 		</AComponent>
 	);
