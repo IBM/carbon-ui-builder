@@ -36,7 +36,7 @@ export const App = () => {
 	// These are states which are shared amongst the three modals.
 	const [displayedModal, setDisplayedModal] = useState<FragmentWizardModals | null>(FragmentWizardModals.CREATE_FRAGMENT_MODAL);
 
-	return <Router basename='carbon-components-builder'>
+	return <Router basename='carbon-ui-builder'>
 		<div className={app}>
 			<ErrorBoundary>
 				<GlobalStateContextProvider>
@@ -73,7 +73,7 @@ export const App = () => {
 				</GlobalStateContextProvider>
 			</ErrorBoundary>
 			<span id="forkongithub">
-				<a href="https://github.com/IBM/carbon-components-builder">Fork on GitHub</a>
+				<a href="https://github.com/IBM/carbon-ui-builder">Fork on GitHub</a>
 			</span>
 		</div>
 	</Router>;

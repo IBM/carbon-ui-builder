@@ -2,7 +2,7 @@
   "name": "carbon-ui-builder",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ibm.github.io/carbon-components-builder/",
+  "homepage": "https://ibm.github.io/carbon-ui-builder/",
   "dependencies": {
     "@carbon/colors": "10.7.2",
     "@carbon/icons-react": "10.49.0",

@@ -99,7 +99,7 @@ export const getAllFragmentStyleClasses = (fragment: any, fragments: any[] = [])
 };
 
 export const getEditScreenParams = () => {
-	return matchPath('/edit/:id', window.location.pathname.split('/carbon-components-builder').join(''))?.params;
+	return matchPath('/edit/:id', window.location.pathname.split('/carbon-ui-builder').join(''))?.params;
 };
 
 export const hasComponentStyleClasses = (componentObj: any) => {

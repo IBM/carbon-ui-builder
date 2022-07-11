@@ -13,7 +13,7 @@ and incorporate in the existing product frontend.
 
 No coding required.
 
-[See it in action!](https://ibm.github.io/carbon-components-builder/)
+[See it in action!](https://ibm.github.io/carbon-ui-builder/)
 
 ## Privacy
 
