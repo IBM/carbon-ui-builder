@@ -244,7 +244,8 @@ export const componentInfo: ComponentInfo = {
 				value:  'Item',
 				items: []
 			}
-		]
+		],
+		cssClasses: [{id: 'margin-left', content: `margin-left: 30px;`}]
 	},
 	image: image,
 	hideFromElementsPane: false,
