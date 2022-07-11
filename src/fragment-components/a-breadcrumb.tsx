@@ -72,21 +72,20 @@ export const ABreadcumbSettingsUI = ({ selectedComponent, setComponent }: any) =
 		}}
 	/>
 	<DraggableTileList
-			dataList={[...selectedComponent.items]}
-			setDataList={updateStepList}
-			updateItem={handleStepUpdate}
-			defaultObject={{
-				itemText: 'New Option',
-				href: '/'
-			}}
-			template={template} />
+		dataList={[...selectedComponent.items]}
+		setDataList={updateStepList}
+		updateItem={handleStepUpdate}
+		defaultObject={{
+			itemText: 'New Option',
+			href: '/'
+		}}
+		template={template} />
 	</>;
 
 };
 
 export const ABreadcrumbCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
-		<TextInput
+	return <TextInput
 			value={selectedComponent.codeContext?.name}
 			labelText='Input name'
 			onChange={(event: any) => {
@@ -98,12 +97,10 @@ export const ABreadcrumbCodeUI = ({ selectedComponent, setComponent }: any) => {
 					}
 				});
 			}}
-		/>
-	</>;
+		/>;
 };
 
 export const ABreadcrumb = ({
-	children,
 	componentObj,
 	...rest
 }: any) => {
@@ -113,16 +110,16 @@ export const ABreadcrumb = ({
 		rejectDrop={true}
 		{...rest}>
 			<Breadcrumb
-				noTrailingSlash={componentObj.noTrailingSlash}
-				className={cx(preventCheckEvent, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}>
-				{
-					componentObj.items.map((step: any, index: number) => (
-						<BreadcrumbItem
-							href={step.href}
-							key={index}>
-								{step.itemText}
-						</BreadcrumbItem>))
-				}
+			noTrailingSlash={componentObj.noTrailingSlash}
+			className={cx(preventCheckEvent, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}>
+			{
+				componentObj.items.map((step: any, index: number) => (
+					<BreadcrumbItem
+						href={step.href}
+						key={index}>
+							{step.itemText}
+					</BreadcrumbItem>))
+			}
 			</Breadcrumb>
 		</AComponent>
 	);
@@ -132,7 +129,7 @@ export const componentInfo: ComponentInfo = {
 	component: ABreadcrumb,
 	settingsUI: ABreadcumbSettingsUI,
 	codeUI: ABreadcrumbCodeUI,
-	keywords: ['link'],
+	keywords: ['breadcrumb'],
 	name: 'Breadcrumb',
 	type: 'breadcrumb',
 	defaultComponentObj: {
@@ -148,9 +145,8 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `
-			@Input() ${nameStringToVariableString(json.codeContext?.name)}noTrailingSlash = ${json.noTrailingSlash};`,
-			outputs: (_) => ``,
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}noTrailingSlash = ${json.noTrailingSlash};`,
+			outputs: (_) => '',
 			imports: ['BreadcrumbModule'],
 			code: ({ json }) => {
 				return `<ibm-breadcrumb
@@ -178,7 +174,7 @@ export const componentInfo: ComponentInfo = {
 						</BreadcrumbItem>`
 						)).join('\n')}
 					</Breadcrumb>`;
-				}
+			}
 		}
 	}
 };
