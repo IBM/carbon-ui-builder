@@ -1,6 +1,6 @@
 {
-  "short_name": "Carbon Components Builder",
-  "name": "Carbon Components Builder - UI Fragment Composer",
+  "short_name": "Carbon UI Builder",
+  "name": "Carbon UI Builder - UI Fragment Composer",
   "icons": [
     {
       "src": "favicon.ico",

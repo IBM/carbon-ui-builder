@@ -60,7 +60,7 @@ export const Dashboard = ({ displayWizard, setDisplayWizard, setModalFragment }:
 	}, []);
 
 	useEffect(() => {
-		document.title = 'Carbon Components Builder • UI Fragments Composer';
+		document.title = 'Carbon UI Builder • UI Fragments Composer';
 	}, []);
 
 	const filterFragments = (fragments: any) => fragments.filter((fragment: any) => fragment?.title?.toLowerCase()

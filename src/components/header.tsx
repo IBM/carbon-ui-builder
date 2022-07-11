@@ -51,16 +51,16 @@ export const Header = ({
 	`;
 
 	return (
-		<ShellHeader aria-label="IBM Carbon Components Builder" role='banner' tabIndex={0}>
+		<ShellHeader aria-label="IBM Carbon UI Builder" role='banner' tabIndex={0}>
 			<SkipToContent />
 			<HeaderName
 				prefix="IBM"
 				tabIndex={0}
-				title='Carbon Components Builder home'
+				title='Carbon UI Builder home'
 				className={headerName}
 				onClick={() => navigate('/')}
 				onKeyDown={(event: any) => event.key === 'Enter' && navigate('/')}>
-				Carbon Components Builder {process.env.NODE_ENV === 'development' ? 'Dev' : ''}
+				Carbon UI Builder {process.env.NODE_ENV === 'development' ? 'Dev' : ''}
 			</HeaderName>
 			<HeaderNavigation className={headerNavStyle}>
 				<HeaderMenuItem
