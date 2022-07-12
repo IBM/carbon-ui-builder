@@ -17,7 +17,8 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 		{ id: 'json', text: 'JSON' },
 		{ id: 'html', text: 'HTML' },
 		{ id: 'css', text: 'CSS' },
-		{ id: 'javascript', text: 'Javascript' }
+		{ id: 'javascript', text: 'JavaScript' },
+		{ id: 'typescript', text: 'TypeScript' }
 	];
 	return <>
 		<Dropdown
