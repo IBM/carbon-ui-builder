@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/carbon-ui-builder/static/css/main.75e57b13.css",
-    "main.js": "/carbon-ui-builder/static/js/main.cde29d4d.js",
+    "main.js": "/carbon-ui-builder/static/js/main.1b3646f5.js",
     "static/media/dashboard-empty-state.svg": "/carbon-ui-builder/static/media/dashboard-empty-state.68a2dbad53e66c2560c18c7cae63b988.svg",
     "static/media/chart-404.svg": "/carbon-ui-builder/static/media/chart-404.0cbc4226f4ef1a83fbdfe88bf5f398d3.svg",
     "static/media/tile-clickable.svg": "/carbon-ui-builder/static/media/tile-clickable.dc9f4bb46dc5a7a320bb0b1cf8f6354c.svg",
@@ -26,6 +26,7 @@
     "static/media/tile-selectable.svg": "/carbon-ui-builder/static/media/tile-selectable.b8c9ac53c42a2ce3845e7d8ea0d5b36d.svg",
     "static/media/progress-indicator.svg": "/carbon-ui-builder/static/media/progress-indicator.444a6e25448fed4a61c90ddb1fdf4b00.svg",
     "static/media/tag.svg": "/carbon-ui-builder/static/media/tag.4420658244edc54ef6419e8f497c29da.svg",
+    "static/media/code-snippet.svg": "/carbon-ui-builder/static/media/code-snippet.e5805ed7dc9382e16cedd19484c1e7cd.svg",
     "static/media/loading.svg": "/carbon-ui-builder/static/media/loading.bc2d5fd98975e58b042ba634c1518c90.svg",
     "static/media/accordion-item.svg": "/carbon-ui-builder/static/media/accordion-item.79af529acde3999cf74cd64f7004cc7a.svg",
     "static/media/introduction.md": "/carbon-ui-builder/static/media/introduction.fa70059dea0400525b8e.md",
@@ -34,10 +35,10 @@
     "static/media/tile.svg": "/carbon-ui-builder/static/media/tile.faa170c0e2c6e37d9135ee12f6fc8e41.svg",
     "static/media/hotkeys.md": "/carbon-ui-builder/static/media/hotkeys.c48756993ac57912057b.md",
     "main.75e57b13.css.map": "/carbon-ui-builder/static/css/main.75e57b13.css.map",
-    "main.cde29d4d.js.map": "/carbon-ui-builder/static/js/main.cde29d4d.js.map"
+    "main.1b3646f5.js.map": "/carbon-ui-builder/static/js/main.1b3646f5.js.map"
   },
   "entrypoints": [
     "static/css/main.75e57b13.css",
-    "static/js/main.cde29d4d.js"
+    "static/js/main.1b3646f5.js"
   ]
 }
