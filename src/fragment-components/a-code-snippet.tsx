@@ -30,7 +30,7 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 				...selectedComponent,
 				language: event.selectedItem.id
 		})} />
-		<label className="bx--label">Code</label>
+		<label className='bx--label'>Code</label>
 		<ControlledEditor
 			language={selectedComponent.language} height="10rem"
 			value={selectedComponent.code}
@@ -40,8 +40,7 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 				...selectedComponent,
 				code: value
 			});
-		}} >
-		</ControlledEditor>
+		}} />
 		<Dropdown
 			label='Variant selector'
 			titleText='Variant selector'
