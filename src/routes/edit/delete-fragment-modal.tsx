@@ -15,7 +15,7 @@ export const DeleteFragmentModal = ({ id }: any) => {
 
 	const deleteFragment = () => {
 		toggleFragmentVisibility(id, true);
-		navigate('/');
+		dispatchModal({ type: ModalActionType.closeModal });
 		dispatchNotification({
 			type: NotificationActionType.ADD_NOTIFICATION,
 			data: {
@@ -29,7 +29,7 @@ export const DeleteFragmentModal = ({ id }: any) => {
 				}
 			}
 		});
-		dispatchModal({ type: ModalActionType.closeModal });
+		navigate('/');
 	};
 
 	return (

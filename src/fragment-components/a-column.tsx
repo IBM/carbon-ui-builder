@@ -11,6 +11,7 @@ import { AComponent } from './a-component';
 import { useFragment } from '../context';
 import { getParentComponent, updatedState } from '../components';
 import { ComponentInfo } from '.';
+import { APlaceholder } from './a-placeholder';
 
 const helpIconStyle = css`
 	color: #525252;
@@ -187,7 +188,7 @@ export const AColumn = ({
 				type: 'insert',
 				component: {
 					type: 'column',
-					items: [{ type: 'text', text: 'New cell' }]
+					items: []
 				}
 			},
 			parentComponent.id,
@@ -235,10 +236,12 @@ export const AColumn = ({
 			</span>
 			<AComponent
 			componentObj={componentObj}
-			className={css`display: block;`}
+			className={css`display: block; height: 100%;`}
 			selected={selected}
 			{...rest}>
-				{children}
+				{
+					children && children.length > 0 ? children : <APlaceholder componentObj={componentObj} select={rest.select} />
+				}
 			</AComponent>
 		</Column>
 	);

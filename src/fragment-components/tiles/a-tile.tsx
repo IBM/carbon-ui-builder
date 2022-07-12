@@ -14,6 +14,7 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
+import { APlaceholder } from '../a-placeholder';
 
 export const ATileSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -65,7 +66,9 @@ export const ATile = ({
 			onDrop={onDrop}
 			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
 			light={componentObj.light}>
-				{children}
+				{
+					children && children.length > 0 ? children : <APlaceholder componentObj={componentObj} select={rest.select} />
+				}
 			</Tile>
 		</AComponent>
 	);
@@ -79,9 +82,7 @@ export const componentInfo: ComponentInfo = {
 	type: 'tile',
 	defaultComponentObj: {
 		type: 'tile',
-		items: [
-			{ type: 'text', text: 'A simple tile' }
-		]
+		items: []
 	},
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <ATile
 		componentObj={componentObj}

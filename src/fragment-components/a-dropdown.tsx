@@ -100,7 +100,7 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 			label='Size'
 			titleText='Size'
 			items={sizeItems}
-			initialSelectedItem={sizeItems.find(item => item.id === selectedComponent.size)}
+			selectedItem={sizeItems.find(item => item.id === selectedComponent.size)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
@@ -110,7 +110,7 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 			label='Direction'
 			titleText='Dropdown direction'
 			items={directionItems}
-			initialSelectedItem={directionItems.find(item => item.id === selectedComponent.direction)}
+			selectedItem={directionItems.find(item => item.id === selectedComponent.direction)}
 			itemToString={(item: any) => (item ? item.id : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
@@ -120,7 +120,7 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 			label='Feedback'
 			titleText='Selection feedback'
 			items={selectionFeedbackItems}
-			initialSelectedItem={selectionFeedbackItems.find(item => item.id === selectedComponent.selectionFeedback)}
+			selectedItem={selectionFeedbackItems.find(item => item.id === selectedComponent.selectionFeedback)}
 			itemToString={(item: any) => (item ? item.id : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
@@ -336,7 +336,7 @@ export const componentInfo: ComponentInfo = {
 					helperText="${json.helperText}"
 					label="${json.placeholder}"
 					${json.isInline ? 'type="inline"': ''}
-					${json.selectionFeedback !== 'top-after-reopen' && json.isMulti ? `selectionFeedback="${json.selectionFeedback}` : ''}
+					${json.selectionFeedback !== 'top-after-reopen' && json.isMulti ? `selectionFeedback="${json.selectionFeedback}"` : ''}
 					${json.hideLabel !== undefined ? `hideLabel={${json.hideLabel}}` : ''}
 					${json.direction !== 'bottom' ? `direction="${json.direction}"` : ''}
 					${json.light ? `light="${json.light}"` : ''}

@@ -3,8 +3,9 @@ import domtoimage from 'dom-to-image';
 import ReactDOM from 'react-dom';
 import { Fragment } from '../components';
 import { camelCase, kebabCase, upperFirst } from 'lodash';
+import { matchPath } from 'react-router-dom';
 
-const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+export const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export interface RenderProps {
 	id: string;
@@ -61,7 +62,7 @@ export const getAllComponentStyleClasses = (componentObj: any, fragments: any[])
 		};
 
 		if (co.type === 'fragment') {
-			const fragment = fragments.find(f => f.id === co.id);
+			const fragment = fragments.find(f => f.id === co.fragmentId);
 
 			styleClasses = {
 				...styleClasses,
@@ -95,6 +96,10 @@ export const getAllFragmentStyleClasses = (fragment: any, fragments: any[] = [])
 		...getAllComponentStyleClasses(fragment.data, fragments)
 	};
 	return Object.values(allClasses);
+};
+
+export const getEditScreenParams = () => {
+	return matchPath('/edit/:id', window.location.pathname.split('/carbon-components-builder').join(''))?.params;
 };
 
 export const hasComponentStyleClasses = (componentObj: any) => {
@@ -164,6 +169,14 @@ export const getFragmentDuplicate = (fragments: any, fragment: any, overrides = 
 	return { ...fragmentCopy, ...overrides };
 };
 
+export const getUrlFromBlob = async (blob: any) => {
+	return new Promise((resolve) => {
+		const reader = new FileReader();
+		reader.readAsDataURL(blob ? blob : new Blob());
+		reader.onloadend = () => resolve(reader.result ? reader.result.toString() : '');
+	});
+};
+
 export const getFragmentPreviewUrl = async (fragment: any) => {
 	const renderProps: RenderProps = {
 		id: fragment.id,
@@ -178,11 +191,7 @@ export const getFragmentPreviewUrl = async (fragment: any) => {
 	};
 
 	const imageBlob = await getFragmentPreview(fragment, renderProps);
-	return new Promise((resolve) => {
-		const reader = new FileReader();
-		reader.readAsDataURL(imageBlob ? imageBlob : new Blob());
-		reader.onloadend = () => resolve(reader.result ? reader.result.toString() : '');
-	});
+	return getUrlFromBlob(imageBlob);
 };
 
 export const reactClassNamesFromComponentObj = (componentObj: any) =>

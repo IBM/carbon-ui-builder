@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import {
 	Accordion,
 	AccordionItem,
-	TextInput,
 	Checkbox,
 	TooltipDefinition
 } from 'carbon-components-react';
@@ -12,14 +11,13 @@ import { getSelectedComponent, updatedState } from '../../components/fragment';
 import { allComponents } from '../../fragment-components';
 import { SelectedComponentBreadcrumbs } from './selected-component-breadcrumbs';
 import { css, cx } from 'emotion';
-import { FragmentLayers } from '../../components/fragment-layers';
+import { FragmentLayoutWidget } from '../../components/fragment-layout-widget';
 import { GlobalStateContext } from '../../context';
 
 const styleContextPaneStyle = css`
 .bx--form-item.bx--checkbox-wrapper {
 	display: inline-flex;
-}
-`;
+}`;
 
 const showComponentSettingsUI = (selectedComponent: any, setComponent: any) => {
 	for (const component of Object.values(allComponents)) {
@@ -85,17 +83,6 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 					}
 					{
 						!selectedComponent && <>
-							<TextInput
-								id='fragmentName'
-								labelText='Fragment name'
-								defaultValue={fragment.title}
-								onChange={(event: any) => setFragment({
-									...fragment,
-									title: event.target.value
-								})}/>
-
-							<br />
-
 							<Checkbox
 								id='setFragmentAsTemplate'
 								checked={fragment.labels && fragment.labels.includes('template')}
@@ -164,12 +151,13 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 					}
 				</AccordionItem>
 				<AccordionItem
-				title='Layers'
-				open={settings.contextPane?.settings?.fragmentLayersAccordionOpen}
+				title='Layout'
+				className='layout-widget'
+				open={settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen}
 				onHeadingClick={() => updateContextPaneSettings({
-					fragmentLayersAccordionOpen: !settings.contextPane?.settings?.fragmentLayersAccordionOpen
+					fragmentLayoutWidgetAccordionOpen: !settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen
 				})}>
-					<FragmentLayers fragment={fragment} setFragment={setFragment} />
+					<FragmentLayoutWidget fragment={fragment} setFragment={setFragment} />
 				</AccordionItem>
 			</Accordion>
 		</div>

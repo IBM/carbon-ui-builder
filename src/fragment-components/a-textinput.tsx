@@ -14,12 +14,18 @@ export const ATextInputSettingsUI = ({ selectedComponent, setComponent }: any) =
 		{ id: 'password', text: 'Password' }
 	];
 
+	const sizeItems = [
+		{ id: 'sm', text: 'Small' },
+		{ id: 'md', text: 'Medium' },
+		{ id: 'lg', text: 'Large' }
+	];
+
 	return <>
 		<Dropdown
 			label='Type'
 			titleText='Type'
 			items={typeItems}
-			initialSelectedItem={typeItems.find(item => item.id === selectedComponent.inputType)}
+			selectedItem={typeItems.find(item => item.id === selectedComponent.inputType)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
@@ -35,6 +41,16 @@ export const ATextInputSettingsUI = ({ selectedComponent, setComponent }: any) =
 				});
 			}}
 		/>
+		<Dropdown
+			label='Size'
+			titleText='Size'
+			items={sizeItems}
+			selectedItem={sizeItems.find(item => item.id === selectedComponent.size) || sizeItems[1]}
+			itemToString={(item: any) => (item ? item.text : '')}
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				size: event.selectedItem.id
+		})} />
 		<TextInput
 			value={selectedComponent.helperText}
 			labelText='Helper text'
@@ -98,11 +114,23 @@ export const ATextInput = ({
 		rejectDrop={true}
 		{...rest}>
 			<TextInput
+				id={componentObj.id}
 				type={componentObj.inputType}
 				labelText={componentObj.label}
 				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
-				{...componentObj}
-				{...rest} />
+				defaultValue={componentObj.defaultValue}
+				disabled={componentObj.disabled}
+				helperText={componentObj.helperText}
+				hideLabel={componentObj.hideLabel}
+				inline={componentObj.inline}
+				invalid={componentObj.invalid}
+				invalidText={componentObj.invalidText}
+				light={componentObj.light}
+				placeholder={componentObj.placeholder}
+				readOnly={componentObj.readOnly}
+				size={componentObj.size}
+				warn={componentObj.warn}
+				warnText={componentObj.warnText} />
 		</AComponent>
 	);
 };
@@ -135,6 +163,7 @@ export const componentInfo: ComponentInfo = {
 							ibmText
 							${angularClassNamesFromComponentObj(json)}
 							name="${json.codeContext?.name}"
+							${json.size ? `size="${json.size}"` : ''}
 							placeholder="${json.placeholder}">
 				</ibm-label>`;
 			}
@@ -147,6 +176,7 @@ export const componentInfo: ComponentInfo = {
 					name="${json.codeContext?.name}"
 					helperText="${json.helperText}"
 					placeholder="${json.placeholder}"
+					${json.size ? `size="${json.size}"` : ''}
 					value={state["${json.codeContext?.name}"]}
 					${reactClassNamesFromComponentObj(json)}
 					onChange={handleInputChange} />`;
