@@ -45,6 +45,12 @@ const accordionContentStyle = css`
 	margin-bottom: 1rem;
 `;
 
+const tooltipStyle = css`
+.bx--tooltip__trigger.bx--tooltip__trigger--definition.bx--tooltip--bottom.bx--tooltip--a11y + .bx--assistive-text {
+	margin-left: -150px;
+}
+`;
+
 const showComponentSettingsUI = (selectedComponent: any, setComponent: any) => {
 	for (const component of Object.values(allComponents)) {
 		// Find the UI for editing style for our component
@@ -137,7 +143,8 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 						<TooltipDefinition
 							tooltipText='Setting a fragment as a template makes it an easy starting point
 							for future fragments.'
-							direction='bottom'>
+							direction='bottom'
+							className={tooltipStyle}>
 							template
 						</TooltipDefinition>
 						<Checkbox
@@ -162,7 +169,8 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 							}}/>
 						<TooltipDefinition
 							tooltipText='Setting a fragment as a micro layout makes it available to drag and drop into fragments'
-							direction='bottom'>
+							direction='bottom'
+							className={tooltipStyle}>
 							micro layout
 						</TooltipDefinition>
 					</>
