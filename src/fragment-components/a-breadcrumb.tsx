@@ -2,7 +2,8 @@ import React from 'react';
 import { Breadcrumb,
 	TextInput,
 	BreadcrumbItem,
-	Checkbox } from 'carbon-components-react';
+	Checkbox
+} from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
 import image from './../assets/component-icons/breadcrumb.svg';
 import {
@@ -13,9 +14,10 @@ import {
 import { DraggableTileList } from '../components';
 import { css, cx } from 'emotion';
 
-const preventCheckEvent = css`
+const preventCheckEventStyle = css`
 	pointer-events: none;
 `;
+
 export const ABreadcumbSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const handleStepUpdate = (key: string, value: any, index: number) => {
 		const step = {
@@ -37,10 +39,10 @@ export const ABreadcumbSettingsUI = ({ selectedComponent, setComponent }: any) =
 		return <>
 			<TextInput
 				light
-				value={item.itemText}
+				value={item.label}
 				labelText='Breadcrumb label'
 				onChange={(event: any) => {
-					handleStepUpdate('itemText', event.currentTarget.value, index);
+					handleStepUpdate('label', event.currentTarget.value, index);
 				}}
 			/>
 			<TextInput
@@ -61,13 +63,13 @@ export const ABreadcumbSettingsUI = ({ selectedComponent, setComponent }: any) =
 	};
 	return <>
 	<Checkbox
-		labelText='No trailing slash'
-		id='no-trailing-slash'
-		checked={selectedComponent.noTrailingSlash}
+		labelText='Use trailing slash'
+		id='trailing-slash'
+		checked={!selectedComponent.noTrailingSlash}
 		onChange={(checked: boolean) => {
 			setComponent({
 				...selectedComponent,
-				noTrailingSlash: checked
+				noTrailingSlash: !checked
 			});
 		}}
 	/>
@@ -76,7 +78,7 @@ export const ABreadcumbSettingsUI = ({ selectedComponent, setComponent }: any) =
 		setDataList={updateStepList}
 		updateItem={handleStepUpdate}
 		defaultObject={{
-			itemText: 'New Option',
+			label: 'Breadcrumb',
 			href: '/'
 		}}
 		template={template} />
@@ -111,14 +113,13 @@ export const ABreadcrumb = ({
 		{...rest}>
 			<Breadcrumb
 			noTrailingSlash={componentObj.noTrailingSlash}
-			className={cx(preventCheckEvent, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}>
+			className={cx(preventCheckEventStyle, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}>
 			{
-				componentObj.items.map((step: any, index: number) => (
-					<BreadcrumbItem
-						href={step.href}
-						key={index}>
-							{step.itemText}
-					</BreadcrumbItem>))
+				componentObj.items.map((step: any, index: number) => <BreadcrumbItem
+					href={step.href}
+					key={index}>
+						{step.label}
+				</BreadcrumbItem>)
 			}
 			</Breadcrumb>
 		</AComponent>
@@ -137,7 +138,7 @@ export const componentInfo: ComponentInfo = {
 		noTrailingSlash: false,
 		items: [
 			{
-				itemText: 'Breadcrumb 1',
+				label: 'Breadcrumb 1',
 				href: '/'
 			}
 		]
@@ -155,9 +156,9 @@ export const componentInfo: ComponentInfo = {
 					${json.items.map((step: any) => (
 						`<ibm-breadcrumb-item
 							href="${step.href}">
-								${step.itemText}
+								${step.label}
 						</ibm-breadcrumb-item>`
-					)).join('\n')}
+						)).join('\n')}
 				</ibm-breadcrumb>`;
 			}
 		},
@@ -170,7 +171,7 @@ export const componentInfo: ComponentInfo = {
 					${json.items.map((step: any) => (
 						`<BreadcrumbItem
 							href="${step.href}">
-								${step.itemText}
+								${step.label}
 						</BreadcrumbItem>`
 						)).join('\n')}
 					</Breadcrumb>`;
