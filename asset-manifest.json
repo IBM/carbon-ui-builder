@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/carbon-ui-builder/static/css/main.75e57b13.css",
-    "main.js": "/carbon-ui-builder/static/js/main.2a0c9666.js",
+    "main.js": "/carbon-ui-builder/static/js/main.4d983c80.js",
     "static/media/dashboard-empty-state.svg": "/carbon-ui-builder/static/media/dashboard-empty-state.68a2dbad53e66c2560c18c7cae63b988.svg",
     "static/media/chart-404.svg": "/carbon-ui-builder/static/media/chart-404.0cbc4226f4ef1a83fbdfe88bf5f398d3.svg",
     "static/media/tile-clickable.svg": "/carbon-ui-builder/static/media/tile-clickable.dc9f4bb46dc5a7a320bb0b1cf8f6354c.svg",
@@ -35,10 +35,10 @@
     "static/media/tile.svg": "/carbon-ui-builder/static/media/tile.faa170c0e2c6e37d9135ee12f6fc8e41.svg",
     "static/media/hotkeys.md": "/carbon-ui-builder/static/media/hotkeys.c48756993ac57912057b.md",
     "main.75e57b13.css.map": "/carbon-ui-builder/static/css/main.75e57b13.css.map",
-    "main.2a0c9666.js.map": "/carbon-ui-builder/static/js/main.2a0c9666.js.map"
+    "main.4d983c80.js.map": "/carbon-ui-builder/static/js/main.4d983c80.js.map"
   },
   "entrypoints": [
     "static/css/main.75e57b13.css",
-    "static/js/main.2a0c9666.js"
+    "static/js/main.4d983c80.js"
   ]
 }
