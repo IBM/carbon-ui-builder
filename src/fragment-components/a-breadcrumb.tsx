@@ -138,7 +138,7 @@ export const componentInfo: ComponentInfo = {
 		noTrailingSlash: false,
 		items: [
 			{
-				label: 'Breadcrumb 1',
+				label: 'Breadcrumb',
 				href: '/'
 			}
 		]
