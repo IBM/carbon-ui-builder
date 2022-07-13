@@ -146,12 +146,12 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}noTrailingSlash = ${json.noTrailingSlash};`,
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}NoTrailingSlash = ${json.noTrailingSlash};`,
 			outputs: (_) => '',
 			imports: ['BreadcrumbModule'],
 			code: ({ json }) => {
 				return `<ibm-breadcrumb
-					[noTrailingSlash]="${nameStringToVariableString(json.codeContext?.name)}noTrailingSlash"
+					[noTrailingSlash]="${nameStringToVariableString(json.codeContext?.name)}NoTrailingSlash"
 					${angularClassNamesFromComponentObj(json)}>
 					${json.items.map((step: any) => (
 						`<ibm-breadcrumb-item
