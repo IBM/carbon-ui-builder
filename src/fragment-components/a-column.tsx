@@ -145,7 +145,7 @@ export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
 
 const addStyleLeftRight = css`
 	position: absolute;
-	margin-top: 1rem;
+	margin-top: 14px;
 	background: white;
 	border: 2px solid #d8d8d8;
 	line-height: 21px;
