@@ -143,21 +143,38 @@ export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	</>;
 };
 
-const addStyle = css`
+const addStyleLeftRight = css`
 	position: absolute;
-	margin-top: -2px;
+	margin-top: 1rem;
 	background: white;
 	border: 2px solid #d8d8d8;
 	line-height: 21px;
 	z-index: 1;
 `;
 
-const addStyleLeft = cx(addStyle, css`
+const addStyleLeft = cx(addStyleLeftRight, css`
 	margin-left: -30px;
 `);
 
-const addStyleRight = cx(addStyle, css`
+const addStyleRight = cx(addStyleLeftRight, css`
 	margin-left: calc(100% - 30px);
+`);
+
+const addStyleTopBottom = css`
+	position: absolute;
+	margin-left: calc(50% - 10px);
+	background: white;
+	border: 2px solid #d8d8d8;
+	line-height: 21px;
+`;
+
+const addStyleTop = cx(addStyleTopBottom, css`
+	top: -20px;
+`);
+
+const addStyleBottom = cx(addStyleTopBottom, css`
+	bottom: -20px;
+	z-index: 1;
 `);
 
 const iconStyle = css`
@@ -176,6 +193,29 @@ export const AColumn = ({
 	const [fragment, setFragment] = useFragment();
 
 	const parentComponent = getParentComponent(fragment.data, componentObj);
+
+	const grandParentComponent = getParentComponent(fragment.data, parentComponent);
+
+	/**
+	 * @param offset 0 - add left, 1 - add right
+	 */
+	const addRow = (offset = 0) => setFragment({
+		...fragment,
+		data: updatedState(
+			fragment.data,
+			{
+				type: 'insert',
+				component: {
+					type: 'row', items: [
+						{ type: 'column', items: [] },
+						{ type: 'column', items: [] }
+					]
+				}
+			},
+			grandParentComponent.id,
+			grandParentComponent.items.indexOf(componentObj) + offset
+		)
+	});
 
 	/**
 	 * @param offset 0 - add left, 1 - add right
@@ -222,6 +262,12 @@ export const AColumn = ({
 			span: componentObj.maxSpan || undefined,
 			offset: componentObj.maxOffset || undefined
 		}}>
+			<span className={cx(addStyleTop, selected ? css`` : css`display: none`)}>
+				<Add32 onClick={(event: any) => {
+					event.stopPropagation();
+					addRow(1);
+				}} className={iconStyle}/>
+			</span>
 			<span className={cx(addStyleLeft, selected ? css`` : css`display: none`)}>
 				<Add32 onClick={(event: any) => {
 					event.stopPropagation();
@@ -232,6 +278,12 @@ export const AColumn = ({
 				<Add32 onClick={(event: any) => {
 					event.stopPropagation();
 					addCell(1);
+				}} className={iconStyle}/>
+			</span>
+			<span className={cx(addStyleBottom, selected ? css`` : css`display: none`)}>
+				<Add32 onClick={(event: any) => {
+					event.stopPropagation();
+					addRow();
 				}} className={iconStyle}/>
 			</span>
 			<AComponent
