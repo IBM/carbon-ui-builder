@@ -213,7 +213,7 @@ export const AColumn = ({
 				}
 			},
 			grandParentComponent.id,
-			grandParentComponent.items.indexOf(componentObj) + offset
+			grandParentComponent.items.indexOf(parentComponent) + offset
 		)
 	});
 
@@ -265,7 +265,7 @@ export const AColumn = ({
 			<span className={cx(addStyleTop, selected ? css`` : css`display: none`)}>
 				<Add32 onClick={(event: any) => {
 					event.stopPropagation();
-					addRow(1);
+					addRow();
 				}} className={iconStyle}/>
 			</span>
 			<span className={cx(addStyleLeft, selected ? css`` : css`display: none`)}>
@@ -283,7 +283,7 @@ export const AColumn = ({
 			<span className={cx(addStyleBottom, selected ? css`` : css`display: none`)}>
 				<Add32 onClick={(event: any) => {
 					event.stopPropagation();
-					addRow();
+					addRow(1);
 				}} className={iconStyle}/>
 			</span>
 			<AComponent
