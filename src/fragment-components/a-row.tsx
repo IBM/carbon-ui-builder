@@ -49,6 +49,23 @@ const addStyleBottom = cx(addStyle, css`
 	z-index: 1;
 `);
 
+const addStyleLeftRight = css`
+	position: absolute;
+	margin-top: 14px;
+	background: white;
+	border: 2px solid #d8d8d8;
+	line-height: 21px;
+	z-index: 1;
+`;
+
+const addStyleLeft = cx(addStyleLeftRight, css`
+	margin-left: -20px;
+`);
+
+const addStyleRight = cx(addStyleLeftRight, css`
+	margin-left: 100%;
+`);
+
 const iconStyle = css`
 	height: 1rem;
 	width: 1rem;
@@ -84,6 +101,25 @@ export const ARow = ({
 			},
 			parentComponent.id,
 			parentComponent.items.indexOf(componentObj) + offset
+		)
+	});
+
+	/**
+	 * @param offset 0 - add left, 1 - add right
+	 */
+	const addCell = (offset = 0) => setFragment({
+		...fragment,
+		data: updatedState(
+			fragment.data,
+			{
+				type: 'insert',
+				component: {
+					type: 'column',
+					items: []
+				}
+			},
+			componentObj.id,
+			offset
 		)
 	});
 
@@ -133,6 +169,18 @@ export const ARow = ({
 					<Add32 onClick={(event: any) => {
 						event.stopPropagation();
 						addRow();
+					}} className={iconStyle}/>
+				</span>
+				<span className={cx(addStyleLeft, selected ? css`` : css`display: none`)}>
+					<Add32 onClick={(event: any) => {
+						event.stopPropagation();
+						addCell();
+					}} className={iconStyle}/>
+				</span>
+				<span className={cx(addStyleRight, selected ? css`` : css`display: none`)}>
+					<Add32 onClick={(event: any) => {
+						event.stopPropagation();
+						addCell(componentObj.items.length);
 					}} className={iconStyle}/>
 				</span>
 				<span className={cx(addStyleBottom, selected ? css`` : css`display: none`)}>
