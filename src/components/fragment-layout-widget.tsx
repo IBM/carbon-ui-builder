@@ -70,7 +70,7 @@ export const FragmentLayoutWidget = ({ fragment, setFragment, title }: any) => {
 						onClick={() => setFragment({
 							...fragment,
 							selectedComponentId: componentObj.id
-						}, true)}>
+						}, false)}>
 						<Edit16 className={actionIconStyle} />
 					</Button>
 					<Button

@@ -28,8 +28,8 @@ export const useFragment = (id?: string) => {
 	}
 
 	const fragment = fragments.find((fragment: any) => fragment.id === id);
-	const setFragment = (fragment: any) => {
-		updateFragment(fragment);
+	const setFragment = (fragment: any, updateActionHistory = true) => {
+		updateFragment(fragment, updateActionHistory);
 	};
 	return [fragment, setFragment];
 };
@@ -88,7 +88,7 @@ const GlobalStateContextProvider = ({ children }: any) => {
 	const updateFragment = (fragment: any, updateActionHistory = true) => {
 		const fragmentToUpdate = {
 			...fragment,
-			lastModified: updateActionHistory ? new Date().toISOString() : fragment.lastModified
+			lastModified: new Date().toISOString()
 		};
 		if (!fragments.length) {
 			setFragments([fragmentToUpdate]);
@@ -106,7 +106,7 @@ const GlobalStateContextProvider = ({ children }: any) => {
 		setFragments(updatedFragments);
 
 		if (updateActionHistory) {
-			addAction({ fragmentToUpdate });
+			addAction({ fragment: fragmentToUpdate });
 		}
 	};
 
@@ -129,13 +129,13 @@ const GlobalStateContextProvider = ({ children }: any) => {
 		setActionHistoryIndex(newIndex);
 	};
 
-	function undoAction() {
+	const undoAction = () => {
 		if (!canUndo()) {
 			return;
 		}
 
 		setAction(actionHistoryIndex - 1);
-	}
+	};
 
 	const canRedo = () => actionHistoryIndex < actionHistory.length - 1;
 
