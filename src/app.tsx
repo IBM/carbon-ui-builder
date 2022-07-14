@@ -36,7 +36,7 @@ export const App = () => {
 	// These are states which are shared amongst the three modals.
 	const [displayedModal, setDisplayedModal] = useState<FragmentWizardModals | null>(FragmentWizardModals.CREATE_FRAGMENT_MODAL);
 
-	return <Router basename='carbon-ui-builder'>
+	return <Router basename='/'>
 		<div className={app}>
 			<ErrorBoundary>
 				<GlobalStateContextProvider>
