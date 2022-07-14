@@ -214,7 +214,7 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 		setFragment({
 			...fragment,
 			selectedComponentId: componentObj.id
-		}, true);
+		}, false);
 	};
 
 	const remove = (componentObj: any) => {
