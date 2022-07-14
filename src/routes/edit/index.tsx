@@ -72,10 +72,6 @@ const editPageContent = css`
 const sideRail = css`
 	transition: left ${transitionDetails};
 
-	&.bx--side-nav {
-		z-index: 1;
-	}
-
 	&.bx--side-nav, &.bx--side-nav:hover {
 		.bx--side-nav__item .bx--side-nav__link {
 			height: 3rem;

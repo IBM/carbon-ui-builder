@@ -46,12 +46,20 @@ export const Header = ({
 		}
 	`;
 
+	const headerStyle = css`
+		z-index: 8001;
+	`;
+
 	const headerNavStyle = css`
 		display: block;
 	`;
 
 	return (
-		<ShellHeader aria-label="IBM Carbon UI Builder" role='banner' tabIndex={0}>
+		<ShellHeader
+		aria-label="IBM Carbon UI Builder"
+		role='banner'
+		tabIndex={0}
+		className={headerStyle}>
 			<SkipToContent />
 			<HeaderName
 				prefix="IBM"
