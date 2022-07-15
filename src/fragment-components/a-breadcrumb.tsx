@@ -84,7 +84,6 @@ export const ABreadcumbSettingsUI = ({ selectedComponent, setComponent }: any) =
 		}}
 		template={template} />
 	</>;
-
 };
 
 export const ABreadcrumbCodeUI = ({ selectedComponent, setComponent }: any) => {
