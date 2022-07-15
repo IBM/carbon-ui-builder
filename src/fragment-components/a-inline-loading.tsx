@@ -17,38 +17,47 @@ import {
 
 export const AInlineLoadingSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
-	<legend className="bx--label">Status</legend>
-	<RadioButtonGroup
-	orientation="vertical"
-	name="status-radio-buttons"
-    valueSelected={selectedComponent.status}
-	onChange={(event: any) => {
-		setComponent({
-			...selectedComponent,
-			status: event
-		});
-	}}>
-		<RadioButton
-		id="inactive"
-		labelText="Inactive"
-		value="inactive"
-		/>
-		<RadioButton
-		id="active"
-		labelText="Active"
-		value="active"
-		/>
-		<RadioButton
-		id="finished"
-		labelText="Finished"
-		value="finished"
-		/>
-		<RadioButton
-		id="error"
-		labelText="Error"
-		value="error"
-		/>
-	</RadioButtonGroup>
+		<legend className="bx--label">Status</legend>
+		<RadioButtonGroup
+			orientation="vertical"
+			name="status-radio-buttons"
+			valueSelected={selectedComponent.status}
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					status: event
+				});
+			}} >
+			<RadioButton
+			id="inactive"
+			labelText="Inactive"
+			value="inactive"
+			/>
+			<RadioButton
+			id="active"
+			labelText="Active"
+			value="active"
+			/>
+			<RadioButton
+			id="finished"
+			labelText="Finished"
+			value="finished"
+			/>
+			<RadioButton
+			id="error"
+			labelText="Error"
+			value="error"
+			/>
+		</RadioButtonGroup>
+		<TextInput
+			value={selectedComponent.textDescription}
+			labelText='Loading text description'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					textDescription: event.currentTarget.value
+				});
+			}} />
 	</>;
 };
 
@@ -76,6 +85,7 @@ export const AInlineLoading = ({
 		rejectDrop={true}
 		{...rest}>
 			<InlineLoading
+				description={componentObj.textDescription}
 				status={componentObj.status}
 				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
 		</AComponent>
@@ -91,22 +101,32 @@ export const componentInfo: ComponentInfo = {
 	type: 'inlineloading',
 	defaultComponentObj: {
 		type: 'inlineloading',
-		status: 'active'
+		status: 'active',
+		textDescription: 'Loading data'
 	},
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Status = ${json.status};`,
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Status = "${json.status}";`,
 			outputs: (_) => '',
-			imports: [''],
+			imports: ['InlineLoadingModule'],
 			code: ({ json }) => {
-				return ``;
+				return `<ibm-inline-loading
+							[state]="${nameStringToVariableString(json.codeContext?.name)}Status"
+							${json.status === 'active' ? `[loadingText]="'${json.textDescription}'"`: ''}
+							${json.status === 'finished' ? `[successText]="'${json.textDescription}'"`: ''}
+							${json.status === 'error' ? `[errorText]="'${json.textDescription}'"`: ''}
+							${angularClassNamesFromComponentObj(json)}>
+						</ibm-inline-loading>`;
 			}
 		},
 		react: {
-			imports: [''],
+			imports: ['InlineLoading'],
 			code: ({ json }) => {
-				return ``;
+				return `<InlineLoading
+							description="${json.textDescription}"
+							status="${json.status}"
+							${reactClassNamesFromComponentObj(json)} />`;
 			}
 		}
 	}
