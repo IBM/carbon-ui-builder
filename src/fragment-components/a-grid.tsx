@@ -11,11 +11,11 @@ export const AGridSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<Checkbox
 			labelText='Show outline'
-			id='grid-showOutline'
-			checked={selectedComponent.showOutline}
+			id='grid-outline'
+			checked={selectedComponent.outline}
 			onChange={(checked: boolean) => setComponent({
 				...selectedComponent,
-				showOutline: checked
+				outline: checked
 			})} />
 		<Checkbox
 			labelText='Condensed'
@@ -45,7 +45,7 @@ export const AGridSettingsUI = ({ selectedComponent, setComponent }: any) => {
 };
 
 // there must be a better way to do this...
-const showOutlineStyle = css`
+const outline = css`
 	.bx--col,
 	.bx--col-sm-1, .bx--col-sm-2, .bx--col-sm-3, .bx--col-sm-4,
 	.bx--col-md-1, .bx--col-md-2, .bx--col-md-3, .bx--col-md-4, .bx--col-md-5, .bx--col-md-6, .bx--col-md-7, .bx--col-md-8,
@@ -70,7 +70,7 @@ export const AGrid = ({
 			<Grid
 			className={cx(
 			componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-			componentObj.showOutline ? showOutlineStyle : ''
+			componentObj.outline ? outline : ''
 			)}
 			condensed={componentObj.condensed}
 			fullWidth={componentObj.fullWidth}
@@ -156,7 +156,7 @@ export const componentInfo: ComponentInfo = {
 	type: 'grid',
 	defaultComponentObj: {
 		type: 'grid',
-		showOutline: true,
+		outline: true,
 		items: [
 			{
 				type: 'row', items: [

@@ -25,11 +25,11 @@ export const AFragmentSettingsUI = ({ selectedComponent, setComponent }: any) =>
 		</LinkButton>
 		<Checkbox
 			labelText='Show outline'
-			id='fragment-showOutline'
-			checked={selectedComponent.showOutline}
+			id='fragment-outline'
+			checked={selectedComponent.outline}
 			onChange={(checked: boolean) => setComponent({
 				...selectedComponent,
-				showOutline: checked
+				outline: checked
 			})} />
 	</>;
 };
@@ -51,7 +51,7 @@ export const AFragmentCodeUI = ({ selectedComponent, setComponent }: any) => {
 	);
 };
 
-const showOutlineStyle = css`
+const outlineStyle = css`
 	outline: 1px dashed #78a9ff;
 `;
 
@@ -70,7 +70,7 @@ export const AFragment = ({
 			style={{ pointerEvents: 'none' }}
 			className={cx(
 				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-				componentObj.showOutline ? showOutlineStyle : ''
+				componentObj.outline ? outlineStyle : ''
 			)}>
 				{children}
 			</div>
