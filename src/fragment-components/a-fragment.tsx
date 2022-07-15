@@ -9,8 +9,9 @@ import { AComponent, ComponentInfo } from './a-component';
 
 import image from './../assets/component-icons/button.svg';
 import { GlobalStateContext } from '../context';
-import { classNameFromFragment, tagNameFromFragment } from '../utils/fragment-tools';
+import { classNameFromFragment, getFragmentsFromLocalStorage, tagNameFromFragment } from '../utils/fragment-tools';
 import { LinkButton } from '../components';
+import { getFragmentHelpers } from '../context/fragments-context-helper';
 
 export const AFragmentSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -81,9 +82,12 @@ export const componentInfo: ComponentInfo = {
 	component: AFragment,
 	settingsUI: AFragmentSettingsUI,
 	render: ({ componentObj, select, remove, selected, renderComponents }) => {
+		// try to use the state but get the fragments from local storage if state is not available
+		// localStorage info is used when rendering and can't be used for interaction
 		// eslint-disable-next-line react-hooks/rules-of-hooks
-		const globalState = useContext(GlobalStateContext); // used for fetching subcomponents/microlayouts
-		const subFragment = globalState?.getFragment(componentObj.fragmentId);
+		const { getFragment } = useContext(GlobalStateContext) || getFragmentHelpers({ fragments: getFragmentsFromLocalStorage() });
+
+		const subFragment = getFragment(componentObj.fragmentId);
 
 		if (!subFragment) {
 			return ''; // NOTE should we also remove it from the fragment?

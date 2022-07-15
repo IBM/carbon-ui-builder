@@ -6,6 +6,7 @@ import React, {
 } from 'react';
 import assign from 'lodash/assign';
 import { getFragmentHelpers } from './fragments-context-helper';
+import { getFragmentsFromLocalStorage } from '../utils/fragment-tools';
 
 const GlobalStateContext: React.Context<any> = createContext(null);
 GlobalStateContext.displayName = 'GlobalStateContext';
@@ -34,18 +35,8 @@ export const useFragment = (id?: string) => {
 	return [fragment, setFragment];
 };
 
-const validInitialFragments = (localFragments: any[] | undefined) => {
-	if (!localFragments || !Array.isArray(localFragments)) {
-		return [];
-	}
-
-	return localFragments.filter((fragment: any) => !!fragment.id && typeof fragment.id === 'string');
-};
-
 const GlobalStateContextProvider = ({ children }: any) => {
-	const [fragments, _setFragments] = useState<any[]>(
-		validInitialFragments(JSON.parse(localStorage.getItem('localFragments') as string)) || []
-	);
+	const [fragments, _setFragments] = useState<any[]>(getFragmentsFromLocalStorage());
 	const [actionHistory, setActionHistory] = useState([] as any[]);
 	const [actionHistoryIndex, setActionHistoryIndex] = useState(-1);
 

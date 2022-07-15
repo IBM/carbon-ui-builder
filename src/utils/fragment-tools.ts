@@ -20,6 +20,17 @@ export interface RenderProps {
 	};
 }
 
+export const validInitialFragments = (localFragments: any[] | undefined) => {
+	if (!localFragments || !Array.isArray(localFragments)) {
+		return [];
+	}
+
+	return localFragments.filter((fragment: any) => !!fragment.id && typeof fragment.id === 'string');
+};
+
+export const getFragmentsFromLocalStorage = () =>
+	validInitialFragments(JSON.parse(localStorage.getItem('localFragments') as string)) || [];
+
 export const getFragmentPreview = async (fragment: any, props: RenderProps) => {
 	const element = document.createElement('div');
 	element.className = 'render-preview';

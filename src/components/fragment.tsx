@@ -3,7 +3,11 @@ import { SkeletonPlaceholder } from 'carbon-components-react';
 import './fragment-preview.scss';
 import { css, cx } from 'emotion';
 import { allComponents, ComponentInfoRenderProps } from '../fragment-components';
-import { getAllFragmentStyleClasses, getRandomId } from '../utils/fragment-tools';
+import {
+	getAllFragmentStyleClasses,
+	getFragmentsFromLocalStorage,
+	getRandomId
+} from '../utils/fragment-tools';
 import { GlobalStateContext } from '../context';
 import { getDropIndex } from '../routes/edit/tools';
 
@@ -190,7 +194,9 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 		return <SkeletonPlaceholder />;
 	}
 
-	const { fragments } = globalState || {};
+	// try to use the state but get the fragments from local storage if state is not available
+	// localStorage info is used when rendering and can't be used for interaction
+	const { fragments } = globalState || { fragments: getFragmentsFromLocalStorage() };
 
 	const drop = (event: any) => {
 		event.stopPropagation();
