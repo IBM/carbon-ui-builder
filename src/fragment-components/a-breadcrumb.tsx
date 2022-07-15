@@ -63,26 +63,27 @@ export const ABreadcumbSettingsUI = ({ selectedComponent, setComponent }: any) =
 		});
 	};
 	return <>
-	<Checkbox
-		labelText='Use trailing slash'
-		id='trailing-slash'
-		checked={!selectedComponent.noTrailingSlash}
-		onChange={(checked: boolean) => {
-			setComponent({
-				...selectedComponent,
-				noTrailingSlash: !checked
-			});
-		}}
-	/>
-	<DraggableTileList
-		dataList={[...selectedComponent.items]}
-		setDataList={updateStepList}
-		updateItem={handleStepUpdate}
-		defaultObject={{
-			label: 'Breadcrumb',
-			href: '/'
-		}}
-		template={template} />
+		<Checkbox
+			labelText='Use trailing slash'
+			id='trailing-slash'
+			checked={!selectedComponent.noTrailingSlash}
+			onChange={(checked: boolean) => {
+				setComponent({
+					...selectedComponent,
+					noTrailingSlash: !checked
+				});
+			}}
+		/>
+		<DraggableTileList
+			dataList={[...selectedComponent.items]}
+			setDataList={updateStepList}
+			updateItem={handleStepUpdate}
+			defaultObject={{
+				label: 'Breadcrumb',
+				href: '/'
+			}}
+			template={template}
+		/>
 	</>;
 };
 
