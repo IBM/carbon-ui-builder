@@ -167,7 +167,7 @@ export const componentInfo: ComponentInfo = {
 			imports: ['Breadcrumb', 'BreadcrumbItem'],
 			code: ({ json }) => {
 				return `<Breadcrumb
-					noTrailingSlash={${json.noTrailingSlash }}
+					noTrailingSlash={${json.noTrailingSlash}}
 					${reactClassNamesFromComponentObj(json)}>
 					${json.items.map((step: any) =>
 						`<BreadcrumbItem href="${step.href}">
