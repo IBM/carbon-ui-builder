@@ -2,6 +2,7 @@
 import * as accordion from './accordion/a-accordion';
 import * as accordionitem from './accordion/a-accordion-item';
 import * as button from './a-button';
+import * as breadcrumb from './a-breadcrumb';
 import * as checkbox from './a-checkbox';
 import * as codeSnippet from './a-code-snippet';
 import * as column from './a-column';
@@ -74,6 +75,7 @@ export const allComponents = {
 	accordion,
 	accordionitem,
 	button,
+	breadcrumb,
 	checkbox,
 	codeSnippet,
 	combobox,
