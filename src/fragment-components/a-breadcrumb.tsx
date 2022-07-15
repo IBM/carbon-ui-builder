@@ -169,12 +169,10 @@ export const componentInfo: ComponentInfo = {
 				return `<Breadcrumb
 					noTrailingSlash={${json.noTrailingSlash }}
 					${reactClassNamesFromComponentObj(json)}>
-					${json.items.map((step: any) => (
-						`<BreadcrumbItem
-							href="${step.href}">
-								${step.label}
-						</BreadcrumbItem>`
-						)).join('\n')}
+					${json.items.map((step: any) =>
+						`<BreadcrumbItem href="${step.href}">
+							${step.label}
+						</BreadcrumbItem>`).join('\n')}
 					</Breadcrumb>`;
 			}
 		}
