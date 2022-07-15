@@ -116,8 +116,10 @@ export const ARadio = ({
 		bottomAction={() => addRadio(1)}>
 			<AComponent
 			selected={selected}
-			headingCss={cx(parentComponent.orientation === 'vertical' ? css`margin-left: 20px;` : ``,
-				css`width: fit-content; min-width: 9rem;`)}
+			headingCss={cx(
+				parentComponent.orientation === 'vertical' ? css`margin-left: 20px;` : '',
+				css`width: fit-content; min-width: 9rem;`
+			)}
 			componentObj={componentObj}
 			{...rest}>
 				<RadioButton
