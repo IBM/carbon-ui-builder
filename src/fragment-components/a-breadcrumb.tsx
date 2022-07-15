@@ -1,5 +1,6 @@
 import React from 'react';
-import { Breadcrumb,
+import {
+	Breadcrumb,
 	TextInput,
 	BreadcrumbItem,
 	Checkbox
