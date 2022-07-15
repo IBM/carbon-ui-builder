@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.75e57b13.css",
-    "main.js": "/static/js/main.816eef8f.js",
+    "main.js": "/static/js/main.70980653.js",
     "static/media/dashboard-empty-state.svg": "/static/media/dashboard-empty-state.68a2dbad53e66c2560c18c7cae63b988.svg",
     "static/media/chart-404.svg": "/static/media/chart-404.0cbc4226f4ef1a83fbdfe88bf5f398d3.svg",
     "static/media/tile-clickable.svg": "/static/media/tile-clickable.dc9f4bb46dc5a7a320bb0b1cf8f6354c.svg",
@@ -12,6 +12,7 @@
     "static/media/search.svg": "/static/media/search.04acd04a6db200ffb1fe29f478750559.svg",
     "static/media/number-input.svg": "/static/media/number-input.26fae273e32b4d1bfe6018486d7383aa.svg",
     "static/media/combobox.svg": "/static/media/combobox.226b02e2ddec9f43591f16cb38b67a04.svg",
+    "static/media/breadcrumb.svg": "/static/media/breadcrumb.26a8c743dbd35c9da2d51ea6496a8495.svg",
     "static/media/button.svg": "/static/media/button.46d9a9f2529f0e4b8b32fa0b56b14a56.svg",
     "static/media/radio.svg": "/static/media/radio.5d70d2bbda78f6d89b54d918841b14ae.svg",
     "static/media/accordion.svg": "/static/media/accordion.4ea92de4d0dd899007fa6c1dbbd4fffd.svg",
@@ -35,10 +36,10 @@
     "static/media/tile.svg": "/static/media/tile.faa170c0e2c6e37d9135ee12f6fc8e41.svg",
     "static/media/hotkeys.md": "/static/media/hotkeys.c48756993ac57912057b.md",
     "main.75e57b13.css.map": "/static/css/main.75e57b13.css.map",
-    "main.816eef8f.js.map": "/static/js/main.816eef8f.js.map"
+    "main.70980653.js.map": "/static/js/main.70980653.js.map"
   },
   "entrypoints": [
     "static/css/main.75e57b13.css",
-    "static/js/main.816eef8f.js"
+    "static/js/main.70980653.js"
   ]
 }
