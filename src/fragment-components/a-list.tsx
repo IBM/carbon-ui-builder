@@ -185,21 +185,18 @@ export const AListSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	</>;
 };
 
-export const AListCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>;
-};
+export const AListCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const AList = ({
 	children,
@@ -245,7 +242,7 @@ export const componentInfo: ComponentInfo = {
 				items: []
 			}
 		],
-		cssClasses: [{id: 'margin-left', content: `margin-left: 30px;`}]
+		cssClasses: [{ id: 'margin-left', content: 'margin-left: 30px;' }]
 	},
 	image: image,
 	hideFromElementsPane: false,

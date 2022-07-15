@@ -11,32 +11,28 @@ import {
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 
-export const AListItemSettingsUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-		value={selectedComponent.value}
-		labelText='Label'
-		onChange={(event: any) => {
-			setComponent({
-				...selectedComponent,
-				value: event.currentTarget.value
-			});
-		}} />;
-};
+export const AListItemSettingsUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.value}
+	labelText='Label'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			value: event.currentTarget.value
+		});
+	}} />;
 
-export const AListItemCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}} />;
-};
+export const AListItemCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const AListItem = ({
 	componentObj,

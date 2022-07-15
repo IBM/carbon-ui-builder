@@ -22,7 +22,7 @@ const overlayStyle = css`
 export const ALoadingSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
 		{ id: 'small', text: 'Small' },
-		{ id: 'normal', text: 'Normal' },
+		{ id: 'normal', text: 'Normal' }
 	];
 	return <>
 		<Dropdown
