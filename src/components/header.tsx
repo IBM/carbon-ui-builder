@@ -28,7 +28,7 @@ export const Header = ({
 }: any) => {
 	const navigate: NavigateFunction = useNavigate();
 	const globalState = useContext(GlobalStateContext);
-	const [, dispatchModal] = useContext(ModalContext);
+	const modalContext = useContext(ModalContext);
 	const params = getEditScreenParams();
 	const fragment = globalState?.fragments.find((fragment: any) => fragment.id === params?.id);
 
@@ -99,7 +99,7 @@ export const Header = ({
 						params?.id && fragment?.data &&
 						<HeaderMenuItem
 						className={headerName}
-						onClick={() => dispatchModal({
+						onClick={() => modalContext && Array.isArray(modalContext) && modalContext.length >= 2 && modalContext[1]({ // dispatchModal
 							type: ModalActionType.setExportModal,
 							id: fragment.id
 						})}>
