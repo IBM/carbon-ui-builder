@@ -5,6 +5,7 @@ import * as button from './a-button';
 import * as checkbox from './a-checkbox';
 import * as column from './a-column';
 import * as combobox from './a-combobox';
+import * as datepicker from './a-date-picker';
 import * as dropdown from './a-dropdown';
 import * as fragment from './a-fragment';
 import * as grid from './a-grid';
@@ -40,6 +41,7 @@ export { ACheckbox, ACheckboxSettingsUI, ACheckboxCodeUI } from './a-checkbox';
 export { AColumn, AColumnSettingsUI } from './a-column';
 export { AComboBox, AComboBoxSettingsUI, AComboBoxCodeUI } from './a-combobox';
 export { ADropdown, ADropdownSettingsUI, ADropdownCodeUI } from './a-dropdown';
+export { ADatePicker, ADatePickerSettingsUI, ADatePickerCodeUI } from './a-date-picker';
 export * from './a-component';
 export { AFragment, AFragmentSettingsUI, AFragmentCodeUI } from './a-fragment';
 export { AGrid, AGridSettingsUI } from './a-grid';
@@ -75,6 +77,7 @@ export const allComponents = {
 	checkbox,
 	combobox,
 	column,
+	datepicker,
 	dropdown,
 	fragment,
 	grid,
