@@ -64,7 +64,7 @@ export const AFragment = ({
 	return (
 		<AComponent
 		componentObj={componentObj}
-		className={css`position: relative; display: inline-flex`}
+		className={css`position: relative;`}
 		rejectDrop={true}
 		{...rest}>
 			<section
