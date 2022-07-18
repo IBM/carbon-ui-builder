@@ -323,7 +323,7 @@ export const Edit = () => {
 			onClick={() => updateFragment({ ...fragment, selectedComponentId: null }, false)}>
 				{
 					// eslint-disable-next-line
-					fragment && <Fragment fragment={fragment} setFragment={updateFragment} />
+					fragment && <Fragment fragment={fragment} setFragment={updateFragment} outline={fragment.outline} />
 				}
 			</div>
 			<div className={rightPanel}>

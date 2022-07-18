@@ -311,7 +311,7 @@ export const AColumn = ({
 export const componentInfo: ComponentInfo = {
 	component: AColumn,
 	settingsUI: AColumnSettingsUI,
-	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <AColumn
+	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline }) => <AColumn
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
@@ -319,7 +319,7 @@ export const componentInfo: ComponentInfo = {
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
 			{componentObj.items.map((column: any) => (
-				renderComponents(column)
+				renderComponents(column, outline)
 			))}
 	</AColumn>,
 	keywords: ['column', 'grid'],

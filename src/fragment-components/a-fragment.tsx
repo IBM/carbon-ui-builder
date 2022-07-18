@@ -58,6 +58,7 @@ const outlineStyle = css`
 export const AFragment = ({
 	children,
 	componentObj,
+	outline,
 	...rest
 }: any) => {
 	return (
@@ -66,14 +67,14 @@ export const AFragment = ({
 		className={css`position: relative; display: inline-flex`}
 		rejectDrop={true}
 		{...rest}>
-			<div
+			<section
 			style={{ pointerEvents: 'none' }}
 			className={cx(
 				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-				componentObj.outline ? outlineStyle : ''
+				(componentObj.outline || outline === true) && outline !== false ? outlineStyle : ''
 			)}>
 				{children}
-			</div>
+			</section>
 		</AComponent>
 	);
 };
@@ -81,7 +82,7 @@ export const AFragment = ({
 export const componentInfo: ComponentInfo = {
 	component: AFragment,
 	settingsUI: AFragmentSettingsUI,
-	render: ({ componentObj, select, remove, selected, renderComponents }) => {
+	render: ({ componentObj, select, remove, selected, renderComponents, outline }) => {
 		// try to use the state but get the fragments from local storage if state is not available
 		// localStorage info is used when rendering and can't be used for interaction
 		// eslint-disable-next-line react-hooks/rules-of-hooks
@@ -97,8 +98,9 @@ export const componentInfo: ComponentInfo = {
 			componentObj={componentObj}
 			select={select}
 			remove={remove}
+			outline={outline}
 			selected={selected}>
-				{renderComponents(subFragment.data)}
+				{renderComponents(subFragment.data, outline)}
 		</AFragment>;
 	},
 	keywords: ['fragment'],

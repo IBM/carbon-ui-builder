@@ -45,7 +45,7 @@ export const AGridSettingsUI = ({ selectedComponent, setComponent }: any) => {
 };
 
 // there must be a better way to do this...
-const outline = css`
+const outlineStyle = css`
 	.bx--col,
 	.bx--col-sm-1, .bx--col-sm-2, .bx--col-sm-3, .bx--col-sm-4,
 	.bx--col-md-1, .bx--col-md-2, .bx--col-md-3, .bx--col-md-4, .bx--col-md-5, .bx--col-md-6, .bx--col-md-7, .bx--col-md-8,
@@ -63,6 +63,7 @@ const outline = css`
 export const AGrid = ({
 	children,
 	componentObj,
+	outline,
 	...rest
 }: any) => {
 	return (
@@ -70,7 +71,7 @@ export const AGrid = ({
 			<Grid
 			className={cx(
 			componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-			componentObj.outline ? outline : ''
+			(componentObj.outline || outline === true) && outline !== false ? outlineStyle : ''
 			)}
 			condensed={componentObj.condensed}
 			fullWidth={componentObj.fullWidth}

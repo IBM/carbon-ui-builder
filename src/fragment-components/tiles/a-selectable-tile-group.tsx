@@ -158,14 +158,14 @@ export const componentInfo: ComponentInfo = {
 			}
 		]
 	},
-	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <ASelectableTileGroup
+	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline }) => <ASelectableTileGroup
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
 		selected={selected}
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
-			{componentObj.items.map((tile: any) => renderComponents(tile))}
+			{componentObj.items.map((tile: any) => renderComponents(tile, outline))}
 	</ASelectableTileGroup>,
 	image,
 	codeExport: {

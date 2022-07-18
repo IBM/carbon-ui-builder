@@ -185,7 +185,7 @@ export const getParentComponent = (state: any, child: any) => {
 	return null;
 };
 
-export const Fragment = ({ fragment, setFragment }: any) => {
+export const Fragment = ({ fragment, setFragment, outline }: any) => {
 	const globalState = useContext(GlobalStateContext);
 	const [showDragOverIndicator, setShowDragOverIndicator] = useState(false);
 	const holderRef = useRef(null as any);
@@ -230,7 +230,7 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 		});
 	};
 
-	const renderComponents = (componentObj: any): any => {
+	const renderComponents = (componentObj: any, outline: boolean | null = null): any => {
 		if (typeof componentObj === 'string' || !componentObj) {
 			return componentObj;
 		}
@@ -251,21 +251,23 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 						select: () => select(componentObj),
 						remove: () => remove(componentObj),
 						selected: fragment.selectedComponentId === componentObj.id,
-						renderComponents
+						renderComponents,
+						outline
 					} as ComponentInfoRenderProps);
 				}
 				return <component.componentInfo.component
 					componentObj={componentObj}
 					select={() => select(componentObj)}
 					remove={() => remove(componentObj)}
-					selected={fragment.selectedComponentId === componentObj.id}>
-						{componentObj.items && componentObj.items.map((row: any) => renderComponents(row))}
+					selected={fragment.selectedComponentId === componentObj.id}
+					outline={outline}>
+						{componentObj.items && componentObj.items.map((row: any) => renderComponents(row, outline))}
 				</component.componentInfo.component>;
 			}
 		}
 
 		if (componentObj.items) {
-			return componentObj.items.map((item: any) => renderComponents(item));
+			return componentObj.items.map((item: any) => renderComponents(item, outline));
 		}
 
 		return null;
@@ -300,7 +302,7 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 		onDragOver={allowDrop}
 		onDrop={drop}>
 			<div ref={holderRef} className={`${fragment.cssClasses ? fragment.cssClasses.map((cc: any) => cc.id).join(' ') : ''}`}>
-				{renderComponents(fragment.data)}
+				{renderComponents(fragment.data, outline)}
 			</div>
 		</div>
 	);

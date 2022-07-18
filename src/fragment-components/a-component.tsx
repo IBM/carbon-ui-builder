@@ -66,7 +66,8 @@ export interface ComponentInfoRenderProps {
 	selected: boolean;
 	onDragOver: (event: any) => void;
 	onDrop: (event: any) => any;
-	renderComponents: (componentObj: any) => any;
+	outline: boolean | null;
+	renderComponents: (componentObj: any, outline: boolean | null) => any;
 }
 
 export const AComponent = ({

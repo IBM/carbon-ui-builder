@@ -1,15 +1,16 @@
 import React, { useContext, useRef, useState } from 'react';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { Button, TextInput } from 'carbon-components-react';
 import {
 	Checkmark16,
+	ChevronLeft24,
 	Copy16,
-	TrashCan16,
-	Edit16,
 	DocumentExport16,
-	Undo16,
+	Edit16,
+	CircleDash20,
 	Redo16,
-	ChevronLeft24
+	TrashCan16,
+	Undo16
 } from '@carbon/icons-react';
 import { ModalContext, ModalActionType } from '../../context/modal-context';
 import { FragmentModal } from './fragment-modal';
@@ -144,6 +145,19 @@ const fragmentEditToolBar = css`
 	}
 `;
 
+const actionIconSelectedStyle = css`
+	color: #0f62fe;
+`;
+
+const actionIconInheritedStyle = css`
+background: linear-gradient(to top right,
+	rgba(0,0,0,0) 0%,
+	rgba(0,0,0,0) calc(50% - 1.2px),
+	rgba(0,0,0,1) 50%,
+	rgba(0,0,0,0) calc(50% + 1.2px),
+	rgba(0,0,0,0) 100%)
+`;
+
 export const EditHeader = ({ fragment, setFragment }: any) => {
 	const navigate: NavigateFunction = useNavigate();
 	const [, dispatchModal] = useContext(ModalContext);
@@ -207,12 +221,24 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 						</p>
 
 						<div className='title-subheading'>
-							<div className='date-wrap'>{`Last modified ${ fragment.lastModified}`}</div>
+							<div className='date-wrap'>{`Last modified ${fragment.lastModified}`}</div>
 						</div>
 					</div>
 				</div>
 				<div className={fragmentEditToolBar}>
 					<div className='toolBarButtons'>
+						<Button
+							kind='ghost'
+							aria-label='Toggle outline'
+							title='Toggle outline'
+							onClick={() => setFragment({ ...fragment, outline: fragment.outline === false ? null : !fragment.outline })}>
+							<CircleDash20 className={cx(
+								actionIconStyle,
+								fragment.outline === true ? actionIconSelectedStyle : '',
+								fragment.outline === false ? actionIconInheritedStyle : ''
+							)} />
+						</Button>
+						<div className={toolBarSeparator} />
 						<Button
 							kind='ghost'
 							aria-label='Undo'

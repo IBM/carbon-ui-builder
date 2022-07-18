@@ -83,6 +83,7 @@ export const AExpandableTile = ({
 	children,
 	componentObj,
 	onDrop,
+	outline,
 	selected,
 	...rest
 }: any) => {
@@ -94,7 +95,12 @@ export const AExpandableTile = ({
 		{...rest}>
 			<ExpandableTile
 			light={componentObj.light}
-			className={`${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} ${componentObj.outline ? outlineStyle : ''}`}
+			className={`${
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')
+				} ${
+					(componentObj.outline || outline === true) && outline !== false ? outlineStyle : ''
+				}`
+			}
 			expanded={componentObj.expanded}>
 				<TileAboveTheFoldContent onDrop={onDrop}>
 					{children.filter(({ props }: any) => props && props.componentObj.type !== 'tile-fold')}
@@ -143,14 +149,15 @@ export const componentInfo: ComponentInfo = {
 			}
 		]
 	},
-	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <AExpandableTile
+	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline }) => <AExpandableTile
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
 		selected={selected}
 		onDragOver={onDragOver}
+		outline={outline}
 		onDrop={onDrop}>
-		{componentObj.items.map((fold: any) => renderComponents(fold))}
+		{componentObj.items.map((fold: any) => renderComponents(fold, outline))}
 	</AExpandableTile>,
 	image,
 	codeExport: {
