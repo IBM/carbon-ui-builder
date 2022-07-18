@@ -17,7 +17,7 @@ import {
 import {
 	getParentComponent
 } from '../components';
-import image from './../assets/component-icons/radio.svg';
+import image from './../assets/component-icons/list.svg';
 import {
 	angularClassNamesFromComponentObj,
 	reactClassNamesFromComponentObj
