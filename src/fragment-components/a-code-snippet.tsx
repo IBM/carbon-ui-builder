@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Dropdown, TextInput, CodeSnippet } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
@@ -14,26 +14,28 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 		{ id: 'inline', text: 'Inline' }
 	];
 	const languages = [
+		{ id: 'text', text: 'Text' },
 		{ id: 'json', text: 'JSON' },
 		{ id: 'html', text: 'HTML' },
 		{ id: 'css', text: 'CSS' },
 		{ id: 'javascript', text: 'JavaScript' },
 		{ id: 'typescript', text: 'TypeScript' }
 	];
+
+	const [codeLanguage, setCodeLanguage] = useState('text');
+
 	return <>
 		<Dropdown
 			label='Code language selector'
 			titleText='Code language selector'
+			size='sm'
 			items={languages}
-			initialSelectedItem={languages.find(item => item.id === selectedComponent.language)}
+			selectedItem={languages.find(item => item.id === codeLanguage)}
 			itemToString={(item: any) => (item ? item.text : '')}
-			onChange={(event: any) => setComponent({
-				...selectedComponent,
-				language: event.selectedItem.id
-		})} />
+			onChange={(event: any) => setCodeLanguage(event.selectedItem.id)} />
 		<label className='bx--label'>Code</label>
 		<ControlledEditor
-			language={selectedComponent.language} height="10rem"
+			language={codeLanguage} height="10rem"
 			value={selectedComponent.code}
 			options= {{ quickSuggestions: false }}
 			onChange= {(_, value: any) => {
@@ -95,10 +97,8 @@ export const componentInfo: ComponentInfo = {
 	type: 'code-snippet',
 	defaultComponentObj: {
 		type: 'code-snippet',
-		label: 'CodeSnippet',
 		variant: 'single',
-		code: '',
-		language: 'html'
+		code: ''
 	},
 	image,
 	codeExport: {
