@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
-import { Dropdown, TextInput, CodeSnippet } from 'carbon-components-react';
+import {
+	Dropdown,
+	TextInput,
+	CodeSnippet,
+	Checkbox
+} from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
 import { ComponentInfo } from '.';
@@ -25,6 +30,14 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 	const [codeLanguage, setCodeLanguage] = useState('text');
 
 	return <>
+		<Checkbox
+			labelText='Light theme'
+			id='theme-select'
+			checked={selectedComponent.light}
+			onChange={(checked: any) => setComponent({
+				...selectedComponent,
+				light: checked
+		})} />
 		<Dropdown
 			label='Code language selector'
 			titleText='Code language selector'
@@ -80,6 +93,7 @@ export const ACodeSnippet = ({
 		rejectDrop={true}
 		{...rest}>
 			<CodeSnippet
+			light={componentObj.light}
 			type={componentObj.variant}
 			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 				{componentObj.code}
@@ -98,7 +112,8 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'code-snippet',
 		variant: 'single',
-		code: ''
+		code: '',
+		light: false
 	},
 	image,
 	codeExport: {
@@ -109,6 +124,7 @@ export const componentInfo: ComponentInfo = {
 			imports: ['CodeSnippetModule'],
 			code: ({ json }) => {
 				return `<ibm-code-snippet
+					${json.light ? `[theme]="light"` : `[theme]="dark"`}
 					display={{${nameStringToVariableString(json.codeContext?.name)}Type}}>{{
 						${nameStringToVariableString(json.codeContext?.name)}Code
 					}}</ibm-code-snippet>`;
@@ -118,6 +134,7 @@ export const componentInfo: ComponentInfo = {
 			imports: ['CodeSnippet'],
 			code: ({ json }) => {
 				return `<CodeSnippet
+					light={${json.light}}
 					type="${json.variant}">{\`${json.code}\`}
 				</CodeSnippet>`;
 			}
