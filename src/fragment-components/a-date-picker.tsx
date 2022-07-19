@@ -64,8 +64,8 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 					updateListItems('value', event.currentTarget.value, index);
 				}}
 			/>
-		</>
-	}
+		</>;
+	};
 	const updateStepList = (newList: any[]) => {
 		setComponent({
 			...selectedComponent,
@@ -138,8 +138,7 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 					});
 				}}
 			/>
-			{ selectedComponent.datePickerType === 'range' && <>
-				<TextInput
+			{ selectedComponent.datePickerType === 'range' && <TextInput
 					value={selectedComponent.rangeEndLabel}
 					labelText='Date picker label'
 					onChange={(event: any) => {
@@ -149,9 +148,8 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 						});
 					}}
 				/>
-			</>
 			}
-		</> :
+			</> :
 		<DraggableTileList
 			dataList={[...selectedComponent.items]}
 			setDataList={updateStepList}
@@ -166,8 +164,7 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 };
 
 export const ADatePickerCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
-		<TextInput
+	return <TextInput
 			value={selectedComponent.codeContext?.name}
 			labelText='Input name'
 			onChange={(event: any) => {
@@ -179,12 +176,10 @@ export const ADatePickerCodeUI = ({ selectedComponent, setComponent }: any) => {
 					}
 				});
 			}}
-		/>
-	</>;
+		/>;
 };
 
 export const ADatePicker = ({
-	children,
 	componentObj,
 	...rest
 }: any) => {
@@ -269,25 +264,25 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => ``,
+			inputs: (_) => '',
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 			imports: ['DatePickerModule', 'TimePickerModule', 'TimePickerSelectModule'],
 			code: ({ json }) => {
 				return `${json.datePickerType === 'timePicker' ?
 					`<ibm-timepicker
 					${angularClassNamesFromComponentObj(json)}
-					${json.light ? `[theme]="light"` : `[theme]="dark"`}
+					${json.light ? '[theme]="light"' : '[theme]="dark"'}
 					[invalid]="${json.invalid}"
 					[invalidText]="'A valid value is required'"
 					(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
 					[value]="''"
 					[disabled]="${json.disabled}">
-					<ibm-timepicker-select ${json.light ? `[theme]="light"` : `[theme]="dark"`}
+					<ibm-timepicker-select ${json.light ? '[theme]="light"' : '[theme]="dark"'}
 						[disabled]="${json.disabled}" display="inline">
 						<option selected value="AM">AM</option>
 						<option value="PM">PM</option>
 					</ibm-timepicker-select>
-					<ibm-timepicker-select ${json.light ? `[theme]="light"` : `[theme]="dark"`}
+					<ibm-timepicker-select ${json.light ? '[theme]="light"' : '[theme]="dark"'}
 						[disabled]="${json.disabled}" display="inline">
 						${json.items.map((step: any) => (
 							`<option
@@ -300,7 +295,7 @@ export const componentInfo: ComponentInfo = {
 					</ibm-timepicker>` : json.datePickerType === 'simple' ?
 					`<ibm-date-picker-input
 						${angularClassNamesFromComponentObj(json)}
-						${json.light ? `[theme]="light"` : `[theme]="dark"`}
+						${json.light ? '[theme]="light"' : '[theme]="dark"'}
 						[label]="'${json.rangeStartLabel}'"
 						[placeholder]="'mm/dd/yyyy'"
 						[disabled]="${json.disabled}"
@@ -315,7 +310,7 @@ export const componentInfo: ComponentInfo = {
 						id="initial-value-datepicker"
 						[placeholder]="'mm/dd/yyyy'"
 						[size]="${json.size}"
-						${json.light ? `[theme]="light"` : `[theme]="dark"`}
+						${json.light ? '[theme]="light"' : '[theme]="dark"'}
 						[value]="''"
 						[disabled]="${json.disabled}"
 						[invalid]="${json.invalid}"
@@ -331,7 +326,7 @@ export const componentInfo: ComponentInfo = {
 						range="true"
 						id="initial-value-datepicker"
 						[placeholder]="'mm/dd/yyyy'"
-						${json.light ? `[theme]="light"` : `[theme]="dark"`}
+						${json.light ? '[theme]="light"' : '[theme]="dark"'}
 						[disabled]="${json.disabled}"
 						[invalid]="${json.invalid}"
 						[invalidText]="'A valid value is required'"
@@ -339,7 +334,7 @@ export const componentInfo: ComponentInfo = {
 						[value]="''"
 						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
 					</ibm-date-picker>`
-				}`
+				}`;
 			}
 		},
 		react: {
@@ -385,7 +380,7 @@ export const componentInfo: ComponentInfo = {
 							invalid={${json.invalid}} />`
 						: '' }
 					</DatePicker>`
-				}`
+				}`;
 			}
 		}
 	}
