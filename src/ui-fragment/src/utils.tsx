@@ -9,7 +9,8 @@ import { UIGrid } from './components/ui-grid';
 import { UIRow } from './components/ui-row';
 
 export const setItemInState = (item: any, state: any, setState: (state: any) => void) => {
-	const itemIndex = state.items.indexOf(item);
+	const itemIndex = state.items.findIndex((i: any) => i.id === item.id);
+
 	setState({
 		...state,
 		items: [
