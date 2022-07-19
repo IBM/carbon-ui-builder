@@ -12,11 +12,16 @@ import {
 import { AComponent, ComponentInfo } from './a-component';
 import { DraggableTileList } from '../components';
 import image from './../assets/component-icons/link.svg';
+import {
+	angularClassNamesFromComponentObj,
+	nameStringToVariableString,
+	reactClassNamesFromComponentObj
+} from '../utils/fragment-tools';
 
 export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const size = [
 		{ id: 'sm', text: 'Small' },
-		{ id: 'medium', text: 'Medium' },
+		{ id: 'md', text: 'Medium' },
 		{ id: 'xl', text: 'Extra large' }
 	];
 	const datePickerType = [
@@ -191,11 +196,11 @@ export const ADatePicker = ({
 			{
 				componentObj.datePickerType === 'timePicker' ?
 				<TimePicker id="time-picker" light={componentObj.light}>
-				<TimePickerSelect id="time-picker-select-1">
+				<TimePickerSelect labelText="time-picker-1" id="time-picker-select-1">
 					<SelectItem value="AM" text="AM" />
 					<SelectItem value="PM" text="PM" />
 				</TimePickerSelect>
-				<TimePickerSelect id="time-picker-select-2" >
+				<TimePickerSelect labelText="time-picker-2" id="time-picker-select-2" >
 					{
 						componentObj.items.map((step: any, index: number) => <SelectItem
 							value={step.value}
@@ -265,28 +270,101 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => ``,
-			outputs: ({ json }) => ``,
-			imports: [''],
+			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
+			imports: ['DatePickerModule', 'TimePickerModule', 'TimePickerSelectModule'],
 			code: ({ json }) => {
-				return ``;
+				return `${json.datePickerType === 'timePicker' ?
+					`<ibm-timepicker
+					${angularClassNamesFromComponentObj(json)}
+					${json.light ? `[theme]="light"` : `[theme]="dark"`}
+					[invalid]="${json.invalid}"
+					[invalidText]="'A valid value is required'"
+					(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
+					[value]="''"
+					[disabled]="${json.disabled}">
+					<ibm-timepicker-select ${json.light ? `[theme]="light"` : `[theme]="dark"`}
+						[disabled]="${json.disabled}" display="inline">
+						<option selected value="AM">AM</option>
+						<option value="PM">PM</option>
+					</ibm-timepicker-select>
+					<ibm-timepicker-select ${json.light ? `[theme]="light"` : `[theme]="dark"`}
+						[disabled]="${json.disabled}" display="inline">
+						${json.items.map((step: any) => (
+							`<option
+								value="${step.value}"
+								text="${step.text}">
+									${step.text}
+							</option>`
+						)).join('\n')}
+					</ibm-timepicker-select>
+					</ibm-timepicker>` : json.datePickerType === 'simple' ?
+					`<ibm-date-picker-input
+						${angularClassNamesFromComponentObj(json)}
+						${json.light ? `[theme]="light"` : `[theme]="dark"`}
+						[label]="'${json.rangeStartLabel}'"
+						[placeholder]="'mm/dd/yyyy'"
+						[disabled]="${json.disabled}"
+						[size]="${json.size}"
+						[invalid]="${json.invalid}"
+						[invalidText]="'A valid value is required'"
+						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
+					</ibm-date-picker-input>` : json.datePickerType === 'single' ?
+					`<ibm-date-picker
+						${angularClassNamesFromComponentObj(json)}
+						[label]="'${json.rangeStartLabel}'"
+						id="initial-value-datepicker"
+						[placeholder]="'mm/dd/yyyy'"
+						[size]="${json.size}"
+						${json.light ? `[theme]="light"` : `[theme]="dark"`}
+						[value]="''"
+						[disabled]="${json.disabled}"
+						[invalid]="${json.invalid}"
+						[invalidText]="'A valid value is required'"
+						[dateFormat]="'m/d/Y'"
+						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
+					</ibm-date-picker>`
+					: `<ibm-date-picker
+						${angularClassNamesFromComponentObj(json)}
+						[label]="'${json.rangeStartLabel}'"
+						[rangeLabel]="'${json.rangeEndLabel}'"
+						[size]="${json.size}"
+						range="true"
+						id="initial-value-datepicker"
+						[placeholder]="'mm/dd/yyyy'"
+						${json.light ? `[theme]="light"` : `[theme]="dark"`}
+						[disabled]="${json.disabled}"
+						[invalid]="${json.invalid}"
+						[invalidText]="'A valid value is required'"
+						[dateFormat]="'m/d/Y'"
+						[value]="''"
+						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
+					</ibm-date-picker>`
+				}`
 			}
 		},
 		react: {
 			imports: ['DatePicker','TimePicker','TimePickerSelect','SelectItem','DatePickerInput'],
 			code: ({ json }) => {
 				return `${json.datePickerType === 'timePicker' ?
-					`<TimePicker id="time-picker" light={${json.light}}>
-					<TimePickerSelect id="time-picker-select-1">
+					`<TimePicker ${reactClassNamesFromComponentObj(json)} id="time-picker" light={${json.light}}>
+					<TimePickerSelect labelText="time-picker-1" id="time-picker-select-1">
 						<SelectItem value="AM" text="AM" />
 						<SelectItem value="PM" text="PM" />
 					</TimePickerSelect>
-					<TimePickerSelect id="time-picker-select-2" >
+					<TimePickerSelect labelText="time-picker-2" id="time-picker-select-2" >
 						${json.items.map((step: any) => (
-							`<SelectItem value="${step.value}" text="${step.text}" />`
+							`<SelectItem
+								value="${step.value}"
+								text="${step.text}"
+							/>`
 						)).join('\n')}
 					</TimePickerSelect>
 					</TimePicker>` :
-					`<DatePicker dateFormat="m/d/Y" datePickerType="${json.datePickerType}" light={${json.light}}>
+					`<DatePicker
+					${reactClassNamesFromComponentObj(json)}
+					dateFormat="m/d/Y"
+					datePickerType="${json.datePickerType}"
+					light={${json.light}}>
 						<DatePickerInput
 							id="date-picker-default-id"
 							placeholder="mm/dd/yyyy"
