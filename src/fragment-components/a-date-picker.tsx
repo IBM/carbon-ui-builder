@@ -216,7 +216,7 @@ export const ADatePicker = ({
 						invalid={componentObj.invalid}
 					/>
 					{
-						componentObj.datePickerType === 'range' ?
+						componentObj.datePickerType === 'range' &&
 							<DatePickerInput
 								id="date-picker-range-end"
 								placeholder="mm/dd/yyyy"
@@ -226,7 +226,6 @@ export const ADatePicker = ({
 								disabled={componentObj.disabled}
 								invalid={componentObj.invalid}
 							/>
-						: <></>
 					}
 				</DatePicker>
 			}
