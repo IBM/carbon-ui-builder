@@ -1,4 +1,6 @@
 import React from 'react';
+import { UIAccordion } from './components/ui-accordion';
+import { UIAccordionItem } from './components/ui-accordion-item';
 import { UIButton } from './components/ui-button';
 import { UIColumn } from './components/ui-column';
 import { UIGrid } from './components/ui-grid';
@@ -18,6 +20,12 @@ export const setItemInState = (item: any, state: any, setState: (state: any) => 
 
 export const renderComponents = (state: any, setState: (state: any) => void, setGlobalState: (state: any) => void) => {
 	switch (state.type) {
+		case 'accordion':
+			return <UIAccordion key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'accordion-item':
+			return <UIAccordionItem key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
 		case 'button':
 			return <UIButton key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
