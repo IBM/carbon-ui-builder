@@ -10,13 +10,14 @@ import {
 	CircleDash20,
 	Redo16,
 	TrashCan16,
-	Undo16
+	Undo16,
+	View16
 } from '@carbon/icons-react';
 import { ModalContext, ModalActionType } from '../../context/modal-context';
 import { FragmentModal } from './fragment-modal';
 import { GlobalStateContext } from '../../context';
 import { actionIconStyle } from '.';
-import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { NavigateFunction, useNavigate, useParams } from 'react-router-dom';
 
 const editHeader = css`
 	left: 16rem;
@@ -161,6 +162,7 @@ background: linear-gradient(to top right,
 export const EditHeader = ({ fragment, setFragment }: any) => {
 	const navigate: NavigateFunction = useNavigate();
 	const [, dispatchModal] = useContext(ModalContext);
+	const params = useParams();
 	const [isEditingTitle, setIsEditingTitle] = useState(false);
 	const titleTextInputRef = useRef(null as any);
 	const {
@@ -248,6 +250,18 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 								fragment.outline === false ? actionIconInheritedStyle : ''
 							)} />
 						</Button>
+						{
+							process.env.NODE_ENV === 'development' &&
+							<Button
+								kind='ghost'
+								aria-label={'Preview fragment'}
+								title={'Preview fragment'}
+								onClick={() => {
+									window.open(`/view/${params.id}`, '', 'popup');
+								}}>
+								<View16 className={actionIconStyle} />
+							</Button>
+						}
 						<div className={toolBarSeparator} />
 						<Button
 							kind='ghost'
