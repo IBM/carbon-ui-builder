@@ -94,7 +94,7 @@ export const FragmentLayoutWidget = ({ fragment, setFragment, title }: any) => {
 	return <HierarchyList
 		title={title}
 		className={fragmentLayoutStyle}
-		items={getHierarchyListItemsFromComponentObj(fragment.data)?.children}
+		items={getHierarchyListItemsFromComponentObj(fragment.data)?.children || []}
 		onListUpdated={(updatedItems: any[]) => {
 			setFragment({
 				...fragment,
