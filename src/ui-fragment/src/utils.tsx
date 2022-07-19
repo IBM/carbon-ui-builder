@@ -1,6 +1,8 @@
 import React from 'react';
 import { UIAccordion } from './components/ui-accordion';
 import { UIAccordionItem } from './components/ui-accordion-item';
+import { UIBreadcrumb } from './components/ui-breadcrumb';
+import { UIBreadcrumbItem } from './components/ui-breadcrumb-item';
 import { UIButton } from './components/ui-button';
 import { UIColumn } from './components/ui-column';
 import { UIGrid } from './components/ui-grid';
@@ -28,6 +30,12 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'button':
 			return <UIButton key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'breadcrumb':
+			return <UIBreadcrumb key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'breadcrumb-item':
+			return <UIBreadcrumbItem key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'grid':
 			return <UIGrid key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
