@@ -79,6 +79,7 @@ export const ABreadcumbSettingsUI = ({ selectedComponent, setComponent }: any) =
 			setDataList={updateStepList}
 			updateItem={handleStepUpdate}
 			defaultObject={{
+				type: 'breadcrumb-item',
 				label: 'Breadcrumb',
 				href: '/'
 			}}
@@ -139,6 +140,7 @@ export const componentInfo: ComponentInfo = {
 		noTrailingSlash: false,
 		items: [
 			{
+				type: 'breadcrumb-item',
 				label: 'Breadcrumb',
 				href: '/'
 			}
