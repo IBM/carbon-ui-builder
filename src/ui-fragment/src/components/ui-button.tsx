@@ -23,5 +23,10 @@ export const UIButton = ({ state }: {
 		return <></>;
 	}
 
-	return <Button kind={state.kind} className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>{state.text}</Button>;
+	return <Button
+	kind={state.kind}
+	name={state.codeContext?.name}
+	className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+		{state.text}
+	</Button>;
 };
