@@ -4,6 +4,7 @@ import { UIAccordionItem } from './components/ui-accordion-item';
 import { UIBreadcrumb } from './components/ui-breadcrumb';
 import { UIBreadcrumbItem } from './components/ui-breadcrumb-item';
 import { UIButton } from './components/ui-button';
+import { UICheckbox } from './components/ui-checkbox';
 import { UIColumn } from './components/ui-column';
 import { UIGrid } from './components/ui-grid';
 import { UIRow } from './components/ui-row';
@@ -37,6 +38,9 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'breadcrumb-item':
 			return <UIBreadcrumbItem key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'checkbox':
+			return <UICheckbox key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'grid':
 			return <UIGrid key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
