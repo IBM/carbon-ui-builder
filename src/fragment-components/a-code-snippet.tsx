@@ -104,23 +104,22 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Type = "${json.variant}"
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Code = ${JSON.stringify(json.code)}`,
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Code = \`${json.code}\``,
 			outputs: () => '',
 			imports: ['CodeSnippetModule'],
 			code: ({ json }) => {
 				return `<ibm-code-snippet
-					display={{${nameStringToVariableString(json.codeContext?.name)}Type}}>
-						{{${nameStringToVariableString(json.codeContext?.name)}Code}}
-					</ibm-code-snippet>`;
+					display={{${nameStringToVariableString(json.codeContext?.name)}Type}}>{{
+						${nameStringToVariableString(json.codeContext?.name)}Code
+					}}</ibm-code-snippet>`;
 			}
 		},
 		react: {
 			imports: ['CodeSnippet'],
 			code: ({ json }) => {
 				return `<CodeSnippet
-					type="${json.variant}">
-						{${JSON.stringify(json.code)}}
-					</CodeSnippet>`;
+					type="${json.variant}">{\`${json.code}\`}
+				</CodeSnippet>`;
 			}
 		}
 	}
