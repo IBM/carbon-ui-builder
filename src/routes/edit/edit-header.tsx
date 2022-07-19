@@ -170,6 +170,16 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 		redoAction
 	} = useContext(GlobalStateContext);
 
+	const getOutlineHelperText = (outline: boolean | null) => {
+		if (outline === true) {
+			return 'Forcing outline - click to change';
+		}
+		if (outline === false) {
+			return 'Hiding outline - click to change';
+		}
+		return 'Inheriting outline visibility - click to change';
+	};
+
 	return (
 		<header
 			className={editHeader}
@@ -229,8 +239,8 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 					<div className='toolBarButtons'>
 						<Button
 							kind='ghost'
-							aria-label='Toggle outline'
-							title='Toggle outline'
+							aria-label={getOutlineHelperText(fragment.outline)}
+							title={getOutlineHelperText(fragment.outline)}
 							onClick={() => setFragment({ ...fragment, outline: fragment.outline === false ? null : !fragment.outline })}>
 							<CircleDash20 className={cx(
 								actionIconStyle,
