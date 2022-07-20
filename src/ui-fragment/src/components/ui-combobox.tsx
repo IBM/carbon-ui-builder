@@ -6,7 +6,7 @@ export interface ComboBoxState {
 	type: string;
 	placeholder: string;
 	id: string | number;
-	selectedItem: any;
+	selectedItem?: any;
 	listItems?: any[];
 	light?: boolean;
 	invalid?: boolean;
@@ -62,6 +62,9 @@ export const UIComboBox = ({ state, setState }: {
 		selectedItem={state.selectedItem}
 		helperText={state.helperText}
 		itemToString={state.itemToString || ((item) => item.text || '')}
-		onChange={(selectedItem: any) => setState({ ...state, selectedItem })}
+		onChange={(selectedItem: any) => setState({
+			...state,
+			selectedItem: state.listItems?.find((item) => item.text === selectedItem.text)
+		})}
 		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />;
 };
