@@ -11,6 +11,8 @@ import { UIComboBox } from './components/ui-combobox';
 import { UIDropdown } from './components/ui-dropdown';
 import { UIGrid } from './components/ui-grid';
 import { UILoading } from './components/ui-loading';
+import { UIRadio } from './components/ui-radio';
+import { UIRadioGroup } from './components/ui-radio-group';
 import { UIRow } from './components/ui-row';
 
 export const setItemInState = (item: any, state: any, setState: (state: any) => void) => {
@@ -60,6 +62,12 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'loading':
 			return <UILoading key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'radio-group':
+			return <UIRadioGroup key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'radio':
+			return <UIRadio key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'row':
 			return <UIRow key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
