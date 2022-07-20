@@ -37,41 +37,24 @@ export const UIComboBox = ({ state }: {
 		return <></>;
 	}
 
-	return state.isMulti
-		? <FilterableMultiSelect
-			placeholder={state.placeholder}
-			id={state.id}
-			items={state.listItems}
-			light={state.light}
-			invalid={state.invalid}
-			invalidText={state.invalidText}
-			isInline={state.isInline}
-			warn={state.warn}
-			warnText={state.warnText}
-			disabled={state.disabled}
-			selectionFeedback={state.selectionFeedback}
-			direction={state.direction}
-			size={state.size}
-			label={state.label}
-			helperText={state.helperText}
-			itemToString={state.itemToString || ((item) => item.text || '')}
-			className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />
-		: <ComboBox
-			placeholder={state.placeholder}
-			id={state.id}
-			items={state.listItems}
-			light={state.light}
-			invalid={state.invalid}
-			invalidText={state.invalidText}
-			isInline={state.isInline}
-			warn={state.warn}
-			warnText={state.warnText}
-			disabled={state.disabled}
-			selectionFeedback={state.selectionFeedback}
-			direction={state.direction}
-			size={state.size}
-			label={state.label}
-			helperText={state.helperText}
-			itemToString={state.itemToString || ((item) => item.text || '')}
-			className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />;
+	const ComboOrMulti = state.isMulti ? FilterableMultiSelect : ComboBox;
+
+	return <ComboOrMulti
+		placeholder={state.placeholder}
+		id={state.id}
+		items={state.listItems}
+		light={state.light}
+		invalid={state.invalid}
+		invalidText={state.invalidText}
+		isInline={state.isInline}
+		warn={state.warn}
+		warnText={state.warnText}
+		disabled={state.disabled}
+		selectionFeedback={state.selectionFeedback}
+		direction={state.direction}
+		size={state.size}
+		label={state.label}
+		helperText={state.helperText}
+		itemToString={state.itemToString || ((item) => item.text || '')}
+		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />;
 };
