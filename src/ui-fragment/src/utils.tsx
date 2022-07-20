@@ -10,6 +10,7 @@ import { UIColumn } from './components/ui-column';
 import { UIComboBox } from './components/ui-combobox';
 import { UIDropdown } from './components/ui-dropdown';
 import { UIGrid } from './components/ui-grid';
+import { UILoading } from './components/ui-loading';
 import { UIRow } from './components/ui-row';
 
 export const setItemInState = (item: any, state: any, setState: (state: any) => void) => {
@@ -56,6 +57,9 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'grid':
 			return <UIGrid key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'loading':
+			return <UILoading key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'row':
 			return <UIRow key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
