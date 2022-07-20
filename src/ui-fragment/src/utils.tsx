@@ -7,6 +7,7 @@ import { UIButton } from './components/ui-button';
 import { UICheckbox } from './components/ui-checkbox';
 import { UICodeSnippet } from './components/ui-code-snippet';
 import { UIColumn } from './components/ui-column';
+import { UIComboBox } from './components/ui-combobox';
 import { UIGrid } from './components/ui-grid';
 import { UIRow } from './components/ui-row';
 
@@ -45,6 +46,9 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'code-snippet':
 			return <UICodeSnippet key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'combobox':
+			return <UIComboBox key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'grid':
 			return <UIGrid key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
