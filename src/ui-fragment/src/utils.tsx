@@ -10,6 +10,7 @@ import { UIColumn } from './components/ui-column';
 import { UIComboBox } from './components/ui-combobox';
 import { UIDropdown } from './components/ui-dropdown';
 import { UIGrid } from './components/ui-grid';
+import { UILink } from './components/ui-link';
 import { UILoading } from './components/ui-loading';
 import { UIRadio } from './components/ui-radio';
 import { UIRadioGroup } from './components/ui-radio-group';
@@ -51,6 +52,9 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 		case 'code-snippet':
 			return <UICodeSnippet key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
+		case 'column':
+			return <UIColumn key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
 		case 'combobox':
 			return <UIComboBox key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
@@ -72,8 +76,8 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 		case 'row':
 			return <UIRow key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
-		case 'column':
-			return <UIColumn key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+		case 'link':
+			return <UILink key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		default:
 			break;
