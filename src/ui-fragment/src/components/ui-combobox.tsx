@@ -6,6 +6,7 @@ export interface ComboBoxState {
 	type: string;
 	placeholder: string;
 	id: string | number;
+	selectedItem: any;
 	listItems?: any[];
 	light?: boolean;
 	invalid?: boolean;
@@ -19,6 +20,7 @@ export interface ComboBoxState {
 	direction?: string;
 	size?: string;
 	label?: string;
+	hideLabel?: boolean;
 	helperText?: string;
 	itemToString?: (item: any) => string;
 	cssClasses?: CssClasses[];
@@ -27,7 +29,7 @@ export interface ComboBoxState {
 	};
 }
 
-export const UIComboBox = ({ state }: {
+export const UIComboBox = ({ state, setState }: {
 	state: ComboBoxState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
@@ -40,21 +42,26 @@ export const UIComboBox = ({ state }: {
 	const ComboOrMulti = state.isMulti ? FilterableMultiSelect : ComboBox;
 
 	return <ComboOrMulti
+		{...state.isMulti ? {
+			type: state.isInline ? 'inline' : 'default',
+			hideLabel: state.hideLabel,
+			selectionFeedback: state.selectionFeedback
+		} : {}}
 		placeholder={state.placeholder}
 		id={state.id}
 		items={state.listItems}
 		light={state.light}
 		invalid={state.invalid}
 		invalidText={state.invalidText}
-		isInline={state.isInline}
 		warn={state.warn}
 		warnText={state.warnText}
 		disabled={state.disabled}
-		selectionFeedback={state.selectionFeedback}
 		direction={state.direction}
 		size={state.size}
 		label={state.label}
+		selectedItem={state.selectedItem}
 		helperText={state.helperText}
 		itemToString={state.itemToString || ((item) => item.text || '')}
+		onChange={(selectedItem: any) => setState({ ...state, selectedItem })}
 		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />;
 };
