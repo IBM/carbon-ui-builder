@@ -8,7 +8,7 @@ import {
 import { AComponent } from './a-component';
 import { ComponentInfo } from '.';
 import { css } from 'emotion';
-import image from './../assets/component-icons/loading.svg';
+import image from './../assets/component-icons/inline-loading.svg';
 import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj,

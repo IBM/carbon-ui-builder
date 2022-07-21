@@ -56,6 +56,6 @@ git commit -s
 Feel free to [create an issue][issues] to question or discuss anything with us.
 
 <!-- links -->
-[issues]: https://github.com/IBM/carbon-components-builder/issues
-[pulls]: https://github.com/IBM/carbon-components-builder/pulls
+[issues]: https://github.com/IBM/carbon-ui-builder/issues
+[pulls]: https://github.com/IBM/carbon-ui-builder/pulls
 [DCO]: https://developercertificate.org/

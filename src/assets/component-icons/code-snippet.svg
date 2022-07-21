@@ -1,0 +1,10 @@
+<svg id="Group_28" data-name="Group 28" xmlns="http://www.w3.org/2000/svg" width="82" height="17" viewBox="0 0 82 17">
+  <rect id="Background" width="82" height="17" fill="#f4f4f4"/>
+  <g id="icon_copy" data-name="icon copy" transform="translate(64.709)">
+    <rect id="Base" width="17" height="17" transform="translate(0.291)" fill="none"/>
+    <g id="Organization_File_copy_16" data-name="Organization / File / copy / 16" transform="translate(5.761 5.586)">
+      <path id="Fill" d="M5.586,6.016H1.719a.43.43,0,0,1-.43-.43V1.719a.43.43,0,0,1,.43-.43H5.586a.43.43,0,0,1,.43.43V5.586A.43.43,0,0,1,5.586,6.016Zm-3.867-4.3V5.586H5.586V1.719ZM.43,3.438H0V.43A.43.43,0,0,1,.43,0H3.438V.43H.43Z" transform="translate(0 0)" fill="#161616"/>
+    </g>
+  </g>
+  <path id="text_line" data-name="text line" d="M0,0H57.365V3.438H0Z" transform="translate(6.226 6.875)" fill="#e8e8e8"/>
+</svg>

@@ -6,6 +6,7 @@ import React, {
 } from 'react';
 import assign from 'lodash/assign';
 import { getFragmentHelpers } from './fragments-context-helper';
+import { getFragmentsFromLocalStorage } from '../utils/fragment-tools';
 
 const GlobalStateContext: React.Context<any> = createContext(null);
 GlobalStateContext.displayName = 'GlobalStateContext';
@@ -28,24 +29,14 @@ export const useFragment = (id?: string) => {
 	}
 
 	const fragment = fragments.find((fragment: any) => fragment.id === id);
-	const setFragment = (fragment: any) => {
-		updateFragment(fragment);
+	const setFragment = (fragment: any, updateActionHistory = true) => {
+		updateFragment(fragment, updateActionHistory);
 	};
 	return [fragment, setFragment];
 };
 
-const validInitialFragments = (localFragments: any[] | undefined) => {
-	if (!localFragments || !Array.isArray(localFragments)) {
-		return [];
-	}
-
-	return localFragments.filter((fragment: any) => !!fragment.id && typeof fragment.id === 'string');
-};
-
 const GlobalStateContextProvider = ({ children }: any) => {
-	const [fragments, _setFragments] = useState<any[]>(
-		validInitialFragments(JSON.parse(localStorage.getItem('localFragments') as string)) || []
-	);
+	const [fragments, _setFragments] = useState<any[]>(getFragmentsFromLocalStorage());
 	const [actionHistory, setActionHistory] = useState([] as any[]);
 	const [actionHistoryIndex, setActionHistoryIndex] = useState(-1);
 
@@ -88,7 +79,7 @@ const GlobalStateContextProvider = ({ children }: any) => {
 	const updateFragment = (fragment: any, updateActionHistory = true) => {
 		const fragmentToUpdate = {
 			...fragment,
-			lastModified: updateActionHistory ? new Date().toISOString() : fragment.lastModified
+			lastModified: new Date().toISOString()
 		};
 		if (!fragments.length) {
 			setFragments([fragmentToUpdate]);
@@ -106,7 +97,7 @@ const GlobalStateContextProvider = ({ children }: any) => {
 		setFragments(updatedFragments);
 
 		if (updateActionHistory) {
-			addAction({ fragmentToUpdate });
+			addAction({ fragment: fragmentToUpdate });
 		}
 	};
 
@@ -129,13 +120,13 @@ const GlobalStateContextProvider = ({ children }: any) => {
 		setActionHistoryIndex(newIndex);
 	};
 
-	function undoAction() {
+	const undoAction = () => {
 		if (!canUndo()) {
 			return;
 		}
 
 		setAction(actionHistoryIndex - 1);
-	}
+	};
 
 	const canRedo = () => actionHistoryIndex < actionHistory.length - 1;
 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="73" height="15" viewBox="0 0 73 15">
+  <g id="breadcrumb_item" data-name="breadcrumb / item" transform="translate(-139.755 -117)">
+    <g id="breadcrumb_item-2" data-name="breadcrumb / item" transform="translate(140 117)">
+      <rect id="Bounds" width="34" height="15" transform="translate(-0.245)" fill="none"/>
+      <g id="Stack" transform="translate(1.755 2)">
+        <text id="_" data-name="/" transform="translate(29 9)" fill="#161616" font-size="9" font-family="IBMPlexSans, IBM Plex Sans"><tspan x="0" y="0">/</tspan></text>
+        <g id="Padding_Group" data-name="Padding Group" transform="translate(0 2.848)">
+          <path id="skeleton" d="M0-15H23.15v4.848H0Z" transform="translate(0 15)" fill="#e8e8e8" fill-rule="evenodd"/>
+        </g>
+        <g id="Padding_Group-2" data-name="Padding Group" transform="translate(37.85 2.848)">
+          <path id="skeleton-2" data-name="skeleton" d="M0-15H23.15v4.848H0Z" transform="translate(0 15)" fill="#e8e8e8" fill-rule="evenodd"/>
+        </g>
+      </g>
+      <g id="Stack-2" data-name="Stack" transform="translate(1.755 2)">
+        <text id="_2" data-name="/" transform="translate(29 9)" fill="#161616" font-size="9" font-family="IBMPlexSans, IBM Plex Sans"><tspan x="0" y="0">/</tspan></text>
+        <g id="Padding_Group-3" data-name="Padding Group" transform="translate(0 2.848)">
+          <path id="skeleton-3" data-name="skeleton" d="M0-15H23.15v4.848H0Z" transform="translate(0 15)" fill="#e8e8e8" fill-rule="evenodd"/>
+        </g>
+        <g id="Padding_Group-4" data-name="Padding Group" transform="translate(37.85 2.848)">
+          <path id="skeleton-4" data-name="skeleton" d="M0-15H23.15v4.848H0Z" transform="translate(0 15)" fill="#e8e8e8" fill-rule="evenodd"/>
+        </g>
+        <text id="_3" data-name="/" transform="translate(67 9)" fill="#161616" font-size="9" font-family="IBMPlexSans, IBM Plex Sans"><tspan x="0" y="0">/</tspan></text>
+      </g>
+    </g>
+  </g>
+</svg>

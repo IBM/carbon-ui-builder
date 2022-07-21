@@ -20,7 +20,18 @@ export interface RenderProps {
 	};
 }
 
-export const getFragmentPreview = async (fragment: any, props: RenderProps) => {
+export const validInitialFragments = (localFragments: any[] | undefined) => {
+	if (!localFragments || !Array.isArray(localFragments)) {
+		return [];
+	}
+
+	return localFragments.filter((fragment: any) => !!fragment.id && typeof fragment.id === 'string');
+};
+
+export const getFragmentsFromLocalStorage = () =>
+	validInitialFragments(JSON.parse(localStorage.getItem('localFragments') as string)) || [];
+
+export const getFragmentPreview = async (fragment: any, props: RenderProps, outline = false) => {
 	const element = document.createElement('div');
 	element.className = 'render-preview';
 
@@ -31,7 +42,7 @@ export const getFragmentPreview = async (fragment: any, props: RenderProps) => {
 	(element as HTMLElement).style.width = `${props.width || 800}px`;
 	(element as HTMLElement).style.height = `${props.height || 400}px`;
 	(element as HTMLElement).style.minHeight = `${props.height || 400}px`;
-	ReactDOM.render(React.createElement(Fragment, { fragment }), element);
+	ReactDOM.render(React.createElement(Fragment, { fragment, outline }), element);
 	document.body.appendChild(element);
 
 	await sleep(100); // wait for render to finish
@@ -99,7 +110,7 @@ export const getAllFragmentStyleClasses = (fragment: any, fragments: any[] = [])
 };
 
 export const getEditScreenParams = () => {
-	return matchPath('/edit/:id', window.location.pathname.split('/carbon-components-builder').join(''))?.params;
+	return matchPath('/edit/:id', window.location.pathname)?.params;
 };
 
 export const hasComponentStyleClasses = (componentObj: any) => {
