@@ -4,8 +4,8 @@ import { CssClasses } from '../types';
 
 export interface InlineLoadingState {
 	type: string;
-	status: string,
-	textDescription: string
+	status: string;
+	textDescription: string;
 	cssClasses?: CssClasses[];
 	codeContext?: {
 		name: string;
