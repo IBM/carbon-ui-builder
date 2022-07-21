@@ -22,6 +22,7 @@ import * as textarea from './a-textarea';
 import * as textinput from './a-textinput';
 import * as link from './a-link';
 import * as loading from './a-loading';
+import * as inlineloading from './a-inline-loading';
 import * as overflowMenu from './a-overflow-menu';
 // Tiles
 import * as tile from './tiles/a-tile';
@@ -47,6 +48,7 @@ export * from './a-component';
 export { AFragment, AFragmentSettingsUI, AFragmentCodeUI } from './a-fragment';
 export { AGrid, AGridSettingsUI } from './a-grid';
 export { ALoading, ALoadingCodeUI, ALoadingSettingsUI } from './a-loading';
+export { AInlineLoading, AInlineLoadingCodeUI, AInlineLoadingSettingsUI } from './a-inline-loading';
 export { ALink, ALinkSettingsUI, ALinkCodeUI } from './a-link';
 export { ANumberInput, ANumberInputSettingsUI, ANumberInputCodeUI } from './a-numberinput';
 export { AProgressIndicator, AProgressIndicatorSettingsUI, AProgressIndicatorCodeUI } from './a-progress-indicator';
@@ -84,6 +86,7 @@ export const allComponents = {
 	fragment,
 	grid,
 	loading,
+	inlineloading,
 	radio,
 	radioGroup,
 	link,

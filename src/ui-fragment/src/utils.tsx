@@ -10,6 +10,7 @@ import { UIColumn } from './components/ui-column';
 import { UIComboBox } from './components/ui-combobox';
 import { UIDropdown } from './components/ui-dropdown';
 import { UIGrid } from './components/ui-grid';
+import { UIInlineLoading } from './components/ui-inline-loading';
 import { UILink } from './components/ui-link';
 import { UILoading } from './components/ui-loading';
 import { UIRadio } from './components/ui-radio';
@@ -64,6 +65,9 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'grid':
 			return <UIGrid key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'inlineloading':
+		return <UIInlineLoading key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'loading':
 			return <UILoading key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
