@@ -119,12 +119,13 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Type = "${json.variant}"
+			@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}"
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Code = \`${json.code}\``,
 			outputs: () => '',
 			imports: ['CodeSnippetModule'],
 			code: ({ json }) => {
 				return `<ibm-code-snippet
-					${json.light ? `[theme]="light"` : `[theme]="dark"`}
+					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 					display={{${nameStringToVariableString(json.codeContext?.name)}Type}}>{{
 						${nameStringToVariableString(json.codeContext?.name)}Code
 					}}</ibm-code-snippet>`;
