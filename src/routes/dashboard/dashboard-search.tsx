@@ -8,7 +8,7 @@ import {
 } from 'carbon-components-react';
 
 import {
-	Add16,
+	DocumentAdd16,
 	ArrowsVertical16,
 	CheckmarkFilled16
 } from '@carbon/icons-react';
@@ -101,7 +101,7 @@ export const DashboardSearch = ({
 		title='Add new fragment'
 		aria-label='Add new fragment'>
 			New fragment
-			<Add16 className='bx--btn__icon' />
+			<DocumentAdd16 className='bx--btn__icon' />
 		</Button>
 	</div>
 );

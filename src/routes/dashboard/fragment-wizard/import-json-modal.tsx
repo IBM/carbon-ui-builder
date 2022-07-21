@@ -210,12 +210,18 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 			selectorPrimaryFocus='.bx--tile--selectable'
 			onRequestSubmit={() => {
 				generateFragment();
-				props.setLastVisitedModal(FragmentWizardModals.CHOOSE_FRAGMENT_MODAL);
+				props.setLastVisitedModal(FragmentWizardModals.IMPORT_JSON_MODAL);
+				props.setDisplayedModal(FragmentWizardModals.CREATE_FRAGMENT_MODAL);
+				props.setShouldDisplay(false);
 			}}
-			onRequestClose={() => props.setShouldDisplay(false)}
+			onRequestClose={() => {
+				props.setLastVisitedModal(FragmentWizardModals.IMPORT_JSON_MODAL);
+				props.setDisplayedModal(FragmentWizardModals.CREATE_FRAGMENT_MODAL);
+				props.setShouldDisplay(false);
+			}}
 			onSecondarySubmit={() => {
 				props.setDisplayedModal(props.lastVisitedModal);
-				props.setLastVisitedModal(FragmentWizardModals.CHOOSE_FRAGMENT_MODAL);
+				props.setLastVisitedModal(FragmentWizardModals.IMPORT_JSON_MODAL);
 			}}
 			hasForm
 			modalHeading='Import JSON'

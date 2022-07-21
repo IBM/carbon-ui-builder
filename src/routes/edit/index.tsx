@@ -117,6 +117,10 @@ export const leftPaneHeader = css`
 
 export const leftPaneContent = css`
 	padding: 0 15px;
+
+	.bx--form-item {
+		margin-top: 1rem;
+	}
 `;
 
 export const actionIconStyle = css`
@@ -316,10 +320,10 @@ export const Edit = () => {
 			</SideNav>
 			<div
 			className={cx('edit-content', selectedLeftPane !== SelectedLeftPane.NONE ? 'is-side-panel-active' : '')}
-			onClick={() => updateFragment({ ...fragment, selectedComponentId: null })}>
+			onClick={() => updateFragment({ ...fragment, selectedComponentId: null }, false)}>
 				{
 					// eslint-disable-next-line
-					fragment && <Fragment fragment={fragment} setFragment={updateFragment} />
+					fragment && <Fragment fragment={fragment} setFragment={updateFragment} outline={fragment.outline} />
 				}
 			</div>
 			<div className={rightPanel}>

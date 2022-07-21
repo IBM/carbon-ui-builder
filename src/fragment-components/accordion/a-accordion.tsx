@@ -67,12 +67,12 @@ export const AAccordion = ({
 export const componentInfo: ComponentInfo = {
 	component: AAccordion,
 	settingsUI: AAccordionSettingsUI,
-	render: ({ componentObj, select, remove, selected, renderComponents }) => <AAccordion
+	render: ({ componentObj, select, remove, selected, renderComponents, outline }) => <AAccordion
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
 		selected={selected}>
-			{componentObj.items.map((accordionItem: any) => renderComponents(accordionItem))}
+			{componentObj.items.map((accordionItem: any) => renderComponents(accordionItem, outline))}
 	</AAccordion>,
 	keywords: ['accordion'],
 	name: 'Accordion',

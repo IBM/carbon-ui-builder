@@ -2,7 +2,9 @@
 import * as accordion from './accordion/a-accordion';
 import * as accordionitem from './accordion/a-accordion-item';
 import * as button from './a-button';
+import * as breadcrumb from './a-breadcrumb';
 import * as checkbox from './a-checkbox';
+import * as codeSnippet from './a-code-snippet';
 import * as column from './a-column';
 import * as combobox from './a-combobox';
 import * as dropdown from './a-dropdown';
@@ -38,6 +40,7 @@ import * as radioTileGroup from './tiles/a-radio-tile-group';
 export { AAccordion, AAccordionSettingsUI } from './accordion/a-accordion';
 export { AAccordionItem, AAccordionItemCodeUI, AAccordionItemSettingsUI } from './accordion/a-accordion-item';
 export { AButton, AButtonCodeUI, AButtonSettingsUI } from './a-button';
+export { ACodeSnippet, ACodeSnippetSettingsUI, ACodeSnippetCodeUI } from './a-code-snippet';
 export { ACheckbox, ACheckboxSettingsUI, ACheckboxCodeUI } from './a-checkbox';
 export { AColumn, AColumnSettingsUI } from './a-column';
 export { AComboBox, AComboBoxSettingsUI, AComboBoxCodeUI } from './a-combobox';
@@ -76,7 +79,9 @@ export const allComponents = {
 	accordion,
 	accordionitem,
 	button,
+	breadcrumb,
 	checkbox,
+	codeSnippet,
 	combobox,
 	column,
 	dropdown,

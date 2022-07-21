@@ -137,7 +137,7 @@ const jsonToSharedComponents = (json: any, fragments: any[]) => {
 	let sharedComponents: any = {};
 
 	if (json.type === 'fragment') {
-		const fragment = fragments.find(f => f.id === json.id);
+		const fragment = fragments.find(f => f.id === json.fragmentId);
 		const fragmentTemplate = generateTemplate(fragment.data, fragments);
 
 		sharedComponents[`src/shared/${tagNameFromFragment(fragment)}.js`] = format(`import React from 'react';

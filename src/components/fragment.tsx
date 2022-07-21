@@ -3,7 +3,11 @@ import { SkeletonPlaceholder } from 'carbon-components-react';
 import './fragment-preview.scss';
 import { css, cx } from 'emotion';
 import { allComponents, ComponentInfoRenderProps } from '../fragment-components';
-import { getAllFragmentStyleClasses, getRandomId } from '../utils/fragment-tools';
+import {
+	getAllFragmentStyleClasses,
+	getFragmentsFromLocalStorage,
+	getRandomId
+} from '../utils/fragment-tools';
 import { GlobalStateContext } from '../context';
 import { getDropIndex } from '../routes/edit/tools';
 
@@ -181,7 +185,7 @@ export const getParentComponent = (state: any, child: any) => {
 	return null;
 };
 
-export const Fragment = ({ fragment, setFragment }: any) => {
+export const Fragment = ({ fragment, setFragment, outline }: any) => {
 	const globalState = useContext(GlobalStateContext);
 	const [showDragOverIndicator, setShowDragOverIndicator] = useState(false);
 	const holderRef = useRef(null as any);
@@ -190,7 +194,9 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 		return <SkeletonPlaceholder />;
 	}
 
-	const { fragments } = globalState || {};
+	// try to use the state but get the fragments from local storage if state is not available
+	// localStorage info is used when rendering and can't be used for interaction
+	const { fragments } = globalState || { fragments: getFragmentsFromLocalStorage() };
 
 	const drop = (event: any) => {
 		event.stopPropagation();
@@ -214,7 +220,7 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 		setFragment({
 			...fragment,
 			selectedComponentId: componentObj.id
-		}, true);
+		}, false);
 	};
 
 	const remove = (componentObj: any) => {
@@ -224,7 +230,7 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 		});
 	};
 
-	const renderComponents = (componentObj: any): any => {
+	const renderComponents = (componentObj: any, outline: boolean | null = null): any => {
 		if (typeof componentObj === 'string' || !componentObj) {
 			return componentObj;
 		}
@@ -245,21 +251,23 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 						select: () => select(componentObj),
 						remove: () => remove(componentObj),
 						selected: fragment.selectedComponentId === componentObj.id,
-						renderComponents
+						renderComponents,
+						outline
 					} as ComponentInfoRenderProps);
 				}
 				return <component.componentInfo.component
 					componentObj={componentObj}
 					select={() => select(componentObj)}
 					remove={() => remove(componentObj)}
-					selected={fragment.selectedComponentId === componentObj.id}>
-						{componentObj.items && componentObj.items.map((row: any) => renderComponents(row))}
+					selected={fragment.selectedComponentId === componentObj.id}
+					outline={outline}>
+						{componentObj.items && componentObj.items.map((row: any) => renderComponents(row, outline))}
 				</component.componentInfo.component>;
 			}
 		}
 
 		if (componentObj.items) {
-			return componentObj.items.map((item: any) => renderComponents(item));
+			return componentObj.items.map((item: any) => renderComponents(item, outline));
 		}
 
 		return null;
@@ -294,7 +302,7 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 		onDragOver={allowDrop}
 		onDrop={drop}>
 			<div ref={holderRef} className={`${fragment.cssClasses ? fragment.cssClasses.map((cc: any) => cc.id).join(' ') : ''}`}>
-				{renderComponents(fragment.data)}
+				{renderComponents(fragment.data, outline)}
 			</div>
 		</div>
 	);

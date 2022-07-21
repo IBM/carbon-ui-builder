@@ -64,6 +64,7 @@ export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 			onRequestSubmit={() => {
 				generateFragment();
 				props.setLastVisitedModal(FragmentWizardModals.CHOOSE_FRAGMENT_MODAL);
+				props.setShouldDisplay(false);
 			}}
 			onRequestClose={() => props.setShouldDisplay(false)}
 			onSecondarySubmit={() => {

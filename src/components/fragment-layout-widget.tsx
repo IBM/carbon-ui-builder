@@ -10,6 +10,8 @@ import { actionIconStyle } from '../routes';
 import { stateWithoutComponent } from './fragment';
 
 const fragmentLayoutStyle = css`
+	margin-left: 1px;
+
 	.iot--list--page {
 		display: none;
 	}
@@ -68,7 +70,7 @@ export const FragmentLayoutWidget = ({ fragment, setFragment, title }: any) => {
 						onClick={() => setFragment({
 							...fragment,
 							selectedComponentId: componentObj.id
-						}, true)}>
+						}, false)}>
 						<Edit16 className={actionIconStyle} />
 					</Button>
 					<Button
@@ -92,7 +94,7 @@ export const FragmentLayoutWidget = ({ fragment, setFragment, title }: any) => {
 	return <HierarchyList
 		title={title}
 		className={fragmentLayoutStyle}
-		items={getHierarchyListItemsFromComponentObj(fragment.data)?.children}
+		items={getHierarchyListItemsFromComponentObj(fragment.data)?.children || []}
 		onListUpdated={(updatedItems: any[]) => {
 			setFragment({
 				...fragment,

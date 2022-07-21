@@ -10,10 +10,12 @@ export enum FragmentWizardModals {
 	IMPORT_JSON_MODAL
 }
 
-export const FragmentWizard = ({ shouldDisplay, setShouldDisplay }: any) => {
-	// These are states which are shared amongst the three modals.
-	const [displayedModal, setDisplayedModal]
-		= useState<FragmentWizardModals | null>(FragmentWizardModals.CREATE_FRAGMENT_MODAL);
+export const FragmentWizard = ({
+	shouldDisplay,
+	setShouldDisplay,
+	displayedModal,
+	setDisplayedModal
+}: any) => {
 	// This is used to indicate which modal was last visited and is used to go go back to the
 	// correct previous modal.
 	const [lastVisitedModal, setLastVisitedModal]

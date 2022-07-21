@@ -374,7 +374,7 @@ export const componentInfo: ComponentInfo = {
 					[itemsKey]: `const ${itemsKey} = state["${name}Items"] || ${json.listItems ?
 						JSON.stringify(json.listItems) : '[]'};`,
 					[itemsToStringKey]: `const ${itemsToStringKey} = state["${name}ItemToString"] || ((item) => (item ? item.text : ""));`,
-					[itemsDefaultSelectedKey]: `const ${itemsDefaultSelectedKey} = state["${name}initialSelectedItems"] || ${json.isMulti ?
+					[itemsDefaultSelectedKey]: `const ${itemsDefaultSelectedKey} = state["${name}DefaultSelected"] || ${json.isMulti ?
 						`(${itemsKey}.filter(item => item.selected))`: `(${itemsKey}.find(item => item.selected))`};`
 				};
 			}

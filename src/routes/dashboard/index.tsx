@@ -13,8 +13,6 @@ import {
 	Row
 } from './../../components';
 import { FragmentTileList } from './fragment-tile-list';
-import { FragmentWizard } from './fragment-wizard/fragment-wizard';
-import { FragmentModal } from '../edit/fragment-modal';
 import { GlobalStateContext } from '../../context';
 import { getFragmentTemplates } from '../../utils/fragment-tools';
 
@@ -49,12 +47,11 @@ const searchRowStyles = css`
 	}
 `;
 
-export const Dashboard = () => {
+export const Dashboard = ({ displayWizard, setDisplayWizard, setModalFragment }: any) => {
 	const { fragments, updateFragments } = useContext(GlobalStateContext);
 	const [fragmentGroupDisplayed, setFragmentGroupDisplayed] = useState(FragmentGroupDisplayed.LocalOnly);
 	const [fragmentTitleFilter, setFragmentTitleFilter] = useState('');
 	const [sortDirection, setSortDirection] = useState(SortDirection.Ascending);
-	const [displayWizard, setDisplayWizard] = useState(false);
 
 	useEffect(() => {
 		updateFragments(fragments);
@@ -63,7 +60,7 @@ export const Dashboard = () => {
 	}, []);
 
 	useEffect(() => {
-		document.title = 'Carbon Components Builder • UI Fragments Composer';
+		document.title = 'Carbon UI Builder • UI Fragments Composer';
 	}, []);
 
 	const filterFragments = (fragments: any) => fragments.filter((fragment: any) => fragment?.title?.toLowerCase()
@@ -82,54 +79,47 @@ export const Dashboard = () => {
 			displayedFragments = filterFragments(fragments);
 			break;
 	}
-	const [modalFragment, setModalFragment] = useState<any>(null);
 
 	return (
-		<>
-			<Main style={{ marginLeft: '0px' }}>
-				<Row styles={headerRowSyles}>
-					<Col cols={{
-						sm: 12,
-						md: 12,
-						lg: 12
-					}}>
-						<DashboardHeader
-							onDisplayedSwitchHandler={setFragmentGroupDisplayed}
-							fragmentGroupDisplayed={fragmentGroupDisplayed} />
-					</Col>
-				</Row>
-				<Row styles={searchRowStyles}>
-					<Col cols={{
-						sm: 12,
-						md: 12,
-						lg: 12
-					}}>
-						<DashboardSearch
-							onSearchHandler={setFragmentTitleFilter}
-							onSortHandler={setSortDirection}
-							sortDirection={sortDirection}
-							displayWizard={displayWizard}
-							setDisplayWizard={setDisplayWizard} />
-					</Col>
-				</Row>
-				<Row>
-					<Col cols={{
-						sm: 12,
-						md: 12,
-						lg: 12
-					}}>
-						{
-							<FragmentTileList
-								fragments={displayedFragments}
-								setModalFragment={setModalFragment} />
-						}
-					</Col>
-				</Row>
-			</Main>
-			<FragmentWizard
-				shouldDisplay={displayWizard}
-				setShouldDisplay={setDisplayWizard} />
-			{modalFragment && <FragmentModal fragment={modalFragment} />}
-		</>
+		<Main style={{ marginLeft: '0px' }}>
+			<Row styles={headerRowSyles}>
+				<Col cols={{
+					sm: 12,
+					md: 12,
+					lg: 12
+				}}>
+					<DashboardHeader
+						onDisplayedSwitchHandler={setFragmentGroupDisplayed}
+						fragmentGroupDisplayed={fragmentGroupDisplayed} />
+				</Col>
+			</Row>
+			<Row styles={searchRowStyles}>
+				<Col cols={{
+					sm: 12,
+					md: 12,
+					lg: 12
+				}}>
+					<DashboardSearch
+						onSearchHandler={setFragmentTitleFilter}
+						onSortHandler={setSortDirection}
+						sortDirection={sortDirection}
+						displayWizard={displayWizard}
+						setDisplayWizard={setDisplayWizard} />
+				</Col>
+			</Row>
+			<Row>
+				<Col cols={{
+					sm: 12,
+					md: 12,
+					lg: 12
+				}}>
+					{
+						<FragmentTileList
+							fragments={displayedFragments}
+							setModalFragment={setModalFragment} />
+					}
+				</Col>
+			</Row>
+		</Main>
 	);
 };

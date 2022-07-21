@@ -36,7 +36,7 @@ export const SelectedComponentBreadcrumbs = ({ selectedComponent }: any) => {
 		setFragment({
 			...fragment,
 			selectedComponentId: component.id
-		}, true);
+		}, false);
 	};
 
 	return selectedComponent && <Breadcrumb className={css`padding: 1rem`} noTrailingSlash>
