@@ -6,7 +6,7 @@ import { css } from 'emotion';
 export interface ListItemState {
 	type: string;
 	value: string;
-	items: any[],
+	items: any[];
 	cssClasses?: CssClasses[];
 	codeContext?: {
 		name: string;
