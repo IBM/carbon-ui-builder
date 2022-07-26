@@ -22,12 +22,10 @@ export const AInlineLoadingSettingsUI = ({ selectedComponent, setComponent }: an
 			orientation="vertical"
 			name="status-radio-buttons"
 			valueSelected={selectedComponent.status}
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					status: event
-				});
-			}} >
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				status: event
+			})} >
 			<RadioButton
 			id="inactive"
 			labelText="Inactive"
@@ -52,27 +50,31 @@ export const AInlineLoadingSettingsUI = ({ selectedComponent, setComponent }: an
 		<TextInput
 			value={selectedComponent.textDescription}
 			labelText='Loading text description'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					textDescription: event.currentTarget.value
-				});
-			}} />
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				textDescription: event.currentTarget.value
+			})} />
+		<TextInput
+			value={selectedComponent.iconDescription}
+			labelText='Icon description'
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				iconDescription: event.currentTarget.value
+			})} />
 	</>;
 };
 
 export const AInlineLoadingCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
 	value={selectedComponent.codeContext?.name}
 	labelText='Input name'
-	onChange={(event: any) => {
-		setComponent({
-			...selectedComponent,
-			codeContext: {
-				...selectedComponent.codeContext,
-				name: event.currentTarget.value
-			}
-		});
-	}} />;
+	onChange={(event: any) => setComponent({
+		...selectedComponent,
+		codeContext: {
+			...selectedComponent.codeContext,
+			name: event.currentTarget.value
+		}
+	})}
+/>;
 
 export const AInlineLoading = ({
 	componentObj,
@@ -85,9 +87,10 @@ export const AInlineLoading = ({
 		rejectDrop={true}
 		{...rest}>
 			<InlineLoading
-				description={componentObj.textDescription}
-				status={componentObj.status}
-				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
+			description={componentObj.textDescription}
+			status={componentObj.status}
+			iconDescription={componentObj.iconDescription}
+			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
 		</AComponent>
 	);
 };
@@ -102,16 +105,18 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'inlineloading',
 		status: 'active',
-		textDescription: 'Loading data'
+		textDescription: 'Loading data',
+		iconDescription: 'Loading'
 	},
 	image,
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Status = "${json.status}";`,
-			outputs: (_) => '',
+			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}OnSuccess = new EventEmitter();`,
 			imports: ['InlineLoadingModule'],
 			code: ({ json }) => {
 				return `<ibm-inline-loading
+							(onSuccess)="${nameStringToVariableString(json.codeContext?.name)}OnSuccess.emit($event)"
 							[state]="${nameStringToVariableString(json.codeContext?.name)}Status"
 							${json.status === 'active' ? `[loadingText]="'${json.textDescription}'"`: ''}
 							${json.status === 'finished' ? `[successText]="'${json.textDescription}'"`: ''}
@@ -124,7 +129,9 @@ export const componentInfo: ComponentInfo = {
 			imports: ['InlineLoading'],
 			code: ({ json }) => {
 				return `<InlineLoading
+							(onSuccess)="${nameStringToVariableString(json.codeContext?.name)}OnSuccess.emit($event)"
 							description="${json.textDescription}"
+							iconDescription="${json.iconDescription}"
 							status="${json.status}"
 							${reactClassNamesFromComponentObj(json)} />`;
 			}
