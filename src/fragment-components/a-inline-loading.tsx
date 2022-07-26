@@ -87,10 +87,10 @@ export const AInlineLoading = ({
 		rejectDrop={true}
 		{...rest}>
 			<InlineLoading
-			description={componentObj.textDescription}
-			status={componentObj.status}
-			iconDescription={componentObj.iconDescription}
-			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
+				description={componentObj.textDescription}
+				status={componentObj.status}
+				iconDescription={componentObj.iconDescription}
+				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
 		</AComponent>
 	);
 };

@@ -67,7 +67,7 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 			return <UIGrid key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'inlineloading':
-		return <UIInlineLoading key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UIInlineLoading key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'loading':
 			return <UILoading key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
