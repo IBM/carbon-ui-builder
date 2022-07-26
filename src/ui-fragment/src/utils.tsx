@@ -14,6 +14,8 @@ import { UILink } from './components/ui-link';
 import { UIList } from './components/ui-list';
 import { UIListItem } from './components/ui-list-item';
 import { UILoading } from './components/ui-loading';
+import { UINumberInput } from './components/ui-number-input';
+import { UIProgressIndicator } from './components/ui-progress-indicator';
 import { UIRadio } from './components/ui-radio';
 import { UIRadioGroup } from './components/ui-radio-group';
 import { UIRow } from './components/ui-row';
@@ -87,6 +89,11 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'listItem':
 			return <UIListItem key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+		case 'number-input':
+			return <UINumberInput key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'progress-indicator':
+			return <UIProgressIndicator key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'text':
 			return <UIText key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
