@@ -113,14 +113,14 @@ export const componentInfo: ComponentInfo = {
 	hideFromElementsPane: true,
 	settingsUI: AAccordionItemSettingsUI,
 	codeUI: AAccordionItemCodeUI,
-	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <AAccordionItem
+	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline }) => <AAccordionItem
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
 		onDragOver={onDragOver}
 		onDrop={onDrop}
 		selected={selected}>
-			{componentObj.items.map((child: any) => renderComponents(child))}
+			{componentObj.items.map((child: any) => renderComponents(child, outline))}
 	</AAccordionItem>,
 	keywords: ['accordion', 'item'],
 	name: 'Accordion item',
