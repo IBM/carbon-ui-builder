@@ -82,18 +82,15 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				datePickerType: event.selectedItem.id
-		})}/>
+		})} />
 		<Checkbox
-				labelText='Light'
-				id='light'
-				checked={selectedComponent.light}
-				onChange={(checked: boolean) => {
-					setComponent({
-						...selectedComponent,
-						light: checked
-					});
-				}}
-			/>
+			labelText='Light'
+			id='light'
+			checked={selectedComponent.light}
+			onChange={(checked: boolean) => setComponent({
+				...selectedComponent,
+				light: checked
+			})} />
 		{
 			selectedComponent.datePickerType !== 'timePicker' ? <>
 			<Dropdown
@@ -105,49 +102,39 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 				onChange={(event: any) => setComponent({
 					...selectedComponent,
 					size: event.selectedItem.id
-			})}/>
+			})} />
 			<Checkbox
 				labelText='Disabled'
 				id='disable'
 				checked={selectedComponent.disabled}
-				onChange={(checked: boolean) => {
-					setComponent({
-						...selectedComponent,
-						disabled: checked
-					});
-				}}
-			/>
+				onChange={(checked: boolean) => setComponent({
+					...selectedComponent,
+					disabled: checked
+				})} />
 			<Checkbox
 				labelText='Invalid'
 				id='invalid'
 				checked={selectedComponent.invalid}
-				onChange={(checked: boolean) => {
-					setComponent({
-						...selectedComponent,
-						invalid: checked
-					});
-				}}
-			/>
+				onChange={(checked: boolean) =>
+				setComponent({
+					...selectedComponent,
+					invalid: checked
+				})} />
 			<TextInput
 				value={selectedComponent.rangeStartLabel}
 				labelText='Date picker label'
-				onChange={(event: any) => {
-					setComponent({
-						...selectedComponent,
-						rangeStartLabel: event.currentTarget.value
-					});
-				}}
-			/>
-			{ selectedComponent.datePickerType === 'range' && <TextInput
+				onChange={(event: any) => setComponent({
+					...selectedComponent,
+					rangeStartLabel: event.currentTarget.value
+				})} />
+			{
+				selectedComponent.datePickerType === 'range' && <TextInput
 					value={selectedComponent.rangeEndLabel}
 					labelText='Date picker label'
-					onChange={(event: any) => {
-						setComponent({
-							...selectedComponent,
-							rangeEndLabel: event.currentTarget.value
-						});
-					}}
-				/>
+					onChange={(event: any) => setComponent({
+						...selectedComponent,
+						rangeEndLabel: event.currentTarget.value
+					})} />
 			}
 			</> :
 		<DraggableTileList
@@ -163,21 +150,18 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 	</>;
 };
 
-export const ADatePickerCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>;
-};
+export const ADatePickerCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => setComponent({
+		...selectedComponent,
+		codeContext: {
+			...selectedComponent.codeContext,
+			name: event.currentTarget.value
+		}
+	})}
+/>;
+
 
 export const ADatePicker = ({
 	componentObj,
@@ -247,6 +231,7 @@ export const componentInfo: ComponentInfo = {
 		light: false,
 		size: 'sm',
 		datePickerType: 'simple',
+		value: '',
 		rangeStartLabel: 'Date picker label',
 		rangeEndLabel: 'Date picker label',
 		items: [
@@ -263,7 +248,7 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: (_) => '',
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value}";`,
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 			imports: ['DatePickerModule', 'TimePickerModule', 'TimePickerSelectModule'],
 			code: ({ json }) => {
@@ -274,7 +259,7 @@ export const componentInfo: ComponentInfo = {
 					[invalid]="${json.invalid}"
 					[invalidText]="'A valid value is required'"
 					(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
-					[value]="''"
+					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 					[disabled]="${json.disabled}">
 					<ibm-timepicker-select ${json.light ? '[theme]="light"' : '[theme]="dark"'}
 						[disabled]="${json.disabled}" display="inline">
@@ -310,7 +295,7 @@ export const componentInfo: ComponentInfo = {
 						[placeholder]="'mm/dd/yyyy'"
 						[size]="${json.size}"
 						${json.light ? '[theme]="light"' : '[theme]="dark"'}
-						[value]="''"
+						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 						[disabled]="${json.disabled}"
 						[invalid]="${json.invalid}"
 						[invalidText]="'A valid value is required'"
@@ -330,7 +315,7 @@ export const componentInfo: ComponentInfo = {
 						[invalid]="${json.invalid}"
 						[invalidText]="'A valid value is required'"
 						[dateFormat]="'m/d/Y'"
-						[value]="''"
+						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
 					</ibm-date-picker>`
 				}`;
