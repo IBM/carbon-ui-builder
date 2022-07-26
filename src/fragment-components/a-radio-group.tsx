@@ -155,12 +155,12 @@ export const componentInfo: ComponentInfo = {
 			}
 		]
 	},
-	render: ({ componentObj, select, remove, selected, renderComponents }) => <ARadioGroup
+	render: ({ componentObj, select, remove, selected, renderComponents, outline }) => <ARadioGroup
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
 		selected={selected}>
-			{componentObj.items.map((button: any) => renderComponents(button))}
+			{componentObj.items.map((button: any) => renderComponents(button, outline))}
 	</ARadioGroup>,
 	image,
 	codeExport: {

@@ -1,2 +1,2 @@
-/carbon-components-builder/static/* /static/:splat
-/* /carbon-components-builder/index.html 200
+/static/* /static/:splat
+/* /index.html 200

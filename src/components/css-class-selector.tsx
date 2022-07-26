@@ -51,8 +51,7 @@ export const CssClassSelector = ({ selectedClasses, setSelectedClasses }: any) =
 	};
 
 	return (
-		<div style={{ marginTop: '1rem' }}>
-			<p>Custom CSS classes</p>
+		<div>
 			<FormLabel>Selected classes</FormLabel>
 			<br />
 			{

@@ -6,7 +6,7 @@ import {
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
 import { useFragment } from '../context';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import {
 	getParentComponent,
 	updatedState,
@@ -27,14 +27,14 @@ export const ARadioSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			labelText='Default selected'
 			id='defaultSelected'
 			checked={selectedComponent.defaultChecked}
-			onChange={() => {
+			onChange={(checked: any) => {
 				setComponent({
 					...parentComponent,
-					defaultSelected: `${selectedComponent.id}`,
-					valueChecked: selectedComponent.id,
+					defaultSelected: checked ? `${selectedComponent.id}` : '',
+					valueChecked: checked ? selectedComponent.id : '',
 					items: parentComponent.items.map((item: any) => ({
 						...item,
-						defaultChecked: selectedComponent.id === item.id
+						defaultChecked: checked ? selectedComponent.id === item.id : item.id === 'none'
 					}))
 				});
 			}}/>
@@ -111,11 +111,15 @@ export const ARadio = ({
 		active={selected}
 		addButtonsCss={addButtonStyle}
 		key={componentObj.id}
-		leftAction= {() => addRadio(0)}
+		topAction={parentComponent?.orientation === 'vertical' ? () => addRadio(0) : undefined}
+		leftAction= {parentComponent?.orientation === 'horizontal' ? () => addRadio(0) : undefined}
 		bottomAction={() => addRadio(1)}>
 			<AComponent
 			selected={selected}
-			headingCss={css`width: fit-content; min-width: 9rem;`}
+			headingCss={cx(
+				parentComponent?.orientation === 'vertical' ? css`margin-left: 20px;` : '',
+				css`width: fit-content; min-width: 9rem;`
+			)}
 			componentObj={componentObj}
 			{...rest}>
 				<RadioButton

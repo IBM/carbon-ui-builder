@@ -180,14 +180,14 @@ export const componentInfo: ComponentInfo = {
 		defaultChecked: false,
 		items: []
 	},
-	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <ARadioTile
+	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline }) => <ARadioTile
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
 		selected={selected}
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
-			{componentObj.items.map((item: any) => renderComponents(item))}
+			{componentObj.items.map((item: any) => renderComponents(item, outline))}
 	</ARadioTile>,
 	/**
 	 * Can only be added by adding tile-group or by clicking `plus` icon on top or bottom

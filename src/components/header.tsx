@@ -28,7 +28,7 @@ export const Header = ({
 }: any) => {
 	const navigate: NavigateFunction = useNavigate();
 	const globalState = useContext(GlobalStateContext);
-	const [, dispatchModal] = useContext(ModalContext);
+	const modalContext = useContext(ModalContext);
 	const params = getEditScreenParams();
 	const fragment = globalState?.fragments.find((fragment: any) => fragment.id === params?.id);
 
@@ -46,21 +46,29 @@ export const Header = ({
 		}
 	`;
 
+	const headerStyle = css`
+		z-index: 8001;
+	`;
+
 	const headerNavStyle = css`
 		display: block;
 	`;
 
 	return (
-		<ShellHeader aria-label="IBM Carbon Components Builder" role='banner' tabIndex={0}>
+		<ShellHeader
+		aria-label="IBM Carbon UI Builder"
+		role='banner'
+		tabIndex={0}
+		className={headerStyle}>
 			<SkipToContent />
 			<HeaderName
 				prefix="IBM"
 				tabIndex={0}
-				title='Carbon Components Builder home'
+				title='Carbon UI Builder home'
 				className={headerName}
 				onClick={() => navigate('/')}
 				onKeyDown={(event: any) => event.key === 'Enter' && navigate('/')}>
-				Carbon Components Builder {process.env.NODE_ENV === 'development' ? 'Dev' : ''}
+				Carbon UI Builder {process.env.NODE_ENV === 'development' ? 'Dev' : ''}
 			</HeaderName>
 			<HeaderNavigation className={headerNavStyle}>
 				<HeaderMenuItem
@@ -91,7 +99,7 @@ export const Header = ({
 						params?.id && fragment?.data &&
 						<HeaderMenuItem
 						className={headerName}
-						onClick={() => dispatchModal({
+						onClick={() => modalContext && Array.isArray(modalContext) && modalContext.length >= 2 && modalContext[1]({ // dispatchModal
 							type: ModalActionType.setExportModal,
 							id: fragment.id
 						})}>
