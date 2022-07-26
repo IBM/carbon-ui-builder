@@ -19,7 +19,8 @@ export const AListItemSettingsUI = ({ selectedComponent, setComponent }: any) =>
 			...selectedComponent,
 			value: event.currentTarget.value
 		});
-	}} />;
+	}}
+/>;
 
 export const AListItemCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
 	value={selectedComponent.codeContext?.name}
@@ -32,7 +33,8 @@ export const AListItemCodeUI = ({ selectedComponent, setComponent }: any) => <Te
 				name: event.currentTarget.value
 			}
 		});
-	}} />;
+	}}
+/>;
 
 export const AListItem = ({
 	componentObj,
@@ -60,10 +62,12 @@ export const AListItem = ({
 			{
 				<ListItem className={css`cursor:pointer`}>
 					{componentObj.value}
-					{componentObj.items.length > 0 ? <OrderedList nested={true}>
-							{componentObj.items.map((step: any) => getChildren(step, true))}
-						</OrderedList>
-					: [] }
+					{
+						componentObj.items.length > 0 ? <OrderedList nested={true}>
+								{componentObj.items.map((step: any) => getChildren(step, true))}
+							</OrderedList>
+						: []
+					}
 				</ListItem>
 			}
 		</AComponent>

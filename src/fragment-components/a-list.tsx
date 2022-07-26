@@ -196,7 +196,8 @@ export const AListCodeUI = ({ selectedComponent, setComponent }: any) => <TextIn
 				name: event.currentTarget.value
 			}
 		});
-	}} />;
+	}}
+/>;
 
 export const AList = ({
 	children,
