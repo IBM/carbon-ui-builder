@@ -29,7 +29,7 @@ export const UIListItem = ({ state }: {
 					</OrderedList>
 				: [] }
 			</ListItem>;
-	}
+	};
 	if (state.type !== 'list-item') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;

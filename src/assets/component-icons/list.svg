@@ -1,22 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="103" height="81" viewBox="0 0 103 81">
-  <g id="Group_1" data-name="Group 1" transform="translate(-821 -472)">
-    <g id="text_input_default_medium_02_label_helper_text" data-name="text input / default / medium / 02 label + helper text" transform="translate(849 481)">
-      <g id="text_input_piece_helper_text" data-name="text input / piece / helper text">
-        <rect id="skeleton" width="75" height="8" fill="#e8e8e8"/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="71.5" height="62" viewBox="0 0 71.5 62">
+  <defs>
+    <clipPath id="clip-path">
+      <path id="Path_4828" data-name="Path 4828" d="M220-301h50v8H220Z" fill="none"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <path id="Path_4827" data-name="Path 4827" d="M192-287h71.875v-20H192Z" transform="translate(-192 307)" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="Group_1" data-name="Group 1" transform="translate(-927 -510)">
+    <g id="Group_4841" data-name="Group 4841" transform="translate(728.5 816.5)" clip-path="url(#clip-path)">
+      <g id="Group_4840" data-name="Group 4840" transform="translate(198.125 -307)" clip-path="url(#clip-path-2)">
+        <path id="Path_4826" data-name="Path 4826" d="M215-306h57.813v18H215Z" transform="translate(-197.031 307)" fill="#e5e5e5"/>
       </g>
     </g>
-    <text id="_1." data-name="1." transform="translate(821 493)" font-size="20" font-family="IBMPlexMono, IBM Plex Mono"><tspan x="0" y="0">1.</tspan></text>
-    <g id="text_input_default_medium_02_label_helper_text-2" data-name="text input / default / medium / 02 label + helper text" transform="translate(849 508)">
-      <g id="text_input_piece_helper_text-2" data-name="text input / piece / helper text">
-        <rect id="skeleton-2" data-name="skeleton" width="75" height="8" fill="#e8e8e8"/>
+    <g id="Group_4841-2" data-name="Group 4841" transform="translate(728.5 837.5)" clip-path="url(#clip-path)">
+      <g id="Group_4840-2" data-name="Group 4840" transform="translate(198.125 -307)" clip-path="url(#clip-path-2)">
+        <path id="Path_4826-2" data-name="Path 4826" d="M215-306h57.813v18H215Z" transform="translate(-197.031 307)" fill="#e5e5e5"/>
       </g>
     </g>
-    <text id="_2." data-name="2." transform="translate(821 520)" font-size="20" font-family="IBMPlexMono, IBM Plex Mono"><tspan x="0" y="0">2.</tspan></text>
-    <g id="text_input_default_medium_02_label_helper_text-3" data-name="text input / default / medium / 02 label + helper text" transform="translate(849 534)">
-      <g id="text_input_piece_helper_text-3" data-name="text input / piece / helper text">
-        <rect id="skeleton-3" data-name="skeleton" width="75" height="8" fill="#e8e8e8"/>
+    <g id="Group_4841-3" data-name="Group 4841" transform="translate(728.5 858.5)" clip-path="url(#clip-path)">
+      <g id="Group_4840-3" data-name="Group 4840" transform="translate(198.125 -307)" clip-path="url(#clip-path-2)">
+        <path id="Path_4826-3" data-name="Path 4826" d="M215-306h57.813v18H215Z" transform="translate(-197.031 307)" fill="#e5e5e5"/>
       </g>
     </g>
-    <text id="_3." data-name="3." transform="translate(821 547)" font-size="20" font-family="IBMPlexMono, IBM Plex Mono"><tspan x="0" y="0">3.</tspan></text>
+    <text id="_1." data-name="1." transform="translate(927 526)" font-size="16" font-family="IBMPlexMono, IBM Plex Mono"><tspan x="0" y="0">1.</tspan></text>
+    <text id="_2." data-name="2." transform="translate(927 546)" font-size="16" font-family="IBMPlexMono, IBM Plex Mono"><tspan x="0" y="0">2.</tspan></text>
+    <text id="_3." data-name="3." transform="translate(927 568)" font-size="16" font-family="IBMPlexMono, IBM Plex Mono"><tspan x="0" y="0">3.</tspan></text>
   </g>
 </svg>

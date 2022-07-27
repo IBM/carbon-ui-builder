@@ -52,7 +52,7 @@ export const AListItem = ({
 					</OrderedList>
 				: [] }
 			</ListItem>;
-	}
+	};
 	return (
 		<AComponent
 		selected={selected}
@@ -85,7 +85,7 @@ const getChildrenExportReact = (step: any, child = false) => {
 				</OrderedList>`
 			: '' }
 		</ListItem>`;
-}
+};
 
 const getChildrenExportAngular = (step: any) => {
 	if (!step.items) {
@@ -97,7 +97,7 @@ const getChildrenExportAngular = (step: any) => {
 				${step.items.map((innerStep: any) => getChildrenExportAngular(innerStep)).join('\n')}
 			</ol>` : ''}
 		</li>`;
-}
+};
 
 export const componentInfo: ComponentInfo = {
 	component: AListItem,
