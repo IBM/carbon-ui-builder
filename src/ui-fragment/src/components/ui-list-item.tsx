@@ -22,7 +22,7 @@ export const UIListItem = ({ state }: {
 		if (!step.items) {
 			return;
 		}
-		return 	<ListItem className={css`cursor:pointer`}>
+		return 	<ListItem className={css`cursor:pointer;`}>
 					{step.value}
 					{step.items.length > 0 ? <OrderedList nested={child}>
 							{step.items.map((innerStep: any) => getChildren(innerStep, true))}
@@ -30,12 +30,12 @@ export const UIListItem = ({ state }: {
 					: [] }
 			</ListItem>;
 	}
-	if (state.type !== 'listItem') {
+	if (state.type !== 'list-item') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;
 	}
 
-	return <ListItem className={css`cursor:pointer`}>
+	return <ListItem className={css`cursor:pointer;`}>
 		{state.value}
 		{state.items.length > 0 ? <OrderedList nested={true}>
 				{state.items.map((step: any) => getChildren(step, true))}

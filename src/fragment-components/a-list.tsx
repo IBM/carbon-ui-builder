@@ -24,12 +24,12 @@ import {
 } from '../utils/fragment-tools';
 import { actionIconStyle } from '../routes';
 
-const LayoutStyle = css`
+const layoutStyle = css`
 	.iot--list--page {
 		display: none;
 	}
 `;
-const OrderedListStyle = css`
+const orderedListStyle = css`
 	margin-left: 20px;
 	list-style: auto;
 `;
@@ -58,7 +58,7 @@ const ListItemsWidget = ({ setComponent, title }: any) => {
 		const component = getComponentObjById(id, fragment.data);
 		const dataList = [...component.items];
 		const newChildObject = {
-			type: 'listItem',
+			type: 'list-item',
 			value: 'Item',
 			items: []
 		};
@@ -143,7 +143,7 @@ const ListItemsWidget = ({ setComponent, title }: any) => {
 
 	return <HierarchyList
 		title={title}
-		className={LayoutStyle}
+		className={layoutStyle}
 		items={getHierarchyListItemsFromComponentObj(fragment.data)?.children}
 		onListUpdated={(updatedItems: any[]) => {
 			setFragment({
@@ -211,10 +211,10 @@ export const AList = ({
 		headingCss={css`width: fit-content; min-width: 9rem;`}
 		componentObj={componentObj}
 		{...rest}>
-			<legend className={cx(css`margin-left: 3px;`, 'bx--label')}>
+			<legend className={cx('bx--label', css`margin-left: 3px;`)}>
 				{componentObj.legendName}
 			</legend>
-			<OrderedList className={OrderedListStyle}>
+			<OrderedList className={orderedListStyle}>
 				{children}
 			</OrderedList>
 		</AComponent>
@@ -230,15 +230,15 @@ export const componentInfo: ComponentInfo = {
 	type: 'list',
 	defaultComponentObj: {
 		type: 'list',
-		legendName: 'Ordered List',
+		legendName: 'Ordered list',
 		items: [
 			{
-				type: 'listItem',
+				type: 'list-item',
 				value: 'Item',
 				items: []
 			},
 			{
-				type: 'listItem',
+				type: 'list-item',
 				value:  'Item',
 				items: []
 			}

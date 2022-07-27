@@ -45,10 +45,10 @@ export const AListItem = ({
 		if (!step.items) {
 			return;
 		}
-		return 	<ListItem className={css`cursor:pointer`}>
+		return 	<ListItem className={css`cursor:pointer;`}>
 					{step.value}
 					{step.items.length > 0 ? <OrderedList nested={child}>
-							{step.items.map((innerStep: any) => getChildren(innerStep, true))}
+						{step.items.map((innerStep: any) => getChildren(innerStep, true))}
 						</OrderedList>
 					: [] }
 			</ListItem>;
@@ -60,7 +60,7 @@ export const AListItem = ({
 		componentObj={componentObj}
 		{...rest}>
 			{
-				<ListItem className={css`cursor:pointer`}>
+				<ListItem className={css`cursor:pointer;`}>
 					{componentObj.value}
 					{
 						componentObj.items.length > 0 ? <OrderedList nested={true}>
@@ -103,18 +103,22 @@ export const componentInfo: ComponentInfo = {
 	component: AListItem,
 	settingsUI: AListItemSettingsUI,
 	codeUI: AListItemCodeUI,
-	render: ({ componentObj, select, remove, selected }) => <AListItem
-	componentObj={componentObj}
-	select={select}
-	remove={remove}
-	selected={selected}>
-		{componentObj.value}
-	</AListItem>,
+	render: ({ componentObj, select, remove, selected }) => {
+		return (
+			<AListItem
+				componentObj={componentObj}
+				select={select}
+				remove={remove}
+				selected={selected}>
+					{componentObj.value}
+			</AListItem>
+		);
+	},
 	keywords: ['list', 'item'],
 	name: 'List item',
-	type: 'listItem',
+	type: 'list-item',
 	defaultComponentObj: {
-		type: 'listItem'
+		type: 'list-item'
 	},
 	image: undefined,
 	hideFromElementsPane: true,
