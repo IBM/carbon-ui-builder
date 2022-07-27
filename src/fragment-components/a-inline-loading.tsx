@@ -107,16 +107,19 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Status = "${json.status}";`,
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Status = "${json.status}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}LoadingText = "${json.textDescription}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}SuccessText = "${json.textDescription}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}ErrorText = "${json.textDescription}";`,
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}OnSuccess = new EventEmitter();`,
 			imports: ['InlineLoadingModule'],
 			code: ({ json }) => {
 				return `<ibm-inline-loading
 							(onSuccess)="${nameStringToVariableString(json.codeContext?.name)}OnSuccess.emit($event)"
 							[state]="${nameStringToVariableString(json.codeContext?.name)}Status"
-							${json.status === 'active' ? `[loadingText]="'${json.textDescription}'"`: ''}
-							${json.status === 'finished' ? `[successText]="'${json.textDescription}'"`: ''}
-							${json.status === 'error' ? `[errorText]="'${json.textDescription}'"`: ''}
+							${json.status === 'active' ? `[loadingText]="${nameStringToVariableString(json.codeContext?.name)}LoadingText"`: ''}
+							${json.status === 'finished' ? `[successText]="${nameStringToVariableString(json.codeContext?.name)}SuccessText"`: ''}
+							${json.status === 'error' ? `[errorText]="${nameStringToVariableString(json.codeContext?.name)}ErrorText"`: ''}
 							${angularClassNamesFromComponentObj(json)}>
 						</ibm-inline-loading>`;
 			}
