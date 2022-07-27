@@ -45,7 +45,7 @@ export const AListItem = ({
 		if (!step.items) {
 			return;
 		}
-		return 	<ListItem className={css`cursor:pointer`}>
+		return <ListItem className={css`cursor: pointer;`}>
 					{step.value}
 					{step.items.length > 0 ? <OrderedList nested={child}>
 							{step.items.map((innerStep: any) => getChildren(innerStep, true))}
