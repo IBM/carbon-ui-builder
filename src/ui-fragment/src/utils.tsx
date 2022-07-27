@@ -89,6 +89,7 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'listItem':
 			return <UIListItem key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
 		case 'number-input':
 			return <UINumberInput key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
