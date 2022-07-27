@@ -23,11 +23,11 @@ export const UIListItem = ({ state }: {
 			return;
 		}
 		return 	<ListItem className={css`cursor: pointer;`}>
-					{step.value}
-					{step.items.length > 0 ? <OrderedList nested={child}>
-							{step.items.map((innerStep: any) => getChildren(innerStep, true))}
-						</OrderedList>
-					: [] }
+				{step.value}
+				{step.items.length > 0 ? <OrderedList nested={child}>
+						{step.items.map((innerStep: any) => getChildren(innerStep, true))}
+					</OrderedList>
+				: [] }
 			</ListItem>;
 	}
 	if (state.type !== 'list-item') {
