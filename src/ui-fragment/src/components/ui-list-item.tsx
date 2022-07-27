@@ -20,7 +20,7 @@ export const UIListItem = ({ state }: {
 }) => {
 	const getChildren = (step: any, child = false) => {
 		if (!step.items) {
-			return;
+			return null;
 		}
 		return 	<ListItem className={css`cursor: pointer;`}>
 				{step.value}
