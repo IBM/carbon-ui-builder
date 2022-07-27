@@ -17,7 +17,7 @@ export const UIInlineLoading = ({ state }: {
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
 }) => {
-	if (state.type !== 'inlineloading') {
+	if (state.type !== 'inline-loading') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;
 	}

@@ -22,7 +22,7 @@ import * as textarea from './a-textarea';
 import * as textinput from './a-textinput';
 import * as link from './a-link';
 import * as loading from './a-loading';
-import * as inlineloading from './a-inline-loading';
+import * as inlineLoading from './a-inline-loading';
 import * as overflowMenu from './a-overflow-menu';
 // Tiles
 import * as tile from './tiles/a-tile';
@@ -86,7 +86,7 @@ export const allComponents = {
 	fragment,
 	grid,
 	loading,
-	inlineloading,
+	inlineLoading,
 	radio,
 	radioGroup,
 	link,

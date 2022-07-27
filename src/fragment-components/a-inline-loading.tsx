@@ -17,35 +17,31 @@ import {
 
 export const AInlineLoadingSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
-		<legend className="bx--label">Status</legend>
+		<legend className='bx--label'>Status</legend>
 		<RadioButtonGroup
-			orientation="vertical"
-			name="status-radio-buttons"
+			orientation='vertical'
+			name='status-radio-buttons'
 			valueSelected={selectedComponent.status}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				status: event
 			})} >
 			<RadioButton
-			id="inactive"
-			labelText="Inactive"
-			value="inactive"
-			/>
+				id='inactive'
+				labelText='Inactive'
+				value='inactive'/>
 			<RadioButton
-			id="active"
-			labelText="Active"
-			value="active"
-			/>
+				id='active'
+				labelText='Active'
+				value='active'/>
 			<RadioButton
-			id="finished"
-			labelText="Finished"
-			value="finished"
-			/>
+				id='finished'
+				labelText='Finished'
+				value='finished'/>
 			<RadioButton
-			id="error"
-			labelText="Error"
-			value="error"
-			/>
+				id='error'
+				labelText='Error'
+				value='error'/>
 		</RadioButtonGroup>
 		<TextInput
 			value={selectedComponent.textDescription}
@@ -101,9 +97,9 @@ export const componentInfo: ComponentInfo = {
 	settingsUI: AInlineLoadingSettingsUI,
 	keywords: ['inline', 'loading'],
 	name: 'Inline Loading',
-	type: 'inlineloading',
+	type: 'inline-loading',
 	defaultComponentObj: {
-		type: 'inlineloading',
+		type: 'inline-loading',
 		status: 'active',
 		textDescription: 'Loading data',
 		iconDescription: 'Loading'
