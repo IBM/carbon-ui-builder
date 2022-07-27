@@ -41,20 +41,16 @@ export const AListItem = ({
 	selected,
 	...rest
 }: any) => {
-	function getChildren(step: any, child = false) {
+	const getChildren = (step: any, child = false) => {
 		if (!step.items) {
 			return;
 		}
-<<<<<<< HEAD
-		return 	<ListItem className={css`cursor:pointer;`}>
-=======
 		return <ListItem className={css`cursor: pointer;`}>
->>>>>>> 6366b263c0becf3801f07ee1348657f1ed431001
-					{step.value}
-					{step.items.length > 0 ? <OrderedList nested={child}>
-						{step.items.map((innerStep: any) => getChildren(innerStep, true))}
-						</OrderedList>
-					: [] }
+				{step.value}
+				{step.items.length > 0 ? <OrderedList nested={child}>
+					{step.items.map((innerStep: any) => getChildren(innerStep, true))}
+					</OrderedList>
+				: [] }
 			</ListItem>;
 	}
 	return (
@@ -64,7 +60,7 @@ export const AListItem = ({
 		componentObj={componentObj}
 		{...rest}>
 			{
-				<ListItem className={css`cursor:pointer;`}>
+				<ListItem className={css`cursor: pointer;`}>
 					{componentObj.value}
 					{
 						componentObj.items.length > 0 ? <OrderedList nested={true}>
@@ -78,29 +74,29 @@ export const AListItem = ({
 	);
 };
 
-function getChildrenExportReact(step: any, child = false) {
+const getChildrenExportReact = (step: any, child = false) => {
 	if (!step.items) {
 		return;
 	}
 	return `<ListItem>
-				${step.value}
-				${step.items.length > 0 ? `<OrderedList nested={${child}}>
-						${step.items.map((innerStep: any) => getChildrenExportReact(innerStep, true)).join('\n')}
-					</OrderedList>`
-				: '' }
+			${step.value}
+			${step.items.length > 0 ? `<OrderedList nested={${child}}>
+					${step.items.map((innerStep: any) => getChildrenExportReact(innerStep, true)).join('\n')}
+				</OrderedList>`
+			: '' }
 		</ListItem>`;
 }
 
-function getChildrenExportAngular(step: any) {
+const getChildrenExportAngular = (step: any) => {
 	if (!step.items) {
 		return;
 	}
 	return `<li ibmListItem>
-				${step.value}
-				${step.items.length > 0 ? `<ol ibmList>
-					${step.items.map((innerStep: any) => getChildrenExportAngular(innerStep)).join('\n')}
-				</ol>` : ''}
-			</li>`;
+			${step.value}
+			${step.items.length > 0 ? `<ol ibmList>
+				${step.items.map((innerStep: any) => getChildrenExportAngular(innerStep)).join('\n')}
+			</ol>` : ''}
+		</li>`;
 }
 
 export const componentInfo: ComponentInfo = {

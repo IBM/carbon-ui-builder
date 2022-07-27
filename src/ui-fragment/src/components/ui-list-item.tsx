@@ -18,15 +18,11 @@ export const UIListItem = ({ state }: {
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
 }) => {
-	function getChildren(step: any, child = false) {
+	const getChildren = (step: any, child = false) => {
 		if (!step.items) {
 			return;
 		}
-<<<<<<< HEAD
-		return 	<ListItem className={css`cursor:pointer;`}>
-=======
-		return 	<ListItem className={css`cursor: pointer`}>
->>>>>>> 6366b263c0becf3801f07ee1348657f1ed431001
+		return 	<ListItem className={css`cursor: pointer;`}>
 					{step.value}
 					{step.items.length > 0 ? <OrderedList nested={child}>
 							{step.items.map((innerStep: any) => getChildren(innerStep, true))}
@@ -39,7 +35,7 @@ export const UIListItem = ({ state }: {
 		return <></>;
 	}
 
-	return <ListItem className={css`cursor:pointer;`}>
+	return <ListItem className={css`cursor: pointer;`}>
 		{state.value}
 		{state.items.length > 0 ? <OrderedList nested={true}>
 				{state.items.map((step: any) => getChildren(step, true))}
