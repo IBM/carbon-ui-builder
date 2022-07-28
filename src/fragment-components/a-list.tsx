@@ -12,7 +12,8 @@ import { useFragment } from '../context';
 import { css, cx } from 'emotion';
 import {
 	Add16,
-	TrashCan16
+	TrashCan16,
+	Edit16
 } from '@carbon/icons-react';
 import {
 	getParentComponent
@@ -52,7 +53,7 @@ const getComponentObjById = (id: string, componentObj: any) => {
 	return undefined;
 };
 
-const ListItemsWidget = ({ setComponent, title }: any) => {
+const ListItemsWidget = ({ selectedComponent, setComponent, title }: any) => {
 	const [fragment, setFragment] = useFragment();
 	const addToList = (id: any) => {
 		const component = getComponentObjById(id, fragment.data);
@@ -92,13 +93,11 @@ const ListItemsWidget = ({ setComponent, title }: any) => {
 		if (!hierchyListItem) {
 			return undefined;
 		}
-
 		const component = getComponentObjById(hierchyListItem.id, componentObj);
 
 		if (!component) {
 			return undefined;
 		}
-
 		return {
 			...component,
 			items: hierchyListItem.children?.map((child: any) => getReorderedComponentObjFromHierarchyListItem(child, componentObj))
@@ -135,21 +134,44 @@ const ListItemsWidget = ({ setComponent, title }: any) => {
 						}}>
 						<TrashCan16 className={actionIconStyle} />
 					</Button>
+					<Button
+						kind='ghost'
+						aria-label='Edit'
+						title='Edit'
+						onClick={() => setFragment({
+							...fragment,
+							selectedComponentId: componentObj.id
+						}, false)}>
+						<Edit16 className={actionIconStyle} />
+					</Button>
 				</>
 			},
 			children: componentObj.items?.map((item: any) => getHierarchyListItemsFromComponentObj(item))
 		};
 	};
 
+	const itemsList = {
+		data: {
+			id: fragment.data.id,
+			items: [
+				{
+					type: selectedComponent.type,
+					id: selectedComponent.id,
+					items: selectedComponent.items
+				}
+			]
+		}
+	};
 	return <HierarchyList
 		title={title}
 		className={layoutStyle}
-		items={getHierarchyListItemsFromComponentObj(fragment.data)?.children}
+		items={getHierarchyListItemsFromComponentObj(itemsList.data)?.children}
 		onListUpdated={(updatedItems: any[]) => {
-			setFragment({
-				...fragment,
-				data: getReorderedComponentObjFromHierarchyListItem({ id: 1, children: updatedItems }, fragment.data)
-			});
+			itemsList.data = getReorderedComponentObjFromHierarchyListItem({ id: 1, children: updatedItems }, itemsList.data);
+			setComponent({
+				...selectedComponent,
+				items: itemsList.data.items[0].items
+			})
 		}}
 		editingStyle='single'
 	/>;
@@ -176,7 +198,7 @@ export const AListSettingsUI = ({ selectedComponent, setComponent }: any) => {
 		<Accordion align='start'>
 			<AccordionItem
 			id={selectedComponent.id}
-			title='Items list'
+			title={selectedComponent.legendName}
 			className='layout-widget'
 			open={isAccordionOpen.small}>
 				<ListItemsWidget selectedComponent={selectedComponent} setComponent={setComponent}/>
