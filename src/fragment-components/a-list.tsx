@@ -171,7 +171,7 @@ const ListItemsWidget = ({ selectedComponent, setComponent, title }: any) => {
 			setComponent({
 				...selectedComponent,
 				items: itemsList.data.items[0].items
-			})
+			});
 		}}
 		editingStyle='single'
 	/>;
