@@ -164,6 +164,7 @@ const ListItemsWidget = ({ selectedComponent, setComponent, title }: any) => {
 	};
 	return <HierarchyList
 		title={title}
+		hasSearch={true}
 		className={layoutStyle}
 		items={getHierarchyListItemsFromComponentObj(itemsList.data)?.children}
 		onListUpdated={(updatedItems: any[]) => {
