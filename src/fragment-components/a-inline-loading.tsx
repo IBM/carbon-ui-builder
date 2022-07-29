@@ -25,23 +25,27 @@ export const AInlineLoadingSettingsUI = ({ selectedComponent, setComponent }: an
 		onChange={(event: any) => setComponent({
 			...selectedComponent,
 			status: event
+<<<<<<< HEAD
 		})} >
+=======
+		})}>
+>>>>>>> b27ab99... Update src/fragment-components/a-inline-loading.tsx
 			<RadioButton
 				id='inactive'
 				labelText='Inactive'
-				value='inactive'/>
+				value='inactive' />
 			<RadioButton
 				id='active'
 				labelText='Active'
-				value='active'/>
+				value='active' />
 			<RadioButton
 				id='finished'
 				labelText='Finished'
-				value='finished'/>
+				value='finished' />
 			<RadioButton
 				id='error'
 				labelText='Error'
-				value='error'/>
+				value='error' />
 		</RadioButtonGroup>
 		<TextInput
 			value={selectedComponent.loadingText}
