@@ -1,7 +1,10 @@
 import React from 'react';
-import { Tooltip,
+import {
+	Tooltip,
+	Checkbox,
 	TextInput,
-	Dropdown
+	Dropdown,
+	DefinitionTooltip
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
 import image from './../assets/component-icons/link.svg';
@@ -19,18 +22,30 @@ export const ATooltipSettingsUI = ({ selectedComponent, setComponent }: any) => 
 		{ id: 'right', text: 'Right' }
 	];
 
+	const definitionTooltipAlign = [
+		{ id: 'top', text: 'Top' },
+		{ id: 'bottom', text: 'Bottom' }
+	];
+
 	return <>
 		<Dropdown
 			label='Align'
 			titleText='Align'
-			items={alignItems}
+			items={selectedComponent.definitionTooltip ? definitionTooltipAlign : alignItems}
 			selectedItem={alignItems.find(item => item.id === selectedComponent.align)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				align: event.selectedItem.id
 			})} />
-
+		<Checkbox
+			labelText='Definition tooltip'
+			id='definition-tooltip'
+			checked={selectedComponent.definitionTooltip}
+			onChange={(checked: boolean) => setComponent({
+				...selectedComponent,
+				definitionTooltip: checked
+		})} />
 		<TextInput
 			value={selectedComponent.description}
 			labelText='Description'
@@ -38,6 +53,15 @@ export const ATooltipSettingsUI = ({ selectedComponent, setComponent }: any) => 
 				...selectedComponent,
 				description: event.currentTarget.value
 			})} />
+		{
+			selectedComponent.definitionTooltip && <TextInput
+				value={selectedComponent.definitionTooltipText}
+				labelText='Trigger text'
+				onChange={(event: any) => setComponent({
+					...selectedComponent,
+					definitionTooltipText: event.currentTarget.value
+			})} />
+		}
 	</>;
 };
 
@@ -69,12 +93,21 @@ export const ATooltip = ({
 		componentObj={componentObj}
 		rejectDrop={true}
 		{...rest}>
+		{
+			componentObj.definitionTooltip ?
+			<DefinitionTooltip
+			align={componentObj.align}
+			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
+			definition={componentObj.description}>
+				{componentObj.definitionTooltipText}
+		  	</DefinitionTooltip> :
 			<Tooltip
 			label={componentObj.description}
 			align={componentObj.align}
 			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 				{componentObj.description}
 			</Tooltip>
+		}
 		</AComponent>
 	);
 };
@@ -89,6 +122,8 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'tooltip',
 		align: 'top',
+		definitionTooltip: false,
+		definitionTooltipText: 'Definition Tooltip',
 		description: 'This is some tooltip text'
 	},
 	image,
@@ -96,13 +131,29 @@ export const componentInfo: ComponentInfo = {
 		angular: {
 			inputs: ({ json }) => ``,
 			outputs: ({ json }) => ``,
-			imports: [''],
+			imports: ['DialogModule, PlaceholderModule, TagModule'],
 			code: ({ json }) => {
-				return ``;
+				return `${json.definitionTooltip ?
+					`<ibm-tooltip-definition
+						[content]="${json.description}"
+						[placement]="${json.align}"
+						{{${json.definitionTooltipText}}}
+					</ibm-tooltip-definition>` :
+					`<div class="bx--tooltip__label">
+					<span
+						[ibmTooltip]="${json.description}"
+						trigger="click"
+						[placement]="${json.align}">
+						<div role="button">
+							<svg ibmIcon="information--filled" size="16"></svg>
+						</div>
+					</span>
+				</div>
+				<ibm-placeholder></ibm-placeholder>`}`;
 			}
 		},
 		react: {
-			imports: ['Link'],
+			imports: [''],
 			code: ({ json }) => {
 				return ``;
 			}
