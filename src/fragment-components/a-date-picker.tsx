@@ -83,6 +83,13 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 				...selectedComponent,
 				datePickerType: event.selectedItem.id
 		})} />
+		<TextInput
+			value={selectedComponent.dateFormat}
+			labelText='Date format'
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				dateFormat: event.selectedItem.id
+		})} />
 		<Checkbox
 			labelText='Light'
 			id='light'
@@ -162,7 +169,6 @@ export const ADatePickerCodeUI = ({ selectedComponent, setComponent }: any) => <
 	})}
 />;
 
-
 export const ADatePicker = ({
 	componentObj,
 	...rest
@@ -189,7 +195,7 @@ export const ADatePicker = ({
 					}
 				</TimePickerSelect>
 				</TimePicker> :
-				<DatePicker dateFormat="m/d/Y" datePickerType={componentObj.datePickerType} light={componentObj.light}>
+				<DatePicker dateFormat={componentObj.dateFormat} datePickerType={componentObj.datePickerType} light={componentObj.light}>
 					<DatePickerInput
 						id="date-picker-default-id"
 						placeholder="mm/dd/yyyy"
@@ -231,6 +237,7 @@ export const componentInfo: ComponentInfo = {
 		light: false,
 		size: 'sm',
 		datePickerType: 'simple',
+		dateFormat: 'm/d/Y',
 		value: '',
 		rangeStartLabel: 'Date picker label',
 		rangeEndLabel: 'Date picker label',
@@ -299,7 +306,7 @@ export const componentInfo: ComponentInfo = {
 						[disabled]="${json.disabled}"
 						[invalid]="${json.invalid}"
 						[invalidText]="'A valid value is required'"
-						[dateFormat]="'m/d/Y'"
+						[dateFormat]="${json.dateFormat}"
 						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
 					</ibm-date-picker>`
 					: `<ibm-date-picker
@@ -314,7 +321,7 @@ export const componentInfo: ComponentInfo = {
 						[disabled]="${json.disabled}"
 						[invalid]="${json.invalid}"
 						[invalidText]="'A valid value is required'"
-						[dateFormat]="'m/d/Y'"
+						[dateFormat]="${json.dateFormat}"
 						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
 					</ibm-date-picker>`
@@ -341,7 +348,7 @@ export const componentInfo: ComponentInfo = {
 					</TimePicker>` :
 					`<DatePicker
 					${reactClassNamesFromComponentObj(json)}
-					dateFormat="m/d/Y"
+					dateFormat="${json.dateFormat}"
 					datePickerType="${json.datePickerType}"
 					light={${json.light}}>
 						<DatePickerInput
