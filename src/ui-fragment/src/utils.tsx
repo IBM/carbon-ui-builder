@@ -20,6 +20,7 @@ import { UIRow } from './components/ui-row';
 import { UISearchInput } from './components/ui-serach-input';
 import { UITag } from './components/ui-tag';
 import { UIText } from './components/ui-text';
+import { UITextAreaInput } from './components/ui-text-area';
 
 export const setItemInState = (item: any, state: any, setState: (state: any) => void) => {
 	const itemIndex = state.items.findIndex((i: any) => i.id === item.id);
@@ -99,6 +100,8 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 		case 'text':
 			return <UIText key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
+		case 'text-area':
+			return <UITextAreaInput key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 		default:
 			break;
 	}
