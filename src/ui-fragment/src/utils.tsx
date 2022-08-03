@@ -17,6 +17,7 @@ import { UIProgressIndicator } from './components/ui-progress-indicator';
 import { UIRadio } from './components/ui-radio';
 import { UIRadioGroup } from './components/ui-radio-group';
 import { UIRow } from './components/ui-row';
+import { UISearchInput } from './components/ui-serach-input';
 import { UIText } from './components/ui-text';
 
 export const setItemInState = (item: any, state: any, setState: (state: any) => void) => {
@@ -87,6 +88,9 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'progress-indicator':
 			return <UIProgressIndicator key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'search':
+			return <UISearchInput key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'text':
 			return <UIText key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
