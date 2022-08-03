@@ -19,6 +19,7 @@ import { UIRadio } from './components/ui-radio';
 import { UIRadioGroup } from './components/ui-radio-group';
 import { UIRow } from './components/ui-row';
 import { UISearchInput } from './components/ui-serach-input';
+import { UITag } from './components/ui-tag';
 import { UIText } from './components/ui-text';
 
 export const setItemInState = (item: any, state: any, setState: (state: any) => void) => {
@@ -95,6 +96,9 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'search':
 			return <UISearchInput key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'tag':
+			return <UITag key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'text':
 			return <UIText key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
