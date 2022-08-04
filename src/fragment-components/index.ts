@@ -19,7 +19,7 @@ import * as tag from './a-tag';
 import * as searchinput from './a-searchinput';
 import * as text from './a-text';
 import * as textarea from './a-text-area';
-import * as textinput from './a-textinput';
+import * as textinput from './a-text-input';
 import * as link from './a-link';
 import * as loading from './a-loading';
 import * as inlineLoading from './a-inline-loading';
@@ -57,7 +57,7 @@ export { ASearchInput, ASearchInputSettingsUI, ASearchInputCodeUI } from './a-se
 export { ATag, ATagSettingsUI } from './a-tag';
 export { AText, ATextSettingsUI } from './a-text';
 export { ATextArea, ATextAreaSettingsUI, ATextAreaCodeUI } from './a-text-area';
-export { ATextInput, ATextInputSettingsUI, ATextInputCodeUI } from './a-textinput';
+export { ATextInput, ATextInputSettingsUI, ATextInputCodeUI } from './a-text-input';
 export { AOverflowMenu, AOverflowMenuCodeUI, AOverflowMenuSettingsUI } from './a-overflow-menu';
 export { ARadio, ARadioSettingsUI, ARadioCodeUI } from './a-radio';
 export { ARadioGroup, ARadioGroupSettingsUI, ARadioGroupCodeUI } from './a-radio-group';
