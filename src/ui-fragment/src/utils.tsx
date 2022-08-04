@@ -24,6 +24,7 @@ import { UITag } from './components/ui-tag';
 import { UIText } from './components/ui-text';
 import { UITextAreaInput } from './components/ui-text-area';
 import { UITextInput } from './components/ui-text-input';
+import { UITile } from './components/ui-tile';
 import { UITileFold } from './components/ui-tile-fold';
 
 export const setItemInState = (item: any, state: any, setState: (state: any) => void) => {
@@ -115,6 +116,9 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'overflow-menu-item':
 			return <UIOverflowMenuItem key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'tile':
+			return <UITile key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'tile-fold':
 			return <UITileFold key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
