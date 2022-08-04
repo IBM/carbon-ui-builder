@@ -109,6 +109,7 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 			setDataList={updateStepList}
 			updateItem={updateListItems}
 			defaultObject={{
+				type: 'overflow-menu-item',
 				itemText: 'New option',
 				disabled: false,
 				isDelete: false,
@@ -174,12 +175,14 @@ export const componentInfo: ComponentInfo = {
 		type: 'overflow-menu',
 		items: [
 			{
+				type: 'overflow-menu-item',
 				itemText: 'Option 1',
 				disabled: false,
 				isDelete: false,
 				hasDivider: false
 			},
 			{
+				type: 'overflow-menu-item',
 				itemText: 'Option 2',
 				disabled: false,
 				isDelete: false,
