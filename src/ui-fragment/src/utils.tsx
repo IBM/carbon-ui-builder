@@ -14,6 +14,8 @@ import { UIInlineLoading } from './components/ui-inline-loading';
 import { UILink } from './components/ui-link';
 import { UILoading } from './components/ui-loading';
 import { UINumberInput } from './components/ui-number-input';
+import { UIOverflowMenu } from './components/ui-overflow-menu';
+import { UIOverflowMenuItem } from './components/ui-overflow-menu-item';
 import { UIProgressIndicator } from './components/ui-progress-indicator';
 import { UIRadio } from './components/ui-radio';
 import { UIRadioGroup } from './components/ui-radio-group';
@@ -110,6 +112,12 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'text-input':
 			return <UITextInput key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'overflow-menu':
+			return <UIOverflowMenu key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'overflow-menu-item':
+			return <UIOverflowMenuItem key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		default:
 			break;
