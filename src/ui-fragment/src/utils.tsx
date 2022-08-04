@@ -22,6 +22,7 @@ import { UIProgressIndicator } from './components/ui-progress-indicator';
 import { UIRadio } from './components/ui-radio';
 import { UIRadioGroup } from './components/ui-radio-group';
 import { UIRow } from './components/ui-row';
+import { UISelectableTile } from './components/ui-selectable-tile';
 import { UISearchInput } from './components/ui-serach-input';
 import { UITag } from './components/ui-tag';
 import { UIText } from './components/ui-text';
@@ -138,6 +139,9 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'expandable-tile':
 			return <UIExpandableTile key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'selectable-tile':
+			return <UISelectableTile key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		default:
 			break;
