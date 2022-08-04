@@ -173,7 +173,7 @@ export const componentInfo: ComponentInfo = {
 					${json.disabled ? `disabled="${json.disabled}"` : ''}
 					${json.checked ? `toggled="${json.checked}"` : ''}
 					size="${json.size}"
-					id="${json.id}"
+					id="${json.codeContext?.name}"
 					${reactClassNamesFromComponentObj(json)} />`;
 			}
 		}
