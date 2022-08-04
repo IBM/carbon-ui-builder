@@ -5,6 +5,7 @@ import { UIBreadcrumb } from './components/ui-breadcrumb';
 import { UIBreadcrumbItem } from './components/ui-breadcrumb-item';
 import { UIButton } from './components/ui-button';
 import { UICheckbox } from './components/ui-checkbox';
+import { UIClickableTile } from './components/ui-clickable-tile';
 import { UICodeSnippet } from './components/ui-code-snippet';
 import { UIColumn } from './components/ui-column';
 import { UIComboBox } from './components/ui-combobox';
@@ -126,6 +127,9 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'tile-fold':
 			return <UITileFold key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'clickable-tile':
+			return <UIClickableTile key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		default:
 			break;
