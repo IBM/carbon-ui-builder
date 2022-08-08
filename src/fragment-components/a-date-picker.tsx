@@ -229,9 +229,9 @@ export const componentInfo: ComponentInfo = {
 	codeUI: ADatePickerCodeUI,
 	keywords: ['datepicker', 'date', 'picker'],
 	name: 'Date Picker',
-	type: 'datepicker',
+	type: 'date-picker',
 	defaultComponentObj: {
-		type: 'datepicker',
+		type: 'date-picker',
 		disabled: false,
 		invalid: false,
 		light: false,
