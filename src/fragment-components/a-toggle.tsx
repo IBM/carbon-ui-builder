@@ -168,12 +168,12 @@ export const componentInfo: ComponentInfo = {
 			code: ({ json }) => {
 				return `<Toggle
 					labelText="${json.header}"
-					labelA="${json.onText}"
-					labelB="${json.offText}"
+					labelA="${json.offText}"
+					labelB="${json.onText}"
 					${json.disabled ? `disabled="${json.disabled}"` : ''}
 					${json.checked ? `toggled="${json.checked}"` : ''}
 					size="${json.size}"
-					id="${json.id}"
+					id="${json.codeContext?.name}"
 					${reactClassNamesFromComponentObj(json)} />`;
 			}
 		}

@@ -5,6 +5,7 @@ import { UIBreadcrumb } from './components/ui-breadcrumb';
 import { UIBreadcrumbItem } from './components/ui-breadcrumb-item';
 import { UIButton } from './components/ui-button';
 import { UICheckbox } from './components/ui-checkbox';
+import { UIClickableTile } from './components/ui-clickable-tile';
 import { UICodeSnippet } from './components/ui-code-snippet';
 import { UIColumn } from './components/ui-column';
 import { UIComboBox } from './components/ui-combobox';
@@ -13,12 +14,21 @@ import { UIGrid } from './components/ui-grid';
 import { UILink } from './components/ui-link';
 import { UILoading } from './components/ui-loading';
 import { UINumberInput } from './components/ui-number-input';
+import { UIOverflowMenu } from './components/ui-overflow-menu';
+import { UIOverflowMenuItem } from './components/ui-overflow-menu-item';
 import { UIProgressIndicator } from './components/ui-progress-indicator';
 import { UIRadio } from './components/ui-radio';
 import { UIRadioGroup } from './components/ui-radio-group';
 import { UIRow } from './components/ui-row';
+import { UISearchInput } from './components/ui-serach-input';
+import { UITag } from './components/ui-tag';
 import { UIText } from './components/ui-text';
 import { UITooltip } from './components/ui-tooltip';
+import { UITextAreaInput } from './components/ui-text-area';
+import { UITextInput } from './components/ui-text-input';
+import { UITile } from './components/ui-tile';
+import { UITileFold } from './components/ui-tile-fold';
+import { UIToggle } from './components/ui-toggle';
 
 export const setItemInState = (item: any, state: any, setState: (state: any) => void) => {
 	const itemIndex = state.items.findIndex((i: any) => i.id === item.id);
@@ -89,11 +99,40 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 		case 'progress-indicator':
 			return <UIProgressIndicator key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
+		case 'search':
+			return <UISearchInput key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'tag':
+			return <UITag key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
 		case 'text':
 			return <UIText key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'tooltip':
 			return <UITooltip key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+		case 'text-area':
+			return <UITextAreaInput key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'text-input':
+			return <UITextInput key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'overflow-menu':
+			return <UIOverflowMenu key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'overflow-menu-item':
+			return <UIOverflowMenuItem key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'tile':
+			return <UITile key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'tile-fold':
+			return <UITileFold key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'clickable-tile':
+			return <UIClickableTile key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'toggle':
+			return <UIToggle key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		default:
 			break;
