@@ -2,7 +2,8 @@ import React from 'react';
 import {
 	Tooltip,
 	TextInput,
-	Dropdown
+	Dropdown,
+	Checkbox
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
 import image from './../assets/component-icons/link.svg';
@@ -44,6 +45,23 @@ export const ATooltipSettingsUI = ({ selectedComponent, setComponent }: any) => 
 				...selectedComponent,
 				description: event.currentTarget.value
 		})} />
+		<TextInput
+			value={selectedComponent.triggerText}
+			labelText='Trigger text'
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				triggerText: event.currentTarget.value
+		})} />
+		<Checkbox
+			labelText='Is open'
+			id='is-open'
+			checked={selectedComponent.isOpen}
+			onChange={(checked: any) => {
+				setComponent({
+					...selectedComponent,
+					isOpen: checked
+				});
+			}} />
 	</>;
 };
 
@@ -75,7 +93,9 @@ export const ATooltip = ({
 		{...rest}>
 			<Tooltip
 			label={componentObj.description}
-			align={componentObj.align}
+			direction={componentObj.align}
+			triggerText={componentObj.triggerText}
+			open={componentObj.isOpen}
 			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 				{componentObj.description}
 			</Tooltip>
@@ -93,27 +113,29 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'tooltip',
 		align: 'bottom',
-		description: 'This is some tooltip text'
+		description: 'This is some tooltip text',
+		triggerText: 'Tooltip label',
+		isOpen: false
 	},
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Description = "${json.description}";`,
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Description = "${json.description}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}TriggerText = "${json.triggerText}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}isOpen = ${json.isOpen};`,
 			outputs: (_) => '',
 			imports: ['DialogModule, PlaceholderModule, TagModule, IconModule'],
 			code: ({ json }) => {
-				return `
-				<div class="bx--tooltip__label">
+				return `<div class="bx--tooltip__label">
+					{{${nameStringToVariableString(json.codeContext?.name)}TriggerText}}
 					<span
 						${angularClassNamesFromComponentObj(json)}
 						[ibmTooltip]="${nameStringToVariableString(json.codeContext?.name)}Description"
 						trigger="click"
+						[isOpen]=${nameStringToVariableString(json.codeContext?.name)}isOpen
 						[placement]="'${json.align}'" >
 						<div role="button">
-							<svg id="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-								<path d="M8.5 11L8.5 6.5 6.5 6.5 6.5 7.5 7.5 7.5 7.5 11 6 11 6 12 10 12 10 11zM8 3.5c-.4 0-.8.3-.8.8S7.6 5 8 5c.4 0 .8-.3.8-.8S8.4 3.5 8 3.5z"/>
-								<path d="M8,15c-3.9,0-7-3.1-7-7s3.1-7,7-7s7,3.1,7,7S11.9,15,8,15z M8,2C4.7,2,2,4.7,2,8s2.7,6,6,6s6-2.7,6-6S11.3,2,8,2z"/>
-							</svg>
+							<svg ibmIcon="information--filled" size="16"></svg>
 						</div>
 					</span>
 				</div>
@@ -126,7 +148,9 @@ export const componentInfo: ComponentInfo = {
 				return `<Tooltip
 					${reactClassNamesFromComponentObj(json)}
 					label="${json.description}"
-					align="${json.align}">
+					triggerText="${json.triggerText}"
+					open={${json.isOpen}}
+					direction="${json.align}">
 						${json.description}
 					</Tooltip>`;
 			}
