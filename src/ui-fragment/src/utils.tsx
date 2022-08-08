@@ -20,6 +20,7 @@ import { UIOverflowMenuItem } from './components/ui-overflow-menu-item';
 import { UIProgressIndicator } from './components/ui-progress-indicator';
 import { UIRadio } from './components/ui-radio';
 import { UIRadioGroup } from './components/ui-radio-group';
+import { UIRadioTileGroup } from './components/ui-radio-tile-group';
 import { UIRow } from './components/ui-row';
 import { UISelectableTile } from './components/ui-selectable-tile';
 import { UISelectableTileGroup } from './components/ui-selectable-tile-group';
@@ -142,6 +143,9 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'selectable-tile-group':
 			return <UISelectableTileGroup key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'radio-tile-group':
+			return <UIRadioTileGroup key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		default:
 			break;
