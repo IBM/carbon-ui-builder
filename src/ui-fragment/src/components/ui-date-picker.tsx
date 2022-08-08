@@ -4,7 +4,7 @@ import {
 	TimePicker,
 	TimePickerSelect,
 	SelectItem,
-	DatePickerInput, } from 'carbon-components-react';
+	DatePickerInput } from 'carbon-components-react';
 import { CssClasses } from '../types';
 
 export interface DatePickerState {
@@ -16,17 +16,17 @@ export interface DatePickerState {
 		name: string;
 		href?: string;
 	};
-	type: string,
-	disabled?: boolean,
-	invalid?: boolean,
-	light?: boolean,
-	size?: string,
-	datePickerType?: string,
-	dateFormat?: string,
-	value?: string,
-	rangeStartLabel?: string,
-	rangeEndLabel?: string,
-	items: []
+	type: string;
+	disabled?: boolean;
+	invalid?: boolean;
+	light?: boolean;
+	size?: string;
+	datePickerType?: string;
+	dateFormat?: string;
+	value?: string;
+	rangeStartLabel?: string;
+	rangeEndLabel?: string;
+	items: [];
 }
 
 export const UIDatePicker = ({ state }: {
@@ -39,8 +39,7 @@ export const UIDatePicker = ({ state }: {
 		return <></>;
 	}
 
-	return (
-		state.datePickerType === 'timePicker' ?
+	return (state.datePickerType === 'timePicker' ?
 		<TimePicker id="time-picker" light={state.light}>
 		<TimePickerSelect labelText="time-picker-1" id="time-picker-select-1">
 			<SelectItem value="AM" text="AM" />
@@ -79,5 +78,5 @@ export const UIDatePicker = ({ state }: {
 					/>
 			}
 		</DatePicker>
-	)
+	);
 };
