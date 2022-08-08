@@ -6,8 +6,8 @@ export interface TooltipState {
 	type: string;
 	align: string;
 	description: string | number;
-	triggerText: string,
-	isOpen: boolean,
+	triggerText: string;
+	isOpen: boolean;
 	cssClasses?: CssClasses[];
 	codeContext?: {
 		name: string;
@@ -25,12 +25,12 @@ export const UITooltip = ({ state }: {
 	}
 
 	return <Tooltip
-	label={state.description}
-	align={state.align}
-	name={state.codeContext?.name}
-	triggerText={state.triggerText}
-	open={state.isOpen}
-	className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>
-		{state.description}
-	</Tooltip>;
+		label={state.description}
+		align={state.align}
+		name={state.codeContext?.name}
+		triggerText={state.triggerText}
+		open={state.isOpen}
+		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+			{state.description}
+		</Tooltip>;
 };
