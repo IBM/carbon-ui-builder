@@ -11,7 +11,7 @@ import {
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
 import { DraggableTileList } from '../components';
-import image from './../assets/component-icons/link.svg';
+import image from './../assets/component-icons/date-picker.svg';
 import {
 	angularClassNamesFromComponentObj,
 	nameStringToVariableString,
