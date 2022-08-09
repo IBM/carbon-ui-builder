@@ -293,7 +293,7 @@ export const AColumn = ({
 			rejectDrop={(dragObj: any) => {
 				// don't allow dropping columns directly into other columns
 				// row drop handler will take over
-				if (dragObj.component.type === 'column') {
+				if (dragObj?.component?.type === 'column') {
 					return true;
 				}
 
