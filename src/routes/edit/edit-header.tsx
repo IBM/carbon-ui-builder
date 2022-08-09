@@ -198,7 +198,7 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 						<ChevronLeft24 className={actionIconStyle} />
 					</Button>
 					<div className='title-wrap'>
-						<p className='fragment-title'>
+						<div className='fragment-title'>
 							{
 								<div className={isEditingTitle ? css`display: inline-block` : css`display: none`}>
 									<TextInput
@@ -233,7 +233,7 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 										});
 									}
 								}} />
-						</p>
+						</div>
 
 						<div className='title-subheading'>
 							<div className='date-wrap'>{`Last modified ${fragment.lastModified}`}</div>
