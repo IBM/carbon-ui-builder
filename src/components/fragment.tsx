@@ -284,7 +284,7 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 		className={cx(
 			canvas,
 			styles,
-			css`width: ${fragment.width || '800px'}; height: ${fragment.height || '600px'}`
+			css`width: ${fragment.width || '800'}px; height: ${fragment.height || '600'}px`
 		)}
 		style={{
 			background: showDragOverIndicator ? '#0001' : ''
