@@ -250,18 +250,19 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 								fragment.outline === false ? actionIconInheritedStyle : ''
 							)} />
 						</Button>
-						{
-							process.env.NODE_ENV === 'development' &&
-							<Button
-								kind='ghost'
-								aria-label={'Preview fragment'}
-								title={'Preview fragment'}
-								onClick={() => {
-									window.open(`/view/${params.id}`, '', 'popup');
-								}}>
-								<View16 className={actionIconStyle} />
-							</Button>
-						}
+						<Button
+							kind='ghost'
+							aria-label={'Preview fragment'}
+							title={'Preview fragment'}
+							onClick={() => {
+								window.open(
+									`/view/${params.id}`,
+									'',
+									`popup,width=${fragment.width || '800'},height=${fragment.height || '600'}`
+								);
+							}}>
+							<View16 className={actionIconStyle} />
+						</Button>
 						<div className={toolBarSeparator} />
 						<Button
 							kind='ghost'
