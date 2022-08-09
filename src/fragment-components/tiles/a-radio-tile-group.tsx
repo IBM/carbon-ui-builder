@@ -18,6 +18,7 @@ export const ARadioTileGroupSettingsUI = ({ selectedComponent, setComponent }: a
 	return <>
 		<TileMorphism component={selectedComponent} setComponent={setComponent} />
 		<TextInput
+			id='radio-tile-legend-text-input'
 			value={selectedComponent.legend}
 			labelText='Legend name'
 			placeholder='Fieldset header'
@@ -63,6 +64,7 @@ export const ARadioTileGroupSettingsUI = ({ selectedComponent, setComponent }: a
 
 export const ARadioTileGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
 	return <TextInput
+		id='radio-tile-input-name-text-input'
 		value={selectedComponent.codeContext?.name}
 		labelText='Input name'
 		onChange={(event: any) => {
