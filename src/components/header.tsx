@@ -70,7 +70,7 @@ export const Header = ({
 				onKeyDown={(event: any) => event.key === 'Enter' && navigate('/')}>
 				Carbon UI Builder {process.env.NODE_ENV === 'development' ? 'Dev' : ''}
 			</HeaderName>
-			<HeaderNavigation className={headerNavStyle}>
+			<HeaderNavigation aria-label='application menu' className={headerNavStyle}>
 				<HeaderMenuItem
 				className={headerName}
 				onClick={() => navigate('/')}>
