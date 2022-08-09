@@ -142,8 +142,7 @@ export const ARadioTile = ({
 		<Adder
 		active={selected}
 		topAction={() => addRadio()}
-		bottomAction={() => addRadio(1)}
-		key={componentObj.id}>
+		bottomAction={() => addRadio(1)}>
 			<AComponent
 			componentObj={componentObj}
 			headingCss={css`display: block;`}
@@ -181,6 +180,7 @@ export const componentInfo: ComponentInfo = {
 		items: []
 	},
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline }) => <ARadioTile
+		key={componentObj.id}
 		componentObj={componentObj}
 		select={select}
 		remove={remove}

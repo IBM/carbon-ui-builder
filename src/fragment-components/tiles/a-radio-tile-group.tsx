@@ -182,6 +182,7 @@ export const componentInfo: ComponentInfo = {
 		]
 	},
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline }) => <ARadioTileGroup
+		key={componentObj.id}
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
