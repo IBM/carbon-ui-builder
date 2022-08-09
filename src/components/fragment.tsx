@@ -256,6 +256,7 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 					} as ComponentInfoRenderProps);
 				}
 				return <component.componentInfo.component
+					key={componentObj.id}
 					componentObj={componentObj}
 					select={() => select(componentObj)}
 					remove={() => remove(componentObj)}
