@@ -96,7 +96,12 @@ export const AComponent = ({
 		}
 
 		if (typeof rejectDrop === 'function') {
-			const dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
+			let dragObj: any;
+			try {
+				dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
+			} catch (error) {
+				return rejectDrop({});
+			}
 			return rejectDrop(dragObj);
 		}
 
