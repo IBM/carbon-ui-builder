@@ -223,6 +223,7 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 								size='sm'
 								hasIconOnly
 								renderIcon={isEditingTitle ? Checkmark16 : Edit16}
+								iconDescription='toggle editing title'
 								onClick={() => {
 									setIsEditingTitle(!isEditingTitle);
 									// isEditingTitle won't be changed until next render so checking for opposite
@@ -308,6 +309,7 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 							aria-label='Export fragment'
 							title='Export fragment'
 							renderIcon={DocumentExport16}
+							iconDescription='export fragment'
 							onClick={() => dispatchModal({
 								type: ModalActionType.setExportModal,
 								id: fragment.id
