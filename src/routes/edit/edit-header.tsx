@@ -202,6 +202,8 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 							{
 								<div className={isEditingTitle ? css`display: inline-block` : css`display: none`}>
 									<TextInput
+										id='fragment-title-text-input'
+										labelText=''
 										ref={titleTextInputRef}
 										value={fragment.title}
 										onChange={(event: any) => setFragment({ ...fragment, title: event.target.value })}

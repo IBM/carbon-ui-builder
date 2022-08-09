@@ -152,6 +152,7 @@ export const StylePane = ({ isActive }: any) => {
 						))
 					} <br />
 					<TextInput
+						id='css-selector-text-input'
 						labelText='CSS selector'
 						helperText='Value used in development'
 						value={getSelectedClass().id || ''}
@@ -172,6 +173,7 @@ export const StylePane = ({ isActive }: any) => {
 						onChange={(event: any) => setHasDescriptiveName(event)} />
 					{
 						hasDescriptiveName() && <TextInput
+							id='descriptive-name-text-input'
 							labelText='Descriptive name'
 							helperText='Name that appears in tags and search'
 							value={getSelectedClass().name || ''}
