@@ -11,13 +11,13 @@ const svgStyle = css`
 	width: 25vw;
 	height: auto;
 	max-width: 400px;
+	max-height: 33vh;
 `;
 
 const placeholderContainer = css`
 	margin-top: 48px;
 	display: flex;
 	flex-direction: column;
-	height: calc(100vh - 48px);
 	padding: 24px;
 	padding-top: 150px;
 	align-items: center;
