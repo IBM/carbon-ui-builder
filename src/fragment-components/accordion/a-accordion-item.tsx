@@ -23,6 +23,7 @@ import { APlaceholder } from '../a-placeholder';
 export const AAccordionItemSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TextInput
+			id='accordion-item-title-text-input'
 			value={selectedComponent.title}
 			labelText='Title'
 			onChange={(event: any) => {
@@ -46,18 +47,19 @@ export const AAccordionItemSettingsUI = ({ selectedComponent, setComponent }: an
 
 export const AAccordionItemCodeUI = ({ selectedComponent, setComponent }: any) => {
 	return <TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>;
+		id='accordion-item-input-name-text-input'
+		value={selectedComponent.codeContext?.name}
+		labelText='Input name'
+		onChange={(event: any) => {
+			setComponent({
+				...selectedComponent,
+				codeContext: {
+					...selectedComponent.codeContext,
+					name: event.currentTarget.value
+				}
+			});
+		}}
+	/>;
 };
 
 export const AAccordionItem = ({
