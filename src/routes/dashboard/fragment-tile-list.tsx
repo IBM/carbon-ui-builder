@@ -30,9 +30,9 @@ const fragmentRowWrapper = css`
 	height: 100%
 `;
 
-export const FragmentTileList = ({ fragments, loaded, setModalFragment }: any) => {
+export const FragmentTileList = ({ fragments, setModalFragment }: any) => {
 	const getTilesOrPlaceholder = () => {
-		if ((!fragments || fragments.length === 0) && loaded) {
+		if ((!fragments || fragments.length === 0)) {
 			return (
 				<div className={placeholderContainer}>
 					<div style={{ textAlign: 'left' }}>
