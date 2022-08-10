@@ -57,6 +57,7 @@ export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
 		<Accordion align='start'>
 			<AccordionItem title='Small' open={isAccordionOpen.small}>
 				<NumberInput
+					id='column-small-span-number-input'
 					min={0}
 					max={4}
 					label='Span'
@@ -64,6 +65,7 @@ export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
 					value={selectedComponent.smallSpan}
 					onChange={onNumInputchange} />
 				<NumberInput
+					id='column-small-offset-number-input'
 					min={0}
 					max={3}
 					label='Offset'
@@ -74,6 +76,7 @@ export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
 
 			<AccordionItem title='Medium' open={isAccordionOpen.medium}>
 				<NumberInput
+					id='column-medium-span-number-input'
 					min={0}
 					max={8}
 					label='Span'
@@ -81,6 +84,7 @@ export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
 					value={selectedComponent.mediumSpan}
 					onChange={onNumInputchange} />
 				<NumberInput
+					id='column-medium-offset-number-input'
 					min={0}
 					max={7}
 					label='Offset'
@@ -91,6 +95,7 @@ export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
 
 			<AccordionItem title='Large' open={isAccordionOpen.large}>
 				<NumberInput
+					id='column-large-span-number-input'
 					min={0}
 					max={16}
 					label='Span'
@@ -98,6 +103,7 @@ export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
 					value={selectedComponent.largeSpan}
 					onChange={onNumInputchange} />
 				<NumberInput
+					id='column-large-offset-number-input'
 					min={0}
 					max={15}
 					label='Offset'
@@ -108,6 +114,7 @@ export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
 
 			<AccordionItem title='Extra large' open={isAccordionOpen.xLarge}>
 				<NumberInput
+					id='column-x-large-span-number-input'
 					min={0}
 					max={16}
 					label='Span'
@@ -115,6 +122,7 @@ export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
 					value={selectedComponent.xLargeSpan}
 					onChange={onNumInputchange} />
 				<NumberInput
+					id='column-x-large-offset-number-input'
 					min={0}
 					max={15}
 					label='Offset'
@@ -125,6 +133,7 @@ export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
 
 			<AccordionItem title='Max' open={isAccordionOpen.max}>
 				<NumberInput
+					id='column-max-span-number-input'
 					min={0}
 					max={16}
 					label='Span'
@@ -132,6 +141,7 @@ export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
 					value={selectedComponent.maxSpan}
 					onChange={onNumInputchange} />
 				<NumberInput
+					id='column-max-offset-number-input'
 					min={0}
 					max={15}
 					label='Offset'
