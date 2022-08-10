@@ -160,9 +160,8 @@ export const DraggableTileList = ({
 		<div>
 			<AddButton index={0} />
 			{
-				dataList.map((item: any, index: number) => <>
+				dataList.map((item: any, index: number) => <React.Fragment key={`tile-and-button-${index}`}>
 					<Tile
-					key={`tile--${index}`}
 					draggable='true'
 					onDragStart={(event: any) => onDragStart(event, index)}
 					onDragEnd={(event: any) => onDragEnd(event)}
@@ -182,10 +181,8 @@ export const DraggableTileList = ({
 						<Draggable16 className={draggableIconStyle} />
 						{template(item, index)}
 					</Tile>
-					<AddButton
-						index={index + 1}
-						key={`add-btn--${index + 1}`} />
-				</>)
+					<AddButton index={index + 1} />
+				</React.Fragment>)
 			}
 		</div>
 	);
