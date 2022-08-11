@@ -1,5 +1,6 @@
 import React, { useContext, useRef, useState } from 'react';
 import { SkeletonPlaceholder } from 'carbon-components-react';
+import { Add32, DropPhoto32 } from '@carbon/icons-react';
 import './fragment-preview.scss';
 import { css, cx } from 'emotion';
 import { allComponents, ComponentInfoRenderProps } from '../fragment-components';
@@ -15,6 +16,31 @@ const canvas = css`
 	border: 2px solid #d8d8d8;
 	background-color: white;
 	position: relative;
+
+	> div {
+		height: 100%;
+	}
+`;
+
+const centerStyle = css`
+	height: 100%;
+	display: flex;
+	align-items: center;
+	color: #8d8d8d;
+	cursor: pointer;
+
+	> div {
+		margin: auto;
+
+		p {
+			display: flex;
+			line-height: 32px;
+
+			svg {
+				margin-right: 0.5rem;
+			}
+		}
+	}
 `;
 
 const allowDrop = (event: any) => {
@@ -230,6 +256,23 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 		});
 	};
 
+	const addGrid = (event: any) => {
+		if (event) {
+			event.stopPropagation();
+		}
+
+		setFragment({
+			...fragment,
+			data: updatedState(
+				fragment.data,
+				{
+					type: 'insert',
+					component: allComponents.grid.componentInfo.defaultComponentObj
+				}, fragment.data.id, 0
+			)
+		});
+	};
+
 	const renderComponents = (componentObj: any, outline: boolean | null = null): any => {
 		if (typeof componentObj === 'string' || !componentObj) {
 			return componentObj;
@@ -303,6 +346,14 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 		onDragOver={allowDrop}
 		onDrop={drop}>
 			<div ref={holderRef} className={`${fragment.cssClasses ? fragment.cssClasses.map((cc: any) => cc.id).join(' ') : ''}`}>
+				{
+					!fragment.data?.items?.length && <div className={centerStyle} onClick={addGrid}>
+						<div>
+							<p><Add32 /> Click to add grid <br /></p>
+							<p><DropPhoto32 /> Drag and drop an element from the left pane to get started</p>
+						</div>
+					</div>
+				}
 				{renderComponents(fragment.data, outline)}
 			</div>
 		</div>
