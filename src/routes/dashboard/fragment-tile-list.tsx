@@ -37,7 +37,7 @@ const tileStyle = css`
 	height: 200px;
 	position: relative;
 
-	svg {
+	> svg {
 		margin-bottom: 0.5rem;
 	}
 `;
