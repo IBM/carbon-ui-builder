@@ -116,6 +116,19 @@ export const Header = ({
 					</HeaderMenuItem>
 				</HeaderMenu>
 
+				{/*         FEEDBACK MENU        */}
+				<HeaderMenu
+				aria-label='feedback'
+				menuLinkName='Feedback'
+				className={headerName}>
+					<HeaderMenuItem
+					className={headerName}
+					href='https://github.com/IBM/carbon-ui-builder/issues/new'
+					target='_blank'>
+						I found a bug
+					</HeaderMenuItem>
+				</HeaderMenu>
+
 				{/*         HELP MENU        */}
 				<HeaderMenu
 				aria-label='help'
@@ -136,19 +149,6 @@ export const Header = ({
 					href='https://ibm-studios.slack.com/archives/C02LL3SMXFS'
 					target='_blank'>
 						I have a question
-					</HeaderMenuItem>
-				</HeaderMenu>
-
-				{/*         FEEDBACK MENU        */}
-				<HeaderMenu
-				aria-label='feedback'
-				menuLinkName='Feedback'
-				className={headerName}>
-					<HeaderMenuItem
-					className={headerName}
-					href='https://github.com/IBM/carbon-ui-builder/issues/new'
-					target='_blank'>
-						I found a bug
 					</HeaderMenuItem>
 				</HeaderMenu>
 			</HeaderNavigation>
