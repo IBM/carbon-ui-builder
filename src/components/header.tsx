@@ -8,10 +8,14 @@ import {
 	SkipToContent
 } from 'carbon-components-react';
 import {
+	ChatLaunch16,
+	Debug16,
 	DocumentAdd16,
 	Download16,
 	DocumentImport16,
-	DocumentExport16
+	DocumentExport16,
+	Information16,
+	Keyboard16
 } from '@carbon/icons-react';
 import { css } from 'emotion';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
@@ -125,7 +129,7 @@ export const Header = ({
 					className={headerName}
 					href='https://github.com/IBM/carbon-ui-builder/issues/new'
 					target='_blank'>
-						I found a bug
+						<Debug16 /> I found a bug
 					</HeaderMenuItem>
 				</HeaderMenu>
 
@@ -137,18 +141,18 @@ export const Header = ({
 					<HeaderMenuItem
 					className={headerName}
 					onClick={() => navigate('/help/introduction')}>
-						Introduction
+						<Information16 /> Introduction
 					</HeaderMenuItem>
 					<HeaderMenuItem
 					className={headerName}
 					onClick={() => navigate('/help/hotkeys')}>
-						Hotkeys / Shortcuts
+						<Keyboard16 /> Hotkeys / Shortcuts
 					</HeaderMenuItem>
 					<HeaderMenuItem
 					className={headerName}
 					href='https://ibm-studios.slack.com/archives/C02LL3SMXFS'
 					target='_blank'>
-						I have a question
+						<ChatLaunch16 /> I have a question
 					</HeaderMenuItem>
 				</HeaderMenu>
 			</HeaderNavigation>
