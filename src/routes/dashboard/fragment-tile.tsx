@@ -6,9 +6,26 @@ import {
 	SkeletonText,
 	Tile
 } from 'carbon-components-react';
+import {
+	Copy16,
+	DocumentExport16,
+	Edit16,
+	Reset16,
+	TrashCan16
+} from '@carbon/icons-react';
+import { css } from 'emotion';
 import { ModalContext, ModalActionType } from '../../context/modal-context';
 import { FragmentPreview } from '../../components/fragment-preview';
 import './fragment-tile.scss';
+
+const menuItemStyle = css`
+	display: flex;
+	align-items: center;
+
+	svg {
+		margin-right: 0.5rem;
+	}
+`;
 
 export const FragmentTile = ({
 	fragment,
@@ -49,19 +66,19 @@ export const FragmentTile = ({
 						iconDescription=''
 						onClick={(event: { stopPropagation: () => void }) => event.stopPropagation()}>
 							<OverflowMenuItem
-								itemText='Edit'
+								itemText={<div className={menuItemStyle}><Edit16 /> Edit</div>}
 								onClick={() => navigate(`/edit/${fragment.id}`)} />
 							<OverflowMenuItem
-								itemText='Export'
+								itemText={<div className={menuItemStyle}><DocumentExport16 /> Export</div>}
 								onClick={() => handleModalState(ModalActionType.setExportModal)} />
 							<OverflowMenuItem
-								itemText='Duplicate'
+								itemText={<div className={menuItemStyle}><Copy16 /> Duplicate</div>}
 								onClick={() => handleModalState(ModalActionType.setDuplicationModal)} />
 							<OverflowMenuItem
-								itemText='Reset preview'
+								itemText={<div className={menuItemStyle}><Reset16 /> Reset preview</div>}
 								onClick={resetPreview.current} />
 							<OverflowMenuItem
-								itemText='Remove'
+								itemText={<div className={menuItemStyle}><TrashCan16 /> Delete</div>}
 								onClick={() => handleModalState(ModalActionType.setDeletionModal)}
 								isDelete />
 						</OverflowMenu>
