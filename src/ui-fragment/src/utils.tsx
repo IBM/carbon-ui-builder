@@ -26,7 +26,6 @@ import { UIRow } from './components/ui-row';
 import { UISelectableTile } from './components/ui-selectable-tile';
 import { UISelectableTileGroup } from './components/ui-selectable-tile-group';
 import { UISearchInput } from './components/ui-serach-input';
-import { UISwitch } from './components/ui-switch';
 import { UITag } from './components/ui-tag';
 import { UIText } from './components/ui-text';
 import { UITextAreaInput } from './components/ui-text-area';
@@ -109,9 +108,6 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'search':
 			return <UISearchInput key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
-
-		case 'switch-item':
-			return <UISwitch key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'tag':
 			return <UITag key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;

@@ -1,12 +1,10 @@
 import React from 'react';
-import { ContentSwitcher } from 'carbon-components-react';
-import { renderComponents, setItemInState } from '../utils';
+import { ContentSwitcher, Switch } from 'carbon-components-react';
 import { CssClasses } from '../types';
-import { SwitchState } from './ui-switch';
 
 export interface ContentSwitcherState {
 	type: string;
-	items: SwitchState[];
+	items: [];
 	size: [],
 	cssClasses?: CssClasses[];
 }
@@ -25,10 +23,13 @@ export const UIContentSwitcher = ({ state, setState, setGlobalState }: {
 	size={state.size}
 	className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 		{
-			state.items?.map((item: any) => {
-				const setItem = (i: any) => setItemInState(i, state, setState);
-				return renderComponents(item, setItem, setGlobalState);
-			})
+			state.items.map((step: any, index: number) => <Switch
+				className={step.className}
+				name={step.name}
+				text={step.text}
+				disabled={step.disabled}
+				key={index}
+			/>)
 		}
 	</ContentSwitcher>;
 };
