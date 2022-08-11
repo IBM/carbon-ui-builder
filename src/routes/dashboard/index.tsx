@@ -47,7 +47,12 @@ const searchRowStyles = css`
 	}
 `;
 
-export const Dashboard = ({ displayWizard, setDisplayWizard, setModalFragment }: any) => {
+export const Dashboard = ({
+	displayWizard,
+	setDisplayWizard,
+	setModalFragment,
+	setDisplayedModal
+}: any) => {
 	const { fragments, updateFragments } = useContext(GlobalStateContext);
 	const [fragmentGroupDisplayed, setFragmentGroupDisplayed] = useState(FragmentGroupDisplayed.LocalOnly);
 	const [fragmentTitleFilter, setFragmentTitleFilter] = useState('');
@@ -116,7 +121,10 @@ export const Dashboard = ({ displayWizard, setDisplayWizard, setModalFragment }:
 					{
 						<FragmentTileList
 							fragments={displayedFragments}
-							setModalFragment={setModalFragment} />
+							setModalFragment={setModalFragment}
+							setDisplayedModal={setDisplayedModal}
+							displayWizard={displayWizard}
+							setDisplayWizard={setDisplayWizard} />
 					}
 				</Col>
 			</Row>
