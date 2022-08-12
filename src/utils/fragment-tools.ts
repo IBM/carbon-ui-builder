@@ -205,6 +205,14 @@ export const getFragmentPreviewUrl = async (fragment: any) => {
 	return getUrlFromBlob(imageBlob);
 };
 
+export const openFragmentPreview = (fragment: any) => {
+	window.open(
+		`/view/${fragment.id}`,
+		'',
+		`popup,width=${fragment.width || '800'},height=${fragment.height || '600'}`
+	);
+};
+
 export const reactClassNamesFromComponentObj = (componentObj: any) =>
 	componentObj.cssClasses
 		&& Array.isArray(componentObj.cssClasses)

@@ -18,6 +18,7 @@ import { FragmentModal } from './fragment-modal';
 import { GlobalStateContext } from '../../context';
 import { actionIconStyle } from '.';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { openFragmentPreview } from '../../utils/fragment-tools';
 
 const editHeader = css`
 	left: 16rem;
@@ -256,13 +257,7 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 							kind='ghost'
 							aria-label={'Preview fragment'}
 							title={'Preview fragment'}
-							onClick={() => {
-								window.open(
-									`/view/${fragment.id}`,
-									'',
-									`popup,width=${fragment.width || '800'},height=${fragment.height || '600'}`
-								);
-							}}>
+							onClick={() => openFragmentPreview(fragment)}>
 							<View16 className={actionIconStyle} />
 						</Button>
 						<div className={toolBarSeparator} />
