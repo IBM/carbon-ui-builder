@@ -63,7 +63,7 @@ export const FragmentTile = ({
 						<OverflowMenu
 						className='fragment-overflow'
 						ariaLabel='Fragment options'
-						iconDescription=''
+						iconDescription='fragment menu'
 						onClick={(event: { stopPropagation: () => void }) => event.stopPropagation()}>
 							<OverflowMenuItem
 								itemText={<div className={menuItemStyle}><Edit16 /> Edit</div>}
