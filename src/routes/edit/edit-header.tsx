@@ -17,7 +17,7 @@ import { ModalContext, ModalActionType } from '../../context/modal-context';
 import { FragmentModal } from './fragment-modal';
 import { GlobalStateContext } from '../../context';
 import { actionIconStyle } from '.';
-import { NavigateFunction, useNavigate, useParams } from 'react-router-dom';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
 
 const editHeader = css`
 	left: 16rem;
@@ -162,7 +162,6 @@ background: linear-gradient(to top right,
 export const EditHeader = ({ fragment, setFragment }: any) => {
 	const navigate: NavigateFunction = useNavigate();
 	const [, dispatchModal] = useContext(ModalContext);
-	const params = useParams();
 	const [isEditingTitle, setIsEditingTitle] = useState(false);
 	const titleTextInputRef = useRef(null as any);
 	const {
@@ -259,7 +258,7 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 							title={'Preview fragment'}
 							onClick={() => {
 								window.open(
-									`/view/${params.id}`,
+									`/view/${fragment.id}`,
 									'',
 									`popup,width=${fragment.width || '800'},height=${fragment.height || '600'}`
 								);
