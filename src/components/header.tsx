@@ -8,10 +8,14 @@ import {
 	SkipToContent
 } from 'carbon-components-react';
 import {
+	ChatLaunch16,
+	Debug16,
 	DocumentAdd16,
 	Download16,
 	DocumentImport16,
-	DocumentExport16
+	DocumentExport16,
+	Information16,
+	Keyboard16
 } from '@carbon/icons-react';
 import { css } from 'emotion';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
@@ -70,7 +74,7 @@ export const Header = ({
 				onKeyDown={(event: any) => event.key === 'Enter' && navigate('/')}>
 				Carbon UI Builder {process.env.NODE_ENV === 'development' ? 'Dev' : ''}
 			</HeaderName>
-			<HeaderNavigation className={headerNavStyle}>
+			<HeaderNavigation aria-label='application menu' className={headerNavStyle}>
 				<HeaderMenuItem
 				className={headerName}
 				onClick={() => navigate('/')}>
@@ -116,6 +120,19 @@ export const Header = ({
 					</HeaderMenuItem>
 				</HeaderMenu>
 
+				{/*         FEEDBACK MENU        */}
+				<HeaderMenu
+				aria-label='feedback'
+				menuLinkName='Feedback'
+				className={headerName}>
+					<HeaderMenuItem
+					className={headerName}
+					href='https://github.com/IBM/carbon-ui-builder/issues/new'
+					target='_blank'>
+						<Debug16 /> I found a bug
+					</HeaderMenuItem>
+				</HeaderMenu>
+
 				{/*         HELP MENU        */}
 				<HeaderMenu
 				aria-label='help'
@@ -124,12 +141,18 @@ export const Header = ({
 					<HeaderMenuItem
 					className={headerName}
 					onClick={() => navigate('/help/introduction')}>
-						Introduction
+						<Information16 /> Introduction
 					</HeaderMenuItem>
 					<HeaderMenuItem
 					className={headerName}
 					onClick={() => navigate('/help/hotkeys')}>
-						Hotkeys / Shortcuts
+						<Keyboard16 /> Hotkeys / Shortcuts
+					</HeaderMenuItem>
+					<HeaderMenuItem
+					className={headerName}
+					href='https://ibm-studios.slack.com/archives/C02LL3SMXFS'
+					target='_blank'>
+						<ChatLaunch16 /> I have a question
 					</HeaderMenuItem>
 				</HeaderMenu>
 			</HeaderNavigation>

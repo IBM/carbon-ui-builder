@@ -6,7 +6,7 @@ import {
 	Checkbox
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
-import image from './../assets/component-icons/link.svg';
+import image from './../assets/component-icons/tooltip.svg';
 import {
 	angularClassNamesFromComponentObj,
 	nameStringToVariableString,

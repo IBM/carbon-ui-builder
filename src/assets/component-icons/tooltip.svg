@@ -1,0 +1,14 @@
+<svg id="tooltip_icon_tooltip_" data-name="tooltip / icon tooltip /" xmlns="http://www.w3.org/2000/svg" width="76" height="52" viewBox="0 0 76 52">
+  <g id="tooltip_icon_tooltip_item_arrow_top" data-name="tooltip / icon tooltip / item / arrow top" transform="translate(0 24)">
+    <g id="Container">
+      <rect id="bg" width="75.999" height="28" transform="translate(0.001 0)" fill="none"/>
+      <g id="tooltip_piece_arrow_top" data-name="tooltip / piece / arrow top">
+        <path id="bg-2" data-name="bg" d="M2,28a2,2,0,0,1-2-2V6A2,2,0,0,1,2,4H33.983l4-4,4,4H74a2,2,0,0,1,2,2V26a2,2,0,0,1-2,2Z" fill="#383838"/>
+      </g>
+    </g>
+    <text id="Tooltip" transform="translate(38 21)" fill="#fff" font-size="14" font-family="IBMPlexSans, IBM Plex Sans" letter-spacing="0.011em"><tspan x="-22.004" y="0">Tooltip</tspan></text>
+  </g>
+  <g id="Actions_Controls_settings--adjust_16" data-name="Actions / Controls / settings--adjust / 16" transform="translate(30)">
+    <path id="Fill" d="M5,13.005A2.509,2.509,0,0,1,2.55,11H0V10H2.55a2.5,2.5,0,0,1,4.9,0H14v1H7.45A2.509,2.509,0,0,1,5,13.005ZM5,9a1.5,1.5,0,1,0,1.5,1.5A1.5,1.5,0,0,0,5,9ZM9,5A2.508,2.508,0,0,1,6.55,3H0V2H6.55a2.5,2.5,0,0,1,4.9,0H14V3H11.45A2.509,2.509,0,0,1,9,5ZM9,1a1.5,1.5,0,1,0,1.5,1.5A1.5,1.5,0,0,0,9,1Z" transform="translate(1 1.497)" fill="#161616"/>
+  </g>
+</svg>

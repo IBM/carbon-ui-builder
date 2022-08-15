@@ -1,25 +1,64 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import {
+	ClickableTile,
+	Column,
+	Grid,
+	Row
+} from 'carbon-components-react';
+import {
+	Grid32,
+	ArrowRight16,
+	Code32,
+	Development32
+} from '@carbon/icons-react';
 import { css } from 'emotion';
+import { componentInfo as gridComponentInfo } from '../../fragment-components/a-grid';
 
 import { FragmentTile } from './fragment-tile';
 
 // import the img placeholder svg
 import placeholder from './../../assets/dashboard-empty-state.svg';
+import { generateNewFragment } from './fragment-wizard/generate-new-fragment';
+import { GlobalStateContext } from '../../context';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { initializeIds } from '../../components';
+import { FragmentWizardModals } from './fragment-wizard/fragment-wizard';
 
 // styles for placeholder
 const svgStyle = css`
 	width: 25vw;
 	height: auto;
 	max-width: 400px;
+	max-height: 27vh;
+`;
+
+const tileStyle = css`
+	width: 200px;
+	height: 200px;
+	position: relative;
+
+	> svg {
+		margin-bottom: 0.5rem;
+	}
+`;
+
+const actionStyle = css`
+    line-height: 2rem;
+    display: flex;
+    align-items: center;
+    position: absolute;
+	bottom: 0;
+
+	svg {
+		margin-left: 1rem;
+	}
 `;
 
 const placeholderContainer = css`
 	margin-top: 48px;
 	display: flex;
 	flex-direction: column;
-	height: calc(100vh - 48px);
 	padding: 24px;
-	padding-top: 150px;
 	align-items: center;
 `;
 
@@ -30,17 +69,80 @@ const fragmentRowWrapper = css`
 	height: 100%
 `;
 
-export const FragmentTileList = ({ fragments, loaded, setModalFragment }: any) => {
+export const FragmentTileList = ({
+	fragments,
+	setModalFragment,
+	setDisplayedModal,
+	setDisplayWizard
+}: any) => {
+	const { addFragment } = useContext(GlobalStateContext);
+	const navigate: NavigateFunction = useNavigate();
+
+	const generateFragment = (items: any[] = []) => {
+		const generatedFragment = generateNewFragment(
+			{ items, id: 1 }
+		);
+
+		addFragment(generatedFragment);
+
+		navigate(`/edit/${generatedFragment.id}`);
+	};
+
 	const getTilesOrPlaceholder = () => {
-		if ((!fragments || fragments.length === 0) && loaded) {
+		if ((!fragments || fragments.length === 0)) {
 			return (
 				<div className={placeholderContainer}>
 					<div style={{ textAlign: 'left' }}>
-						<img alt="No fragments exist" src={placeholder} className={svgStyle} />
-						<h3>You have no fragments here.</h3>
-						<p style={{ marginTop: '0.5em' }}>
-							To build a new fragment, click <strong>New Fragment</strong>.
-						</p>
+						<Grid>
+							<Row>
+								<Column>
+									<img alt="No fragments exist" src={placeholder} className={svgStyle} />
+								</Column>
+							</Row>
+							<Row>
+								<Column>
+									<h3>Carbon UI Builder</h3>
+									<p style={{ marginTop: '0.5em' }}>
+										Build product pages in a fraction of time that it normally takes you.
+									</p>
+								</Column>
+							</Row>
+							<Row className={css`margin-top: 3rem;`}>
+								<Column>
+									<ClickableTile
+									className={tileStyle}
+									light={true}
+									onClick={() => generateFragment([initializeIds(gridComponentInfo.defaultComponentObj)])}>
+										<Grid32 />
+										<p>Empty page (with grid)</p>
+										<div className={actionStyle}>Start building <ArrowRight16 /></div>
+									</ClickableTile>
+								</Column>
+								<Column>
+									<ClickableTile
+									className={tileStyle}
+									light={true}
+									onClick={() => generateFragment()}>
+										<Development32 />
+										<p>Empty fragment</p>
+										<div className={actionStyle}>Start building <ArrowRight16 /></div>
+									</ClickableTile>
+								</Column>
+								<Column>
+									<ClickableTile
+									className={tileStyle}
+									light={true}
+									onClick={() => {
+										setDisplayWizard(true);
+										setDisplayedModal(FragmentWizardModals.IMPORT_JSON_MODAL);
+									}}>
+										<Code32 />
+										<p>Import JSON</p>
+										<div className={actionStyle}>Continue building <ArrowRight16 /></div>
+									</ClickableTile>
+								</Column>
+							</Row>
+						</Grid>
 					</div>
 				</div>
 			);

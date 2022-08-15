@@ -72,6 +72,7 @@ export const App = () => {
 									<Route path='/' element={
 										<Dashboard
 											displayWizard={displayWizard}
+											setDisplayedModal={setDisplayedModal}
 											setDisplayWizard={setDisplayWizard}
 											setModalFragment={setModalFragment} />
 									} />

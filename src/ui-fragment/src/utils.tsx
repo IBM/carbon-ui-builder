@@ -10,6 +10,7 @@ import { UICodeSnippet } from './components/ui-code-snippet';
 import { UIColumn } from './components/ui-column';
 import { UIComboBox } from './components/ui-combobox';
 import { UIDropdown } from './components/ui-dropdown';
+import { UIExpandableTile } from './components/ui-expandable-tile';
 import { UIGrid } from './components/ui-grid';
 import { UILink } from './components/ui-link';
 import { UILoading } from './components/ui-loading';
@@ -19,7 +20,10 @@ import { UIOverflowMenuItem } from './components/ui-overflow-menu-item';
 import { UIProgressIndicator } from './components/ui-progress-indicator';
 import { UIRadio } from './components/ui-radio';
 import { UIRadioGroup } from './components/ui-radio-group';
+import { UIRadioTileGroup } from './components/ui-radio-tile-group';
 import { UIRow } from './components/ui-row';
+import { UISelectableTile } from './components/ui-selectable-tile';
+import { UISelectableTileGroup } from './components/ui-selectable-tile-group';
 import { UISearchInput } from './components/ui-serach-input';
 import { UITag } from './components/ui-tag';
 import { UIText } from './components/ui-text';
@@ -133,6 +137,18 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'toggle':
 			return <UIToggle key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'expandable-tile':
+			return <UIExpandableTile key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'selectable-tile':
+			return <UISelectableTile key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'selectable-tile-group':
+			return <UISelectableTileGroup key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'radio-tile-group':
+			return <UIRadioTileGroup key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		default:
 			break;

@@ -198,10 +198,12 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 						<ChevronLeft24 className={actionIconStyle} />
 					</Button>
 					<div className='title-wrap'>
-						<p className='fragment-title'>
+						<div className='fragment-title'>
 							{
 								<div className={isEditingTitle ? css`display: inline-block` : css`display: none`}>
 									<TextInput
+										id='fragment-title-text-input'
+										labelText=''
 										ref={titleTextInputRef}
 										value={fragment.title}
 										onChange={(event: any) => setFragment({ ...fragment, title: event.target.value })}
@@ -221,6 +223,7 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 								size='sm'
 								hasIconOnly
 								renderIcon={isEditingTitle ? Checkmark16 : Edit16}
+								iconDescription='toggle editing title'
 								onClick={() => {
 									setIsEditingTitle(!isEditingTitle);
 									// isEditingTitle won't be changed until next render so checking for opposite
@@ -230,7 +233,7 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 										});
 									}
 								}} />
-						</p>
+						</div>
 
 						<div className='title-subheading'>
 							<div className='date-wrap'>{`Last modified ${fragment.lastModified}`}</div>
@@ -250,18 +253,19 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 								fragment.outline === false ? actionIconInheritedStyle : ''
 							)} />
 						</Button>
-						{
-							process.env.NODE_ENV === 'development' &&
-							<Button
-								kind='ghost'
-								aria-label={'Preview fragment'}
-								title={'Preview fragment'}
-								onClick={() => {
-									window.open(`/view/${params.id}`, '', 'popup');
-								}}>
-								<View16 className={actionIconStyle} />
-							</Button>
-						}
+						<Button
+							kind='ghost'
+							aria-label={'Preview fragment'}
+							title={'Preview fragment'}
+							onClick={() => {
+								window.open(
+									`/view/${params.id}`,
+									'',
+									`popup,width=${fragment.width || '800'},height=${fragment.height || '600'}`
+								);
+							}}>
+							<View16 className={actionIconStyle} />
+						</Button>
 						<div className={toolBarSeparator} />
 						<Button
 							kind='ghost'
@@ -305,6 +309,7 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 							aria-label='Export fragment'
 							title='Export fragment'
 							renderIcon={DocumentExport16}
+							iconDescription='export fragment'
 							onClick={() => dispatchModal({
 								type: ModalActionType.setExportModal,
 								id: fragment.id
