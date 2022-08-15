@@ -164,17 +164,44 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => ``,
-			outputs: ({ json }) => ``,
-			imports: [''],
+			inputs: (_) => ``,
+			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter();`,
+			imports: ['ContentSwitcherModule'],
 			code: ({ json }) => {
-				return ``;
+				return `<ibm-content-switcher
+					${angularClassNamesFromComponentObj(json)}
+					(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit()">
+					${json.items.map((step: any) => (
+						`<button
+							ibmContentOption
+							name="${step.name}"
+							[disabled]="${step.disabled}">
+							${step.text}
+						</button>`
+						)).join('\n')}
+				</ibm-content-switcher>`;
 			}
 		},
 		react: {
-			imports: [''],
+			imports: ['ContentSwitcher', 'Switch'],
 			code: ({ json }) => {
-				return ``;
+				const name = nameStringToVariableString(json.codeContext?.name);
+				return `<ContentSwitcher
+					size="${json.size}"
+					${reactClassNamesFromComponentObj(json)}
+					onChange={(selectedItem) => handleInputChange({
+						target: {
+							name: "${name}",
+							value: selectedItem
+						}
+					})}>
+					${json.items.map((step: any) => (
+						`<Switch
+							name={"${step.name}"}
+							text="${step.text}"
+							disabled={${step.disabled}}/>`
+						)).join('\n')}
+				</ContentSwitcher>`;
 			}
 		}
 	}
