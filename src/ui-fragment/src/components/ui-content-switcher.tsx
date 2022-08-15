@@ -5,11 +5,11 @@ import { CssClasses } from '../types';
 export interface ContentSwitcherState {
 	type: string;
 	items: [];
-	size: [],
+	size: [];
 	cssClasses?: CssClasses[];
 }
 
-export const UIContentSwitcher = ({ state, setState, setGlobalState }: {
+export const UIContentSwitcher = ({ state }: {
 	state: ContentSwitcherState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;

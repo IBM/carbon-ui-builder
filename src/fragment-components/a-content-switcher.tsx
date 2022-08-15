@@ -88,26 +88,21 @@ export const AContentSwitcherSettingsUI = ({ selectedComponent, setComponent }: 
 	</>;
 };
 
-export const AContentSwitcherCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
-		<TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>
-	</>;
-};
+export const AContentSwitcherCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}}
+/>;
 
 export const AContentSwitcher = ({
-	children,
 	componentObj,
 	...rest
 }: any) => {
@@ -145,26 +140,26 @@ export const componentInfo: ComponentInfo = {
 				name: 'first',
 				text: 'First section',
 				disabled: false,
-				type: 'switch-item',
+				type: 'switch-item'
 			},
 			{
 				name: 'second',
 				text: 'Second section',
 				disabled: false,
-				type: 'switch-item',
+				type: 'switch-item'
 			},
 			{
 				name: 'third',
 				text: 'Third section',
 				disabled: false,
-				type: 'switch-item',
+				type: 'switch-item'
 			}
 		]
 	},
 	image,
 	codeExport: {
 		angular: {
-			inputs: (_) => ``,
+			inputs: (_) => '',
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter();`,
 			imports: ['ContentSwitcherModule'],
 			code: ({ json }) => {
