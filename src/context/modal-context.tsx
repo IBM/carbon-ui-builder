@@ -8,26 +8,34 @@ export enum ModalActionType {
 	setDuplicationModal,
 	setDeletionModal,
 	setExportModal,
+	setPreviewModal,
 	closeModal
 }
 
 export enum ModalType {
 	DUPLICATION,
 	DELETION,
-	EXPORT
+	EXPORT,
+	PREVIEW
 }
 
 export type ModalAction = BaseModalAction;
 
 export interface BaseModalAction {
 	type: ModalActionType;
-	id: string;
+	id?: string;
+	fragment?: any;
+	fragments?: any[];
+	isFeaturedFragment?: boolean;
 }
 
 export interface ModalState {
 	ShowModal: boolean;
 	ModalType: any;
-	FragmentID: string;
+	FragmentID?: string;
+	fragment?: any;
+	fragments?: any[];
+	isFeaturedFragment?: boolean;
 }
 
 const initialState = {
@@ -58,6 +66,15 @@ const modalReducer = (state: ModalState, action: BaseModalAction) => {
 				ShowModal: true,
 				ModalType: ModalType.EXPORT,
 				FragmentID: action.id
+			};
+		case ModalActionType.setPreviewModal:
+			return {
+				...state,
+				ShowModal: true,
+				ModalType: ModalType.PREVIEW,
+				fragments: action.fragments,
+				fragment: action.fragment,
+				isFeaturedFragment: action.isFeaturedFragment
 			};
 		case ModalActionType.closeModal:
 			return {

@@ -9,15 +9,13 @@ import { getFragmentDuplicate } from '../../utils/fragment-tools';
 
 // In the case that fragment modal is used in the dashboard the full fragment containing options and data
 // can't be passed in, so fragment id is passed in and `useFragment` is used within this component.
-export const DuplicateFragmentModal = ({ id }: any) => {
+export const DuplicateFragmentModal = ({ fragment }: any) => {
 	const [modalState, dispatchModal] = useContext(ModalContext);
 	const [, dispatchNotification] = useContext(NotificationContext);
 	const { fragments, addFragment } = useContext(GlobalStateContext);
 
 	const navigate: NavigateFunction = useNavigate();
 	const location = useLocation();
-
-	const fragment = fragments.find((fragment: any) => fragment.id === id);
 
 	const duplicateFragment = () => {
 		const fragmentCopy = getFragmentDuplicate(
