@@ -10,7 +10,7 @@ import {
 	Copy16,
 	DocumentExport16,
 	Edit16,
-	Reset16,
+	View16,
 	TrashCan16
 } from '@carbon/icons-react';
 import { css } from 'emotion';
@@ -27,12 +27,18 @@ const menuItemStyle = css`
 	}
 `;
 
+const clickableStyle = css`
+	cursor: pointer;
+`;
+
 export const FragmentTile = ({
 	fragment,
+	fragments,
 	title,
 	to,
 	lastModified,
-	setModalFragment
+	setModalFragment,
+	isFeaturedFragment
 }: any) => {
 	const navigate = useNavigate();
 	const [, dispatchModal] = useContext(ModalContext);
@@ -46,18 +52,41 @@ export const FragmentTile = ({
 		});
 	};
 
+	const openPreview = (fragment: any, fragments: any[]) => {
+		setModalFragment(fragment);
+		dispatchModal({
+			type: ModalActionType.setPreviewModal,
+			fragment,
+			fragments,
+			isFeaturedFragment
+		});
+	};
+
 	return (
 		<div className='tile-wrapper'>
 			<Tile className='tile-style' >
 				<div className='tile-inner-wrapper'>
-					<Link to={to}>
-						<FragmentPreview fragment={fragment} resetPreview={resetPreview} />
-					</Link>
+					{
+						isFeaturedFragment
+						? <section className={clickableStyle} onClick={() => openPreview(fragment, fragments)}>
+							<FragmentPreview fragment={fragment} resetPreview={resetPreview} />
+						</section>
+						: <Link to={to}>
+							<FragmentPreview fragment={fragment} resetPreview={resetPreview} />
+						</Link>
+					}
+
 					<div className='fragment-info'>
 						<div>
-							<Link to={to} className='dashboard-link'>
-								<h3>{title}</h3>
-							</Link>
+							{
+								isFeaturedFragment
+								? <section className={clickableStyle} onClick={() => openPreview(fragment, fragments)}>
+									<h3>{title}</h3>
+								</section>
+								: <Link to={to} className='dashboard-link'>
+									<h3>{title}</h3>
+								</Link>
+							}
 							<span>{lastModified ? lastModified : 'Last modified date unknown'}</span>
 						</div>
 						<OverflowMenu
@@ -65,9 +94,11 @@ export const FragmentTile = ({
 						ariaLabel='Fragment options'
 						iconDescription='fragment menu'
 						onClick={(event: { stopPropagation: () => void }) => event.stopPropagation()}>
-							<OverflowMenuItem
-								itemText={<div className={menuItemStyle}><Edit16 /> Edit</div>}
-								onClick={() => navigate(`/edit/${fragment.id}`)} />
+							{
+								!isFeaturedFragment && <OverflowMenuItem
+									itemText={<div className={menuItemStyle}><Edit16 /> Edit</div>}
+									onClick={() => navigate(`/edit/${fragment.id}`)} />
+							}
 							<OverflowMenuItem
 								itemText={<div className={menuItemStyle}><DocumentExport16 /> Export</div>}
 								onClick={() => handleModalState(ModalActionType.setExportModal)} />
@@ -75,8 +106,8 @@ export const FragmentTile = ({
 								itemText={<div className={menuItemStyle}><Copy16 /> Duplicate</div>}
 								onClick={() => handleModalState(ModalActionType.setDuplicationModal)} />
 							<OverflowMenuItem
-								itemText={<div className={menuItemStyle}><Reset16 /> Reset preview</div>}
-								onClick={resetPreview.current} />
+								itemText={<div className={menuItemStyle}><View16 /> Open preview</div>}
+								onClick={() => openPreview(fragment, fragments)} />
 							<OverflowMenuItem
 								itemText={<div className={menuItemStyle}><TrashCan16 /> Delete</div>}
 								onClick={() => handleModalState(ModalActionType.setDeletionModal)}

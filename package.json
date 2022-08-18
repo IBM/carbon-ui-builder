@@ -16,6 +16,7 @@
     "jspdf": "2.5.1",
     "lodash": "4.17.21",
     "lz-string": "1.4.4",
+    "octokit": "1.8.0",
     "path": "npm:path-browserify",
     "prettier": "2.6.2",
     "react": "17.0.2",

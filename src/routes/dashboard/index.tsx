@@ -4,6 +4,7 @@ import React, {
 	useEffect
 } from 'react';
 import { css } from 'emotion';
+import { Octokit } from 'octokit';
 import { DashboardSearch, SortDirection } from './dashboard-search';
 import { FragmentGroupDisplayed, DashboardHeader } from './dashboard-header';
 
@@ -47,6 +48,17 @@ const searchRowStyles = css`
 	}
 `;
 
+const octokit = new Octokit();
+
+const githubContentRequest = {
+	mediaType: {
+		format: 'raw'
+	},
+	owner: 'IBM',
+	repo: 'carbon-ui-builder-featured-fragments',
+	path: 'featured-fragments'
+};
+
 export const Dashboard = ({
 	displayWizard,
 	setDisplayWizard,
@@ -54,8 +66,9 @@ export const Dashboard = ({
 	setDisplayedModal
 }: any) => {
 	const { fragments, updateFragments } = useContext(GlobalStateContext);
-	const [fragmentGroupDisplayed, setFragmentGroupDisplayed] = useState(FragmentGroupDisplayed.LocalOnly);
+	const [fragmentGroupDisplayed, setFragmentGroupDisplayed] = useState(FragmentGroupDisplayed.AllFragments);
 	const [fragmentTitleFilter, setFragmentTitleFilter] = useState('');
+	const [displayedFragments, setDisplayedFragments] = useState([]);
 	const [sortDirection, setSortDirection] = useState(SortDirection.Ascending);
 
 	useEffect(() => {
@@ -72,18 +85,45 @@ export const Dashboard = ({
 		?.includes(fragmentTitleFilter.toLowerCase()) && !fragment.hidden)
 		?.sort(fragmentSort(sortDirection));
 
-	let displayedFragments;
+	const getFeaturedFragments = async () => {
+		const featuredFragmentsResponse = await octokit.rest.repos.getContent(githubContentRequest);
 
-	switch (fragmentGroupDisplayed) {
-		case FragmentGroupDisplayed.Templates: {
-			displayedFragments = filterFragments(getFragmentTemplates(fragments));
-			break;
+		const allFeaturedFragments = await Promise.all((featuredFragmentsResponse.data as any[]).map(async (item) => {
+			const fragmentFileResponse = await octokit.rest.repos.getContent({ ...githubContentRequest, path: item.path });
+			try {
+				return {
+					id: item.path,
+					title: item.name.substring(0, item.name.length - 5),
+					lastModified: new Date(fragmentFileResponse.headers['last-modified'] || '').toISOString(),
+					data: JSON.parse(fragmentFileResponse.data.toString())
+				};
+			} catch (error) {
+				return null;
+			}
+		}));
+
+		return allFeaturedFragments.filter(fragment => fragment !== null);
+	};
+
+	useEffect(() => {
+		switch (fragmentGroupDisplayed) {
+			case FragmentGroupDisplayed.Templates: {
+				setDisplayedFragments(filterFragments(getFragmentTemplates(fragments)));
+				break;
+			}
+			case FragmentGroupDisplayed.FeaturedFragments: {
+				getFeaturedFragments().then((value: any) => {
+					setDisplayedFragments(value);
+				});
+				break;
+			}
+			case FragmentGroupDisplayed.AllFragments:
+			default:
+				setDisplayedFragments(filterFragments(fragments));
+				break;
 		}
-		case FragmentGroupDisplayed.AllFragments:
-		default:
-			displayedFragments = filterFragments(fragments);
-			break;
-	}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [fragmentGroupDisplayed, fragments]);
 
 	return (
 		<Main style={{ marginLeft: '0px' }}>
@@ -121,6 +161,7 @@ export const Dashboard = ({
 					{
 						<FragmentTileList
 							fragments={displayedFragments}
+							isFeaturedFragment={fragmentGroupDisplayed === FragmentGroupDisplayed.FeaturedFragments}
 							setModalFragment={setModalFragment}
 							setDisplayedModal={setDisplayedModal}
 							displayWizard={displayWizard}
