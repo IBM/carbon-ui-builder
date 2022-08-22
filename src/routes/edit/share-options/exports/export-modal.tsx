@@ -14,7 +14,7 @@ import { createFragmentSandbox } from './create-fragment-sandbox';
 import { createReactApp } from './frameworks/react-fragment';
 import { createAngularApp } from './frameworks/angular-fragment';
 
-import { ModalContext, ModalActionType } from '../../../../context/modal-context';
+import { ModalContext } from '../../../../context/modal-context';
 import { saveBlob } from '../../../../utils/file-tools';
 import { GlobalStateContext } from '../../../../context';
 import { ExportImageComponent } from './export-image-component';
@@ -156,23 +156,27 @@ const CodeView = ({ code, selectedFilename }: any) => {
 
 const generateSandboxUrl = (parameters: any) => (`https://codesandbox.io/api/v1/sandboxes/define?parameters=${parameters}`);
 
-export const ExportModal = ({ fragment }: any) => {
+export const ExportModal = () => {
 	const { fragments, settings, setSettings } = useContext(GlobalStateContext);
-	const [modalState, dispatchModal] = useContext(ModalContext);
+	const { fragmentExportModal, hideFragmentExportModal } = useContext(ModalContext);
 	const [selectedAngularFilename, setSelectedAngularFilename] = useState('src/app/app.component.ts' as string);
 	const [selectedReactFilename, setSelectedReactFilename] = useState('src/component.js' as string);
 
-	const jsonCode: any = JSON.stringify(fragment.data, null, 2);
-	const reactCode: any = createReactApp(fragment, fragments);
-	const angularCode: any = createAngularApp(fragment, fragments);
+	if (!fragmentExportModal?.fragment) {
+		return null;
+	}
+
+	const jsonCode: any = JSON.stringify(fragmentExportModal.fragment.data, null, 2);
+	const reactCode: any = createReactApp(fragmentExportModal.fragment, fragments);
+	const angularCode: any = createAngularApp(fragmentExportModal.fragment, fragments);
 
 	return (
 		<Modal
 		passiveModal
-		open={modalState.ShowModal}
-		onRequestClose={() => dispatchModal({ type: ModalActionType.closeModal })}
+		open={fragmentExportModal.isVisible}
+		onRequestClose={hideFragmentExportModal}
 		size='lg'
-		modalHeading={`Export "${fragment.title}" code`}
+		modalHeading={`Export "${fragmentExportModal.fragment.title}" code`}
 		className={exportCodeModalStyle}>
 			<Tabs
 			selected={settings.selectedExportTabIndex || 0}
@@ -235,7 +239,7 @@ export const ExportModal = ({ fragment }: any) => {
 						</h3>
 						<Button
 						kind='ghost'
-						onClick={() => saveBlob(new Blob([jsonCode]), `${fragment.title}.json`)}>
+						onClick={() => saveBlob(new Blob([jsonCode]), `${fragmentExportModal.fragment.title}.json`)}>
 							Download JSON
 						</Button>
 					</div>
@@ -253,7 +257,7 @@ export const ExportModal = ({ fragment }: any) => {
 					<div className={titleWrapper}>
 						<h3>Image</h3>
 					</div>
-					<ExportImageComponent fragment={fragment} />
+					<ExportImageComponent fragment={fragmentExportModal.fragment} />
 				</Tab>
 			</Tabs>
 		</Modal>

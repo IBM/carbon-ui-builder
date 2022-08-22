@@ -13,8 +13,7 @@ import {
 	Undo16,
 	View16
 } from '@carbon/icons-react';
-import { ModalContext, ModalActionType } from '../../context/modal-context';
-import { FragmentModal } from './fragment-modal';
+import { ModalContext } from '../../context/modal-context';
 import { GlobalStateContext } from '../../context';
 import { actionIconStyle } from '.';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
@@ -162,7 +161,11 @@ background: linear-gradient(to top right,
 
 export const EditHeader = ({ fragment, setFragment }: any) => {
 	const navigate: NavigateFunction = useNavigate();
-	const [, dispatchModal] = useContext(ModalContext);
+	const {
+		showFragmentDuplicateModal,
+		showFragmentDeleteModal,
+		showFragmentExportModal
+	} = useContext(ModalContext);
 	const [isEditingTitle, setIsEditingTitle] = useState(false);
 	const titleTextInputRef = useRef(null as any);
 	const {
@@ -282,20 +285,14 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 							kind='ghost'
 							aria-label='Duplicate fragment'
 							title='Duplicate fragment'
-							onClick={() => dispatchModal({
-								type: ModalActionType.setDuplicationModal,
-								id: fragment.id
-							})}>
+							onClick={() => showFragmentDuplicateModal(fragment)}>
 							<Copy16 className={actionIconStyle} />
 						</Button>
 						<Button
 							kind='ghost'
 							aria-label='Delete fragment'
 							title='Delete fragment'
-							onClick={() => dispatchModal({
-								type: ModalActionType.setDeletionModal,
-								id: fragment.id
-							})}>
+							onClick={() => showFragmentDeleteModal(fragment.id)}>
 							<TrashCan16 className={actionIconStyle} />
 						</Button>
 						<Button
@@ -304,16 +301,12 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 							title='Export fragment'
 							renderIcon={DocumentExport16}
 							iconDescription='export fragment'
-							onClick={() => dispatchModal({
-								type: ModalActionType.setExportModal,
-								id: fragment.id
-							})}>
+							onClick={() => showFragmentExportModal(fragment)}>
 							Export
 						</Button>
 					</div>
 				</div>
 			</div>
-			<FragmentModal fragment={fragment} />
 		</header>
 	);
 };

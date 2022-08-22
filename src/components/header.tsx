@@ -22,7 +22,7 @@ import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { FragmentWizardModals } from '../routes/dashboard/fragment-wizard/fragment-wizard';
 import { saveBlob } from '../utils/file-tools';
 import { GlobalStateContext } from '../context';
-import { ModalActionType, ModalContext } from '../context/modal-context';
+import { ModalContext } from '../context/modal-context';
 import { getEditScreenParams } from '../utils/fragment-tools';
 
 export const Header = ({
@@ -103,10 +103,7 @@ export const Header = ({
 						params?.id && fragment?.data &&
 						<HeaderMenuItem
 						className={headerName}
-						onClick={() => modalContext && Array.isArray(modalContext) && modalContext.length >= 2 && modalContext[1]({ // dispatchModal
-							type: ModalActionType.setExportModal,
-							id: fragment.id
-						})}>
+						onClick={() => modalContext && modalContext.showFragmentExportModal(fragment)}>
 							<DocumentExport16 /> Export
 						</HeaderMenuItem>
 					}
