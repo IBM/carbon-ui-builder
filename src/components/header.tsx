@@ -8,17 +8,21 @@ import {
 	SkipToContent
 } from 'carbon-components-react';
 import {
+	ChatLaunch16,
+	Debug16,
 	DocumentAdd16,
 	Download16,
 	DocumentImport16,
-	DocumentExport16
+	DocumentExport16,
+	Information16,
+	Keyboard16
 } from '@carbon/icons-react';
 import { css } from 'emotion';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { FragmentWizardModals } from '../routes/dashboard/fragment-wizard/fragment-wizard';
 import { saveBlob } from '../utils/file-tools';
 import { GlobalStateContext } from '../context';
-import { ModalActionType, ModalContext } from '../context/modal-context';
+import { ModalContext } from '../context/modal-context';
 import { getEditScreenParams } from '../utils/fragment-tools';
 
 export const Header = ({
@@ -99,10 +103,7 @@ export const Header = ({
 						params?.id && fragment?.data &&
 						<HeaderMenuItem
 						className={headerName}
-						onClick={() => modalContext && Array.isArray(modalContext) && modalContext.length >= 2 && modalContext[1]({ // dispatchModal
-							type: ModalActionType.setExportModal,
-							id: fragment.id
-						})}>
+						onClick={() => modalContext && modalContext.showFragmentExportModal(fragment)}>
 							<DocumentExport16 /> Export
 						</HeaderMenuItem>
 					}
@@ -116,6 +117,19 @@ export const Header = ({
 					</HeaderMenuItem>
 				</HeaderMenu>
 
+				{/*         FEEDBACK MENU        */}
+				<HeaderMenu
+				aria-label='feedback'
+				menuLinkName='Feedback'
+				className={headerName}>
+					<HeaderMenuItem
+					className={headerName}
+					href='https://github.com/IBM/carbon-ui-builder/issues/new'
+					target='_blank'>
+						<Debug16 /> I found a bug
+					</HeaderMenuItem>
+				</HeaderMenu>
+
 				{/*         HELP MENU        */}
 				<HeaderMenu
 				aria-label='help'
@@ -124,12 +138,18 @@ export const Header = ({
 					<HeaderMenuItem
 					className={headerName}
 					onClick={() => navigate('/help/introduction')}>
-						Introduction
+						<Information16 /> Introduction
 					</HeaderMenuItem>
 					<HeaderMenuItem
 					className={headerName}
 					onClick={() => navigate('/help/hotkeys')}>
-						Hotkeys / Shortcuts
+						<Keyboard16 /> Hotkeys / Shortcuts
+					</HeaderMenuItem>
+					<HeaderMenuItem
+					className={headerName}
+					href='https://ibm-studios.slack.com/archives/C02LL3SMXFS'
+					target='_blank'>
+						<ChatLaunch16 /> I have a question
 					</HeaderMenuItem>
 				</HeaderMenu>
 			</HeaderNavigation>

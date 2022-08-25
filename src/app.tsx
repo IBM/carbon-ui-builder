@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import {
-	Route, BrowserRouter as Router, Routes, Outlet
+	Route,
+	BrowserRouter as Router,
+	Routes,
+	Outlet
 } from 'react-router-dom';
 import { Notification } from './components/index';
 import {
@@ -15,9 +18,10 @@ import { NotificationContextProvider } from './context/notification-context';
 import { UIShell } from './components/ui-shell';
 import { css } from 'emotion';
 import { Help } from './routes/help';
-import { FragmentWizard, FragmentWizardModals } from './routes/dashboard/fragment-wizard/fragment-wizard';
-import { FragmentModal } from './routes/edit/fragment-modal';
 import { View } from './routes/view';
+import { FragmentWizard, FragmentWizardModals } from './routes/dashboard/fragment-wizard/fragment-wizard';
+import { AllModals } from './routes/edit/all-modals';
+import { Launch } from './routes/launch';
 
 const app = css`
 	nav.bx--side-nav--expanded + div#edit-content {
@@ -32,7 +36,6 @@ const app = css`
 `;
 
 export const App = () => {
-	const [modalFragment, setModalFragment] = useState<any>(null);
 	const [displayWizard, setDisplayWizard] = useState(false);
 	// These are states which are shared amongst the three modals.
 	const [displayedModal, setDisplayedModal] = useState<FragmentWizardModals | null>(FragmentWizardModals.CREATE_FRAGMENT_MODAL);
@@ -50,7 +53,7 @@ export const App = () => {
 			setDisplayedModal={setDisplayedModal}
 			shouldDisplay={displayWizard}
 			setShouldDisplay={setDisplayWizard} />
-		{modalFragment && <FragmentModal fragment={modalFragment} />}
+		<AllModals />
 		<span id="forkongithub">
 			<a href="https://github.com/IBM/carbon-ui-builder">Fork on GitHub</a>
 		</span>
@@ -64,23 +67,18 @@ export const App = () => {
 						<ModalContextProvider>
 							<Routes>
 								<Route element={<Outlet />}>
-									<Route
-										path='/view/:id'
-										element={<View />} />
+									<Route path='/view/:id' element={<View />} />
+									<Route path='/launch' element={<Launch />} />
+									<Route path='/launch/:owner/:repo/*' element={<Launch />} />
 								</Route>
 								<Route element={<DefaultContainer />}>
 									<Route path='/' element={
 										<Dashboard
 											displayWizard={displayWizard}
-											setDisplayWizard={setDisplayWizard}
-											setModalFragment={setModalFragment} />
+											setDisplayWizard={setDisplayWizard} />
 									} />
-									<Route
-										path='/edit/:id'
-										element={<Edit />} />
-									<Route
-										path='/help/:id'
-										element={<Help />} />
+									<Route path='/edit/:id' element={<Edit />} />
+									<Route path='/help/:id' element={<Help />} />
 									<Route path="*" element={<NotFound />} />
 								</Route>
 							</Routes>

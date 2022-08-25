@@ -13,6 +13,11 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
+import { css, cx } from 'emotion';
+
+const preventCheckEvent = css`
+	pointer-events: none;
+`;
 
 export const AContentSwitcherSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
@@ -20,6 +25,10 @@ export const AContentSwitcherSettingsUI = ({ selectedComponent, setComponent }: 
 		{ id: 'md', text: 'Medium' },
 		{ id: 'lg', text: 'Large' }
 	];
+
+	const selectedItems = selectedComponent.items.map((step: any, index: number) => {
+		return { id: index, text: step.text };
+	});
 
 	const updateListItems = (key: string, value: any, index: number) => {
 		const step = {
@@ -74,6 +83,17 @@ export const AContentSwitcherSettingsUI = ({ selectedComponent, setComponent }: 
 				...selectedComponent,
 				size: event.selectedItem.id
 		})} />
+		<Dropdown
+			id='selected-item'
+			label='Selected content'
+			titleText='Selected content'
+			items={selectedItems}
+			selectedItem={selectedItems.find((item: any) => item.id === selectedComponent.selectedIndex)}
+			itemToString={(item: any) => (item ? item.text : '')}
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				selectedIndex: event.selectedItem.id
+		})} />
 		<DraggableTileList
 			dataList={[...selectedComponent.items]}
 			setDataList={updateStepList}
@@ -110,16 +130,19 @@ export const AContentSwitcher = ({
 		<AComponent
 		componentObj={componentObj}
 		{...rest}>
-			<ContentSwitcher size={componentObj.size}>
-			{
-				componentObj.items.map((step: any, index: number) => <Switch
-					className={step.className}
-					name={step.name}
-					text={step.text}
-					disabled={step.disabled}
-					key={index}
-				/>)
-			}
+			<ContentSwitcher
+				size={componentObj.size}
+				selectedIndex={componentObj.selectedIndex}
+				className={cx(preventCheckEvent, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}>
+				{
+					componentObj.items.map((step: any, index: number) => <Switch
+						className={step.className}
+						name={step.name}
+						text={step.text}
+						disabled={step.disabled}
+						key={index}
+					/>)
+				}
 			</ContentSwitcher>
 		</AComponent>
 	);
@@ -135,6 +158,7 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'content-switcher',
 		size: 'sm',
+		selectedIndex: 0,
 		items: [
 			{
 				name: 'first',
@@ -166,8 +190,9 @@ export const componentInfo: ComponentInfo = {
 				return `<ibm-content-switcher
 					${angularClassNamesFromComponentObj(json)}
 					(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit()">
-					${json.items.map((step: any) => (
+					${json.items.map((step: any, index: number) => (
 						`<button
+							${json.selectedIndex === index ? `active="${json.selectedIndex === index}"` : ''}
 							ibmContentOption
 							name="${step.name}"
 							[disabled]="${step.disabled}">
@@ -183,6 +208,7 @@ export const componentInfo: ComponentInfo = {
 				const name = nameStringToVariableString(json.codeContext?.name);
 				return `<ContentSwitcher
 					size="${json.size}"
+					selectedIndex={${json.selectedIndex}}
 					${reactClassNamesFromComponentObj(json)}
 					onChange={(selectedItem) => handleInputChange({
 						target: {
