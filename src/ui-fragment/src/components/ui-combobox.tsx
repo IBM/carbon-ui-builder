@@ -58,7 +58,7 @@ export const UIComboBox = ({ state, setState }: {
 		disabled={state.disabled}
 		direction={state.direction}
 		size={state.size}
-		label={state.label}
+		titleText={state.label}
 		selectedItem={state.selectedItem}
 		helperText={state.helperText}
 		itemToString={state.itemToString || ((item) => item?.text || '')}
