@@ -6,6 +6,7 @@ export interface ContentSwitcherState {
 	type: string;
 	items: [];
 	size: [];
+	selectedIndex: number;
 	cssClasses?: CssClasses[];
 }
 
@@ -21,6 +22,7 @@ export const UIContentSwitcher = ({ state }: {
 
 	return <ContentSwitcher
 	size={state.size}
+	selectedIndex={state.selectedIndex}
 	className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 		{
 			state.items.map((step: any, index: number) => <Switch
