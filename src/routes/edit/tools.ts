@@ -60,3 +60,42 @@ export const getDropIndex = (event: any, containerElement: HTMLElement) => {
 
 	return dropIndex;
 };
+
+export const filenameToLanguage = (filename: string) => {
+	const filenameLowercase = filename.toLowerCase();
+
+	if (
+		filenameLowercase.endsWith('ts') ||
+		filenameLowercase.endsWith('tsx')
+	) {
+		return 'typescript';
+	}
+
+	if (
+		filenameLowercase.endsWith('js') ||
+		filenameLowercase.endsWith('jsx')
+	) {
+		return 'javascript';
+	}
+
+	if (
+		filenameLowercase.endsWith('css') ||
+		filenameLowercase.endsWith('scss')
+	) {
+		return 'scss';
+	}
+
+	if (
+		filenameLowercase.endsWith('json')
+	) {
+		return 'json';
+	}
+
+	if (
+		filenameLowercase.endsWith('html')
+	) {
+		return 'html';
+	}
+
+	return 'text';
+};
