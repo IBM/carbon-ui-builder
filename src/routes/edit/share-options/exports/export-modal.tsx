@@ -18,6 +18,7 @@ import { ModalContext } from '../../../../context/modal-context';
 import { saveBlob } from '../../../../utils/file-tools';
 import { GlobalStateContext } from '../../../../context';
 import { ExportImageComponent } from './export-image-component';
+import { filenameToLanguage } from '../../tools';
 
 const exportCodeModalStyle = css`
 	.bx--tab-content {
@@ -70,45 +71,6 @@ const fileNameStyle = css`
 		left: 0;
 	}
 `;
-
-const filenameToLanguage = (filename: string) => {
-	const filenameLowercase = filename.toLowerCase();
-
-	if (
-		filenameLowercase.endsWith('ts') ||
-		filenameLowercase.endsWith('tsx')
-	) {
-		return 'typescript';
-	}
-
-	if (
-		filenameLowercase.endsWith('js') ||
-		filenameLowercase.endsWith('jsx')
-	) {
-		return 'javascript';
-	}
-
-	if (
-		filenameLowercase.endsWith('css') ||
-		filenameLowercase.endsWith('scss')
-	) {
-		return 'scss';
-	}
-
-	if (
-		filenameLowercase.endsWith('json')
-	) {
-		return 'json';
-	}
-
-	if (
-		filenameLowercase.endsWith('html')
-	) {
-		return 'html';
-	}
-
-	return 'text';
-};
 
 const FileNames = ({ code, setSelectedFilename }: any) => <div className={fileNamesContainerStyle}>
 	{
