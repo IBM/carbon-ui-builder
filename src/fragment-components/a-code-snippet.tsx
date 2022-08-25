@@ -93,7 +93,7 @@ export const componentInfo: ComponentInfo = {
 	settingsUI: ACodeSnippetSettingsUI,
 	codeUI: ACodeSnippetCodeUI,
 	keywords: ['code', 'snippet', 'code snippet'],
-	name: 'Code Snippet',
+	name: 'Code snippet',
 	type: 'code-snippet',
 	defaultComponentObj: {
 		type: 'code-snippet',
