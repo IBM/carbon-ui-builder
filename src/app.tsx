@@ -21,6 +21,7 @@ import { Help } from './routes/help';
 import { View } from './routes/view';
 import { FragmentWizard, FragmentWizardModals } from './routes/dashboard/fragment-wizard/fragment-wizard';
 import { AllModals } from './routes/edit/all-modals';
+import { Launch } from './routes/launch';
 
 const app = css`
 	nav.bx--side-nav--expanded + div#edit-content {
@@ -67,6 +68,8 @@ export const App = () => {
 							<Routes>
 								<Route element={<Outlet />}>
 									<Route path='/view/:id' element={<View />} />
+									<Route path='/launch' element={<Launch />} />
+									<Route path='/launch/:owner/:repo/*' element={<Launch />} />
 								</Route>
 								<Route element={<DefaultContainer />}>
 									<Route path='/' element={
