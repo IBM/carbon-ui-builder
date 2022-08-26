@@ -22,7 +22,7 @@ export const AllModals = () => {
 			secondaryButtonText={modal.secondaryButtonText}
 			modalHeading={modal.modalHeading || 'Message'}
 			primaryButtonText={modal.primaryButtonText || 'OK'}
-			onRequestSubmit={() => modal.submit ? modal.onRequestSubmit() : hideModal()}>
+			onRequestSubmit={() => modal.onRequestSubmit ? modal.onRequestSubmit() : hideModal()}>
 			{ modal.component }
 		</Modal>;
 
