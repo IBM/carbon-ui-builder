@@ -7,7 +7,7 @@ import {
 	Switch } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
 import { DraggableTileList } from '../components';
-import image from './../assets/component-icons/link.svg';
+import image from './../assets/component-icons/content-switcher.svg';
 import {
 	angularClassNamesFromComponentObj,
 	nameStringToVariableString,
@@ -153,7 +153,7 @@ export const componentInfo: ComponentInfo = {
 	settingsUI: AContentSwitcherSettingsUI,
 	codeUI: AContentSwitcherCodeUI,
 	keywords: ['content', 'switcher'],
-	name: 'Content Switcher',
+	name: 'Content switcher',
 	type: 'content-switcher',
 	defaultComponentObj: {
 		type: 'content-switcher',
