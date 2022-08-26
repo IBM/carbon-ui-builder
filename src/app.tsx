@@ -54,9 +54,6 @@ export const App = () => {
 			shouldDisplay={displayWizard}
 			setShouldDisplay={setDisplayWizard} />
 		<AllModals />
-		<span id="forkongithub">
-			<a href="https://github.com/IBM/carbon-ui-builder">Fork on GitHub</a>
-		</span>
 	</>;
 
 	return <Router basename='/'>

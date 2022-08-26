@@ -15,7 +15,8 @@ import {
 	DocumentImport16,
 	DocumentExport16,
 	Information16,
-	Keyboard16
+	Keyboard16,
+	LogoGithub16
 } from '@carbon/icons-react';
 import { css } from 'emotion';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
@@ -24,6 +25,35 @@ import { saveBlob } from '../utils/file-tools';
 import { GlobalStateContext } from '../context';
 import { ModalContext } from '../context/modal-context';
 import { getEditScreenParams } from '../utils/fragment-tools';
+
+const dividerStyle = css`
+	margin: 2px 1rem;
+	height: 1px;
+	background-color: gray;
+	width: calc(100% - 2rem);
+`;
+
+const headerName = css`
+	&:hover {
+		cursor: pointer;
+	}
+
+	.bx--text-truncate--end {
+		display: inline-flex;
+
+		svg {
+			margin-right: 0.5rem;
+		}
+	}
+`;
+
+const headerStyle = css`
+	z-index: 8001;
+`;
+
+const headerNavStyle = css`
+	display: block;
+`;
 
 export const Header = ({
 	setDisplayedModal,
@@ -35,28 +65,6 @@ export const Header = ({
 	const modalContext = useContext(ModalContext);
 	const params = getEditScreenParams();
 	const fragment = globalState?.fragments.find((fragment: any) => fragment.id === params?.id);
-
-	const headerName = css`
-		&:hover {
-			cursor: pointer;
-		}
-
-		.bx--text-truncate--end {
-			display: inline-flex;
-
-			svg {
-				margin-right: 0.5rem;
-			}
-		}
-	`;
-
-	const headerStyle = css`
-		z-index: 8001;
-	`;
-
-	const headerNavStyle = css`
-		display: block;
-	`;
 
 	return (
 		<ShellHeader
@@ -150,6 +158,13 @@ export const Header = ({
 					href='https://ibm-studios.slack.com/archives/C02LL3SMXFS'
 					target='_blank'>
 						<ChatLaunch16 /> I have a question
+					</HeaderMenuItem>
+					<div className={dividerStyle} />
+					<HeaderMenuItem
+					className={headerName}
+					href='https://github.com/IBM/carbon-ui-builder'
+					target='_blank'>
+						<LogoGithub16 /> Fork on GitHub
 					</HeaderMenuItem>
 				</HeaderMenu>
 			</HeaderNavigation>
