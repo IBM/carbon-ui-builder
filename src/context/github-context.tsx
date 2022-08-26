@@ -1,4 +1,9 @@
-import React, { createContext, useContext } from 'react';
+import React, {
+	createContext,
+	useContext,
+	useEffect,
+	useState
+} from 'react';
 import { Octokit } from 'octokit';
 import { Buffer } from 'buffer';
 import { GlobalStateContext } from './global-state-context';
@@ -7,10 +12,13 @@ const GithubContext: React.Context<any> = createContext({});
 
 GithubContext.displayName = 'GithubContext';
 
-const octokit = new Octokit();
-
 const GithubContextProvider = ({ children }: any) => {
 	const { githubToken, setGithubToken } = useContext(GlobalStateContext);
+	const [octokit, setOctokit] = useState(new Octokit({ auth: githubToken }));
+
+	useEffect(() => {
+		setOctokit(new Octokit({ auth: githubToken }));
+	}, [githubToken]);
 
 	const getContent = async (owner: string, repo: string, contentPath: string, format: 'raw' | 'object' = 'object') => {
 		let path = contentPath;
