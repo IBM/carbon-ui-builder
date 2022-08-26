@@ -1,24 +1,13 @@
-import { Octokit } from 'octokit';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Editor from '@monaco-editor/react';
-import { Buffer } from 'buffer';
 import { UIFragment } from '../../ui-fragment/src/ui-fragment';
 import { filenameToLanguage } from '../edit/tools';
-
-const githubContentRequest = {
-	mediaType: {
-		format: 'object'
-	},
-	owner: '',
-	repo: '',
-	path: ''
-};
-
-const octokit = new Octokit();
+import { GithubContext } from '../../context';
 
 export const Launch = () => {
 	const params = useParams();
+	const { getContent } = useContext(GithubContext);
 	const [state, setState] = useState({
 		fragmentState: null as any,
 		folderContent: [] as any[]
@@ -36,70 +25,8 @@ export const Launch = () => {
 			return;
 		}
 
-		(async () => {
-			let path = params['*'] || '';
-			if (path.endsWith('/')) {
-				// github doesn't like when we're fetching with a slash, so we remove it
-				path = path.substring(0, path.length - 1);
-			}
-
-			const response = await octokit.rest.repos. getContent({
-				...githubContentRequest,
-				owner: params.owner || '',
-				repo: params.repo || '',
-				path
-			});
-
-			// repos use entries
-			if (Array.isArray((response.data as any)?.entries)) {
-				setState({
-					fragmentState: null,
-					folderContent: (response.data as any)?.entries
-				});
-				return;
-			}
-
-			// data is array if path is of a folder
-			if (Array.isArray(response.data)) {
-				setState({
-					fragmentState: null,
-					folderContent: response.data
-				});
-				return;
-			}
-
-			// response.data is a string for text files (?)
-			let data: any = response.data;
-			let dataBase64 = '';
-
-			// if response.data isn't a string, it's an object and has base64 encoded content
-			if (typeof data !== 'string') {
-				dataBase64 = (response.data as any).content || '';
-				data = Buffer.from(dataBase64, (response.data as any).encoding).toString();
-			}
-
-			try {
-				const responseObject = JSON.parse(`${data}`);
-				if (!responseObject.id || !responseObject.items || !Array.isArray(responseObject.items)) {
-					throw Error('JSON is not a fragment');
-				}
-
-				setState({
-					folderContent: [],
-					fragmentState: responseObject
-				});
-			} catch (error) {
-				// if parsing file as json fails (in case it's not json or doesn't look like fragment json)
-				// it's some other file - template below decides how to render it
-				setState({
-					fragmentState: null,
-					folderContent: [],
-					fileContent: data,
-					fileContentBase64: dataBase64
-				});
-			}
-		})();
-	}, [params]);
+		getContent(params.owner, params.repo, params['*'] || '').then((content: any) => setState(content));
+	}, [params, getContent]);
 
 	if (!params.owner || !params.repo) {
 		return <div>Nothing to see here. <a href='/'>Go home.</a></div>;

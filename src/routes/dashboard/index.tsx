@@ -4,7 +4,6 @@ import React, {
 	useEffect
 } from 'react';
 import { css } from 'emotion';
-import { Octokit } from 'octokit';
 import { DashboardSearch, SortDirection } from './dashboard-search';
 import { FragmentGroupDisplayed, DashboardHeader } from './dashboard-header';
 
@@ -14,7 +13,7 @@ import {
 	Row
 } from './../../components';
 import { FragmentTileList } from './fragment-tile-list';
-import { GlobalStateContext } from '../../context';
+import { GithubContext, GlobalStateContext } from '../../context';
 import { getFragmentTemplates } from '../../utils/fragment-tools';
 
 const fragmentSort = (sortDirection: SortDirection) => function(a: any, b: any) {
@@ -48,17 +47,6 @@ const searchRowStyles = css`
 	}
 `;
 
-const octokit = new Octokit();
-
-const githubContentRequest = {
-	mediaType: {
-		format: 'raw'
-	},
-	owner: 'IBM',
-	repo: 'carbon-ui-builder-featured-fragments',
-	path: 'featured-fragments'
-};
-
 export const Dashboard = ({
 	displayWizard,
 	setDisplayWizard,
@@ -66,6 +54,7 @@ export const Dashboard = ({
 	setDisplayedModal
 }: any) => {
 	const { fragments, updateFragments } = useContext(GlobalStateContext);
+	const { getFeaturedFragments } = useContext(GithubContext);
 	const [fragmentGroupDisplayed, setFragmentGroupDisplayed] = useState(FragmentGroupDisplayed.AllFragments);
 	const [fragmentTitleFilter, setFragmentTitleFilter] = useState('');
 	const [displayedFragments, setDisplayedFragments] = useState([]);
@@ -84,26 +73,6 @@ export const Dashboard = ({
 	const filterFragments = (fragments: any) => fragments.filter((fragment: any) => fragment?.title?.toLowerCase()
 		?.includes(fragmentTitleFilter.toLowerCase()) && !fragment.hidden)
 		?.sort(fragmentSort(sortDirection));
-
-	const getFeaturedFragments = async () => {
-		const featuredFragmentsResponse = await octokit.rest.repos.getContent(githubContentRequest);
-
-		const allFeaturedFragments = await Promise.all((featuredFragmentsResponse.data as any[]).map(async (item) => {
-			const fragmentFileResponse = await octokit.rest.repos.getContent({ ...githubContentRequest, path: item.path });
-			try {
-				return {
-					id: item.path,
-					title: item.name.substring(0, item.name.length - 5),
-					lastModified: new Date(fragmentFileResponse.headers['last-modified'] || '').toISOString(),
-					data: JSON.parse(fragmentFileResponse.data.toString())
-				};
-			} catch (error) {
-				return null;
-			}
-		}));
-
-		return allFeaturedFragments.filter(fragment => fragment !== null);
-	};
 
 	useEffect(() => {
 		switch (fragmentGroupDisplayed) {
