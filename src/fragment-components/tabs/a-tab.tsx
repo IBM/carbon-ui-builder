@@ -2,8 +2,6 @@ import React from 'react';
 import {
 	Tab,
 	Tabs,
-	TabList,
-	TabPanels,
 	Checkbox,
 	TextInput } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from '../a-component';
@@ -76,8 +74,8 @@ export const ATabSettingsUI = ({ selectedComponent, setComponent }: any) => {
 };
 
 export const ATabCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
-		<TextInput
+	return <TextInput
+			id="input-name"
 			value={selectedComponent.codeContext?.name}
 			labelText='Input name'
 			onChange={(event: any) => {
@@ -89,8 +87,7 @@ export const ATabCodeUI = ({ selectedComponent, setComponent }: any) => {
 					}
 				});
 			}}
-		/>
-	</>;
+		/>;
 };
 
 export const ATab = ({
@@ -103,19 +100,15 @@ export const ATab = ({
 		componentObj={componentObj}
 		{...rest}>
 			<Tabs>
-				<TabList aria-label="List of tabs" contained={componentObj.contained}>
-					{
-						componentObj.tabItems.map((step: any, index: number) => {
-							<Tab disabled={step.disabled} key={index}>
-								{step.labelText}
-							</Tab>
-						})
-					}
-
-				</TabList>
-				<TabPanels>
-					{children}
-				</TabPanels>
+				{
+					componentObj.tabItems.map((step: any, index: number) => <Tab
+					className={step.className}
+					label={step.labelText}
+					disabled={step.disabled}
+					key={index}>
+						{children}
+					</Tab>)
+				}
 			</Tabs>
 		</AComponent>
 	);
@@ -137,7 +130,6 @@ export const componentInfo: ComponentInfo = {
 	type: 'tab',
 	defaultComponentObj: {
 		type: 'tab',
-		contained: false,
 		tabItems: [
 			{
 				labelText: 'Tab 1',
@@ -154,30 +146,24 @@ export const componentInfo: ComponentInfo = {
 		],
 		tabPanels: [
 			{
-				type: 'tab-panel',
-			},
-			{
-				type: 'tab-panel',
-			},
-			{
-				type: 'tab-panel',
+				type: 'tab-panel'
 			}
 		]
 	},
 	image,
 	codeExport: {
 		angular: {
-			inputs: () => ``,
-			outputs: () => ``,
+			inputs: () => '',
+			outputs: () => '',
 			imports: [''],
 			code: () => {
-				return ``;
+				return '';
 			}
 		},
 		react: {
 			imports: ['Link'],
 			code: () => {
-				return ``;
+				return '';
 			}
 		}
 	}

@@ -1,16 +1,12 @@
 import React from 'react';
-import { TabContent, TextInput } from 'carbon-components-react';
+import { TextInput } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from '../a-component';
 import image from '../../assets/component-icons/link.svg';
 
-export const ATabPanelSettingsUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
-	</>;
-};
+export const ATabPanelSettingsUI = () => {};
 
 export const ATabPanelCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <>
-		<TextInput
+	return <TextInput
 			value={selectedComponent.codeContext?.name}
 			labelText='Input name'
 			onChange={(event: any) => {
@@ -22,12 +18,10 @@ export const ATabPanelCodeUI = ({ selectedComponent, setComponent }: any) => {
 					}
 				});
 			}}
-		/>
-	</>;
+		/>;
 };
 
 export const ATabPanel = ({
-	children,
 	componentObj,
 	...rest
 }: any) => {
@@ -35,9 +29,6 @@ export const ATabPanel = ({
 		<AComponent
 		componentObj={componentObj}
 		{...rest}>
-			<TabContent
-				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
-			</TabContent>
 		</AComponent>
 	);
 };
@@ -56,23 +47,23 @@ export const componentInfo: ComponentInfo = {
 	name: 'Tab panel',
 	type: 'tab-panel',
 	defaultComponentObj: {
-		type: 'tab-panel',
+		type: 'tab-panel'
 	},
 	image,
 	hideFromElementsPane: true,
 	codeExport: {
 		angular: {
-			inputs: () => ``,
-			outputs: () => ``,
+			inputs: () => '',
+			outputs: () => '',
 			imports: [''],
 			code: () => {
-				return ``;
+				return '';
 			}
 		},
 		react: {
 			imports: [''],
-			code: ({  }) => {
-				return ``;
+			code: () => {
+				return '';
 			}
 		}
 	}
