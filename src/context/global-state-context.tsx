@@ -43,6 +43,8 @@ const GlobalStateContextProvider = ({ children }: any) => {
 	const [styleClasses, _setStyleClasses] = useState(JSON.parse(localStorage.getItem('globalStyleClasses') as string || '[]') as any[]);
 	const [settings, _setSettings] = useState(JSON.parse(localStorage.getItem('globalSettings') as string || '{}') as any);
 
+	const [githubToken, _setGithubToken] = useState(localStorage.getItem('githubToken') as string || '');
+
 	const setFragments = (frags: any[]) => {
 		_setFragments(frags);
 		localStorage.setItem('localFragments', JSON.stringify(frags));
@@ -66,6 +68,12 @@ const GlobalStateContextProvider = ({ children }: any) => {
 				styleClasses: JSON.parse(csString)
 			});
 		}
+	};
+
+	const setGithubToken = (token: string) => {
+		const csString = JSON.stringify(token);
+		localStorage.setItem('githubToken', csString);
+		_setGithubToken(token);
 	};
 
 	const setSettings = (sc: any) => {
@@ -180,7 +188,11 @@ const GlobalStateContextProvider = ({ children }: any) => {
 			undoAction,
 			canRedo,
 			redoAction,
-			clearActionHistory
+			clearActionHistory,
+
+			// GITHUB TOKENS
+			githubToken,
+			setGithubToken
 		}}>
 			{children}
 		</GlobalStateContext.Provider>
