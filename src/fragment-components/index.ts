@@ -17,6 +17,8 @@ import * as progressIndicator from './a-progress-indicator';
 import * as row from './a-row';
 import * as tag from './a-tag';
 import * as searchinput from './a-searchinput';
+import * as tab from './tabs/a-tab';
+import * as tabPanel from './tabs/a-tab-panel';
 import * as text from './a-text';
 import * as textarea from './a-text-area';
 import * as textinput from './a-text-input';
@@ -52,6 +54,8 @@ export { ANumberInput, ANumberInputSettingsUI, ANumberInputCodeUI } from './a-nu
 export { AProgressIndicator, AProgressIndicatorSettingsUI, AProgressIndicatorCodeUI } from './a-progress-indicator';
 export { ARow, ARowSettingsUI } from './a-row';
 export { ASearchInput, ASearchInputSettingsUI, ASearchInputCodeUI } from './a-searchinput';
+export { ATab, ATabSettingsUI, ATabCodeUI } from './tabs/a-tab';
+export { ATabPanel, ATabPanelSettingsUI, ATabPanelCodeUI } from './tabs/a-tab-panel';
 export { ATag, ATagSettingsUI } from './a-tag';
 export { AText, ATextSettingsUI } from './a-text';
 export { ATextArea, ATextAreaSettingsUI, ATextAreaCodeUI } from './a-text-area';
@@ -91,6 +95,8 @@ export const allComponents = {
 	progressIndicator,
 	row,
 	searchinput,
+	tab,
+	tabPanel,
 	tag,
 	text,
 	textarea,
