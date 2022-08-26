@@ -104,7 +104,7 @@ export const initializeIds = (componentObj: any, forceNewIds = false) => {
 	id = id || componentObj.id || getRandomId();
 	// name is used in form items and for angular inputs and outputs variable names
 	let name = componentObj.codeContext?.name;
-	if (name === undefined) {
+	if (name === undefined || forceNewIds) {
 		name = `${componentObj.type}-${id}`;
 	}
 
