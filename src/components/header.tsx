@@ -1,11 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
 	HeaderMenu,
 	HeaderMenuItem,
 	HeaderNavigation,
 	HeaderName,
+	HeaderGlobalAction,
+	HeaderGlobalBar,
+	HeaderPanel,
 	Header as ShellHeader,
-	SkipToContent
+	SkipToContent,
+	Switcher,
+	SwitcherItem
 } from 'carbon-components-react';
 import {
 	ChatLaunch16,
@@ -16,7 +21,8 @@ import {
 	DocumentExport16,
 	Information16,
 	Keyboard16,
-	LogoGithub16
+	LogoGithub16,
+	UserAvatar20
 } from '@carbon/icons-react';
 import { css } from 'emotion';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
@@ -25,6 +31,7 @@ import { saveBlob } from '../utils/file-tools';
 import { GlobalStateContext } from '../context';
 import { ModalContext } from '../context/modal-context';
 import { getEditScreenParams } from '../utils/fragment-tools';
+import { UserContext } from '../context/user-context';
 
 const dividerStyle = css`
 	margin: 2px 1rem;
@@ -55,6 +62,12 @@ const headerNavStyle = css`
 	display: block;
 `;
 
+const profileImageStyle = css`
+	width: 2rem;
+	border-radius: 1rem;
+	border: 2px solid lightgray;
+`;
+
 export const Header = ({
 	setDisplayedModal,
 	displayWizard,
@@ -62,7 +75,9 @@ export const Header = ({
 }: any) => {
 	const navigate: NavigateFunction = useNavigate();
 	const globalState = useContext(GlobalStateContext);
+	const user = useContext(UserContext);
 	const modalContext = useContext(ModalContext);
+	const [userMenuVisible, setUserMenuVisible] = useState(false);
 	const params = getEditScreenParams();
 	const fragment = globalState?.fragments.find((fragment: any) => fragment.id === params?.id);
 
@@ -168,6 +183,40 @@ export const Header = ({
 					</HeaderMenuItem>
 				</HeaderMenu>
 			</HeaderNavigation>
+			<HeaderGlobalBar>
+				<HeaderGlobalAction
+				aria-label='User profile'
+				tooltipAlignment='end'
+				onClick={() => setUserMenuVisible(!userMenuVisible)}>
+					{
+						user.profileImageUrl
+						? <img className={profileImageStyle} src={user.profileImageUrl} />
+						: <UserAvatar20 />
+					}
+				</HeaderGlobalAction>
+			</HeaderGlobalBar>
+			<HeaderPanel
+			aria-label='User info'
+			expanded={userMenuVisible}>
+				<Switcher aria-label='User menu'>
+					{
+						user.isLoggedIn
+						? <>
+							<li className='bx--switcher__item' style={{ paddingLeft: '1rem' }}>Hi {user.name}!</li>
+							<SwitcherItem
+							aria-label='log out'
+							onClick={() => modalContext.showLogoutGithubModal()}>
+								Log out
+							</SwitcherItem>
+						</>
+						: <SwitcherItem
+						aria-label='log in with github'
+						onClick={() => modalContext.showLoginGithubModal()}>
+							Log in with GitHub
+						</SwitcherItem>
+					}
+				</Switcher>
+			</HeaderPanel>
 		</ShellHeader>
 	);
 };
