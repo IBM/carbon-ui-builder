@@ -133,6 +133,25 @@ const ModalContextProvider = ({ children }: any) => {
 		});
 	};
 
+	// /////////////////////////////
+	//    Logout github modal   //
+	// /////////////////////////////
+	const [logoutGithubModalState, setLogoutGithubModalState] = useState({
+		isVisible: false
+	} as any);
+
+	const showLogoutGithubModal = () => {
+		setLogoutGithubModalState({
+			isVisible: true
+		});
+	};
+
+	const hideLogoutGithubModal = () => {
+		setLogoutGithubModalState({
+			isVisible: false
+		});
+	};
+
 	return (
 		<ModalContext.Provider value={{
 			modal: modalState,
@@ -157,7 +176,11 @@ const ModalContextProvider = ({ children }: any) => {
 
 			loginGithubModal: loginGithubModalState,
 			showLoginGithubModal,
-			hideLoginGithubModal
+			hideLoginGithubModal,
+
+			logoutGithubModal: logoutGithubModalState,
+			showLogoutGithubModal,
+			hideLogoutGithubModal
 		}}>
 			{children}
 		</ModalContext.Provider>
