@@ -5,6 +5,7 @@ import { FragmentDuplicateModal } from './fragment-duplicate-modal';
 import { FragmentDeleteModal } from './fragment-delete-modal';
 import { ExportModal } from './share-options/exports/export-modal';
 import { FragmentPreviewModal } from './fragment-preview-modal';
+import { LoginGithubModal } from '../../components/login-github-modal';
 
 // eslint-disable-next-line react/prop-types
 export const AllModals = () => {
@@ -33,5 +34,6 @@ export const AllModals = () => {
 			fragmentPreviewModal && fragmentPreviewModal?.fragment && // needed to properly initialize fragmentState
 			<FragmentPreviewModal />
 		}
+		<LoginGithubModal />
 	</>;
 };

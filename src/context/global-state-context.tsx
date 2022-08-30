@@ -71,8 +71,7 @@ const GlobalStateContextProvider = ({ children }: any) => {
 	};
 
 	const setGithubToken = (token: string) => {
-		const csString = JSON.stringify(token);
-		localStorage.setItem('githubToken', csString);
+		localStorage.setItem('githubToken', token);
 		_setGithubToken(token);
 	};
 
