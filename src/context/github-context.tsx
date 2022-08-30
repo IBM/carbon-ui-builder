@@ -1,8 +1,7 @@
 import React, {
 	createContext,
 	useContext,
-	useEffect,
-	useState
+	useRef
 } from 'react';
 import { Octokit } from 'octokit';
 import { Buffer } from 'buffer';
@@ -13,12 +12,13 @@ const GithubContext: React.Context<any> = createContext({});
 GithubContext.displayName = 'GithubContext';
 
 const GithubContextProvider = ({ children }: any) => {
-	const { githubToken, setGithubToken } = useContext(GlobalStateContext);
-	const [octokit, setOctokit] = useState(new Octokit({ auth: githubToken }));
+	const { githubToken, setGithubToken: _setGithubToken } = useContext(GlobalStateContext);
+	const octokit = useRef(new Octokit({ auth: githubToken }));
 
-	useEffect(() => {
-		setOctokit(new Octokit({ auth: githubToken }));
-	}, [githubToken]);
+	const setGithubToken = (t: string) => {
+		octokit.current = new Octokit({ auth: t });
+		_setGithubToken(t);
+	};
 
 	const getContent = async (owner: string, repo: string, contentPath: string, format: 'raw' | 'object' = 'object') => {
 		let path = contentPath;
@@ -27,7 +27,7 @@ const GithubContextProvider = ({ children }: any) => {
 			path = path.substring(0, path.length - 1);
 		}
 
-		const response = await octokit.rest.repos.getContent({
+		const response = await octokit.current.rest.repos.getContent({
 			mediaType: {
 				format
 			},
@@ -108,12 +108,17 @@ const GithubContextProvider = ({ children }: any) => {
 		return allFeaturedFragments.filter(fragment => fragment !== null);
 	};
 
+	const getUser = async () => {
+		return await octokit.current.rest.users.getAuthenticated();
+	};
+
 	return (
 		<GithubContext.Provider value={{
 			token: githubToken,
 			setToken: setGithubToken,
 			getFeaturedFragments,
-			getContent
+			getContent,
+			getUser
 		}}>
 			{children}
 		</GithubContext.Provider>
