@@ -1,4 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, {
+	useContext,
+	useEffect,
+	useState
+} from 'react';
 import { Modal } from 'carbon-components-react';
 import { GithubContext, ModalContext } from '../context';
 import { LoginGithub } from './login-github';
@@ -7,6 +11,10 @@ export const LoginGithubModal = () => {
 	const { loginGithubModal, hideLoginGithubModal } = useContext(ModalContext);
 	const { token, setToken } = useContext(GithubContext);
 	const [tokenString, setTokenString] = useState(token);
+
+	useEffect(() => {
+		setTokenString(token);
+	}, [token]);
 
 	return <Modal
 	size='sm'
