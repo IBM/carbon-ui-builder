@@ -127,17 +127,20 @@ export const componentInfo: ComponentInfo = {
 			{
 				type: 'tab',
 				labelText: 'Tab 1',
-				disabled: false
+				disabled: false,
+				tabItems: []
 			},
 			{
 				type: 'tab',
 				labelText: 'Tab 2',
-				disabled: false
+				disabled: false,
+				tabItems: []
 			},
 			{
 				type: 'tab',
 				labelText: 'Tab 3',
-				disabled: false
+				disabled: false,
+				tabItems: []
 			}
 		],
 	},
