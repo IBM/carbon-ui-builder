@@ -1,81 +1,17 @@
-import React from 'react';
-import {
-	Tab,
-	Tabs,
-	Checkbox,
-	TextInput } from 'carbon-components-react';
+import React, { useRef } from 'react';
+import { TextInput, Tab } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from '../a-component';
 import image from '../../assets/component-icons/link.svg';
-import { DraggableTileList } from '../../components/draggable-list';
+import { updatedState } from '../../components';
+import { useFragment } from '../../context';
+import { getDropIndex } from '../../routes/edit/tools';
+import { APlaceholder } from '../a-placeholder';
 
-export const ATabSettingsUI = ({ selectedComponent, setComponent }: any) => {
-
-	const updateListItems = (key: string, value: any, index: number) => {
-		const step = {
-			...selectedComponent.tabItems[index],
-			[key]: value
-		};
-
-		setComponent({
-			...selectedComponent,
-			tabItems: [
-				...selectedComponent.tabItems.slice(0, index),
-				step,
-				...selectedComponent.tabItems.slice(index + 1)
-			]
-		});
-	};
-
-	const template = (item: any, index: number) => {
-		return <>
-			<TextInput
-				light
-				value={item.labelText}
-				labelText='Tab Label'
-				onChange={(event: any) => {
-					updateListItems('labelText', event.currentTarget.value, index);
-				}}
-			/>
-			<div style={{ display: 'flex', flexWrap: 'wrap' }}>
-				<Checkbox
-					labelText='Disabled'
-					id={`disabled-${index}`}
-					checked={item.disabled}
-					onChange={(checked: boolean) => updateListItems('disabled', checked, index)}/>
-			</div>
-		</>;
-	};
-	const updateStepList = (newList: any[]) => {
-		setComponent({
-			...selectedComponent,
-			tabItems: newList
-		});
-	};
-	return <>
-		<Checkbox
-		labelText='Contained'
-		id='contained'
-		checked={selectedComponent.contained}
-		onChange={(checked: boolean) => setComponent({
-			...selectedComponent,
-			contained: checked
-		})} />
-
-		<DraggableTileList
-			dataList={[...selectedComponent.tabItems]}
-			setDataList={updateStepList}
-			updateItem={updateListItems}
-			defaultObject={{
-				labelText: 'New Tab',
-				disabled: false
-			}}
-			template={template} />
-	</>;
-};
+export const ATabSettingsUI = () => { return <></>};
 
 export const ATabCodeUI = ({ selectedComponent, setComponent }: any) => {
 	return <TextInput
-			id="input-name"
+			id='input-name'
 			value={selectedComponent.codeContext?.name}
 			labelText='Input name'
 			onChange={(event: any) => {
@@ -91,25 +27,44 @@ export const ATabCodeUI = ({ selectedComponent, setComponent }: any) => {
 };
 
 export const ATab = ({
-	children,
 	componentObj,
+	onDrop,
+	onDragOver,
+	children,
+	selected,
 	...rest
 }: any) => {
+	const [fragment, setFragment] = useFragment();
+	const holderRef = useRef(null as any);
+	console.log('Children', children.length);
 	return (
 		<AComponent
 		componentObj={componentObj}
+		selected={selected}
+		// handleDrop={(event: any) => {
+		// 	debugger;
+		// 	const dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
+		// 	const dropIndex = getDropIndex(event, holderRef.current);
+		// 	setFragment({
+		// 		...fragment,
+		// 		data: updatedState(
+		// 			fragment.data,
+		// 			dragObj,
+		// 			componentObj.items[dropIndex].id,
+		// 			dropIndex
+		// 		)
+		// 	});
+		// }}
 		{...rest}>
-			<Tabs>
-				{
-					componentObj.tabItems.map((step: any, index: number) => <Tab
-					className={step.className}
-					label={step.labelText}
-					disabled={step.disabled}
-					key={index}>
-						{children}
-					</Tab>)
-				}
-			</Tabs>
+			<Tab
+			onDrop={onDrop}
+			label={componentObj.labelText}
+			disabled={componentObj.disabled}>
+					<span>2134</span>
+					{
+						children && children.length > 0 ? children : <APlaceholder componentObj={componentObj} select={rest.select} />
+					}
+			</Tab>
 		</AComponent>
 	);
 };
@@ -118,39 +73,31 @@ export const componentInfo: ComponentInfo = {
 	component: ATab,
 	settingsUI: ATabSettingsUI,
 	codeUI: ATabCodeUI,
-	render: ({ componentObj, select, remove, selected, renderComponents, outline }) => <ATab
-		componentObj={componentObj}
-		select={select}
-		remove={remove}
-		selected={selected}>
-			{componentObj.tabPanels.map((button: any) => renderComponents(button, outline))}
+	render: ({ componentObj, select, remove, selected, renderComponents, onDragOver, onDrop, outline }) => <ATab
+	componentObj={componentObj}
+	disabled={componentObj.disabled}
+	label={componentObj.labelText}
+	select={select}
+	remove={remove}
+	onDragOver={onDragOver}
+	onDrop={onDrop}
+	selected={selected}>
+		<section
+			onDragOver={onDragOver}
+			onDrop={onDrop}>
+			<APlaceholder componentObj={componentObj} select={select} />
+			{componentObj.items?.map((button: any) => renderComponents(button, outline))}
+		</section>
 	</ATab>,
-	keywords: ['tabs', 'tab'],
-	name: 'Tabs',
+	keywords: ['tab'],
+	name: 'Tab',
 	type: 'tab',
 	defaultComponentObj: {
 		type: 'tab',
-		tabItems: [
-			{
-				labelText: 'Tab 1',
-				disabled: false
-			},
-			{
-				labelText: 'Tab 2',
-				disabled: false
-			},
-			{
-				labelText: 'Tab 3',
-				disabled: false
-			}
-		],
-		tabPanels: [
-			{
-				type: 'tab-panel'
-			}
-		]
+		items: []
 	},
 	image,
+	hideFromElementsPane: true,
 	codeExport: {
 		angular: {
 			inputs: () => '',
@@ -161,10 +108,11 @@ export const componentInfo: ComponentInfo = {
 			}
 		},
 		react: {
-			imports: ['Link'],
+			imports: [''],
 			code: () => {
 				return '';
 			}
 		}
 	}
 };
+
