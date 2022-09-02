@@ -42,11 +42,7 @@ export const ATab = ({
 			onDragOver={onDragOver}
 			label={componentObj.labelText}
 			disabled={componentObj.disabled}>
-				<section onDrop={onDrop}>
-					{
-						children && children.length > 0 ? children : <APlaceholder componentObj={componentObj} select={rest.select} />
-					}
-				</section>
+				{children}
 			</Tab>
 		</AComponent>
 	);
@@ -63,7 +59,12 @@ export const componentInfo: ComponentInfo = {
 	onDragOver={onDragOver}
 	onDrop={onDrop}
 	selected={selected}>
-		{componentObj.items?.map((tab: any) => renderComponents(tab, outline))}
+		<section onDrop={onDrop}>
+			{
+				componentObj.items && componentObj.items.length > 0 ?
+					componentObj.items.map((tab: any) => renderComponents(tab, outline)) : <APlaceholder componentObj={componentObj} select={select} />
+			}
+		</section>
 	</ATab>,
 	keywords: ['tab'],
 	name: 'Tab',

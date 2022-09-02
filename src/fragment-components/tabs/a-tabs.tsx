@@ -7,11 +7,6 @@ import {
 import { AComponent, ComponentInfo } from '../a-component';
 import image from '../../assets/component-icons/link.svg';
 import { DraggableTileList } from '../../components/draggable-list';
-import { APlaceholder } from '../a-placeholder';
-import { getDropIndex } from '../../routes/edit/tools';
-import { useFragment } from '../../context';
-import { getParentComponent, updatedState } from '../../components';
-import { template } from 'lodash';
 
 export const ATabsSettingsUI = ({ selectedComponent, setComponent }: any) => {
 
@@ -58,22 +53,15 @@ export const ATabsSettingsUI = ({ selectedComponent, setComponent }: any) => {
 		});
 	};
 	return <>
-		<Checkbox
-		labelText='Contained'
-		id='contained'
-		checked={selectedComponent.contained}
-		onChange={(checked: boolean) => setComponent({
-			...selectedComponent,
-			contained: checked
-		})} />
-
 		<DraggableTileList
 			dataList={[...selectedComponent.items]}
 			setDataList={updateStepList}
 			updateItem={updateListItems}
 			defaultObject={{
-				labelText: 'New Tab',
-				disabled: false
+				type: 'tab',
+				labelText: 'New tab',
+				disabled: false,
+				items: []
 			}}
 			template={template} />
 	</>;
@@ -105,7 +93,6 @@ export const ATabs = ({
 }: any) => {
 	return (
 		<AComponent
-		rejectDrop={true}
 		componentObj={componentObj}
 		{...rest}>
 			<Tabs
@@ -131,7 +118,6 @@ export const componentInfo: ComponentInfo = {
 	type: 'tabs',
 	defaultComponentObj: {
 		type: 'tabs',
-		selectedTabIndex: 0,
 		items: [
 			{
 				type: 'tab',
