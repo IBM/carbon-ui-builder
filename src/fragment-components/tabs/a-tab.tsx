@@ -38,10 +38,15 @@ export const ATab = ({
 		selected={selected}
 		{...rest}>
 			<Tab
+			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
 			onDragOver={onDragOver}
 			label={componentObj.labelText}
 			disabled={componentObj.disabled}>
-				{children}
+				<section onDrop={onDrop}>
+					{
+						children && children.length > 0 ? children : <APlaceholder componentObj={componentObj} select={rest.select} />
+					}
+				</section>
 			</Tab>
 		</AComponent>
 	);
@@ -53,8 +58,6 @@ export const componentInfo: ComponentInfo = {
 	codeUI: ATabCodeUI,
 	render: ({ componentObj, select, remove, selected, renderComponents, onDragOver, onDrop, outline }) => <ATab
 	componentObj={componentObj}
-	disabled={componentObj.disabled}
-	label={componentObj.labelText}
 	select={select}
 	remove={remove}
 	onDragOver={onDragOver}
