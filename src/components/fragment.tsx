@@ -157,7 +157,6 @@ export const updatedState = (state: any, dragObj: any, dropInId?: number, dropIn
 
 	if (state.items) {
 		state.items = state.items.map((item: any) => updatedState(item, dragObj, dropInId, dropInIndex));
-
 	}
 
 	if (!dropInId) {
