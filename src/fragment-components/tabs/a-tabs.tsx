@@ -93,6 +93,7 @@ export const ATabs = ({
 }: any) => {
 	return (
 		<AComponent
+		rejectDrop={true}
 		componentObj={componentObj}
 		{...rest}>
 			<Tabs
