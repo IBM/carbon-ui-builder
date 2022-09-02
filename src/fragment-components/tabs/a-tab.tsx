@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { TextInput, Tab } from 'carbon-components-react';
+import { TextInput, Tab, Tile } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from '../a-component';
 import image from '../../assets/component-icons/link.svg';
 import { APlaceholder } from '../a-placeholder';
@@ -39,14 +39,9 @@ export const ATab = ({
 		{...rest}>
 			<Tab
 			onDragOver={onDragOver}
-			onDrop={onDrop}
 			label={componentObj.labelText}
 			disabled={componentObj.disabled}>
-				<section onDrop={onDrop}>
-				{
-					children && children.length > 0 ? children : <APlaceholder componentObj={componentObj} select={rest.select} />
-				}
-				</section>
+				{children}
 			</Tab>
 		</AComponent>
 	);
@@ -65,14 +60,14 @@ export const componentInfo: ComponentInfo = {
 	onDragOver={onDragOver}
 	onDrop={onDrop}
 	selected={selected}>
-		{componentObj.tabItems?.map((tabItem: any) => renderComponents(tabItem, outline))}
+		{componentObj.items?.map((tab: any) => renderComponents(tab, outline))}
 	</ATab>,
 	keywords: ['tab'],
 	name: 'Tab',
 	type: 'tab',
 	defaultComponentObj: {
 		type: 'tab',
-		tabItems: []
+		items: []
 	},
 	image,
 	hideFromElementsPane: true,
