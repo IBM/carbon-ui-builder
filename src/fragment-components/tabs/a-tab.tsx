@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { TextInput, Tab, Tile } from 'carbon-components-react';
+import { TextInput, Tab } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from '../a-component';
 import image from '../../assets/component-icons/link.svg';
 import { APlaceholder } from '../a-placeholder';
