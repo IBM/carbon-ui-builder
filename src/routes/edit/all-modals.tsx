@@ -26,7 +26,7 @@ export const AllModals = () => {
 			primaryButtonText={modal.primaryButtonText || 'OK'}
 			onRequestSubmit={() => modal.onRequestSubmit ? modal.onRequestSubmit() : hideModal()}>
 			{ modal.component }
-		</Modal>;
+		</Modal>
 
 		<FragmentDuplicateModal />
 		<FragmentDeleteModal />
