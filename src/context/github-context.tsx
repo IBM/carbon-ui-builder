@@ -1,6 +1,7 @@
 import React, {
 	createContext,
 	useContext,
+	useEffect,
 	useRef
 } from 'react';
 import { Octokit } from 'octokit';
@@ -13,7 +14,24 @@ GithubContext.displayName = 'GithubContext';
 
 const GithubContextProvider = ({ children }: any) => {
 	const { githubToken, setGithubToken: _setGithubToken } = useContext(GlobalStateContext);
+	const user = useRef({} as any);
+	const userRepos = useRef([] as any[]);
 	const octokit = useRef(new Octokit({ auth: githubToken }));
+
+	const getUser = async (forceLoad = false) => {
+		if (!user.current.login || forceLoad) {
+			const u = (await octokit.current.rest.users.getAuthenticated()).data;
+			user.current = u;
+		}
+
+		return user.current;
+	};
+
+	useEffect(() => {
+		if (githubToken) {
+			getUser(true);
+		}
+	}, [githubToken]);
 
 	const setGithubToken = (t: string) => {
 		octokit.current = new Octokit({ auth: t });
@@ -88,6 +106,15 @@ const GithubContextProvider = ({ children }: any) => {
 		}
 	};
 
+	const getRepos = async (forceLoad = false) => {
+		if (!userRepos.current.length || forceLoad) {
+			const repos = (await octokit.current.rest.repos.listForUser({ username: user.current.login })).data;
+			userRepos.current = repos;
+		}
+
+		return userRepos.current;
+	};
+
 	const getFeaturedFragments = async () => {
 		const featuredFragmentsResponse = await getContent('IBM', 'carbon-ui-builder-featured-fragments', 'featured-fragments', 'raw');
 
@@ -108,17 +135,14 @@ const GithubContextProvider = ({ children }: any) => {
 		return allFeaturedFragments.filter(fragment => fragment !== null);
 	};
 
-	const getUser = async () => {
-		return await octokit.current.rest.users.getAuthenticated();
-	};
-
 	return (
 		<GithubContext.Provider value={{
 			token: githubToken,
 			setToken: setGithubToken,
 			getFeaturedFragments,
 			getContent,
-			getUser
+			getUser,
+			getRepos
 		}}>
 			{children}
 		</GithubContext.Provider>
