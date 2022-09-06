@@ -19,6 +19,7 @@ import {
 	Download16,
 	DocumentImport16,
 	DocumentExport16,
+	FolderDetails16,
 	Information16,
 	Keyboard16,
 	LogoGithub16,
@@ -66,6 +67,24 @@ const profileImageStyle = css`
 	width: 2rem;
 	border-radius: 1rem;
 	border: 2px solid lightgray;
+`;
+
+const switcherItemWithIconStyle = css`
+	a {
+		display: flex;
+	}
+
+	svg {
+		margin-right: 0.5rem;
+	}
+`;
+
+const itemSeparatorStyle = css`
+	width: calc(100% - 2rem);
+	height: 1px;
+	background-color: #c6c6c6;
+	margin-top: 0.5rem;
+	margin-bottom: 0.5rem;
 `;
 
 export const Header = ({
@@ -203,6 +222,13 @@ export const Header = ({
 						user.isLoggedIn
 						? <>
 							<li className='bx--switcher__item' style={{ paddingLeft: '1rem' }}>Hi {user.name}!</li>
+							<SwitcherItem
+							className={switcherItemWithIconStyle}
+							aria-label='all repositories'
+							onClick={() => navigate('/repo')}>
+								<FolderDetails16 /> All repositories
+							</SwitcherItem>
+							<div className={itemSeparatorStyle} />
 							<SwitcherItem
 							aria-label='log out'
 							onClick={() => modalContext.showLogoutGithubModal()}>
