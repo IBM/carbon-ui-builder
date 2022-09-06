@@ -20,6 +20,7 @@ import { FragmentWizard, FragmentWizardModals } from './routes/dashboard/fragmen
 import { AllModals } from './routes/edit/all-modals';
 import { Launch } from './routes/launch';
 import { ContextProviders } from './context/context-providers';
+import { Repo } from './routes/repo';
 
 const app = css`
 	nav.bx--side-nav--expanded + div#edit-content {
@@ -72,6 +73,8 @@ export const App = () => {
 							} />
 							<Route path='/edit/:id' element={<Edit />} />
 							<Route path='/help/:id' element={<Help />} />
+							<Route path='/repo' element={<Repo />} />
+							<Route path='/repo/:id/*' element={<Repo />} />
 							<Route path="*" element={<NotFound />} />
 						</Route>
 					</Routes>
