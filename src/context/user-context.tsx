@@ -16,7 +16,7 @@ const UserContextProvider = ({ children }: any) => {
 
 	const initUserContext = async () => {
 		if (!userInfo.name) { // we didn't fetch initial user info
-			const user = (await getUser())?.data;
+			const user = await getUser();
 			setUserInfo(user || {});
 		}
 	};
