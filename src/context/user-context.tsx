@@ -15,7 +15,7 @@ const UserContextProvider = ({ children }: any) => {
 	const [userInfo, setUserInfo] = useState({} as any);
 
 	const initUserContext = async () => {
-		if (!userInfo.name) { // we didn't fetch initial user info
+		if (!userInfo.login) { // we didn't fetch initial user info
 			const user = await getUser();
 			setUserInfo(user || {});
 		}
@@ -39,6 +39,7 @@ const UserContextProvider = ({ children }: any) => {
 		<UserContext.Provider value={{
 			isLoggedIn: !!token,
 			name: userInfo.name,
+			githubLogin: userInfo.login,
 			profileImageUrl: userInfo.avatar_url
 		}}>
 			{children}

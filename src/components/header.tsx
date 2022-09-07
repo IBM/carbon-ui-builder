@@ -221,7 +221,7 @@ export const Header = ({
 					{
 						user.isLoggedIn
 						? <>
-							<li className='bx--switcher__item' style={{ paddingLeft: '1rem' }}>Hi {user.name}!</li>
+							<li className='bx--switcher__item' style={{ paddingLeft: '1rem' }}>Hi {user.name || user.githubLogin}!</li>
 							<SwitcherItem
 							className={switcherItemWithIconStyle}
 							aria-label='all repositories'
