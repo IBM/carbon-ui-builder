@@ -18,6 +18,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { css } from 'emotion';
 import { GithubContext } from '../../context';
 import { UserContext } from '../../context/user-context';
+import { GithubFilePreview } from '../../components/github-file-preview';
 
 const repoContainerStyle = css`
 	margin-top: 3rem;
@@ -52,15 +53,21 @@ const FolderItem = ({ repo, item }: any) => {
 	</ClickableTile>;
 };
 
+const cleanFolderState = {
+	fragmentState: null as any,
+	folderContent: [] as any[],
+	fileContent: '',
+	fileContentBase64: ''
+} as any;
+
 export const Repo = () => {
 	const params = useParams();
 	const { getContent, getRepos, getUser } = useContext(GithubContext);
 	const { githubLogin } = useContext(UserContext);
 	const [state, setState] = useState({
-		fragmentState: null as any,
-		folderContent: [] as any[],
+		...cleanFolderState,
 		userRepos: [] as any[]
-	} as any);
+	});
 
 	useEffect(() => {
 		if (!githubLogin) {
@@ -69,20 +76,17 @@ export const Repo = () => {
 		(async () => {
 			const userRepos = await getRepos();
 			if (params.id) {
-				const { folderContent, fragmentState } = await getContent((await getUser()).login, params.id, params['*'] || '');
+				const content = await getContent((await getUser()).login, params.id, params['*'] || '');
 
 				setState({
-					...state,
-					folderContent,
-					fragmentState,
+					...cleanFolderState,
+					...content,
 					userRepos
 				});
 			} else {
 				// no repo requested so we offer all repos to pick from
 				setState({
-					...state,
-					folderContent: [],
-					fragmentState: null,
+					...cleanFolderState,
 					userRepos
 				});
 			}
@@ -111,6 +115,14 @@ export const Repo = () => {
 						item={item} />
 					</Column>)
 					: state.userRepos.sort(compareItems).map((repo: any) => <Column key={repo.name}><FolderItem repo={repo} /></Column>)
+				}
+				{
+					(state.fragmentState || state.fileContent)
+					&& <GithubFilePreview
+						editorHeight='calc(100vh - 3rem)'
+						fragmentState={state.fragmentState}
+						fileContent={state.fileContent}
+						fileContentBase64={state.fileContentBase64} />
 				}
 			</Row>
 		</Grid>
