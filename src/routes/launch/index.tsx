@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import Editor from '@monaco-editor/react';
-import { UIFragment } from '../../ui-fragment/src/ui-fragment';
-import { filenameToLanguage } from '../edit/tools';
 import { GithubContext } from '../../context';
+import { GithubFilePreview } from '../../components/github-file-preview';
 
 export const Launch = () => {
 	const params = useParams();
@@ -12,13 +10,6 @@ export const Launch = () => {
 		fragmentState: null as any,
 		folderContent: [] as any[]
 	} as any);
-
-	const setFragmentState = (fs: any) => {
-		setState({
-			...state,
-			fragmentState: fs
-		});
-	};
 
 	useEffect(() => {
 		if (!params.owner || !params.repo) {
@@ -50,30 +41,8 @@ export const Launch = () => {
 		</ul>;
 	}
 
-	// fileContent is set when the content we fetched isn't parsed as fragment json
-	if (state.fileContent) {
-		const chunks = (params['*'] || '').split('.');
-		const suffix = chunks[chunks.length - 1];
-
-		// if file is an image
-		if (
-			suffix === 'jpg' ||
-			suffix === 'jpeg' ||
-			suffix === 'png' ||
-			suffix === 'gif' ||
-			suffix === 'svg' ||
-			suffix === 'ico'
-		) {
-			return <img src={`data:image/${suffix};base64,${state.fileContentBase64}`} />;
-		}
-
-		// show non-image content in an editor
-		return <Editor
-			height='100vh'
-			language={filenameToLanguage(params['*'] || '')}
-			value={state.fileContent}
-		/>;
-	}
-
-	return <UIFragment state={state.fragmentState} setState={(state) => setFragmentState(state)} />;
+	return <GithubFilePreview
+		fragmentState={state.fragmentState}
+		fileContent={state.fileContent}
+		fileContentBase64={state.fileContentBase64} />;
 };
