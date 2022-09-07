@@ -55,7 +55,7 @@ const FolderItem = ({ repo, item }: any) => {
 export const Repo = () => {
 	const params = useParams();
 	const { getContent, getRepos, getUser } = useContext(GithubContext);
-	const { name } = useContext(UserContext);
+	const { githubLogin } = useContext(UserContext);
 	const [state, setState] = useState({
 		fragmentState: null as any,
 		folderContent: [] as any[],
@@ -63,7 +63,7 @@ export const Repo = () => {
 	} as any);
 
 	useEffect(() => {
-		if (!name) {
+		if (!githubLogin) {
 			return;
 		}
 		(async () => {
@@ -88,7 +88,7 @@ export const Repo = () => {
 			}
 		})();
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [params.id, params['*'], name]);
+	}, [params.id, params['*'], githubLogin]);
 
 	const compareItems = (a: any, b: any) => {
 		if (a.type === 'dir' && b.type === 'file') {
