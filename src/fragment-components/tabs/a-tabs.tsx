@@ -7,6 +7,10 @@ import {
 import { AComponent, ComponentInfo } from '../a-component';
 import image from '../../assets/component-icons/link.svg';
 import { DraggableTileList } from '../../components/draggable-list';
+import { useFragment } from '../../context';
+import { updatedState } from '../../components';
+import { APlaceholder } from '../a-placeholder';
+import { getDropIndex } from '../../routes/edit/tools';
 
 export const ATabsSettingsUI = ({ selectedComponent, setComponent }: any) => {
 
@@ -91,6 +95,8 @@ export const ATabs = ({
 	onDrop,
 	...rest
 }: any) => {
+	const [fragment, setFragment] = useFragment();
+	const holderRef = useRef(null as any);
 	return (
 		<AComponent
 		rejectDrop={true}
@@ -98,7 +104,39 @@ export const ATabs = ({
 		{...rest}>
 			<Tabs
 			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
-				{children}
+				{
+					componentObj.items.map((step: any, index: number) => <Tab
+						className={step.className}
+						label={step.labelText}
+						disabled={step.disabled}
+						key={index}
+					>
+						{
+							<section ref={holderRef} onDrop={(event) => {
+								event.stopPropagation();
+								event.preventDefault();
+								const dropIndex = getDropIndex(event, holderRef.current);
+								const dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
+								// change the code below to step items array
+								setFragment({
+									...fragment,
+									data: updatedState(
+										fragment.data,
+										dragObj,
+										componentObj.id,
+										dropIndex
+									)
+								});
+							}} onDragOver={onDragOver}>
+								{
+									step.items && step.items.length > 0
+									? children
+									: <APlaceholder componentObj={step} select={rest.select} />
+								}
+							</section>
+						}
+					</Tab>)
+				}
 			</Tabs>
 		</AComponent>
 	);
@@ -113,7 +151,11 @@ export const componentInfo: ComponentInfo = {
 	select={select}
 	remove={remove}
 	selected={selected}>
-		{componentObj.items.map((tab: any) => renderComponents(tab, outline))}
+		{componentObj.items.map((tab: any) => {
+			if(tab.items && tab.items.length > 0) {
+				return tab.items.map((item: any) => { return renderComponents(item, outline)})
+			}
+		})}
 	</ATabs>,
 	keywords: ['tabs', 'tab'],
 	name: 'Tabs',
@@ -135,6 +177,11 @@ export const componentInfo: ComponentInfo = {
 					{
 						type:'text',
 						text: 'abc'
+					},
+					{
+						type: 'button',
+						kind: 'primary',
+						text: 'Button'
 					}
 				]
 			},

@@ -1,11 +1,7 @@
 import React, { useRef } from 'react';
-import { TextInput, Tab, TabContent } from 'carbon-components-react';
+import { TextInput, Tab } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from '../a-component';
 import image from '../../assets/component-icons/link.svg';
-import { APlaceholder } from '../a-placeholder';
-import { updatedState } from '../../components';
-import { useFragment } from '../../context';
-import { getDropIndex } from '../../routes/edit/tools';
 
 export const ATabSettingsUI = () => { return <></>};
 
@@ -28,8 +24,6 @@ export const ATabCodeUI = ({ selectedComponent, setComponent }: any) => {
 
 export const ATab = ({
 	componentObj,
-	onDrop,
-	onDragOver,
 	children,
 	selected,
 	outline,
@@ -41,10 +35,7 @@ export const ATab = ({
 			selected={selected}
 			{...rest}>
 			<Tab
-			tabIndex={rest.index}
 			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
-			onDrop={onDrop}
-			onDragOver={onDragOver}
 			label={componentObj.labelText}
 			disabled={componentObj.disabled}>
 				{children}
@@ -57,38 +48,12 @@ export const componentInfo: ComponentInfo = {
 	component: ATab,
 	settingsUI: ATabSettingsUI,
 	codeUI: ATabCodeUI,
-	render: ({ componentObj, select, remove, selected, renderComponents, onDragOver, outline }) => {
-		const [fragment, setFragment] = useFragment();
-		const holderRef = useRef(null as any);
-		return (<ATab
+	render: ({ componentObj, select, remove, selected }) => <ATab
 			componentObj={componentObj}
 			select={select}
 			remove={remove}
 			selected={selected}>
-			{
-				<section ref={holderRef} onDrop={(event) => {
-					event.stopPropagation();
-					event.preventDefault();
-					const dropIndex = getDropIndex(event, holderRef.current);
-					const dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
-					setFragment({
-						...fragment,
-						data: updatedState(
-							fragment.data,
-							dragObj,
-							componentObj.id,
-							dropIndex
-						)
-					});
-				}} onDragOver={onDragOver}>
-					{
-						componentObj.items && componentObj.items.length > 0
-						? componentObj.items.map((tab: any) => renderComponents(tab, outline))
-						: <APlaceholder componentObj={componentObj} select={select} />
-					}
-				</section>
-			}
-	</ATab>)},
+	</ATab>,
 	keywords: ['tab'],
 	name: 'Tab',
 	type: 'tab',
