@@ -4,6 +4,7 @@ import React, {
 	useState
 } from 'react';
 import {
+	Button,
 	Grid,
 	Column,
 	Row,
@@ -12,7 +13,8 @@ import {
 import {
 	Document32,
 	Folder32,
-	FolderDetails32
+	FolderDetails32,
+	CopyLink16
 } from '@carbon/icons-react';
 import { useNavigate } from 'react-router-dom';
 import { css } from 'emotion';
@@ -49,6 +51,12 @@ const FolderItem = ({ repo, item, basePath }: any) => {
 	</ClickableTile>;
 };
 
+const toolbarStyle = css`
+	margin-left: 2rem;
+	margin-righ: 2rem;
+	margin-top: 1rem;
+`;
+
 const cleanFolderState = {
 	fragmentState: null as any,
 	folderContent: [] as any[],
@@ -56,8 +64,8 @@ const cleanFolderState = {
 	fileContentBase64: ''
 } as any;
 
-export const GithubNavigator = ({ basePath, path, repoName, repoOrg }: any) => {
-	const { getContent, getRepos, getUser } = useContext(GithubContext);
+export const GithubNavigator = ({ basePath, path, repoName, repoOrg, showToolbar=true }: any) => {
+	const { getContent, getRepos } = useContext(GithubContext);
 	const { githubLogin } = useContext(UserContext);
 	const [state, setState] = useState({
 		...cleanFolderState,
@@ -71,7 +79,7 @@ export const GithubNavigator = ({ basePath, path, repoName, repoOrg }: any) => {
 		(async () => {
 			const repos = await getRepos(repoOrg);
 			if (repoName) {
-				const content = await getContent(repoOrg || (await getUser()).login, repoName, path || '');
+				const content = await getContent(repoOrg || githubLogin, repoName, path || '');
 
 				setState({
 					...cleanFolderState,
@@ -99,29 +107,46 @@ export const GithubNavigator = ({ basePath, path, repoName, repoOrg }: any) => {
 		return a.name - b.name;
 	};
 
-	return <Grid>
-		<Row>
-			{
-				repoName
-				? state.folderContent.sort(compareItems).map((item: any) => <Column key={item.name}>
-					<FolderItem
-						basePath={`${basePath}${repoOrg ? `/${repoOrg}` : ''}`}
-						repo={state.repos[state.repos.findIndex((repo: any) => repo.name === repoName)]}
-						item={item} />
-				</Column>)
-				: state.repos.sort(compareItems).map((repo: any) => <Column key={repo.name}>
-					<FolderItem repo={repo} basePath={`${basePath}${repoOrg ? `/${repoOrg}` : ''}`} />
-				</Column>)
-			}
-			{
-				(state.fragmentState || state.fileContent)
-				&& <GithubFilePreview
-					editorHeight='calc(100vh - 3rem)'
-					fragmentState={state.fragmentState}
-					fileContent={state.fileContent}
-					fileContentBase64={state.fileContentBase64}
-					path={path} />
-			}
-		</Row>
-	</Grid>;
+	return <>
+		{
+			showToolbar
+			&& <div className={toolbarStyle}>
+				<Button
+					kind='ghost'
+					hasIconOnly
+					iconDescription='Copy sharable link'
+					renderIcon={CopyLink16}
+					tooltipPosition='bottom'
+					tooltipAlignment='start'
+					onClick={() => {
+						navigator.clipboard.writeText(`${window.location.origin}/launch/${githubLogin}/${repoName}/${path}`);
+					}} />
+			</div>
+		}
+		<Grid>
+			<Row>
+				{
+					repoName
+					? state.folderContent.sort(compareItems).map((item: any) => <Column key={item.name}>
+						<FolderItem
+							basePath={`${basePath}${repoOrg ? `/${repoOrg}` : ''}`}
+							repo={state.repos[state.repos.findIndex((repo: any) => repo.name === repoName)]}
+							item={item} />
+					</Column>)
+					: state.repos.sort(compareItems).map((repo: any) => <Column key={repo.name}>
+						<FolderItem repo={repo} basePath={`${basePath}${repoOrg ? `/${repoOrg}` : ''}`} />
+					</Column>)
+				}
+				{
+					(state.fragmentState || state.fileContent)
+					&& <GithubFilePreview
+						editorHeight='calc(100vh - 3rem)'
+						fragmentState={state.fragmentState}
+						fileContent={state.fileContent}
+						fileContentBase64={state.fileContentBase64}
+						path={path} />
+				}
+			</Row>
+		</Grid>
+	</>;
 };
