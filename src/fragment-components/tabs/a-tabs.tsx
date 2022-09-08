@@ -106,31 +106,43 @@ export const ATabs = ({
 			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 				{
 					componentObj.items.map((step: any, index: number) => <Tab
+						onClick= {() => componentObj.selectedTab = index}
 						className={step.className}
 						label={step.labelText}
 						disabled={step.disabled}
-						key={index}
-					>
+						key={index}>
 						{
 							<section ref={holderRef} onDrop={(event) => {
 								event.stopPropagation();
 								event.preventDefault();
-								const dropIndex = getDropIndex(event, holderRef.current);
 								const dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
-								// change the code below to step items array
+								const items = componentObj.items.map((item: any, index: any) => {
+									if (index === componentObj.selectedTab) {
+										return {
+											...step,
+											items:[ ...step.items,
+												dragObj.component
+											]
+										};
+									}
+									return item;
+								});
 								setFragment({
 									...fragment,
-									data: updatedState(
-										fragment.data,
-										dragObj,
-										componentObj.id,
-										dropIndex
-									)
-								});
+									data: updatedState(fragment.data, {
+										type: 'update',
+										component: {
+											...componentObj,
+											items
+
+										}
+									})
+								}, false);
 							}} onDragOver={onDragOver}>
 								{
 									step.items && step.items.length > 0
-									? children : <APlaceholder componentObj={step} select={rest.select} />
+									? children.filter((child: any, index: any) => index === componentObj.selectedTab)
+									: <APlaceholder componentObj={step} select={rest.select} />
 								}
 							</section>
 						}
@@ -153,7 +165,7 @@ export const componentInfo: ComponentInfo = {
 		{componentObj.items.map((tab: any) => {
 			if (tab.items && tab.items.length > 0) {
 				return tab.items.map((item: any) => { return renderComponents(item, outline)})
-			}
+			} return []
 		})}
 	</ATabs>,
 	keywords: ['tabs', 'tab'],
@@ -161,6 +173,7 @@ export const componentInfo: ComponentInfo = {
 	type: 'tabs',
 	defaultComponentObj: {
 		type: 'tabs',
+		selectedTab: 0,
 		items: [
 			{
 				type: 'tab',
@@ -172,17 +185,7 @@ export const componentInfo: ComponentInfo = {
 				type: 'tab',
 				labelText: 'Tab 2',
 				disabled: false,
-				items: [
-					{
-						type:'text',
-						text: 'abc'
-					},
-					{
-						type: 'button',
-						kind: 'primary',
-						text: 'Button'
-					}
-				]
+				items: []
 			},
 			{
 				type: 'tab',
