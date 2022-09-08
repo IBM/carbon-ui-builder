@@ -15,7 +15,7 @@ GithubContext.displayName = 'GithubContext';
 const GithubContextProvider = ({ children }: any) => {
 	const { githubToken, setGithubToken: _setGithubToken } = useContext(GlobalStateContext);
 	const user = useRef({} as any);
-	const userRepos = useRef([] as any[]);
+	const reposCache = useRef({} as any);
 	const octokit = useRef(new Octokit({ auth: githubToken }));
 
 	const getUser = async (forceLoad = false) => {
@@ -106,13 +106,15 @@ const GithubContextProvider = ({ children }: any) => {
 		}
 	};
 
-	const getRepos = async (forceLoad = false) => {
-		if (!userRepos.current.length || forceLoad) {
-			const repos = (await octokit.current.rest.repos.listForUser({ username: user.current.login })).data;
-			userRepos.current = repos;
+	const getRepos = async (username: string | null = null, forceLoad = false) => {
+		const un = username ? username : user.current.login;
+
+		if (!reposCache.current[un]?.length || forceLoad) {
+			const repos = (await octokit.current.rest.repos.listForUser({ username: un })).data;
+			reposCache.current[un] = repos;
 		}
 
-		return userRepos.current;
+		return reposCache.current[un];
 	};
 
 	const getFeaturedFragments = async () => {
