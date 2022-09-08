@@ -56,12 +56,12 @@ const cleanFolderState = {
 	fileContentBase64: ''
 } as any;
 
-export const GithubNavigator = ({ basePath, path, repoName }: any) => {
+export const GithubNavigator = ({ basePath, path, repoName, repoOrg }: any) => {
 	const { getContent, getRepos, getUser } = useContext(GithubContext);
 	const { githubLogin } = useContext(UserContext);
 	const [state, setState] = useState({
 		...cleanFolderState,
-		userRepos: [] as any[]
+		repos: [] as any[]
 	});
 
 	useEffect(() => {
@@ -69,20 +69,20 @@ export const GithubNavigator = ({ basePath, path, repoName }: any) => {
 			return;
 		}
 		(async () => {
-			const userRepos = await getRepos();
+			const repos = await getRepos(repoOrg);
 			if (repoName) {
-				const content = await getContent((await getUser()).login, repoName, path || '');
+				const content = await getContent(repoOrg || (await getUser()).login, repoName, path || '');
 
 				setState({
 					...cleanFolderState,
 					...content,
-					userRepos
+					repos
 				});
 			} else {
 				// no repo requested so we offer all repos to pick from
 				setState({
 					...cleanFolderState,
-					userRepos
+					repos
 				});
 			}
 		})();
@@ -105,12 +105,12 @@ export const GithubNavigator = ({ basePath, path, repoName }: any) => {
 				repoName
 				? state.folderContent.sort(compareItems).map((item: any) => <Column key={item.name}>
 					<FolderItem
-						basePath={basePath}
-						repo={state.userRepos[state.userRepos.findIndex((repo: any) => repo.name === repoName)]}
+						basePath={`${basePath}${repoOrg ? `/${repoOrg}` : ''}`}
+						repo={state.repos[state.repos.findIndex((repo: any) => repo.name === repoName)]}
 						item={item} />
 				</Column>)
-				: state.userRepos.sort(compareItems).map((repo: any) => <Column key={repo.name}>
-					<FolderItem repo={repo} basePath={basePath} />
+				: state.repos.sort(compareItems).map((repo: any) => <Column key={repo.name}>
+					<FolderItem repo={repo} basePath={`${basePath}${repoOrg ? `/${repoOrg}` : ''}`} />
 				</Column>)
 			}
 			{
@@ -119,7 +119,8 @@ export const GithubNavigator = ({ basePath, path, repoName }: any) => {
 					editorHeight='calc(100vh - 3rem)'
 					fragmentState={state.fragmentState}
 					fileContent={state.fileContent}
-					fileContentBase64={state.fileContentBase64} />
+					fileContentBase64={state.fileContentBase64}
+					path={path} />
 			}
 		</Row>
 	</Grid>;
