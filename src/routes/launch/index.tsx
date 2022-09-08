@@ -13,5 +13,6 @@ export const Launch = () => {
 		basePath='/launch'
 		path={params['*']}
 		repoName={params.repo}
-		repoOrg={params.owner} />;
+		repoOrg={params.owner}
+		showToolbar={false} />;
 };
