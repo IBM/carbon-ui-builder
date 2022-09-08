@@ -10,7 +10,6 @@ import { DraggableTileList } from '../../components/draggable-list';
 import { useFragment } from '../../context';
 import { updatedState } from '../../components';
 import { APlaceholder } from '../a-placeholder';
-import { getDropIndex } from '../../routes/edit/tools';
 
 export const ATabsSettingsUI = ({ selectedComponent, setComponent }: any) => {
 
@@ -56,8 +55,7 @@ export const ATabsSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			items: newList
 		});
 	};
-	return <>
-		<DraggableTileList
+	return <DraggableTileList
 			dataList={[...selectedComponent.items]}
 			setDataList={updateStepList}
 			updateItem={updateListItems}
@@ -67,8 +65,7 @@ export const ATabsSettingsUI = ({ selectedComponent, setComponent }: any) => {
 				disabled: false,
 				items: []
 			}}
-			template={template} />
-	</>;
+			template={template} />;
 };
 
 export const ATabsCodeUI = ({ selectedComponent, setComponent }: any) => {
@@ -92,7 +89,6 @@ export const ATabs = ({
 	children,
 	componentObj,
 	onDragOver,
-	onDrop,
 	...rest
 }: any) => {
 	const [fragment, setFragment] = useFragment();
@@ -164,8 +160,10 @@ export const componentInfo: ComponentInfo = {
 	selected={selected}>
 		{componentObj.items.map((tab: any) => {
 			if (tab.items && tab.items.length > 0) {
-				return tab.items.map((item: any) => { return renderComponents(item, outline)})
-			} return []
+				return tab.items.map((item: any) => {
+					return renderComponents(item, outline);
+				});
+			} return [];
 		})}
 	</ATabs>,
 	keywords: ['tabs', 'tab'],
@@ -193,7 +191,7 @@ export const componentInfo: ComponentInfo = {
 				disabled: false,
 				items: []
 			}
-		],
+		]
 	},
 	image,
 	codeExport: {
