@@ -130,8 +130,7 @@ export const ATabs = ({
 							}} onDragOver={onDragOver}>
 								{
 									step.items && step.items.length > 0
-									? children
-									: <APlaceholder componentObj={step} select={rest.select} />
+									? children : <APlaceholder componentObj={step} select={rest.select} />
 								}
 							</section>
 						}
@@ -152,7 +151,7 @@ export const componentInfo: ComponentInfo = {
 	remove={remove}
 	selected={selected}>
 		{componentObj.items.map((tab: any) => {
-			if(tab.items && tab.items.length > 0) {
+			if (tab.items && tab.items.length > 0) {
 				return tab.items.map((item: any) => { return renderComponents(item, outline)})
 			}
 		})}
@@ -204,7 +203,7 @@ export const componentInfo: ComponentInfo = {
 			}
 		},
 		react: {
-			imports: ['Link'],
+			imports: [''],
 			code: () => {
 				return '';
 			}
