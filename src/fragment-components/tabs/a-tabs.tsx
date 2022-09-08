@@ -10,6 +10,7 @@ import { DraggableTileList } from '../../components/draggable-list';
 import { useFragment } from '../../context';
 import { updatedState } from '../../components';
 import { APlaceholder } from '../a-placeholder';
+import { cx } from 'emotion';
 
 export const ATabsSettingsUI = ({ selectedComponent, setComponent }: any) => {
 
@@ -65,7 +66,8 @@ export const ATabsSettingsUI = ({ selectedComponent, setComponent }: any) => {
 				disabled: false,
 				items: []
 			}}
-			template={template} />;
+			template={template}
+		/>;
 };
 
 export const ATabsCodeUI = ({ selectedComponent, setComponent }: any) => {
@@ -88,7 +90,6 @@ export const ATabsCodeUI = ({ selectedComponent, setComponent }: any) => {
 export const ATabs = ({
 	children,
 	componentObj,
-	onDragOver,
 	...rest
 }: any) => {
 	const [fragment, setFragment] = useFragment();
@@ -103,7 +104,7 @@ export const ATabs = ({
 				{
 					componentObj.items.map((step: any, index: number) => <Tab
 						onClick= {() => componentObj.selectedTab = index}
-						className={step.className}
+						className={cx(step.className, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}
 						label={step.labelText}
 						disabled={step.disabled}
 						key={index}>
@@ -134,11 +135,11 @@ export const ATabs = ({
 										}
 									})
 								}, false);
-							}} onDragOver={onDragOver}>
+							}}>
 								{
-									step.items && step.items.length > 0
-									? children.filter((child: any, index: any) => index === componentObj.selectedTab)
-									: <APlaceholder componentObj={step} select={rest.select} />
+									step.items && step.items.length > 0 ?
+									children.filter((child: any, index: any) => index === componentObj.selectedTab) :
+									<APlaceholder componentObj={step} select={rest.select} />
 								}
 							</section>
 						}
@@ -172,6 +173,7 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'tabs',
 		selectedTab: 0,
+		contained: false,
 		items: [
 			{
 				type: 'tab',
@@ -198,13 +200,13 @@ export const componentInfo: ComponentInfo = {
 		angular: {
 			inputs: () => '',
 			outputs: () => '',
-			imports: [''],
+			imports: ['TabsModule'],
 			code: () => {
 				return '';
 			}
 		},
 		react: {
-			imports: [''],
+			imports: ['Tabs', 'Tab'],
 			code: () => {
 				return '';
 			}
