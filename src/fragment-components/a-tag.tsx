@@ -48,6 +48,7 @@ export const ATagSettingsUI = ({ selectedComponent, setComponent }: any) => {
 		/>
 
 		<Dropdown
+			id='type'
 			label='Type'
 			titleText='Type'
 			items={typeItems}

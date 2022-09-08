@@ -108,10 +108,11 @@ export const componentInfo: ComponentInfo = {
 	component: ATabs,
 	settingsUI: ATabsSettingsUI,
 	codeUI: ATabsCodeUI,
-	render: ({ componentObj, select, remove, renderComponents, outline }) => <ATabs
+	render: ({ componentObj, select, selected, remove, renderComponents, outline }) => <ATabs
 	componentObj={componentObj}
 	select={select}
-	remove={remove}>
+	remove={remove}
+	selected={selected}>
 		{componentObj.items.map((tab: any) => renderComponents(tab, outline))}
 	</ATabs>,
 	keywords: ['tabs', 'tab'],
@@ -130,7 +131,12 @@ export const componentInfo: ComponentInfo = {
 				type: 'tab',
 				labelText: 'Tab 2',
 				disabled: false,
-				items: []
+				items: [
+					{
+						type:'text',
+						text: 'abc'
+					}
+				]
 			},
 			{
 				type: 'tab',
