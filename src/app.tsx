@@ -63,6 +63,7 @@ export const App = () => {
 						<Route element={<Outlet />}>
 							<Route path='/view/:id' element={<View />} />
 							<Route path='/launch' element={<Launch />} />
+							<Route path='/launch/:owner' element={<Launch />} />
 							<Route path='/launch/:owner/:repo/*' element={<Launch />} />
 						</Route>
 						<Route element={<DefaultContainer />}>
