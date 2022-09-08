@@ -1,6 +1,11 @@
+import { css } from 'emotion';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { GithubNavigator } from '../../components/github-navigator';
+
+const launchContainerStyle = css`
+	height: 100vh;
+`;
 
 export const Launch = () => {
 	const params = useParams();
@@ -9,10 +14,12 @@ export const Launch = () => {
 		return <div>Nothing to see here. <a href='/'>Go home.</a></div>;
 	}
 
-	return <GithubNavigator
-		basePath='/launch'
-		path={params['*']}
-		repoName={params.repo}
-		repoOrg={params.owner}
-		showToolbar={false} />;
+	return <div className={launchContainerStyle}>
+		<GithubNavigator
+			basePath='/launch'
+			path={params['*']}
+			repoName={params.repo}
+			repoOrg={params.owner}
+			showToolbar={false} />
+	</div>;
 };

@@ -32,13 +32,19 @@ const FolderItem = ({ repo, item, basePath }: any) => {
 	const navigate = useNavigate();
 
 	if (!item) {
-		return <ClickableTile className={folderItemStyle} onClick={() => navigate(`${basePath}/${repo.name}`)}>
+		return <ClickableTile
+		className={folderItemStyle}
+		light={true}
+		onClick={() => navigate(`${basePath}/${repo.name}`)}>
 			<div><FolderDetails32 /></div>
 			{repo.name}
 		</ClickableTile>;
 	}
 
-	return <ClickableTile className={folderItemStyle} onClick={() => navigate(`${basePath}/${repo.name}/${item.path}`)}>
+	return <ClickableTile
+	className={folderItemStyle}
+	light={true}
+	onClick={() => navigate(`${basePath}/${repo.name}/${item.path}`)}>
 		<div>
 			{
 				item.type === 'dir' && <Folder32 />
@@ -52,9 +58,20 @@ const FolderItem = ({ repo, item, basePath }: any) => {
 };
 
 const toolbarStyle = css`
-	margin-left: 2rem;
-	margin-righ: 2rem;
+	padding-left: 2rem;
+	padding-right: 2rem;
 	margin-top: 1rem;
+	box-shadow: inset 0px -1px #d8d8d8;
+`;
+
+const folderContentStyleWithToolbar = css`
+	background-color: #f4f4f4;
+	min-height: calc(100% - 3rem);
+`;
+
+const folderContentStyle = css`
+	background-color: #f4f4f4;
+	min-height: 100%;
 `;
 
 const cleanFolderState = {
@@ -123,30 +140,34 @@ export const GithubNavigator = ({ basePath, path, repoName, repoOrg, showToolbar
 					}} />
 			</div>
 		}
-		<Grid>
-			<Row>
-				{
-					repoName
-					? state.folderContent.sort(compareItems).map((item: any) => <Column key={item.name}>
-						<FolderItem
-							basePath={`${basePath}${repoOrg ? `/${repoOrg}` : ''}`}
-							repo={state.repos[state.repos.findIndex((repo: any) => repo.name === repoName)]}
-							item={item} />
-					</Column>)
-					: state.repos.sort(compareItems).map((repo: any) => <Column key={repo.name}>
-						<FolderItem repo={repo} basePath={`${basePath}${repoOrg ? `/${repoOrg}` : ''}`} />
-					</Column>)
-				}
-				{
-					(state.fragmentState || state.fileContent)
-					&& <GithubFilePreview
+		{
+			(state.fragmentState || state.fileContent)
+				? <div>
+					<GithubFilePreview
 						editorHeight='calc(100vh - 3rem)'
 						fragmentState={state.fragmentState}
 						fileContent={state.fileContent}
 						fileContentBase64={state.fileContentBase64}
 						path={path} />
-				}
-			</Row>
-		</Grid>
+				</div>
+				: <div className={showToolbar ? folderContentStyleWithToolbar : folderContentStyle}>
+					<Grid>
+						<Row>
+							{
+								repoName
+								? state.folderContent.sort(compareItems).map((item: any) => <Column key={item.name}>
+									<FolderItem
+										basePath={`${basePath}${repoOrg ? `/${repoOrg}` : ''}`}
+										repo={state.repos[state.repos.findIndex((repo: any) => repo.name === repoName)]}
+										item={item} />
+								</Column>)
+								: state.repos.sort(compareItems).map((repo: any) => <Column key={repo.name}>
+									<FolderItem repo={repo} basePath={`${basePath}${repoOrg ? `/${repoOrg}` : ''}`} />
+								</Column>)
+							}
+						</Row>
+					</Grid>
+				</div>
+		}
 	</>;
 };
