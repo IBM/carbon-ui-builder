@@ -13,10 +13,12 @@ import {
 	ClickableTile
 } from 'carbon-components-react';
 import {
+	CopyLink16,
 	Document32,
 	Folder32,
 	FolderDetails32,
-	CopyLink16
+	NextOutline16,
+	PreviousOutline16
 } from '@carbon/icons-react';
 import { useNavigate } from 'react-router-dom';
 import { css } from 'emotion';
@@ -61,6 +63,7 @@ const FolderItem = ({ repo, item, basePath }: any) => {
 
 const toolbarStyle = css`
 	display: flex;
+	justify-content: space-between;
 	padding-left: 2rem;
 	padding-right: 2rem;
 	margin-top: 1rem;
@@ -82,12 +85,17 @@ const folderContentStyle = css`
 	min-height: 100%;
 `;
 
-const cleanFolderState = {
-	fragmentState: null as any,
-	folderContent: [] as any[],
-	fileContent: '',
-	fileContentBase64: ''
-} as any;
+const toolbarButtonsStyle = css`
+	right: 0;
+`;
+
+const separatorStyle = css`
+	width: 1px;
+	height: calc(100% - 1rem);
+	background-color: #c6c6c6;
+	margin: 0.5rem;
+	display: inline-block;
+`;
 
 const findNth = (heystack: string, needle: string, n: number) => {
 	// finds the index of n-th occurance of needle in heystack
@@ -106,9 +114,16 @@ const findNth = (heystack: string, needle: string, n: number) => {
 	return position;
 };
 
+const cleanFolderState = {
+	fragmentState: null as any,
+	folderContent: [] as any[],
+	fileContent: '',
+	fileContentBase64: ''
+} as any;
+
 export const GithubNavigator = ({ basePath, path, repoName, repoOrg, showToolbar=true }: any) => {
 	const navigate = useNavigate();
-	const { getContent, getRepos } = useContext(GithubContext);
+	const { getContentWithFolder, getRepos } = useContext(GithubContext);
 	const { githubLogin } = useContext(UserContext);
 	const [state, setState] = useState({
 		...cleanFolderState,
@@ -122,7 +137,7 @@ export const GithubNavigator = ({ basePath, path, repoName, repoOrg, showToolbar
 		(async () => {
 			const repos = await getRepos(repoOrg);
 			if (repoName) {
-				const content = await getContent(repoOrg || githubLogin, repoName, path || '');
+				const content = await getContentWithFolder(repoOrg || githubLogin, repoName, path || '');
 
 				setState({
 					...cleanFolderState,
@@ -140,15 +155,9 @@ export const GithubNavigator = ({ basePath, path, repoName, repoOrg, showToolbar
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [repoName, path, githubLogin]);
 
-	const compareItems = (a: any, b: any) => {
-		if (a.type === 'dir' && b.type === 'file') {
-			return -1;
-		}
-		if (a.type === 'file' && b.type === 'dir') {
-			return 1;
-		}
-		return a.name - b.name;
-	};
+	const getFilesList = () => state.folderContent.filter((item: any) => item.type === 'file');
+
+	const getFileIndex = () => getFilesList().findIndex((item: any) => path === item.path);
 
 	return <>
 		{
@@ -189,16 +198,45 @@ export const GithubNavigator = ({ basePath, path, repoName, repoOrg, showToolbar
 						</BreadcrumbItem>)
 					}
 				</Breadcrumb>
-				<Button
-					kind='ghost'
-					hasIconOnly
-					iconDescription='Copy sharable link'
-					renderIcon={CopyLink16}
-					tooltipPosition='bottom'
-					tooltipAlignment='start'
-					onClick={() => {
-						navigator.clipboard.writeText(`${window.location.origin}/launch/${githubLogin}/${repoName}/${path}`);
-					}} />
+				<div className={toolbarButtonsStyle}>
+					<Button
+						kind='ghost'
+						hasIconOnly
+						iconDescription='Copy sharable link'
+						renderIcon={CopyLink16}
+						tooltipPosition='bottom'
+						tooltipAlignment='start'
+						onClick={() => {
+							navigator.clipboard.writeText(`${window.location.origin}/launch/${githubLogin}/${repoName}/${path}`);
+						}} />
+					{
+						(state.fragmentState || state.fileContent) && <>
+							<div className={separatorStyle} />
+							<Button
+								kind='ghost'
+								hasIconOnly
+								disabled={getFileIndex() <= 0}
+								iconDescription='Previous file'
+								renderIcon={PreviousOutline16}
+								tooltipPosition='bottom'
+								tooltipAlignment='start'
+								onClick={() => {
+									navigate(`${basePath}/${repoName}/${getFilesList()[getFileIndex() - 1].path}`);
+								}} />
+							<Button
+								kind='ghost'
+								hasIconOnly
+								disabled={getFileIndex() >= getFilesList().length - 1}
+								iconDescription='Next file'
+								renderIcon={NextOutline16}
+								tooltipPosition='bottom'
+								tooltipAlignment='start'
+								onClick={() => {
+									navigate(`${basePath}/${repoName}/${getFilesList()[getFileIndex() + 1].path}`);
+								}} />
+						</>
+					}
+				</div>
 			</div>
 		}
 		{
@@ -216,13 +254,13 @@ export const GithubNavigator = ({ basePath, path, repoName, repoOrg, showToolbar
 						<Row>
 							{
 								repoName
-								? state.folderContent.sort(compareItems).map((item: any) => <Column key={item.name}>
+								? state.folderContent.map((item: any) => <Column key={item.name}>
 									<FolderItem
 										basePath={`${basePath}${repoOrg ? `/${repoOrg}` : ''}`}
 										repo={state.repos[state.repos.findIndex((repo: any) => repo.name === repoName)]}
 										item={item} />
 								</Column>)
-								: state.repos.sort(compareItems).map((repo: any) => <Column key={repo.name}>
+								: state.repos.map((repo: any) => <Column key={repo.name}>
 									<FolderItem repo={repo} basePath={`${basePath}${repoOrg ? `/${repoOrg}` : ''}`} />
 								</Column>)
 							}
