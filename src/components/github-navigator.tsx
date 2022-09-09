@@ -4,6 +4,8 @@ import React, {
 	useState
 } from 'react';
 import {
+	Breadcrumb,
+	BreadcrumbItem,
 	Button,
 	Grid,
 	Column,
@@ -58,10 +60,16 @@ const FolderItem = ({ repo, item, basePath }: any) => {
 };
 
 const toolbarStyle = css`
+	display: flex;
 	padding-left: 2rem;
 	padding-right: 2rem;
 	margin-top: 1rem;
 	box-shadow: inset 0px -1px #d8d8d8;
+`;
+
+const breadcrumbStyle = css`
+	padding-top: 1rem;
+	padding-bottom: 1rem;
 `;
 
 const folderContentStyleWithToolbar = css`
@@ -81,7 +89,25 @@ const cleanFolderState = {
 	fileContentBase64: ''
 } as any;
 
+const findNth = (heystack: string, needle: string, n: number) => {
+	// finds the index of n-th occurance of needle in heystack
+	let position = -1;
+
+	for (let i = 0; i < n; i++) {
+		const pos = heystack.indexOf(needle, position + 1);
+
+		if (pos < 0) {
+			position = heystack.length;
+			break;
+		}
+		position = pos;
+	}
+
+	return position;
+};
+
 export const GithubNavigator = ({ basePath, path, repoName, repoOrg, showToolbar=true }: any) => {
+	const navigate = useNavigate();
 	const { getContent, getRepos } = useContext(GithubContext);
 	const { githubLogin } = useContext(UserContext);
 	const [state, setState] = useState({
@@ -128,6 +154,41 @@ export const GithubNavigator = ({ basePath, path, repoName, repoOrg, showToolbar
 		{
 			showToolbar
 			&& <div className={toolbarStyle}>
+				<Breadcrumb className={breadcrumbStyle} noTrailingSlash>
+					<BreadcrumbItem
+					href={basePath}
+					isCurrentPage={!repoName}
+					onClick={(event: any) => {
+						event.nativeEvent.preventDefault();
+						navigate(basePath);
+					}}>
+						repo
+					</BreadcrumbItem>
+					{
+						repoName
+						&& <BreadcrumbItem
+						href={`${basePath}/${repoName}`}
+						isCurrentPage={!path}
+						onClick={(event: any) => {
+							event.nativeEvent.preventDefault();
+							navigate(`${basePath}/${repoName}`);
+						}}>
+							{repoName}
+						</BreadcrumbItem>
+					}
+					{
+						path && path.split('/').map((item: string, index: number) => <BreadcrumbItem
+						key={index}
+						href={`${basePath}/${repoName}/${path.substring(0, findNth(path, '/', index + 1))}`}
+						isCurrentPage={index === path.split('/').length - 1}
+						onClick={(event: any) => {
+							event.nativeEvent.preventDefault();
+							navigate(`${basePath}/${repoName}/${path.substring(0, findNth(path, '/', index + 1))}`);
+						}}>
+							{item}
+						</BreadcrumbItem>)
+					}
+				</Breadcrumb>
 				<Button
 					kind='ghost'
 					hasIconOnly
