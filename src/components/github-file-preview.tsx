@@ -23,7 +23,7 @@ export const GithubFilePreview = ({
 	// fileContent is set when the content we fetched isn't parsed as fragment json
 	if (fileContent) {
 		const chunks = (path || '').split('.');
-		const suffix = chunks[chunks.length - 1];
+		const suffix = chunks[chunks.length - 1].toLowerCase();
 
 		// if file is an image
 		if (
