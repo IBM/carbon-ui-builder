@@ -12,6 +12,16 @@ const GithubContext: React.Context<any> = createContext({});
 
 GithubContext.displayName = 'GithubContext';
 
+const compareItems = (a: any, b: any) => {
+	if (a.type === 'dir' && b.type === 'file') {
+		return -1;
+	}
+	if (a.type === 'file' && b.type === 'dir') {
+		return 1;
+	}
+	return a.name - b.name;
+};
+
 const GithubContextProvider = ({ children }: any) => {
 	const { githubToken, setGithubToken: _setGithubToken } = useContext(GlobalStateContext);
 	const user = useRef({} as any);
@@ -62,7 +72,7 @@ const GithubContextProvider = ({ children }: any) => {
 		if (Array.isArray((response.data as any)?.entries)) {
 			return {
 				fragmentState: null,
-				folderContent: (response.data as any)?.entries
+				folderContent: (response.data as any)?.entries.sort(compareItems)
 			};
 		}
 
@@ -70,7 +80,7 @@ const GithubContextProvider = ({ children }: any) => {
 		if (Array.isArray(response.data)) {
 			return {
 				fragmentState: null,
-				folderContent: response.data
+				folderContent: response.data.sort(compareItems)
 			};
 		}
 
@@ -111,7 +121,7 @@ const GithubContextProvider = ({ children }: any) => {
 
 		if (!reposCache.current[un]?.length || forceLoad) {
 			const repos = (await octokit.current.rest.repos.listForUser({ username: un })).data;
-			reposCache.current[un] = repos;
+			reposCache.current[un] = repos.sort(compareItems);
 		}
 
 		return reposCache.current[un];
