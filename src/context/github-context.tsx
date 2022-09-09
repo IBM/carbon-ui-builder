@@ -121,11 +121,12 @@ const GithubContextProvider = ({ children }: any) => {
 
 		const pathParts = contentPath.split('/');
 
-		if (contentState.fileContent || contentState.fileContentBase64) {
+		if (contentState.fileContent || contentState.fileContentBase64 || contentState.fragmentState) {
 			return {
 				...(await getContent(owner, repo, pathParts.slice(0, pathParts.length - 1).join('/'), format)),
 				fileContent: contentState.fileContent,
-				fileContentBase64: contentState.fileContentBase64
+				fileContentBase64: contentState.fileContentBase64,
+				fragmentState: contentState.fragmentState
 			};
 		}
 
