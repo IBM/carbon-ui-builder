@@ -116,6 +116,22 @@ const GithubContextProvider = ({ children }: any) => {
 		}
 	};
 
+	const getContentWithFolder = async (owner: string, repo: string, contentPath: string, format: 'raw' | 'object' = 'object') => {
+		const contentState: any = await getContent(owner, repo, contentPath, format);
+
+		const pathParts = contentPath.split('/');
+
+		if (contentState.fileContent || contentState.fileContentBase64) {
+			return {
+				...(await getContent(owner, repo, pathParts.slice(0, pathParts.length - 1).join('/'), format)),
+				fileContent: contentState.fileContent,
+				fileContentBase64: contentState.fileContentBase64
+			};
+		}
+
+		return contentState;
+	};
+
 	const getRepos = async (username: string | null = null, forceLoad = false) => {
 		const un = username ? username : user.current.login;
 
@@ -153,6 +169,7 @@ const GithubContextProvider = ({ children }: any) => {
 			setToken: setGithubToken,
 			getFeaturedFragments,
 			getContent,
+			getContentWithFolder,
 			getUser,
 			getRepos
 		}}>
