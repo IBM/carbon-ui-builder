@@ -4,13 +4,18 @@ import {
 	Tab,
 	Checkbox,
 	TextInput } from 'carbon-components-react';
-import { AComponent, ComponentInfo } from '../a-component';
-import image from '../../assets/component-icons/link.svg';
-import { DraggableTileList } from '../../components/draggable-list';
-import { useFragment } from '../../context';
-import { updatedState } from '../../components';
-import { APlaceholder } from '../a-placeholder';
-import { cx } from 'emotion';
+import { AComponent, ComponentInfo } from './a-component';
+import image from '../assets/component-icons/link.svg';
+import { DraggableTileList } from '../components/draggable-list';
+import { useFragment } from '../context';
+import { updatedState } from '../components';
+import { APlaceholder } from './a-placeholder';
+import { cx, css } from 'emotion';
+import {
+	reactClassNamesFromComponentObj,
+	angularClassNamesFromComponentObj,
+	nameStringToVariableString
+} from '../utils/fragment-tools';
 
 export const ATabsSettingsUI = ({ selectedComponent, setComponent }: any) => {
 
@@ -198,17 +203,55 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: () => '',
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}FollowFocus = true;
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}CacheActive = false;
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}isNavigation = true;`,
 			outputs: () => '',
 			imports: ['TabsModule'],
-			code: () => {
-				return '';
+			code: ({ json, fragments, jsonToTemplate }) => {
+				return `<ibm-tabs
+					[type]="default"
+					[cacheActive]="${nameStringToVariableString(json.codeContext?.name)}CacheActive"
+					[followFocus]="${nameStringToVariableString(json.codeContext?.name)}FollowFocus"
+					[isNavigation]="${nameStringToVariableString(json.codeContext?.name)}isNavigation"
+					${angularClassNamesFromComponentObj(json)}>
+					${json.items.map((step: any) =>
+						`<ibm-tab
+							heading="${step.labelText}"
+							[disabled]=${step.disabled}>
+								${step.items && step.items.length > 0 ?
+									`<section>
+										${step.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+									</section>`
+								: ``}
+						</ibm-tab>`
+					).join('\n')}
+				</ibm-tabs>`;
 			}
 		},
 		react: {
 			imports: ['Tabs', 'Tab'],
-			code: () => {
-				return '';
+			code: ({ json, fragments, jsonToTemplate }) => {
+				return `<Tabs
+				${reactClassNamesFromComponentObj(json)}>
+				${json.items.map((step: any, index: any) =>
+					`<Tab
+						onClick={(index) => handleInputChange({
+							target: {
+								selectedTab: ${index}
+							}
+						})}
+						key= {${index}}
+						disabled={${step.disabled}}
+						label="${step.labelText}">
+							${step.items && step.items.length > 0 ?
+								`<section>
+									${step.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+								</section>`
+							: ``}
+					</Tab>`
+				).join('\n')}
+			</Tabs>`;
 			}
 		}
 	}
