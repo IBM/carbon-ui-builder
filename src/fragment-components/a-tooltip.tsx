@@ -44,7 +44,7 @@ export const ATooltipSettingsUI = ({ selectedComponent, setComponent }: any) => 
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				description: event.currentTarget.value
-		})} />
+			})} />
 		<TextInput
 			value={selectedComponent.triggerText}
 			labelText='Trigger text'
