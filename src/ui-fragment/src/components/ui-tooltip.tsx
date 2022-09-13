@@ -5,7 +5,7 @@ import { CssClasses } from '../types';
 export interface TooltipState {
 	type: string;
 	align: string;
-	description: string | number;
+	label: string | number;
 	triggerText: string;
 	isOpen: boolean;
 	cssClasses?: CssClasses[];
@@ -25,12 +25,12 @@ export const UITooltip = ({ state }: {
 	}
 
 	return <Tooltip
-		label={state.description}
+		label={state.label}
 		align={state.align}
 		name={state.codeContext?.name}
 		triggerText={state.triggerText}
 		open={state.isOpen}
 		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>
-			{state.description}
+			{state.label}
 		</Tooltip>;
 };

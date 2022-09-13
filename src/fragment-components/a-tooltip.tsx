@@ -20,7 +20,7 @@ const preventCheckEvent = css`
 }`;
 
 export const ATooltipSettingsUI = ({ selectedComponent, setComponent }: any) => {
-	const alignItems = [
+	const dropdownAlignItems = [
 		{ id: 'bottom', text: 'Bottom' },
 		{ id: 'top', text: 'Top' },
 		{ id: 'right', text: 'Right' },
@@ -31,19 +31,19 @@ export const ATooltipSettingsUI = ({ selectedComponent, setComponent }: any) => 
 		<Dropdown
 			label='Align'
 			titleText='Align'
-			items={alignItems}
-			selectedItem={alignItems.find(item => item.id === selectedComponent.align)}
+			items={dropdownAlignItems}
+			selectedItem={dropdownAlignItems.find(item => item.id === selectedComponent.align)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				align: event.selectedItem.id
 			})} />
 		<TextInput
-			value={selectedComponent.description}
-			labelText='Description'
+			value={selectedComponent.label}
+			labelText='Label'
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
-				description: event.currentTarget.value
+				label: event.currentTarget.value
 		})} />
 		<TextInput
 			value={selectedComponent.triggerText}
@@ -92,12 +92,12 @@ export const ATooltip = ({
 		className={`${preventCheckEvent} ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} `}
 		{...rest}>
 			<Tooltip
-			label={componentObj.description}
+			label={componentObj.label}
 			direction={componentObj.align}
 			triggerText={componentObj.triggerText}
 			open={componentObj.isOpen}
 			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
-				{componentObj.description}
+				{componentObj.label}
 			</Tooltip>
 		</AComponent>
 	);
@@ -113,14 +113,14 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'tooltip',
 		align: 'bottom',
-		description: 'This is some tooltip text',
+		label: 'This is some tooltip text',
 		triggerText: 'Tooltip label',
 		isOpen: false
 	},
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Description = "${json.description}";
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.label}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}TriggerText = "${json.triggerText}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}isOpen = ${json.isOpen};`,
 			outputs: (_) => '',
@@ -130,7 +130,7 @@ export const componentInfo: ComponentInfo = {
 					{{${nameStringToVariableString(json.codeContext?.name)}TriggerText}}
 					<span
 						${angularClassNamesFromComponentObj(json)}
-						[ibmTooltip]="${nameStringToVariableString(json.codeContext?.name)}Description"
+						[ibmTooltip]="${nameStringToVariableString(json.codeContext?.name)}Label"
 						trigger="click"
 						[isOpen]=${nameStringToVariableString(json.codeContext?.name)}isOpen
 						[placement]="'${json.align}'" >
@@ -147,11 +147,11 @@ export const componentInfo: ComponentInfo = {
 			code: ({ json }) => {
 				return `<Tooltip
 					${reactClassNamesFromComponentObj(json)}
-					label="${json.description}"
+					label="${json.label}"
 					triggerText="${json.triggerText}"
 					open={${json.isOpen}}
 					direction="${json.align}">
-						${json.description}
+						${json.label}
 					</Tooltip>`;
 			}
 		}
