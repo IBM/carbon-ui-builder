@@ -2,8 +2,7 @@ import React from 'react';
 import {
 	Tooltip,
 	TextInput,
-	Dropdown,
-	Checkbox
+	Dropdown
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
 import image from './../assets/component-icons/tooltip.svg';
