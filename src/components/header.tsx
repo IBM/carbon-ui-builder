@@ -23,7 +23,8 @@ import {
 	Information16,
 	Keyboard16,
 	LogoGithub16,
-	UserAvatar20
+	UserAvatar20,
+	Help16
 } from '@carbon/icons-react';
 import { css } from 'emotion';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
@@ -181,6 +182,12 @@ export const Header = ({
 					className={headerName}
 					onClick={() => navigate('/help/introduction')}>
 						<Information16 /> Introduction
+					</HeaderMenuItem>
+					<HeaderMenuItem
+					className={headerName}
+					href='https://github.com/IBM/carbon-ui-builder/discussions/categories/frequently-asked-questions-faq'
+					target='_blank'>
+						<Help16 /> FAQ
 					</HeaderMenuItem>
 					<HeaderMenuItem
 					className={headerName}
