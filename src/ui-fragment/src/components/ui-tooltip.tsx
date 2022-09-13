@@ -4,10 +4,9 @@ import { CssClasses } from '../types';
 
 export interface TooltipState {
 	type: string;
-	align: string;
-	label: string | number;
+	direction: string;
+	description: string | number;
 	triggerText: string;
-	isOpen: boolean;
 	cssClasses?: CssClasses[];
 	codeContext?: {
 		name: string;
@@ -25,12 +24,11 @@ export const UITooltip = ({ state }: {
 	}
 
 	return <Tooltip
-		label={state.label}
-		align={state.align}
+		description={state.description}
+		direction={state.direction}
 		name={state.codeContext?.name}
 		triggerText={state.triggerText}
-		open={state.isOpen}
 		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>
-			{state.label}
+			{state.description}
 		</Tooltip>;
 };

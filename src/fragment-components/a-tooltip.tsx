@@ -20,7 +20,7 @@ const preventCheckEvent = css`
 }`;
 
 export const ATooltipSettingsUI = ({ selectedComponent, setComponent }: any) => {
-	const dropdownAlignItems = [
+	const dropdownDirectionItems = [
 		{ id: 'bottom', text: 'Bottom' },
 		{ id: 'top', text: 'Top' },
 		{ id: 'right', text: 'Right' },
@@ -29,21 +29,21 @@ export const ATooltipSettingsUI = ({ selectedComponent, setComponent }: any) => 
 
 	return <>
 		<Dropdown
-			label='Align'
-			titleText='Align'
-			items={dropdownAlignItems}
-			selectedItem={dropdownAlignItems.find(item => item.id === selectedComponent.align)}
+			label='Direction'
+			titleText='Direction'
+			items={dropdownDirectionItems}
+			selectedItem={dropdownDirectionItems.find(item => item.id === selectedComponent.direction)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
-				align: event.selectedItem.id
+				direction: event.selectedItem.id
 			})} />
 		<TextInput
-			value={selectedComponent.label}
-			labelText='Label'
+			value={selectedComponent.description}
+			labelText='Description'
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
-				label: event.currentTarget.value
+				description: event.currentTarget.value
 			})} />
 		<TextInput
 			value={selectedComponent.triggerText}
@@ -52,16 +52,6 @@ export const ATooltipSettingsUI = ({ selectedComponent, setComponent }: any) => 
 				...selectedComponent,
 				triggerText: event.currentTarget.value
 			})} />
-		<Checkbox
-			labelText='Is open'
-			id='is-open'
-			checked={selectedComponent.isOpen}
-			onChange={(checked: any) => {
-				setComponent({
-					...selectedComponent,
-					isOpen: checked
-				});
-			}} />
 	</>;
 };
 
@@ -92,12 +82,11 @@ export const ATooltip = ({
 		className={`${preventCheckEvent} ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} `}
 		{...rest}>
 			<Tooltip
-			label={componentObj.label}
-			direction={componentObj.align}
+			description={componentObj.description}
+			direction={componentObj.direction}
 			triggerText={componentObj.triggerText}
-			open={componentObj.isOpen}
 			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
-				{componentObj.label}
+				{componentObj.description}
 			</Tooltip>
 		</AComponent>
 	);
@@ -112,17 +101,15 @@ export const componentInfo: ComponentInfo = {
 	type: 'tooltip',
 	defaultComponentObj: {
 		type: 'tooltip',
-		align: 'bottom',
-		label: 'This is some tooltip text',
-		triggerText: 'Tooltip label',
-		isOpen: false
+		direction: 'bottom',
+		description: 'This is some tooltip text',
+		triggerText: 'Tooltip label'
 	},
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.label}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}TriggerText = "${json.triggerText}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}isOpen = ${json.isOpen};`,
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Description = "${json.description}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}TriggerText = "${json.triggerText}";`,
 			outputs: (_) => '',
 			imports: ['DialogModule, PlaceholderModule, TagModule, IconModule'],
 			code: ({ json }) => {
@@ -130,10 +117,9 @@ export const componentInfo: ComponentInfo = {
 					{{${nameStringToVariableString(json.codeContext?.name)}TriggerText}}
 					<span
 						${angularClassNamesFromComponentObj(json)}
-						[ibmTooltip]="${nameStringToVariableString(json.codeContext?.name)}Label"
+						[ibmTooltip]="${nameStringToVariableString(json.codeContext?.name)}Description"
 						trigger="click"
-						[isOpen]=${nameStringToVariableString(json.codeContext?.name)}isOpen
-						[placement]="'${json.align}'" >
+						[placement]="'${json.direction}'" >
 						<div role="button">
 							<svg ibmIcon="information--filled" size="16"></svg>
 						</div>
@@ -147,11 +133,11 @@ export const componentInfo: ComponentInfo = {
 			code: ({ json }) => {
 				return `<Tooltip
 					${reactClassNamesFromComponentObj(json)}
-					label="${json.label}"
+					description="${json.description}"
+					className="tooltip-trigger"
 					triggerText="${json.triggerText}"
-					open={${json.isOpen}}
-					direction="${json.align}">
-						${json.label}
+					direction="${json.direction}">
+						${json.description}
 					</Tooltip>`;
 			}
 		}
