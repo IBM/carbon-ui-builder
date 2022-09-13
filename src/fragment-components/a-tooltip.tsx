@@ -51,7 +51,7 @@ export const ATooltipSettingsUI = ({ selectedComponent, setComponent }: any) => 
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				triggerText: event.currentTarget.value
-		})} />
+			})} />
 		<Checkbox
 			labelText='Is open'
 			id='is-open'
