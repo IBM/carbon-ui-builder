@@ -10,7 +10,7 @@ import { DraggableTileList } from '../components/draggable-list';
 import { useFragment } from '../context';
 import { updatedState } from '../components';
 import { APlaceholder } from './a-placeholder';
-import { cx, css } from 'emotion';
+import { cx } from 'emotion';
 import {
 	reactClassNamesFromComponentObj,
 	angularClassNamesFromComponentObj,
@@ -210,7 +210,6 @@ export const componentInfo: ComponentInfo = {
 			imports: ['TabsModule'],
 			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<ibm-tabs
-					[type]="default"
 					[cacheActive]="${nameStringToVariableString(json.codeContext?.name)}CacheActive"
 					[followFocus]="${nameStringToVariableString(json.codeContext?.name)}FollowFocus"
 					[isNavigation]="${nameStringToVariableString(json.codeContext?.name)}isNavigation"
@@ -223,7 +222,7 @@ export const componentInfo: ComponentInfo = {
 									`<section>
 										${step.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 									</section>`
-								: ``}
+								: ''}
 						</ibm-tab>`
 					).join('\n')}
 				</ibm-tabs>`;
@@ -248,7 +247,7 @@ export const componentInfo: ComponentInfo = {
 								`<section>
 									${step.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 								</section>`
-							: ``}
+							: ''}
 					</Tab>`
 				).join('\n')}
 			</Tabs>`;
