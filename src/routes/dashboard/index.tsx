@@ -13,7 +13,7 @@ import {
 	Row
 } from './../../components';
 import { FragmentTileList } from './fragment-tile-list';
-import { GlobalStateContext } from '../../context';
+import { GithubContext, GlobalStateContext } from '../../context';
 import { getFragmentTemplates } from '../../utils/fragment-tools';
 
 const fragmentSort = (sortDirection: SortDirection) => function(a: any, b: any) {
@@ -54,8 +54,10 @@ export const Dashboard = ({
 	setDisplayedModal
 }: any) => {
 	const { fragments, updateFragments } = useContext(GlobalStateContext);
-	const [fragmentGroupDisplayed, setFragmentGroupDisplayed] = useState(FragmentGroupDisplayed.LocalOnly);
+	const { getFeaturedFragments } = useContext(GithubContext);
+	const [fragmentGroupDisplayed, setFragmentGroupDisplayed] = useState(FragmentGroupDisplayed.AllFragments);
 	const [fragmentTitleFilter, setFragmentTitleFilter] = useState('');
+	const [displayedFragments, setDisplayedFragments] = useState([]);
 	const [sortDirection, setSortDirection] = useState(SortDirection.Ascending);
 
 	useEffect(() => {
@@ -72,18 +74,25 @@ export const Dashboard = ({
 		?.includes(fragmentTitleFilter.toLowerCase()) && !fragment.hidden)
 		?.sort(fragmentSort(sortDirection));
 
-	let displayedFragments;
-
-	switch (fragmentGroupDisplayed) {
-		case FragmentGroupDisplayed.Templates: {
-			displayedFragments = filterFragments(getFragmentTemplates(fragments));
-			break;
+	useEffect(() => {
+		switch (fragmentGroupDisplayed) {
+			case FragmentGroupDisplayed.Templates: {
+				setDisplayedFragments(filterFragments(getFragmentTemplates(fragments)));
+				break;
+			}
+			case FragmentGroupDisplayed.FeaturedFragments: {
+				getFeaturedFragments().then((value: any) => {
+					setDisplayedFragments(value);
+				});
+				break;
+			}
+			case FragmentGroupDisplayed.AllFragments:
+			default:
+				setDisplayedFragments(filterFragments(fragments));
+				break;
 		}
-		case FragmentGroupDisplayed.AllFragments:
-		default:
-			displayedFragments = filterFragments(fragments);
-			break;
-	}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [fragmentGroupDisplayed, fragments]);
 
 	return (
 		<Main style={{ marginLeft: '0px' }}>
@@ -121,6 +130,7 @@ export const Dashboard = ({
 					{
 						<FragmentTileList
 							fragments={displayedFragments}
+							isFeaturedFragment={fragmentGroupDisplayed === FragmentGroupDisplayed.FeaturedFragments}
 							setModalFragment={setModalFragment}
 							setDisplayedModal={setDisplayedModal}
 							displayWizard={displayWizard}

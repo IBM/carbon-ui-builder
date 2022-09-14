@@ -16,21 +16,11 @@ import { componentInfo as gridComponentInfo } from '../../fragment-components/a-
 
 import { FragmentTile } from './fragment-tile';
 
-// import the img placeholder svg
-import placeholder from './../../assets/dashboard-empty-state.svg';
 import { generateNewFragment } from './fragment-wizard/generate-new-fragment';
 import { GlobalStateContext } from '../../context';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { initializeIds } from '../../components';
 import { FragmentWizardModals } from './fragment-wizard/fragment-wizard';
-
-// styles for placeholder
-const svgStyle = css`
-	width: 25vw;
-	height: auto;
-	max-width: 400px;
-	max-height: 27vh;
-`;
 
 const tileStyle = css`
 	width: 200px;
@@ -71,6 +61,7 @@ const fragmentRowWrapper = css`
 
 export const FragmentTileList = ({
 	fragments,
+	isFeaturedFragment,
 	setModalFragment,
 	setDisplayedModal,
 	setDisplayWizard
@@ -94,11 +85,6 @@ export const FragmentTileList = ({
 				<div className={placeholderContainer}>
 					<div style={{ textAlign: 'left' }}>
 						<Grid>
-							<Row>
-								<Column>
-									<img alt="No fragments exist" src={placeholder} className={svgStyle} />
-								</Column>
-							</Row>
 							<Row>
 								<Column>
 									<h3>Carbon UI Builder</h3>
@@ -153,7 +139,9 @@ export const FragmentTileList = ({
 				key={v.id}
 				{...v}
 				fragment={v}
+				fragments={fragments}
 				to={`/edit/${v.id}`}
+				isFeaturedFragment={isFeaturedFragment}
 				{...v.lastModified}
 				setModalFragment={setModalFragment}/>
 		));

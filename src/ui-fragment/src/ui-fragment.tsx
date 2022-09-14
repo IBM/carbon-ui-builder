@@ -1,4 +1,6 @@
-import { renderComponents } from './utils';
+import React from 'react';
+import { css } from 'emotion';
+import { getAllComponentStyleClasses, renderComponents } from './utils';
 
 export interface UIFragmentProps {
 	state: any;
@@ -6,5 +8,13 @@ export interface UIFragmentProps {
 }
 
 export const UIFragment = ({ state, setState }: UIFragmentProps) => {
-	return renderComponents(state, setState, setState);
+	const styles = css`${
+		Object.values(getAllComponentStyleClasses(state, [])).map((styleClass: any) => `.${styleClass.id} {
+			${styleClass.content}
+		}`)
+	}`;
+
+	return <div className={styles}>
+		{ renderComponents(state, setState, setState) }
+	</div>;
 };

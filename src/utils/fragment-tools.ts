@@ -56,37 +56,6 @@ export const getFragmentTemplates = (fragments: any[]) => (
 	fragments.filter((fragment: any) => !!fragment.labels?.includes('template'))
 );
 
-export const getAllComponentStyleClasses = (componentObj: any, fragments: any[]) => {
-	let styleClasses: any = {};
-
-	// convert into an object so all classes are unique
-	componentObj.cssClasses?.forEach((cssClass: any) => {
-		// NOTE do we need to merge them deeply?
-		styleClasses[cssClass.id] = cssClass;
-	});
-
-	componentObj.items?.map((co: any) => {
-		const coClasses = getAllComponentStyleClasses(co, fragments);
-		styleClasses = {
-			...styleClasses,
-			...coClasses
-		};
-
-		if (co.type === 'fragment') {
-			const fragment = fragments.find(f => f.id === co.fragmentId);
-
-			styleClasses = {
-				...styleClasses,
-				// we can't avoid this without a messy declare+reassign+export
-				// eslint-disable-next-line @typescript-eslint/no-use-before-define
-				...getAllFragmentStyleClasses(fragment || {}, fragments)
-			};
-		}
-	});
-
-	return styleClasses;
-};
-
 export const tagNameFromFragment = (fragment: any) => {
 	// TODO fragment can have a tag name?
 	return kebabCase(fragment.title);
@@ -95,18 +64,6 @@ export const tagNameFromFragment = (fragment: any) => {
 export const classNameFromFragment = (fragment: any) => {
 	// TODO fragment can have a class name?
 	return upperFirst(camelCase(fragment.title));
-};
-
-export const getAllFragmentStyleClasses = (fragment: any, fragments: any[] = []) => {
-	if (!fragment || !fragment.data) {
-		return [];
-	}
-
-	const allClasses = {
-		...getAllComponentStyleClasses(fragment, fragments),
-		...getAllComponentStyleClasses(fragment.data, fragments)
-	};
-	return Object.values(allClasses);
 };
 
 export const getEditScreenParams = () => {
@@ -203,6 +160,14 @@ export const getFragmentPreviewUrl = async (fragment: any) => {
 
 	const imageBlob = await getFragmentPreview(fragment, renderProps);
 	return getUrlFromBlob(imageBlob);
+};
+
+export const openFragmentPreview = (fragment: any) => {
+	window.open(
+		`/view/${fragment.id}`,
+		'',
+		`popup,width=${fragment.width || '800'},height=${fragment.height || '600'}`
+	);
 };
 
 export const reactClassNamesFromComponentObj = (componentObj: any) =>

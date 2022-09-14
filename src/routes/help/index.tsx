@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 
 const helpContainerStyle = css`
 	position: absolute;
-	width: 100vw;
+	width: calc(100vw - 6rem);
 	height: calc(100% - 3rem);
 	top: 3rem;
 	max-width: 100%;
@@ -20,6 +20,25 @@ const helpContainerStyle = css`
 	h2, h3 {
 		margin-top: 1rem;
 		margin-bottom: 1rem;
+	}
+
+	ul, ol {
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+		margin-left: 2rem;
+		line-height: 1.5rem;
+	}
+
+	ul li {
+		list-style: initial;
+	}
+
+	ol li {
+		list-style: auto;
+	}
+
+	p {
+		line-height: 2rem;
 	}
 
 	table {

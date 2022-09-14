@@ -5,12 +5,12 @@ import './fragment-preview.scss';
 import { css, cx } from 'emotion';
 import { allComponents, ComponentInfoRenderProps } from '../fragment-components';
 import {
-	getAllFragmentStyleClasses,
 	getFragmentsFromLocalStorage,
 	getRandomId
 } from '../utils/fragment-tools';
 import { GlobalStateContext } from '../context';
 import { getDropIndex } from '../routes/edit/tools';
+import { getAllFragmentStyleClasses } from '../ui-fragment/src/utils';
 
 const canvas = css`
 	border: 2px solid #d8d8d8;
@@ -104,7 +104,7 @@ export const initializeIds = (componentObj: any, forceNewIds = false) => {
 	id = id || componentObj.id || getRandomId();
 	// name is used in form items and for angular inputs and outputs variable names
 	let name = componentObj.codeContext?.name;
-	if (name === undefined) {
+	if (name === undefined || forceNewIds) {
 		name = `${componentObj.type}-${id}`;
 	}
 
