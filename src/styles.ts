@@ -6,7 +6,7 @@ export const main = cx(
 	css`
 		padding-top: 0;
 		background: #f4f4f4;
-		min-height: 100vh;
+		min-height: calc(100vh - 1rem);
 		max-width: unset;
 `);
 

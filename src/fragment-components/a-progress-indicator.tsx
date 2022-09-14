@@ -36,11 +36,13 @@ export const AProgressIndicatorSettingsUI = ({ selectedComponent, setComponent }
 	const template = (item: any, index: number) => {
 		return <>
 			<TextInput
+				id={`progress-indicator-label-${index}`}
 				light
 				value={item.label}
 				labelText="Label"
 				onChange={(event: any) => handleStepUpdate('label', event.currentTarget.value, index)} />
 			<TextInput
+				id={`progress-indicator-secondary-label-${index}`}
 				light
 				value={item.secondaryLabel}
 				labelText='Secondary label'
@@ -98,6 +100,7 @@ export const AProgressIndicatorSettingsUI = ({ selectedComponent, setComponent }
 
 export const AProgressIndicatorCodeUI = ({ selectedComponent, setComponent }: any) => {
 	return <TextInput
+		id='progress-indicator-input-name-text-input'
 		value={selectedComponent.codeContext?.name}
 		labelText='Input name'
 		onChange={(event: any) => {
