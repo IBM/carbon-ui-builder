@@ -15,9 +15,9 @@ export interface DatePickerState {
 	cssClasses?: CssClasses[];
 	codeContext?: {
 		name: string;
-		href?: string;
 	};
 	type: string;
+	placeHolder: string;
 	disabled?: boolean;
 	invalid?: boolean;
 	light?: boolean;
@@ -40,8 +40,8 @@ export const UIDatePicker = ({ state }: {
 		return <></>;
 	}
 
-	return (state.datePickerType === 'timePicker' ?
-		<TimePicker id="time-picker" light={state.light}>
+	return (state.datePickerType === 'timePicker'
+	? <TimePicker id="time-picker" light={state.light}>
 		<TimePickerSelect labelText="time-picker-1" id="time-picker-select-1">
 			<SelectItem value="AM" text="AM" />
 			<SelectItem value="PM" text="PM" />
@@ -55,11 +55,11 @@ export const UIDatePicker = ({ state }: {
 				/>)
 			}
 		</TimePickerSelect>
-		</TimePicker> :
-		<DatePicker dateFormat={state.dateFormat} datePickerType={state.datePickerType} light={state.light}>
+		</TimePicker>
+		: <DatePicker dateFormat={state.dateFormat} datePickerType={state.datePickerType} light={state.light}>
 			<DatePickerInput
 				id="date-picker-default-id"
-				placeholder="mm/dd/yyyy"
+				placeholder={state.placeHolder}
 				labelText={state.rangeStartLabel}
 				type="text"
 				size={state.size}
@@ -67,10 +67,10 @@ export const UIDatePicker = ({ state }: {
 				invalid={state.invalid}
 			/>
 			{
-				state.datePickerType === 'range' &&
-					<DatePickerInput
+				state.datePickerType === 'range'
+				&& <DatePickerInput
 						id="date-picker-range-end"
-						placeholder="mm/dd/yyyy"
+						placeholder={state.placeHolder}
 						labelText={state.rangeEndLabel}
 						type="text"
 						size={state.size}
