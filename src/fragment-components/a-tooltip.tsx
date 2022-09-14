@@ -100,7 +100,7 @@ export const componentInfo: ComponentInfo = {
 	type: 'tooltip',
 	defaultComponentObj: {
 		type: 'tooltip',
-		direction: 'bottom',
+		direction: '',
 		description: 'This is some tooltip text',
 		triggerText: 'Tooltip label'
 	},
@@ -118,7 +118,7 @@ export const componentInfo: ComponentInfo = {
 						${angularClassNamesFromComponentObj(json)}
 						[ibmTooltip]="${nameStringToVariableString(json.codeContext?.name)}Description"
 						trigger="click"
-						[placement]="'${json.direction}'" >
+						${json.direction ? `[placement]="'${json.direction}'"` : ''} >
 						<div role="button">
 							<svg ibmIcon="information--filled" size="16"></svg>
 						</div>
@@ -135,6 +135,7 @@ export const componentInfo: ComponentInfo = {
 					description="${json.description}"
 					className="tooltip-trigger"
 					triggerText="${json.triggerText}"
+					${json.direction ? `direction="'${json.direction}'"` : ''}
 					direction="${json.direction}">
 						${json.description}
 					</Tooltip>`;
