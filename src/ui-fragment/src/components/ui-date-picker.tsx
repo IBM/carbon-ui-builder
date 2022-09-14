@@ -4,7 +4,8 @@ import {
 	TimePicker,
 	TimePickerSelect,
 	SelectItem,
-	DatePickerInput } from 'carbon-components-react';
+	DatePickerInput
+} from 'carbon-components-react';
 import { CssClasses } from '../types';
 
 export interface DatePickerState {
