@@ -114,6 +114,7 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'tooltip':
 			return <UITooltip key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
 		case 'text-area':
 			return <UITextAreaInput key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
