@@ -41,7 +41,7 @@ export const UIDatePicker = ({ state }: {
 	}
 
 	return (state.datePickerType === 'timePicker'
-	? <TimePicker id="time-picker" light={state.light}>
+		? <TimePicker id="time-picker" light={state.light}>
 		<TimePickerSelect labelText="time-picker-1" id="time-picker-select-1">
 			<SelectItem value="AM" text="AM" />
 			<SelectItem value="PM" text="PM" />

@@ -307,7 +307,7 @@ export const componentInfo: ComponentInfo = {
 						? '[theme]="light"'
 						: '[theme]="dark"'}
 						[label]="'${json.rangeStartLabel}'"
-						[placeholder]="${json.placeHolder}"
+						[placeholder]="'${json.placeHolder}'"
 						[disabled]="${json.disabled}"
 						[size]="${json.size}"
 						[invalid]="${json.invalid}"
@@ -319,7 +319,7 @@ export const componentInfo: ComponentInfo = {
 						${angularClassNamesFromComponentObj(json)}
 						[label]="'${json.rangeStartLabel}'"
 						id="initial-value-datepicker"
-						[placeholder]="${json.placeHolder}"
+						[placeholder]="'${json.placeHolder}'"
 						[size]="${json.size}"
 						${json.light
 						? '[theme]="light"'
@@ -338,7 +338,7 @@ export const componentInfo: ComponentInfo = {
 						[size]="${json.size}"
 						range="true"
 						id="initial-value-datepicker"
-						[placeholder]="${json.placeHolder}"
+						[placeholder]="$'{json.placeHolder}'"
 						${json.light
 						? '[theme]="light"'
 						: '[theme]="dark"'}
