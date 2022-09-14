@@ -12,9 +12,6 @@ import {
 	ErrorBoundary,
 	NotFound
 } from './routes';
-import { GlobalStateContextProvider } from './context/global-state-context';
-import { ModalContextProvider } from './context/modal-context';
-import { NotificationContextProvider } from './context/notification-context';
 import { UIShell } from './components/ui-shell';
 import { css } from 'emotion';
 import { Help } from './routes/help';
@@ -22,6 +19,8 @@ import { View } from './routes/view';
 import { FragmentWizard, FragmentWizardModals } from './routes/dashboard/fragment-wizard/fragment-wizard';
 import { AllModals } from './routes/edit/all-modals';
 import { Launch } from './routes/launch';
+import { ContextProviders } from './context/context-providers';
+import { Repo } from './routes/repo';
 
 const app = css`
 	nav.bx--side-nav--expanded + div#edit-content {
@@ -54,37 +53,33 @@ export const App = () => {
 			shouldDisplay={displayWizard}
 			setShouldDisplay={setDisplayWizard} />
 		<AllModals />
-		<span id="forkongithub">
-			<a href="https://github.com/IBM/carbon-ui-builder">Fork on GitHub</a>
-		</span>
 	</>;
 
 	return <Router basename='/'>
 		<div className={app}>
 			<ErrorBoundary>
-				<GlobalStateContextProvider>
-					<NotificationContextProvider>
-						<ModalContextProvider>
-							<Routes>
-								<Route element={<Outlet />}>
-									<Route path='/view/:id' element={<View />} />
-									<Route path='/launch' element={<Launch />} />
-									<Route path='/launch/:owner/:repo/*' element={<Launch />} />
-								</Route>
-								<Route element={<DefaultContainer />}>
-									<Route path='/' element={
-										<Dashboard
-											displayWizard={displayWizard}
-											setDisplayWizard={setDisplayWizard} />
-									} />
-									<Route path='/edit/:id' element={<Edit />} />
-									<Route path='/help/:id' element={<Help />} />
-									<Route path="*" element={<NotFound />} />
-								</Route>
-							</Routes>
-						</ModalContextProvider>
-					</NotificationContextProvider>
-				</GlobalStateContextProvider>
+				<ContextProviders>
+					<Routes>
+						<Route element={<Outlet />}>
+							<Route path='/view/:id' element={<View />} />
+							<Route path='/launch' element={<Launch />} />
+							<Route path='/launch/:owner' element={<Launch />} />
+							<Route path='/launch/:owner/:repo/*' element={<Launch />} />
+						</Route>
+						<Route element={<DefaultContainer />}>
+							<Route path='/' element={
+								<Dashboard
+									displayWizard={displayWizard}
+									setDisplayWizard={setDisplayWizard} />
+							} />
+							<Route path='/edit/:id' element={<Edit />} />
+							<Route path='/help/:id' element={<Help />} />
+							<Route path='/repo' element={<Repo />} />
+							<Route path='/repo/:id/*' element={<Repo />} />
+							<Route path="*" element={<NotFound />} />
+						</Route>
+					</Routes>
+				</ContextProviders>
 			</ErrorBoundary>
 		</div>
 	</Router>;

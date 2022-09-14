@@ -120,7 +120,7 @@ const toolBarSeparator = css`
 
 const fragmentEditToolBar = css`
 	display: flex;
-	margin-right: 5rem;
+	margin-right: 1rem;
 	margin-top: 8px;
 	margin-bottom: 8px;
 	button {
