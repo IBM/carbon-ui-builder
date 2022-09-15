@@ -178,7 +178,6 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'tabs',
 		selectedTab: 0,
-		contained: false,
 		items: [
 			{
 				type: 'tab',
