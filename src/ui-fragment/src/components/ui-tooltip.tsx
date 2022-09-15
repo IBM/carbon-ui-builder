@@ -4,7 +4,7 @@ import { CssClasses } from '../types';
 
 export interface TooltipState {
 	type: string;
-	direction: string;
+	direction?: string;
 	description: string | number;
 	triggerText: string;
 	cssClasses?: CssClasses[];
@@ -22,10 +22,9 @@ export const UITooltip = ({ state }: {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;
 	}
-
 	return <Tooltip
 		description={state.description}
-		direction={state.direction}
+		direction={state.direction ? state.direction : 'bottom'}
 		name={state.codeContext?.name}
 		triggerText={state.triggerText}
 		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>

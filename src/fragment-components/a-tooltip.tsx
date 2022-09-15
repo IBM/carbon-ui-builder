@@ -28,7 +28,8 @@ export const ATooltipSettingsUI = ({ selectedComponent, setComponent }: any) => 
 
 	return <>
 		<Dropdown
-			label='Direction'
+			id='dropdownDirectionItems'
+			label='Select a direction'
 			titleText='Direction'
 			items={dropdownDirectionItems}
 			selectedItem={dropdownDirectionItems.find(item => item.id === selectedComponent.direction)}
@@ -82,7 +83,6 @@ export const ATooltip = ({
 		{...rest}>
 			<Tooltip
 			description={componentObj.description}
-			direction={componentObj.direction}
 			triggerText={componentObj.triggerText}
 			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 				{componentObj.description}
@@ -108,7 +108,8 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Description = "${json.description}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}TriggerText = "${json.triggerText}";`,
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}TriggerText = "${json.triggerText}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Direction = "${json.direction}";`,
 			outputs: (_) => '',
 			imports: ['DialogModule, PlaceholderModule, TagModule, IconModule'],
 			code: ({ json }) => {
@@ -118,7 +119,7 @@ export const componentInfo: ComponentInfo = {
 						${angularClassNamesFromComponentObj(json)}
 						[ibmTooltip]="${nameStringToVariableString(json.codeContext?.name)}Description"
 						trigger="click"
-						${json.direction ? `[placement]="'${json.direction}'"` : ''} >
+						[placement]="${json.direction ? `'${nameStringToVariableString(json.codeContext?.name)}Direction'"` : `'bottom'`}">
 						<div role="button">
 							<svg ibmIcon="information--filled" size="16"></svg>
 						</div>
@@ -135,8 +136,7 @@ export const componentInfo: ComponentInfo = {
 					description="${json.description}"
 					className="tooltip-trigger"
 					triggerText="${json.triggerText}"
-					${json.direction ? `direction="'${json.direction}'"` : ''}
-					direction="${json.direction}">
+					${json.direction ? `direction="${json.direction}"` : ''}>
 						${json.description}
 					</Tooltip>`;
 			}
