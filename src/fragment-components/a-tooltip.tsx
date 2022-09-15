@@ -119,7 +119,7 @@ export const componentInfo: ComponentInfo = {
 						${angularClassNamesFromComponentObj(json)}
 						[ibmTooltip]="${nameStringToVariableString(json.codeContext?.name)}Description"
 						trigger="click"
-						[placement]="${json.direction ? `'${nameStringToVariableString(json.codeContext?.name)}Direction'"` : `'bottom'`}">
+						[placement]="${json.direction ? `'${nameStringToVariableString(json.codeContext?.name)}Direction'` : `'bottom'`}">
 						<div role="button">
 							<svg ibmIcon="information--filled" size="16"></svg>
 						</div>
