@@ -7,7 +7,7 @@ import { cx } from 'emotion';
 export interface TabsState {
 	type: string;
 	id: string | number;
-	items?: [],
+	items?: [];
 	selectedTab: number;
 	cssClasses?: CssClasses[];
 	codeContext?: {
