@@ -5,7 +5,7 @@ import {
 	Checkbox,
 	TextInput } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
-import image from '../assets/component-icons/link.svg';
+import image from '../assets/component-icons/tabs.svg';
 import { DraggableTileList } from '../components/draggable-list';
 import { useFragment } from '../context';
 import { updatedState } from '../components';
