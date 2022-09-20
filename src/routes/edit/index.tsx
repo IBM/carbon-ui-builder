@@ -160,10 +160,6 @@ const rightPanel = css`
 			margin-left: 0;
 		}
 
-		.layout-widget .bx--accordion__content {
-			padding: 1px;
-		}
-
 		.iot--list-item {
 			padding-right: 0;
 		}
