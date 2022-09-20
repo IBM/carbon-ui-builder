@@ -8,12 +8,14 @@ import {
 	ChevronDown16,
 	ChevronUp16
 } from '@carbon/icons-react';
+import { css, cx } from 'emotion';
+import { ControlledEditor } from '@monaco-editor/react';
+import { throttle } from 'lodash';
 
 import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { getSelectedComponent, updatedState } from '../../components/fragment';
 import { allComponents } from '../../fragment-components';
 import { SelectedComponentBreadcrumbs } from './selected-component-breadcrumbs';
-import { css, cx } from 'emotion';
 import { FragmentLayoutWidget } from '../../components/fragment-layout-widget';
 import { GlobalStateContext } from '../../context';
 
@@ -45,6 +47,10 @@ const accordionContentStyle = css`
 	margin-bottom: 1rem;
 `;
 
+const fullWidthWidgetStyle = css`
+	padding-left: 1px;
+`;
+
 const tooltipStyle = css`
 .bx--tooltip__trigger.bx--tooltip__trigger--definition.bx--tooltip--bottom.bx--tooltip--a11y + .bx--assistive-text {
 	margin-left: -150px;
@@ -61,6 +67,12 @@ const showComponentSettingsUI = (selectedComponent: any, setComponent: any) => {
 		}
 	}
 };
+
+let setComponent = (_component: any) => console.log('setComponent not inizialized yet');
+const throttledSetComponent = throttle((component: any) => setComponent(component), 150);
+
+let proxySetFragment = (_component: any) => console.log('proxySetFragment not inizialized yet');
+const throttledSetFragment = throttle((component: any) => proxySetFragment(component), 150);
 
 export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 	const selectedComponent = getSelectedComponent(fragment);
@@ -79,7 +91,7 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 		});
 	};
 
-	const setComponent = (component: any, updateActionHistory = true) => {
+	setComponent = (component: any, updateActionHistory = true) => {
 		setFragment(
 			{
 				...fragment,
@@ -91,6 +103,8 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 			updateActionHistory
 		);
 	};
+
+	proxySetFragment = setFragment;
 
 	return (
 		<div className={cx(styleContextPaneStyle, 'context-pane-content')}>
@@ -199,7 +213,7 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 			}
 			<Button
 			kind='ghost'
-			className={cx(accordionButtonStyle, 'layout-widget')}
+			className={accordionButtonStyle}
 			renderIcon={settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen ? ChevronUp16 : ChevronDown16}
 			onClick={() => updateContextPaneSettings({
 				fragmentLayoutWidgetAccordionOpen: !settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen
@@ -209,6 +223,44 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 			{
 				settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen &&
 					<FragmentLayoutWidget fragment={fragment} setFragment={setFragment} />
+			}
+			<Button
+			kind='ghost'
+			className={accordionButtonStyle}
+			renderIcon={settings.contextPane?.settings?.notesAccordionOpen ? ChevronUp16 : ChevronDown16}
+			onClick={() => updateContextPaneSettings({
+				notesAccordionOpen: !settings.contextPane?.settings?.notesAccordionOpen
+			})}>
+				Notes
+			</Button>
+			{
+				settings.contextPane?.settings?.notesAccordionOpen &&
+				<div className={fullWidthWidgetStyle}>
+					<ControlledEditor
+						height='300px'
+						language='markdown'
+						options={{
+							minimap: {
+								enabled: false
+							},
+							lineDecorationsWidth: 2,
+							lineNumbersMinChars: 4
+						}}
+						onChange= {(_, value: any) => {
+							if (selectedComponent) {
+								throttledSetComponent({
+									...selectedComponent,
+									notes: value
+								});
+							} else {
+								throttledSetFragment({
+									...fragment,
+									notes: value
+								});
+							}
+						}}
+						value={selectedComponent ? selectedComponent.notes : fragment.notes} />
+				</div>
 			}
 		</div>
 	);
