@@ -40,10 +40,10 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 			options= {{ quickSuggestions: false }}
 			onChange= {(_, value: any) => {
 				setComponent({
-				...selectedComponent,
-				code: value
-			});
-		}} />
+					...selectedComponent,
+					code: value
+				});
+			}} />
 		<Dropdown
 			label='Variant selector'
 			titleText='Variant selector'
@@ -53,7 +53,7 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				variant: event.selectedItem.id
-		})} />
+			})} />
 	</>;
 };
 
