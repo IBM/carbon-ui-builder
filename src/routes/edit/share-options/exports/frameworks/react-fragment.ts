@@ -158,13 +158,9 @@ const jsonToSharedComponents = (json: any, fragments: any[]) => {
 		`, formatOptions);
 
 		sharedComponents[`src/shared/${tagNameFromFragment(fragment)}.scss`] = format(
-			`${getAllFragmentStyleClasses(fragment).map((styleClass: any) => {
-				if(styleClass.content) {
-					return 	`.${styleClass.id} {
-						${styleClass.content}
-					}`
-				}
-		}).join('\n')}`,
+			`${getAllFragmentStyleClasses(fragment).map((styleClass: any) => `.${styleClass.id} {
+				${styleClass.content}
+			}`).join('\n')}`,
 			formatOptionsCss
 		);
 
