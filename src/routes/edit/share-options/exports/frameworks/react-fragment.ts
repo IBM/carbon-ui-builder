@@ -185,10 +185,10 @@ const jsonToSharedComponents = (json: any, fragments: any[]) => {
 };
 
 export const createReactApp = (fragment: any, fragments: any[]) => {
-
 	const fragmentTemplate = generateTemplate(fragment.data, fragments);
 
 	const sharedComponents = jsonToSharedComponents(fragment.data, fragments);
+
 	const indexHtml = `<div id='root'></div>
 `;
 	const componentJs
