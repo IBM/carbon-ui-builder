@@ -306,12 +306,13 @@ export const Edit = () => {
 					isActive={selectedLeftPane === SelectedLeftPane.STYLE}>
 						Style
 					</SideNavLink>
-					<SideNavLink
+					{ /* hide Code pane for now */
+					/* <SideNavLink
 					renderIcon={Code16}
 					onClick={() => onRailClick(SelectedLeftPane.CODE)}
 					isActive={selectedLeftPane === SelectedLeftPane.CODE}>
 						Code
-					</SideNavLink>
+					</SideNavLink> */}
 				</SideNavItems>
 			</SideNav>
 			<div
