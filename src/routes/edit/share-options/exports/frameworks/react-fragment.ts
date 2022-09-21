@@ -158,9 +158,13 @@ const jsonToSharedComponents = (json: any, fragments: any[]) => {
 		`, formatOptions);
 
 		sharedComponents[`src/shared/${tagNameFromFragment(fragment)}.scss`] = format(
-			`${getAllFragmentStyleClasses(fragment).map((styleClass: any) => `.${styleClass.id} {
-				${styleClass.content}
-			}`).join('\n')}`,
+			`${getAllFragmentStyleClasses(fragment).map((styleClass: any) => {
+				if(styleClass.content) {
+					return 	`.${styleClass.id} {
+						${styleClass.content}
+					}`
+				}
+		}).join('\n')}`,
 			formatOptionsCss
 		);
 
@@ -184,7 +188,6 @@ export const createReactApp = (fragment: any, fragments: any[]) => {
 	const fragmentTemplate = generateTemplate(fragment.data, fragments);
 
 	const sharedComponents = jsonToSharedComponents(fragment.data, fragments);
-
 	const indexHtml = `<div id='root'></div>
 `;
 	const componentJs
@@ -202,9 +205,13 @@ export const FragmentComponent = ({state, setState}) => {
 };
 `;
 
-	const componentScss = getAllFragmentStyleClasses(fragment).map((styleClass: any) => `.${styleClass.id} {
-	${styleClass.content}
-}`).join('\n');
+	const componentScss = getAllFragmentStyleClasses(fragment).map((styleClass: any) => {
+		if(styleClass.content) {
+			return `.${styleClass.id} {
+				${styleClass.content}
+			}`
+		}
+	}).join('\n');
 
 	const indexJs
 		= `import React, { useState } from 'react';
