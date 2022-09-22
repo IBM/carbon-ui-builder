@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="72px" height="26px" viewBox="0 0 72 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>text area</title>
+    <g id="Editing-Patterns-White" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.65">
+        <g id="05.2" transform="translate(-36.000000, -634.000000)">
+            <g id="Group-10" transform="translate(15.000000, 170.000000)">
+                <g id="dropdown-/-01-default-/-01-label-/-closed-/-01-enabled" transform="translate(21.000000, 464.000000)">
+                    <polygon id="Field-color" fill="#F4F4F4" points="0 0 72 0 72 26 0 26"></polygon>
+                    <rect id="Border-bottom" fill="#8D8D8D" x="0" y="25" width="72" height="1"></rect>
+                    <line x1="67" y1="24" x2="70.5" y2="20.5" id="Line-4" stroke="#979797" stroke-width="0.5" stroke-linecap="square"></line>
+                    <line x1="69.25" y1="24.25" x2="70.75" y2="22.75" id="Line-4" stroke="#979797" stroke-width="0.5" stroke-linecap="square"></line>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

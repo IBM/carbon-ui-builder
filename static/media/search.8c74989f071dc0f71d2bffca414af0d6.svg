@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="72px" height="26px" viewBox="0 0 72 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>search</title>
+    <defs>
+        <path d="M14,13.295 L10.225,9.5 C12.0996648,7.2380802 11.8657415,3.90219848 9.69374842,1.92404398 C7.52175532,-0.0541105278 4.17859243,0.0239205462 2.10125649,2.10125649 C0.0239205462,4.17859243 -0.0541105278,7.52175532 1.92404398,9.69374842 C3.90219848,11.8657415 7.2380802,12.0996648 9.5,10.225 L13.295,14 L14,13.295 Z M1.5,6 C1.5,3.51471863 3.51471863,1.5 6,1.5 C8.48528137,1.5 10.5,3.51471863 10.5,6 C10.5,8.48528137 8.48528137,10.5 6,10.5 C3.51471863,10.5 1.5,8.48528137 1.5,6 Z" id="path-1"></path>
+        <polygon id="path-3" points="4.707 4 8 0.707 7.293 0 4 3.293 0.707 0 0 0.707 3.293 4 0 7.293 0.707 8 4 4.707 7.293 8 8 7.293"></polygon>
+    </defs>
+    <g id="Search" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Search">
+            <g id="Group-21">
+                <rect id="Rectangle-11-Copy" fill="#F4F4F4" x="0" y="0" width="72" height="26"></rect>
+                <g id="icon/image/search/20" transform="translate(6, 6)">
+                    <g id="search" stroke-width="1" fill-rule="evenodd" transform="translate(1.000000, 1.000000)">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <use id="Mask" fill="#000000" fill-rule="nonzero" xlink:href="#path-1"></use>
+                        <g mask="url(#mask-2)" fill="#8d8d8d">
+                            <g transform="translate(-1.000000, -1.000000)">
+                                <rect x="0" y="0" width="16" height="16"></rect>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+                <rect id="Border-bottom" fill="#8D8D8D" x="0" y="25" width="72" height="1"></rect>
+                <g id="icon/navigation/close/20" transform="translate(48, 6)">
+                    <g id="Group">
+                        <g id="close" transform="translate(4, 4)">
+                            <mask id="mask-4" fill="white">
+                                <use xlink:href="#path-3"></use>
+                            </mask>
+                            <use id="Mask" fill="#161616" fill-rule="nonzero" xlink:href="#path-3"></use>
+                            <g mask="url(#mask-4)" fill="#8d8d8d">
+                                <g transform="translate(-4, -4)">
+                                    <rect x="0" y="0" width="16" height="16"></rect>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
