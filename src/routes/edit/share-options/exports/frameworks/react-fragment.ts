@@ -203,10 +203,10 @@ export const FragmentComponent = ({state, setState}) => {
 `;
 
 	const componentScss = getAllFragmentStyleClasses(fragment).map((styleClass: any) => {
-		if(styleClass.content) {
+		if (styleClass.content) {
 			return `.${styleClass.id} {
 				${styleClass.content}
-			}`
+			}`;
 		}
 	}).join('\n');
 
