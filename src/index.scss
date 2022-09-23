@@ -28,6 +28,7 @@
 
 	p {
 		line-height: 2rem;
+		margin-bottom: 1rem;
 	}
 
 	table {
@@ -42,5 +43,12 @@
 		tr {
 			border-bottom: 1px solid #888;
 		}
+	}
+
+	code {
+		background-color: rgba(175, 184, 193, 0.2);
+		border-radius: 6px;
+		padding: .2em .4em;
+		font-size: 85%;
 	}
 }
