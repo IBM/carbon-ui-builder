@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Editor from '@monaco-editor/react';
+import ReactMarkdown from 'react-markdown';
+import gfm from 'remark-gfm';
 import { filenameToLanguage } from '../routes/edit/tools';
 import { UIFragment } from '../ui-fragment/src/ui-fragment';
+import { css, cx } from 'emotion';
+
+const markdownContainerStyle = css`
+	margin: 1rem 3rem;
+`;
 
 export const GithubFilePreview = ({
 	path,
@@ -35,6 +42,12 @@ export const GithubFilePreview = ({
 			suffix === 'ico'
 		) {
 			return <img src={`data:image/${suffix};base64,${fileContentBase64}`} />;
+		}
+
+		if (suffix === 'md') {
+			return <div className={cx(markdownContainerStyle, 'markdown')}>
+				<ReactMarkdown remarkPlugins={[gfm]}>{fileContent}</ReactMarkdown>
+			</div>;
 		}
 
 		// show non-image content in an editor
