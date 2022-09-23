@@ -142,8 +142,8 @@ export const componentInfo: ComponentInfo = {
 			imports: ['Button'],
 			code: ({ json }) => {
 				return `<Button
-					${json.kind && ` kind="${json.kind}"`}
-					${json.size && ` size="${json.size}"`}
+					${json.kind && `kind="${json.kind}"`}
+					${json.size && `size="${json.size}"`}
 					${reactClassNamesFromComponentObj(json)}>${json.text}</Button>`;
 			}
 		}
