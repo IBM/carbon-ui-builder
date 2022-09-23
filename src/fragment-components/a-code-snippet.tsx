@@ -112,8 +112,7 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'code-snippet',
 		variant: 'single',
-		code: '',
-		light: false
+		code: ''
 	},
 	image,
 	codeExport: {
