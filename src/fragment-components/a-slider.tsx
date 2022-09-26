@@ -70,7 +70,6 @@ export const ASliderSettingsUI = ({ selectedComponent, setComponent }: any) => {
 				min: event.currentTarget.value
 			})} />
 
-
 		<TextInput
 			value={selectedComponent.max}
 			labelText='Max'
@@ -222,7 +221,8 @@ export const componentInfo: ComponentInfo = {
 					(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
 					<span minLabel>{{${nameStringToVariableString(json.codeContext?.name)}MinLabel}}</span>
 					<span maxLabel>{{${nameStringToVariableString(json.codeContext?.name)}MaxLabel}}</span>
-					<input [ngClass]="{'bx--text-input--light':  ${nameStringToVariableString(json.codeContext?.name)}Light === 'light'}"/>
+					<input [ngClass]="{'bx--text-input--light':  ${nameStringToVariableString(json.codeContext?.name)}Light === 'light'}"
+					${angularClassNamesFromComponentObj(json)}/>
 				</ibm-slider>`;
 			}
 		},

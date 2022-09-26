@@ -5,23 +5,23 @@ import { CssClasses } from '../types';
 export interface SliderState {
 	type: string;
 	cssClasses?: CssClasses[];
-	labelText: string,
-	min: number,
-	max: number,
-	disabled: boolean,
-	step: number,
-	hideTextInput: boolean,
-	light: boolean,
-	value: number,
-	stepMultiplier: number,
-	minLabel: string,
-	maxLabel: string,
+	labelText: string;
+	min: number;
+	max: number;
+	disabled: boolean;
+	step: number;
+	hideTextInput: boolean;
+	light: boolean;
+	value: number;
+	stepMultiplier: number;
+	minLabel: string;
+	maxLabel: string;
 	codeContext?: {
 		name: string;
 	};
 }
 
-export const UISlider = ({ state, setState, setGlobalState }: {
+export const UISlider = ({ state }: {
 	state: SliderState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
