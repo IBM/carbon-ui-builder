@@ -197,11 +197,33 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: (_) => '',
-			outputs: ({ json }) => ``,
-			imports: [''],
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = ${json.value};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Min = ${json.min};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Max = ${json.max};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}MinLabel = "${json.minLabel}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}MaxLabel = "${json.maxLabel}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Step = ${json.step};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}StepMultiplier = ${json.stepMultiplier};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}HideTextInput = ${json.hideTextInput};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Light = "${json.light ? 'light' : 'dark'}" `,
+			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
+			imports: ['SliderModule'],
 			code: ({ json }) => {
-				return ``;
+				return `<ibm-slider
+					[label]="${nameStringToVariableString(json.codeContext?.name)}Label"
+					[min]="${nameStringToVariableString(json.codeContext?.name)}Min"
+					[max]="${nameStringToVariableString(json.codeContext?.name)}Max"
+					[step]="${nameStringToVariableString(json.codeContext?.name)}Step"
+					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
+					[shiftMultiplier]="${nameStringToVariableString(json.codeContext?.name)}StepMultiplier"
+					[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
+					(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
+					<span minLabel>{{${nameStringToVariableString(json.codeContext?.name)}MinLabel}}</span>
+					<span maxLabel>{{${nameStringToVariableString(json.codeContext?.name)}MaxLabel}}</span>
+					<input [ngClass]="{'bx--text-input--light':  ${nameStringToVariableString(json.codeContext?.name)}Light === 'light'}"/>
+				</ibm-slider>`;
 			}
 		},
 		react: {
