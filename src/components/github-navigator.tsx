@@ -32,23 +32,23 @@ const folderItemStyle = css`
 	margin-top: 2rem;
 `;
 
-const FolderItem = ({ repo, item, basePath }: any) => {
+const FolderItem = ({ repoName, item, basePath }: any) => {
 	const navigate = useNavigate();
 
 	if (!item) {
 		return <ClickableTile
 		className={folderItemStyle}
 		light={true}
-		onClick={() => navigate(`${basePath}/${repo.name}`)}>
+		onClick={() => navigate(`${basePath}/${repoName}`)}>
 			<div><FolderDetails32 /></div>
-			{repo.name}
+			{repoName}
 		</ClickableTile>;
 	}
 
 	return <ClickableTile
 	className={folderItemStyle}
 	light={true}
-	onClick={() => navigate(`${basePath}/${repo.name}/${item.path}`)}>
+	onClick={() => navigate(`${basePath}/${repoName}/${item.path}`)}>
 		<div>
 			{
 				item.type === 'dir' && <Folder32 />
@@ -131,9 +131,6 @@ export const GithubNavigator = ({ basePath, path, repoName, repoOrg, showToolbar
 	});
 
 	useEffect(() => {
-		if (!githubLogin) {
-			return;
-		}
 		(async () => {
 			const repos = await getRepos(repoOrg);
 			if (repoName) {
@@ -257,11 +254,11 @@ export const GithubNavigator = ({ basePath, path, repoName, repoOrg, showToolbar
 								? state.folderContent.map((item: any) => <Column key={item.name}>
 									<FolderItem
 										basePath={`${basePath}${repoOrg ? `/${repoOrg}` : ''}`}
-										repo={state.repos[state.repos.findIndex((repo: any) => repo.name === repoName)]}
+										repoName={repoName}
 										item={item} />
 								</Column>)
 								: state.repos.map((repo: any) => <Column key={repo.name}>
-									<FolderItem repo={repo} basePath={`${basePath}${repoOrg ? `/${repoOrg}` : ''}`} />
+									<FolderItem repoName={repo.name} basePath={`${basePath}${repoOrg ? `/${repoOrg}` : ''}`} />
 								</Column>)
 							}
 						</Row>

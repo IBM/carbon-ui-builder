@@ -29,6 +29,10 @@ const GithubContextProvider = ({ children }: any) => {
 	const octokit = useRef(new Octokit({ auth: githubToken }));
 
 	const getUser = async (forceLoad = false) => {
+		if (!githubToken) {
+			return {};
+		}
+
 		if (!user.current.login || forceLoad) {
 			const u = (await octokit.current.rest.users.getAuthenticated()).data;
 			user.current = u;
@@ -41,6 +45,7 @@ const GithubContextProvider = ({ children }: any) => {
 		if (githubToken) {
 			getUser(true);
 		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [githubToken]);
 
 	const setGithubToken = (t: string) => {
