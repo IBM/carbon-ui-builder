@@ -150,10 +150,10 @@ const getComponentCode = (fragment: any, fragments: any[]) => {
 	// component.html
 	componentCode[`src/app/components/${tagNameFromFragment(fragment)}/${tagNameFromFragment(fragment)}.component.html`] =
 		format(jsonToTemplate(fragment.data, fragments), formatOptionsHtml);
-
 	// module.ts
 	componentCode[`src/app/components/${tagNameFromFragment(fragment)}/${tagNameFromFragment(fragment)}.module.ts`] = format(
 		`import { NgModule } from "@angular/core";
+		import { CommonModule } from "@angular/common";
 		import { ${jsonToAngularImports(fragment.data).join(', ')} } from 'carbon-components-angular';
 		import { ${classNameFromFragment(fragment)} } from "./${tagNameFromFragment(fragment)}.component";
 		${
@@ -162,7 +162,7 @@ const getComponentCode = (fragment: any, fragments: any[]) => {
 		}
 
 		@NgModule({
-			imports: [${[
+			imports: [CommonModule, ${[
 				...jsonToAngularImports(fragment.data),
 				...Object.values(subFragments).map((fragment) => `${classNameFromFragment(fragment)}Module`)
 			].join(', ')}],
