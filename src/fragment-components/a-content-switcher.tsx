@@ -4,7 +4,8 @@ import {
 	TextInput,
 	Dropdown,
 	ContentSwitcher,
-	Switch } from 'carbon-components-react';
+	Switch
+} from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
 import { DraggableTileList } from '../components';
 import image from './../assets/component-icons/content-switcher.svg';
@@ -45,12 +46,14 @@ export const AContentSwitcherSettingsUI = ({ selectedComponent, setComponent }: 
 			]
 		});
 	};
+
 	const updateStepList = (newList: any[]) => {
 		setComponent({
 			...selectedComponent,
 			items: newList
 		});
 	};
+
 	const template = (item: any, index: number) => {
 		return <>
 			<TextInput
@@ -59,18 +62,17 @@ export const AContentSwitcherSettingsUI = ({ selectedComponent, setComponent }: 
 				labelText='Text'
 				onChange={(event: any) => {
 					updateListItems('text', event.currentTarget.value, index);
-				}}
-			/>
+				}} />
 			<Checkbox
 				labelText='Disabled'
 				id={`disabled-${index}`}
 				checked={selectedComponent.disabled}
 				onChange={(checked: boolean) => {
 					updateListItems('disabled', checked, index);
-				}}
-			/>
+				}} />
 		</>;
 	};
+
 	return <>
 		<Dropdown
 			id='content-switcher-size'
@@ -82,7 +84,7 @@ export const AContentSwitcherSettingsUI = ({ selectedComponent, setComponent }: 
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				size: event.selectedItem.id
-		})} />
+			})} />
 		<Dropdown
 			id='selected-item'
 			label='Selected content'
@@ -93,7 +95,7 @@ export const AContentSwitcherSettingsUI = ({ selectedComponent, setComponent }: 
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				selectedIndex: event.selectedItem.id
-		})} />
+			})} />
 		<DraggableTileList
 			dataList={[...selectedComponent.items]}
 			setDataList={updateStepList}
@@ -131,18 +133,18 @@ export const AContentSwitcher = ({
 		componentObj={componentObj}
 		{...rest}>
 			<ContentSwitcher
-				size={componentObj.size}
-				selectedIndex={componentObj.selectedIndex}
-				className={cx(preventCheckEvent, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}>
-				{
-					componentObj.items.map((step: any, index: number) => <Switch
-						className={step.className}
-						name={step.name}
-						text={step.text}
-						disabled={step.disabled}
-						key={index}
-					/>)
-				}
+			size={componentObj.size}
+			selectedIndex={componentObj.selectedIndex}
+			className={cx(preventCheckEvent, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}>
+			{
+				componentObj.items.map((step: any, index: number) => <Switch
+					className={step.className}
+					name={step.name}
+					text={step.text}
+					disabled={step.disabled}
+					key={index} />
+				)
+			}
 			</ContentSwitcher>
 		</AComponent>
 	);
@@ -190,15 +192,14 @@ export const componentInfo: ComponentInfo = {
 				return `<ibm-content-switcher
 					${angularClassNamesFromComponentObj(json)}
 					(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit()">
-					${json.items.map((step: any, index: number) => (
-						`<button
+					${json.items.map((step: any, index: number) => `<button
 							${json.selectedIndex === index ? `active="${json.selectedIndex === index}"` : ''}
 							ibmContentOption
 							name="${step.name}"
 							[disabled]="${step.disabled}">
 							${step.text}
 						</button>`
-						)).join('\n')}
+					).join('\n')}
 				</ibm-content-switcher>`;
 			}
 		},
@@ -216,12 +217,11 @@ export const componentInfo: ComponentInfo = {
 							value: selectedItem
 						}
 					})}>
-					${json.items.map((step: any) => (
-						`<Switch
-							name={"${step.name}"}
-							text="${step.text}"
-							disabled={${step.disabled}}/>`
-						)).join('\n')}
+					${json.items.map((step: any) => `<Switch
+						name={"${step.name}"}
+						text="${step.text}"
+						disabled={${step.disabled}}/>`
+					).join('\n')}
 				</ContentSwitcher>`;
 			}
 		}
