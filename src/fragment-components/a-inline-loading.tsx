@@ -19,13 +19,13 @@ export const AInlineLoadingSettingsUI = ({ selectedComponent, setComponent }: an
 	return <>
 		<legend className='bx--label'>Status</legend>
 		<RadioButtonGroup
-			orientation='vertical'
-			name='status-radio-buttons'
-			valueSelected={selectedComponent.status}
-			onChange={(event: any) => setComponent({
-				...selectedComponent,
-				status: event
-			})} >
+		orientation='vertical'
+		name='status-radio-buttons'
+		valueSelected={selectedComponent.status}
+		onChange={(event: any) => setComponent({
+			...selectedComponent,
+			status: event
+		})} >
 			<RadioButton
 				id='inactive'
 				labelText='Inactive'
@@ -44,11 +44,25 @@ export const AInlineLoadingSettingsUI = ({ selectedComponent, setComponent }: an
 				value='error'/>
 		</RadioButtonGroup>
 		<TextInput
-			value={selectedComponent.textDescription}
+			value={selectedComponent.loadingText}
 			labelText='Loading text description'
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
-				textDescription: event.currentTarget.value
+				loadingText: event.currentTarget.value
+			})} />
+		<TextInput
+			value={selectedComponent.errorText}
+			labelText='Error text description'
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				errorText: event.currentTarget.value
+			})} />
+		<TextInput
+			value={selectedComponent.successText}
+			labelText='Success text description'
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				successText: event.currentTarget.value
 			})} />
 		<TextInput
 			value={selectedComponent.iconDescription}
@@ -83,10 +97,10 @@ export const AInlineLoading = ({
 		rejectDrop={true}
 		{...rest}>
 			<InlineLoading
-				description={componentObj.textDescription}
-				status={componentObj.status}
-				iconDescription={componentObj.iconDescription}
-				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
+			description={componentObj.loadingText}
+			status={componentObj.status}
+			iconDescription={componentObj.iconDescription}
+			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
 		</AComponent>
 	);
 };
@@ -101,38 +115,44 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'inline-loading',
 		status: 'active',
-		textDescription: 'Loading data',
+		loadingText: '',
+		successText: '',
+		errorText: '',
 		iconDescription: 'Loading'
 	},
 	image,
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Status = "${json.status}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}LoadingText = "${json.textDescription}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}SuccessText = "${json.textDescription}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}ErrorText = "${json.textDescription}";`,
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}LoadingText = "${json.loadingText}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}SuccessText = "${json.successText}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}ErrorText = "${json.errorText}";`,
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}OnSuccess = new EventEmitter();`,
 			imports: ['InlineLoadingModule'],
 			code: ({ json }) => {
 				return `<ibm-inline-loading
-							(onSuccess)="${nameStringToVariableString(json.codeContext?.name)}OnSuccess.emit($event)"
-							[state]="${nameStringToVariableString(json.codeContext?.name)}Status"
-							${json.status === 'active' ? `[loadingText]="${nameStringToVariableString(json.codeContext?.name)}LoadingText"`: ''}
-							${json.status === 'finished' ? `[successText]="${nameStringToVariableString(json.codeContext?.name)}SuccessText"`: ''}
-							${json.status === 'error' ? `[errorText]="${nameStringToVariableString(json.codeContext?.name)}ErrorText"`: ''}
-							${angularClassNamesFromComponentObj(json)}>
-						</ibm-inline-loading>`;
+					(onSuccess)="${nameStringToVariableString(json.codeContext?.name)}OnSuccess.emit($event)"
+					[state]="${nameStringToVariableString(json.codeContext?.name)}Status"
+					[loadingText]="${nameStringToVariableString(json.codeContext?.name)}LoadingText"
+					[successText]="${nameStringToVariableString(json.codeContext?.name)}SuccessText"
+					[errorText]="${nameStringToVariableString(json.codeContext?.name)}ErrorText"
+					${angularClassNamesFromComponentObj(json)}>
+				</ibm-inline-loading>`;
 			}
 		},
 		react: {
 			imports: ['InlineLoading'],
 			code: ({ json }) => {
 				return `<InlineLoading
-							(onSuccess)="${nameStringToVariableString(json.codeContext?.name)}OnSuccess.emit($event)"
-							description="${json.textDescription}"
-							iconDescription="${json.iconDescription}"
-							status="${json.status}"
-							${reactClassNamesFromComponentObj(json)} />`;
+					onSuccess={(success) => handleInputChange({
+						target: {
+							name: "${json.codeContext?.name}",
+						}
+					})}
+					description="${json.loadingText}"
+					iconDescription="${json.iconDescription}"
+					status="${json.status}"
+					${reactClassNamesFromComponentObj(json)} />`;
 			}
 		}
 	}
