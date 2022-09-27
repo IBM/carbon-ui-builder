@@ -27,9 +27,7 @@ export const AContentSwitcherSettingsUI = ({ selectedComponent, setComponent }: 
 		{ id: 'lg', text: 'Large' }
 	];
 
-	const selectedItems = selectedComponent.items.map((step: any, index: number) => {
-		return { id: index, text: step.text };
-	});
+	const selectedItems = selectedComponent.items.map((step: any, index: number) => ({ id: index, text: step.text }));
 
 	const updateListItems = (key: string, value: any, index: number) => {
 		const step = {
