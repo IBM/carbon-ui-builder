@@ -3,7 +3,8 @@ import {
 	Tabs,
 	Tab,
 	Checkbox,
-	TextInput } from 'carbon-components-react';
+	TextInput
+} from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
 import image from '../assets/component-icons/tabs.svg';
 import { DraggableTileList } from '../components/draggable-list';
@@ -44,35 +45,35 @@ export const ATabsSettingsUI = ({ selectedComponent, setComponent }: any) => {
 				labelText='Tab Label'
 				onChange={(event: any) => {
 					updateListItems('labelText', event.currentTarget.value, index);
-				}}
-			/>
+				}} />
 			<div style={{ display: 'flex', flexWrap: 'wrap' }}>
 				<Checkbox
 					labelText='Disabled'
 					id={`disabled-${index}`}
 					checked={item.disabled}
-					onChange={(checked: boolean) => updateListItems('disabled', checked, index)}/>
+					onChange={(checked: boolean) => updateListItems('disabled', checked, index)} />
 			</div>
 		</>;
 	};
+
 	const updateStepList = (newList: any[]) => {
 		setComponent({
 			...selectedComponent,
 			items: newList
 		});
 	};
+
 	return <DraggableTileList
-			dataList={[...selectedComponent.items]}
-			setDataList={updateStepList}
-			updateItem={updateListItems}
-			defaultObject={{
-				type: 'tab',
-				labelText: 'New tab',
-				disabled: false,
-				items: []
-			}}
-			template={template}
-		/>;
+		dataList={[...selectedComponent.items]}
+		setDataList={updateStepList}
+		updateItem={updateListItems}
+		defaultObject={{
+			type: 'tab',
+			labelText: 'New tab',
+			disabled: false,
+			items: []
+		}}
+		template={template} />;
 };
 
 export const ATabsCodeUI = ({ selectedComponent, setComponent }: any) => {
@@ -213,15 +214,14 @@ export const componentInfo: ComponentInfo = {
 					[followFocus]="${nameStringToVariableString(json.codeContext?.name)}FollowFocus"
 					[isNavigation]="${nameStringToVariableString(json.codeContext?.name)}isNavigation"
 					${angularClassNamesFromComponentObj(json)}>
-					${json.items.map((step: any) =>
-						`<ibm-tab
-							heading="${step.labelText}"
-							[disabled]=${step.disabled}>
-								${step.items && step.items.length > 0 ?
-									`<section>
-										${step.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-									</section>`
-								: ''}
+					${json.items.map((step: any) => `<ibm-tab
+						heading="${step.labelText}"
+						[disabled]=${step.disabled}>
+							${step.items && step.items.length > 0 ?
+								`<section>
+									${step.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+								</section>`
+							: ''}
 						</ibm-tab>`
 					).join('\n')}
 				</ibm-tabs>`;
@@ -232,21 +232,20 @@ export const componentInfo: ComponentInfo = {
 			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<Tabs
 				${reactClassNamesFromComponentObj(json)}>
-				${json.items.map((step: any, index: any) =>
-					`<Tab
-						onClick={(index) => handleInputChange({
-							target: {
-								selectedTab: ${index}
-							}
-						})}
-						key= {${index}}
-						disabled={${step.disabled}}
-						label="${step.labelText}">
-							${step.items && step.items.length > 0 ?
-								`<section>
-									${step.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-								</section>`
-							: ''}
+				${json.items.map((step: any, index: any) => `<Tab
+					onClick={(index) => handleInputChange({
+						target: {
+							selectedTab: ${index}
+						}
+					})}
+					key= {${index}}
+					disabled={${step.disabled}}
+					label="${step.labelText}">
+						${step.items && step.items.length > 0 ?
+							`<section>
+								${step.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							</section>`
+						: ''}
 					</Tab>`
 				).join('\n')}
 			</Tabs>`;
