@@ -107,62 +107,62 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 			})} />
 		{
 			selectedComponent.datePickerType !== 'timePicker'
-			? <>
-			<Dropdown
-				label='Size'
-				titleText='Size'
-				items={size}
-				selectedItem={size.find(item => item.id === selectedComponent.size)}
-				itemToString={(item: any) => (item ? item.text : '')}
-				onChange={(event: any) => setComponent({
-					...selectedComponent,
-					size: event.selectedItem.id
-			})} />
-			<Checkbox
-				labelText='Disabled'
-				id='disable'
-				checked={selectedComponent.disabled}
-				onChange={(checked: boolean) => setComponent({
-					...selectedComponent,
-					disabled: checked
+				? <>
+				<Dropdown
+					label='Size'
+					titleText='Size'
+					items={size}
+					selectedItem={size.find(item => item.id === selectedComponent.size)}
+					itemToString={(item: any) => (item ? item.text : '')}
+					onChange={(event: any) => setComponent({
+						...selectedComponent,
+						size: event.selectedItem.id
 				})} />
-			<Checkbox
-				labelText='Invalid'
-				id='invalid'
-				checked={selectedComponent.invalid}
-				onChange={(checked: boolean) =>
-				setComponent({
-					...selectedComponent,
-					invalid: checked
-				})} />
-			<TextInput
-				value={selectedComponent.rangeStartLabel}
-				labelText='Date picker label'
-				onChange={(event: any) => setComponent({
-					...selectedComponent,
-					rangeStartLabel: event.currentTarget.value
-				})} />
-			{
-				selectedComponent.datePickerType === 'range'
-				&& <TextInput
-					value={selectedComponent.rangeEndLabel}
+				<Checkbox
+					labelText='Disabled'
+					id='disable'
+					checked={selectedComponent.disabled}
+					onChange={(checked: boolean) => setComponent({
+						...selectedComponent,
+						disabled: checked
+					})} />
+				<Checkbox
+					labelText='Invalid'
+					id='invalid'
+					checked={selectedComponent.invalid}
+					onChange={(checked: boolean) =>
+					setComponent({
+						...selectedComponent,
+						invalid: checked
+					})} />
+				<TextInput
+					value={selectedComponent.rangeStartLabel}
 					labelText='Date picker label'
 					onChange={(event: any) => setComponent({
 						...selectedComponent,
-						rangeEndLabel: event.currentTarget.value
+						rangeStartLabel: event.currentTarget.value
 					})} />
-			}
-			</> :
-			<DraggableTileList
-				dataList={[...selectedComponent.items]}
-				setDataList={updateStepList}
-				updateItem={updateListItems}
-				defaultObject={{
-					text: 'New timezone',
-					value: 'New timezoneValue'
-				}}
-				template={template} />
-			}
+				{
+					selectedComponent.datePickerType === 'range'
+					&& <TextInput
+						value={selectedComponent.rangeEndLabel}
+						labelText='Date picker label'
+						onChange={(event: any) => setComponent({
+							...selectedComponent,
+							rangeEndLabel: event.currentTarget.value
+						})} />
+				}
+				</> :
+				<DraggableTileList
+					dataList={[...selectedComponent.items]}
+					setDataList={updateStepList}
+					updateItem={updateListItems}
+					defaultObject={{
+						text: 'New timezone',
+						value: 'New timezoneValue'
+					}}
+					template={template} />
+		}
 	</>;
 };
 
