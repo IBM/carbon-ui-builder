@@ -30,6 +30,7 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 		{ id: 'range', text: 'Range with calender' },
 		{ id: 'timePicker', text: 'Time picker' }
 	];
+
 	const updateListItems = (key: string, value: any, index: number) => {
 		const step = {
 			...selectedComponent.items[index],
@@ -54,18 +55,17 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 				labelText='Text label'
 				onChange={(event: any) => {
 					updateListItems('text', event.currentTarget.value, index);
-				}}
-			/>
+				}} />
 			<TextInput
 				light
 				value={item.value}
 				labelText='Value'
 				onChange={(event: any) => {
 					updateListItems('value', event.currentTarget.value, index);
-				}}
-			/>
+				}} />
 		</>;
 	};
+
 	const updateStepList = (newList: any[]) => {
 		setComponent({
 			...selectedComponent,
@@ -106,7 +106,8 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 				light: checked
 			})} />
 		{
-			selectedComponent.datePickerType !== 'timePicker' ? <>
+			selectedComponent.datePickerType !== 'timePicker'
+			? <>
 			<Dropdown
 				label='Size'
 				titleText='Size'
@@ -152,16 +153,16 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 					})} />
 			}
 			</> :
-		<DraggableTileList
-			dataList={[...selectedComponent.items]}
-			setDataList={updateStepList}
-			updateItem={updateListItems}
-			defaultObject={{
-				text: 'New timezone',
-				value: 'New timezoneValue'
-			}}
-			template={template} />
-		}
+			<DraggableTileList
+				dataList={[...selectedComponent.items]}
+				setDataList={updateStepList}
+				updateItem={updateListItems}
+				defaultObject={{
+					text: 'New timezone',
+					value: 'New timezoneValue'
+				}}
+				template={template} />
+			}
 	</>;
 };
 
@@ -188,46 +189,46 @@ export const ADatePicker = ({
 		{...rest}>
 			{
 				componentObj.datePickerType === 'timePicker'
-				? <TimePicker id="time-picker" light={componentObj.light}>
-				<TimePickerSelect labelText="time-picker-1" id="time-picker-select-1">
-					<SelectItem value="AM" text="AM" />
-					<SelectItem value="PM" text="PM" />
-				</TimePickerSelect>
-				<TimePickerSelect labelText="time-picker-2" id="time-picker-select-2" >
-					{
-						componentObj.items.map((step: any, index: number) => <SelectItem
-							value={step.value}
-							text={step.text}
-							key={index}
-						/>)
-					}
-				</TimePickerSelect>
+				?	<TimePicker id="time-picker" light={componentObj.light}>
+						<TimePickerSelect labelText="time-picker-1" id="time-picker-select-1">
+							<SelectItem value="AM" text="AM" />
+							<SelectItem value="PM" text="PM" />
+						</TimePickerSelect>
+						<TimePickerSelect labelText="time-picker-2" id="time-picker-select-2" >
+							{
+								componentObj.items.map((step: any, index: number) => <SelectItem
+									value={step.value}
+									text={step.text}
+									key={index}
+								/>)
+							}
+						</TimePickerSelect>
 				</TimePicker>
-				: <DatePicker
+				:	<DatePicker
 					dateFormat={componentObj.dateFormat}
 					datePickerType={componentObj.datePickerType}
 					light={componentObj.light}>
-					<DatePickerInput
-						id="date-picker-default-id"
-						placeholder={componentObj.placeHolder}
-						labelText={componentObj.rangeStartLabel}
-						type="text"
-						size={componentObj.size}
-						disabled={componentObj.disabled}
-						invalid={componentObj.invalid}
-					/>
-					{
-						componentObj.datePickerType === 'range' &&
-							<DatePickerInput
-								id="date-picker-range-end"
-								placeholder={componentObj.placeHolder}
-								labelText={componentObj.rangeEndLabel}
-								type="text"
-								size={componentObj.size}
-								disabled={componentObj.disabled}
-								invalid={componentObj.invalid}
-							/>
-					}
+						<DatePickerInput
+							id="date-picker-default-id"
+							placeholder={componentObj.placeHolder}
+							labelText={componentObj.rangeStartLabel}
+							type="text"
+							size={componentObj.size}
+							disabled={componentObj.disabled}
+							invalid={componentObj.invalid}
+						/>
+						{
+							componentObj.datePickerType === 'range' &&
+								<DatePickerInput
+									id="date-picker-range-end"
+									placeholder={componentObj.placeHolder}
+									labelText={componentObj.rangeEndLabel}
+									type="text"
+									size={componentObj.size}
+									disabled={componentObj.disabled}
+									invalid={componentObj.invalid}
+								/>
+						}
 				</DatePicker>
 			}
 		</AComponent>
@@ -280,25 +281,27 @@ export const componentInfo: ComponentInfo = {
 					(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
 					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 					[disabled]="${json.disabled}">
-					<ibm-timepicker-select ${json.light
+						<ibm-timepicker-select ${json.light
 						? '[theme]="light"'
 						: '[theme]="dark"'}
-						[disabled]="${json.disabled}" display="inline">
-						<option selected value="AM">AM</option>
-						<option value="PM">PM</option>
-					</ibm-timepicker-select>
-					<ibm-timepicker-select ${json.light
+						[disabled]="${json.disabled}"
+						display="inline">
+								<option selected value="AM">AM</option>
+								<option value="PM">PM</option>
+						</ibm-timepicker-select>
+						<ibm-timepicker-select ${json.light
 						? '[theme]="light"'
 						: '[theme]="dark"'}
-						[disabled]="${json.disabled}" display="inline">
-						${json.items.map((step: any) => (
-							`<option
+						[disabled]="${json.disabled}"
+						display="inline">
+							${json.items.map((step: any) => (
+								`<option
 								value="${step.value}"
 								text="${step.text}">
 									${step.text}
-							</option>`
-						)).join('\n')}
-					</ibm-timepicker-select>
+								</option>`
+							)).join('\n')}
+						</ibm-timepicker-select>
 					</ibm-timepicker>`
 					: json.datePickerType === 'simple'
 					? `<ibm-date-picker-input
@@ -356,19 +359,22 @@ export const componentInfo: ComponentInfo = {
 			imports: ['DatePicker','TimePicker','TimePickerSelect','SelectItem','DatePickerInput'],
 			code: ({ json }) => {
 				return `${json.datePickerType === 'timePicker'
-					? `<TimePicker ${reactClassNamesFromComponentObj(json)} id="time-picker" light={${json.light}}>
-					<TimePickerSelect labelText="time-picker-1" id="time-picker-select-1">
-						<SelectItem value="AM" text="AM" />
-						<SelectItem value="PM" text="PM" />
-					</TimePickerSelect>
-					<TimePickerSelect labelText="time-picker-2" id="time-picker-select-2" >
-						${json.items.map((step: any) => (
-							`<SelectItem
-								value="${step.value}"
-								text="${step.text}"
-							/>`
-						)).join('\n')}
-					</TimePickerSelect>
+					? `<TimePicker
+					${reactClassNamesFromComponentObj(json)}
+					id="time-picker"
+					light={${json.light}}>
+						<TimePickerSelect labelText="time-picker-1" id="time-picker-select-1">
+							<SelectItem value="AM" text="AM" />
+							<SelectItem value="PM" text="PM" />
+						</TimePickerSelect>
+						<TimePickerSelect labelText="time-picker-2" id="time-picker-select-2" >
+							${json.items.map((step: any) => (
+								`<SelectItem
+									value="${step.value}"
+									text="${step.text}"
+								/>`
+							)).join('\n')}
+						</TimePickerSelect>
 					</TimePicker>`
 					: `<DatePicker
 					${reactClassNamesFromComponentObj(json)}
