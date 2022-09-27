@@ -203,11 +203,13 @@ export const FragmentComponent = ({state, setState}) => {
 `;
 
 	const componentScss = getAllFragmentStyleClasses(fragment).map((styleClass: any) => {
-		if (styleClass.content) {
-			return `.${styleClass.id} {
-				${styleClass.content}
-			}`;
+		if (!styleClass.content || !styleClass.content.trim()) {
+			return null;
 		}
+
+		return `.${styleClass.id} {
+			${styleClass.content}
+		}`;
 	}).join('\n');
 
 	const indexJs

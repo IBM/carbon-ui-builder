@@ -175,11 +175,13 @@ const getComponentCode = (fragment: any, fragments: any[]) => {
 	// component.scss
 	componentCode[`src/app/components/${tagNameFromFragment(fragment)}/${tagNameFromFragment(fragment)}.component.scss`] = format(
 		`${getAllFragmentStyleClasses(fragment).map((styleClass: any) => {
-			if (styleClass.content) {
-				return `.${styleClass.id} {
-					${styleClass.content}
-				}`;
+			if (!styleClass.content || !styleClass.content.trim()) {
+				return null;
 			}
+
+			return `.${styleClass.id} {
+				${styleClass.content}
+			}`;
 		}).join('\n')}`,
 		formatOptionsCss
 	);
