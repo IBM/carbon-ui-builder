@@ -48,7 +48,7 @@ export const GithubFilePreview = ({
 			suffix === 'svg' ||
 			suffix === 'ico'
 		) {
-			return <img className={centerStyle} src={`data:image/${suffix};base64,${fileContentBase64}`} />;
+			return <img className='center' src={`data:image/${suffix};base64,${fileContentBase64}`} />;
 		}
 
 		if (suffix === 'md') {
