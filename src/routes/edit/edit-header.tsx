@@ -166,12 +166,12 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 
 	const getOutlineHelperText = (outline: boolean | null) => {
 		if (outline === true) {
-			return 'Forcing outline - click to change';
+			return 'Outline (forced on)';
 		}
 		if (outline === false) {
-			return 'Hiding outline - click to change';
+			return 'Outline (forced off)';
 		}
-		return 'Inheriting outline visibility - click to change';
+		return 'Outline (inheriting)';
 	};
 
 	return (
@@ -236,67 +236,66 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 					<div className='toolBarButtons'>
 						<Button
 							kind='ghost'
-							aria-label={getOutlineHelperText(fragment.outline)}
-							title={getOutlineHelperText(fragment.outline)}
-							onClick={() => setFragment({ ...fragment, outline: fragment.outline === false ? null : !fragment.outline })}>
-							{
-								fragment.outline === undefined || fragment.outline === null
-								&& <IntentRequestInactive20 className={actionIconStyle} />
-							}
-							{
-								fragment.outline === true
-								&& <IntentRequestActive20 className={actionIconStyle} />
-							}
-							{
-								fragment.outline === false
-								&& <IntentRequestUninstall20 className={actionIconStyle} />
-							}
-						</Button>
+							hasIconOnly
+							tooltipPosition='bottom'
+							iconDescription={getOutlineHelperText(fragment.outline)}
+							onClick={() => setFragment({ ...fragment, outline: fragment.outline === false ? null : !fragment.outline })}
+							renderIcon={() => {
+								if (fragment.outline === true) {
+									return <IntentRequestActive20 className={actionIconStyle} />;
+								}
+
+								if (fragment.outline === false) {
+									return <IntentRequestUninstall20 className={actionIconStyle} />;
+								}
+
+								return <IntentRequestInactive20 className={actionIconStyle} />;
+							}} />
 						<Button
 							kind='ghost'
-							aria-label={'Preview fragment'}
-							title={'Preview fragment'}
-							onClick={() => openFragmentPreview(fragment)}>
-							<View16 className={actionIconStyle} />
-						</Button>
+							hasIconOnly
+							tooltipPosition='bottom'
+							iconDescription='Preview fragment'
+							onClick={() => openFragmentPreview(fragment)}
+							renderIcon={() => <View16 className={actionIconStyle} />} />
 						<div className={toolBarSeparator} />
 						<Button
 							kind='ghost'
-							aria-label='Undo'
-							title='Undo'
+							hasIconOnly
+							tooltipPosition='bottom'
+							iconDescription='Undo'
 							disabled={!canUndo()}
-							onClick={() => undoAction()}>
-							<Undo16 className={actionIconStyle} />
-						</Button>
+							onClick={() => undoAction()}
+							renderIcon={() => <Undo16 className={actionIconStyle} />} />
 						<Button
 							kind='ghost'
-							aria-label='Redo'
-							title='Redo'
+							hasIconOnly
+							tooltipPosition='bottom'
+							iconDescription='Redo'
 							disabled={!canRedo()}
-							onClick={() => redoAction()}>
-							<Redo16 className={actionIconStyle} />
-						</Button>
+							onClick={() => redoAction()}
+							renderIcon={() => <Redo16 className={actionIconStyle} />} />
 						<div className={toolBarSeparator} />
 						<Button
 							kind='ghost'
-							aria-label='Duplicate fragment'
-							title='Duplicate fragment'
-							onClick={() => showFragmentDuplicateModal(fragment)}>
-							<Copy16 className={actionIconStyle} />
-						</Button>
+							hasIconOnly
+							tooltipPosition='bottom'
+							iconDescription='Duplicate fragment'
+							onClick={() => showFragmentDuplicateModal(fragment)}
+							renderIcon={() => <Copy16 className={actionIconStyle} />} />
 						<Button
 							kind='ghost'
-							aria-label='Delete fragment'
-							title='Delete fragment'
-							onClick={() => showFragmentDeleteModal(fragment.id)}>
-							<TrashCan16 className={actionIconStyle} />
-						</Button>
+							hasIconOnly
+							tooltipPosition='bottom'
+							iconDescription='Delete fragment'
+							onClick={() => showFragmentDeleteModal(fragment.id)}
+							renderIcon={() => <TrashCan16 className={actionIconStyle} />} />
 						<Button
 							kind='primary'
+							iconDescription='Export fragment'
 							aria-label='Export fragment'
 							title='Export fragment'
 							renderIcon={DocumentExport16}
-							iconDescription='export fragment'
 							onClick={() => showFragmentExportModal(fragment)}>
 							Export
 						</Button>
