@@ -96,6 +96,7 @@ export const ATabs = ({
 }: any) => {
 	const [fragment, setFragment] = useFragment();
 	const holderRef = useRef(null as any);
+
 	return (
 		<AComponent
 		rejectDrop={true}
