@@ -89,7 +89,6 @@ export const ATabsCodeUI = ({ selectedComponent, setComponent }: any) => <TextIn
 	}}
 />;
 
-
 export const ATabs = ({
 	children,
 	componentObj,
