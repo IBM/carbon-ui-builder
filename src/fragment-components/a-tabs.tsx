@@ -54,6 +54,7 @@ export const ATabsSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			</div>
 		</>;
 	};
+
 	const updateStepList = (newList: any[]) => {
 		setComponent({
 			...selectedComponent,
