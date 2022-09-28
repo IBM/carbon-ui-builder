@@ -23,7 +23,7 @@ export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 
 	const sizeItems = [
 		{ id: 'sm', text: 'Small' },
-		{ id: 'md', text: 'Medium' },
+		{ id: 'field', text: 'Medium' },
 		{ id: 'lg', text: 'Large' },
 		{ id: 'xl', text: 'Extra large' },
 		{ id: 'default', text: 'Default' }
@@ -129,9 +129,7 @@ export const componentInfo: ComponentInfo = {
 			code: ({ json }) => {
 				return `<button
 					${json.kind ? `ibmButton='${json.kind}'` : 'ibmButton'}
-					${json.size ? `size='${json.size === 'md'
-					? 'field' : json.size === 'default'
-					? 'normal' : json.size}'` : ''}
+					${json.size ? `size='${json.size === 'default' ? 'normal' : json.size}'` : ''}
 					(click)='${nameStringToVariableString(json.codeContext?.name)}Clicked.emit()'
 					${angularClassNamesFromComponentObj(json)}>
 						${json.text}
