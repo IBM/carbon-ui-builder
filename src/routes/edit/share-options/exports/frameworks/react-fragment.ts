@@ -202,9 +202,15 @@ export const FragmentComponent = ({state, setState}) => {
 };
 `;
 
-	const componentScss = getAllFragmentStyleClasses(fragment).map((styleClass: any) => `.${styleClass.id} {
-	${styleClass.content}
-}`).join('\n');
+	const componentScss = getAllFragmentStyleClasses(fragment).map((styleClass: any) => {
+		if (!styleClass.content || !styleClass.content.trim()) {
+			return null;
+		}
+
+		return `.${styleClass.id} {
+			${styleClass.content}
+		}`;
+	}).join('\n');
 
 	const indexJs
 		= `import React, { useState } from 'react';
