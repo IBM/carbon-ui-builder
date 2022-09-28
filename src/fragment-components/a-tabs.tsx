@@ -139,9 +139,9 @@ export const ATabs = ({
 								}, false);
 							}}>
 								{
-									step.items && step.items.length > 0 ?
-									children.filter((child: any, index: any) => index === componentObj.selectedTab) :
-									<APlaceholder componentObj={step} select={rest.select} />
+									step.items && step.items.length > 0
+									? children.filter((child: any, index: any) => index === componentObj.selectedTab)
+									: <APlaceholder componentObj={step} select={rest.select} />
 								}
 							</section>
 						}
