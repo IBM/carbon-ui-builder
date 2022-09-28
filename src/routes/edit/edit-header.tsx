@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from 'react';
-import { css, cx } from 'emotion';
+import { css } from 'emotion';
 import { Button, TextInput } from 'carbon-components-react';
 import {
 	Checkmark16,
@@ -7,7 +7,9 @@ import {
 	Copy16,
 	DocumentExport16,
 	Edit16,
-	CircleDash20,
+	IntentRequestInactive20,
+	IntentRequestActive20,
+	IntentRequestUninstall20,
 	Redo16,
 	TrashCan16,
 	Undo16,
@@ -146,19 +148,6 @@ const fragmentEditToolBar = css`
 	}
 `;
 
-const actionIconSelectedStyle = css`
-	color: #0f62fe;
-`;
-
-const actionIconInheritedStyle = css`
-background: linear-gradient(to top right,
-	rgba(0,0,0,0) 0%,
-	rgba(0,0,0,0) calc(50% - 1.2px),
-	rgba(0,0,0,1) 50%,
-	rgba(0,0,0,0) calc(50% + 1.2px),
-	rgba(0,0,0,0) 100%)
-`;
-
 export const EditHeader = ({ fragment, setFragment }: any) => {
 	const navigate: NavigateFunction = useNavigate();
 	const {
@@ -250,11 +239,18 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 							aria-label={getOutlineHelperText(fragment.outline)}
 							title={getOutlineHelperText(fragment.outline)}
 							onClick={() => setFragment({ ...fragment, outline: fragment.outline === false ? null : !fragment.outline })}>
-							<CircleDash20 className={cx(
-								actionIconStyle,
-								fragment.outline === true ? actionIconSelectedStyle : '',
-								fragment.outline === false ? actionIconInheritedStyle : ''
-							)} />
+							{
+								fragment.outline === undefined || fragment.outline === null
+								&& <IntentRequestInactive20 className={actionIconStyle} />
+							}
+							{
+								fragment.outline === true
+								&& <IntentRequestActive20 className={actionIconStyle} />
+							}
+							{
+								fragment.outline === false
+								&& <IntentRequestUninstall20 className={actionIconStyle} />
+							}
 						</Button>
 						<Button
 							kind='ghost'
