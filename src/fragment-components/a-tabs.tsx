@@ -103,8 +103,7 @@ export const ATabs = ({
 		rejectDrop={true}
 		componentObj={componentObj}
 		{...rest}>
-			<Tabs
-			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+			<Tabs className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 				{
 					componentObj.items.map((step: any, index: number) => <Tab
 						onClick= {() => componentObj.selectedTab = index}
