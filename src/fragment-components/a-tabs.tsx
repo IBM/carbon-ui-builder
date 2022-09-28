@@ -19,7 +19,6 @@ import {
 } from '../utils/fragment-tools';
 
 export const ATabsSettingsUI = ({ selectedComponent, setComponent }: any) => {
-
 	const updateListItems = (key: string, value: any, index: number) => {
 		const step = {
 			...selectedComponent.items[index],
@@ -55,7 +54,6 @@ export const ATabsSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			</div>
 		</>;
 	};
-
 	const updateStepList = (newList: any[]) => {
 		setComponent({
 			...selectedComponent,
@@ -76,22 +74,21 @@ export const ATabsSettingsUI = ({ selectedComponent, setComponent }: any) => {
 		template={template} />;
 };
 
-export const ATabsCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-			id="input-name"
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>;
-};
+export const ATabsCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	id="input-name"
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}}
+/>;
+
 
 export const ATabs = ({
 	children,
@@ -123,7 +120,8 @@ export const ATabs = ({
 									if (index === componentObj.selectedTab) {
 										return {
 											...step,
-											items:[ ...step.items,
+											items: [
+												...step.items,
 												dragObj.component
 											]
 										};
@@ -137,7 +135,6 @@ export const ATabs = ({
 										component: {
 											...componentObj,
 											items
-
 										}
 									})
 								}, false);
@@ -165,13 +162,15 @@ export const componentInfo: ComponentInfo = {
 	select={select}
 	remove={remove}
 	selected={selected}>
-		{componentObj.items.map((tab: any) => {
-			if (tab.items && tab.items.length > 0) {
-				return tab.items.map((item: any) => {
-					return renderComponents(item, outline);
-				});
-			} return [];
-		})}
+		{
+			componentObj.items.map((tab: any) => {
+				if (tab.items && tab.items.length > 0) {
+					return tab.items.map((item: any) => {
+						return renderComponents(item, outline);
+					});
+				} return [];
+			})
+		}
 	</ATabs>,
 	keywords: ['tabs', 'tab'],
 	name: 'Tabs',
@@ -217,8 +216,8 @@ export const componentInfo: ComponentInfo = {
 					${json.items.map((step: any) => `<ibm-tab
 						heading="${step.labelText}"
 						[disabled]=${step.disabled}>
-							${step.items && step.items.length > 0 ?
-								`<section>
+							${step.items && step.items.length > 0
+								? `<section>
 									${step.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 								</section>`
 							: ''}
@@ -241,8 +240,8 @@ export const componentInfo: ComponentInfo = {
 					key= {${index}}
 					disabled={${step.disabled}}
 					label="${step.labelText}">
-						${step.items && step.items.length > 0 ?
-							`<section>
+						${step.items && step.items.length > 0
+							? `<section>
 								${step.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 							</section>`
 						: ''}
