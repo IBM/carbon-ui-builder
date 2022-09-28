@@ -10,6 +10,13 @@ const markdownContainerStyle = css`
 	margin: 1rem 3rem;
 `;
 
+const centerStyle = css`
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+`;
+
 export const GithubFilePreview = ({
 	path,
 	editorHeight,
@@ -41,7 +48,7 @@ export const GithubFilePreview = ({
 			suffix === 'svg' ||
 			suffix === 'ico'
 		) {
-			return <img className='center' src={`data:image/${suffix};base64,${fileContentBase64}`} />;
+			return <img className={centerStyle} src={`data:image/${suffix};base64,${fileContentBase64}`} />;
 		}
 
 		if (suffix === 'md') {

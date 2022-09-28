@@ -97,6 +97,10 @@ const separatorStyle = css`
 	display: inline-block;
 `;
 
+const previewContainerStyle = css`
+	height: 100%;
+`;
+
 const findNth = (heystack: string, needle: string, n: number) => {
 	// finds the index of n-th occurance of needle in heystack
 	let position = -1;
@@ -238,7 +242,7 @@ export const GithubNavigator = ({ basePath, path, repoName, repoOrg, showToolbar
 		}
 		{
 			(state.fragmentState || state.fileContent)
-				? <div>
+				? <div className={previewContainerStyle}>
 					<GithubFilePreview
 						editorHeight='calc(100vh - 3rem)'
 						fragmentState={state.fragmentState}
