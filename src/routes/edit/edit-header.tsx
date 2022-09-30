@@ -47,7 +47,6 @@ const editHeader = css`
 			}
 			.date-wrap {
 				font-size: 12px;
-				font-style: italic;
 				color: black;
 				padding-left: 12px;
 			}
