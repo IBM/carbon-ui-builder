@@ -32,18 +32,18 @@ export const UISlider = ({ state }: {
 	}
 
 	return <Slider
-	id="slider"
-	labelText={state.labelText}
-	min={state.min}
-	max={state.max}
-	value={state.value}
-	disabled={state.disabled}
-	step={state.step}
-	hideTextInput={state.hideTextInput}
-	stepMultiplier={state.stepMultiplier}
-	minLabel={state.minLabel}
-	maxLabel={state.maxLabel}
-	light={state.light}
-	className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+		id="slider"
+		labelText={state.labelText}
+		min={state.min}
+		max={state.max}
+		value={state.value}
+		disabled={state.disabled}
+		step={state.step}
+		hideTextInput={state.hideTextInput}
+		stepMultiplier={state.stepMultiplier}
+		minLabel={state.minLabel}
+		maxLabel={state.maxLabel}
+		light={state.light}
+		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 	</Slider>;
 };

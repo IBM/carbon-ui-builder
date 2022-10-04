@@ -28,8 +28,7 @@ export const ASliderSettingsUI = ({ selectedComponent, setComponent }: any) => {
 					...selectedComponent,
 					disabled: checked
 				});
-			}}
-		/>
+			}} />
 
 		<Checkbox
 			labelText='Hide text input'
@@ -40,8 +39,7 @@ export const ASliderSettingsUI = ({ selectedComponent, setComponent }: any) => {
 					...selectedComponent,
 					hideTextInput: checked
 				});
-			}}
-		/>
+			}} />
 
 		<Checkbox
 			labelText='Light'
@@ -52,8 +50,8 @@ export const ASliderSettingsUI = ({ selectedComponent, setComponent }: any) => {
 					...selectedComponent,
 					light: checked
 				});
-			}}
-		/>
+			}} />
+
 		<TextInput
 			value={selectedComponent.labelText}
 			labelText='Slider label'
@@ -120,21 +118,20 @@ export const ASliderSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	</>;
 };
 
-export const ASliderCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>;
-};
+export const ASliderCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}}
+/>;
+
 
 export const ASlider = ({
 	children,
