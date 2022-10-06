@@ -55,6 +55,7 @@ export const GithubFilePreview = ({
 			height={editorHeight || '100vh'}
 			language={filenameToLanguage(path || '')}
 			value={fileContent}
+			options={{ readOnly: true }}
 		/>;
 	}
 

@@ -119,6 +119,7 @@ const CodeView = ({ code, selectedFilename }: any) => {
 			height='calc(100% - 32px)'
 			language={filenameToLanguage(selectedFilename)}
 			value={codeString}
+			options={{ readOnly: true }}
 		/>
 	</div>;
 };
@@ -216,7 +217,7 @@ export const ExportModal = () => {
 						height={contentHeight}
 						language='json'
 						value={jsonCode}
-					/>
+						options={{ readOnly: true }} />
 				</Tab>
 				<Tab
 					id='image'
