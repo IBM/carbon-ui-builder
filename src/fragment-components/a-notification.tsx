@@ -120,16 +120,14 @@ export const ANotificationSettingsUI = ({ selectedComponent, setComponent }: any
 			})} />
 		{
 			selectedComponent.variantSelector === 'toastNotification'
-			? <>
-			<TextInput
+			? <TextInput
 				light
 				value={selectedComponent.captionText}
 				labelText='Caption text'
 				onChange={(event: any) => setComponent({
 					...selectedComponent,
 					captionText: event.currentTarget.value
-				})} />
-			</> :
+				})} /> :
 			<TextInput
 				light
 				value={selectedComponent.actionButtonText}
@@ -156,11 +154,10 @@ export const ANotificationCodeUI = ({ selectedComponent, setComponent }: any) =>
 				}
 			});
 		}}
-	/>
+	/>;
 };
 
 export const ANotification = ({
-	children,
 	componentObj,
 	...rest
 }: any) => {
@@ -187,7 +184,7 @@ export const ANotification = ({
 				}
 				timeout={0}
 				title={componentObj.title} />
-				:  <InlineNotification
+				: <InlineNotification
 				className={cx(preventCheckEventStyle, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}
 				kind={componentObj.kind}
 				actions={
@@ -235,15 +232,15 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => ``,
-			outputs: ({ json }) => ``,
+			inputs: ({ json }) => '',
+			outputs: ({ json }) => '',
 			imports: [''],
 			code: ({ json }) => {
 				return ``;
 			}
 		},
 		react: {
-			imports: ['Link'],
+			imports: [''],
 			code: ({ json }) => {
 				return ``;
 			}

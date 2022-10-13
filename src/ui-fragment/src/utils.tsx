@@ -14,7 +14,7 @@ import { UIExpandableTile } from './components/ui-expandable-tile';
 import { UIGrid } from './components/ui-grid';
 import { UILink } from './components/ui-link';
 import { UILoading } from './components/ui-loading';
-import { UINotification} from './components/ui-notification';
+import { UINotification } from './components/ui-notification';
 import { UINumberInput } from './components/ui-number-input';
 import { UIOverflowMenu } from './components/ui-overflow-menu';
 import { UIOverflowMenuItem } from './components/ui-overflow-menu-item';

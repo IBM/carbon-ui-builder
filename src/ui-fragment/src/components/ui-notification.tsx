@@ -8,17 +8,17 @@ import { CssClasses } from '../types';
 
 export interface NotificationState {
 	type: string;
-	lowContrast?: boolean,
-	hideCloseButton?: boolean,
-	kind?: string,
-	variantSelector?: string,
-	link?: string,
-	subtitleText?: string,
-	linkText?: string,
-	title?: string,
-	iconDescription?: string,
-	captionText?: string,
-	actionButtonText?: string,
+	lowContrast?: boolean;
+	hideCloseButton?: boolean;
+	kind?: string;
+	variantSelector?: string;
+	link?: string;
+	subtitleText?: string;
+	linkText?: string;
+	title?: string;
+	iconDescription?: string;
+	captionText?: string;
+	actionButtonText?: string;
 	cssClasses?: CssClasses[];
 }
 
@@ -51,7 +51,7 @@ export const UINotification = ({ state }: {
 			}
 			timeout={0}
 			title={state.title} />
-			:  <InlineNotification
+			: <InlineNotification
 			className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}
 			kind={state.kind}
 			actions={
