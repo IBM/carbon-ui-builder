@@ -10,6 +10,7 @@ import * as combobox from './a-combobox';
 import * as dropdown from './a-dropdown';
 import * as fragment from './a-fragment';
 import * as grid from './a-grid';
+import * as notification from './a-notification';
 import * as numberinput from './a-numberinput';
 import * as radio from './a-radio';
 import * as radioGroup from './a-radio-group';
@@ -48,6 +49,7 @@ export { AFragment, AFragmentSettingsUI, AFragmentCodeUI } from './a-fragment';
 export { AGrid, AGridSettingsUI } from './a-grid';
 export { ALoading, ALoadingCodeUI, ALoadingSettingsUI } from './a-loading';
 export { ALink, ALinkSettingsUI, ALinkCodeUI } from './a-link';
+export { ANotification, ANotificationSettingsUI, ANotificationCodeUI } from './a-notification';
 export { ANumberInput, ANumberInputSettingsUI, ANumberInputCodeUI } from './a-numberinput';
 export { AProgressIndicator, AProgressIndicatorSettingsUI, AProgressIndicatorCodeUI } from './a-progress-indicator';
 export { ARow, ARowSettingsUI } from './a-row';
@@ -87,6 +89,7 @@ export const allComponents = {
 	radio,
 	radioGroup,
 	link,
+	notification,
 	numberinput,
 	progressIndicator,
 	row,

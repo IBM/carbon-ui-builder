@@ -14,6 +14,7 @@ import { UIExpandableTile } from './components/ui-expandable-tile';
 import { UIGrid } from './components/ui-grid';
 import { UILink } from './components/ui-link';
 import { UILoading } from './components/ui-loading';
+import { UINotification} from './components/ui-notification';
 import { UINumberInput } from './components/ui-number-input';
 import { UIOverflowMenu } from './components/ui-overflow-menu';
 import { UIOverflowMenuItem } from './components/ui-overflow-menu-item';
@@ -138,6 +139,9 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'link':
 			return <UILink key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'notification':
+			return <UINotification key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'number-input':
 			return <UINumberInput key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
