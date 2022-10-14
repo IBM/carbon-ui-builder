@@ -250,7 +250,7 @@ export const componentInfo: ComponentInfo = {
 						[notificationObj]="{
 							type: "${nameStringToVariableString(json.codeContext?.name)}Kind",
 							title: "${nameStringToVariableString(json.codeContext?.name)}Title",
-							subtitle: "${json.subtitleText}",
+							subtitle: "${nameStringToVariableString(json.codeContext?.name)}SubtitleText",
 							caption: "${nameStringToVariableString(json.codeContext?.name)}CaptionText",
 							lowContrast: ${nameStringToVariableString(json.codeContext?.name)}LowContrast,
 							showClose: ${nameStringToVariableString(json.codeContext?.name)}ShowClose,
