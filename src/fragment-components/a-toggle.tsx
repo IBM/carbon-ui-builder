@@ -180,7 +180,7 @@ export const componentInfo: ComponentInfo = {
 							name: "${json.codeContext?.name}",
 							value: checked
 						}
-					})}
+					})} 
 					${reactClassNamesFromComponentObj(json)} />`;
 			}
 		}
