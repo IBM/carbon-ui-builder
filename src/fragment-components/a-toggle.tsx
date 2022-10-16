@@ -175,7 +175,7 @@ export const componentInfo: ComponentInfo = {
 					size="${json.size}"
 					id="${json.codeContext?.name}"
 					checked={state["${json.codeContext?.name}"]?.checked}
-					onChange={(checked) => handleInputChange({
+					onToggle={(checked) => handleInputChange({
 						target: {
 							name: "${json.codeContext?.name}",
 							value: checked
