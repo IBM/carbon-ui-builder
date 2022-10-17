@@ -63,10 +63,10 @@ export const ANotificationSettingsUI = ({ selectedComponent, setComponent }: any
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => {
 				setComponent({
-				...selectedComponent,
-				variantSelector: event.selectedItem.id
-			});
-		}} />
+					...selectedComponent,
+					variantSelector: event.selectedItem.id
+				});
+			}} />
 		<Dropdown
 			id='notification-kind'
 			label='Notification kind'
@@ -76,10 +76,10 @@ export const ANotificationSettingsUI = ({ selectedComponent, setComponent }: any
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => {
 				setComponent({
-				...selectedComponent,
-				kind: event.selectedItem.id
-			});
-		}} />
+					...selectedComponent,
+					kind: event.selectedItem.id
+				});
+			}} />
 		<TextInput
 			light
 			value={selectedComponent.title}
