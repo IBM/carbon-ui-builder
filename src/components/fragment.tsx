@@ -4,10 +4,7 @@ import { Add32, DropPhoto32 } from '@carbon/icons-react';
 import './fragment-preview.scss';
 import { css, cx } from 'emotion';
 import { allComponents, ComponentInfoRenderProps } from '../fragment-components';
-import {
-	getFragmentsFromLocalStorage,
-	getRandomId
-} from '../utils/fragment-tools';
+import { getFragmentsFromLocalStorage, getRandomId } from '../utils/fragment-tools';
 import { GlobalStateContext } from '../context';
 import { getDropIndex } from '../routes/edit/tools';
 import { getAllFragmentStyleClasses } from '../ui-fragment/src/utils';
@@ -48,6 +45,8 @@ const allowDrop = (event: any) => {
 	event.preventDefault();
 };
 
+let componentCounter = 2; // actually initialized (again) in Fragment
+
 export const getComponentById = (componentObj: any, id: number) => {
 	if (!componentObj || !id) {
 		return undefined;
@@ -77,6 +76,29 @@ export const getSelectedComponent = (fragment: any) => {
 	return getComponentById(fragment.data, fragment.selectedComponentId);
 };
 
+export const getHighestId = (componentObj: any) => {
+	if (!componentObj) {
+		return 0;
+	}
+
+	if (!componentObj.items || !componentObj.items.length) {
+		return +componentObj.id || 0;
+	}
+
+	return Math.max(...componentObj.items.map((item: any) => getHighestId(item)), (+componentObj.id || 0));
+};
+
+export const getNewId = () => {
+	const id = '' + componentCounter++;
+
+	// beyond 20 digits, js goes to scientific notation so we'd get collisions
+	if (id.length > 20) {
+		return getRandomId();
+	}
+
+	return id;
+};
+
 export const stateWithoutComponent = (state: any, componentId: number) => {
 	if (state.items) {
 		const componentIndex = state.items.findIndex((component: any) => component.id === componentId);
@@ -99,9 +121,9 @@ export const stateWithoutComponent = (state: any, componentId: number) => {
 export const initializeIds = (componentObj: any, forceNewIds = false) => {
 	let id = null;
 	if (forceNewIds) {
-		id = getRandomId();
+		id = getNewId();
 	}
-	id = id || componentObj.id || getRandomId();
+	id = id || componentObj.id || getNewId();
 	// name is used in form items and for angular inputs and outputs variable names
 	let name = componentObj.codeContext?.name;
 	if (name === undefined || forceNewIds) {
@@ -179,7 +201,7 @@ export const updatedState = (state: any, dragObj: any, dropInId?: number, dropIn
 		// convert into a list of components, move current component into list
 		return {
 			// TODO should this be a `type: container`?
-			id: getRandomId(),
+			id: getNewId(),
 			items: updatedList([{ ...state }], dragObj.component, dropInIndex)
 		};
 	}
@@ -223,6 +245,9 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 	// try to use the state but get the fragments from local storage if state is not available
 	// localStorage info is used when rendering and can't be used for interaction
 	const { fragments } = globalState || { fragments: getFragmentsFromLocalStorage() };
+
+	// initialize component counter
+	componentCounter = getHighestId(fragment.data) + 1;
 
 	const drop = (event: any) => {
 		event.stopPropagation();
