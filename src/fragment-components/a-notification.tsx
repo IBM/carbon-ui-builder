@@ -162,7 +162,7 @@ export const ANotification = ({
 		{...rest}>
 			{
 				componentObj.variantSelector === 'toastNotification'
-				?	<ToastNotification
+					? <ToastNotification
 				className={cx(preventCheckEventStyle, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}
 				caption={componentObj.captionText}
 				hideCloseButton={componentObj.hideCloseButton}
@@ -177,7 +177,7 @@ export const ANotification = ({
 				}
 				timeout={0}
 				title={componentObj.title} />
-				:	<InlineNotification
+					: <InlineNotification
 				className={cx(preventCheckEventStyle, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}
 				kind={componentObj.kind}
 				hideCloseButton={componentObj.hideCloseButton}
@@ -231,28 +231,25 @@ export const componentInfo: ComponentInfo = {
 					${json.variantSelector === 'toastNotification' ? `caption: "${json.captionText}",` : `message: "${json.captionText}",`}
 					lowContrast:${json.lowContrast},
 					showClose: ${!json.hideCloseButton},
-					${json.link
-					? `links: [{
-							href: "${json.link}",
-							text: "${json.linkText}"
-						}]`
-					: ''}
+					${json.link ? `links: [{ href: "${json.link}", text: "${json.linkText}" }]` : ''}
 					${json.actionButtonText
-					? `actions: [{
-							text: "${json.actionButtonText}",
-							click: "${nameStringToVariableString(json.codeContext?.name)}ActionClick.emit()"
-						}];`
-					: ''}
+						? `actions: [
+							{
+								text: "${json.actionButtonText}",
+								click: "${nameStringToVariableString(json.codeContext?.name)}ActionClick.emit()"
+							}];`
+						: ''
+					}
 				};`,
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ActionClick = new EventEmitter<any>();`,
 			imports: ['NotificationModule', 'ButtonModule'],
 			code: ({ json }) => {
 				return `${json.variantSelector === 'toastNotification'
-					? `<ibm-toast
+						? `<ibm-toast
 					${angularClassNamesFromComponentObj(json)}
 					[notificationObj]="${nameStringToVariableString(json.codeContext?.name)}notificationObj">
 					</ibm-toast>`
-					: `<ibm-notification
+						: `<ibm-notification
 					${angularClassNamesFromComponentObj(json)}
 					[notificationObj]="${nameStringToVariableString(json.codeContext?.name)}notificationObj">
 					</ibm-notification>`
@@ -263,20 +260,21 @@ export const componentInfo: ComponentInfo = {
 			imports: ['ToastNotification','InlineNotification','NotificationActionButton'],
 			code: ({ json }) => {
 				return `${json.variantSelector === 'toastNotification'
-					? `<ToastNotification
+						? `<ToastNotification
 					caption="${json.captionText}"
 					hideCloseButton={${json.hideCloseButton}}
 					lowContrast={${json.lowContrast}}
 					kind="${json.kind}"
 					${json.subtitleText || json.link
-					? `subtitle=
+						? `subtitle=
 						{
 							<span>
 								${json.subtitleText}
 								${json.link ? `<a href="${json.link}">${json.linkText}</a>` : ''}
 							</span>
 						}
-					`: ''}
+						`: ''
+					}
 					timeout={${0}}
 					title="${json.title}"
 					onClose={(selectedItem) => handleInputChange({
@@ -286,7 +284,7 @@ export const componentInfo: ComponentInfo = {
 						}
 					})}
 					${reactClassNamesFromComponentObj(json)} />`
-					: `<InlineNotification
+						: `<InlineNotification
 					kind="${json.kind}"
 					hideCloseButton={${json.hideCloseButton}}
 					lowContrast={${json.lowContrast}}
@@ -302,14 +300,15 @@ export const componentInfo: ComponentInfo = {
 						</NotificationActionButton>
 					}
 					${json.subtitleText || json.link
-					? `subtitle=
+						? `subtitle=
 						{
 							<span>
 								${json.subtitleText}
 								${json.link ? `<a href="${json.link}">${json.linkText}</a>` : ''}
 							</span>
 						}
-					`: ''}
+						`: ''
+					}
 					title="${json.title}"
 					onClose={(selectedItem) => handleInputChange({
 						target: {
