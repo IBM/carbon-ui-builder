@@ -114,7 +114,7 @@ export const ANotificationSettingsUI = ({ selectedComponent, setComponent }: any
 			})} />
 		{
 			selectedComponent.variantSelector === 'toastNotification'
-			? <TextInput
+				? <TextInput
 			light
 			value={selectedComponent.captionText}
 			labelText='Caption text'
@@ -122,7 +122,7 @@ export const ANotificationSettingsUI = ({ selectedComponent, setComponent }: any
 				...selectedComponent,
 				captionText: event.currentTarget.value
 			})} />
-			: <TextInput
+				: <TextInput
 			light
 			value={selectedComponent.actionButtonText}
 			labelText='Action button text'

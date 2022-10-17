@@ -35,7 +35,7 @@ export const UINotification = ({ state }: {
 	return <>
 		{
 			state.variantSelector === 'toastNotification'
-			?	<ToastNotification
+				? <ToastNotification
 			className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}
 			caption={state.captionText}
 			iconDescription={state.iconDescription}
@@ -51,7 +51,7 @@ export const UINotification = ({ state }: {
 			}
 			timeout={0}
 			title={state.title} />
-			:	<InlineNotification
+				: <InlineNotification
 			className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}
 			kind={state.kind}
 			actions={
