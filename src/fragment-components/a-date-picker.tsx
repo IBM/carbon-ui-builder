@@ -104,64 +104,63 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 			onChange={(checked: boolean) => setComponent({
 				...selectedComponent,
 				light: checked
-			})} />
+		})} />
 		{
 			selectedComponent.datePickerType !== 'timePicker'
 				? <>
-				<Dropdown
-					label='Size'
-					titleText='Size'
-					items={size}
-					selectedItem={size.find(item => item.id === selectedComponent.size)}
-					itemToString={(item: any) => (item ? item.text : '')}
-					onChange={(event: any) => setComponent({
-						...selectedComponent,
-						size: event.selectedItem.id
-				})} />
-				<Checkbox
-					labelText='Disabled'
-					id='disable'
-					checked={selectedComponent.disabled}
-					onChange={(checked: boolean) => setComponent({
-						...selectedComponent,
-						disabled: checked
-					})} />
-				<Checkbox
-					labelText='Invalid'
-					id='invalid'
-					checked={selectedComponent.invalid}
-					onChange={(checked: boolean) =>
-					setComponent({
-						...selectedComponent,
-						invalid: checked
-					})} />
-				<TextInput
-					value={selectedComponent.rangeStartLabel}
+			<Dropdown
+				label='Size'
+				titleText='Size'
+				items={size}
+				selectedItem={size.find(item => item.id === selectedComponent.size)}
+				itemToString={(item: any) => (item ? item.text : '')}
+				onChange={(event: any) => setComponent({
+					...selectedComponent,
+					size: event.selectedItem.id
+			})} />
+			<Checkbox
+				labelText='Disabled'
+				id='disable'
+				checked={selectedComponent.disabled}
+				onChange={(checked: boolean) => setComponent({
+					...selectedComponent,
+					disabled: checked
+			})} />
+			<Checkbox
+				labelText='Invalid'
+				id='invalid'
+				checked={selectedComponent.invalid}
+				onChange={(checked: boolean) => setComponent({
+					...selectedComponent,
+					invalid: checked
+			})} />
+			<TextInput
+				value={selectedComponent.rangeStartLabel}
+				labelText='Date picker label'
+				onChange={(event: any) => setComponent({
+					...selectedComponent,
+					rangeStartLabel: event.currentTarget.value
+			})} />
+			{
+				selectedComponent.datePickerType === 'range'
+					&& <TextInput
+					value={selectedComponent.rangeEndLabel}
 					labelText='Date picker label'
 					onChange={(event: any) => setComponent({
 						...selectedComponent,
-						rangeStartLabel: event.currentTarget.value
+						rangeEndLabel: event.currentTarget.value
 					})} />
-				{
-					selectedComponent.datePickerType === 'range'
-					&& <TextInput
-						value={selectedComponent.rangeEndLabel}
-						labelText='Date picker label'
-						onChange={(event: any) => setComponent({
-							...selectedComponent,
-							rangeEndLabel: event.currentTarget.value
-						})} />
-				}
+			}
 				</> :
-				<DraggableTileList
-					dataList={[...selectedComponent.items]}
-					setDataList={updateStepList}
-					updateItem={updateListItems}
-					defaultObject={{
-						text: 'New timezone',
-						value: 'New timezoneValue'
-					}}
-					template={template} />
+			<DraggableTileList
+				dataList={[...selectedComponent.items]}
+				setDataList={updateStepList}
+				updateItem={updateListItems}
+				defaultObject={{
+					text: 'New timezone',
+					value: 'New timezoneValue'
+				}}
+				template={template} />
 		}
 	</>;
 };
@@ -189,7 +188,7 @@ export const ADatePicker = ({
 		{...rest}>
 			{
 				componentObj.datePickerType === 'timePicker'
-				?	<TimePicker id="time-picker" light={componentObj.light}>
+					? <TimePicker id="time-picker" light={componentObj.light}>
 						<TimePickerSelect labelText="time-picker-1" id="time-picker-select-1">
 							<SelectItem value="AM" text="AM" />
 							<SelectItem value="PM" text="PM" />
@@ -203,8 +202,8 @@ export const ADatePicker = ({
 								/>)
 							}
 						</TimePickerSelect>
-				</TimePicker>
-				:	<DatePicker
+					</TimePicker>
+					: <DatePicker
 					dateFormat={componentObj.dateFormat}
 					datePickerType={componentObj.datePickerType}
 					light={componentObj.light}>
@@ -215,8 +214,7 @@ export const ADatePicker = ({
 							type="text"
 							size={componentObj.size}
 							disabled={componentObj.disabled}
-							invalid={componentObj.invalid}
-						/>
+							invalid={componentObj.invalid} />
 						{
 							componentObj.datePickerType === 'range' &&
 								<DatePickerInput
@@ -226,10 +224,9 @@ export const ADatePicker = ({
 									type="text"
 									size={componentObj.size}
 									disabled={componentObj.disabled}
-									invalid={componentObj.invalid}
-								/>
+									invalid={componentObj.invalid} />
 						}
-				</DatePicker>
+					</DatePicker>
 			}
 		</AComponent>
 	);
@@ -273,7 +270,7 @@ export const componentInfo: ComponentInfo = {
 			imports: ['DatePickerModule', 'TimePickerModule', 'TimePickerSelectModule'],
 			code: ({ json }) => {
 				return `${json.datePickerType === 'timePicker'
-				? `<ibm-timepicker
+					? `<ibm-timepicker
 					${angularClassNamesFromComponentObj(json)}
 					${json.light ? '[theme]="light"' : '[theme]="dark"'}
 					[invalid]="${json.invalid}"
@@ -282,16 +279,18 @@ export const componentInfo: ComponentInfo = {
 					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 					[disabled]="${json.disabled}">
 						<ibm-timepicker-select ${json.light
-						? '[theme]="light"'
-						: '[theme]="dark"'}
+							? '[theme]="light"'
+							: '[theme]="dark"'
+						}
 						[disabled]="${json.disabled}"
 						display="inline">
 								<option selected value="AM">AM</option>
 								<option value="PM">PM</option>
 						</ibm-timepicker-select>
 						<ibm-timepicker-select ${json.light
-						? '[theme]="light"'
-						: '[theme]="dark"'}
+							? '[theme]="light"'
+							: '[theme]="dark"'
+						}
 						[disabled]="${json.disabled}"
 						display="inline">
 							${json.items.map((step: any) => (
@@ -307,8 +306,9 @@ export const componentInfo: ComponentInfo = {
 					? `<ibm-date-picker-input
 						${angularClassNamesFromComponentObj(json)}
 						${json.light
-						? '[theme]="light"'
-						: '[theme]="dark"'}
+							? '[theme]="light"'
+							: '[theme]="dark"'
+						}
 						[label]="'${json.rangeStartLabel}'"
 						[placeholder]="'${json.placeHolder}'"
 						[disabled]="${json.disabled}"
@@ -325,8 +325,9 @@ export const componentInfo: ComponentInfo = {
 						[placeholder]="'${json.placeHolder}'"
 						[size]="${json.size}"
 						${json.light
-						? '[theme]="light"'
-						: '[theme]="dark"'}
+							? '[theme]="light"'
+							: '[theme]="dark"'
+						}
 						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 						[disabled]="${json.disabled}"
 						[invalid]="${json.invalid}"
@@ -343,8 +344,9 @@ export const componentInfo: ComponentInfo = {
 						id="initial-value-datepicker"
 						[placeholder]="$'{json.placeHolder}'"
 						${json.light
-						? '[theme]="light"'
-						: '[theme]="dark"'}
+							? '[theme]="light"'
+							: '[theme]="dark"'
+						}
 						[disabled]="${json.disabled}"
 						[invalid]="${json.invalid}"
 						[invalidText]="'A valid value is required'"
@@ -391,7 +393,7 @@ export const componentInfo: ComponentInfo = {
 							invalid={${json.invalid}}
 						/>
 						${json.datePickerType === 'range'
-						? `<DatePickerInput
+							? `<DatePickerInput
 							id="date-picker-range-end"
 							placeholder="${json.placeHolder}"
 							labelText="${json.rangeEndLabel}"
@@ -399,7 +401,8 @@ export const componentInfo: ComponentInfo = {
 							size="${json.size}"
 							disabled={${json.disabled}}
 							invalid={${json.invalid}} />`
-						: '' }
+							: ''
+						}
 					</DatePicker>`
 				}`;
 			}
