@@ -12,8 +12,8 @@ const notificationStyle = { minWidth: '30rem' };
 const notificationAreaStyle = css`
 	left: 50%;
 	transform: translateX(-50%);
-	position: absolute;
-	z-index: 2;
+	position: fixed;
+	z-index: 8;
 	min-width: 30rem;
 	top: 2rem;
 `;
