@@ -132,7 +132,6 @@ export const ASliderCodeUI = ({ selectedComponent, setComponent }: any) => <Text
 	}}
 />;
 
-
 export const ASlider = ({
 	children,
 	componentObj,
