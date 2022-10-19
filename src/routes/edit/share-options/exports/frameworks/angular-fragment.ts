@@ -130,6 +130,30 @@ const getAllSubfragments = (json: any, fragments: any[]) => {
 	return sharedComponents;
 };
 
+const getOtherImportModuleNames = (otherImportString: any) => {
+	const imports: any = [];
+	let index = 1;
+	if (otherImportString) {
+		const otherImports = otherImportString.split(' ');
+		while (otherImports[index]) {
+			if (otherImports[index - 1] === 'import' && !imports.includes(otherImports[index])
+			&& otherImports[index + 1] === 'from') {
+				imports.push(otherImports[index]);
+			}
+
+			if (otherImports[index - 1] === '{') {
+				imports.push(otherImports[index]);
+				while (otherImports[index + 1] !== '}') {
+					imports.push(otherImports[index]);
+					index++;
+				}
+			}
+			index++;
+		}
+	}
+	return imports.map((el: any) => el.replace(',',''));
+};
+
 const otherImportsFromComponentObj = (json: any, fragments?: any[]) => {
 	let imports = '';
 	for (const component of Object.values(allComponents)) {
@@ -179,6 +203,7 @@ const getComponentCode = (fragment: any, fragments: any[]) => {
 		`import { NgModule } from "@angular/core";
 		import { ${jsonToAngularImports(fragment.data).join(', ')} } from 'carbon-components-angular';
 		import { ${classNameFromFragment(fragment)} } from "./${tagNameFromFragment(fragment)}.component";
+			${otherImportsFromComponentObj(fragment.data, fragments)}
 		${
 			Object.values(subFragments).map((f) =>
 				`import { ${classNameFromFragment(f)}Module} from "../${tagNameFromFragment(f)}/${tagNameFromFragment(f)}.module";`).join('\n')
@@ -187,6 +212,7 @@ const getComponentCode = (fragment: any, fragments: any[]) => {
 		@NgModule({
 			imports: [${[
 				...jsonToAngularImports(fragment.data),
+				getOtherImportModuleNames(otherImportsFromComponentObj(fragment.data, fragments)),
 				...Object.values(subFragments).map((fragment) => `${classNameFromFragment(fragment)}Module`)
 			].join(', ')}],
 			declarations: [${classNameFromFragment(fragment)}],
