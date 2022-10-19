@@ -5,6 +5,7 @@ import parserCss from 'prettier/parser-postcss';
 import { allComponents } from '../../../../../fragment-components';
 import { getAllFragmentStyleClasses } from '../../../../../ui-fragment/src/utils';
 import { classNameFromFragment, hasFragmentStyleClasses, tagNameFromFragment } from '../../../../../utils/fragment-tools';
+import { sortedUniq } from 'lodash';
 
 const format = (source: string, options?: Options | undefined) => {
 	// we're catching and ignorring errors so live editing doesn't throw errors
@@ -129,6 +130,27 @@ const getAllSubfragments = (json: any, fragments: any[]) => {
 	return sharedComponents;
 };
 
+const otherImportsFromComponentObj = (json: any, fragments?: any[]) => {
+	let imports = '';
+	for (const component of Object.values(allComponents)) {
+		if (json.type === component.componentInfo.type) {
+			if (component.componentInfo.codeExport.angular.otherImports) {
+				imports += component.componentInfo.codeExport.angular.otherImports({ json, fragments });
+				break;
+			}
+		}
+	}
+
+	if (json.items) {
+		imports += json.items.map((item: any) => otherImportsFromComponentObj(item, fragments)).join('\n');
+	}
+
+	// remove duplicate imports
+	imports = sortedUniq(imports.split('\n')).join('\n');
+
+	return imports;
+};
+
 const getComponentCode = (fragment: any, fragments: any[]) => {
 	const componentCode: any = {};
 	const subFragments = getAllSubfragments(fragment.data, fragments);
@@ -136,6 +158,7 @@ const getComponentCode = (fragment: any, fragments: any[]) => {
 	// component.ts
 	componentCode[`src/app/components/${tagNameFromFragment(fragment)}/${tagNameFromFragment(fragment)}.component.ts`] = format(
 		`import { Component, Input, Output, EventEmitter } from '@angular/core';
+			${otherImportsFromComponentObj(fragment.data, fragments)}
 		@Component({
 			selector: 'app-${tagNameFromFragment(fragment)}',
 			templateUrl: './${tagNameFromFragment(fragment)}.component.html'${hasFragmentStyleClasses(fragment) ? `,
