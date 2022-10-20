@@ -1,6 +1,6 @@
-# Carbon Components Builder - UI Fragment Composer by IBM
+# Carbon UI Builder - UI Fragment Composer by IBM
 
-Carbon Components Builder is a visual builder tool for Carbon UI components allowing you to
+Carbon UI Builder is a visual builder tool for Carbon UI components allowing you to
 build product pages in a fraction of time that it normally take.
 
 Export in seconds as
@@ -13,12 +13,12 @@ and incorporate in the existing product frontend.
 
 No coding required.
 
-[See it in action!](https://ibm.github.io/carbon-components-builder/)
+[See it in action!](https://builder.carbondesignsystem.com)
 
 ## Privacy
 
 All your data is safely stored on your computer, never leaving the browser.
-This means that the Carbon Components Builder works even if you don't have internet connection.
+This means that the Carbon UI Builder works even if you don't have internet connection.
 
 ## What's Carbon, anyway?
 

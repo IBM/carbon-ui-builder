@@ -24,7 +24,7 @@ export const ANumberInputSettingsUI = ({ selectedComponent, setComponent }: any)
 			label='Size'
 			titleText='Size'
 			items={sizeItems}
-			initialSelectedItem={sizeItems.find(item => item.id === selectedComponent.size)}
+			selectedItem={sizeItems.find(item => item.id === selectedComponent.size)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
@@ -171,8 +171,6 @@ export const ANumberInput = ({
 				light={componentObj.light}
 				allowEmpty={componentObj.allowEmpty}
 				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
-				{...componentObj}
-				{...rest}
 				type='number' />
 		</AComponent>
 	);
@@ -220,7 +218,7 @@ export const componentInfo: ComponentInfo = {
 					[helperText]="${nameStringToVariableString(json.codeContext?.name)}HelperText"
 					name="${json.codeContext?.name}"
 					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
-					(change)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value) || numberinput78Change.emit($event)"
+					(change)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
 					[label]="${nameStringToVariableString(json.codeContext?.name)}Label"
 					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 					[min]="${nameStringToVariableString(json.codeContext?.name)}Min"

@@ -8,16 +8,25 @@ import image from './../assets/component-icons/checkbox.svg';
 import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const ACheckboxSettingsUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-		value={selectedComponent.label}
-		labelText='Label'
-		onChange={(event: any) => {
-			setComponent({
+	return <>
+		<TextInput
+			value={selectedComponent.label}
+			labelText='Label'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					label: event.currentTarget.value
+				});
+			}} />
+		<Checkbox
+			labelText='Checked'
+			id='checkbox-checked'
+			checked={selectedComponent.checked}
+			onChange={(checked: any) => setComponent({
 				...selectedComponent,
-				label: event.currentTarget.value
-			});
-		}}
-	/>;
+				checked
+			})} />
+	</>;
 };
 
 export const ACheckboxCodeUI = ({ selectedComponent, setComponent }: any) => {
@@ -51,6 +60,7 @@ export const ACheckbox = ({
 				kind={componentObj.kind}
 				disabled={componentObj.disabled}
 				labelText={componentObj.label}
+				checked={componentObj.checked}
 				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
 		</AComponent>
 	);
@@ -70,7 +80,7 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked: boolean;`,
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${!!json.checked};`,
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}CheckedChange = new EventEmitter<boolean>();`,
 			imports: ['CheckboxModule'],
 			code: ({ json }) => {

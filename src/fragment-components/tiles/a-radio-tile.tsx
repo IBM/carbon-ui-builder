@@ -18,6 +18,7 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
+import { APlaceholder } from '../a-placeholder';
 
 export const ARadioTileSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const [fragment] = useFragment();
@@ -67,6 +68,7 @@ export const ARadioTileSettingsUI = ({ selectedComponent, setComponent }: any) =
 export const ARadioTileCodeUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TextInput
+			id='radio-tile-input-name-text-input'
 			value={selectedComponent.codeContext?.name}
 			labelText='Input name'
 			onChange={(event: any) => {
@@ -80,6 +82,7 @@ export const ARadioTileCodeUI = ({ selectedComponent, setComponent }: any) => {
 			}}
 		/>
 		<TextInput
+			id='radio-tile-value-text-input'
 			value={selectedComponent.codeContext?.value || ''}
 			labelText='Value*'
 			placeholder='Tile value'
@@ -128,7 +131,7 @@ export const ARadioTile = ({
 							formItemName: componentObj.codeContext?.formItemName
 						},
 						...(componentObj.light !== undefined ? { light: componentObj.light } : ''),
-						items: [{ type: 'text', text: 'New radio tile' }]
+						items: []
 					}
 				},
 				parentComponent.id,
@@ -141,8 +144,7 @@ export const ARadioTile = ({
 		<Adder
 		active={selected}
 		topAction={() => addRadio()}
-		bottomAction={() => addRadio(1)}
-		key={componentObj.id}>
+		bottomAction={() => addRadio(1)}>
 			<AComponent
 			componentObj={componentObj}
 			headingCss={css`display: block;`}
@@ -157,7 +159,9 @@ export const ARadioTile = ({
 				value={componentObj.codeContext?.value}
 				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
 				onDrop={onDrop}>
-					{children}
+					{
+						children && children.length > 0 ? children : <APlaceholder componentObj={componentObj} select={rest.select} />
+					}
 				</RadioTile>
 			</AComponent>
 		</Adder>
@@ -177,14 +181,15 @@ export const componentInfo: ComponentInfo = {
 		defaultChecked: false,
 		items: []
 	},
-	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <ARadioTile
+	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline }) => <ARadioTile
+		key={componentObj.id}
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
 		selected={selected}
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
-			{componentObj.items.map((item: any) => renderComponents(item))}
+			{componentObj.items.map((item: any) => renderComponents(item, outline))}
 	</ARadioTile>,
 	/**
 	 * Can only be added by adding tile-group or by clicking `plus` icon on top or bottom

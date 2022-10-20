@@ -39,6 +39,7 @@ import { CodePane } from './code-pane';
 import { SettingsContextPane } from './settings-context-pane';
 import { CodeContextPane } from './code-context-pane';
 import { useParams } from 'react-router-dom';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 const leftPaneWidth = '300px';
 const rightPaneWidth = '302px';
@@ -98,7 +99,6 @@ export const leftPane = css`
 	width: ${leftPaneWidth};
 	left: -${leftPaneWidth};
 	height: calc(100% - 4rem);
-	padding: 0 15px;
 	box-shadow: inset -1px 0px #d8d8d8;
 	z-index: 999;
 	overflow-y: auto;
@@ -111,8 +111,16 @@ export const leftPane = css`
 
 export const leftPaneHeader = css`
 	position: fixed;
-	width: 270px;
+	width: 300px;
 	background: white;
+`;
+
+export const leftPaneContent = css`
+	padding: 0 15px;
+
+	.bx--form-item {
+		margin-top: 1rem;
+	}
 `;
 
 export const actionIconStyle = css`
@@ -152,10 +160,6 @@ const rightPanel = css`
 			margin-left: 0;
 		}
 
-		.layers-widget .bx--accordion__content {
-			padding: 1px;
-		}
-
 		.iot--list-item {
 			padding-right: 0;
 		}
@@ -193,6 +197,8 @@ export const Edit = () => {
 		updateFragment,
 		clearActionHistory,
 		addAction,
+		undoAction,
+		redoAction,
 		styleClasses
 	} = useContext(GlobalStateContext);
 
@@ -227,11 +233,59 @@ export const Edit = () => {
 	const selectedComponent = getSelectedComponent(fragment);
 	const parentComponent = getParentComponent(fragment.data, selectedComponent);
 
+	const duplicateSelectedComponent = () => {
+		if (!selectedComponent) {
+			return;
+		}
+		updateFragment({
+			...fragment,
+			data: updatedState(
+				fragment.data, {
+					type: 'insert',
+					component: JSON.parse(JSON.stringify(initializeIds(selectedComponent, true))) // full clone, new Ids
+				},
+				parentComponent.id,
+				parentComponent.items.indexOf(selectedComponent) + 1
+			)
+		});
+	};
+
+	const deleteSelectedComponent = (f = fragment) => {
+		if (!f.selectedComponentId) {
+			return;
+		}
+
+		updateFragment({
+			...f,
+			data: stateWithoutComponent(f.data, f.selectedComponentId),
+			selectedComponentId: 0
+		});
+	};
+
+	useHotkeys('ctrl+d, alt+d, option+d', (event) => {
+		event.preventDefault();
+		duplicateSelectedComponent();
+	},
+	{
+		keyup: true
+	}, [fragment]);
+
+	useHotkeys('delete, backspace', (event) => {
+		event.preventDefault();
+		deleteSelectedComponent(fragment);
+	},
+	{
+		keyup: true
+	}, [fragment]);
+
+	useHotkeys('ctrl+z, cmd+z, alt+z, option+z', undoAction, { keyup: true }, [undoAction]);
+	useHotkeys('ctrl+shift+z, cmd+shift+z, alt+shift+z, option+shift+z', redoAction, { keyup: true }, [redoAction]);
+
 	return (
 		<div
-			id='edit-wrapper'
-			className={editPageContent}>
-			{fragment && <EditHeader fragment={fragment} />}
+		id='edit-wrapper'
+		className={editPageContent}>
+			{fragment && <EditHeader fragment={fragment} setFragment={updateFragment} />}
 			<ElementsPane isActive={selectedLeftPane === SelectedLeftPane.ELEMENTS} />
 			<StylePane isActive={selectedLeftPane === SelectedLeftPane.STYLE} />
 			<CodePane isActive={selectedLeftPane === SelectedLeftPane.CODE} />
@@ -252,20 +306,21 @@ export const Edit = () => {
 					isActive={selectedLeftPane === SelectedLeftPane.STYLE}>
 						Style
 					</SideNavLink>
-					<SideNavLink
+					{ /* hide Code pane for now */
+					/* <SideNavLink
 					renderIcon={Code16}
 					onClick={() => onRailClick(SelectedLeftPane.CODE)}
 					isActive={selectedLeftPane === SelectedLeftPane.CODE}>
 						Code
-					</SideNavLink>
+					</SideNavLink> */}
 				</SideNavItems>
 			</SideNav>
 			<div
 			className={cx('edit-content', selectedLeftPane !== SelectedLeftPane.NONE ? 'is-side-panel-active' : '')}
-			onClick={() => updateFragment({ ...fragment, selectedComponentId: null })}>
+			onClick={() => updateFragment({ ...fragment, selectedComponentId: null }, false)}>
 				{
 					// eslint-disable-next-line
-					fragment && <Fragment fragment={fragment} setFragment={updateFragment} />
+					fragment && <Fragment fragment={fragment} setFragment={updateFragment} outline={fragment.outline} />
 				}
 			</div>
 			<div className={rightPanel}>
@@ -292,31 +347,14 @@ export const Edit = () => {
 					disabled={!fragment.selectedComponentId} // disabled for fragment
 					renderIcon={Copy32}
 					className={css`margin-right: 8px`}
-					onClick={
-						() => updateFragment({
-							...fragment,
-							data: updatedState(
-								fragment.data, {
-									type: 'insert',
-									component: JSON.parse(JSON.stringify(initializeIds(selectedComponent, true))) // full clone, new Ids
-								},
-								parentComponent.id,
-								parentComponent.items.indexOf(selectedComponent) + 1
-							)
-						})
-					}>
+					onClick={duplicateSelectedComponent}>
 						Duplicate
 					</Button>
 					<Button
 					kind='danger'
 					disabled={!fragment.selectedComponentId} // disabled for fragment
 					renderIcon={TrashCan32}
-					onClick={
-						() => updateFragment({
-							...fragment,
-							data: stateWithoutComponent(fragment.data, fragment.selectedComponentId)
-						})
-					}>
+					onClick={() => deleteSelectedComponent()}>
 						Delete
 					</Button>
 				</div>

@@ -11,7 +11,7 @@ import {
 import { FragmentWizardModals } from './fragment-wizard';
 import { generateNewFragment } from './generate-new-fragment';
 
-import { GlobalStateContext } from '../../../context';
+import { GlobalStateContext, NotificationActionType, NotificationContext } from '../../../context';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 
 const fragmentOptions = css`
@@ -48,6 +48,7 @@ const uid = (prefix = 'id') => {
 
 export const ImportJsonModal = (props: ImportJsonModalProps) => {
 	const { addFragment } = useContext(GlobalStateContext);
+	const [, dispatchNotification] = useContext(NotificationContext);
 	const [files, setFiles] = useState([] as any[]);
 	const [jsonString, _setJsonString] = useState('');
 	const [fragmentJson, setFragmentJson] = useState('');
@@ -191,7 +192,14 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 	const generateFragment = () => {
 		const generatedFragment = generateNewFragment(fragmentJson);
 
+		// close all notifications
+		dispatchNotification({
+			type: NotificationActionType.CLOSE_ALL_NOTIFICATIONS
+		});
+
 		addFragment(generatedFragment);
+
+		// go to new fragment
 		navigate(`/edit/${generatedFragment.id}`);
 	};
 
@@ -202,12 +210,18 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 			selectorPrimaryFocus='.bx--tile--selectable'
 			onRequestSubmit={() => {
 				generateFragment();
-				props.setLastVisitedModal(FragmentWizardModals.CHOOSE_FRAGMENT_MODAL);
+				props.setLastVisitedModal(FragmentWizardModals.IMPORT_JSON_MODAL);
+				props.setDisplayedModal(FragmentWizardModals.CREATE_FRAGMENT_MODAL);
+				props.setShouldDisplay(false);
 			}}
-			onRequestClose={() => props.setShouldDisplay(false)}
+			onRequestClose={() => {
+				props.setLastVisitedModal(FragmentWizardModals.IMPORT_JSON_MODAL);
+				props.setDisplayedModal(FragmentWizardModals.CREATE_FRAGMENT_MODAL);
+				props.setShouldDisplay(false);
+			}}
 			onSecondarySubmit={() => {
 				props.setDisplayedModal(props.lastVisitedModal);
-				props.setLastVisitedModal(FragmentWizardModals.CHOOSE_FRAGMENT_MODAL);
+				props.setLastVisitedModal(FragmentWizardModals.IMPORT_JSON_MODAL);
 			}}
 			hasForm
 			modalHeading='Import JSON'

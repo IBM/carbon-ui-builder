@@ -26,7 +26,7 @@ export const AAccordionSettingsUI = ({ selectedComponent, setComponent }: any) =
 			label='Size'
 			titleText='Size'
 			items={sizeItems}
-			initialSelectedItem={sizeItems.find(item => item.id === selectedComponent.size)}
+			selectedItem={sizeItems.find(item => item.id === selectedComponent.size)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
@@ -36,7 +36,7 @@ export const AAccordionSettingsUI = ({ selectedComponent, setComponent }: any) =
 			label='Alignment of accordion heading'
 			titleText='Alignment'
 			items={alignItems}
-			initialSelectedItem={alignItems.find(item => item.id === selectedComponent.align)}
+			selectedItem={alignItems.find(item => item.id === selectedComponent.align)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
@@ -67,12 +67,12 @@ export const AAccordion = ({
 export const componentInfo: ComponentInfo = {
 	component: AAccordion,
 	settingsUI: AAccordionSettingsUI,
-	render: ({ componentObj, select, remove, selected, renderComponents }) => <AAccordion
+	render: ({ componentObj, select, remove, selected, renderComponents, outline }) => <AAccordion
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
 		selected={selected}>
-			{componentObj.items.map((accordionItem: any) => renderComponents(accordionItem))}
+			{componentObj.items.map((accordionItem: any) => renderComponents(accordionItem, outline))}
 	</AAccordion>,
 	keywords: ['accordion'],
 	name: 'Accordion',
@@ -85,7 +85,7 @@ export const componentInfo: ComponentInfo = {
 			{
 				type: 'accordion-item',
 				title: 'Accordion item',
-				items: [{ type: 'text', text: 'Accordion item content' }]
+				items: []
 			}
 		]
 	},

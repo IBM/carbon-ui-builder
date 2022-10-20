@@ -20,6 +20,7 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
+import { APlaceholder } from '../a-placeholder';
 
 export const ASelectableTileSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -141,7 +142,7 @@ export const ASelectableTile = ({
 						formItemName: componentObj.codeContext?.formItemName
 					},
 					...(componentObj.light !== undefined ? { light: componentObj.light } : ''),
-					items: [{ type: 'text', text: 'New selectable tile' }]
+					items: []
 				}
 			},
 			parentComponent.id,
@@ -162,8 +163,7 @@ export const ASelectableTile = ({
 		<Adder
 			active={parentComponent?.tileGroup && selected}
 			topAction={() => addTile()}
-			bottomAction={() => addTile(1)}
-			key={componentObj.id}>
+			bottomAction={() => addTile(1)}>
 			<AComponent
 				componentObj={componentObj}
 				headingCss={css`display: block;`}
@@ -180,7 +180,9 @@ export const ASelectableTile = ({
 					disabled={componentObj.disabled}
 					className={`${preventCheckEvent} ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}`}
 					onDrop={onDrop}>
-						{children}
+						{
+							children && children.length > 0 ? children : <APlaceholder componentObj={componentObj} select={rest.select} />
+						}
 					</SelectableTile>
 			</AComponent>
 		</Adder>
@@ -199,18 +201,17 @@ export const componentInfo: ComponentInfo = {
 		standalone: true,
 		disabled: false,
 		selected: false,
-		items: [
-			{ type: 'text', text: 'A standalone selectable tile' }
-		]
+		items: []
 	},
-	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <ASelectableTile
+	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline }) => <ASelectableTile
+		key={componentObj.id}
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
 		selected={selected}
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
-			{componentObj.items.map((item: any) => renderComponents(item))}
+			{componentObj.items.map((item: any) => renderComponents(item, outline))}
 	</ASelectableTile>,
 	image,
 	codeExport: {

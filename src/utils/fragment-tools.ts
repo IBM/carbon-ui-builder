@@ -3,6 +3,7 @@ import domtoimage from 'dom-to-image';
 import ReactDOM from 'react-dom';
 import { Fragment } from '../components';
 import { camelCase, kebabCase, upperFirst } from 'lodash';
+import { matchPath } from 'react-router-dom';
 
 export const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -19,7 +20,18 @@ export interface RenderProps {
 	};
 }
 
-export const getFragmentPreview = async (fragment: any, props: RenderProps) => {
+export const validInitialFragments = (localFragments: any[] | undefined) => {
+	if (!localFragments || !Array.isArray(localFragments)) {
+		return [];
+	}
+
+	return localFragments.filter((fragment: any) => !!fragment.id && typeof fragment.id === 'string');
+};
+
+export const getFragmentsFromLocalStorage = () =>
+	validInitialFragments(JSON.parse(localStorage.getItem('localFragments') as string)) || [];
+
+export const getFragmentPreview = async (fragment: any, props: RenderProps, outline = false) => {
 	const element = document.createElement('div');
 	element.className = 'render-preview';
 
@@ -30,7 +42,7 @@ export const getFragmentPreview = async (fragment: any, props: RenderProps) => {
 	(element as HTMLElement).style.width = `${props.width || 800}px`;
 	(element as HTMLElement).style.height = `${props.height || 400}px`;
 	(element as HTMLElement).style.minHeight = `${props.height || 400}px`;
-	ReactDOM.render(React.createElement(Fragment, { fragment }), element);
+	ReactDOM.render(React.createElement(Fragment, { fragment, outline }), element);
 	document.body.appendChild(element);
 
 	await sleep(100); // wait for render to finish
@@ -44,37 +56,6 @@ export const getFragmentTemplates = (fragments: any[]) => (
 	fragments.filter((fragment: any) => !!fragment.labels?.includes('template'))
 );
 
-export const getAllComponentStyleClasses = (componentObj: any, fragments: any[]) => {
-	let styleClasses: any = {};
-
-	// convert into an object so all classes are unique
-	componentObj.cssClasses?.forEach((cssClass: any) => {
-		// NOTE do we need to merge them deeply?
-		styleClasses[cssClass.id] = cssClass;
-	});
-
-	componentObj.items?.map((co: any) => {
-		const coClasses = getAllComponentStyleClasses(co, fragments);
-		styleClasses = {
-			...styleClasses,
-			...coClasses
-		};
-
-		if (co.type === 'fragment') {
-			const fragment = fragments.find(f => f.id === co.id);
-
-			styleClasses = {
-				...styleClasses,
-				// we can't avoid this without a messy declare+reassign+export
-				// eslint-disable-next-line @typescript-eslint/no-use-before-define
-				...getAllFragmentStyleClasses(fragment || {}, fragments)
-			};
-		}
-	});
-
-	return styleClasses;
-};
-
 export const tagNameFromFragment = (fragment: any) => {
 	// TODO fragment can have a tag name?
 	return kebabCase(fragment.title);
@@ -85,16 +66,8 @@ export const classNameFromFragment = (fragment: any) => {
 	return upperFirst(camelCase(fragment.title));
 };
 
-export const getAllFragmentStyleClasses = (fragment: any, fragments: any[] = []) => {
-	if (!fragment || !fragment.data) {
-		return [];
-	}
-
-	const allClasses = {
-		...getAllComponentStyleClasses(fragment, fragments),
-		...getAllComponentStyleClasses(fragment.data, fragments)
-	};
-	return Object.values(allClasses);
+export const getEditScreenParams = () => {
+	return matchPath('/edit/:id', window.location.pathname)?.params;
 };
 
 export const hasComponentStyleClasses = (componentObj: any) => {
@@ -187,6 +160,14 @@ export const getFragmentPreviewUrl = async (fragment: any) => {
 
 	const imageBlob = await getFragmentPreview(fragment, renderProps);
 	return getUrlFromBlob(imageBlob);
+};
+
+export const openFragmentPreview = (fragment: any) => {
+	window.open(
+		`/view/${fragment.id}`,
+		'',
+		`popup,width=${fragment.width || '800'},height=${fragment.height || '600'}`
+	);
 };
 
 export const reactClassNamesFromComponentObj = (componentObj: any) =>

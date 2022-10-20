@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
-	Route, BrowserRouter as Router, Routes
+	Route,
+	BrowserRouter as Router,
+	Routes,
+	Outlet
 } from 'react-router-dom';
 import { Notification } from './components/index';
 import {
@@ -9,11 +12,15 @@ import {
 	ErrorBoundary,
 	NotFound
 } from './routes';
-import { GlobalStateContextProvider } from './context/global-state-context';
-import { ModalContextProvider } from './context/modal-context';
-import { NotificationContextProvider } from './context/notification-context';
 import { UIShell } from './components/ui-shell';
 import { css } from 'emotion';
+import { Help } from './routes/help';
+import { View } from './routes/view';
+import { FragmentWizard, FragmentWizardModals } from './routes/dashboard/fragment-wizard/fragment-wizard';
+import { AllModals } from './routes/edit/all-modals';
+import { Launch } from './routes/launch';
+import { ContextProviders } from './context/context-providers';
+import { Repo } from './routes/repo';
 
 const app = css`
 	nav.bx--side-nav--expanded + div#edit-content {
@@ -27,29 +34,54 @@ const app = css`
 	}
 `;
 
-export const App = () => (
-	<Router basename='carbon-components-builder'>
+export const App = () => {
+	const [displayWizard, setDisplayWizard] = useState(false);
+	// These are states which are shared amongst the three modals.
+	const [displayedModal, setDisplayedModal] = useState<FragmentWizardModals | null>(FragmentWizardModals.CREATE_FRAGMENT_MODAL);
+
+	const DefaultContainer = () => <>
+		<UIShell
+			setDisplayedModal={setDisplayedModal}
+			displayWizard={displayWizard}
+			setDisplayWizard={setDisplayWizard} />
+		<Notification />
+		<Outlet />
+
+		<FragmentWizard
+			displayedModal={displayedModal}
+			setDisplayedModal={setDisplayedModal}
+			shouldDisplay={displayWizard}
+			setShouldDisplay={setDisplayWizard} />
+		<AllModals />
+	</>;
+
+	return <Router basename='/'>
 		<div className={app}>
 			<ErrorBoundary>
-				<GlobalStateContextProvider>
-					<NotificationContextProvider>
-						<UIShell />
-						<Notification />
-						<ModalContextProvider>
-							<Routes>
-								<Route path='/' element={<Dashboard />} />
-								<Route
-									path='/edit/:id'
-									element={<Edit />} />
-								<Route path="*" element={<NotFound />} />
-							</Routes>
-						</ModalContextProvider>
-					</NotificationContextProvider>
-				</GlobalStateContextProvider>
+				<ContextProviders>
+					<Routes>
+						<Route element={<Outlet />}>
+							<Route path='/view/:id' element={<View />} />
+							<Route path='/launch' element={<Launch />} />
+							<Route path='/launch/:owner' element={<Launch />} />
+							<Route path='/launch/:owner/:repo/*' element={<Launch />} />
+						</Route>
+						<Route element={<DefaultContainer />}>
+							<Route path='/' element={
+								<Dashboard
+									displayWizard={displayWizard}
+									setDisplayWizard={setDisplayWizard}
+									setDisplayedModal={setDisplayedModal} />
+							} />
+							<Route path='/edit/:id' element={<Edit />} />
+							<Route path='/help/:id' element={<Help />} />
+							<Route path='/repo' element={<Repo />} />
+							<Route path='/repo/:id/*' element={<Repo />} />
+							<Route path="*" element={<NotFound />} />
+						</Route>
+					</Routes>
+				</ContextProviders>
 			</ErrorBoundary>
-			<span id="forkongithub">
-				<a href="https://github.com/IBM/carbon-components-builder">Fork on GitHub</a>
-			</span>
 		</div>
-	</Router>
-);
+	</Router>;
+};

@@ -30,14 +30,14 @@ export const ATileFold = ({
 export const componentInfo: ComponentInfo = {
 	component: ATileFold,
 	settingsUI: ATileFoldSettingsUI,
-	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <ATileFold
+	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline }) => <ATileFold
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
 		selected={selected}
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
-			{componentObj.items.map((item: any) => renderComponents(item))}
+			{componentObj.items.map((item: any) => renderComponents(item, outline))}
 	</ATileFold>,
 	keywords: ['tile', 'tile fold', 'fold'],
 	name: 'tilefold',

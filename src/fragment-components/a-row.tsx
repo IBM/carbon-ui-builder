@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
 	Row,
 	Checkbox
@@ -9,6 +9,7 @@ import { getParentComponent, updatedState } from '../components';
 import { css, cx } from 'emotion';
 import { useFragment } from '../context';
 import { ComponentInfo } from '.';
+import { getDropIndex } from '../routes/edit/tools';
 
 export const ARowSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -48,6 +49,23 @@ const addStyleBottom = cx(addStyle, css`
 	z-index: 1;
 `);
 
+const addStyleLeftRight = css`
+	position: absolute;
+	margin-top: 14px;
+	background: white;
+	border: 2px solid #d8d8d8;
+	line-height: 21px;
+	z-index: 1;
+`;
+
+const addStyleLeft = cx(addStyleLeftRight, css`
+	margin-left: -20px;
+`);
+
+const addStyleRight = cx(addStyleLeftRight, css`
+	margin-left: 100%;
+`);
+
 const iconStyle = css`
 	height: 1rem;
 	width: 1rem;
@@ -61,6 +79,7 @@ export const ARow = ({
 	...rest
 }: any) => {
 	const [fragment, setFragment] = useFragment();
+	const holderRef = useRef(null as any);
 
 	const parentComponent = getParentComponent(fragment.data, componentObj);
 
@@ -75,8 +94,8 @@ export const ARow = ({
 				type: 'insert',
 				component: {
 					type: 'row', items: [
-						{ type: 'column', items: [{ type: 'text', text: 'Cell 1' }] },
-						{ type: 'column', items: [{ type: 'text', text: 'Cell 2' }] }
+						{ type: 'column', items: [] },
+						{ type: 'column', items: [] }
 					]
 				}
 			},
@@ -85,10 +104,60 @@ export const ARow = ({
 		)
 	});
 
+	/**
+	 * @param offset 0 - add left, 1 - add right
+	 */
+	const addCell = (offset = 0) => setFragment({
+		...fragment,
+		data: updatedState(
+			fragment.data,
+			{
+				type: 'insert',
+				component: {
+					type: 'column',
+					items: []
+				}
+			},
+			componentObj.id,
+			offset
+		)
+	});
+
 	return (
 		// position: relative doesn't seem to affect the grid layout and it's needed atm
 		// to position right add icon
-		<AComponent componentObj={componentObj} selected={selected} {...rest}>
+		<AComponent
+		componentObj={componentObj}
+		selected={selected}
+		handleDrop={(event: any) => {
+			const dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
+
+			const dropIndex = getDropIndex(event, holderRef.current);
+			// if type is column, drop in place in row,
+			// if it's anything else, drop in closest column
+			if (dragObj.component.type === 'column') {
+				setFragment({
+					...fragment,
+					data: updatedState(
+						fragment.data,
+						dragObj,
+						componentObj.id,
+						dropIndex
+					)
+				});
+			} else {
+				setFragment({
+					...fragment,
+					data: updatedState(
+						fragment.data,
+						dragObj,
+						componentObj.items[dropIndex].id,
+						0
+					)
+				});
+			}
+		}}
+		{...rest}>
 			<Row
 			className={cx(
 				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
@@ -102,13 +171,27 @@ export const ARow = ({
 						addRow();
 					}} className={iconStyle}/>
 				</span>
+				<span className={cx(addStyleLeft, selected ? css`` : css`display: none`)}>
+					<Add32 onClick={(event: any) => {
+						event.stopPropagation();
+						addCell();
+					}} className={iconStyle}/>
+				</span>
+				<span className={cx(addStyleRight, selected ? css`` : css`display: none`)}>
+					<Add32 onClick={(event: any) => {
+						event.stopPropagation();
+						addCell(componentObj.items.length);
+					}} className={iconStyle}/>
+				</span>
 				<span className={cx(addStyleBottom, selected ? css`` : css`display: none`)}>
 					<Add32 onClick={(event: any) => {
 						event.stopPropagation();
 						addRow(1);
 					}} className={iconStyle}/>
 				</span>
-				{children}
+				<section ref={holderRef} className={css`display: contents`}>
+					{children}
+				</section>
 			</Row>
 		</AComponent>
 	);

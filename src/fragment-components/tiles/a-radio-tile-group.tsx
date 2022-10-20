@@ -18,6 +18,7 @@ export const ARadioTileGroupSettingsUI = ({ selectedComponent, setComponent }: a
 	return <>
 		<TileMorphism component={selectedComponent} setComponent={setComponent} />
 		<TextInput
+			id='radio-tile-legend-text-input'
 			value={selectedComponent.legend}
 			labelText='Legend name'
 			placeholder='Fieldset header'
@@ -63,6 +64,7 @@ export const ARadioTileGroupSettingsUI = ({ selectedComponent, setComponent }: a
 
 export const ARadioTileGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
 	return <TextInput
+		id='radio-tile-input-name-text-input'
 		value={selectedComponent.codeContext?.name}
 		labelText='Input name'
 		onChange={(event: any) => {
@@ -95,7 +97,7 @@ export const ARadioTileGroup = ({
 	const [fragment, setFragment] = useFragment();
 
 	// Initialize the child tiles with the form item name
-	// We use the name property because it unique by default
+	// We use the name property because it's unique by default
 	useEffect(() => {
 		const parentComponent = getParentComponent(fragment.data, componentObj);
 		const componentIndex = parentComponent.items.indexOf(componentObj);
@@ -119,7 +121,7 @@ export const ARadioTileGroup = ({
 					items
 				}
 			})
-		});
+		}, false);
 		// Disabling since we want to call this only once to initialize children `formItemName` attribute in code context
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -161,7 +163,7 @@ export const componentInfo: ComponentInfo = {
 				codeContext: {
 					value: 'Tile 1'
 				},
-				items: [{ type: 'text', text: 'Radio tile A' }]
+				items: []
 			},
 			{
 				type: 'radio-tile',
@@ -169,7 +171,7 @@ export const componentInfo: ComponentInfo = {
 				codeContext: {
 					value: 'Tile 2'
 				},
-				items: [{ type: 'text', text: 'Radio tile B' }]
+				items: []
 			},
 			{
 				type: 'radio-tile',
@@ -177,18 +179,19 @@ export const componentInfo: ComponentInfo = {
 				codeContext: {
 					value: 'Tile 3'
 				},
-				items: [{ type: 'text', text: 'Radio tile C' }]
+				items: []
 			}
 		]
 	},
-	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <ARadioTileGroup
+	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline }) => <ARadioTileGroup
+		key={componentObj.id}
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
 		selected={selected}
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
-			{componentObj.items.map((tile: any) => renderComponents(tile))}
+			{componentObj.items.map((tile: any) => renderComponents(tile, outline))}
 	</ARadioTileGroup>,
 	image,
 	codeExport: {

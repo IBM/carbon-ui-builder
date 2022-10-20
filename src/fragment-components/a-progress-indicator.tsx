@@ -36,11 +36,13 @@ export const AProgressIndicatorSettingsUI = ({ selectedComponent, setComponent }
 	const template = (item: any, index: number) => {
 		return <>
 			<TextInput
+				id={`progress-indicator-label-${index}`}
 				light
 				value={item.label}
 				labelText="Label"
 				onChange={(event: any) => handleStepUpdate('label', event.currentTarget.value, index)} />
 			<TextInput
+				id={`progress-indicator-secondary-label-${index}`}
 				light
 				value={item.secondaryLabel}
 				labelText='Secondary label'
@@ -98,6 +100,7 @@ export const AProgressIndicatorSettingsUI = ({ selectedComponent, setComponent }
 
 export const AProgressIndicatorCodeUI = ({ selectedComponent, setComponent }: any) => {
 	return <TextInput
+		id='progress-indicator-input-name-text-input'
 		value={selectedComponent.codeContext?.name}
 		labelText='Input name'
 		onChange={(event: any) => {
@@ -169,14 +172,15 @@ export const componentInfo: ComponentInfo = {
 					...(step.disabled ? { disabled: step.disabled } : {})
 				}));
 				return `@Input() ${nameStringToVariableString(json.codeContext?.name)}Steps = ${JSON.stringify(steps)};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Vertical = ${json.isVertical || false}
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Spacing = ${json.spacing || false}
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Current = ${json.currentIndex}`;
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Orientation = "${json.isVertical ? 'vertical' : 'horizontal'}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Spacing = ${json.spacing || false};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Current = ${json.currentIndex};`;
 			},
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}StepSelected = new EventEmitter<Event>();`,
 			imports: ['ProgressIndicatorModule'],
 			code: ({ json }) => {
 				return `<ibm-progress-indicator
+					[orientation]="${nameStringToVariableString(json.codeContext?.name)}Orientation"
 					[steps]="${nameStringToVariableString(json.codeContext?.name)}Steps"
 					[current]="${nameStringToVariableString(json.codeContext?.name)}Current"
 					(stepSelected)="${nameStringToVariableString(json.codeContext?.name)}StepSelected.emit($event)"
@@ -189,7 +193,8 @@ export const componentInfo: ComponentInfo = {
 			imports: ['ProgressIndicator', 'ProgressStep'],
 			code: ({ json }) => {
 				return `<ProgressIndicator
-					currentIndex={state["${json.codeContext?.name}StepIndex"] | 0}
+					currentIndex={state["${json.codeContext?.name}StepIndex"] || 0}
+					${json.isVertical ? 'vertical={true}' : ''}
 					${reactClassNamesFromComponentObj(json)}
 					onChange={(selectedStep) => handleInputChange({
 						target: {

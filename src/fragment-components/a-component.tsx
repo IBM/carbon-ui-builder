@@ -16,9 +16,18 @@ const headerStyle = css`
 	border: 2px solid #d8d8d8;
 	line-height: 21px;
 	z-index: ${componentHeaderZIndex};
+	cursor: grab;
 `;
 
-const iconStyle = css`height: 1rem; width: 1rem; float: right`;
+const iconStyle = css`
+	height: 1rem;
+	width: 1rem;
+	float: right;
+`;
+
+const actionableIconStyle = css`
+	cursor: pointer;
+`;
 
 export const AComponentCodeUI = ({ selectedComponent }: any) => {
 	return <span className={css`overflow-wrap: anywhere`}>
@@ -66,7 +75,8 @@ export interface ComponentInfoRenderProps {
 	selected: boolean;
 	onDragOver: (event: any) => void;
 	onDrop: (event: any) => any;
-	renderComponents: (componentObj: any) => any;
+	outline: boolean | null;
+	renderComponents: (componentObj: any, outline: boolean | null) => any;
 }
 
 export const AComponent = ({
@@ -77,6 +87,7 @@ export const AComponent = ({
 	selected,
 	remove,
 	headingCss,
+	handleDrop,
 	className
 }: any) => {
 	// TODO use fragments context instead of passing in `remove`?
@@ -84,13 +95,40 @@ export const AComponent = ({
 	const [showDragOverIndicator, setShowDragOverIndicator] = useState(false);
 	const holderRef = useRef(null as any);
 
+	const shouldRejectDrop = (event: any) => {
+		if (!rejectDrop) {
+			return false;
+		}
+
+		if (typeof rejectDrop === 'boolean' && rejectDrop) {
+			return true;
+		}
+
+		if (typeof rejectDrop === 'function') {
+			let dragObj: any;
+			try {
+				dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
+			} catch (error) {
+				return rejectDrop({});
+			}
+			return rejectDrop(dragObj);
+		}
+
+		return !!rejectDrop;
+	};
+
 	const onDrop = (event: any) => {
-		if (rejectDrop) {
+		if (shouldRejectDrop(event)) {
 			return;
 		}
 		event.stopPropagation();
 		event.preventDefault();
 		setShowDragOverIndicator(false);
+
+		if (handleDrop) {
+			handleDrop(event);
+			return;
+		}
 
 		const dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
 
@@ -119,7 +157,7 @@ export const AComponent = ({
 			type: 'move'
 		})}
 		onDragEnter={(event: any) => {
-			if (rejectDrop) {
+			if (shouldRejectDrop(event)) {
 				return true;
 			}
 			event.stopPropagation();
@@ -127,7 +165,7 @@ export const AComponent = ({
 			setShowDragOverIndicator(true);
 		}}
 		onDragLeave={(event: any) => {
-			if (rejectDrop) {
+			if (shouldRejectDrop(event)) {
 				return true;
 			}
 			event.stopPropagation();
@@ -135,7 +173,7 @@ export const AComponent = ({
 			setShowDragOverIndicator(false);
 		}}
 		onDragOver={(event) => {
-			if (rejectDrop) {
+			if (shouldRejectDrop(event)) {
 				return true;
 			}
 			event.stopPropagation();
@@ -152,7 +190,7 @@ export const AComponent = ({
 					if (remove) {
 						remove();
 					}
-				}} className={iconStyle} />
+				}} className={cx(iconStyle, actionableIconStyle)} />
 			</span>
 			{children}
 		</span>

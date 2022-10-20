@@ -97,7 +97,7 @@ export const ASelectableTileGroup = ({
 					items
 				}
 			})
-		});
+		}, false);
 		// Disabling since we want to call this only once to initialize children `formItemName` attribute in code context
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -136,7 +136,7 @@ export const componentInfo: ComponentInfo = {
 				},
 				standalone: false,
 				selected: false,
-				items: [{ type: 'text', text: 'Selectable tile A' }]
+				items: []
 			},
 			{
 				type: 'selectable-tile',
@@ -145,7 +145,7 @@ export const componentInfo: ComponentInfo = {
 				},
 				standalone: false,
 				selected: false,
-				items: [{ type: 'text', text: 'Selectable tile B' }]
+				items: []
 			},
 			{
 				type: 'selectable-tile',
@@ -154,18 +154,19 @@ export const componentInfo: ComponentInfo = {
 				},
 				standalone: false,
 				selected: false,
-				items: [{ type: 'text', text: 'Selectable tile C' }]
+				items: []
 			}
 		]
 	},
-	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <ASelectableTileGroup
+	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline }) => <ASelectableTileGroup
+		key={componentObj.id}
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
 		selected={selected}
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
-			{componentObj.items.map((tile: any) => renderComponents(tile))}
+			{componentObj.items.map((tile: any) => renderComponents(tile, outline))}
 	</ASelectableTileGroup>,
 	image,
 	codeExport: {

@@ -1,22 +1,51 @@
 import React, { useContext, useRef, useState } from 'react';
 import { SkeletonPlaceholder } from 'carbon-components-react';
+import { Add32, DropPhoto32 } from '@carbon/icons-react';
 import './fragment-preview.scss';
 import { css, cx } from 'emotion';
 import { allComponents, ComponentInfoRenderProps } from '../fragment-components';
-import { getAllFragmentStyleClasses, getRandomId } from '../utils/fragment-tools';
+import { getFragmentsFromLocalStorage, getRandomId } from '../utils/fragment-tools';
 import { GlobalStateContext } from '../context';
 import { getDropIndex } from '../routes/edit/tools';
+import { getAllFragmentStyleClasses } from '../ui-fragment/src/utils';
 
 const canvas = css`
 	border: 2px solid #d8d8d8;
 	background-color: white;
 	position: relative;
+
+	> div {
+		height: 100%;
+	}
+`;
+
+const centerStyle = css`
+	height: 100%;
+	display: flex;
+	align-items: center;
+	color: #8d8d8d;
+	cursor: pointer;
+
+	> div {
+		margin: auto;
+
+		p {
+			display: flex;
+			line-height: 32px;
+
+			svg {
+				margin-right: 0.5rem;
+			}
+		}
+	}
 `;
 
 const allowDrop = (event: any) => {
 	event.stopPropagation();
 	event.preventDefault();
 };
+
+let componentCounter = 2; // actually initialized (again) in Fragment
 
 export const getComponentById = (componentObj: any, id: number) => {
 	if (!componentObj || !id) {
@@ -47,6 +76,29 @@ export const getSelectedComponent = (fragment: any) => {
 	return getComponentById(fragment.data, fragment.selectedComponentId);
 };
 
+export const getHighestId = (componentObj: any) => {
+	if (!componentObj) {
+		return 0;
+	}
+
+	if (!componentObj.items || !componentObj.items.length) {
+		return +componentObj.id || 0;
+	}
+
+	return Math.max(...componentObj.items.map((item: any) => getHighestId(item)), (+componentObj.id || 0));
+};
+
+export const getNewId = () => {
+	const id = '' + componentCounter++;
+
+	// beyond 20 digits, js goes to scientific notation so we'd get collisions
+	if (id.length > 20) {
+		return getRandomId();
+	}
+
+	return id;
+};
+
 export const stateWithoutComponent = (state: any, componentId: number) => {
 	if (state.items) {
 		const componentIndex = state.items.findIndex((component: any) => component.id === componentId);
@@ -69,19 +121,19 @@ export const stateWithoutComponent = (state: any, componentId: number) => {
 export const initializeIds = (componentObj: any, forceNewIds = false) => {
 	let id = null;
 	if (forceNewIds) {
-		id = getRandomId();
+		id = getNewId();
 	}
-	id = id || componentObj.id || getRandomId();
+	id = id || componentObj.id || getNewId();
 	// name is used in form items and for angular inputs and outputs variable names
 	let name = componentObj.codeContext?.name;
-	if (name === undefined) {
+	if (name === undefined || forceNewIds) {
 		name = `${componentObj.type}-${id}`;
 	}
 
 	return {
 		...componentObj,
 		id,
-		items: componentObj.items ? componentObj.items.map((co: any) => initializeIds(co)) : undefined,
+		items: componentObj.items ? componentObj.items.map((co: any) => initializeIds(co, forceNewIds)) : undefined,
 		codeContext: {
 			...componentObj.codeContext,
 			name
@@ -149,7 +201,7 @@ export const updatedState = (state: any, dragObj: any, dropInId?: number, dropIn
 		// convert into a list of components, move current component into list
 		return {
 			// TODO should this be a `type: container`?
-			id: getRandomId(),
+			id: getNewId(),
 			items: updatedList([{ ...state }], dragObj.component, dropInIndex)
 		};
 	}
@@ -181,7 +233,7 @@ export const getParentComponent = (state: any, child: any) => {
 	return null;
 };
 
-export const Fragment = ({ fragment, setFragment }: any) => {
+export const Fragment = ({ fragment, setFragment, outline }: any) => {
 	const globalState = useContext(GlobalStateContext);
 	const [showDragOverIndicator, setShowDragOverIndicator] = useState(false);
 	const holderRef = useRef(null as any);
@@ -190,7 +242,12 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 		return <SkeletonPlaceholder />;
 	}
 
-	const { fragments } = globalState || {};
+	// try to use the state but get the fragments from local storage if state is not available
+	// localStorage info is used when rendering and can't be used for interaction
+	const { fragments } = globalState || { fragments: getFragmentsFromLocalStorage() };
+
+	// initialize component counter
+	componentCounter = getHighestId(fragment.data) + 1;
 
 	const drop = (event: any) => {
 		event.stopPropagation();
@@ -214,7 +271,7 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 		setFragment({
 			...fragment,
 			selectedComponentId: componentObj.id
-		}, true);
+		}, false);
 	};
 
 	const remove = (componentObj: any) => {
@@ -224,7 +281,24 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 		});
 	};
 
-	const renderComponents = (componentObj: any): any => {
+	const addGrid = (event: any) => {
+		if (event) {
+			event.stopPropagation();
+		}
+
+		setFragment({
+			...fragment,
+			data: updatedState(
+				fragment.data,
+				{
+					type: 'insert',
+					component: allComponents.grid.componentInfo.defaultComponentObj
+				}, fragment.data.id, 0
+			)
+		});
+	};
+
+	const renderComponents = (componentObj: any, outline: boolean | null = null): any => {
 		if (typeof componentObj === 'string' || !componentObj) {
 			return componentObj;
 		}
@@ -245,21 +319,24 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 						select: () => select(componentObj),
 						remove: () => remove(componentObj),
 						selected: fragment.selectedComponentId === componentObj.id,
-						renderComponents
+						renderComponents,
+						outline
 					} as ComponentInfoRenderProps);
 				}
 				return <component.componentInfo.component
+					key={componentObj.id}
 					componentObj={componentObj}
 					select={() => select(componentObj)}
 					remove={() => remove(componentObj)}
-					selected={fragment.selectedComponentId === componentObj.id}>
-						{componentObj.items && componentObj.items.map((row: any) => renderComponents(row))}
+					selected={fragment.selectedComponentId === componentObj.id}
+					outline={outline}>
+						{componentObj.items && componentObj.items.map((row: any) => renderComponents(row, outline))}
 				</component.componentInfo.component>;
 			}
 		}
 
 		if (componentObj.items) {
-			return componentObj.items.map((item: any) => renderComponents(item));
+			return componentObj.items.map((item: any) => renderComponents(item, outline));
 		}
 
 		return null;
@@ -276,7 +353,7 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 		className={cx(
 			canvas,
 			styles,
-			css`width: ${fragment.width || '800px'}; height: ${fragment.height || '600px'}`
+			css`width: ${fragment.width || '800'}px; height: ${fragment.height || '600'}px`
 		)}
 		style={{
 			background: showDragOverIndicator ? '#0001' : ''
@@ -294,7 +371,15 @@ export const Fragment = ({ fragment, setFragment }: any) => {
 		onDragOver={allowDrop}
 		onDrop={drop}>
 			<div ref={holderRef} className={`${fragment.cssClasses ? fragment.cssClasses.map((cc: any) => cc.id).join(' ') : ''}`}>
-				{renderComponents(fragment.data)}
+				{
+					!fragment.data?.items?.length && <div className={centerStyle} onClick={addGrid}>
+						<div>
+							<p><Add32 /> Click to add grid <br /></p>
+							<p><DropPhoto32 /> Drag and drop an element from the left pane to get started</p>
+						</div>
+					</div>
+				}
+				{renderComponents(fragment.data, outline)}
 			</div>
 		</div>
 	);

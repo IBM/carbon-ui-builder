@@ -3,7 +3,8 @@ import { format as formatPrettier, Options } from 'prettier';
 import parserBabel from 'prettier/parser-babel';
 import parserCss from 'prettier/parser-postcss';
 import { allComponents } from '../../../../../fragment-components';
-import { classNameFromFragment, getAllFragmentStyleClasses, hasFragmentStyleClasses, tagNameFromFragment } from '../../../../../utils/fragment-tools';
+import { getAllFragmentStyleClasses } from '../../../../../ui-fragment/src/utils';
+import { classNameFromFragment, hasFragmentStyleClasses, tagNameFromFragment } from '../../../../../utils/fragment-tools';
 
 const format = (source: string, options?: Options | undefined) => {
 	// we're catching and ignorring errors so live editing doesn't throw errors
@@ -137,7 +138,7 @@ const jsonToSharedComponents = (json: any, fragments: any[]) => {
 	let sharedComponents: any = {};
 
 	if (json.type === 'fragment') {
-		const fragment = fragments.find(f => f.id === json.id);
+		const fragment = fragments.find(f => f.id === json.fragmentId);
 		const fragmentTemplate = generateTemplate(fragment.data, fragments);
 
 		sharedComponents[`src/shared/${tagNameFromFragment(fragment)}.js`] = format(`import React from 'react';
@@ -201,9 +202,15 @@ export const FragmentComponent = ({state, setState}) => {
 };
 `;
 
-	const componentScss = getAllFragmentStyleClasses(fragment).map((styleClass: any) => `.${styleClass.id} {
-	${styleClass.content}
-}`).join('\n');
+	const componentScss = getAllFragmentStyleClasses(fragment).map((styleClass: any) => {
+		if (!styleClass.content || !styleClass.content.trim()) {
+			return null;
+		}
+
+		return `.${styleClass.id} {
+			${styleClass.content}
+		}`;
+	}).join('\n');
 
 	const indexJs
 		= `import React, { useState } from 'react';

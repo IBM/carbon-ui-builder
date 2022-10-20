@@ -45,7 +45,7 @@ export const ARadioGroupSettingsUI = ({ selectedComponent, setComponent }: any) 
 			label='Orientation'
 			titleText='Orientation'
 			items={orientationItems}
-			initialSelectedItem={orientationItems.find(item => item.id === selectedComponent.orientation)}
+			selectedItem={orientationItems.find(item => item.id === selectedComponent.orientation)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
@@ -55,7 +55,7 @@ export const ARadioGroupSettingsUI = ({ selectedComponent, setComponent }: any) 
 			label='Label position'
 			titleText='Label position'
 			items={labelPositions}
-			initialSelectedItem={labelPositions.find(item => item.id === selectedComponent.labelPosition)}
+			selectedItem={labelPositions.find(item => item.id === selectedComponent.labelPosition)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
@@ -65,7 +65,7 @@ export const ARadioGroupSettingsUI = ({ selectedComponent, setComponent }: any) 
 			label='Default selection'
 			titleText='Default selection'
 			items={allItems}
-			initialSelectedItem={allItems.find((item: any) => item.defaultChecked ? item : item.id === 'none')}
+			selectedItem={allItems.find((item: any) => item.defaultChecked ? item : item.id === 'none')}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
@@ -155,12 +155,12 @@ export const componentInfo: ComponentInfo = {
 			}
 		]
 	},
-	render: ({ componentObj, select, remove, selected, renderComponents }) => <ARadioGroup
+	render: ({ componentObj, select, remove, selected, renderComponents, outline }) => <ARadioGroup
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
 		selected={selected}>
-			{componentObj.items.map((button: any) => renderComponents(button))}
+			{componentObj.items.map((button: any) => renderComponents(button, outline))}
 	</ARadioGroup>,
 	image,
 	codeExport: {

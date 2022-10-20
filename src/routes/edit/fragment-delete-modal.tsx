@@ -1,21 +1,24 @@
 import React, { useContext } from 'react';
 
 import { Modal } from 'carbon-components-react';
-import { ModalActionType, ModalContext } from '../../context/modal-context';
+import { ModalContext } from '../../context/modal-context';
 import { GlobalStateContext } from '../../context/global-state-context';
 import { useNavigate } from 'react-router-dom';
 import { NotificationActionType, NotificationContext } from '../../context/notification-context';
 
-export const DeleteFragmentModal = ({ id }: any) => {
+export const FragmentDeleteModal = () => {
 	const { fragments, toggleFragmentVisibility, removeFragment } = useContext(GlobalStateContext);
-	const [modalState, dispatchModal] = useContext(ModalContext);
+	const {
+		fragmentDeleteModal,
+		hideFragmentDeleteModal
+	} = useContext(ModalContext);
 	const navigate = useNavigate();
 	const [, dispatchNotification] = useContext(NotificationContext);
-	const fragment = fragments.find((fragment: any) => fragment.id === id);
+	const fragment = fragments.find((fragment: any) => fragment.id === fragmentDeleteModal.fragmentId);
 
 	const deleteFragment = () => {
-		toggleFragmentVisibility(id, true);
-		navigate('/');
+		toggleFragmentVisibility(fragment.id, true);
+		hideFragmentDeleteModal();
 		dispatchNotification({
 			type: NotificationActionType.ADD_NOTIFICATION,
 			data: {
@@ -24,19 +27,19 @@ export const DeleteFragmentModal = ({ id }: any) => {
 				message: `Fragment '${fragment.title}' has been permanently deleted.`,
 				action: {
 					actionText: 'Undo',
-					actionFunction: () => toggleFragmentVisibility(id, false),
-					onNotificationClose: () => removeFragment(id)
+					actionFunction: () => toggleFragmentVisibility(fragment.id, false),
+					onNotificationClose: () => removeFragment(fragment.id)
 				}
 			}
 		});
-		dispatchModal({ type: ModalActionType.closeModal });
+		navigate('/');
 	};
 
 	return (
 		<Modal
 		size='sm'
-		open={modalState.ShowModal}
-		onRequestClose={() => dispatchModal({ type: ModalActionType.closeModal })}
+		open={fragmentDeleteModal.isVisible}
+		onRequestClose={hideFragmentDeleteModal}
 		secondaryButtonText='Cancel'
 		modalHeading='Delete this fragment?'
 		danger

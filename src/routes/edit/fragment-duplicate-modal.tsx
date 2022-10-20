@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { NotificationActionType, NotificationContext } from '../../context/notification-context';
 import { Modal } from 'carbon-components-react';
-import { ModalActionType, ModalContext } from '../../context/modal-context';
+import { ModalContext } from '../../context/modal-context';
 import { GlobalStateContext } from '../../context/global-state-context';
 import { useNavigate, useLocation, NavigateFunction } from 'react-router-dom';
 
@@ -9,26 +9,33 @@ import { getFragmentDuplicate } from '../../utils/fragment-tools';
 
 // In the case that fragment modal is used in the dashboard the full fragment containing options and data
 // can't be passed in, so fragment id is passed in and `useFragment` is used within this component.
-export const DuplicateFragmentModal = ({ id }: any) => {
-	const [modalState, dispatchModal] = useContext(ModalContext);
+export const FragmentDuplicateModal = () => {
+	const {
+		fragmentDuplicateModal,
+		hideFragmentDuplicateModal
+	} = useContext(ModalContext);
 	const [, dispatchNotification] = useContext(NotificationContext);
 	const { fragments, addFragment } = useContext(GlobalStateContext);
 
 	const navigate: NavigateFunction = useNavigate();
 	const location = useLocation();
 
-	const fragment = fragments.find((fragment: any) => fragment.id === id);
-
 	const duplicateFragment = () => {
 		const fragmentCopy = getFragmentDuplicate(
 			fragments,
-			fragment,
+			fragmentDuplicateModal.fragment,
 			// When a new fragment is created from an existing template, it shouldn't
 			// be a template by default.
-			{ labels: fragment?.labels?.filter((label: string) => label !== 'template') }
+			{ labels: fragmentDuplicateModal.fragment?.labels?.filter((label: string) => label !== 'template') }
 		);
 
+		// close all notifications
+		dispatchNotification({
+			type: NotificationActionType.CLOSE_ALL_NOTIFICATIONS
+		});
+
 		addFragment(fragmentCopy);
+
 		if (location.pathname !== '/') {
 			navigate(`/edit/${fragmentCopy.id}`);
 		}
@@ -37,17 +44,17 @@ export const DuplicateFragmentModal = ({ id }: any) => {
 			data: {
 				kind: 'success',
 				title: 'Duplication success',
-				message: `'${fragmentCopy.title}  has been duplicated from '${fragment.title}'.`
+				message: `'${fragmentCopy.title}  has been duplicated from '${fragmentDuplicateModal.fragment.title}'.`
 			}
 		});
-		dispatchModal({ type: ModalActionType.closeModal });
+		hideFragmentDuplicateModal();
 	};
 
 	return (
 		<Modal
 			size='sm'
-			open={modalState.ShowModal}
-			onRequestClose={() => dispatchModal({ type: ModalActionType.closeModal })}
+			open={fragmentDuplicateModal.isVisible}
+			onRequestClose={hideFragmentDuplicateModal}
 			secondaryButtonText='Cancel'
 			modalHeading='Duplicate fragment?'
 			primaryButtonText='Duplicate'

@@ -21,6 +21,14 @@ export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 		{ id: 'ghost', text: 'Ghost' }
 	];
 
+	const sizeItems = [
+		{ id: 'sm', text: 'Small' },
+		{ id: 'field', text: 'Medium' },
+		{ id: 'lg', text: 'Large' },
+		{ id: 'xl', text: 'Extra large' },
+		{ id: 'default', text: 'Default' }
+	];
+
 	return <>
 		<TextInput
 			value={selectedComponent.text}
@@ -30,16 +38,44 @@ export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 				text: event.currentTarget.value
 			})} />
 		<Dropdown
+			id='kind'
 			label='Kind'
 			titleText='Kind'
 			items={kindItems}
-			initialSelectedItem={kindItems.find(item => item.id === selectedComponent.kind)}
+			selectedItem={kindItems.find(item => item.id === selectedComponent.kind)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				kind: event.selectedItem.id
 			})} />
+		<Dropdown
+			id='size'
+			label='Select a size'
+			titleText='Size'
+			items={sizeItems}
+			selectedItem={sizeItems.find(item => item.id === selectedComponent.size)}
+			itemToString={(item: any) => (item ? item.text : '')}
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				size: event.selectedItem.id
+			})} />
 	</>;
+};
+
+export const AButtonCodeUI = ({ selectedComponent, setComponent }: any) => {
+	return <TextInput
+			value={selectedComponent.codeContext?.name}
+			labelText='Input name'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						name: event.currentTarget.value
+					}
+				});
+			}}
+		/>;
 };
 
 export const AButton = ({
@@ -55,6 +91,7 @@ export const AButton = ({
 		{...rest}>
 			<Button
 			kind={componentObj.kind}
+			size={componentObj.size}
 			disabled={componentObj.disabled}
 			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 				{children}
@@ -66,6 +103,7 @@ export const AButton = ({
 export const componentInfo: ComponentInfo = {
 	component: AButton,
 	settingsUI: AButtonSettingsUI,
+	codeUI: AButtonCodeUI,
 	render: ({ componentObj, select, remove, selected }) => <AButton
 		componentObj={componentObj}
 		select={select}
@@ -79,7 +117,8 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'button',
 		kind: 'primary',
-		text: 'Button'
+		text: 'Button',
+		size: ''
 	},
 	image,
 	codeExport: {
@@ -90,6 +129,7 @@ export const componentInfo: ComponentInfo = {
 			code: ({ json }) => {
 				return `<button
 					${json.kind ? `ibmButton='${json.kind}'` : 'ibmButton'}
+					${json.size ? `size='${json.size === 'default' ? 'normal' : json.size}'` : ''}
 					(click)='${nameStringToVariableString(json.codeContext?.name)}Clicked.emit()'
 					${angularClassNamesFromComponentObj(json)}>
 						${json.text}
@@ -99,7 +139,10 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			imports: ['Button'],
 			code: ({ json }) => {
-				return `<Button${json.kind && ` kind="${json.kind}"`} ${reactClassNamesFromComponentObj(json)}>${json.text}</Button>`;
+				return `<Button
+					${json.kind && `kind="${json.kind}"`}
+					${json.size && `size="${json.size}"`}
+					${reactClassNamesFromComponentObj(json)}>${json.text}</Button>`;
 			}
 		}
 	}

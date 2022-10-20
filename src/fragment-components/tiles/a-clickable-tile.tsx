@@ -14,6 +14,7 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
+import { APlaceholder } from '../a-placeholder';
 
 export const AClickableTileSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -99,7 +100,9 @@ export const AClickableTile = ({
 			href={componentObj.codeContext?.href}
 			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
 			disabled={componentObj.disabled}>
-				{children}
+				{
+					children && children.length > 0 ? children : <APlaceholder componentObj={componentObj} select={rest.select} />
+				}
 			</ClickableTile>
 		</AComponent>
 	);
@@ -114,21 +117,16 @@ export const componentInfo: ComponentInfo = {
 	type: 'clickable-tile',
 	defaultComponentObj: {
 		type: 'clickable-tile',
-		items: [
-			{
-				type: 'text',
-				text: 'A clickable tile'
-			}
-		]
+		items: []
 	},
-	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents }) => <AClickableTile
+	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline }) => <AClickableTile
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
 		selected={selected}
 		onDragOver={onDragOver}
 		onDrop={onDrop}>
-			{componentObj.items.map((item: any) => renderComponents(item))}
+			{componentObj.items.map((item: any) => renderComponents(item, outline))}
 	</AClickableTile>,
 	image,
 	codeExport: {

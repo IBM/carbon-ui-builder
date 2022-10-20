@@ -3,7 +3,8 @@ import React, {
 	useContext,
 	useEffect
 } from 'react';
-import { css } from 'emotion';
+import { Loading } from 'carbon-components-react';
+import { css, cx } from 'emotion';
 import { DashboardSearch, SortDirection } from './dashboard-search';
 import { FragmentGroupDisplayed, DashboardHeader } from './dashboard-header';
 
@@ -13,9 +14,7 @@ import {
 	Row
 } from './../../components';
 import { FragmentTileList } from './fragment-tile-list';
-import { FragmentWizard } from './fragment-wizard/fragment-wizard';
-import { FragmentModal } from '../edit/fragment-modal';
-import { GlobalStateContext } from '../../context';
+import { GithubContext, GlobalStateContext } from '../../context';
 import { getFragmentTemplates } from '../../utils/fragment-tools';
 
 const fragmentSort = (sortDirection: SortDirection) => function(a: any, b: any) {
@@ -49,12 +48,19 @@ const searchRowStyles = css`
 	}
 `;
 
-export const Dashboard = () => {
+export const Dashboard = ({
+	displayWizard,
+	setDisplayWizard,
+	setModalFragment,
+	setDisplayedModal
+}: any) => {
 	const { fragments, updateFragments } = useContext(GlobalStateContext);
-	const [fragmentGroupDisplayed, setFragmentGroupDisplayed] = useState(FragmentGroupDisplayed.LocalOnly);
+	const { getFeaturedFragments } = useContext(GithubContext);
+	const [fragmentGroupDisplayed, setFragmentGroupDisplayed] = useState(FragmentGroupDisplayed.AllFragments);
 	const [fragmentTitleFilter, setFragmentTitleFilter] = useState('');
+	const [displayedFragments, setDisplayedFragments] = useState([]);
 	const [sortDirection, setSortDirection] = useState(SortDirection.Ascending);
-	const [displayWizard, setDisplayWizard] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
 		updateFragments(fragments);
@@ -63,73 +69,83 @@ export const Dashboard = () => {
 	}, []);
 
 	useEffect(() => {
-		document.title = 'Carbon Components Builder • UI Fragments Composer';
+		document.title = 'Carbon UI Builder • UI Fragments Composer';
 	}, []);
 
 	const filterFragments = (fragments: any) => fragments.filter((fragment: any) => fragment?.title?.toLowerCase()
 		?.includes(fragmentTitleFilter.toLowerCase()) && !fragment.hidden)
 		?.sort(fragmentSort(sortDirection));
 
-	let displayedFragments;
-
-	switch (fragmentGroupDisplayed) {
-		case FragmentGroupDisplayed.Templates: {
-			displayedFragments = filterFragments(getFragmentTemplates(fragments));
-			break;
+	useEffect(() => {
+		switch (fragmentGroupDisplayed) {
+			case FragmentGroupDisplayed.Templates: {
+				setDisplayedFragments(filterFragments(getFragmentTemplates(fragments)));
+				break;
+			}
+			case FragmentGroupDisplayed.FeaturedFragments: {
+				setIsLoading(true);
+				getFeaturedFragments().then((value: any) => {
+					setDisplayedFragments(value);
+					setIsLoading(false);
+				});
+				break;
+			}
+			case FragmentGroupDisplayed.AllFragments:
+			default:
+				setDisplayedFragments(filterFragments(fragments));
+				break;
 		}
-		case FragmentGroupDisplayed.AllFragments:
-		default:
-			displayedFragments = filterFragments(fragments);
-			break;
-	}
-	const [modalFragment, setModalFragment] = useState<any>(null);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [fragmentGroupDisplayed, fragments]);
 
 	return (
-		<>
-			<Main style={{ marginLeft: '0px' }}>
-				<Row styles={headerRowSyles}>
-					<Col cols={{
-						sm: 12,
-						md: 12,
-						lg: 12
-					}}>
-						<DashboardHeader
-							onDisplayedSwitchHandler={setFragmentGroupDisplayed}
-							fragmentGroupDisplayed={fragmentGroupDisplayed} />
-					</Col>
-				</Row>
-				<Row styles={searchRowStyles}>
-					<Col cols={{
-						sm: 12,
-						md: 12,
-						lg: 12
-					}}>
-						<DashboardSearch
-							onSearchHandler={setFragmentTitleFilter}
-							onSortHandler={setSortDirection}
-							sortDirection={sortDirection}
+		<Main style={{ marginLeft: '0px' }}>
+			<Row styles={headerRowSyles}>
+				<Col cols={{
+					sm: 12,
+					md: 12,
+					lg: 12
+				}}>
+					<DashboardHeader
+						onDisplayedSwitchHandler={setFragmentGroupDisplayed}
+						fragmentGroupDisplayed={fragmentGroupDisplayed} />
+				</Col>
+			</Row>
+			<Row styles={searchRowStyles}>
+				<Col cols={{
+					sm: 12,
+					md: 12,
+					lg: 12
+				}}>
+					<DashboardSearch
+						onSearchHandler={setFragmentTitleFilter}
+						onSortHandler={setSortDirection}
+						sortDirection={sortDirection}
+						displayWizard={displayWizard}
+						setDisplayWizard={setDisplayWizard} />
+				</Col>
+			</Row>
+			<Row>
+				<Col cols={{
+					sm: 12,
+					md: 12,
+					lg: 12
+				}}>
+					{
+						isLoading
+						? <div className={css`height: 100%;`}>
+							<Loading className={cx('center', css`left: calc(50% - 44px)`)} withOverlay={false} />
+						</div>
+						: <FragmentTileList
+							fragments={displayedFragments}
+							isFeaturedFragment={fragmentGroupDisplayed === FragmentGroupDisplayed.FeaturedFragments}
+							setModalFragment={setModalFragment}
+							setDisplayedModal={setDisplayedModal}
 							displayWizard={displayWizard}
 							setDisplayWizard={setDisplayWizard} />
-					</Col>
-				</Row>
-				<Row>
-					<Col cols={{
-						sm: 12,
-						md: 12,
-						lg: 12
-					}}>
-						{
-							<FragmentTileList
-								fragments={displayedFragments}
-								setModalFragment={setModalFragment} />
-						}
-					</Col>
-				</Row>
-			</Main>
-			<FragmentWizard
-				shouldDisplay={displayWizard}
-				setShouldDisplay={setDisplayWizard} />
-			{modalFragment && <FragmentModal fragment={modalFragment} />}
-		</>
+					}
+				</Col>
+			</Row>
+		</Main>
 	);
 };

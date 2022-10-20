@@ -1,24 +1,61 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
-	Accordion,
-	AccordionItem,
-	TextInput,
+	Button,
 	Checkbox,
 	TooltipDefinition
 } from 'carbon-components-react';
+import {
+	ChevronDown16,
+	ChevronUp16
+} from '@carbon/icons-react';
+import { css, cx } from 'emotion';
+import { ControlledEditor } from '@monaco-editor/react';
+import { throttle } from 'lodash';
 
 import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { getSelectedComponent, updatedState } from '../../components/fragment';
 import { allComponents } from '../../fragment-components';
 import { SelectedComponentBreadcrumbs } from './selected-component-breadcrumbs';
-import { css, cx } from 'emotion';
-import { FragmentLayers } from '../../components/fragment-layers';
+import { FragmentLayoutWidget } from '../../components/fragment-layout-widget';
 import { GlobalStateContext } from '../../context';
 
 const styleContextPaneStyle = css`
 .bx--form-item.bx--checkbox-wrapper {
 	display: inline-flex;
 }`;
+
+const accordionButtonStyle = css`
+	display: block;
+	color: #161616;
+	width: 100%;
+	border-top: 1px solid #e0e0e0;
+
+	&:hover {
+		color: #161616;
+	}
+
+	&.bx--btn--ghost .bx--btn__icon {
+		margin-left: 0;
+		margin-right: 1rem;
+		float: left;
+	}
+`;
+
+const accordionContentStyle = css`
+	padding-left: 1rem;
+	padding-right: 1rem;
+	margin-bottom: 1rem;
+`;
+
+const fullWidthWidgetStyle = css`
+	padding-left: 1px;
+`;
+
+const tooltipStyle = css`
+.bx--tooltip__trigger.bx--tooltip__trigger--definition.bx--tooltip--bottom.bx--tooltip--a11y + .bx--assistive-text {
+	margin-left: -150px;
+}
+`;
 
 const showComponentSettingsUI = (selectedComponent: any, setComponent: any) => {
 	for (const component of Object.values(allComponents)) {
@@ -31,9 +68,17 @@ const showComponentSettingsUI = (selectedComponent: any, setComponent: any) => {
 	}
 };
 
+let setComponent = (_component: any) => console.log('setComponent not inizialized yet');
+const throttledSetComponent = throttle((component: any) => setComponent(component), 150);
+
+let proxySetFragment = (_component: any) => console.log('proxySetFragment not inizialized yet');
+const throttledSetFragment = throttle((component: any) => proxySetFragment(component), 150);
+
 export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 	const selectedComponent = getSelectedComponent(fragment);
 	const { settings, setSettings } = useContext(GlobalStateContext);
+
+	const [fragmentLayoutWidgetAccordionOpen, setFragmentLayoutWidgetAccordionOpen] = useState(false);
 
 	const updateContextPaneSettings = (s: any) => {
 		setSettings({
@@ -48,7 +93,7 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 		});
 	};
 
-	const setComponent = (component: any, updateActionHistory = true) => {
+	setComponent = (component: any, updateActionHistory = true) => {
 		setFragment(
 			{
 				...fragment,
@@ -61,6 +106,8 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 		);
 	};
 
+	proxySetFragment = setFragment;
+
 	return (
 		<div className={cx(styleContextPaneStyle, 'context-pane-content')}>
 			{
@@ -70,108 +117,158 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 						selectedComponent={selectedComponent}
 						setFragment={setFragment} />
 			}
-			<Accordion align='start'>
-				<AccordionItem
-				title='General'
-				open={settings.contextPane?.settings?.generalAccordionOpen}
-				onHeadingClick={() => updateContextPaneSettings({
-					generalAccordionOpen: !settings.contextPane?.settings?.generalAccordionOpen
-				})}>
-					{
-						selectedComponent && <>
-							{showComponentSettingsUI(selectedComponent, setComponent)}
-						</>
-					}
-					{
-						!selectedComponent && <>
-							<TextInput
-								id='fragmentName'
-								labelText='Fragment name'
-								defaultValue={fragment.title}
-								onChange={(event: any) => setFragment({
-									...fragment,
-									title: event.target.value
-								})}/>
-
-							<br />
-
-							<Checkbox
-								id='setFragmentAsTemplate'
-								checked={fragment.labels && fragment.labels.includes('template')}
-								labelText='Make this fragment a &nbsp;'
-								onChange={(checked: boolean) => {
-									if (checked) {
-										if (!fragment.labels?.includes('template')) {
-											setFragment({
-												...fragment,
-												labels: [...(fragment.labels || []), 'template']
-											});
-										}
-									} else {
-										// if the set template is unchecked, remove the 'template' label
+			<Button
+			kind='ghost'
+			className={accordionButtonStyle}
+			renderIcon={settings.contextPane?.settings?.generalAccordionOpen ? ChevronUp16 : ChevronDown16}
+			onClick={() => updateContextPaneSettings({
+				generalAccordionOpen: !settings.contextPane?.settings?.generalAccordionOpen
+			})}>
+				General
+			</Button>
+			{
+				settings.contextPane?.settings?.generalAccordionOpen &&
+				<div className={accordionContentStyle}>
+				{
+					selectedComponent && <>
+						{showComponentSettingsUI(selectedComponent, setComponent)}
+					</>
+				}
+				{
+					!selectedComponent && <>
+						<Checkbox
+							id='setFragmentAsTemplate'
+							checked={fragment.labels && fragment.labels.includes('template')}
+							labelText='Make this fragment a &nbsp;'
+							onChange={(checked: boolean) => {
+								if (checked) {
+									if (!fragment.labels?.includes('template')) {
 										setFragment({
 											...fragment,
-											labels: fragment.labels?.filter((label: string) => label !== 'template')
+											labels: [...(fragment.labels || []), 'template']
 										});
 									}
-								}}/>
-							<TooltipDefinition
-								tooltipText='Setting a fragment as a template makes it an easy starting point
-								for future fragments.'
-								direction='bottom'>
-								template
-							</TooltipDefinition>
-							<Checkbox
-								id='setFragmentAsMicroLayout'
-								checked={fragment.labels && fragment.labels.includes('micro-layout')}
-								labelText='Make this fragment a &nbsp;'
-								onChange={(checked: boolean) => {
-									if (checked) {
-										if (!fragment.labels?.includes('micro-layout')) {
-											setFragment({
-												...fragment,
-												labels: [...(fragment.labels || []), 'micro-layout']
-											});
-										}
-									} else {
-										// if the set micro-layout is unchecked, remove the 'micro-layout' label
+								} else {
+									// if the set template is unchecked, remove the 'template' label
+									setFragment({
+										...fragment,
+										labels: fragment.labels?.filter((label: string) => label !== 'template')
+									});
+								}
+							}}/>
+						<TooltipDefinition
+							tooltipText='Setting a fragment as a template makes it an easy starting point
+							for future fragments.'
+							direction='bottom'
+							className={tooltipStyle}>
+							template
+						</TooltipDefinition>
+						<Checkbox
+							id='setFragmentAsMicroLayout'
+							checked={fragment.labels && fragment.labels.includes('micro-layout')}
+							labelText='Make this fragment a &nbsp;'
+							onChange={(checked: boolean) => {
+								if (checked) {
+									if (!fragment.labels?.includes('micro-layout')) {
 										setFragment({
 											...fragment,
-											labels: fragment.labels?.filter((label: string) => label !== 'micro-layout')
+											labels: [...(fragment.labels || []), 'micro-layout']
 										});
 									}
-								}}/>
-							<TooltipDefinition
-								tooltipText='Setting a fragment as a micro layout makes it available to drag and drop into fragments'
-								direction='bottom'>
-								micro layout
-							</TooltipDefinition>
-						</>
-					}
-				</AccordionItem>
-				<AccordionItem
-				title='Custom CSS classes'
-				open={settings.contextPane?.settings?.customCSSAccordionOpen}
-				onHeadingClick={() => updateContextPaneSettings({
-					customCSSAccordionOpen: !settings.contextPane?.settings?.customCSSAccordionOpen
-				})}>
+								} else {
+									// if the set micro-layout is unchecked, remove the 'micro-layout' label
+									setFragment({
+										...fragment,
+										labels: fragment.labels?.filter((label: string) => label !== 'micro-layout')
+									});
+								}
+							}}/>
+						<TooltipDefinition
+							tooltipText='Setting a fragment as a micro layout makes it available to drag and drop into fragments'
+							direction='bottom'
+							className={tooltipStyle}>
+							micro layout
+						</TooltipDefinition>
+					</>
+				}
+				</div>
+			}
+			<Button
+			kind='ghost'
+			className={accordionButtonStyle}
+			renderIcon={settings.contextPane?.settings?.customCSSAccordionOpen ? ChevronUp16 : ChevronDown16}
+			onClick={() => updateContextPaneSettings({
+				customCSSAccordionOpen: !settings.contextPane?.settings?.customCSSAccordionOpen
+			})}>
+				Custom CSS classes
+			</Button>
+			{
+				settings.contextPane?.settings?.customCSSAccordionOpen &&
+				<div className={accordionContentStyle}>
 					{
 						!selectedComponent && <ComponentCssClassSelector componentObj={fragment} setComponent={setFragment} />
 					}
 					{
 						selectedComponent && <ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 					}
-				</AccordionItem>
-				<AccordionItem
-				title='Layers'
-				className='layers-widget'
-				open={settings.contextPane?.settings?.fragmentLayersAccordionOpen}
-				onHeadingClick={() => updateContextPaneSettings({
-					fragmentLayersAccordionOpen: !settings.contextPane?.settings?.fragmentLayersAccordionOpen
-				})}>
-					<FragmentLayers fragment={fragment} setFragment={setFragment} />
-				</AccordionItem>
-			</Accordion>
+				</div>
+			}
+			<Button
+			kind='ghost'
+			className={accordionButtonStyle}
+			renderIcon={fragmentLayoutWidgetAccordionOpen ? ChevronUp16 : ChevronDown16}
+			onClick={() => setFragmentLayoutWidgetAccordionOpen(!fragmentLayoutWidgetAccordionOpen)}
+			// FragmentLayoutWidget is unstable so for now we use closed-by-default state to prevent crashes - clean starts seem to work fine
+			// renderIcon={settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen ? ChevronUp16 : ChevronDown16}
+			// onClick={() => updateContextPaneSettings({
+			// 	fragmentLayoutWidgetAccordionOpen: !settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen
+			// })}
+			>
+				Layout
+			</Button>
+			{
+				// settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen &&
+				fragmentLayoutWidgetAccordionOpen &&
+					<FragmentLayoutWidget fragment={fragment} setFragment={setFragment} />
+			}
+			<Button
+			kind='ghost'
+			className={accordionButtonStyle}
+			renderIcon={settings.contextPane?.settings?.notesAccordionOpen ? ChevronUp16 : ChevronDown16}
+			onClick={() => updateContextPaneSettings({
+				notesAccordionOpen: !settings.contextPane?.settings?.notesAccordionOpen
+			})}>
+				Notes
+			</Button>
+			{
+				settings.contextPane?.settings?.notesAccordionOpen &&
+				<div className={fullWidthWidgetStyle}>
+					<ControlledEditor
+						height='300px'
+						language='markdown'
+						options={{
+							minimap: {
+								enabled: false
+							},
+							lineDecorationsWidth: 2,
+							lineNumbersMinChars: 4
+						}}
+						onChange= {(_, value: any) => {
+							if (selectedComponent) {
+								throttledSetComponent({
+									...selectedComponent,
+									notes: value
+								});
+							} else {
+								throttledSetFragment({
+									...fragment,
+									notes: value
+								});
+							}
+						}}
+						value={selectedComponent ? selectedComponent.notes : fragment.notes} />
+				</div>
+			}
 		</div>
 	);
 };

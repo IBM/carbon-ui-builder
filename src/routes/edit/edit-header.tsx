@@ -1,17 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { css } from 'emotion';
-import { Button } from 'carbon-components-react';
+import { Button, TextInput } from 'carbon-components-react';
 import {
+	Checkmark16,
+	ChevronLeft24,
 	Copy16,
-	Delete16,
-	Export16,
+	DocumentExport16,
+	Edit16,
+	IntentRequestInactive20,
+	IntentRequestActive20,
+	IntentRequestUninstall20,
+	Redo16,
+	TrashCan16,
 	Undo16,
-	Redo16
+	View16
 } from '@carbon/icons-react';
-import { ModalContext, ModalActionType } from '../../context/modal-context';
-import { FragmentModal } from './fragment-modal';
+import { ModalContext } from '../../context/modal-context';
 import { GlobalStateContext } from '../../context';
 import { actionIconStyle } from '.';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { openFragmentPreview } from '../../utils/fragment-tools';
 
 const editHeader = css`
 	left: 16rem;
@@ -24,7 +32,7 @@ const editHeader = css`
 		justify-content: space-between;
 		.title-wrap {
 			height: 3rem;
-			margin-left: 3rem;
+			margin-left: 0;
 			display: flex;
 			align-self: center;
 			flex-flow: column;
@@ -39,7 +47,6 @@ const editHeader = css`
 			}
 			.date-wrap {
 				font-size: 12px;
-				font-style: italic;
 				color: black;
 				padding-left: 12px;
 			}
@@ -49,6 +56,8 @@ const editHeader = css`
 			font-weight: bold;
 			padding-left: 12px;
 			padding-right: 16px;
+			line-height: 2rem;
+
 			float: left;
 		}
 		.fragment-edit {
@@ -112,7 +121,7 @@ const toolBarSeparator = css`
 
 const fragmentEditToolBar = css`
 	display: flex;
-	margin-right: 5rem;
+	margin-right: 1rem;
 	margin-top: 8px;
 	margin-bottom: 8px;
 	button {
@@ -138,14 +147,31 @@ const fragmentEditToolBar = css`
 	}
 `;
 
-export const EditHeader = ({ fragment }: any) => {
-	const [, dispatchModal] = useContext(ModalContext);
+export const EditHeader = ({ fragment, setFragment }: any) => {
+	const navigate: NavigateFunction = useNavigate();
+	const {
+		showFragmentDuplicateModal,
+		showFragmentDeleteModal,
+		showFragmentExportModal
+	} = useContext(ModalContext);
+	const [isEditingTitle, setIsEditingTitle] = useState(false);
+	const titleTextInputRef = useRef(null as any);
 	const {
 		canUndo,
 		undoAction,
 		canRedo,
 		redoAction
 	} = useContext(GlobalStateContext);
+
+	const getOutlineHelperText = (outline: boolean | null) => {
+		if (outline === true) {
+			return 'Outline (forced on)';
+		}
+		if (outline === false) {
+			return 'Outline (forced off)';
+		}
+		return 'Outline (inheriting)';
+	};
 
 	return (
 		<header
@@ -154,67 +180,127 @@ export const EditHeader = ({ fragment }: any) => {
 			role='banner'
 			tabIndex={0}>
 			<div className='edit-wrapper'>
-				<div className='title-wrap'>
-					<p className='fragment-title'>{fragment.title}</p>
+				<div className={css`display: flex;`}>
+					<Button
+						kind='ghost'
+						aria-label='Back to dashboard'
+						title='Back to dashboard'
+						onClick={() => navigate('/')}>
+						<ChevronLeft24 className={actionIconStyle} />
+					</Button>
+					<div className='title-wrap'>
+						<div className='fragment-title'>
+							{
+								<div className={isEditingTitle ? css`display: inline-block` : css`display: none`}>
+									<TextInput
+										id='fragment-title-text-input'
+										labelText=''
+										ref={titleTextInputRef}
+										value={fragment.title}
+										onChange={(event: any) => setFragment({ ...fragment, title: event.target.value })}
+										onKeyDown={(event: any) => {
+											if (event.key === 'Enter') {
+												setIsEditingTitle(false);
+											}
+										}}
+										onBlur={() => setIsEditingTitle(false)}
+										size='sm'
+										light={true} />
+								</div>
+							}
+							{ !isEditingTitle && fragment.title }
+							<Button
+								kind='ghost'
+								size='sm'
+								hasIconOnly
+								renderIcon={isEditingTitle ? Checkmark16 : Edit16}
+								iconDescription='toggle editing title'
+								onClick={() => {
+									setIsEditingTitle(!isEditingTitle);
+									// isEditingTitle won't be changed until next render so checking for opposite
+									if (!isEditingTitle) {
+										setTimeout(() => {
+											titleTextInputRef.current?.focus();
+										});
+									}
+								}} />
+						</div>
 
-					<div className='title-subheading'>
-						<div className='date-wrap'>{`Last modified ${ fragment.lastModified}`}</div>
+						<div className='title-subheading'>
+							<div className='date-wrap'>{`Last modified ${fragment.lastModified}`}</div>
+						</div>
 					</div>
 				</div>
 				<div className={fragmentEditToolBar}>
 					<div className='toolBarButtons'>
 						<Button
 							kind='ghost'
-							aria-label='Undo'
-							title='Undo'
-							disabled={!canUndo()}
-							onClick={() => undoAction()}>
-							<Undo16 className={actionIconStyle} />
-						</Button>
+							hasIconOnly
+							tooltipPosition='bottom'
+							iconDescription={getOutlineHelperText(fragment.outline)}
+							onClick={() => setFragment({ ...fragment, outline: fragment.outline === false ? null : !fragment.outline })}
+							renderIcon={() => {
+								if (fragment.outline === true) {
+									return <IntentRequestActive20 className={actionIconStyle} />;
+								}
+
+								if (fragment.outline === false) {
+									return <IntentRequestUninstall20 className={actionIconStyle} />;
+								}
+
+								return <IntentRequestInactive20 className={actionIconStyle} />;
+							}} />
 						<Button
 							kind='ghost'
-							aria-label='Redo'
-							title='Redo'
-							disabled={!canRedo()}
-							onClick={() => redoAction()}>
-							<Redo16 className={actionIconStyle} />
-						</Button>
+							hasIconOnly
+							tooltipPosition='bottom'
+							iconDescription='Preview fragment'
+							onClick={() => openFragmentPreview(fragment)}
+							renderIcon={() => <View16 className={actionIconStyle} />} />
 						<div className={toolBarSeparator} />
 						<Button
 							kind='ghost'
-							aria-label='Duplicate fragment'
-							title='Duplicate fragment'
-							onClick={() => dispatchModal({
-								type: ModalActionType.setDuplicationModal,
-								id: fragment.id
-							})}>
-							<Copy16 className={actionIconStyle} />
-						</Button>
+							hasIconOnly
+							tooltipPosition='bottom'
+							iconDescription='Undo'
+							disabled={!canUndo()}
+							onClick={() => undoAction()}
+							renderIcon={() => <Undo16 className={actionIconStyle} />} />
 						<Button
 							kind='ghost'
-							aria-label='Delete fragment'
-							title='Delete fragment'
-							onClick={() => dispatchModal({
-								type: ModalActionType.setDeletionModal,
-								id: fragment.id
-							})}>
-							<Delete16 className={actionIconStyle} />
-						</Button>
+							hasIconOnly
+							tooltipPosition='bottom'
+							iconDescription='Redo'
+							disabled={!canRedo()}
+							onClick={() => redoAction()}
+							renderIcon={() => <Redo16 className={actionIconStyle} />} />
+						<div className={toolBarSeparator} />
+						<Button
+							kind='ghost'
+							hasIconOnly
+							tooltipPosition='bottom'
+							iconDescription='Duplicate fragment'
+							onClick={() => showFragmentDuplicateModal(fragment)}
+							renderIcon={() => <Copy16 className={actionIconStyle} />} />
+						<Button
+							kind='ghost'
+							hasIconOnly
+							tooltipPosition='bottom'
+							iconDescription='Delete fragment'
+							onClick={() => showFragmentDeleteModal(fragment.id)}
+							renderIcon={() => <TrashCan16 className={actionIconStyle} />} />
 						<Button
 							kind='primary'
+							iconDescription='Export fragment'
 							aria-label='Export fragment'
 							title='Export fragment'
-							renderIcon={Export16}
-							onClick={() => dispatchModal({
-								type: ModalActionType.setExportModal,
-								id: fragment.id
-							})}>
+							renderIcon={DocumentExport16}
+							onClick={() => showFragmentExportModal(fragment)}>
 							Export
 						</Button>
 					</div>
 				</div>
 			</div>
-			<FragmentModal fragment={fragment} />
 		</header>
 	);
 };
