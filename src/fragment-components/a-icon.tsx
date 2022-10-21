@@ -41,7 +41,7 @@ const sizeItems = [
 
 const getIcons = () => {
 	const allIcons: any = [];
-	Object.entries(Icons).forEach(([iconValue, iconObj] : any[]) => {
+	Object.entries(Icons).forEach(([iconValue, iconObj]: any[]) => {
 		const icon = iconValue.split(/(\d+)/);
 		const [iconName, sizeValue] = [icon[0], icon[1]];
 		const iconItem = {
@@ -87,10 +87,10 @@ export const AIconSettingsUI = ({ selectedComponent, setComponent }: any) => {
 		initialSelectedItem={selectedComponent.size.find((item: any) => item.size === selectedComponent.size[0].size)}
 		itemToString={(item: any) => (item ? item.text : '')}
 		onChange={(event: any) => setComponent({
-				...selectedComponent,
-				selectedIcon: selectedComponent.size.find((item: any) => item.size === event.selectedItem.size).component,
-				selectedSize: selectedComponent.size.find((item: any) => item.size === event.selectedItem.size).size,
-				name: selectedComponent.size.find((item: any) => item.size === event.selectedItem.size).component.render.name
+			...selectedComponent,
+			selectedIcon: selectedComponent.size.find((item: any) => item.size === event.selectedItem.size).component,
+			selectedSize: selectedComponent.size.find((item: any) => item.size === event.selectedItem.size).size,
+			name: selectedComponent.size.find((item: any) => item.size === event.selectedItem.size).component.render.name
 		})}/>
 		<ModalWrapper
 		buttonTriggerText="More icons"
@@ -110,15 +110,14 @@ export const AIconSettingsUI = ({ selectedComponent, setComponent }: any) => {
 						// eslint-disable-next-line react/jsx-key
 						return (<ElementTile className={elementTileStyle} componentObj={props.componentObj}>
 									<Component
-										className={css`cursor: pointer;`}
-										onClick={() => setComponent({
-											...selectedComponent,
-											selectedIcon: props.componentObj.selectedIcon,
-											key: props.componentObj.key,
-											size: props.componentObj.size,
-											name: props.componentObj.name
-										})}>
-									</Component>
+									className={css`cursor: pointer;`}
+									onClick={() => setComponent({
+										...selectedComponent,
+										selectedIcon: props.componentObj.selectedIcon,
+										key: props.componentObj.key,
+										size: props.componentObj.size,
+										name: props.componentObj.name
+									})} />
 						</ElementTile>);
 					})
 				}
@@ -130,10 +129,12 @@ export const AIcon = ({
 	componentObj,
 	...rest
 }: any) => {
+
 	componentObj.items = getIcons();
 	const component = componentObj.key === '' ?
 		componentObj.items.find((item: any) => item.key === 'Add').componentObj :
 		componentObj.items.find((item: any) => item.key === componentObj.key).componentObj;
+
 	if (isEmpty(componentObj.selectedIcon)) {
 		componentObj.selectedIcon = component.selectedIcon;
 		componentObj.key = component.key;
@@ -141,6 +142,7 @@ export const AIcon = ({
 		componentObj.name = component.name;
 		componentObj.selectedSize = component.selectedSize;
 	}
+
 	return (
 		<AComponent
 		rejectDrop={true}
@@ -175,10 +177,9 @@ export const componentInfo: ComponentInfo = {
 			imports: ['IconModule'],
 			code: ({ json }) => {
 				return `<svg
-							${json.selectedSize ? `size='${json.selectedSize}'` : '16'}
-							${json.name ? `ibmIcon='${json.key}'` : ''}
-							${angularClassNamesFromComponentObj(json)}>
-						</svg>`;
+					${json.selectedSize ? `size='${json.selectedSize}'` : '16'}
+					${json.name ? `ibmIcon='${json.key}'` : ''}
+					${angularClassNamesFromComponentObj(json)} />`;
 			}
 		},
 		react: {
@@ -188,8 +189,8 @@ export const componentInfo: ComponentInfo = {
 			},
 			code: ({ json }) => {
 				return `<${json.name}
-							${json.key ? `aria-label='${json.key}'` : ''}
-						${reactClassNamesFromComponentObj(json)}/>`;
+					${json.key ? `aria-label='${json.key}'` : ''}
+					${reactClassNamesFromComponentObj(json)} />`;
 			}
 		}
 	}
