@@ -148,7 +148,7 @@ export const AIcon = ({
 		headingCss={css`display: block;`}
 		className={css`position: relative; display: flex`}
 		{...rest}>
-			<componentObj.selectedIcon></componentObj.selectedIcon>
+			<componentObj.selectedIcon />
 		</AComponent>
 	);
 };
