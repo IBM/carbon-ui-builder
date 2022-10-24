@@ -4,8 +4,7 @@
 
 For Work In Progress Pull Requests, please use the [Draft pull request feature](https://github.blog/2019-02-14-introducing-draft-pull-requests/).
 
-For pull requests that relate or close an issue, please include them
-below. [Github's guidance on linking issues to pull requests](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue).
+For pull requests that relate or close an issue, please include them below. [Github's guidance on linking issues to pull requests](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue).
 
 -->
 
@@ -46,7 +45,7 @@ ex. This PR [adds/removes/fixes/replaces] the [feature/bug/etc].
 Describe the `how` of the PR.
 
 Provide a summary of:
- - coxtext behind changes made
+ - context behind changes made
  - what reviewers should pay extra attention to
  - what, if anything, was refactored
  - who, if anyone, collaborated on this PR
