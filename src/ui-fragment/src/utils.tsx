@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { GlobalStateContext } from '../../context';
 import { UIAccordion } from './components/ui-accordion';
 import { UIAccordionItem } from './components/ui-accordion-item';
 import { UIBreadcrumb } from './components/ui-breadcrumb';
@@ -47,12 +48,15 @@ export const setItemInState = (item: any, state: any, setState: (state: any) => 
 };
 
 export const getAllComponentStyleClasses = (componentObj: any, fragments: any[]) => {
+	// eslint-disable-next-line react-hooks/rules-of-hooks
+	const { styleClasses: globalStyleClasses } = useContext(GlobalStateContext);
 	let styleClasses: any = {};
 
 	// convert into an object so all classes are unique
 	componentObj.cssClasses?.forEach((cssClass: any) => {
 		// NOTE do we need to merge them deeply?
-		styleClasses[cssClass.id] = cssClass;
+		// update styleClasses content from global context
+		styleClasses[cssClass.id] = globalStyleClasses.find((gsc: any) => gsc.id === cssClass.id) || cssClass;
 	});
 
 	componentObj.items?.map((co: any) => {
