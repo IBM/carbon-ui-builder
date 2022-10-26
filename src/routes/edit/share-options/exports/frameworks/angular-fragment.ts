@@ -133,8 +133,8 @@ const getAllSubfragments = (json: any, fragments: any[]) => {
 const getOtherImportModules = (input: any) => {
 	if (input) {
 		let imports: any = [];
-		let regex = /(?<=import).*?(?=from)/gm;
-		if(input.match(regex)) {
+		const regex = /(?<=import).*?(?=from)/gm;
+		if (input.match(regex)) {
 			imports = input.match(regex);
 			imports = imports?.map((item: any) => item.replace(/[ }{]/g, '')).toString();
 			imports = imports.split(',');
@@ -146,11 +146,9 @@ const getOtherImportModules = (input: any) => {
 const otherImportsFromComponentObj = (json: any, fragments?: any[]) => {
 	let imports = '';
 	for (const component of Object.values(allComponents)) {
-		if (json.type === component.componentInfo.type) {
-			if (component.componentInfo.codeExport.angular.otherImports) {
-				imports += component.componentInfo.codeExport.angular.otherImports({ json, fragments });
-				break;
-			}
+		if (json.type === component.componentInfo.type && component.componentInfo.codeExport.angular.otherImports) {
+			imports += component.componentInfo.codeExport.angular.otherImports({ json });
+			break;
 		}
 	}
 
