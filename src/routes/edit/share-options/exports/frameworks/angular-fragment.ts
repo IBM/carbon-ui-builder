@@ -130,28 +130,17 @@ const getAllSubfragments = (json: any, fragments: any[]) => {
 	return sharedComponents;
 };
 
-const getOtherImportModuleNames = (otherImportString: any) => {
-	const imports: any = [];
-	let index = 1;
-	if (otherImportString) {
-		const otherImports = otherImportString.split(' ');
-		while (otherImports[index]) {
-			if (otherImports[index - 1] === 'import' && !imports.includes(otherImports[index])
-			&& otherImports[index + 1] === 'from') {
-				imports.push(otherImports[index]);
-			}
-
-			if (otherImports[index - 1] === '{') {
-				imports.push(otherImports[index]);
-				while (otherImports[index + 1] !== '}') {
-					imports.push(otherImports[index]);
-					index++;
-				}
-			}
-			index++;
+const getOtherImportModules = (input: any) => {
+	if (input) {
+		let imports: any = [];
+		let regex = /(?<=import).*?(?=from)/gm;
+		if(input.match(regex)) {
+			imports = input.match(regex);
+			imports = imports?.map((item: any) => item.replace(/[ }{]/g, '')).toString();
+			imports = imports.split(',');
 		}
+		return imports;
 	}
-	return imports.map((el: any) => el.replace(',',''));
 };
 
 const otherImportsFromComponentObj = (json: any, fragments?: any[]) => {
@@ -182,7 +171,6 @@ const getComponentCode = (fragment: any, fragments: any[]) => {
 	// component.ts
 	componentCode[`src/app/components/${tagNameFromFragment(fragment)}/${tagNameFromFragment(fragment)}.component.ts`] = format(
 		`import { Component, Input, Output, EventEmitter } from '@angular/core';
-			${otherImportsFromComponentObj(fragment.data, fragments)}
 		@Component({
 			selector: 'app-${tagNameFromFragment(fragment)}',
 			templateUrl: './${tagNameFromFragment(fragment)}.component.html'${hasFragmentStyleClasses(fragment) ? `,
@@ -203,7 +191,7 @@ const getComponentCode = (fragment: any, fragments: any[]) => {
 		`import { NgModule } from "@angular/core";
 		import { ${jsonToAngularImports(fragment.data).join(', ')} } from 'carbon-components-angular';
 		import { ${classNameFromFragment(fragment)} } from "./${tagNameFromFragment(fragment)}.component";
-			${otherImportsFromComponentObj(fragment.data, fragments)}
+		${otherImportsFromComponentObj(fragment.data, fragments)}
 		${
 			Object.values(subFragments).map((f) =>
 				`import { ${classNameFromFragment(f)}Module} from "../${tagNameFromFragment(f)}/${tagNameFromFragment(f)}.module";`).join('\n')
@@ -212,7 +200,7 @@ const getComponentCode = (fragment: any, fragments: any[]) => {
 		@NgModule({
 			imports: [${[
 				...jsonToAngularImports(fragment.data),
-				getOtherImportModuleNames(otherImportsFromComponentObj(fragment.data, fragments)),
+				getOtherImportModules(otherImportsFromComponentObj(fragment.data, fragments)),
 				...Object.values(subFragments).map((fragment) => `${classNameFromFragment(fragment)}Module`)
 			].join(', ')}],
 			declarations: [${classNameFromFragment(fragment)}],
