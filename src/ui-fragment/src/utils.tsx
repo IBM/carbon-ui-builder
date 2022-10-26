@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { GlobalStateContext } from '../../context';
+import { getGlobalStyleClassesFromLocalStorage } from '../../utils/fragment-tools';
 import { UIAccordion } from './components/ui-accordion';
 import { UIAccordionItem } from './components/ui-accordion-item';
 import { UIBreadcrumb } from './components/ui-breadcrumb';
@@ -49,7 +50,7 @@ export const setItemInState = (item: any, state: any, setState: (state: any) => 
 
 export const getAllComponentStyleClasses = (componentObj: any, fragments: any[]) => {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const { styleClasses: globalStyleClasses } = useContext(GlobalStateContext);
+	const { styleClasses: globalStyleClasses } = useContext(GlobalStateContext) || { styleClasses: getGlobalStyleClassesFromLocalStorage() };
 	let styleClasses: any = {};
 
 	// convert into an object so all classes are unique
