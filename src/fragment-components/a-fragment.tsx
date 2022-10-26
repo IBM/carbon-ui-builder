@@ -116,10 +116,7 @@ export const componentInfo: ComponentInfo = {
 			inputs: (_) => '',
 			outputs: (_) => '',
 			imports: [],
-			otherImports: ({ json, fragments }) => {
-				const fragment = fragments?.find(f => f.id === json.fragmentId);
-				return `import {${classNameFromFragment(fragment)}} from "/src/shared/${tagNameFromFragment(fragment)}.js";`;
-			},
+			otherImports: (_) => '',
 			code: ({ json, fragments }) => {
 				const fragment = fragments?.find(f => f.id === json.fragmentId);
 				return `<app-${tagNameFromFragment(fragment)}></app-${tagNameFromFragment(fragment)}>`;
