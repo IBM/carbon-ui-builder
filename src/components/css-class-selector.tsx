@@ -14,6 +14,7 @@ export const CssClassSelector = ({ selectedClasses, setSelectedClasses }: any) =
 		// available is anything in styleClasses, not yet in selecteClasses, sorted
 		return styleClasses
 			.filter((sc: any) => !selectedClasses?.find((ssc: any) => ssc.id === sc.id))
+			.map((sc: any) => ({ id: sc.id, name: sc.name })) // content is fetched from global as needed and we don't want stale content here
 			.sort(compareClasses);
 	};
 
@@ -30,15 +31,6 @@ export const CssClassSelector = ({ selectedClasses, setSelectedClasses }: any) =
 		setAvailableClasses(getAvailableClasses());
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [styleClasses, selectedClasses]);
-
-	useEffect(() => {
-		// update the contents of selected classes when needed
-		setSelectedClasses(
-			styleClasses.filter((sc: any) => !!selectedClasses?.find((ssc: any) => ssc.id === sc.id)),
-			false
-		);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [styleClasses]);
 
 	const selectStyleClass = (styleClass: any) => {
 		setSelectedClasses([...selectedClasses, styleClass]);
