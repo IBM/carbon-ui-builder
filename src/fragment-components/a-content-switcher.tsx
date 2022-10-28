@@ -216,7 +216,7 @@ export const componentInfo: ComponentInfo = {
 						}
 					})}>
 					${json.items.map((step: any) => `<Switch
-						name={"${step.name}"}
+						name="${step.name}"
 						text="${step.text}"
 						disabled={${step.disabled}}/>`
 					).join('\n')}
