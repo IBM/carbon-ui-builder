@@ -116,7 +116,6 @@ export const componentInfo: ComponentInfo = {
 			inputs: (_) => '',
 			outputs: (_) => '',
 			imports: [],
-			otherImports: (_) => '',
 			code: ({ json, fragments }) => {
 				const fragment = fragments?.find(f => f.id === json.fragmentId);
 				return `<app-${tagNameFromFragment(fragment)}></app-${tagNameFromFragment(fragment)}>`;
