@@ -13,6 +13,7 @@ import * as grid from './a-grid';
 import * as numberinput from './a-numberinput';
 import * as radio from './a-radio';
 import * as radioGroup from './a-radio-group';
+import * as pagination from './a-pagination';
 import * as progressIndicator from './a-progress-indicator';
 import * as row from './a-row';
 import * as tag from './a-tag';
@@ -49,6 +50,7 @@ export { AGrid, AGridSettingsUI } from './a-grid';
 export { ALoading, ALoadingCodeUI, ALoadingSettingsUI } from './a-loading';
 export { ALink, ALinkSettingsUI, ALinkCodeUI } from './a-link';
 export { ANumberInput, ANumberInputSettingsUI, ANumberInputCodeUI } from './a-numberinput';
+export { APagination, APaginationSettingsUI, APaginationCodeUI } from './a-pagination';
 export { AProgressIndicator, AProgressIndicatorSettingsUI, AProgressIndicatorCodeUI } from './a-progress-indicator';
 export { ARow, ARowSettingsUI } from './a-row';
 export { ASearchInput, ASearchInputSettingsUI, ASearchInputCodeUI } from './a-searchinput';
@@ -88,6 +90,7 @@ export const allComponents = {
 	radioGroup,
 	link,
 	numberinput,
+	pagination,
 	progressIndicator,
 	row,
 	searchinput,

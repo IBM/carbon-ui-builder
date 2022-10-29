@@ -18,6 +18,7 @@ import { UILoading } from './components/ui-loading';
 import { UINumberInput } from './components/ui-number-input';
 import { UIOverflowMenu } from './components/ui-overflow-menu';
 import { UIOverflowMenuItem } from './components/ui-overflow-menu-item';
+import { UIPagination } from './components/ui-pagination';
 import { UIProgressIndicator } from './components/ui-progress-indicator';
 import { UIRadio } from './components/ui-radio';
 import { UIRadioGroup } from './components/ui-radio-group';
@@ -145,6 +146,9 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'number-input':
 			return <UINumberInput key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'pagination':
+			return <UIPagination key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'progress-indicator':
 			return <UIProgressIndicator key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
