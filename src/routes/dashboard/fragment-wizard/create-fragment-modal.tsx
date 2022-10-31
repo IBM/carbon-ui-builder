@@ -8,7 +8,7 @@ import { FragmentWizardModals } from './fragment-wizard';
 import { generateNewFragment } from './generate-new-fragment';
 import { GlobalStateContext, NotificationActionType, NotificationContext } from '../../../context';
 import { componentInfo as gridComponentInfo } from '../../../fragment-components/a-grid';
-import { initializeIds } from '../../../components';
+import { initializeIds, resetIds } from '../../../components';
 
 const createFragmentTiles = css`
 	display: flex;
@@ -77,6 +77,7 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 				props.setLastVisitedModal(FragmentWizardModals.CREATE_FRAGMENT_MODAL);
 			}}
 			onRequestSubmit={() => {
+				resetIds();
 				if (selectedCreateOption === CreateOptions.IMPORT_JSON) {
 					// open modal with file upload
 					props.setDisplayedModal(FragmentWizardModals.IMPORT_JSON_MODAL);
