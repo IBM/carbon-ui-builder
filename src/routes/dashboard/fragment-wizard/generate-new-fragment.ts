@@ -1,8 +1,6 @@
 import { getRandomId } from '../../../utils/fragment-tools';
 
-export const generateNewFragment = (
-	fragment: any
-) => {
+export const generateNewFragment = (fragment: any) => {
 	const fragmentID = getRandomId();
 	const fragmentName = 'New fragment';
 
