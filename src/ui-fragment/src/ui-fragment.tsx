@@ -8,8 +8,9 @@ export interface UIFragmentProps {
 }
 
 export const UIFragment = ({ state, setState }: UIFragmentProps) => {
+	const globalStyleClasses: any[] = []; // TODO try getting these from the state?
 	const styles = css`${
-		Object.values(getAllComponentStyleClasses(state, [])).map((styleClass: any) => `.${styleClass.id} {
+		Object.values(getAllComponentStyleClasses(state, [], globalStyleClasses)).map((styleClass: any) => `.${styleClass.id} {
 			${styleClass.content}
 		}`)
 	}`;
