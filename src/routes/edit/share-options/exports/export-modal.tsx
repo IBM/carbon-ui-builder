@@ -19,6 +19,7 @@ import { saveBlob } from '../../../../utils/file-tools';
 import { GlobalStateContext } from '../../../../context';
 import { ExportImageComponent } from './export-image-component';
 import { filenameToLanguage } from '../../tools';
+import { getAllFragmentStyleClasses } from '../../../../ui-fragment/src/utils';
 
 monaco.init().then(monaco => {
 	monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
@@ -127,7 +128,7 @@ const CodeView = ({ code, selectedFilename }: any) => {
 const generateSandboxUrl = (parameters: any) => (`https://codesandbox.io/api/v1/sandboxes/define?parameters=${parameters}`);
 
 export const ExportModal = () => {
-	const { fragments, settings, setSettings } = useContext(GlobalStateContext);
+	const { fragments, settings, setSettings, styleClasses } = useContext(GlobalStateContext);
 	const { fragmentExportModal, hideFragmentExportModal } = useContext(ModalContext);
 	const [selectedAngularFilename, setSelectedAngularFilename] = useState('src/app/app.component.ts' as string);
 	const [selectedReactFilename, setSelectedReactFilename] = useState('src/component.js' as string);
@@ -136,7 +137,15 @@ export const ExportModal = () => {
 		return null;
 	}
 
-	const jsonCode: any = JSON.stringify(fragmentExportModal.fragment.data, null, 2);
+	const jsonCode: any = JSON.stringify({
+		id: fragmentExportModal.fragment.id,
+		lastModified: fragmentExportModal.fragment.lastModified,
+		title: fragmentExportModal.fragment.title,
+		data: fragmentExportModal.fragment.data,
+		cssClasses: fragmentExportModal.fragment.cssClasses,
+		allCssClasses: getAllFragmentStyleClasses(fragmentExportModal.fragment, [], styleClasses),
+		labels: fragmentExportModal.fragment.labels
+	}, null, 2);
 	const reactCode: any = createReactApp(fragmentExportModal.fragment, fragments);
 	const angularCode: any = createAngularApp(fragmentExportModal.fragment, fragments);
 
