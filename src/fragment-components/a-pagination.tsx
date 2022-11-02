@@ -235,17 +235,53 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => '',
-			outputs: ({ json }) => '',
-			imports: [''],
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
+									@Input() ${nameStringToVariableString(json.codeContext?.name)}PageInputDisabled = ${json.pageSizeInputDisabled};
+									@Input() ${nameStringToVariableString(json.codeContext?.name)}PageUnknown = ${json.pagesUnknown};
+									@Input() ${nameStringToVariableString(json.codeContext?.name)}TotalDataLength = ${json.totalItems};
+									@Input() ${nameStringToVariableString(json.codeContext?.name)}Model = {
+										currentPage: ${json.page},
+										pageLength: ${json.pageSize},
+										totalDataLength: ${json.totalItems}
+									}`,
+			outputs: ({ json }) =>  `@Output() ${nameStringToVariableString(json.codeContext?.name)}SelectPage = new EventEmitter();`,
+			imports: ['PaginationModule'],
 			code: ({ json }) => {
-				return ``;
+				return `<ibm-pagination
+					[model]="${nameStringToVariableString(json.codeContext?.name)}Model"
+					[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
+					[pageInputDisabled]="${nameStringToVariableString(json.codeContext?.name)}PageInputDisabled"
+					[pagesUnknown]="${nameStringToVariableString(json.codeContext?.name)}PageUnknown"
+					[showPageInput]="true"
+					(selectPage)="${nameStringToVariableString(json.codeContext?.name)}SelectPage.emit($event)"
+					${angularClassNamesFromComponentObj(json)}>
+				</ibm-pagination>`;
 			}
 		},
 		react: {
-			imports: [''],
+			imports: ['Pagination'],
 			code: ({ json }) => {
-				return ``;
+				return `<Pagination
+					backwardText="${json.backwardText}"
+					forwardText="${json.forwardText}"
+					itemsPerPageText="${json.itemsPerPageText}"
+					page={${json.page}}
+					pageNumberText="${json.pageNumberText}"
+					pageSize={${json.pageSize}}
+					disabled={${json.disabled}}
+					isLastPage={${json.isLastPage}}
+					pagesUnknown={${json.pagesUnknown}}
+					pageSizeInputDisabled={${json.pageSizeInputDisabled}}
+					totalItems={${json.totalItems}}
+					size="${json.size}"
+					pageSizes={[
+						10,
+						20,
+						30,
+						40,
+						50
+					]}
+					${reactClassNamesFromComponentObj(json)} />`;
 			}
 		}
 	}
