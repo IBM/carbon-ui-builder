@@ -244,7 +244,7 @@ export const componentInfo: ComponentInfo = {
 										pageLength: ${json.pageSize},
 										totalDataLength: ${json.totalItems}
 									}`,
-			outputs: ({ json }) =>  `@Output() ${nameStringToVariableString(json.codeContext?.name)}SelectPage = new EventEmitter();`,
+			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}SelectPage = new EventEmitter();`,
 			imports: ['PaginationModule'],
 			code: ({ json }) => {
 				return `<ibm-pagination
