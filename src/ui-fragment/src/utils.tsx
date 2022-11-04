@@ -100,6 +100,14 @@ export const getAllFragmentStyleClasses = (fragment: any, fragments: any[], glob
 	return Object.values(allClasses);
 };
 
+export const isFragment = (json: any) => {
+	return json.id
+		&& json.title
+		&& json.lastModified
+		&& json.data
+		&& Array.isArray(json.data?.items);
+};
+
 export const renderComponents = (state: any, setState: (state: any) => void, setGlobalState: (state: any) => void) => {
 	switch (state.type) {
 		case 'accordion':
