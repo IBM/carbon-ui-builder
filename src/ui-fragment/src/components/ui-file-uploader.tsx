@@ -2,8 +2,8 @@ import React from 'react';
 import {
 	FileUploader,
 	FileUploaderDropContainer
- } from 'carbon-components-react';
- import { css, cx } from 'emotion';
+} from 'carbon-components-react';
+import { css } from 'emotion';
 import { CssClasses } from '../types';
 
 const labelDescriptionStyle = css`
@@ -54,9 +54,9 @@ export const UIFileUploader = ({ state }: {
 	}
 
 	return <>
-	{
-		state.dragAndDrop
-			? <>
+		{
+			state.dragAndDrop
+				? <>
 		<strong className={labelTitleStyle}>{state.labelTitle}</strong>
 		<p className={labelDescriptionStyle}>
 			{state.labelDescription}
@@ -70,7 +70,7 @@ export const UIFileUploader = ({ state }: {
 		disabled={state.disabled}
 		labelText={state.dragAndDroplabelText}
 		tabIndex={0} />
-			</> :
+				</> :
 		<FileUploader
 		accept={[
 			'.jpg',
@@ -85,6 +85,6 @@ export const UIFileUploader = ({ state }: {
 		multiple={state.multiple}
 		disabled={state.disabled}
 		size={state.size} />
-	};
-	</>
+		};
+	</>;
 };

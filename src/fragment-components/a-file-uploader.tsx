@@ -115,9 +115,7 @@ export const AFileUploaderSettingsUI = ({ selectedComponent, setComponent }: any
 					...selectedComponent,
 					dragAndDroplabelText: event.currentTarget.value
 				})} />
-
 				: <>
-
 			<Dropdown
 				id='size'
 				label='Size'
@@ -157,7 +155,7 @@ export const AFileUploaderSettingsUI = ({ selectedComponent, setComponent }: any
 					...selectedComponent,
 					iconDescription: event.currentTarget.value
 				})} />
-			</>
+				</>
 		}
 
 		<TextInput
@@ -270,8 +268,8 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => ``,
-			outputs: ({ json }) => ``,
+			inputs: ({ json }) => '',
+			outputs: ({ json }) => '',
 			imports: [''],
 			code: ({ json }) => {
 				return ``;
