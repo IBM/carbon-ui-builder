@@ -1,6 +1,6 @@
 import React from 'react';
 import { css } from 'emotion';
-import { getAllComponentStyleClasses, renderComponents } from './utils';
+import { renderComponents } from './utils';
 
 export interface UIFragmentProps {
 	state: any;
@@ -8,14 +8,23 @@ export interface UIFragmentProps {
 }
 
 export const UIFragment = ({ state, setState }: UIFragmentProps) => {
-	const globalStyleClasses: any[] = []; // TODO try getting these from the state?
 	const styles = css`${
-		Object.values(getAllComponentStyleClasses(state, [], globalStyleClasses)).map((styleClass: any) => `.${styleClass.id} {
+		Object.values(state.allCssClasses || []).map((styleClass: any) => `.${styleClass.id} {
 			${styleClass.content}
 		}`)
 	}`;
 
+	const setStateData = (stateData: any) => {
+		setState({
+			...state,
+			data: {
+				...stateData
+			}
+		});
+	};
+
+	// state.data and setStateData render fragment json; state and setState render component json
 	return <div className={styles}>
-		{ renderComponents(state, setState, setState) }
+		{ renderComponents(state.data || state, state.data ? setStateData : setState, setStateData) }
 	</div>;
 };
