@@ -262,8 +262,27 @@ export const componentInfo: ComponentInfo = {
 		size: 'md',
 		multiple: false,
 		disabled: false,
-		dragAndDrop: false
-
+		dragAndDrop: false,
+		cssClasses: [
+			{
+				id: 'labelTitleStyle',
+				content: `color: #161616;
+					font-size: .875rem;
+					font-weight: 600;
+					letter-spacing: .16px;
+					line-height: 1.28572;`
+			},
+			{
+				id: 'labelDescriptionStyle',
+				content: `color: #525252;
+					font-size: .875rem;
+					font-weight: 400;
+					letter-spacing: .16px;
+					line-height: 1.28572;
+					margin-top: 0.5rem;
+					margin-bottom: 1rem;`
+			}
+		]
 	},
 	image,
 	codeExport: {
@@ -278,7 +297,38 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			imports: ['FileUploader', 'FileUploaderDropContainer'],
 			code: ({ json }) => {
-				return ``;
+				return `${json.dragAndDrop ?
+					`<strong className="labelTitleStyle">${json.labelTitle}</strong>
+					<p className="labelDescriptionStyle">
+						${json.labelDescription}
+					</p>
+					<FileUploaderDropContainer
+					${reactClassNamesFromComponentObj(json)}
+					accept={[
+					'image/jpeg',
+					'image/png'
+					]}
+					${json.multiple ? `multiple={${json.multiple}}` : ''}
+					${json.disabled ? `disabled={${json.disabled}}` : ''}
+					${json.dragAndDroplabelText ? `labelText="${json.dragAndDroplabelText}"` : ''}
+					tabIndex={0} />`
+						:
+					`<FileUploader
+					${reactClassNamesFromComponentObj(json)}
+					accept={[
+						'.jpg',
+						'.png'
+					]}
+					buttonKind="${json.buttonKind}"
+					buttonLabel="${json.buttonLabel}"
+					filenameStatus="${json.filenameStatus}"
+					labelDescription="${json.labelDescription}"
+					labelTitle="${json.labelTitle}"
+					${json.iconDescription ? `iconDescription="${json.iconDescription}"` : ''}
+					${json.multiple ? `multiple={${json.multiple}}` : ''}
+					${json.disabled ? `disabled={${json.disabled}}` : ''}
+					${json.size ? `size="${json.size}"` : ''} />`
+				}`
 			}
 		}
 	}
