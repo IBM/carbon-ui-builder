@@ -105,7 +105,9 @@ export const isFragment = (json: any) => {
 		&& json.title
 		&& json.lastModified
 		&& json.data
-		&& Array.isArray(json.data?.items);
+		&& Array.isArray(json.data?.items)
+		|| json.id
+		&& Array.isArray(json.items);
 };
 
 export const renderComponents = (state: any, setState: (state: any) => void, setGlobalState: (state: any) => void) => {
