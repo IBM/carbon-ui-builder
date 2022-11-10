@@ -155,7 +155,7 @@ export const AFileUploaderSettingsUI = ({ selectedComponent, setComponent }: any
 					...selectedComponent,
 					iconDescription: event.currentTarget.value
 				})} />
-			</>
+				</>
 		}
 
 		<TextInput
@@ -287,11 +287,37 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => '',
-			outputs: ({ json }) => '',
-			imports: [''],
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Title = "${json.labelTitle}";
+									@Input() ${nameStringToVariableString(json.codeContext?.name)}Description = "${json.labelDescription}";
+									@Input() ${nameStringToVariableString(json.codeContext?.name)}Accept = [
+										'.jpg',
+										'.png'
+									];
+									@Input() ${nameStringToVariableString(json.codeContext?.name)}Multiple = ${json.multiple};
+									@Input() ${nameStringToVariableString(json.codeContext?.name)}DropText = "${json.dragAndDroplabelText}";
+									@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
+									@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";
+									@Input() ${nameStringToVariableString(json.codeContext?.name)}ButtonText = "${json.buttonLabel}";
+									@Input() ${nameStringToVariableString(json.codeContext?.name)}ButtonType = "${json.buttonKind}";
+									@Input() ${nameStringToVariableString(json.codeContext?.name)}Drop = ${json.dragAndDrop};`,
+			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}onDropped = new EventEmitter();`,
+			imports: ['FileUploaderModule', 'ButtonModule', 'NotificationModule'],
 			code: ({ json }) => {
-				return ``;
+				return `<ibm-file-uploader
+					${angularClassNamesFromComponentObj(json)}
+					[title]="${nameStringToVariableString(json.codeContext?.name)}Title"
+					[description]="${nameStringToVariableString(json.codeContext?.name)}Description"
+					[accept]="${nameStringToVariableString(json.codeContext?.name)}Accept"
+					[multiple]="${nameStringToVariableString(json.codeContext?.name)}Multiple"
+					[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
+					[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
+					[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
+					[drop]="${nameStringToVariableString(json.codeContext?.name)}Drop"
+					${json.dragAndDrop ? `[dropText]="${nameStringToVariableString(json.codeContext?.name)}DropText"` : ''}
+					${json.dragAndDrop ? '' : `[buttonText]="${nameStringToVariableString(json.codeContext?.name)}ButtonText"`}
+					${json.dragAndDrop ? '' : `[buttonType]="${nameStringToVariableString(json.codeContext?.name)}ButtonType"`}
+					(filesChange)= ${nameStringToVariableString(json.codeContext?.name)}onDropped.emit($event)>
+				</ibm-file-uploader>`;
 			}
 		},
 		react: {
@@ -328,7 +354,7 @@ export const componentInfo: ComponentInfo = {
 					${json.multiple ? `multiple={${json.multiple}}` : ''}
 					${json.disabled ? `disabled={${json.disabled}}` : ''}
 					${json.size ? `size="${json.size}"` : ''} />`
-				}`
+				}`;
 			}
 		}
 	}
