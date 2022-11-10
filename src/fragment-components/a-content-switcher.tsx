@@ -187,6 +187,8 @@ export const componentInfo: ComponentInfo = {
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter();`,
 			imports: ['ContentSwitcherModule'],
 			code: ({ json }) => {
+				// add size input once https://github.com/carbon-design-system/carbon-components-angular/issues/2322 closes
+				// https://github.com/IBM/carbon-ui-builder/issues/187
 				return `<ibm-content-switcher
 					${angularClassNamesFromComponentObj(json)}
 					(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit()">
