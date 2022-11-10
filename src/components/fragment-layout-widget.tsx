@@ -16,6 +16,10 @@ const fragmentLayoutStyle = css`
 	.iot--list--page {
 		display: none;
 	}
+
+	.iot--list-item-editable--drag-preview {
+		right: 99999999px;
+	}
 `;
 
 const getComponentObjById = (id: string, componentObj: any) => {
