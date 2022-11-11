@@ -21,7 +21,6 @@ export const UIInlineLoading = ({ state }: {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;
 	}
-
 	return <InlineLoading
 		description={state.textDescription}
 		status={state.status}
