@@ -38,6 +38,7 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 				...selectedComponent,
 				light: checked
 		})} />
+
 		<Dropdown
 			label='Code language selector'
 			titleText='Code language selector'
@@ -46,6 +47,7 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 			selectedItem={languages.find(item => item.id === codeLanguage)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setCodeLanguage(event.selectedItem.id)} />
+
 		<label className='bx--label'>Code</label>
 		<ControlledEditor
 			language={codeLanguage} height="10rem"
@@ -57,6 +59,7 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 				code: value
 			});
 		}} />
+
 		<Dropdown
 			label='Variant selector'
 			titleText='Variant selector'
