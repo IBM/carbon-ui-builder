@@ -19,6 +19,7 @@ import {
 } from '../utils/fragment-tools';
 
 export const ATabsSettingsUI = ({ selectedComponent, setComponent }: any) => {
+
 	const updateListItems = (key: string, value: any, index: number) => {
 		const step = {
 			...selectedComponent.items[index],
