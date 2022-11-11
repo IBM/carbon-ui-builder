@@ -39,7 +39,6 @@ export const UIDatePicker = ({ state }: {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;
 	}
-
 	return (state.datePickerType === 'timePicker'
 		? <TimePicker id="time-picker" light={state.light}>
 		<TimePickerSelect labelText="time-picker-1" id="time-picker-select-1">
