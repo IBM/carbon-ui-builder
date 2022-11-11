@@ -65,7 +65,7 @@ const getIcons = () => {
 				current.componentObj.size.push({ size: sizeValue,
 					text: sizeItems.find((sizeItem: any) => sizeItem.id === sizeValue)?.text, component: iconObj });
 			} else {
-				// push the icons into a list which is displayed in the modal
+				// push icons into a list which is displayed in the modal
 				allIcons.push(iconItem);
 			}
 		}
