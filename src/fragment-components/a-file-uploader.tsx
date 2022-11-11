@@ -155,7 +155,7 @@ export const AFileUploaderSettingsUI = ({ selectedComponent, setComponent }: any
 					...selectedComponent,
 					iconDescription: event.currentTarget.value
 				})} />
-				</>
+			</>
 		}
 
 		<TextInput
