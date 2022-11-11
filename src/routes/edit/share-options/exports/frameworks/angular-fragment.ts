@@ -151,14 +151,12 @@ const otherImportsFromComponentObj = (json: any, fragments?: any[]) => {
 			break;
 		}
 	}
-
 	if (json.items) {
 		imports += json.items.map((item: any) => otherImportsFromComponentObj(item, fragments)).join('\n');
 	}
 
 	// remove duplicate imports
 	imports = sortedUniq(imports.split('\n')).join('\n');
-
 	return imports;
 };
 
