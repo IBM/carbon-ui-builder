@@ -24,6 +24,7 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 		{ id: 'md', text: 'Medium' },
 		{ id: 'xl', text: 'Extra large' }
 	];
+
 	const datePickerType = [
 		{ id: 'simple', text: 'Simple' },
 		{ id: 'single', text: 'Single with calender' },
