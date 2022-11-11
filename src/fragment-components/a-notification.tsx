@@ -33,6 +33,7 @@ export const ANotificationSettingsUI = ({ selectedComponent, setComponent }: any
 		{ id: 'toastNotification', text: 'Toast notification' },
 		{ id: 'inlineNotification', text: 'Inline notification' }
 	];
+
 	return <>
 		<Checkbox
 			labelText='Hide close button'
