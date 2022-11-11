@@ -55,6 +55,7 @@ export const ATabsSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			</div>
 		</>;
 	};
+
 	const updateStepList = (newList: any[]) => {
 		setComponent({
 			...selectedComponent,
@@ -97,13 +98,13 @@ export const ATabs = ({
 }: any) => {
 	const [fragment, setFragment] = useFragment();
 	const holderRef = useRef(null as any);
+
 	return (
 		<AComponent
 		rejectDrop={true}
 		componentObj={componentObj}
 		{...rest}>
-			<Tabs
-			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+			<Tabs className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 				{
 					componentObj.items.map((step: any, index: number) => <Tab
 						onClick= {() => componentObj.selectedTab = index}
@@ -140,9 +141,9 @@ export const ATabs = ({
 								}, false);
 							}}>
 								{
-									step.items && step.items.length > 0 ?
-									children.filter((child: any, index: any) => index === componentObj.selectedTab) :
-									<APlaceholder componentObj={step} select={rest.select} />
+									step.items && step.items.length > 0
+									? children.filter((child: any, index: any) => index === componentObj.selectedTab)
+									: <APlaceholder componentObj={step} select={rest.select} />
 								}
 							</section>
 						}
