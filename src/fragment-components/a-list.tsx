@@ -30,6 +30,7 @@ const layoutStyle = css`
 		display: none;
 	}
 `;
+
 const orderedListStyle = css`
 	margin-left: 20px;
 	list-style: auto;
