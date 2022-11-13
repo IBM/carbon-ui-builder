@@ -1,9 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { Modal } from 'carbon-components-react';
+import { Modal, TileGroup, RadioTile } from 'carbon-components-react';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { css } from 'emotion';
 
-import { SelectionTile } from '../../../components/selection-tile';
 import { FragmentWizardModals } from './fragment-wizard';
 import { generateNewFragment } from './generate-new-fragment';
 import { GlobalStateContext, NotificationActionType, NotificationContext } from '../../../context';
@@ -11,12 +10,14 @@ import { componentInfo as gridComponentInfo } from '../../../fragment-components
 import { initializeIds } from '../../../components';
 
 const createFragmentTiles = css`
-	display: flex;
-	margin-left: 15px;
-	margin-right: 15px;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: space-between;
+	div {
+		display: flex;
+		margin-left: 15px;
+		margin-right: 15px;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: space-between;
+	}
 `;
 
 const createFragmentTileStyle = css`
@@ -26,6 +27,20 @@ const createFragmentTileStyle = css`
 
 	.bx--tile {
 		height: 100%;
+	}
+`;
+
+const tileFooter = css`
+	position: absolute;
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	bottom: 15px;
+	p {
+		font-weight: bold;
+	}
+	span {
+		margin-right: 30px;
 	}
 `;
 
@@ -44,7 +59,7 @@ export interface CreateFragmentModalProps {
 }
 
 export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
-	const [selectedCreateOption, setSelectedCreateOption] = useState<CreateOptions | null>(null);
+	const [selectedCreateOption, setSelectedCreateOption] = useState<CreateOptions>(CreateOptions.IMPORT_JSON);
 
 	const { addFragment, styleClasses, setStyleClasses } = useContext(GlobalStateContext);
 	const [, dispatchNotification] = useContext(NotificationContext);
@@ -67,6 +82,10 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 
 		navigate(`/edit/${generatedFragment.id}`);
 	};
+
+	const handleChange = (x: CreateOptions) => {
+		setSelectedCreateOption(parseInt(CreateOptions[x]));
+	}
 
 	return (
 		<Modal
@@ -107,28 +126,49 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 			primaryButtonDisabled={selectedCreateOption === null}
 			secondaryButtonText='Cancel'>
 			<p>Start with a template or create a new fragment from scratch.</p>
-			<div className={createFragmentTiles}>
-				<SelectionTile
-					styles={createFragmentTileStyle}
-					onChange={() => setSelectedCreateOption(CreateOptions.IMPORT_JSON)}
-					selected={selectedCreateOption === CreateOptions.IMPORT_JSON}
-					label='Import JSON' />
-				<SelectionTile
-					styles={createFragmentTileStyle}
-					onChange={() => setSelectedCreateOption(CreateOptions.CHOOSE_TEMPLATE)}
-					selected={selectedCreateOption === CreateOptions.CHOOSE_TEMPLATE}
-					label='Pick a template' />
-				<SelectionTile
-					styles={createFragmentTileStyle}
-					onChange={() => setSelectedCreateOption(CreateOptions.EMPTY_FRAGMENT)}
-					selected={selectedCreateOption === CreateOptions.EMPTY_FRAGMENT}
-					label='Empty fragment' />
-				<SelectionTile
-					styles={createFragmentTileStyle}
-					onChange={() => setSelectedCreateOption(CreateOptions.EMPTY_PAGE)}
-					selected={selectedCreateOption === CreateOptions.EMPTY_PAGE}
-					label='Empty page (with grid)' />
-			</div>
+			<TileGroup
+				className={createFragmentTiles}
+				defaultSelected="IMPORT_JSON"
+				name="radio tile group"
+				onChange={handleChange}
+			>
+				<RadioTile
+					light={true}
+					value="IMPORT_JSON"
+					id="tile-1"
+					className={createFragmentTileStyle}>
+					<div className={tileFooter}>
+						<p>Import JSON</p>
+					</div>
+				</RadioTile>
+				<RadioTile
+					light={true}
+					value="CHOOSE_TEMPLATE"
+					id="tile-2"
+					className={createFragmentTileStyle}>
+					<div className={tileFooter}>
+						<p>Pick a template</p>
+					</div>
+				</RadioTile>
+				<RadioTile
+					light={true}
+					value="EMPTY_FRAGMENT"
+					id="tile-3"
+					className={createFragmentTileStyle}>
+					<div className={tileFooter}>
+						<p>Empty fragment</p>
+					</div>
+				</RadioTile>
+				<RadioTile
+					light={true}
+					value="EMPTY_PAGE"
+					id="tile-4"
+					className={createFragmentTileStyle}>
+					<div className={tileFooter}>
+						<p>Empty page (with grid)</p>
+					</div>
+				</RadioTile>
+			</TileGroup>
 		</Modal>
 	);
 };
