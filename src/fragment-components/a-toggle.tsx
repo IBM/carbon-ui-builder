@@ -174,6 +174,13 @@ export const componentInfo: ComponentInfo = {
 					${json.checked ? `toggled="${json.checked}"` : ''}
 					size="${json.size}"
 					id="${json.codeContext?.name}"
+					checked={state["${json.codeContext?.name}"]?.checked}
+					onToggle={(checked) => handleInputChange({
+						target: {
+							name: "${json.codeContext?.name}",
+							value: checked
+						}
+					})} 
 					${reactClassNamesFromComponentObj(json)} />`;
 			}
 		}

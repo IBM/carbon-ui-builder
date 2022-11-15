@@ -3,8 +3,8 @@ import React, {
 	useContext,
 	useEffect
 } from 'react';
-import { css } from 'emotion';
-import { Octokit } from 'octokit';
+import { Loading } from 'carbon-components-react';
+import { css, cx } from 'emotion';
 import { DashboardSearch, SortDirection } from './dashboard-search';
 import { FragmentGroupDisplayed, DashboardHeader } from './dashboard-header';
 
@@ -14,7 +14,7 @@ import {
 	Row
 } from './../../components';
 import { FragmentTileList } from './fragment-tile-list';
-import { GlobalStateContext } from '../../context';
+import { GithubContext, GlobalStateContext } from '../../context';
 import { getFragmentTemplates } from '../../utils/fragment-tools';
 
 const fragmentSort = (sortDirection: SortDirection) => function(a: any, b: any) {
@@ -48,17 +48,6 @@ const searchRowStyles = css`
 	}
 `;
 
-const octokit = new Octokit();
-
-const githubContentRequest = {
-	mediaType: {
-		format: 'raw'
-	},
-	owner: 'IBM',
-	repo: 'carbon-ui-builder-featured-fragments',
-	path: 'featured-fragments'
-};
-
 export const Dashboard = ({
 	displayWizard,
 	setDisplayWizard,
@@ -66,10 +55,12 @@ export const Dashboard = ({
 	setDisplayedModal
 }: any) => {
 	const { fragments, updateFragments } = useContext(GlobalStateContext);
+	const { getFeaturedFragments } = useContext(GithubContext);
 	const [fragmentGroupDisplayed, setFragmentGroupDisplayed] = useState(FragmentGroupDisplayed.AllFragments);
 	const [fragmentTitleFilter, setFragmentTitleFilter] = useState('');
 	const [displayedFragments, setDisplayedFragments] = useState([]);
 	const [sortDirection, setSortDirection] = useState(SortDirection.Ascending);
+	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
 		updateFragments(fragments);
@@ -85,26 +76,6 @@ export const Dashboard = ({
 		?.includes(fragmentTitleFilter.toLowerCase()) && !fragment.hidden)
 		?.sort(fragmentSort(sortDirection));
 
-	const getFeaturedFragments = async () => {
-		const featuredFragmentsResponse = await octokit.rest.repos.getContent(githubContentRequest);
-
-		const allFeaturedFragments = await Promise.all((featuredFragmentsResponse.data as any[]).map(async (item) => {
-			const fragmentFileResponse = await octokit.rest.repos.getContent({ ...githubContentRequest, path: item.path });
-			try {
-				return {
-					id: item.path,
-					title: item.name.substring(0, item.name.length - 5),
-					lastModified: new Date(fragmentFileResponse.headers['last-modified'] || '').toISOString(),
-					data: JSON.parse(fragmentFileResponse.data.toString())
-				};
-			} catch (error) {
-				return null;
-			}
-		}));
-
-		return allFeaturedFragments.filter(fragment => fragment !== null);
-	};
-
 	useEffect(() => {
 		switch (fragmentGroupDisplayed) {
 			case FragmentGroupDisplayed.Templates: {
@@ -112,8 +83,10 @@ export const Dashboard = ({
 				break;
 			}
 			case FragmentGroupDisplayed.FeaturedFragments: {
+				setIsLoading(true);
 				getFeaturedFragments().then((value: any) => {
 					setDisplayedFragments(value);
+					setIsLoading(false);
 				});
 				break;
 			}
@@ -159,7 +132,11 @@ export const Dashboard = ({
 					lg: 12
 				}}>
 					{
-						<FragmentTileList
+						isLoading
+						? <div className={css`height: 100%;`}>
+							<Loading className={cx('center', css`left: calc(50% - 44px)`)} withOverlay={false} />
+						</div>
+						: <FragmentTileList
 							fragments={displayedFragments}
 							isFeaturedFragment={fragmentGroupDisplayed === FragmentGroupDisplayed.FeaturedFragments}
 							setModalFragment={setModalFragment}

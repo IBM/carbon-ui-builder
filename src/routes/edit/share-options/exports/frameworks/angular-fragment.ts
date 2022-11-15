@@ -3,7 +3,8 @@ import parserBabel from 'prettier/parser-babel';
 import parserHtml from 'prettier/parser-html';
 import parserCss from 'prettier/parser-postcss';
 import { allComponents } from '../../../../../fragment-components';
-import { classNameFromFragment, getAllFragmentStyleClasses, hasFragmentStyleClasses, tagNameFromFragment } from '../../../../../utils/fragment-tools';
+import { getAllFragmentStyleClasses } from '../../../../../ui-fragment/src/utils';
+import { classNameFromFragment, hasFragmentStyleClasses, tagNameFromFragment } from '../../../../../utils/fragment-tools';
 
 const format = (source: string, options?: Options | undefined) => {
 	// we're catching and ignorring errors so live editing doesn't throw errors
@@ -173,12 +174,17 @@ const getComponentCode = (fragment: any, fragments: any[]) => {
 
 	// component.scss
 	componentCode[`src/app/components/${tagNameFromFragment(fragment)}/${tagNameFromFragment(fragment)}.component.scss`] = format(
-		`${getAllFragmentStyleClasses(fragment).map((styleClass: any) => `.${styleClass.id} {
-			${styleClass.content}
-		}`).join('\n')}`,
+		`${getAllFragmentStyleClasses(fragment).map((styleClass: any) => {
+			if (!styleClass.content || !styleClass.content.trim()) {
+				return null;
+			}
+
+			return `.${styleClass.id} {
+				${styleClass.content}
+			}`;
+		}).join('\n')}`,
 		formatOptionsCss
 	);
-
 	return componentCode;
 };
 

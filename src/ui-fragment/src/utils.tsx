@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { GlobalStateContext } from '../../context';
 import { UIAccordion } from './components/ui-accordion';
 import { UIAccordionItem } from './components/ui-accordion-item';
 import { UIBreadcrumb } from './components/ui-breadcrumb';
@@ -45,6 +46,52 @@ export const setItemInState = (item: any, state: any, setState: (state: any) => 
 			...state.items.slice(itemIndex + 1)
 		]
 	});
+};
+
+export const getAllComponentStyleClasses = (componentObj: any, fragments: any[]) => {
+	// eslint-disable-next-line react-hooks/rules-of-hooks
+	const { styleClasses: globalStyleClasses } = useContext(GlobalStateContext);
+	let styleClasses: any = {};
+
+	// convert into an object so all classes are unique
+	componentObj.cssClasses?.forEach((cssClass: any) => {
+		// NOTE do we need to merge them deeply?
+		// update styleClasses content from global context
+		styleClasses[cssClass.id] = globalStyleClasses.find((gsc: any) => gsc.id === cssClass.id) || cssClass;
+	});
+
+	componentObj.items?.map((co: any) => {
+		const coClasses = getAllComponentStyleClasses(co, fragments);
+		styleClasses = {
+			...styleClasses,
+			...coClasses
+		};
+
+		if (co.type === 'fragment') {
+			const fragment = fragments.find(f => f.id === co.fragmentId);
+
+			styleClasses = {
+				...styleClasses,
+				// we can't avoid this without a messy declare+reassign+export
+				// eslint-disable-next-line @typescript-eslint/no-use-before-define
+				...getAllFragmentStyleClasses(fragment || {}, fragments)
+			};
+		}
+	});
+
+	return styleClasses;
+};
+
+export const getAllFragmentStyleClasses = (fragment: any, fragments: any[] = []) => {
+	if (!fragment || !fragment.data) {
+		return [];
+	}
+
+	const allClasses = {
+		...getAllComponentStyleClasses(fragment, fragments),
+		...getAllComponentStyleClasses(fragment.data, fragments)
+	};
+	return Object.values(allClasses);
 };
 
 export const renderComponents = (state: any, setState: (state: any) => void, setGlobalState: (state: any) => void) => {
