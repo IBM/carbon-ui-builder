@@ -18,7 +18,6 @@ import * as row from './a-row';
 import * as tag from './a-tag';
 import * as searchinput from './a-searchinput';
 import * as select from './a-select';
-import * as selectItem from './a-select-item';
 import * as text from './a-text';
 import * as textarea from './a-text-area';
 import * as textinput from './a-text-input';
@@ -54,7 +53,6 @@ export { ANumberInput, ANumberInputSettingsUI, ANumberInputCodeUI } from './a-nu
 export { AProgressIndicator, AProgressIndicatorSettingsUI, AProgressIndicatorCodeUI } from './a-progress-indicator';
 export { ARow, ARowSettingsUI } from './a-row';
 export { ASelect, ASelectCodeUI, ASelectSettingsUI } from './a-select';
-export { ASelectItem, ASelectItemCodeUI, ASelectItemSettingsUI } from './a-select-item';
 export { ASearchInput, ASearchInputSettingsUI, ASearchInputCodeUI } from './a-searchinput';
 export { ATag, ATagSettingsUI } from './a-tag';
 export { AText, ATextSettingsUI } from './a-text';
@@ -107,7 +105,6 @@ export const allComponents = {
 	expandabletile,
 	tilefold,
 	select,
-	selectItem,
 	selectabletile,
 	selectableTileGroup,
 	radiotile,
