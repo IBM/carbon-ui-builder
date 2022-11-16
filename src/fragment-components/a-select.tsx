@@ -49,7 +49,6 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			...list.items[index],
 			[key]: value
 		};
-
 		setComponent({
 			...list,
 			items: [
@@ -61,7 +60,6 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	};
 
 	const [fragment, setFragment] = useFragment();
-
 	const addOption = (offset = 0, itemsList: any) => setFragment({
 		...fragment,
 		data: updatedState(
@@ -112,9 +110,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent }: any) => {
 				light
 				value={selectItem.label}
 				labelText='Category label'
-				onChange={(event: any) => {
-					updateListItems('label', event.currentTarget.value, index, selectedComponent);
-				}} />
+				onChange={(event: any) => updateListItems('label', event.currentTarget.value, index, selectedComponent)} />
 			<Checkbox
 				labelText='Disabled'
 				id={`disabled-${index}`}
@@ -140,12 +136,12 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent }: any) => {
 						labelText='Disabled'
 						id={`child-disabled-${index}-${childIndex}`}
 						checked={child.disabled}
-						onChange={(checked: boolean) => updateListItems('disabled', checked, childIndex, selectItem)}/>
+						onChange={(checked: boolean) => updateListItems('disabled', checked, childIndex, selectItem)} />
 					<Checkbox
 						labelText='Hidden'
 						id={`child-hidden-${index}-${childIndex}`}
 						checked={child.hidden}
-						onChange={(checked: boolean) => updateListItems('hidden', checked, childIndex, selectItem)}/>
+						onChange={(checked: boolean) => updateListItems('hidden', checked, childIndex, selectItem)} />
 				</>)
 			} </>
 				: <>
@@ -167,6 +163,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			</>
 		}
 	</>;
+
 	return <>
 		<Dropdown
 			id='size-dropdown'
@@ -366,7 +363,7 @@ export const componentInfo: ComponentInfo = {
 									@Input() ${nameStringToVariableString(json.codeContext?.name)}HelperText = "${json.helperText}";
 									@Input() ${nameStringToVariableString(json.codeContext?.name)}WarnText = "${json.warnText}";
 									@Input() ${nameStringToVariableString(json.codeContext?.name)}Warn = ${json.warn};`,
-			outputs: (_) => ``,
+			outputs: (_) => '',
 			imports: ['SelectModule'],
 			code: ({ json }) => {
 				return `<ibm-select
@@ -378,7 +375,7 @@ export const componentInfo: ComponentInfo = {
 					[invalidText]="${nameStringToVariableString(json.codeContext?.name)}InvalidText"
 					[label]="${nameStringToVariableString(json.codeContext?.name)}Label"
 					[helperText]="${nameStringToVariableString(json.codeContext?.name)}HelperText"
-					${json.inline ? `[display]="inline"` : '[display]="default"'}
+					${json.inline ? '[display]="inline"' : '[display]="default"'}
 					${angularClassNamesFromComponentObj(json)}>
 					${json.items.map((step: any) =>
 						step.items && step.items.length > 0

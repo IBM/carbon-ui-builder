@@ -8,17 +8,17 @@ import { CssClasses } from '../types';
 
 export interface SelectState {
 	type: string;
-	inline: boolean,
-	invalid: boolean,
-	disabled: boolean,
-	warn: boolean,
-	labelText: string,
-	invalidText: string,
-	warnText: string,
-	size: string,
-	defaultValue: string,
-	helperText: string,
-	items: []
+	inline: boolean;
+	invalid: boolean;
+	disabled: boolean;
+	warn: boolean;
+	labelText: string;
+	invalidText: string;
+	warnText: string;
+	size: string;
+	defaultValue: string;
+	helperText: string;
+	items: [];
 	cssClasses?: CssClasses[];
 	codeContext?: {
 		name: string;
@@ -74,5 +74,5 @@ export const UISelect = ({ state }: {
 					key={index} />
 			)
 		}
-	</Select>
+	</Select>;
 };
