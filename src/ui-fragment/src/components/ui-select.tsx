@@ -11,8 +11,11 @@ export interface SelectState {
 	inline: boolean,
 	invalid: boolean,
 	disabled: boolean,
+	warn: boolean,
 	labelText: string,
 	invalidText: string,
+	warnText: string,
+	size: string,
 	defaultValue: string,
 	helperText: string,
 	items: []
@@ -38,6 +41,9 @@ export const UISelect = ({ state }: {
 		defaultValue={state.defaultValue}
 		helperText={state.helperText}
 		invalidText={state.invalidText}
+		warn={state.warn}
+		warnText={state.warnText}
+		size={state.size}
 		labelText={state.labelText}
 		inline={state.inline}
 		invalid={state.invalid}

@@ -5,6 +5,7 @@ import {
 	SelectItem,
 	SelectItemGroup,
 	Checkbox,
+	Dropdown,
 	Button
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
@@ -30,51 +31,11 @@ const addButtonStyle = css`
 	justify-content: center;`;
 
 export const ASelectSettingsUI = ({ selectedComponent, setComponent }: any) => {
-	const [fragment, setFragment] = useFragment();
-
-	// Adds new select item
-	const addOption = (offset = 0, itemsList: any) => setFragment({
-		...fragment,
-		data: updatedState(
-			fragment.data,
-			{
-				type: 'insert',
-				component: {
-					type: 'select-item',
-					text: 'New option',
-					value: 'new-option',
-					disabled: false,
-					hidden: false
-				}
-			},
-			itemsList.id,
-			itemsList.items.indexOf(itemsList) + offset
-		)
-	});
-
-	// Adds new category
-	const addNewCategory = (offset = 0) => setFragment({
-		...fragment,
-		data: updatedState(
-			fragment.data,
-			{
-				type: 'insert',
-				component: {
-					label: 'New category',
-					disabled: false,
-					items: [{
-						type: 'select-item',
-						text: 'New option',
-						value: 'new-option',
-						disabled: false,
-						hidden: false
-					}]
-				}
-			},
-			selectedComponent.id,
-			selectedComponent.items.indexOf(selectedComponent) + offset
-		)
-	});
+	const sizeItems = [
+		{ id: 'sm', text: 'Small' },
+		{ id: 'md', text: 'Medium' },
+		{ id: 'lg', text: 'Large' }
+	];
 
 	const updateStepList = (newList: any[]) => {
 		setComponent({
@@ -98,6 +59,50 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			]
 		});
 	};
+
+	const [fragment, setFragment] = useFragment();
+
+	const addOption = (offset = 0, itemsList: any) => setFragment({
+		...fragment,
+		data: updatedState(
+			fragment.data,
+			{
+				type: 'insert',
+				component: {
+					type: 'select-item',
+					text: 'New option',
+					value: 'new-option',
+					disabled: false,
+					hidden: false
+				}
+			},
+			itemsList.id,
+			itemsList.items.indexOf(itemsList) + offset
+		)
+	});
+
+	const addNewCategory = (offset = 0) => setFragment({
+		...fragment,
+		data: updatedState(
+			fragment.data,
+			{
+				type: 'insert',
+				component: {
+					label: 'New category',
+					disabled: false,
+					items: [{
+						type: 'select-item',
+						text: 'New option',
+						value: 'new-option',
+						disabled: false,
+						hidden: false
+					}]
+				}
+			},
+			selectedComponent.id,
+			selectedComponent.items.indexOf(selectedComponent) + offset
+		)
+	});
 
 	const template = (selectItem: any, index: number) => <>
 		{
@@ -163,6 +168,18 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent }: any) => {
 		}
 	</>;
 	return <>
+		<Dropdown
+			id='size-dropdown'
+			label='Size'
+			titleText='Size'
+			items={sizeItems}
+			selectedItem={sizeItems.find(item => item.id === selectedComponent.size)}
+			itemToString={(item: any) => (item ? item.text : '')}
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				size: event.selectedItem.id
+			})} />
+
 		<TextInput
 			value={selectedComponent.labelText}
 			labelText='Select value'
@@ -172,6 +189,17 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			value={selectedComponent.invalidText}
 			labelText='Invalid text value'
 			onChange={(event: any) => setComponent({ ...selectedComponent, invalidText: event.currentTarget.value })} />
+
+		<TextInput
+			value={selectedComponent.warnText}
+			labelText='Warning text value'
+			onChange={(event: any) => setComponent({ ...selectedComponent, warnText: event.currentTarget.value })} />
+
+		<Checkbox
+			labelText='Warning'
+			id='warning-label'
+			checked={selectedComponent.warn}
+			onChange={(checked: boolean) => setComponent({ ...selectedComponent, warn: checked })} />
 
 		<Checkbox
 			labelText='Disabled'
@@ -241,7 +269,10 @@ export const ASelect = ({
 			defaultValue={componentObj.defaultValue}
 			helperText={componentObj.helperText}
 			invalidText={componentObj.invalidText}
+			warn={componentObj.warn}
+			warnText={componentObj.warnText}
 			labelText={componentObj.labelText}
+			size={componentObj.size}
 			inline={componentObj.inline}
 			invalid={componentObj.invalid}
 			disabled={componentObj.disabled}>
@@ -294,10 +325,13 @@ export const componentInfo: ComponentInfo = {
 		inline: false,
 		invalid: false,
 		disabled: false,
+		warn: false,
+		warnText: '',
+		size: 'md',
 		labelText: 'Select',
-		invalidText: 'A valid value is required',
-		defaultValue: 'placeholder-item',
-		helperText: 'Optional helper text',
+		invalidText: '',
+		defaultValue: '',
+		helperText: '',
 		items: [
 			{
 				text: 'Choose an option',
@@ -324,11 +358,52 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: (_) => '',
-			outputs: ({ json }) => '',
-			imports: [''],
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
+									@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";
+									@Input() ${nameStringToVariableString(json.codeContext?.name)}Invalid = ${json.invalid};
+									@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText}";
+									@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText}";
+									@Input() ${nameStringToVariableString(json.codeContext?.name)}HelperText = "${json.helperText}";
+									@Input() ${nameStringToVariableString(json.codeContext?.name)}WarnText = "${json.warnText}";
+									@Input() ${nameStringToVariableString(json.codeContext?.name)}Warn = ${json.warn};`,
+			outputs: (_) => ``,
+			imports: ['SelectModule'],
 			code: ({ json }) => {
-				return ``;
+				return `<ibm-select
+					[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
+					[warn]="${nameStringToVariableString(json.codeContext?.name)}Warn"
+					[warnText]="${nameStringToVariableString(json.codeContext?.name)}WarnText"
+					[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
+					[invalid]="${nameStringToVariableString(json.codeContext?.name)}Invalid"
+					[invalidText]="${nameStringToVariableString(json.codeContext?.name)}InvalidText"
+					[label]="${nameStringToVariableString(json.codeContext?.name)}Label"
+					[helperText]="${nameStringToVariableString(json.codeContext?.name)}HelperText"
+					${json.inline ? `[display]="inline"` : '[display]="default"'}
+					${angularClassNamesFromComponentObj(json)}>
+					${json.items.map((step: any) =>
+						step.items && step.items.length > 0
+							?
+						`<optgroup
+						label="${step.label}"
+						${step.disabled ? 'disabled' : ''}>
+						${step.items.map((child: any) => `<option
+							value="${child.value}"
+							${child.disabled ? 'disabled' : ''}
+							${child.hidden ? 'hidden' : ''}>
+								${child.text}
+							</option>`
+						).join('\n')}
+						</optgroup>`
+							:
+						`<option
+						value="${step.value}"
+						${step.disabled ? 'disabled' : ''}
+						${step.hidden ? 'hidden' : ''}>
+							${step.text}
+						</option>`
+					).join('\n')}
+				</ibm-select>
+`;
 			}
 		},
 		react: {
@@ -336,6 +411,9 @@ export const componentInfo: ComponentInfo = {
 			code: ({ json }) => {
 				return `<Select
 					id="select"
+					size="${json.size}"
+					warn={${json.warn}}
+					warnText="${json.warnText}"
 					defaultValue="${json.defaultValue}"
 					helperText="${json.helperText}"
 					invalidText="${json.invalidText}"
