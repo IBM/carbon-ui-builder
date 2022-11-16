@@ -159,7 +159,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent }: any) => {
 				id={`hidden-${index}`}
 				checked={selectItem.hidden}
 				onChange={(checked: boolean) => updateListItems('hidden', checked, index, selectedComponent)} />
-				</>
+			</>
 		}
 	</>;
 	return <>
@@ -167,25 +167,30 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			value={selectedComponent.labelText}
 			labelText='Select value'
 			onChange={(event: any) => setComponent({ ...selectedComponent, labelText: event.currentTarget.value })} />
+
 		<TextInput
 			value={selectedComponent.invalidText}
 			labelText='Invalid text value'
 			onChange={(event: any) => setComponent({ ...selectedComponent, invalidText: event.currentTarget.value })} />
+
 		<Checkbox
 			labelText='Disabled'
 			id='disable-label'
 			checked={selectedComponent.disabled}
 			onChange={(checked: boolean) => setComponent({ ...selectedComponent, disabled: checked })} />
+
 		<Checkbox
 			labelText='Inline'
 			id='inline'
 			checked={selectedComponent.inline}
 			onChange={(checked: boolean) => setComponent({ ...selectedComponent, inline: checked })} />
+
 		<Checkbox
 			labelText='Invalid'
 			id='invalid'
 			checked={selectedComponent.invalid}
 			onChange={(checked: boolean) => setComponent({ ...selectedComponent, invalid: checked })} />
+
 		<Button
 		className={addButtonStyle}
 		size="sm"
@@ -194,6 +199,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			event.stopPropagation();
 			addNewCategory();
 		}}>Add new category</Button>
+
 		<DraggableTileList
 		dataList={[...selectedComponent.items]}
 		setDataList={updateStepList}
