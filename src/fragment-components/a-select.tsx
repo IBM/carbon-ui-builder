@@ -8,7 +8,7 @@ import {
 	Button
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
-import image from './../assets/component-icons/link.svg';
+import image from './../assets/component-icons/select.svg';
 import {
 	angularClassNamesFromComponentObj,
 	nameStringToVariableString,

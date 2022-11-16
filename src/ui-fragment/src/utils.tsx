@@ -23,6 +23,7 @@ import { UIRadio } from './components/ui-radio';
 import { UIRadioGroup } from './components/ui-radio-group';
 import { UIRadioTileGroup } from './components/ui-radio-tile-group';
 import { UIRow } from './components/ui-row';
+import { UISelect } from './components/ui-select';
 import { UISelectableTile } from './components/ui-selectable-tile';
 import { UISelectableTileGroup } from './components/ui-selectable-tile-group';
 import { UISearchInput } from './components/ui-serach-input';
@@ -184,6 +185,9 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'expandable-tile':
 			return <UIExpandableTile key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'select':
+			return <UISelect key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'selectable-tile':
 			return <UISelectableTile key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
