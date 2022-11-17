@@ -356,13 +356,13 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
-									@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";
-									@Input() ${nameStringToVariableString(json.codeContext?.name)}Invalid = ${json.invalid};
-									@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText}";
-									@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText}";
-									@Input() ${nameStringToVariableString(json.codeContext?.name)}HelperText = "${json.helperText}";
-									@Input() ${nameStringToVariableString(json.codeContext?.name)}WarnText = "${json.warnText}";
-									@Input() ${nameStringToVariableString(json.codeContext?.name)}Warn = ${json.warn};`,
+								@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";
+								@Input() ${nameStringToVariableString(json.codeContext?.name)}Invalid = ${json.invalid};
+								@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText}";
+								@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText}";
+								@Input() ${nameStringToVariableString(json.codeContext?.name)}HelperText = "${json.helperText}";
+								@Input() ${nameStringToVariableString(json.codeContext?.name)}WarnText = "${json.warnText}";
+								@Input() ${nameStringToVariableString(json.codeContext?.name)}Warn = ${json.warn};`,
 			outputs: (_) => '',
 			imports: ['SelectModule'],
 			code: ({ json }) => {
