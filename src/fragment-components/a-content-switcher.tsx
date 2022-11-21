@@ -207,7 +207,7 @@ export const componentInfo: ComponentInfo = {
 			code: ({ json }) => {
 				return `<ContentSwitcher
 					size="${json.size}"
-					selectedIndex={${json.selectedIndex}}
+					selectedIndex={state["${nameStringToVariableString(json.codeContext?.name)}"] || ${json.selectedIndex}}
 					${reactClassNamesFromComponentObj(json)}
 					onChange={(selectedItem) => handleInputChange({
 						target: {
