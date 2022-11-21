@@ -1,4 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg id="Link_-_Default" data-name="Link - Default" xmlns="http://www.w3.org/2000/svg" width="27" height="18" viewBox="0 0 27 18">
-  <text id="Link" transform="translate(0 14)" fill="#0f61fd" font-size="14" font-family="IBMPlexSans, IBM Plex Sans" letter-spacing="0.011em"><tspan x="0" y="0">Link</tspan></text>
+<svg xmlns="http://www.w3.org/2000/svg" width="77" height="26" viewBox="0 0 77 26">
+  <g id="Group_2" data-name="Group 2" transform="translate(-921 -330.79)">
+    <g id="Group_1" data-name="Group 1" transform="translate(921 331)">
+      <rect id="background" width="77" height="26" transform="translate(0 -0.21)" fill="#f4f4f4"/>
+      <rect id="top_line" data-name="top line" width="77" height="1" transform="translate(0 -0.21)" fill="#e0e0e0"/>
+      <text id="Text" transform="translate(28 15.79)" fill="#161616" font-size="8" font-family="IBMPlexSans, IBM Plex Sans" letter-spacing="0.011em"><tspan x="-24.752" y="0">Page 1</tspan></text>
+      <rect id="First_divider" data-name="First divider" width="1" height="25.79" transform="translate(33.387)" fill="#e0e0e0"/>
+      <rect id="First_divider-2" data-name="First divider" width="1" height="25.79" transform="translate(54.913)" fill="#e0e0e0"/>
+      <g id="Actions_Navigation_caret--left_16" data-name="Actions / Navigation / caret--left / 16" transform="translate(33.682 2.995)">
+        <path id="Path_65" data-name="Path 65" d="M16,17.75l-5-4.375L16,9Z" transform="translate(-4.125 -3.375)" fill="#161616"/>
+        <rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" width="20" height="20" transform="translate(0 0)" fill="none"/>
+      </g>
+      <g id="Actions_Navigation_caret--right_16" data-name="Actions / Navigation / caret--right / 16" transform="translate(55 2.79)">
+        <path id="Path_107" data-name="Path 107" d="M13,9l5,4.375L13,17.75Z" transform="translate(-4.875 -3.375)" fill="#161616"/>
+        <rect id="Rectangle_79" data-name="Rectangle 79" width="20" height="20" transform="translate(0)" fill="none"/>
+      </g>
+    </g>
+  </g>
 </svg>
+
+
