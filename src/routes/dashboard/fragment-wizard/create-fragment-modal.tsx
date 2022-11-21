@@ -46,14 +46,16 @@ export interface CreateFragmentModalProps {
 export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 	const [selectedCreateOption, setSelectedCreateOption] = useState<CreateOptions | null>(null);
 
-	const { addFragment } = useContext(GlobalStateContext);
+	const { addFragment, styleClasses, setStyleClasses } = useContext(GlobalStateContext);
 	const [, dispatchNotification] = useContext(NotificationContext);
 
 	const navigate: NavigateFunction = useNavigate();
 
 	const generateFragment = (items: any[] = []) => {
 		const generatedFragment = generateNewFragment(
-			{ items, id: 1 }
+			{ items, id: 1 },
+			styleClasses,
+			setStyleClasses
 		);
 
 		// close all notifications

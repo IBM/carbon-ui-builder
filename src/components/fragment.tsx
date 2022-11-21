@@ -347,7 +347,7 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 	};
 
 	const styles = css`${
-		getAllFragmentStyleClasses(fragment, fragments).map((styleClass: any) => `.${styleClass.id} {
+		getAllFragmentStyleClasses(fragment, fragments, globalState?.styleClasses).map((styleClass: any) => `.${styleClass.id} {
 			${styleClass.content}
 		}`)
 	}`;
