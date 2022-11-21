@@ -212,7 +212,7 @@ export const componentInfo: ComponentInfo = {
 					onChange={(selectedItem) => handleInputChange({
 						target: {
 							name: "${nameStringToVariableString(json.codeContext?.name)}",
-							value: selectedItem
+							value: selectedItem.index
 						}
 					})}>
 					${json.items.map((step: any) => `<Switch
