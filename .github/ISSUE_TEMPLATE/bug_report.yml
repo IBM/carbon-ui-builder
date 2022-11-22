@@ -1,0 +1,54 @@
+name: Bug Report
+description: Create a report to help us improve Carbon UI Builder.
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # Thank you for filing a bug report!
+  - type: textarea
+    id: current-behavior
+    attributes:
+      label: Current Behavior
+      description: Describe what is currently happening
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps To Reproduce
+      description: Include steps to reproduce the bug behavior.
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: Provide a clear and concise description of the expected behavior.
+    validations:
+      required: false
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: What browsers are you seeing the problem on?
+      multiple: true
+      options:
+        - Firefox
+        - Chrome
+        - Safari
+        - Microsoft Edge
+        - Other
+  - type: textarea
+    attributes:
+      label: Environment
+      description: |
+        examples:
+          - **Operating System**: Mac 11.5.1
+          - **Browser version**: Version 105
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Additional resources
+      description: |
+        Please include links, resources, screenshots, and potential solutions to provide additional context of the issue.
+    validations:
+      required: false

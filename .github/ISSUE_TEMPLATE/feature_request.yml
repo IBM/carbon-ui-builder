@@ -1,0 +1,50 @@
+name: Feature request
+description: Suggest a new feature or request for Carbon UI Builder
+labels: ['enhancement']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping us improve Carbon UI Builder!
+  - type: textarea
+    id: issue-context
+    attributes:
+      label: Issue Context
+      description: |
+        Add a clear and concise description of the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed solution
+      description: |
+        Explain what a possible solution could include.
+    validations:
+      required: false
+  - type: textarea
+    id: proposed-implementation
+    attributes:
+      label: Proposed Implementation
+      description: |
+        Explain first steps for implementing a solution.
+
+        **This is to understand thought processes, if unsure or unable to implement please note that here!**
+    validations:
+      required: false
+  - type: textarea
+    id: resources
+    attributes:
+      label: Additional Resources
+      description: |
+        Add any other context, links, log files, or screenshots about the feature request here.
+    validations:
+      required: false
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: |
+        Include a clear and concise description of any alternative solutions or features you've considered.
+    validations:
+      required: false

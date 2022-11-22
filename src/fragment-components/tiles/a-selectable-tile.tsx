@@ -163,8 +163,7 @@ export const ASelectableTile = ({
 		<Adder
 			active={parentComponent?.tileGroup && selected}
 			topAction={() => addTile()}
-			bottomAction={() => addTile(1)}
-			key={componentObj.id}>
+			bottomAction={() => addTile(1)}>
 			<AComponent
 				componentObj={componentObj}
 				headingCss={css`display: block;`}
@@ -205,6 +204,7 @@ export const componentInfo: ComponentInfo = {
 		items: []
 	},
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline }) => <ASelectableTile
+		key={componentObj.id}
 		componentObj={componentObj}
 		select={select}
 		remove={remove}

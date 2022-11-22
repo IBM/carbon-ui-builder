@@ -63,7 +63,7 @@ export const DashboardSearch = ({
 	<div className={dashboardSearchWrapper}>
 		<Search
 			labelText='Fragment'
-			placeHolderText='Search fragments'
+			placeholder='Search fragments'
 			className={searchInput}
 			onChange={(event: any) => onSearchHandler(event.target.value)} />
 		<OverflowMenu

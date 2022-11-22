@@ -159,6 +159,7 @@ export const componentInfo: ComponentInfo = {
 		]
 	},
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline }) => <ASelectableTileGroup
+		key={componentObj.id}
 		componentObj={componentObj}
 		select={select}
 		remove={remove}

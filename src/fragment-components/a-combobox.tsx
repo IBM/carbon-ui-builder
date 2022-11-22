@@ -55,6 +55,7 @@ export const AComboBoxSettingsUI = ({ selectedComponent, setComponent }: any) =>
 	const template = (item: any, index: number) => {
 		return <>
 			<TextInput
+				id={`combobox-display-item-${index}-text-input`}
 				light
 				value={item.text}
 				labelText='Display text'
@@ -101,6 +102,7 @@ export const AComboBoxSettingsUI = ({ selectedComponent, setComponent }: any) =>
 			/>
 		}
 		<Dropdown
+			id='combobox-size-dropdown'
 			label='Size'
 			titleText='Size'
 			items={sizeItems}
@@ -111,6 +113,7 @@ export const AComboBoxSettingsUI = ({ selectedComponent, setComponent }: any) =>
 				size: event.selectedItem.id
 		})} />
 		<Dropdown
+			id='combobox-direction-dropdown'
 			label='Direction'
 			titleText='Dropdown direction'
 			items={directionItems}
@@ -121,6 +124,7 @@ export const AComboBoxSettingsUI = ({ selectedComponent, setComponent }: any) =>
 				direction: event.selectedItem.id
 		})} />
 		{selectedComponent.isMulti && <Dropdown
+			id='combobox-feedback-dropdown'
 			label='Feedback'
 			titleText='Selection feedback'
 			items={selectionFeedbackItems}
@@ -131,6 +135,7 @@ export const AComboBoxSettingsUI = ({ selectedComponent, setComponent }: any) =>
 				selectionFeedback: event.selectedItem.id
 		})} />}
 		<TextInput
+			id='combobox-label-text-input'
 			value={selectedComponent.label}
 			labelText='Label'
 			onChange={(event: any) => setComponent({
@@ -139,13 +144,14 @@ export const AComboBoxSettingsUI = ({ selectedComponent, setComponent }: any) =>
 		})} />
 		<Checkbox
 			labelText='Hide label'
-			id='hide-label'
+			id='hide-label-checkbox'
 			checked={selectedComponent.hideLabel}
 			onChange={(checked: any) => setComponent({
 				...selectedComponent,
 				hideLabel: checked
 		})} />
 		<TextInput
+			id='combobox-placeholder-text-input'
 			value={selectedComponent.placeholder}
 			labelText='Placeholder'
 			onChange={(event: any) => setComponent({
@@ -153,6 +159,7 @@ export const AComboBoxSettingsUI = ({ selectedComponent, setComponent }: any) =>
 				placeholder: event.currentTarget.value
 		})} />
 		<TextInput
+			id='combobox-helper-text-input'
 			value={selectedComponent.helperText}
 			labelText='Helper text'
 			onChange={(event: any) => setComponent({
@@ -160,6 +167,7 @@ export const AComboBoxSettingsUI = ({ selectedComponent, setComponent }: any) =>
 				helperText: event.currentTarget.value
 		})} />
 		<TextInput
+			id='combobox-warn-text-input'
 			value={selectedComponent.warnText}
 			labelText='Warning text'
 			onChange={(event: any) => setComponent({
@@ -167,6 +175,7 @@ export const AComboBoxSettingsUI = ({ selectedComponent, setComponent }: any) =>
 				warnText: event.currentTarget.value
 		})} />
 		<TextInput
+			id='combobox-invalid-text-input'
 			value={selectedComponent.invalidText}
 			labelText='Invalid text'
 			onChange={(event: any) => setComponent({
@@ -175,7 +184,7 @@ export const AComboBoxSettingsUI = ({ selectedComponent, setComponent }: any) =>
 		})} />
 		<Checkbox
 			labelText='Light theme'
-			id='theme-select'
+			id='theme-select-checkbox'
 			checked={selectedComponent.light}
 			onChange={(checked: any) => setComponent({
 				...selectedComponent,
@@ -197,18 +206,19 @@ export const AComboBoxSettingsUI = ({ selectedComponent, setComponent }: any) =>
 
 export const AComboBoxCodeUI = ({ selectedComponent, setComponent }: any) => {
 	return <TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>;
+		id='combobox-input-name-text-input'
+		value={selectedComponent.codeContext?.name}
+		labelText='Input name'
+		onChange={(event: any) => {
+			setComponent({
+				...selectedComponent,
+				codeContext: {
+					...selectedComponent.codeContext,
+					name: event.currentTarget.value
+				}
+			});
+		}}
+	/>;
 };
 
 const preventClickStyle = css`
@@ -249,6 +259,7 @@ export const AComboBox = ({
 				invalidText={componentObj.invalidText}
 				direction={componentObj.direction}
 				placeholder={componentObj.placeholder}
+				onChange={() => {}}
 				items={[]}
 				className={`${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} ${preventClickStyle}`} />
 		</AComponent>
@@ -374,7 +385,7 @@ export const componentInfo: ComponentInfo = {
 					[itemsKey]: `const ${itemsKey} = state["${name}Items"] || ${json.listItems ?
 						JSON.stringify(json.listItems) : '[]'};`,
 					[itemsToStringKey]: `const ${itemsToStringKey} = state["${name}ItemToString"] || ((item) => (item ? item.text : ""));`,
-					[itemsDefaultSelectedKey]: `const ${itemsDefaultSelectedKey} = state["${name}initialSelectedItems"] || ${json.isMulti ?
+					[itemsDefaultSelectedKey]: `const ${itemsDefaultSelectedKey} = state["${name}DefaultSelected"] || ${json.isMulti ?
 						`(${itemsKey}.filter(item => item.selected))`: `(${itemsKey}.find(item => item.selected))`};`
 				};
 			}

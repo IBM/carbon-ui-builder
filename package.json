@@ -7,6 +7,7 @@
     "@carbon/colors": "10.7.2",
     "@carbon/icons-react": "10.49.0",
     "axios": "0.27.2",
+    "buffer": "6.0.3",
     "carbon-addons-iot-react": "2.148.0",
     "carbon-components": "10.50.0",
     "carbon-components-react": "7.57.1",
@@ -16,6 +17,7 @@
     "jspdf": "2.5.1",
     "lodash": "4.17.21",
     "lz-string": "1.4.4",
+    "octokit": "1.8.0",
     "path": "npm:path-browserify",
     "prettier": "2.6.2",
     "react": "17.0.2",
@@ -48,6 +50,7 @@
     "@types/webpack-env": "1.17.0",
     "@typescript-eslint/eslint-plugin": "5.25.0",
     "@typescript-eslint/parser": "5.25.0",
+    "cross-env": "7.0.3",
     "cypress": "9.6.1",
     "eslint": "8.15.0",
     "eslint-plugin-react": "7.30.0",
@@ -58,7 +61,7 @@
     "ts-jest": "28.0.2"
   },
   "scripts": {
-    "start": "GENERATE_SOURCEMAP=false react-scripts start",
+    "start": "cross-env GENERATE_SOURCEMAP=false react-scripts start",
     "build": "react-scripts build",
     "lint": "eslint --ext .js,.ts,.jsx,.tsx 'src/**'",
     "lint:fix": "eslint --ext .js,.ts,.jsx,.tsx 'src/**' --fix",

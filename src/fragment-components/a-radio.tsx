@@ -111,13 +111,13 @@ export const ARadio = ({
 		active={selected}
 		addButtonsCss={addButtonStyle}
 		key={componentObj.id}
-		topAction={parentComponent.orientation === 'vertical' ? () => addRadio(0) : undefined}
-		leftAction= {parentComponent.orientation === 'horizontal' ? () => addRadio(0) : undefined}
+		topAction={parentComponent?.orientation === 'vertical' ? () => addRadio(0) : undefined}
+		leftAction= {parentComponent?.orientation === 'horizontal' ? () => addRadio(0) : undefined}
 		bottomAction={() => addRadio(1)}>
 			<AComponent
 			selected={selected}
 			headingCss={cx(
-				parentComponent.orientation === 'vertical' ? css`margin-left: 20px;` : '',
+				parentComponent?.orientation === 'vertical' ? css`margin-left: 20px;` : '',
 				css`width: fit-content; min-width: 9rem;`
 			)}
 			componentObj={componentObj}

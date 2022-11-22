@@ -54,6 +54,7 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 	const template = (item: any, index: number) => {
 		return <>
 			<TextInput
+				id={`display-text-input-${item.id}`}
 				light
 				value={item.text}
 				labelText='Display text'
@@ -97,6 +98,7 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 				isInline: checked
 			})} />
 		<Dropdown
+			id='size-dropdown'
 			label='Size'
 			titleText='Size'
 			items={sizeItems}
@@ -107,6 +109,7 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 				size: event.selectedItem.id
 			})} />
 		<Dropdown
+			id='description-dropdown'
 			label='Direction'
 			titleText='Dropdown direction'
 			items={directionItems}
@@ -117,6 +120,7 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 				direction: event.selectedItem.id
 			})} />
 		<Dropdown
+			id='feedback-dropdown'
 			label='Feedback'
 			titleText='Selection feedback'
 			items={selectionFeedbackItems}
@@ -127,6 +131,7 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 				selectionFeedback: event.selectedItem.id
 			})} />
 		<TextInput
+			id='label-text-input'
 			value={selectedComponent.label}
 			labelText='Label'
 			onChange={(event: any) => setComponent({
@@ -142,6 +147,7 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 				hideLabel: checked
 			})} />
 		<TextInput
+			id='placeholder-text-input'
 			value={selectedComponent.placeholder}
 			labelText='Placeholder'
 			onChange={(event: any) => setComponent({
@@ -149,6 +155,7 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 				placeholder: event.currentTarget.value
 			})} />
 		<TextInput
+			id='helper-text-input'
 			value={selectedComponent.helperText}
 			labelText='Helper text'
 			onChange={(event: any) => setComponent({
@@ -156,6 +163,7 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 				helperText: event.currentTarget.value
 			})} />
 		<TextInput
+			id='warning-text-input'
 			value={selectedComponent.warnText}
 			labelText='Warning text'
 			onChange={(event: any) => setComponent({
@@ -163,6 +171,7 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 				warnText: event.currentTarget.value
 			})} />
 		<TextInput
+			id='invalid-text-input'
 			value={selectedComponent.invalidText}
 			labelText='Invalid text'
 			onChange={(event: any) => setComponent({
@@ -193,6 +202,7 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 
 export const ADropdownCodeUI = ({ selectedComponent, setComponent }: any) => {
 	return <TextInput
+			id='input-name-text-input'
 			value={selectedComponent.codeContext?.name}
 			labelText='Input name'
 			onChange={(event: any) => {
@@ -362,7 +372,7 @@ export const componentInfo: ComponentInfo = {
 					[itemsKey]: `const ${itemsKey} = state["${name}Items"] || ${json.listItems ?
 						JSON.stringify(json.listItems) : '[]'};`,
 					[itemsToStringKey]: `const ${itemsToStringKey} = state["${name}ItemToString"] || ((item) => (item ? item.text : ""));`,
-					[itemsDefaultSelectedKey]: `const ${itemsDefaultSelectedKey} = state["${name}initialSelectedItems"] || ${json.isMulti ?
+					[itemsDefaultSelectedKey]: `const ${itemsDefaultSelectedKey} = state["${name}DefaultSelected"] || ${json.isMulti ?
 						`(${itemsKey}.filter(item => item.selected))`: `(${itemsKey}.find(item => item.selected))`};`
 				};
 			}

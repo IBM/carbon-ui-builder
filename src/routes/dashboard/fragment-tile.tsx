@@ -6,63 +6,101 @@ import {
 	SkeletonText,
 	Tile
 } from 'carbon-components-react';
-import { ModalContext, ModalActionType } from '../../context/modal-context';
+import {
+	Copy16,
+	DocumentExport16,
+	Edit16,
+	View16,
+	TrashCan16
+} from '@carbon/icons-react';
+import { css } from 'emotion';
+import { ModalContext } from '../../context/modal-context';
 import { FragmentPreview } from '../../components/fragment-preview';
 import './fragment-tile.scss';
 
+const menuItemStyle = css`
+	display: flex;
+	align-items: center;
+
+	svg {
+		margin-right: 0.5rem;
+	}
+`;
+
+const clickableStyle = css`
+	cursor: pointer;
+`;
+
 export const FragmentTile = ({
 	fragment,
+	fragments,
 	title,
 	to,
 	lastModified,
-	setModalFragment
+	isFeaturedFragment
 }: any) => {
 	const navigate = useNavigate();
-	const [, dispatchModal] = useContext(ModalContext);
+	const {
+		showFragmentDuplicateModal,
+		showFragmentDeleteModal,
+		showFragmentExportModal,
+		showFragmentPreviewModal
+	} = useContext(ModalContext);
 	const resetPreview = useRef(null);
-
-	const handleModalState = (modalAction: ModalActionType) => {
-		setModalFragment(fragment);
-		dispatchModal({
-			type: modalAction,
-			id: fragment.id
-		});
-	};
 
 	return (
 		<div className='tile-wrapper'>
 			<Tile className='tile-style' >
 				<div className='tile-inner-wrapper'>
-					<Link to={to}>
-						<FragmentPreview fragment={fragment} resetPreview={resetPreview} />
-					</Link>
+					{
+						isFeaturedFragment
+						? <section
+						className={clickableStyle}
+						onClick={() => showFragmentPreviewModal(fragment, fragments, isFeaturedFragment)}>
+							<FragmentPreview fragment={fragment} resetPreview={resetPreview} />
+						</section>
+						: <Link to={to}>
+							<FragmentPreview fragment={fragment} resetPreview={resetPreview} />
+						</Link>
+					}
+
 					<div className='fragment-info'>
 						<div>
-							<Link to={to} className='dashboard-link'>
-								<h3>{title}</h3>
-							</Link>
+							{
+								isFeaturedFragment
+								? <section
+								className={clickableStyle}
+								onClick={() => showFragmentPreviewModal(fragment, fragments, isFeaturedFragment)}>
+									<h3>{title}</h3>
+								</section>
+								: <Link to={to} className='dashboard-link'>
+									<h3>{title}</h3>
+								</Link>
+							}
 							<span>{lastModified ? lastModified : 'Last modified date unknown'}</span>
 						</div>
 						<OverflowMenu
 						className='fragment-overflow'
 						ariaLabel='Fragment options'
-						iconDescription=''
+						iconDescription='fragment menu'
 						onClick={(event: { stopPropagation: () => void }) => event.stopPropagation()}>
+							{
+								!isFeaturedFragment && <OverflowMenuItem
+									itemText={<div className={menuItemStyle}><Edit16 /> Edit</div>}
+									onClick={() => navigate(`/edit/${fragment.id}`)} />
+							}
 							<OverflowMenuItem
-								itemText='Edit'
-								onClick={() => navigate(`/edit/${fragment.id}`)} />
+								itemText={<div className={menuItemStyle}><DocumentExport16 /> Export</div>}
+								onClick={() => showFragmentExportModal(fragment)} />
 							<OverflowMenuItem
-								itemText='Export'
-								onClick={() => handleModalState(ModalActionType.setExportModal)} />
+								itemText={<div className={menuItemStyle}><Copy16 /> Duplicate</div>}
+								onClick={() => showFragmentDuplicateModal(fragment)} />
 							<OverflowMenuItem
-								itemText='Duplicate'
-								onClick={() => handleModalState(ModalActionType.setDuplicationModal)} />
+								itemText={<div className={menuItemStyle}><View16 /> Open preview</div>}
+								onClick={() => showFragmentPreviewModal(fragment, fragments, isFeaturedFragment)} />
 							<OverflowMenuItem
-								itemText='Reset preview'
-								onClick={resetPreview.current} />
-							<OverflowMenuItem
-								itemText='Remove'
-								onClick={() => handleModalState(ModalActionType.setDeletionModal)}
+								itemText={<div className={menuItemStyle}><TrashCan16 /> Delete</div>}
+								onClick={() => showFragmentDeleteModal(fragment.id)}
 								isDelete />
 						</OverflowMenu>
 					</div>

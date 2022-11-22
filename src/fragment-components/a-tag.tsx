@@ -71,6 +71,17 @@ export const ATagSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			})}
 		/>
 
+		<TextInput
+			value={selectedComponent.closeLabel}
+			labelText='Close filter label'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					closeLabel: event.currentTarget.value
+				});
+			}}
+		/>
+
 		<Checkbox
 			labelText='Is filter'
 			id='filter'
@@ -147,13 +158,11 @@ export const componentInfo: ComponentInfo = {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Title = "${json.title}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Type = "${json.kind}";`,
 			outputs: ({ json }) => `${json.filter
-				? `@Output() ${nameStringToVariableString(json.codeContext?.name)}Close = new EventEmitter();`
+				? `@Output() ${nameStringToVariableString(json.codeContext?.name)}Click = new EventEmitter();
+					@Output() ${nameStringToVariableString(json.codeContext?.name)}Close = new EventEmitter();`
 				: ''
 			}`,
 			imports: ['TagModule'],
-			// NOTE: Angular tag does not support 'disabled' yet. Filtered tag is able to take in 'disabled' as an input
-			// but it doesn't do anything.
-			// Issue is being tracked here: https://github.com/IBM/carbon-components-angular/issues/2061
 			code: ({ json }) => {
 				const defaultProps = `
 					[type]="${nameStringToVariableString(json.codeContext?.name)}Type"
@@ -163,9 +172,11 @@ export const componentInfo: ComponentInfo = {
 				if (json.filter) {
 					return `<ibm-tag-filter
 						${defaultProps}
+						(click)='${nameStringToVariableString(json.codeContext?.name)}Click.emit()'
 						(close)='${nameStringToVariableString(json.codeContext?.name)}Close.emit()'
 						${angularClassNamesFromComponentObj(json)}
-						[disabled]='${json.disabled}'>
+						[disabled]='${json.disabled}'
+						${json.closeLabel ? `closeButtonLabel='${json.closeLabel}'` : ''}>
 							${json.title}
 					</ibm-tag-filter>
 					`;
@@ -184,6 +195,7 @@ export const componentInfo: ComponentInfo = {
 				return `<Tag
 					${json.kind && ` type="${json.kind}"`}
 					${`size='${json.size ? json.size : 'md'}'`}
+					${json.closeLabel && `title="${json.closeLabel}"`}
 					disabled={${json.disabled}}
 					filter={${json.filter}}
 					${reactClassNamesFromComponentObj(json)}>

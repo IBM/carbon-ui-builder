@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from 'react';
-import { css, cx } from 'emotion';
+import { css } from 'emotion';
 import { Button, TextInput } from 'carbon-components-react';
 import {
 	Checkmark16,
@@ -7,17 +7,19 @@ import {
 	Copy16,
 	DocumentExport16,
 	Edit16,
-	CircleDash20,
+	IntentRequestInactive20,
+	IntentRequestActive20,
+	IntentRequestUninstall20,
 	Redo16,
 	TrashCan16,
 	Undo16,
 	View16
 } from '@carbon/icons-react';
-import { ModalContext, ModalActionType } from '../../context/modal-context';
-import { FragmentModal } from './fragment-modal';
+import { ModalContext } from '../../context/modal-context';
 import { GlobalStateContext } from '../../context';
 import { actionIconStyle } from '.';
-import { NavigateFunction, useNavigate, useParams } from 'react-router-dom';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { openFragmentPreview } from '../../utils/fragment-tools';
 
 const editHeader = css`
 	left: 16rem;
@@ -45,7 +47,6 @@ const editHeader = css`
 			}
 			.date-wrap {
 				font-size: 12px;
-				font-style: italic;
 				color: black;
 				padding-left: 12px;
 			}
@@ -120,7 +121,7 @@ const toolBarSeparator = css`
 
 const fragmentEditToolBar = css`
 	display: flex;
-	margin-right: 5rem;
+	margin-right: 1rem;
 	margin-top: 8px;
 	margin-bottom: 8px;
 	button {
@@ -146,23 +147,13 @@ const fragmentEditToolBar = css`
 	}
 `;
 
-const actionIconSelectedStyle = css`
-	color: #0f62fe;
-`;
-
-const actionIconInheritedStyle = css`
-background: linear-gradient(to top right,
-	rgba(0,0,0,0) 0%,
-	rgba(0,0,0,0) calc(50% - 1.2px),
-	rgba(0,0,0,1) 50%,
-	rgba(0,0,0,0) calc(50% + 1.2px),
-	rgba(0,0,0,0) 100%)
-`;
-
 export const EditHeader = ({ fragment, setFragment }: any) => {
 	const navigate: NavigateFunction = useNavigate();
-	const [, dispatchModal] = useContext(ModalContext);
-	const params = useParams();
+	const {
+		showFragmentDuplicateModal,
+		showFragmentDeleteModal,
+		showFragmentExportModal
+	} = useContext(ModalContext);
 	const [isEditingTitle, setIsEditingTitle] = useState(false);
 	const titleTextInputRef = useRef(null as any);
 	const {
@@ -174,12 +165,12 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 
 	const getOutlineHelperText = (outline: boolean | null) => {
 		if (outline === true) {
-			return 'Forcing outline - click to change';
+			return 'Outline (forced on)';
 		}
 		if (outline === false) {
-			return 'Hiding outline - click to change';
+			return 'Outline (forced off)';
 		}
-		return 'Inheriting outline visibility - click to change';
+		return 'Outline (inheriting)';
 	};
 
 	return (
@@ -198,10 +189,12 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 						<ChevronLeft24 className={actionIconStyle} />
 					</Button>
 					<div className='title-wrap'>
-						<p className='fragment-title'>
+						<div className='fragment-title'>
 							{
 								<div className={isEditingTitle ? css`display: inline-block` : css`display: none`}>
 									<TextInput
+										id='fragment-title-text-input'
+										labelText=''
 										ref={titleTextInputRef}
 										value={fragment.title}
 										onChange={(event: any) => setFragment({ ...fragment, title: event.target.value })}
@@ -221,6 +214,8 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 								size='sm'
 								hasIconOnly
 								renderIcon={isEditingTitle ? Checkmark16 : Edit16}
+								iconDescription={isEditingTitle ? 'Mark done' : 'Edit title'}
+								tooltipPosition='bottom'
 								onClick={() => {
 									setIsEditingTitle(!isEditingTitle);
 									// isEditingTitle won't be changed until next render so checking for opposite
@@ -230,7 +225,7 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 										});
 									}
 								}} />
-						</p>
+						</div>
 
 						<div className='title-subheading'>
 							<div className='date-wrap'>{`Last modified ${fragment.lastModified}`}</div>
@@ -241,80 +236,72 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 					<div className='toolBarButtons'>
 						<Button
 							kind='ghost'
-							aria-label={getOutlineHelperText(fragment.outline)}
-							title={getOutlineHelperText(fragment.outline)}
-							onClick={() => setFragment({ ...fragment, outline: fragment.outline === false ? null : !fragment.outline })}>
-							<CircleDash20 className={cx(
-								actionIconStyle,
-								fragment.outline === true ? actionIconSelectedStyle : '',
-								fragment.outline === false ? actionIconInheritedStyle : ''
-							)} />
-						</Button>
-						{
-							process.env.NODE_ENV === 'development' &&
-							<Button
-								kind='ghost'
-								aria-label={'Preview fragment'}
-								title={'Preview fragment'}
-								onClick={() => {
-									window.open(`/view/${params.id}`, '', 'popup');
-								}}>
-								<View16 className={actionIconStyle} />
-							</Button>
-						}
+							hasIconOnly
+							tooltipPosition='bottom'
+							iconDescription={getOutlineHelperText(fragment.outline)}
+							onClick={() => setFragment({ ...fragment, outline: fragment.outline === false ? null : !fragment.outline })}
+							renderIcon={() => {
+								if (fragment.outline === true) {
+									return <IntentRequestActive20 className={actionIconStyle} />;
+								}
+
+								if (fragment.outline === false) {
+									return <IntentRequestUninstall20 className={actionIconStyle} />;
+								}
+
+								return <IntentRequestInactive20 className={actionIconStyle} />;
+							}} />
+						<Button
+							kind='ghost'
+							hasIconOnly
+							tooltipPosition='bottom'
+							iconDescription='Preview fragment'
+							onClick={() => openFragmentPreview(fragment)}
+							renderIcon={() => <View16 className={actionIconStyle} />} />
 						<div className={toolBarSeparator} />
 						<Button
 							kind='ghost'
-							aria-label='Undo'
-							title='Undo'
+							hasIconOnly
+							tooltipPosition='bottom'
+							iconDescription='Undo'
 							disabled={!canUndo()}
-							onClick={() => undoAction()}>
-							<Undo16 className={actionIconStyle} />
-						</Button>
+							onClick={() => undoAction()}
+							renderIcon={() => <Undo16 className={actionIconStyle} />} />
 						<Button
 							kind='ghost'
-							aria-label='Redo'
-							title='Redo'
+							hasIconOnly
+							tooltipPosition='bottom'
+							iconDescription='Redo'
 							disabled={!canRedo()}
-							onClick={() => redoAction()}>
-							<Redo16 className={actionIconStyle} />
-						</Button>
+							onClick={() => redoAction()}
+							renderIcon={() => <Redo16 className={actionIconStyle} />} />
 						<div className={toolBarSeparator} />
 						<Button
 							kind='ghost'
-							aria-label='Duplicate fragment'
-							title='Duplicate fragment'
-							onClick={() => dispatchModal({
-								type: ModalActionType.setDuplicationModal,
-								id: fragment.id
-							})}>
-							<Copy16 className={actionIconStyle} />
-						</Button>
+							hasIconOnly
+							tooltipPosition='bottom'
+							iconDescription='Duplicate fragment'
+							onClick={() => showFragmentDuplicateModal(fragment)}
+							renderIcon={() => <Copy16 className={actionIconStyle} />} />
 						<Button
 							kind='ghost'
-							aria-label='Delete fragment'
-							title='Delete fragment'
-							onClick={() => dispatchModal({
-								type: ModalActionType.setDeletionModal,
-								id: fragment.id
-							})}>
-							<TrashCan16 className={actionIconStyle} />
-						</Button>
+							hasIconOnly
+							tooltipPosition='bottom'
+							iconDescription='Delete fragment'
+							onClick={() => showFragmentDeleteModal(fragment.id)}
+							renderIcon={() => <TrashCan16 className={actionIconStyle} />} />
 						<Button
 							kind='primary'
+							iconDescription='Export fragment'
 							aria-label='Export fragment'
 							title='Export fragment'
 							renderIcon={DocumentExport16}
-							onClick={() => dispatchModal({
-								type: ModalActionType.setExportModal,
-								id: fragment.id
-							})}>
+							onClick={() => showFragmentExportModal(fragment)}>
 							Export
 						</Button>
 					</div>
 				</div>
 			</div>
-			<FragmentModal fragment={fragment} />
 		</header>
 	);
 };
