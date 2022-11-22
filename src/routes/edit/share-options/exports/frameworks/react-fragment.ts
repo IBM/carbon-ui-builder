@@ -233,7 +233,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 `;
 	const packageJson = {
 		dependencies: {
-			'carbon-components': '10.50.0',
+			'carbon-components': '10.58.0',
 			'carbon-icons': '7.0.7',
 			'@carbon/icons-react': '10.15.0',
 			'carbon-components-react': '7.50.0',
