@@ -314,7 +314,7 @@ export const createAngularApp = (fragment: any, fragments: any[]) => {
 			'tslib': '2.3.0',
 			'sass': '1.45.0',
 			'zone.js': '0.11.4',
-			'carbon-components-angular': '4.56.3',
+			'carbon-components-angular': '4.63.0',
 			'carbon-components': '10.50.0'
 		}
 	};
