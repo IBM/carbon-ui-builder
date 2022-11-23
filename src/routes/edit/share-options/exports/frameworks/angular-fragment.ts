@@ -184,7 +184,6 @@ const getComponentCode = (fragment: any, fragments: any[]) => {
 	// module.ts
 	componentCode[`src/app/components/${tagNameFromFragment(fragment)}/${tagNameFromFragment(fragment)}.module.ts`] = format(
 		`import { NgModule } from "@angular/core";
-		import { CommonModule } from "@angular/common";
 		import { ${jsonToAngularImports(fragment.data).join(', ')} } from 'carbon-components-angular';
 		import { ${classNameFromFragment(fragment)} } from "./${tagNameFromFragment(fragment)}.component";
 		${otherImportsFromComponentObj(fragment.data, fragments)}
