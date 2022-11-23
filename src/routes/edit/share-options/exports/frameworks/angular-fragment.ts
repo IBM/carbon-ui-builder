@@ -5,6 +5,7 @@ import parserCss from 'prettier/parser-postcss';
 import { allComponents } from '../../../../../fragment-components';
 import { getAllFragmentStyleClasses } from '../../../../../ui-fragment/src/utils';
 import { classNameFromFragment, hasFragmentStyleClasses, tagNameFromFragment } from '../../../../../utils/fragment-tools';
+import { sortedUniq } from 'lodash';
 
 const format = (source: string, options?: Options | undefined) => {
 	// we're catching and ignorring errors so live editing doesn't throw errors
@@ -129,6 +130,36 @@ const getAllSubfragments = (json: any, fragments: any[]) => {
 	return sharedComponents;
 };
 
+const getOtherImportModules = (input: any) => {
+	if (input) {
+		let imports: any = [];
+		const regex = /(?<=import).*?(?=from)/gm;
+		if (input.match(regex)) {
+			imports = input.match(regex);
+			imports = imports?.map((item: any) => item.replace(/[ }{]/g, '')).toString();
+			imports = imports.split(',');
+		}
+		return imports;
+	}
+};
+
+const otherImportsFromComponentObj = (json: any, fragments?: any[]) => {
+	let imports = '';
+	for (const component of Object.values(allComponents)) {
+		if (json.type === component.componentInfo.type && component.componentInfo.codeExport.angular.otherImports) {
+			imports += component.componentInfo.codeExport.angular.otherImports({ json });
+			break;
+		}
+	}
+	if (json.items) {
+		imports += json.items.map((item: any) => otherImportsFromComponentObj(item, fragments)).join('\n');
+	}
+
+	// remove duplicate imports
+	imports = sortedUniq(imports.split('\n')).join('\n');
+	return imports;
+};
+
 const getComponentCode = (fragment: any, fragments: any[]) => {
 	const componentCode: any = {};
 	const subFragments = getAllSubfragments(fragment.data, fragments);
@@ -156,14 +187,16 @@ const getComponentCode = (fragment: any, fragments: any[]) => {
 		import { CommonModule } from "@angular/common";
 		import { ${jsonToAngularImports(fragment.data).join(', ')} } from 'carbon-components-angular';
 		import { ${classNameFromFragment(fragment)} } from "./${tagNameFromFragment(fragment)}.component";
+		${otherImportsFromComponentObj(fragment.data, fragments)}
 		${
 			Object.values(subFragments).map((f) =>
 				`import { ${classNameFromFragment(f)}Module} from "../${tagNameFromFragment(f)}/${tagNameFromFragment(f)}.module";`).join('\n')
 		}
 
 		@NgModule({
-			imports: [CommonModule, ${[
+			imports: [${[
 				...jsonToAngularImports(fragment.data),
+				getOtherImportModules(otherImportsFromComponentObj(fragment.data, fragments)),
 				...Object.values(subFragments).map((fragment) => `${classNameFromFragment(fragment)}Module`)
 			].join(', ')}],
 			declarations: [${classNameFromFragment(fragment)}],
