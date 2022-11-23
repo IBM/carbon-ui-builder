@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search } from 'carbon-components-react';
+import { Search, ExpandableSearch } from 'carbon-components-react';
 import { CssClasses } from '../types';
 
 export interface SearchState {
@@ -14,6 +14,9 @@ export interface SearchState {
 	disabled?: boolean;
 	light?: boolean;
 	role?: string;
+	expandable: boolean;
+	inputSize: string;
+	searchType: string;
 	cssClasses?: CssClasses[];
 	codeContext?: {
 		name: string;
@@ -31,18 +34,33 @@ export const UISearchInput = ({ state, setState, name }: {
 		return <></>;
 	}
 
-	return <Search
-		id={state.codeContext?.name}
+	return state.expandable
+		? <ExpandableSearch
+			size={state.inputSize}
+			disabled={state.disabled}
+			autoComplete={state.autoComplete}
+			placeholder={state.placeholder}
+			light={state.light}
+			labelText={state.label}
+			defaultValue={state.defaultValue}
+			closeButtonLabelText={state.closeButtonLabelText}
+			id={state.id}
+			role={state.role}
+			type={state.searchType}
+			onChange={(event: any) => setState({ ...state, value: event.imaginaryTarget.value })} />
+		: <Search
 		name={name}
-		value={state.value}
-		placeholder={state.placeholder}
+		size={state.inputSize}
 		labelText={state.label}
-		autoComplete={state.autoComplete || 'off'}
-		closeButtonLabelText={state.closeButtonLabelText || 'Clear search input'}
+		placeholder={state.placeholder}
+		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}
+		id={state.codeContext?.name}
+		autoComplete={state.autoComplete}
+		closeButtonLabelText={state.closeButtonLabelText}
 		defaultValue={state.defaultValue}
 		disabled={state.disabled}
 		light={state.light}
-		role={state.role || 'searchbox'}
-		onChange={(event: any) => setState({ ...state, value: event.imaginaryTarget.value })}
-		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />;
+		role={state.role}
+		type={state.searchType}
+		onChange={(event: any) => setState({ ...state, value: event.imaginaryTarget.value })} />;
 };

@@ -181,7 +181,6 @@ export const ASearchInput = ({
 				role={componentObj.role}
 				type={componentObj.searchType} />
 			}
-
 		</AComponent>
 	);
 };
