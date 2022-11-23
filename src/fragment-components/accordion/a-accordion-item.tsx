@@ -136,13 +136,13 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Title = "${json.title}";`,
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Title = "${json.title}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};`,
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter();`,
 			imports: ['AccordionModule'],
-			// NOTE: Angular accordion item currently does not support 'disabled'.
-			// issue being tracked here: https://github.com/IBM/carbon-components-angular/issues/2021
 			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<ibm-accordion-item
+					[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
 					[title]="${nameStringToVariableString(json.codeContext?.name)}Title"
 					(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
 					${angularClassNamesFromComponentObj(json)}>
