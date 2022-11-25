@@ -137,7 +137,7 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Title = "${json.title}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};`,
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled === undefined ? false : json.disabled}`,
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter();`,
 			imports: ['AccordionModule'],
 			code: ({ json, fragments, jsonToTemplate }) => {
