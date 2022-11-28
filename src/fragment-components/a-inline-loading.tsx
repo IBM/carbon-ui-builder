@@ -65,12 +65,34 @@ export const AInlineLoadingSettingsUI = ({ selectedComponent, setComponent }: an
 				successText: event.currentTarget.value
 			})} />
 		<TextInput
-			value={selectedComponent.iconDescription}
-			labelText='Icon description'
+			value={selectedComponent.activeIconDescription}
+			labelText='Active icon description'
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
-				iconDescription: event.currentTarget.value
+				activeIconDescription: event.currentTarget.value
 			})} />
+		<TextInput
+		value={selectedComponent.errorIconDescription}
+		labelText='Error icon description'
+		onChange={(event: any) => setComponent({
+			...selectedComponent,
+			errorIconDescription: event.currentTarget.value
+		})} />
+				<TextInput
+		value={selectedComponent.finishedIconDescription}
+		labelText='Finished icon description'
+		onChange={(event: any) => setComponent({
+			...selectedComponent,
+			finishedIconDescription: event.currentTarget.value
+		})} />
+				<TextInput
+		value={selectedComponent.inactiveIconDescription}
+		labelText='Inactive icon description'
+		onChange={(event: any) => setComponent({
+			...selectedComponent,
+			inactiveIconDescription: event.currentTarget.value
+		})} />
+
 	</>;
 };
 
@@ -99,7 +121,6 @@ export const AInlineLoading = ({
 			<InlineLoading
 			description={componentObj.loadingText}
 			status={componentObj.status}
-			iconDescription={componentObj.iconDescription}
 			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
 		</AComponent>
 	);
@@ -118,7 +139,10 @@ export const componentInfo: ComponentInfo = {
 		loadingText: '',
 		successText: '',
 		errorText: '',
-		iconDescription: 'Loading'
+		activeIconDescription: '',
+		errorIconDescription: '',
+		finishedIconDescription: '',
+		inactiveIconDescription: ''
 	},
 	image,
 	codeExport: {
@@ -149,10 +173,34 @@ export const componentInfo: ComponentInfo = {
 							name: "${json.codeContext?.name}",
 						}
 					})}
-					description="${json.loadingText}"
-					iconDescription="${json.iconDescription}"
+					description={${nameStringToVariableString(json.codeContext?.name)}Status["${json.status}"].description}
+					iconDescription={${nameStringToVariableString(json.codeContext?.name)}Status["${json.status}"].iconDescription}
 					status="${json.status}"
 					${reactClassNamesFromComponentObj(json)} />`;
+			},
+			additionalCode: (json) => {
+				const name = nameStringToVariableString(json.codeContext?.name);
+				const status = `${name}Status`;
+				return {
+					[status]: `{
+						active: {
+							iconDescription: ${json.activeIconDescription},
+							description: ${json.loadingText}
+						},
+						error: {
+							iconDescription: ${json.errorIconDescription},
+							description: ${json.errorText}
+						},
+						inactive: {
+							iconDescription: ${json.inactiveIconDescription},
+							description: ${json.loadingText}
+						},
+						finished: {
+							iconDescription: ${json.finishedIconDescription},
+							description: ${json.successText}
+						}
+					}`
+				}
 			}
 		}
 	}
