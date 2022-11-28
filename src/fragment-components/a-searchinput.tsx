@@ -168,18 +168,18 @@ export const ASearchInput = ({
 					role={componentObj.role}
 					type={componentObj.searchType} />
 				: <Search
-				size={componentObj.inputSize}
-				labelText={componentObj.label}
-				placeholder={componentObj.placeholder}
-				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
-				id={componentObj.id}
-				autoComplete={componentObj.autoComplete}
-				closeButtonLabelText={componentObj.closeButtonLabelText}
-				defaultValue={componentObj.defaultValue}
-				disabled={componentObj.disabled}
-				light={componentObj.light}
-				role={componentObj.role}
-				type={componentObj.searchType} />
+					size={componentObj.inputSize}
+					labelText={componentObj.label}
+					placeholder={componentObj.placeholder}
+					className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
+					id={componentObj.id}
+					autoComplete={componentObj.autoComplete}
+					closeButtonLabelText={componentObj.closeButtonLabelText}
+					defaultValue={componentObj.defaultValue}
+					disabled={componentObj.disabled}
+					light={componentObj.light}
+					role={componentObj.role}
+					type={componentObj.searchType} />
 			}
 		</AComponent>
 	);
@@ -234,7 +234,7 @@ export const componentInfo: ComponentInfo = {
 			}
 		},
 		react: {
-			imports: ['Search', 'ExpandableSearch'],
+			imports: ({ json }) => [json.expandable ? 'ExpandableSearch' : 'Search'],
 			code: ({ json }) => {
 				if (json.expandable) {
 					return `<ExpandableSearch
