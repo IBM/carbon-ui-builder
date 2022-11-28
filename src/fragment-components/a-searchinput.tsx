@@ -156,17 +156,17 @@ export const ASearchInput = ({
 			{
 				componentObj.expandable
 				? <ExpandableSearch
-					 size={componentObj.inputSize}
-					 disabled={componentObj.disabled}
-					 autoComplete={componentObj.autoComplete}
-					 placeholder={componentObj.placeholder}
-					 light={componentObj.light}
-					 labelText={componentObj.label}
-					 defaultValue={componentObj.defaultValue}
-					 closeButtonLabelText={componentObj.closeButtonLabelText}
-					 id={componentObj.id}
-					 role={componentObj.role}
-					 type={componentObj.searchType} />
+					size={componentObj.inputSize}
+					disabled={componentObj.disabled}
+					autoComplete={componentObj.autoComplete}
+					placeholder={componentObj.placeholder}
+					light={componentObj.light}
+					labelText={componentObj.label}
+					defaultValue={componentObj.defaultValue}
+					closeButtonLabelText={componentObj.closeButtonLabelText}
+					id={componentObj.id}
+					role={componentObj.role}
+					type={componentObj.searchType} />
 				: <Search
 				size={componentObj.inputSize}
 				labelText={componentObj.label}
@@ -236,8 +236,8 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			imports: ['Search', 'ExpandableSearch'],
 			code: ({ json }) => {
-				return json.expandable
-					? `<ExpandableSearch
+				if (json.expandable) {
+					return `<ExpandableSearch
 						value={state["${json.codeContext?.name}"]}
 						size="${json.inputSize}"
 						disabled={${json.disabled}}
@@ -249,8 +249,9 @@ export const componentInfo: ComponentInfo = {
 						closeButtonLabelText="${json.closeButtonLabelText}"
 						id="${json.id}"
 						role="${json.role}"
-						type="${json.searchType}" />`
-					: `<Search
+						type="${json.searchType}" />`;
+				}
+				return `<Search
 					${reactClassNamesFromComponentObj(json)}
 					value={state["${json.codeContext?.name}"]}
 					onChange={handleInputChange}
@@ -264,7 +265,7 @@ export const componentInfo: ComponentInfo = {
 					disabled={${json.disabled}}
 					light={${json.light}}
 					role="${json.role}"
-					type="${json.searchType}" />`
+					type="${json.searchType}" />`;
 			}
 		}
 	}
