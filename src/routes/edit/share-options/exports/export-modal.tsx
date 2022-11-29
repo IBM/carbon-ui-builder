@@ -212,6 +212,7 @@ export const ExportModal = () => {
 								kind='ghost'
 								className={css`margin-top: -6px;`}
 								hasIconOnly
+								tooltipPosition='right'
 								iconDescription='Copy to clipboard'
 								onClick={() => copyToClipboard(jsonCode)}
 								renderIcon={Copy16} />
