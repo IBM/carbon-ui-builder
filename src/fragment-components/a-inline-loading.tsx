@@ -193,16 +193,14 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			imports: ['InlineLoading'],
 			code: ({ json }) => {
-				const name = nameStringToVariableString(json.codeContext?.name);
-				const status = `${name}Status`;
 				return `<InlineLoading
 					onSuccess={(success) => handleInputChange({
 						target: {
 							name: "${json.codeContext?.name}",
 						}
 					})}
-					description={${status}["${json.status}"].description}
-					iconDescription={${status}["${json.status}"].iconDescription}
+					description={${nameStringToVariableString(json.codeContext?.name)}Status["${json.status}"].description}
+					iconDescription={${nameStringToVariableString(json.codeContext?.name)}Status["${json.status}"].iconDescription}
 					status="${json.status}"
 					${reactClassNamesFromComponentObj(json)} />`;
 			},
@@ -212,20 +210,20 @@ export const componentInfo: ComponentInfo = {
 				return {
 					[status]: `{
 						active: {
-							iconDescription: ${json.activeIconDescription},
-							description: ${json.activeText}
+							iconDescription: "${json.activeIconDescription}",
+							description: "${json.activeText}"
 						},
 						error: {
-							iconDescription: ${json.errorIconDescription},
-							description: ${json.errorText}
+							iconDescription: "${json.errorIconDescription}",
+							description: "${json.errorText}"
 						},
 						inactive: {
-							iconDescription: ${json.inactiveIconDescription},
-							description: ${json.inactiveText}
+							iconDescription: "${json.inactiveIconDescription}",
+							description: "${json.inactiveText}"
 						},
 						finished: {
-							iconDescription: ${json.finishedIconDescription},
-							description: ${json.successText}
+							iconDescription: "${json.finishedIconDescription}",
+							description: "${json.successText}"
 						}
 					}`
 				};
