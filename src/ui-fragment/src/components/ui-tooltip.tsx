@@ -24,7 +24,7 @@ export const UITooltip = ({ state }: {
 	}
 	return <Tooltip
 		description={state.description}
-		direction={state.direction ? state.direction : 'bottom'}
+		direction={state.direction ? state.direction : 'top'}
 		name={state.codeContext?.name}
 		triggerText={state.triggerText}
 		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>

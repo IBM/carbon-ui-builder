@@ -82,6 +82,7 @@ export const ATooltip = ({
 		className={`${preventCheckEvent} ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} `}
 		{...rest}>
 			<Tooltip
+			direction={componentObj.direction}
 			description={componentObj.description}
 			triggerText={componentObj.triggerText}
 			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
@@ -100,7 +101,7 @@ export const componentInfo: ComponentInfo = {
 	type: 'tooltip',
 	defaultComponentObj: {
 		type: 'tooltip',
-		direction: '',
+		direction: 'top',
 		description: 'This is some tooltip text',
 		triggerText: 'Tooltip label'
 	},
@@ -119,7 +120,7 @@ export const componentInfo: ComponentInfo = {
 						${angularClassNamesFromComponentObj(json)}
 						[ibmTooltip]="${nameStringToVariableString(json.codeContext?.name)}Description"
 						trigger="click"
-						[placement]="${json.direction ? `${nameStringToVariableString(json.codeContext?.name)}Direction` : `'bottom'`}">
+						[placement]="${json.direction ? `${nameStringToVariableString(json.codeContext?.name)}Direction` : 'top'}">
 						<div role="button">
 							<svg ibmIcon="information--filled" size="16"></svg>
 						</div>
