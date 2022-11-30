@@ -55,7 +55,7 @@ export const UISearchInput = ({ state, setState, name }: {
 		placeholder={state.placeholder}
 		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}
 		id={state.codeContext?.name}
-		autoComplete={state.autoComplete}
+		autoComplete={state.autocomplete}
 		closeButtonLabelText={state.closeButtonLabelText}
 		defaultValue={state.defaultValue}
 		disabled={state.disabled}
