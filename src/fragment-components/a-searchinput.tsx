@@ -51,7 +51,7 @@ export const ASearchInputSettingsUI = ({ selectedComponent, setComponent }: any)
 			})} />
 		<Checkbox
 			labelText='Auto complete'
-			id='autoComplete'
+			id='autocomplete'
 			checked={selectedComponent.autocomplete === 'on'}
 			onChange={(checked: any) => setComponent({
 				...selectedComponent,
