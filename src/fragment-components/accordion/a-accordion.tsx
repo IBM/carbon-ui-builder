@@ -92,15 +92,13 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Align = "${json.align}";`,
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Align = "${json.align}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";`,
 			outputs: () => '',
 			imports: ['AccordionModule'],
-			// NOTE: Angular accordion does not support size yet.
-			// Issue being tracked here: https://github.com/IBM/carbon-components-angular/issues/2022
-			// NOTE: Angular accordion align end does not behave as expected.
-			// Issue being tracked here: https://github.com/IBM/carbon-components-angular/issues/2023
 			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<ibm-accordion
+					[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
 					[align]="${nameStringToVariableString(json.codeContext?.name)}Align"
 					${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
