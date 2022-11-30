@@ -211,7 +211,7 @@ export const componentInfo: ComponentInfo = {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Expandable = ${json.expandable};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Autocomplete = "${json.autoComplete}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Autocomplete = "${json.autocomplete}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.inputSize}";`,
