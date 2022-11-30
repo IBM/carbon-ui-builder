@@ -38,7 +38,7 @@ export const UISearchInput = ({ state, setState, name }: {
 		? <ExpandableSearch
 			size={state.inputSize}
 			disabled={state.disabled}
-			autoComplete={state.autoComplete}
+			autoComplete={state.autocomplete}
 			placeholder={state.placeholder}
 			light={state.light}
 			labelText={state.label}
