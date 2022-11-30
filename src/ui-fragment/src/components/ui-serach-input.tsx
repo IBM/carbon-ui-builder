@@ -7,7 +7,7 @@ export interface SearchState {
 	id: string | number;
 	label?: string;
 	placeholder?: string;
-	autoComplete?: string;
+	autocomplete?: string;
 	value?: string;
 	closeButtonLabelText?: string;
 	defaultValue?: string;
