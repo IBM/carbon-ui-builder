@@ -158,7 +158,7 @@ export const ASearchInput = ({
 				? <ExpandableSearch
 					size={componentObj.inputSize}
 					disabled={componentObj.disabled}
-					autoComplete={componentObj.autoComplete}
+					autoComplete={componentObj.autocomplete}
 					placeholder={componentObj.placeholder}
 					light={componentObj.light}
 					labelText={componentObj.label}
