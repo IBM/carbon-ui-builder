@@ -50,12 +50,12 @@ export const ASearchInputSettingsUI = ({ selectedComponent, setComponent }: any)
 				light: checked
 			})} />
 		<Checkbox
-			labelText='AutoComplete'
+			labelText='Auto complete'
 			id='autoComplete'
-			checked={selectedComponent.autoComplete === 'on'}
+			checked={selectedComponent.autocomplete === 'on'}
 			onChange={(checked: any) => setComponent({
 				...selectedComponent,
-				autoComplete: checked ? 'on' : 'off'
+				autocomplete: checked ? 'on' : 'off'
 			})} />
 		<Dropdown
 			label='Size'
