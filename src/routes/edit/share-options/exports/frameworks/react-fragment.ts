@@ -80,8 +80,8 @@ export const getAdditionalCode = (componentObj: any, fragments: any[]) => {
 	}
 	let collectedCode = {};
 
-	for (const [key, component] of Object.entries(allComponents)) {
-		if (componentObj.type === key && !component.componentInfo.codeExport.react.isNotDirectExport) {
+	for (const component of Object.values(allComponents)) {
+		if (componentObj.type === component.componentInfo.type && !component.componentInfo.codeExport.react.isNotDirectExport) {
 			if (component.componentInfo.codeExport.react.additionalCode) {
 				collectedCode = { ...collectedCode, ...component.componentInfo.codeExport.react.additionalCode(componentObj) };
 			}
