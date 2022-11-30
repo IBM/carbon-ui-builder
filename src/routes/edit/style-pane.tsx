@@ -153,7 +153,7 @@ export const StylePane = ({ isActive }: any) => {
 					} <br />
 					<TextInput
 						id='css-selector-text-input'
-						labelText='CSS selector'
+						labelText='CSS class name'
 						helperText='Value used in development'
 						value={getSelectedClass().id || ''}
 						disabled={!getSelectedClass().id}
