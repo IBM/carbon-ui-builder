@@ -173,7 +173,7 @@ export const ASearchInput = ({
 					placeholder={componentObj.placeholder}
 					className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
 					id={componentObj.id}
-					autoComplete={componentObj.autoComplete}
+					autoComplete={componentObj.autocomplete}
 					closeButtonLabelText={componentObj.closeButtonLabelText}
 					defaultValue={componentObj.defaultValue}
 					disabled={componentObj.disabled}
