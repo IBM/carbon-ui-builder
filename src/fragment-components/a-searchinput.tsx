@@ -196,7 +196,7 @@ export const componentInfo: ComponentInfo = {
 		type: 'search',
 		label: 'Search',
 		placeholder: 'Search',
-		autoComplete: 'off',
+		autocomplete: 'off',
 		inputSize: 'lg',
 		defaultValue: '',
 		expandable: false,
