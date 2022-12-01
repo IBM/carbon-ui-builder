@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { GlobalStateContext } from '../../context';
+import React from 'react';
 import { UIAccordion } from './components/ui-accordion';
 import { UIAccordionItem } from './components/ui-accordion-item';
 import { UIBreadcrumb } from './components/ui-breadcrumb';
@@ -48,20 +47,20 @@ export const setItemInState = (item: any, state: any, setState: (state: any) => 
 	});
 };
 
-export const getAllComponentStyleClasses = (componentObj: any, fragments: any[]) => {
+export const getAllComponentStyleClasses = (componentObj: any, fragments: any[], globalStyleClasses: any[]) => {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const { styleClasses: globalStyleClasses } = useContext(GlobalStateContext);
+	// const { styleClasses: globalStyleClasses } = useContext(GlobalStateContext) || { styleClasses: getGlobalStyleClassesFromLocalStorage() };
 	let styleClasses: any = {};
 
 	// convert into an object so all classes are unique
 	componentObj.cssClasses?.forEach((cssClass: any) => {
 		// NOTE do we need to merge them deeply?
 		// update styleClasses content from global context
-		styleClasses[cssClass.id] = globalStyleClasses.find((gsc: any) => gsc.id === cssClass.id) || cssClass;
+		styleClasses[cssClass.id] = globalStyleClasses?.find((gsc: any) => gsc.id === cssClass.id) || cssClass;
 	});
 
 	componentObj.items?.map((co: any) => {
-		const coClasses = getAllComponentStyleClasses(co, fragments);
+		const coClasses = getAllComponentStyleClasses(co, fragments, globalStyleClasses);
 		styleClasses = {
 			...styleClasses,
 			...coClasses
@@ -74,7 +73,7 @@ export const getAllComponentStyleClasses = (componentObj: any, fragments: any[])
 				...styleClasses,
 				// we can't avoid this without a messy declare+reassign+export
 				// eslint-disable-next-line @typescript-eslint/no-use-before-define
-				...getAllFragmentStyleClasses(fragment || {}, fragments)
+				...getAllFragmentStyleClasses(fragment || {}, fragments, globalStyleClasses)
 			};
 		}
 	});
@@ -82,16 +81,33 @@ export const getAllComponentStyleClasses = (componentObj: any, fragments: any[])
 	return styleClasses;
 };
 
-export const getAllFragmentStyleClasses = (fragment: any, fragments: any[] = []) => {
+/**
+ * Get all classes for the fragment
+ * @param fragment Fragment to extract classes for
+ * @param fragments All fragments available
+ * @param globalStyleClasses globally available classes
+ * @returns a list of objects containing css class ids and names
+ */
+export const getAllFragmentStyleClasses = (fragment: any, fragments: any[], globalStyleClasses: any[]) => {
 	if (!fragment || !fragment.data) {
 		return [];
 	}
 
 	const allClasses = {
-		...getAllComponentStyleClasses(fragment, fragments),
-		...getAllComponentStyleClasses(fragment.data, fragments)
+		...getAllComponentStyleClasses(fragment, fragments, globalStyleClasses),
+		...getAllComponentStyleClasses(fragment.data, fragments, globalStyleClasses)
 	};
 	return Object.values(allClasses);
+};
+
+export const isFragment = (json: any) => {
+	return json.id
+		&& json.title
+		&& json.lastModified
+		&& json.data
+		&& Array.isArray(json.data?.items)
+		|| json.id
+		&& Array.isArray(json.items);
 };
 
 export const renderComponents = (state: any, setState: (state: any) => void, setGlobalState: (state: any) => void) => {
