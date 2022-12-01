@@ -13,6 +13,7 @@ export interface InlineLoadingState {
 	inactiveText: string;
 	finishedIconDescription: string;
 	successText: string;
+	successDelay: number;
 	cssClasses?: CssClasses[];
 	codeContext?: {
 		name: string;
@@ -47,6 +48,7 @@ export const UIInlineLoading = ({ state }: {
 		}
 	};
 	return <InlineLoading
+		successDelay={state.successDelay}
 		description={status[state.status].description}
 		iconDescription={status[state.status].iconDescription}
 		status={state.status}

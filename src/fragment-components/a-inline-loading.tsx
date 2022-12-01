@@ -3,7 +3,8 @@ import {
 	RadioButtonGroup,
 	RadioButton,
 	InlineLoading,
-	TextInput
+	TextInput,
+	NumberInput
 } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { ComponentInfo } from '.';
@@ -99,6 +100,16 @@ export const AInlineLoadingSettingsUI = ({ selectedComponent, setComponent }: an
 				...selectedComponent,
 				inactiveIconDescription: event.currentTarget.value
 			})} />
+		<NumberInput
+			id='successDelay'
+			min={0}
+			label='Success delay'
+			name='successDelay'
+			value={selectedComponent.successDelay}
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				successDelay: Number(event.imaginaryTarget.value)
+			})} />
 	</>;
 };
 
@@ -144,6 +155,7 @@ export const AInlineLoading = ({
 		rejectDrop={true}
 		{...rest}>
 			<InlineLoading
+			successDelay={componentObj.successDelay}
 			description={status[componentObj.status].description}
 			iconDescription={status[componentObj.status].iconDescription}
 			status={componentObj.status}
@@ -169,7 +181,8 @@ export const componentInfo: ComponentInfo = {
 		activeIconDescription: '',
 		errorIconDescription: '',
 		finishedIconDescription: '',
-		inactiveIconDescription: ''
+		inactiveIconDescription: '',
+		successDelay: 1500
 	},
 	image,
 	codeExport: {
@@ -177,12 +190,14 @@ export const componentInfo: ComponentInfo = {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Status = "${json.status}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}LoadingText = "${json.activeText}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}SuccessText = "${json.successText}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}ErrorText = "${json.errorText}";`,
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}ErrorText = "${json.errorText}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}SuccessDelay = ${json.successDelay};`,
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}OnSuccess = new EventEmitter();`,
 			imports: ['InlineLoadingModule'],
 			code: ({ json }) => {
 				return `<ibm-inline-loading
 					(onSuccess)="${nameStringToVariableString(json.codeContext?.name)}OnSuccess.emit($event)"
+					[successDelay]="${nameStringToVariableString(json.codeContext?.name)}SuccessDelay"
 					[state]="${nameStringToVariableString(json.codeContext?.name)}Status"
 					[loadingText]="${nameStringToVariableString(json.codeContext?.name)}LoadingText"
 					[successText]="${nameStringToVariableString(json.codeContext?.name)}SuccessText"
@@ -201,6 +216,7 @@ export const componentInfo: ComponentInfo = {
 							name: "${json.codeContext?.name}",
 						}
 					})}
+					successDelay={${json.successDelay}}
 					description={${nameStringToVariableString(json.codeContext?.name)}StatusDescription}
 					iconDescription={${nameStringToVariableString(json.codeContext?.name)}StatusIconDescription}
 					status={${status}}
