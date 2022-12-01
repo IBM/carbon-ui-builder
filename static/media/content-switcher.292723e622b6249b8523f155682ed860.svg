@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="90" height="26.64" viewBox="0 0 90 26.64">
+	<g id="Group_1" data-name="Group 1" transform="translate(-570 -466.64)">
+		<path id="Background" d="M0,0H41c2.209,0,4,1.491,4,3.33V23.31c0,1.839-1.791,3.33-4,3.33H0Z" transform="translate(615 466.64)" fill="#f4f4f4" />
+		<text id="Right" transform="translate(622 484.28)" fill="#525252" font-size="11" font-family="IBMPlexSans, IBM Plex Sans">
+			<tspan x="0" y="0">Right</tspan>
+		</text>
+		<path id="Background-2" data-name="Background" d="M4,0H45V26.64H4c-2.209,0-4-1.491-4-3.33V3.33C0,1.491,1.791,0,4,0Z" transform="translate(570 466.64)" fill="#161616" />
+		<rect id="min_padding" data-name="min padding" width="47" height="19" transform="translate(570 470.28)" fill="none" />
+		<text id="Left" transform="translate(578 484.28)" fill="#fff" font-size="11" font-family="IBMPlexSans, IBM Plex Sans">
+			<tspan x="0" y="0">Left</tspan>
+		</text>
+	</g>
+</svg>
