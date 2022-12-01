@@ -29,7 +29,7 @@ export const AContentSwitcherSettingsUI = ({ selectedComponent, setComponent }: 
 
 	const selectedItems = selectedComponent.items.map((step: any, index: number) => ({ id: index, text: step.text }));
 
-	const updateListItems = (key: string, value: any, index: number) => {
+	const updateItem = (key: string, value: any, index: number) => {
 		const step = {
 			...selectedComponent.items[index],
 			[key]: value
@@ -59,14 +59,14 @@ export const AContentSwitcherSettingsUI = ({ selectedComponent, setComponent }: 
 				value={item.text}
 				labelText='Text'
 				onChange={(event: any) => {
-					updateListItems('text', event.currentTarget.value, index);
+					updateItem('text', event.currentTarget.value, index);
 				}} />
 			<Checkbox
 				labelText='Disabled'
 				id={`disabled-${index}`}
 				checked={selectedComponent.disabled}
 				onChange={(checked: boolean) => {
-					updateListItems('disabled', checked, index);
+					updateItem('disabled', checked, index);
 				}} />
 		</>;
 	};
@@ -97,7 +97,7 @@ export const AContentSwitcherSettingsUI = ({ selectedComponent, setComponent }: 
 		<DraggableTileList
 			dataList={[...selectedComponent.items]}
 			setDataList={updateStepList}
-			updateItem={updateListItems}
+			updateItem={updateItem}
 			defaultObject={{
 				type: 'switch-item',
 				disabled: false,
