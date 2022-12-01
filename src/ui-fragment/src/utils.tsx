@@ -9,6 +9,7 @@ import { UIClickableTile } from './components/ui-clickable-tile';
 import { UICodeSnippet } from './components/ui-code-snippet';
 import { UIColumn } from './components/ui-column';
 import { UIComboBox } from './components/ui-combobox';
+import { UIContentSwitcher } from './components/ui-content-switcher';
 import { UIDropdown } from './components/ui-dropdown';
 import { UIExpandableTile } from './components/ui-expandable-tile';
 import { UIGrid } from './components/ui-grid';
@@ -137,6 +138,9 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'combobox':
 			return <UIComboBox key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'content-switcher':
+			return <UIContentSwitcher key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'dropdown':
 			return <UIDropdown key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
