@@ -136,6 +136,7 @@ export const AInlineLoading = ({
 			description: componentObj.successText
 		}
 	};
+
 	return (
 		<AComponent
 		componentObj={componentObj}
