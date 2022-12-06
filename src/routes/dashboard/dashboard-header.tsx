@@ -7,7 +7,7 @@ import { ContentSwitcher, Switch } from 'carbon-components-react';
 export enum FragmentGroupDisplayed {
 	AllFragments,
 	Templates,
-	LocalOnly
+	FeaturedFragments
 }
 
 const dashboardHeaderWrapper = css`
@@ -26,7 +26,7 @@ const fragmentTitle = css`
 `;
 
 const contentSwitcher = css`
-	width: 450px;
+	width: 600px;
 `;
 
 export const DashboardHeader = ({ onDisplayedSwitchHandler, fragmentGroupDisplayed }: any) => (
@@ -34,10 +34,13 @@ export const DashboardHeader = ({ onDisplayedSwitchHandler, fragmentGroupDisplay
 		<h2 className={fragmentTitle}>Fragments</h2>
 		<ContentSwitcher
 			className={contentSwitcher}
-			onChange={(event: any) => onDisplayedSwitchHandler(event.name)}
+			onChange={(event: any) => {
+				onDisplayedSwitchHandler(event.name);
+			}}
 			selectedIndex={fragmentGroupDisplayed}>
 			<Switch name={FragmentGroupDisplayed.AllFragments} text='All fragments' />
 			<Switch name={FragmentGroupDisplayed.Templates} text='Templates only' />
+			<Switch name={FragmentGroupDisplayed.FeaturedFragments} text='Featured' />
 		</ContentSwitcher>
 	</div>
 );

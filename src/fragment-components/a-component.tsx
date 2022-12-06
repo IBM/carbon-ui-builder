@@ -16,9 +16,18 @@ const headerStyle = css`
 	border: 2px solid #d8d8d8;
 	line-height: 21px;
 	z-index: ${componentHeaderZIndex};
+	cursor: grab;
 `;
 
-const iconStyle = css`height: 1rem; width: 1rem; float: right`;
+const iconStyle = css`
+	height: 1rem;
+	width: 1rem;
+	float: right;
+`;
+
+const actionableIconStyle = css`
+	cursor: pointer;
+`;
 
 export const AComponentCodeUI = ({ selectedComponent }: any) => {
 	return <span className={css`overflow-wrap: anywhere`}>
@@ -96,7 +105,12 @@ export const AComponent = ({
 		}
 
 		if (typeof rejectDrop === 'function') {
-			const dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
+			let dragObj: any;
+			try {
+				dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
+			} catch (error) {
+				return rejectDrop({});
+			}
 			return rejectDrop(dragObj);
 		}
 
@@ -176,7 +190,7 @@ export const AComponent = ({
 					if (remove) {
 						remove();
 					}
-				}} className={iconStyle} />
+				}} className={cx(iconStyle, actionableIconStyle)} />
 			</span>
 			{children}
 		</span>

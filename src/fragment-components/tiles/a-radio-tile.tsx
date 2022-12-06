@@ -68,6 +68,7 @@ export const ARadioTileSettingsUI = ({ selectedComponent, setComponent }: any) =
 export const ARadioTileCodeUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<TextInput
+			id='radio-tile-input-name-text-input'
 			value={selectedComponent.codeContext?.name}
 			labelText='Input name'
 			onChange={(event: any) => {
@@ -81,6 +82,7 @@ export const ARadioTileCodeUI = ({ selectedComponent, setComponent }: any) => {
 			}}
 		/>
 		<TextInput
+			id='radio-tile-value-text-input'
 			value={selectedComponent.codeContext?.value || ''}
 			labelText='Value*'
 			placeholder='Tile value'
@@ -142,8 +144,7 @@ export const ARadioTile = ({
 		<Adder
 		active={selected}
 		topAction={() => addRadio()}
-		bottomAction={() => addRadio(1)}
-		key={componentObj.id}>
+		bottomAction={() => addRadio(1)}>
 			<AComponent
 			componentObj={componentObj}
 			headingCss={css`display: block;`}
@@ -181,6 +182,7 @@ export const componentInfo: ComponentInfo = {
 		items: []
 	},
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline }) => <ARadioTile
+		key={componentObj.id}
 		componentObj={componentObj}
 		select={select}
 		remove={remove}

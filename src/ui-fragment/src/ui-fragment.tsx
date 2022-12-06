@@ -1,3 +1,5 @@
+import React from 'react';
+import { css } from 'emotion';
 import { renderComponents } from './utils';
 
 export interface UIFragmentProps {
@@ -6,5 +8,23 @@ export interface UIFragmentProps {
 }
 
 export const UIFragment = ({ state, setState }: UIFragmentProps) => {
-	return renderComponents(state, setState, setState);
+	const styles = css`${
+		Object.values(state.allCssClasses || []).map((styleClass: any) => `.${styleClass.id} {
+			${styleClass.content}
+		}`)
+	}`;
+
+	const setStateData = (stateData: any) => {
+		setState({
+			...state,
+			data: {
+				...stateData
+			}
+		});
+	};
+
+	// state.data and setStateData render fragment json; state and setState render component json
+	return <div className={styles}>
+		{ renderComponents(state.data || state, state.data ? setStateData : setState, setStateData) }
+	</div>;
 };

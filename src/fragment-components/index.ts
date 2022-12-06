@@ -7,6 +7,7 @@ import * as checkbox from './a-checkbox';
 import * as codeSnippet from './a-code-snippet';
 import * as column from './a-column';
 import * as combobox from './a-combobox';
+import * as contentSwitcher from './a-content-switcher';
 import * as dropdown from './a-dropdown';
 import * as fragment from './a-fragment';
 import * as grid from './a-grid';
@@ -18,8 +19,8 @@ import * as row from './a-row';
 import * as tag from './a-tag';
 import * as searchinput from './a-searchinput';
 import * as text from './a-text';
-import * as textarea from './a-textarea';
-import * as textinput from './a-textinput';
+import * as textarea from './a-text-area';
+import * as textinput from './a-text-input';
 import * as link from './a-link';
 import * as listItem from './a-list-item';
 import * as list from './a-list';
@@ -44,6 +45,7 @@ export { ACodeSnippet, ACodeSnippetSettingsUI, ACodeSnippetCodeUI } from './a-co
 export { ACheckbox, ACheckboxSettingsUI, ACheckboxCodeUI } from './a-checkbox';
 export { AColumn, AColumnSettingsUI } from './a-column';
 export { AComboBox, AComboBoxSettingsUI, AComboBoxCodeUI } from './a-combobox';
+export { AContentSwitcher, AContentSwitcherSettingsUI, AContentSwitcherCodeUI } from './a-content-switcher';
 export { ADropdown, ADropdownSettingsUI, ADropdownCodeUI } from './a-dropdown';
 export * from './a-component';
 export { AFragment, AFragmentSettingsUI, AFragmentCodeUI } from './a-fragment';
@@ -58,8 +60,8 @@ export { ARow, ARowSettingsUI } from './a-row';
 export { ASearchInput, ASearchInputSettingsUI, ASearchInputCodeUI } from './a-searchinput';
 export { ATag, ATagSettingsUI } from './a-tag';
 export { AText, ATextSettingsUI } from './a-text';
-export { ATextArea, ATextAreaSettingsUI, ATextAreaCodeUI } from './a-textarea';
-export { ATextInput, ATextInputSettingsUI, ATextInputCodeUI } from './a-textinput';
+export { ATextArea, ATextAreaSettingsUI, ATextAreaCodeUI } from './a-text-area';
+export { ATextInput, ATextInputSettingsUI, ATextInputCodeUI } from './a-text-input';
 export { AOverflowMenu, AOverflowMenuCodeUI, AOverflowMenuSettingsUI } from './a-overflow-menu';
 export { ARadio, ARadioSettingsUI, ARadioCodeUI } from './a-radio';
 export { ARadioGroup, ARadioGroupSettingsUI, ARadioGroupCodeUI } from './a-radio-group';
@@ -83,6 +85,7 @@ export const allComponents = {
 	checkbox,
 	codeSnippet,
 	combobox,
+	contentSwitcher,
 	column,
 	dropdown,
 	fragment,
