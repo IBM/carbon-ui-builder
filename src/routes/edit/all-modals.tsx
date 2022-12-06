@@ -5,6 +5,8 @@ import { FragmentDuplicateModal } from './fragment-duplicate-modal';
 import { FragmentDeleteModal } from './fragment-delete-modal';
 import { ExportModal } from './share-options/exports/export-modal';
 import { FragmentPreviewModal } from './fragment-preview-modal';
+import { LoginGithubModal } from '../../components/login-github-modal';
+import { LogoutGithubModal } from '../../components/logout-github-modal';
 
 // eslint-disable-next-line react/prop-types
 export const AllModals = () => {
@@ -22,9 +24,9 @@ export const AllModals = () => {
 			secondaryButtonText={modal.secondaryButtonText}
 			modalHeading={modal.modalHeading || 'Message'}
 			primaryButtonText={modal.primaryButtonText || 'OK'}
-			onRequestSubmit={() => modal.submit ? modal.onRequestSubmit() : hideModal()}>
+			onRequestSubmit={() => modal.onRequestSubmit ? modal.onRequestSubmit() : hideModal()}>
 			{ modal.component }
-		</Modal>;
+		</Modal>
 
 		<FragmentDuplicateModal />
 		<FragmentDeleteModal />
@@ -33,5 +35,7 @@ export const AllModals = () => {
 			fragmentPreviewModal && fragmentPreviewModal?.fragment && // needed to properly initialize fragmentState
 			<FragmentPreviewModal />
 		}
+		<LoginGithubModal />
+		<LogoutGithubModal />
 	</>;
 };

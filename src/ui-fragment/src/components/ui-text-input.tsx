@@ -32,13 +32,13 @@ export const UITextInput = ({ state, setState, name }: {
 	return <TextInput
 		id={state.codeContext?.name}
 		name={name}
-		value={state.value}
+		value={state.value || ''}
 		placeholder={state.placeholder}
 		labelText={state.label}
 		helperText={state.helperText}
 		defaultValue={state.defaultValue}
 		disabled={state.disabled}
 		light={state.light}
-		onChange={(event: any) => setState({ ...state, value: event.imaginaryTarget.value })}
+		onChange={(event: any) => setState({ ...state, value: event.target.value })}
 		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />;
 };

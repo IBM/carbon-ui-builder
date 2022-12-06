@@ -2,8 +2,11 @@ import { format as formatPrettier, Options } from 'prettier';
 import parserBabel from 'prettier/parser-babel';
 import parserHtml from 'prettier/parser-html';
 import parserCss from 'prettier/parser-postcss';
+import { useContext } from 'react';
+import { GlobalStateContext } from '../../../../../context';
 import { allComponents } from '../../../../../fragment-components';
-import { classNameFromFragment, getAllFragmentStyleClasses, hasFragmentStyleClasses, tagNameFromFragment } from '../../../../../utils/fragment-tools';
+import { getAllFragmentStyleClasses } from '../../../../../ui-fragment/src/utils';
+import { classNameFromFragment, hasFragmentStyleClasses, tagNameFromFragment } from '../../../../../utils/fragment-tools';
 
 const format = (source: string, options?: Options | undefined) => {
 	// we're catching and ignorring errors so live editing doesn't throw errors
@@ -130,6 +133,8 @@ const getAllSubfragments = (json: any, fragments: any[]) => {
 
 const getComponentCode = (fragment: any, fragments: any[]) => {
 	const componentCode: any = {};
+	// eslint-disable-next-line react-hooks/rules-of-hooks
+	const { styleClasses: globalStyleClasses } = useContext(GlobalStateContext);
 	const subFragments = getAllSubfragments(fragment.data, fragments);
 
 	// component.ts
@@ -173,12 +178,17 @@ const getComponentCode = (fragment: any, fragments: any[]) => {
 
 	// component.scss
 	componentCode[`src/app/components/${tagNameFromFragment(fragment)}/${tagNameFromFragment(fragment)}.component.scss`] = format(
-		`${getAllFragmentStyleClasses(fragment).map((styleClass: any) => `.${styleClass.id} {
-			${styleClass.content}
-		}`).join('\n')}`,
+		`${getAllFragmentStyleClasses(fragment, [], globalStyleClasses).map((styleClass: any) => {
+			if (!styleClass.content || !styleClass.content.trim()) {
+				return null;
+			}
+
+			return `.${styleClass.id} {
+				${styleClass.content}
+			}`;
+		}).join('\n')}`,
 		formatOptionsCss
 	);
-
 	return componentCode;
 };
 
@@ -308,8 +318,8 @@ export const createAngularApp = (fragment: any, fragments: any[]) => {
 			'tslib': '2.3.0',
 			'sass': '1.45.0',
 			'zone.js': '0.11.4',
-			'carbon-components-angular': '4.56.3',
-			'carbon-components': '10.50.0'
+			'carbon-components-angular': '4.63.0',
+			'carbon-components': '10.58.0'
 		}
 	};
 

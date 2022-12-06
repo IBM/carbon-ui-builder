@@ -2,8 +2,11 @@ import { sortedUniq } from 'lodash';
 import { format as formatPrettier, Options } from 'prettier';
 import parserBabel from 'prettier/parser-babel';
 import parserCss from 'prettier/parser-postcss';
+import { useContext } from 'react';
+import { GlobalStateContext } from '../../../../../context';
 import { allComponents } from '../../../../../fragment-components';
-import { classNameFromFragment, getAllFragmentStyleClasses, hasFragmentStyleClasses, tagNameFromFragment } from '../../../../../utils/fragment-tools';
+import { getAllFragmentStyleClasses } from '../../../../../ui-fragment/src/utils';
+import { classNameFromFragment, hasFragmentStyleClasses, tagNameFromFragment } from '../../../../../utils/fragment-tools';
 
 const format = (source: string, options?: Options | undefined) => {
 	// we're catching and ignorring errors so live editing doesn't throw errors
@@ -77,8 +80,8 @@ export const getAdditionalCode = (componentObj: any, fragments: any[]) => {
 	}
 	let collectedCode = {};
 
-	for (const [key, component] of Object.entries(allComponents)) {
-		if (componentObj.type === key && !component.componentInfo.codeExport.react.isNotDirectExport) {
+	for (const component of Object.values(allComponents)) {
+		if (componentObj.type === component.componentInfo.type && !component.componentInfo.codeExport.react.isNotDirectExport) {
 			if (component.componentInfo.codeExport.react.additionalCode) {
 				collectedCode = { ...collectedCode, ...component.componentInfo.codeExport.react.additionalCode(componentObj) };
 			}
@@ -135,6 +138,8 @@ const generateTemplate = (json: any, fragments: any[]) => {
 
 const jsonToSharedComponents = (json: any, fragments: any[]) => {
 	let sharedComponents: any = {};
+	// eslint-disable-next-line react-hooks/rules-of-hooks
+	const { styleClasses: globalStyleClasses } = useContext(GlobalStateContext);
 
 	if (json.type === 'fragment') {
 		const fragment = fragments.find(f => f.id === json.fragmentId);
@@ -157,7 +162,7 @@ const jsonToSharedComponents = (json: any, fragments: any[]) => {
 		`, formatOptions);
 
 		sharedComponents[`src/shared/${tagNameFromFragment(fragment)}.scss`] = format(
-			`${getAllFragmentStyleClasses(fragment).map((styleClass: any) => `.${styleClass.id} {
+			`${getAllFragmentStyleClasses(fragment, [], globalStyleClasses).map((styleClass: any) => `.${styleClass.id} {
 				${styleClass.content}
 			}`).join('\n')}`,
 			formatOptionsCss
@@ -180,6 +185,8 @@ const jsonToSharedComponents = (json: any, fragments: any[]) => {
 };
 
 export const createReactApp = (fragment: any, fragments: any[]) => {
+	// eslint-disable-next-line react-hooks/rules-of-hooks
+	const { styleClasses: globalStyleClasses } = useContext(GlobalStateContext);
 	const fragmentTemplate = generateTemplate(fragment.data, fragments);
 
 	const sharedComponents = jsonToSharedComponents(fragment.data, fragments);
@@ -201,9 +208,15 @@ export const FragmentComponent = ({state, setState}) => {
 };
 `;
 
-	const componentScss = getAllFragmentStyleClasses(fragment).map((styleClass: any) => `.${styleClass.id} {
-	${styleClass.content}
-}`).join('\n');
+	const componentScss = getAllFragmentStyleClasses(fragment, [], globalStyleClasses).map((styleClass: any) => {
+		if (!styleClass.content || !styleClass.content.trim()) {
+			return null;
+		}
+
+		return `.${styleClass.id} {
+			${styleClass.content}
+		}`;
+	}).join('\n');
 
 	const indexJs
 		= `import React, { useState } from 'react';

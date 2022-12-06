@@ -9,6 +9,7 @@ import { UIClickableTile } from './components/ui-clickable-tile';
 import { UICodeSnippet } from './components/ui-code-snippet';
 import { UIColumn } from './components/ui-column';
 import { UIComboBox } from './components/ui-combobox';
+import { UIContentSwitcher } from './components/ui-content-switcher';
 import { UIDropdown } from './components/ui-dropdown';
 import { UIExpandableTile } from './components/ui-expandable-tile';
 import { UIGrid } from './components/ui-grid';
@@ -47,6 +48,69 @@ export const setItemInState = (item: any, state: any, setState: (state: any) => 
 	});
 };
 
+export const getAllComponentStyleClasses = (componentObj: any, fragments: any[], globalStyleClasses: any[]) => {
+	// eslint-disable-next-line react-hooks/rules-of-hooks
+	// const { styleClasses: globalStyleClasses } = useContext(GlobalStateContext) || { styleClasses: getGlobalStyleClassesFromLocalStorage() };
+	let styleClasses: any = {};
+
+	// convert into an object so all classes are unique
+	componentObj.cssClasses?.forEach((cssClass: any) => {
+		// NOTE do we need to merge them deeply?
+		// update styleClasses content from global context
+		styleClasses[cssClass.id] = globalStyleClasses?.find((gsc: any) => gsc.id === cssClass.id) || cssClass;
+	});
+
+	componentObj.items?.map((co: any) => {
+		const coClasses = getAllComponentStyleClasses(co, fragments, globalStyleClasses);
+		styleClasses = {
+			...styleClasses,
+			...coClasses
+		};
+
+		if (co.type === 'fragment') {
+			const fragment = fragments.find(f => f.id === co.fragmentId);
+
+			styleClasses = {
+				...styleClasses,
+				// we can't avoid this without a messy declare+reassign+export
+				// eslint-disable-next-line @typescript-eslint/no-use-before-define
+				...getAllFragmentStyleClasses(fragment || {}, fragments, globalStyleClasses)
+			};
+		}
+	});
+
+	return styleClasses;
+};
+
+/**
+ * Get all classes for the fragment
+ * @param fragment Fragment to extract classes for
+ * @param fragments All fragments available
+ * @param globalStyleClasses globally available classes
+ * @returns a list of objects containing css class ids and names
+ */
+export const getAllFragmentStyleClasses = (fragment: any, fragments: any[], globalStyleClasses: any[]) => {
+	if (!fragment || !fragment.data) {
+		return [];
+	}
+
+	const allClasses = {
+		...getAllComponentStyleClasses(fragment, fragments, globalStyleClasses),
+		...getAllComponentStyleClasses(fragment.data, fragments, globalStyleClasses)
+	};
+	return Object.values(allClasses);
+};
+
+export const isFragment = (json: any) => {
+	return json.id
+		&& json.title
+		&& json.lastModified
+		&& json.data
+		&& Array.isArray(json.data?.items)
+		|| json.id
+		&& Array.isArray(json.items);
+};
+
 export const renderComponents = (state: any, setState: (state: any) => void, setGlobalState: (state: any) => void) => {
 	switch (state.type) {
 		case 'accordion':
@@ -75,6 +139,9 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'combobox':
 			return <UIComboBox key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'content-switcher':
+			return <UIContentSwitcher key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'dropdown':
 			return <UIDropdown key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;

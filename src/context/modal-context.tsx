@@ -114,6 +114,44 @@ const ModalContextProvider = ({ children }: any) => {
 		});
 	};
 
+	// /////////////////////////////
+	//    Login github modal   //
+	// /////////////////////////////
+	const [loginGithubModalState, setLoginGithubModalState] = useState({
+		isVisible: false
+	} as any);
+
+	const showLoginGithubModal = () => {
+		setLoginGithubModalState({
+			isVisible: true
+		});
+	};
+
+	const hideLoginGithubModal = () => {
+		setLoginGithubModalState({
+			isVisible: false
+		});
+	};
+
+	// /////////////////////////////
+	//    Logout github modal   //
+	// /////////////////////////////
+	const [logoutGithubModalState, setLogoutGithubModalState] = useState({
+		isVisible: false
+	} as any);
+
+	const showLogoutGithubModal = () => {
+		setLogoutGithubModalState({
+			isVisible: true
+		});
+	};
+
+	const hideLogoutGithubModal = () => {
+		setLogoutGithubModalState({
+			isVisible: false
+		});
+	};
+
 	return (
 		<ModalContext.Provider value={{
 			modal: modalState,
@@ -134,7 +172,15 @@ const ModalContextProvider = ({ children }: any) => {
 
 			fragmentPreviewModal: fragmentPreviewModalState,
 			showFragmentPreviewModal,
-			hideFragmentPreviewModal
+			hideFragmentPreviewModal,
+
+			loginGithubModal: loginGithubModalState,
+			showLoginGithubModal,
+			hideLoginGithubModal,
+
+			logoutGithubModal: logoutGithubModalState,
+			showLogoutGithubModal,
+			hideLogoutGithubModal
 		}}>
 			{children}
 		</ModalContext.Provider>

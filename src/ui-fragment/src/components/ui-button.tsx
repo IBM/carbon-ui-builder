@@ -5,6 +5,7 @@ import { CssClasses } from '../types';
 export interface ButtonState {
 	type: string;
 	kind: string;
+	size: string;
 	text: string;
 	id: string | number;
 	cssClasses?: CssClasses[];
@@ -25,6 +26,7 @@ export const UIButton = ({ state }: {
 
 	return <Button
 	kind={state.kind}
+	size={state.size}
 	name={state.codeContext?.name}
 	className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 		{state.text}

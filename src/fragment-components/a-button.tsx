@@ -21,6 +21,14 @@ export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 		{ id: 'ghost', text: 'Ghost' }
 	];
 
+	const sizeItems = [
+		{ id: 'sm', text: 'Small' },
+		{ id: 'field', text: 'Medium' },
+		{ id: 'lg', text: 'Large' },
+		{ id: 'xl', text: 'Extra large' },
+		{ id: 'default', text: 'Default' }
+	];
+
 	return <>
 		<TextInput
 			value={selectedComponent.text}
@@ -30,6 +38,7 @@ export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 				text: event.currentTarget.value
 			})} />
 		<Dropdown
+			id='kind'
 			label='Kind'
 			titleText='Kind'
 			items={kindItems}
@@ -38,6 +47,17 @@ export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				kind: event.selectedItem.id
+			})} />
+		<Dropdown
+			id='size'
+			label='Select a size'
+			titleText='Size'
+			items={sizeItems}
+			selectedItem={sizeItems.find(item => item.id === selectedComponent.size)}
+			itemToString={(item: any) => (item ? item.text : '')}
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				size: event.selectedItem.id
 			})} />
 	</>;
 };
@@ -71,6 +91,7 @@ export const AButton = ({
 		{...rest}>
 			<Button
 			kind={componentObj.kind}
+			size={componentObj.size}
 			disabled={componentObj.disabled}
 			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 				{children}
@@ -96,7 +117,8 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'button',
 		kind: 'primary',
-		text: 'Button'
+		text: 'Button',
+		size: ''
 	},
 	image,
 	codeExport: {
@@ -107,6 +129,7 @@ export const componentInfo: ComponentInfo = {
 			code: ({ json }) => {
 				return `<button
 					${json.kind ? `ibmButton='${json.kind}'` : 'ibmButton'}
+					${json.size ? `size='${json.size === 'default' ? 'normal' : json.size}'` : ''}
 					(click)='${nameStringToVariableString(json.codeContext?.name)}Clicked.emit()'
 					${angularClassNamesFromComponentObj(json)}>
 						${json.text}
@@ -116,7 +139,10 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			imports: ['Button'],
 			code: ({ json }) => {
-				return `<Button${json.kind && ` kind="${json.kind}"`} ${reactClassNamesFromComponentObj(json)}>${json.text}</Button>`;
+				return `<Button
+					${json.kind && `kind="${json.kind}"`}
+					${json.size && `size="${json.size}"`}
+					${reactClassNamesFromComponentObj(json)}>${json.text}</Button>`;
 			}
 		}
 	}
