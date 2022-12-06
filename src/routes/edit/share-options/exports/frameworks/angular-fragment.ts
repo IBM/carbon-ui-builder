@@ -2,6 +2,8 @@ import { format as formatPrettier, Options } from 'prettier';
 import parserBabel from 'prettier/parser-babel';
 import parserHtml from 'prettier/parser-html';
 import parserCss from 'prettier/parser-postcss';
+import { useContext } from 'react';
+import { GlobalStateContext } from '../../../../../context';
 import { allComponents } from '../../../../../fragment-components';
 import { getAllFragmentStyleClasses } from '../../../../../ui-fragment/src/utils';
 import { classNameFromFragment, hasFragmentStyleClasses, tagNameFromFragment } from '../../../../../utils/fragment-tools';
@@ -131,6 +133,8 @@ const getAllSubfragments = (json: any, fragments: any[]) => {
 
 const getComponentCode = (fragment: any, fragments: any[]) => {
 	const componentCode: any = {};
+	// eslint-disable-next-line react-hooks/rules-of-hooks
+	const { styleClasses: globalStyleClasses } = useContext(GlobalStateContext);
 	const subFragments = getAllSubfragments(fragment.data, fragments);
 
 	// component.ts
@@ -174,7 +178,7 @@ const getComponentCode = (fragment: any, fragments: any[]) => {
 
 	// component.scss
 	componentCode[`src/app/components/${tagNameFromFragment(fragment)}/${tagNameFromFragment(fragment)}.component.scss`] = format(
-		`${getAllFragmentStyleClasses(fragment).map((styleClass: any) => {
+		`${getAllFragmentStyleClasses(fragment, [], globalStyleClasses).map((styleClass: any) => {
 			if (!styleClass.content || !styleClass.content.trim()) {
 				return null;
 			}
