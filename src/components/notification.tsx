@@ -13,7 +13,7 @@ const notificationAreaStyle = css`
 	left: 50%;
 	transform: translateX(-50%);
 	position: absolute;
-	z-index: 2;
+	z-index: 4;
 	min-width: 30rem;
 	top: 2rem;
 `;

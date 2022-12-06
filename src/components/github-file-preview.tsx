@@ -41,7 +41,7 @@ export const GithubFilePreview = ({
 			suffix === 'svg' ||
 			suffix === 'ico'
 		) {
-			return <img src={`data:image/${suffix};base64,${fileContentBase64}`} />;
+			return <img className='center' src={`data:image/${suffix};base64,${fileContentBase64}`} />;
 		}
 
 		if (suffix === 'md') {
@@ -55,6 +55,7 @@ export const GithubFilePreview = ({
 			height={editorHeight || '100vh'}
 			language={filenameToLanguage(path || '')}
 			value={fileContent}
+			options={{ readOnly: true }}
 		/>;
 	}
 
