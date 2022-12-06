@@ -206,7 +206,7 @@ export const GithubNavigator = ({ basePath, path, repoName, repoOrg, showToolbar
 						iconDescription='Copy sharable link'
 						renderIcon={CopyLink16}
 						tooltipPosition='bottom'
-						tooltipAlignment='start'
+						tooltipAlignment='end'
 						onClick={() => {
 							navigator.clipboard.writeText(`${window.location.origin}/launch/${githubLogin}/${repoName}/${path}`);
 						}} />

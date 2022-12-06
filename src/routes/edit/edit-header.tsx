@@ -214,7 +214,8 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 								size='sm'
 								hasIconOnly
 								renderIcon={isEditingTitle ? Checkmark16 : Edit16}
-								iconDescription='toggle editing title'
+								iconDescription={isEditingTitle ? 'Mark done' : 'Edit title'}
+								tooltipPosition='bottom'
 								onClick={() => {
 									setIsEditingTitle(!isEditingTitle);
 									// isEditingTitle won't be changed until next render so checking for opposite

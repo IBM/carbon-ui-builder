@@ -14,6 +14,7 @@ import { UIFragment } from '../../ui-fragment/src/ui-fragment';
 import { useNavigate } from 'react-router-dom';
 import { GlobalStateContext } from '../../context';
 import { getFragmentDuplicate } from '../../utils/fragment-tools';
+import { getAllFragmentStyleClasses } from '../../ui-fragment/src/utils';
 
 const exportCodeModalStyle = css`
 	.bx--tab-content {
@@ -41,12 +42,12 @@ const controlsContainerStyle = css`
 export const FragmentPreviewModal = () => {
 	const navigate = useNavigate();
 	const { fragmentPreviewModal, hideFragmentPreviewModal } = useContext(ModalContext);
-	const { addFragment } = useContext(GlobalStateContext);
-	const [fragmentState, setFragmentState] = useState(JSON.parse(JSON.stringify(fragmentPreviewModal?.fragment?.data || {})));
+	const { addFragment, styleClasses } = useContext(GlobalStateContext);
+	const [fragmentState, setFragmentState] = useState(JSON.parse(JSON.stringify(fragmentPreviewModal?.fragment || {})));
 	const [currentFragmentIndex, setCurrentFragmentIndex] = useState(fragmentPreviewModal?.fragments?.indexOf(fragmentPreviewModal?.fragment));
 
 	useEffect(() => {
-		setFragmentState(JSON.parse(JSON.stringify(fragmentPreviewModal?.fragment?.data || {})));
+		setFragmentState(JSON.parse(JSON.stringify(fragmentPreviewModal?.fragment || {})));
 		setCurrentFragmentIndex(fragmentPreviewModal?.fragments?.indexOf(fragmentPreviewModal?.fragment));
 	}, [fragmentPreviewModal, fragmentPreviewModal?.fragment]);
 
@@ -56,7 +57,7 @@ export const FragmentPreviewModal = () => {
 
 	const selectFragmentByIndex = (index: number) => {
 		setCurrentFragmentIndex(index);
-		setFragmentState(JSON.parse(JSON.stringify(fragmentPreviewModal?.fragments[index]?.data)));
+		setFragmentState(JSON.parse(JSON.stringify(fragmentPreviewModal?.fragments[index])));
 	};
 
 	const editOrCloneFragment = () => {
@@ -112,7 +113,12 @@ export const FragmentPreviewModal = () => {
 				</div>
 			}
 			<div className={fragmentContainerStyle}>
-				<UIFragment state={fragmentState} setState={setFragmentState} />
+				<UIFragment
+					state={{
+						...fragmentState,
+						allCssClasses: getAllFragmentStyleClasses(fragmentState, [], styleClasses)
+					}}
+					setState={setFragmentState} />
 			</div>
 		</Modal>
 	);

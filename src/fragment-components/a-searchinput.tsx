@@ -1,11 +1,21 @@
 import React from 'react';
-import { TextInput, Dropdown, Search } from 'carbon-components-react';
+import {
+	TextInput,
+	Dropdown,
+	Checkbox,
+	Search,
+	ExpandableSearch
+} from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/search.svg';
-import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
+import {
+	angularClassNamesFromComponentObj,
+	nameStringToVariableString,
+	reactClassNamesFromComponentObj
+} from '../utils/fragment-tools';
 
 export const ASearchInputSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
@@ -15,6 +25,38 @@ export const ASearchInputSettingsUI = ({ selectedComponent, setComponent }: any)
 	];
 
 	return <>
+		<Checkbox
+			labelText='Expandable'
+			id='expandable'
+			checked={selectedComponent.expandable}
+			onChange={(checked: any) => setComponent({
+				...selectedComponent,
+				expandable: checked
+			})} />
+		<Checkbox
+			labelText='Disabled'
+			id='disabled'
+			checked={selectedComponent.disabled}
+			onChange={(checked: any) => setComponent({
+				...selectedComponent,
+				disabled: checked
+			})} />
+		<Checkbox
+			labelText='Light'
+			id='light'
+			checked={selectedComponent.light}
+			onChange={(checked: any) => setComponent({
+				...selectedComponent,
+				light: checked
+			})} />
+		<Checkbox
+			labelText='Auto complete'
+			id='autocomplete'
+			checked={selectedComponent.autocomplete === 'on'}
+			onChange={(checked: any) => setComponent({
+				...selectedComponent,
+				autocomplete: checked ? 'on' : 'off'
+			})} />
 		<Dropdown
 			label='Size'
 			titleText='Size'
@@ -33,8 +75,7 @@ export const ASearchInputSettingsUI = ({ selectedComponent, setComponent }: any)
 					...selectedComponent,
 					label: event.currentTarget.value
 				});
-			}}
-		/>
+			}} />
 		<TextInput
 			value={selectedComponent.placeholder}
 			labelText='Placeholder'
@@ -43,8 +84,7 @@ export const ASearchInputSettingsUI = ({ selectedComponent, setComponent }: any)
 					...selectedComponent,
 					placeholder: event.currentTarget.value
 				});
-			}}
-		/>
+			}} />
 		<TextInput
 			value={selectedComponent.defaultValue}
 			labelText='Default value'
@@ -53,8 +93,34 @@ export const ASearchInputSettingsUI = ({ selectedComponent, setComponent }: any)
 					...selectedComponent,
 					defaultValue: event.currentTarget.value
 				});
-			}}
-		/>
+			}} />
+		<TextInput
+			value={selectedComponent.closeButtonLabelText}
+			labelText='Close button label text'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					closeButtonLabelText: event.currentTarget.value
+				});
+			}} />
+		<TextInput
+			value={selectedComponent.searchType}
+			labelText='Type'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					searchType: event.currentTarget.value
+				});
+			}} />
+		<TextInput
+			value={selectedComponent.role}
+			labelText='Role'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					role: event.currentTarget.value
+				});
+			}} />
 	</>;
 };
 
@@ -87,19 +153,34 @@ export const ASearchInput = ({
 		className={css`position: relative; display: flex`}
 		rejectDrop={true}
 		{...rest}>
-			<Search
-				size={componentObj.inputSize}
-				labelText={componentObj.label}
-				placeholder={componentObj.placeholder}
-				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
-				id={componentObj.id}
-				autoComplete={componentObj.autoComplete || 'off'}
-				closeButtonLabelText={componentObj.closeButtonLabelText || 'Clear search input'}
-				defaultValue={componentObj.defaultValue}
-				disabled={componentObj.disabled}
-				light={componentObj.light}
-				role={componentObj.role || 'searchbox'}
-				type={componentObj.type || 'text'} />
+			{
+				componentObj.expandable
+				? <ExpandableSearch
+					size={componentObj.inputSize}
+					disabled={componentObj.disabled}
+					autoComplete={componentObj.autocomplete}
+					placeholder={componentObj.placeholder}
+					light={componentObj.light}
+					labelText={componentObj.label}
+					defaultValue={componentObj.defaultValue}
+					closeButtonLabelText={componentObj.closeButtonLabelText}
+					id={componentObj.id}
+					role={componentObj.role}
+					type={componentObj.searchType} />
+				: <Search
+					size={componentObj.inputSize}
+					labelText={componentObj.label}
+					placeholder={componentObj.placeholder}
+					className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
+					id={componentObj.id}
+					autoComplete={componentObj.autocomplete}
+					closeButtonLabelText={componentObj.closeButtonLabelText}
+					defaultValue={componentObj.defaultValue}
+					disabled={componentObj.disabled}
+					light={componentObj.light}
+					role={componentObj.role}
+					type={componentObj.searchType} />
+			}
 		</AComponent>
 	);
 };
@@ -115,32 +196,76 @@ export const componentInfo: ComponentInfo = {
 		type: 'search',
 		label: 'Search',
 		placeholder: 'Search',
-		inputSize: 'lg'
+		autocomplete: 'off',
+		inputSize: 'lg',
+		defaultValue: '',
+		expandable: false,
+		closeButtonLabelText: 'Clear search input',
+		disabled: false,
+		light: false,
+		searchType: 'text',
+		role: 'searchbox'
 	},
 	image,
 	codeExport: {
 		angular: {
-			inputs: (_) => '',
-			outputs: (_) => '',
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Expandable = ${json.expandable};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Autocomplete = "${json.autocomplete}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.inputSize}";`,
+			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter<any>();
+				@Output() ${nameStringToVariableString(json.codeContext?.name)}Clear = new EventEmitter<any>();`,
 			imports: ['SearchModule'],
 			code: ({ json }) => {
 				return `<ibm-search
-					${angularClassNamesFromComponentObj(json)}
 					name="${json.codeContext?.name}"
-					placeholder="${json.placeholder}">
+					[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
+					[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
+					[placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
+					[autocomplete]="${nameStringToVariableString(json.codeContext?.name)}Autocomplete"
+					[expandable]="${nameStringToVariableString(json.codeContext?.name)}Expandable"
+					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+					(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event)"
+					(clear)="${nameStringToVariableString(json.codeContext?.name)}Clear.emit()"
+					${angularClassNamesFromComponentObj(json)}>
 				</ibm-search>`;
 			}
 		},
 		react: {
-			imports: ['Search'],
+			imports: ({ json }) => [json.expandable ? 'ExpandableSearch' : 'Search'],
 			code: ({ json }) => {
+				if (json.expandable) {
+					return `<ExpandableSearch
+						value={state["${json.codeContext?.name}"]}
+						size="${json.inputSize}"
+						disabled={${json.disabled}}
+						autoComplete="${json.autocomplete}"
+						placeholder="${json.placeholder}"
+						light={${json.light}}
+						labelText="${json.label}"
+						defaultValue="${json.defaultValue}"
+						closeButtonLabelText="${json.closeButtonLabelText}"
+						id="${json.id}"
+						role="${json.role}"
+						type="${json.searchType}" />`;
+				}
 				return `<Search
-					labelText="${json.label}"
-					name="${json.codeContext?.name}"
-					placeholder="${json.placeholder}"
-					value={state["${json.codeContext?.name}"]}
 					${reactClassNamesFromComponentObj(json)}
-					onChange={handleInputChange} />`;
+					value={state["${json.codeContext?.name}"]}
+					onChange={handleInputChange}
+					size="${json.inputSize}"
+					labelText="${json.label}"
+					placeholder="${json.placeholder}"
+					id="${json.id}"
+					autoComplete="${json.autocomplete}"
+					closeButtonLabelText="${json.closeButtonLabelText}"
+					defaultValue="${json.defaultValue}"
+					disabled={${json.disabled}}
+					light={${json.light}}
+					role="${json.role}"
+					type="${json.searchType}" />`;
 			}
 		}
 	}

@@ -221,8 +221,8 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 				Layout
 			</Button>
 			{
-				settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen &&
-					<FragmentLayoutWidget fragment={fragment} setFragment={setFragment} />
+				settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen
+				&& <FragmentLayoutWidget fragment={fragment} setFragment={setFragment} />
 			}
 			<Button
 			kind='ghost'
