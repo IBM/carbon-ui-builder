@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import {
 	Button,
 	Checkbox,
@@ -77,8 +77,6 @@ const throttledSetFragment = throttle((component: any) => proxySetFragment(compo
 export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 	const selectedComponent = getSelectedComponent(fragment);
 	const { settings, setSettings } = useContext(GlobalStateContext);
-
-	const [fragmentLayoutWidgetAccordionOpen, setFragmentLayoutWidgetAccordionOpen] = useState(false);
 
 	const updateContextPaneSettings = (s: any) => {
 		setSettings({
@@ -216,20 +214,15 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 			<Button
 			kind='ghost'
 			className={accordionButtonStyle}
-			renderIcon={fragmentLayoutWidgetAccordionOpen ? ChevronUp16 : ChevronDown16}
-			onClick={() => setFragmentLayoutWidgetAccordionOpen(!fragmentLayoutWidgetAccordionOpen)}
-			// FragmentLayoutWidget is unstable so for now we use closed-by-default state to prevent crashes - clean starts seem to work fine
-			// renderIcon={settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen ? ChevronUp16 : ChevronDown16}
-			// onClick={() => updateContextPaneSettings({
-			// 	fragmentLayoutWidgetAccordionOpen: !settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen
-			// })}
-			>
+			renderIcon={settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen ? ChevronUp16 : ChevronDown16}
+			onClick={() => updateContextPaneSettings({
+				fragmentLayoutWidgetAccordionOpen: !settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen
+			})}>
 				Layout
 			</Button>
 			{
-				// settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen &&
-				fragmentLayoutWidgetAccordionOpen &&
-					<FragmentLayoutWidget fragment={fragment} setFragment={setFragment} />
+				settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen
+				&& <FragmentLayoutWidget fragment={fragment} setFragment={setFragment} />
 			}
 			<Button
 			kind='ghost'

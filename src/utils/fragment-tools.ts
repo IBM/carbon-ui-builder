@@ -31,6 +31,8 @@ export const validInitialFragments = (localFragments: any[] | undefined) => {
 export const getFragmentsFromLocalStorage = () =>
 	validInitialFragments(JSON.parse(localStorage.getItem('localFragments') as string)) || [];
 
+export const getGlobalStyleClassesFromLocalStorage = () => JSON.parse(localStorage.getItem('globalStyleClasses') as string || '[]');
+
 export const getFragmentPreview = async (fragment: any, props: RenderProps, outline = false) => {
 	const element = document.createElement('div');
 	element.className = 'render-preview';
