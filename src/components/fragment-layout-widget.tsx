@@ -3,7 +3,8 @@ import { Button } from 'carbon-components-react';
 import { HierarchyList } from 'carbon-addons-iot-react';
 import {
 	Edit16,
-	TrashCan16
+	TrashCan16,
+	Book32
 } from '@carbon/icons-react';
 import { css } from 'emotion';
 import { actionIconStyle } from '../routes';
@@ -14,6 +15,10 @@ const fragmentLayoutStyle = css`
 
 	.iot--list--page {
 		display: none;
+	}
+
+	.iot--list-item-editable--drag-preview {
+		right: 99999999px;
 	}
 `;
 
@@ -91,16 +96,21 @@ export const FragmentLayoutWidget = ({ fragment, setFragment, title }: any) => {
 		};
 	};
 
-	return <HierarchyList
-		title={title}
-		className={fragmentLayoutStyle}
-		items={getHierarchyListItemsFromComponentObj(fragment.data)?.children || []}
-		onListUpdated={(updatedItems: any[]) => {
-			setFragment({
-				...fragment,
-				data: getReorderedComponentObjFromHierarchyListItem({ id: 1, children: updatedItems }, fragment.data)
-			});
-		}}
-		editingStyle='single'
-	/>;
+	// HierarchyList (from PAL library) crashes in unpredictable ways and takes the app with it
+	try {
+		return <HierarchyList
+			title={title}
+			className={fragmentLayoutStyle}
+			items={getHierarchyListItemsFromComponentObj(fragment.data)?.children || []}
+			onListUpdated={(updatedItems: any[]) => {
+				setFragment({
+					...fragment,
+					data: getReorderedComponentObjFromHierarchyListItem({ id: 1, children: updatedItems }, fragment.data)
+				});
+			}}
+			editingStyle='single'
+		/>;
+	} catch (_) {
+		return <div className={css`text-align: center; padding-bottom: 1rem;`}><Book32 /></div>;
+	}
 };

@@ -8,7 +8,7 @@ import {
 } from 'carbon-components-react';
 import { Copy16, Document16 } from '@carbon/icons-react';
 import { css } from 'emotion';
-import Editor from '@monaco-editor/react';
+import Editor, { monaco } from '@monaco-editor/react';
 
 import { createFragmentSandbox } from './create-fragment-sandbox';
 import { createReactApp } from './frameworks/react-fragment';
@@ -19,6 +19,14 @@ import { saveBlob } from '../../../../utils/file-tools';
 import { GlobalStateContext } from '../../../../context';
 import { ExportImageComponent } from './export-image-component';
 import { filenameToLanguage } from '../../tools';
+import { getAllFragmentStyleClasses } from '../../../../ui-fragment/src/utils';
+
+monaco.init().then(monaco => {
+	monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+		noSemanticValidation: true,
+		noSyntaxValidation: true
+	});
+});
 
 const exportCodeModalStyle = css`
 	.bx--tab-content {
@@ -76,12 +84,12 @@ const FileNames = ({ code, setSelectedFilename }: any) => <div className={fileNa
 	{
 		Object.keys(code).map((fileName: string) => (
 			<Button
-			key={fileName}
-			className={fileNameStyle}
-			kind='ghost'
-			renderIcon={Document16}
-			size='sm'
-			onClick={() => setSelectedFilename(fileName)}>
+				key={fileName}
+				className={fileNameStyle}
+				kind='ghost'
+				renderIcon={Document16}
+				size='sm'
+				onClick={() => setSelectedFilename(fileName)}>
 				{fileName}
 			</Button>
 		))
@@ -106,12 +114,13 @@ const CodeView = ({ code, selectedFilename }: any) => {
 				hasIconOnly
 				iconDescription='Copy to clipboard'
 				onClick={() => copyToClipboard(codeString)}
-				renderIcon={Copy16}/>
+				renderIcon={Copy16} />
 		</p>
 		<Editor
 			height='calc(100% - 32px)'
 			language={filenameToLanguage(selectedFilename)}
 			value={codeString}
+			options={{ readOnly: true }}
 		/>
 	</div>;
 };
@@ -119,7 +128,7 @@ const CodeView = ({ code, selectedFilename }: any) => {
 const generateSandboxUrl = (parameters: any) => (`https://codesandbox.io/api/v1/sandboxes/define?parameters=${parameters}`);
 
 export const ExportModal = () => {
-	const { fragments, settings, setSettings } = useContext(GlobalStateContext);
+	const { fragments, settings, setSettings, styleClasses } = useContext(GlobalStateContext);
 	const { fragmentExportModal, hideFragmentExportModal } = useContext(ModalContext);
 	const [selectedAngularFilename, setSelectedAngularFilename] = useState('src/app/app.component.ts' as string);
 	const [selectedReactFilename, setSelectedReactFilename] = useState('src/component.js' as string);
@@ -128,35 +137,43 @@ export const ExportModal = () => {
 		return null;
 	}
 
-	const jsonCode: any = JSON.stringify(fragmentExportModal.fragment.data, null, 2);
+	const jsonCode: any = JSON.stringify({
+		id: fragmentExportModal.fragment.id,
+		lastModified: fragmentExportModal.fragment.lastModified,
+		title: fragmentExportModal.fragment.title,
+		data: fragmentExportModal.fragment.data,
+		cssClasses: fragmentExportModal.fragment.cssClasses,
+		allCssClasses: getAllFragmentStyleClasses(fragmentExportModal.fragment, [], styleClasses),
+		labels: fragmentExportModal.fragment.labels
+	}, null, 2);
 	const reactCode: any = createReactApp(fragmentExportModal.fragment, fragments);
 	const angularCode: any = createAngularApp(fragmentExportModal.fragment, fragments);
 
 	return (
 		<Modal
-		passiveModal
-		open={fragmentExportModal.isVisible}
-		onRequestClose={hideFragmentExportModal}
-		size='lg'
-		modalHeading={`Export "${fragmentExportModal.fragment.title}" code`}
-		className={exportCodeModalStyle}>
+			passiveModal
+			open={fragmentExportModal.isVisible}
+			onRequestClose={hideFragmentExportModal}
+			size='lg'
+			modalHeading={`Export "${fragmentExportModal.fragment.title}" code`}
+			className={exportCodeModalStyle}>
 			<Tabs
-			selected={settings.selectedExportTabIndex || 0}
-			onSelectionChange={(tabIndex: number) => {
-				setSettings({ ...settings, selectedExportTabIndex: tabIndex });
-			}}>
+				selected={settings.selectedExportTabIndex || 0}
+				onSelectionChange={(tabIndex: number) => {
+					setSettings({ ...settings, selectedExportTabIndex: tabIndex });
+				}}>
 				<Tab
-				id='Angular'
-				label='Angular'
-				role='presentation'
-				tabIndex={0}>
+					id='Angular'
+					label='Angular'
+					role='presentation'
+					tabIndex={0}>
 					<div className={titleWrapper}>
 						<h3>Angular Code</h3>
 						<a
 							href={generateSandboxUrl(createFragmentSandbox(angularCode))}
 							target='_blank'
 							rel='noopener noreferrer'>
-								Edit on CodeSandbox
+							Edit on CodeSandbox
 						</a>
 					</div>
 					<div className={tabContentStyle}>
@@ -165,17 +182,17 @@ export const ExportModal = () => {
 					</div>
 				</Tab>
 				<Tab
-				id='react'
-				label='React'
-				role='presentation'
-				tabIndex={0}>
+					id='react'
+					label='React'
+					role='presentation'
+					tabIndex={0}>
 					<div className={titleWrapper}>
 						<h3>React Code</h3>
 						<a
 							href={generateSandboxUrl(createFragmentSandbox(reactCode))}
 							target='_blank'
 							rel='noopener noreferrer'>
-								Edit on CodeSandbox
+							Edit on CodeSandbox
 						</a>
 					</div>
 					<div className={tabContentStyle}>
@@ -184,10 +201,10 @@ export const ExportModal = () => {
 					</div>
 				</Tab>
 				<Tab
-				id='json'
-				label='JSON'
-				role='presentation'
-				tabIndex={0}>
+					id='json'
+					label='JSON'
+					role='presentation'
+					tabIndex={0}>
 					<div className={titleWrapper}>
 						<h3>
 							JSON
@@ -195,13 +212,14 @@ export const ExportModal = () => {
 								kind='ghost'
 								className={css`margin-top: -6px;`}
 								hasIconOnly
+								tooltipPosition='right'
 								iconDescription='Copy to clipboard'
 								onClick={() => copyToClipboard(jsonCode)}
-								renderIcon={Copy16}/>
+								renderIcon={Copy16} />
 						</h3>
 						<Button
-						kind='ghost'
-						onClick={() => saveBlob(new Blob([jsonCode]), `${fragmentExportModal.fragment.title}.json`)}>
+							kind='ghost'
+							onClick={() => saveBlob(new Blob([jsonCode]), `${fragmentExportModal.fragment.title}.json`)}>
 							Download JSON
 						</Button>
 					</div>
@@ -209,13 +227,13 @@ export const ExportModal = () => {
 						height={contentHeight}
 						language='json'
 						value={jsonCode}
-					/>
+						options={{ readOnly: true }} />
 				</Tab>
 				<Tab
-				id='image'
-				label='Image'
-				role='presentation'
-				tabIndex={0}>
+					id='image'
+					label='Image'
+					role='presentation'
+					tabIndex={0}>
 					<div className={titleWrapper}>
 						<h3>Image</h3>
 					</div>

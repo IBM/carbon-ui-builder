@@ -70,7 +70,8 @@ export const App = () => {
 							<Route path='/' element={
 								<Dashboard
 									displayWizard={displayWizard}
-									setDisplayWizard={setDisplayWizard} />
+									setDisplayWizard={setDisplayWizard}
+									setDisplayedModal={setDisplayedModal} />
 							} />
 							<Route path='/edit/:id' element={<Edit />} />
 							<Route path='/help/:id' element={<Help />} />
