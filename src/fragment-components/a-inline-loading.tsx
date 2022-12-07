@@ -216,7 +216,7 @@ export const componentInfo: ComponentInfo = {
 							return state.${nameStringToVariableString(json.codeContext?.name)}OnSuccess;
 						}
 						return undefined;
-					})}
+					}}
 					successDelay={${json.successDelay}}
 					description={${nameStringToVariableString(json.codeContext?.name)}StatusDescription}
 					iconDescription={${nameStringToVariableString(json.codeContext?.name)}StatusIconDescription}
