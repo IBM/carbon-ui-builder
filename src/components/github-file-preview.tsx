@@ -10,16 +10,6 @@ const markdownContainerStyle = css`
 	margin: 1rem 3rem;
 `;
 
-<<<<<<< HEAD
-const centerStyle = css`
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-`;
-
-=======
->>>>>>> ae485acc11cd7df30f018282725bc2ada4dd5d90
 export const GithubFilePreview = ({
 	path,
 	editorHeight,
