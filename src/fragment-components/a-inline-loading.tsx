@@ -211,10 +211,11 @@ export const componentInfo: ComponentInfo = {
 			code: ({ json }) => {
 				const status = `state["${nameStringToVariableString(json.codeContext?.name)}"] || "${json.status}"`;
 				return `<InlineLoading
-					onSuccess={(success) => handleInputChange({
-						target: {
-							name: "${json.codeContext?.name}",
+					onSuccess={() => {
+						if(typeof state.${nameStringToVariableString(json.codeContext?.name)}OnSuccess === "function") {
+							return state.${nameStringToVariableString(json.codeContext?.name)}OnSuccess;
 						}
+						return undefined;
 					})}
 					successDelay={${json.successDelay}}
 					description={${nameStringToVariableString(json.codeContext?.name)}StatusDescription}
