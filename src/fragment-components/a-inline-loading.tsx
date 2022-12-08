@@ -155,11 +155,11 @@ export const AInlineLoading = ({
 		rejectDrop={true}
 		{...rest}>
 			<InlineLoading
-			successDelay={componentObj.successDelay}
-			description={status[componentObj.status].description}
-			iconDescription={status[componentObj.status].iconDescription}
-			status={componentObj.status}
-			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
+				successDelay={componentObj.successDelay}
+				description={status[componentObj.status].description}
+				iconDescription={status[componentObj.status].iconDescription}
+				status={componentObj.status}
+				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
 		</AComponent>
 	);
 };
