@@ -83,8 +83,8 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 		navigate(`/edit/${generatedFragment.id}`);
 	};
 
-	const handleChange = (x: CreateOptions, radix: any) => {
-		setSelectedCreateOption(parseInt(CreateOptions[x], radix));
+	const handleChange = (x: CreateOptions) => {
+		setSelectedCreateOption(parseInt(CreateOptions[x]));
 	};
 
 	return (
