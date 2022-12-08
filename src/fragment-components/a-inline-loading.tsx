@@ -103,7 +103,7 @@ export const AInlineLoadingSettingsUI = ({ selectedComponent, setComponent }: an
 		<NumberInput
 			id='successDelay'
 			min={0}
-			label='Success delay'
+			label='Success delay (ms)'
 			name='successDelay'
 			value={selectedComponent.successDelay}
 			onChange={(event: any) => setComponent({
