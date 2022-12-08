@@ -204,9 +204,8 @@ export const componentInfo: ComponentInfo = {
 				return `<InlineLoading
 					onSuccess={() => {
 						if(typeof state.${nameStringToVariableString(json.codeContext?.name)}OnSuccess === "function") {
-							return state.${nameStringToVariableString(json.codeContext?.name)}OnSuccess;
+							state.${nameStringToVariableString(json.codeContext?.name)}OnSuccess();
 						}
-						return undefined;
 					}}
 					successDelay={${json.successDelay}}
 					description={${nameStringToVariableString(json.codeContext?.name)}StatusDescription}
