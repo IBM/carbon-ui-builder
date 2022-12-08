@@ -160,7 +160,7 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 				</RadioTile>
 				<RadioTile
 					light={true}
-					value="EMPTY_PAGE"
+					value={CreateOptions.EMPTY_PAGE}
 					id="empty-page"
 					className={createFragmentTileStyle}>
 					<div className={tileFooter}>
