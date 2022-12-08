@@ -223,7 +223,7 @@ export const componentInfo: ComponentInfo = {
 					[status]: `const ${status} = {
 						active: {
 							iconDescription: "${json.activeIconDescription || 'Loading...'}",
-							description: "${json.activeText  || 'Loading...'}"
+							description: "${json.activeText || 'Loading...'}"
 						},
 						error: {
 							iconDescription: "${json.errorIconDescription || 'Error!'}",
