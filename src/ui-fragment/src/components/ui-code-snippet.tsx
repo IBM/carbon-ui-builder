@@ -8,6 +8,7 @@ export interface CodeSnippetState {
 	code: string;
 	id: string | number;
 	cssClasses?: CssClasses[];
+	light: boolean;
 	codeContext?: {
 		name: string;
 	};
@@ -24,6 +25,7 @@ export const UICodeSnippet = ({ state }: {
 	}
 
 	return <CodeSnippet
+	light={state.light}
 	type={state.variant}
 	className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 		{state.code}
