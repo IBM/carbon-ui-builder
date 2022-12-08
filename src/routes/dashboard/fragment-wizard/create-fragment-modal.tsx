@@ -134,7 +134,7 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 				<RadioTile
 					light={true}
 					value="IMPORT_JSON"
-					id="tile-1"
+					id="import-json"
 					className={createFragmentTileStyle}>
 					<div className={tileFooter}>
 						<p>Import JSON</p>
