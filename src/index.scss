@@ -1,2 +1,70 @@
 @import '~carbon-components/scss/globals/scss/styles';
 @import '~carbon-addons-iot-react/scss/styles';
+
+// chrome bug
+// https://bugs.chromium.org/p/chromium/issues/detail?id=1370030&sort=-modified%20-opened%20target&q=drag&can=1
+// https://stackoverflow.com/questions/73972272/google-chrome-106-draggable-causing-elements-to-disappear
+[draggable="true"] {
+    transform: translate(0, 0);
+    z-index: 0;
+}
+// /chrome
+
+.markdown {
+	h1 {
+		margin-bottom: 2rem;
+	}
+
+	h2, h3 {
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	ul, ol {
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+		margin-left: 2rem;
+		line-height: 1.5rem;
+	}
+
+	ul li {
+		list-style: initial;
+	}
+
+	ol li {
+		list-style: auto;
+	}
+
+	p {
+		line-height: 2rem;
+		margin-bottom: 1rem;
+	}
+
+	table {
+		thead {
+			font-weight: bold;
+			font-size: 150%;
+			text-align: left;
+		}
+		tr, th, td {
+			padding: 1rem;
+		}
+		tr {
+			border-bottom: 1px solid #888;
+		}
+	}
+
+	code {
+		background-color: rgba(175, 184, 193, 0.2);
+		border-radius: 6px;
+		padding: .2em .4em;
+		font-size: 85%;
+	}
+}
+
+.center {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}

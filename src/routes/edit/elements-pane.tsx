@@ -43,7 +43,7 @@ export const ElementsPane = ({ isActive }: any) => {
 	 * @param matches a list of strings that represent the component user might search for
 	 */
 	const shouldShow = (matches: string[]) => {
-		return !filterString || matches.some((match) => match.includes(filterString));
+		return !filterString || matches.some((match) => match.includes(filterString.toLowerCase()));
 	};
 
 	const editScreenParams = getEditScreenParams();

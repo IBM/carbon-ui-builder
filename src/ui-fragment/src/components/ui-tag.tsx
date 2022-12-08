@@ -8,6 +8,7 @@ export interface TagState {
 	title: string;
 	id: string | number;
 	size?: string;
+	closeLabel?: string;
 	filter?: boolean;
 	disabled?: boolean;
 	cssClasses?: CssClasses[];
@@ -31,6 +32,7 @@ export const UITag = ({ state }: {
 	size={state.size}
 	disabled={state.disabled}
 	filter={state.filter}
+	title={state.closeLabel}
 	className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 		{state.title}
 	</Tag>;

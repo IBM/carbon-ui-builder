@@ -1,0 +1,35 @@
+name: Check build
+
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout to branch
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # Set up node to use v16 & cache node modules
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "npm"
+          cache-dependency-path: "package-lock.json"
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Build the react app, linting errors will be included in build
+      - name: Build site
+        run: npm run build

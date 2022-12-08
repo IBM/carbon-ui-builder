@@ -3,7 +3,8 @@ import React, {
 	useContext,
 	useEffect
 } from 'react';
-import { css } from 'emotion';
+import { Loading } from 'carbon-components-react';
+import { css, cx } from 'emotion';
 import { DashboardSearch, SortDirection } from './dashboard-search';
 import { FragmentGroupDisplayed, DashboardHeader } from './dashboard-header';
 
@@ -59,6 +60,7 @@ export const Dashboard = ({
 	const [fragmentTitleFilter, setFragmentTitleFilter] = useState('');
 	const [displayedFragments, setDisplayedFragments] = useState([]);
 	const [sortDirection, setSortDirection] = useState(SortDirection.Ascending);
+	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
 		updateFragments(fragments);
@@ -81,8 +83,10 @@ export const Dashboard = ({
 				break;
 			}
 			case FragmentGroupDisplayed.FeaturedFragments: {
+				setIsLoading(true);
 				getFeaturedFragments().then((value: any) => {
 					setDisplayedFragments(value);
+					setIsLoading(false);
 				});
 				break;
 			}
@@ -128,7 +132,11 @@ export const Dashboard = ({
 					lg: 12
 				}}>
 					{
-						<FragmentTileList
+						isLoading
+						? <div className={css`height: 100%;`}>
+							<Loading className={cx('center', css`left: calc(50% - 44px)`)} withOverlay={false} />
+						</div>
+						: <FragmentTileList
 							fragments={displayedFragments}
 							isFeaturedFragment={fragmentGroupDisplayed === FragmentGroupDisplayed.FeaturedFragments}
 							setModalFragment={setModalFragment}

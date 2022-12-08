@@ -7,6 +7,7 @@ import * as checkbox from './a-checkbox';
 import * as codeSnippet from './a-code-snippet';
 import * as column from './a-column';
 import * as combobox from './a-combobox';
+import * as contentSwitcher from './a-content-switcher';
 import * as datepicker from './a-date-picker';
 import * as dropdown from './a-dropdown';
 import * as fragment from './a-fragment';
@@ -43,6 +44,7 @@ export { ACodeSnippet, ACodeSnippetSettingsUI, ACodeSnippetCodeUI } from './a-co
 export { ACheckbox, ACheckboxSettingsUI, ACheckboxCodeUI } from './a-checkbox';
 export { AColumn, AColumnSettingsUI } from './a-column';
 export { AComboBox, AComboBoxSettingsUI, AComboBoxCodeUI } from './a-combobox';
+export { AContentSwitcher, AContentSwitcherSettingsUI, AContentSwitcherCodeUI } from './a-content-switcher';
 export { ADropdown, ADropdownSettingsUI, ADropdownCodeUI } from './a-dropdown';
 export { ADatePicker, ADatePickerSettingsUI, ADatePickerCodeUI } from './a-date-picker';
 export * from './a-component';
@@ -81,6 +83,7 @@ export const allComponents = {
 	checkbox,
 	codeSnippet,
 	combobox,
+	contentSwitcher,
 	column,
 	datepicker,
 	dropdown,

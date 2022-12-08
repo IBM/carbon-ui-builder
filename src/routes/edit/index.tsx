@@ -113,6 +113,7 @@ export const leftPaneHeader = css`
 	position: fixed;
 	width: 300px;
 	background: white;
+	z-index: 1;
 `;
 
 export const leftPaneContent = css`
@@ -158,10 +159,6 @@ const rightPanel = css`
 			padding-left: 1rem;
 			padding-right: 1rem;
 			margin-left: 0;
-		}
-
-		.layout-widget .bx--accordion__content {
-			padding: 1px;
 		}
 
 		.iot--list-item {
@@ -310,12 +307,13 @@ export const Edit = () => {
 					isActive={selectedLeftPane === SelectedLeftPane.STYLE}>
 						Style
 					</SideNavLink>
-					<SideNavLink
+					{ /* hide Code pane for now */
+					/* <SideNavLink
 					renderIcon={Code16}
 					onClick={() => onRailClick(SelectedLeftPane.CODE)}
 					isActive={selectedLeftPane === SelectedLeftPane.CODE}>
 						Code
-					</SideNavLink>
+					</SideNavLink> */}
 				</SideNavItems>
 			</SideNav>
 			<div

@@ -7,6 +7,7 @@ import React, {
 import { Octokit } from 'octokit';
 import { Buffer } from 'buffer';
 import { GlobalStateContext } from './global-state-context';
+import { isFragment } from '../ui-fragment/src/utils';
 
 const GithubContext: React.Context<any> = createContext({});
 
@@ -29,6 +30,10 @@ const GithubContextProvider = ({ children }: any) => {
 	const octokit = useRef(new Octokit({ auth: githubToken }));
 
 	const getUser = async (forceLoad = false) => {
+		if (!githubToken) {
+			return {};
+		}
+
 		if (!user.current.login || forceLoad) {
 			const u = (await octokit.current.rest.users.getAuthenticated()).data;
 			user.current = u;
@@ -41,6 +46,7 @@ const GithubContextProvider = ({ children }: any) => {
 		if (githubToken) {
 			getUser(true);
 		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [githubToken]);
 
 	const setGithubToken = (t: string) => {
@@ -96,7 +102,7 @@ const GithubContextProvider = ({ children }: any) => {
 
 		try {
 			const responseObject = JSON.parse(`${data}`);
-			if (!responseObject.id || !responseObject.items || !Array.isArray(responseObject.items)) {
+			if (!isFragment(responseObject)) {
 				throw Error('JSON is not a fragment');
 			}
 
@@ -150,11 +156,18 @@ const GithubContextProvider = ({ children }: any) => {
 		const allFeaturedFragments = await Promise.all(((featuredFragmentsResponse as any).data as any[]).map(async (item) => {
 			const fragmentFileResponse = await getContent('IBM', 'carbon-ui-builder-featured-fragments', item.path, 'raw');
 			try {
+				const data = JSON.parse((fragmentFileResponse as any).data.toString());
+
+				// I know what this looks like but if data has data, it's a fragment
+				if (data.data) {
+					return data;
+				}
+
 				return {
 					id: item.path,
 					title: item.name.substring(0, item.name.length - 5),
 					lastModified: new Date((fragmentFileResponse as any).headers['last-modified'] || '').toISOString(),
-					data: JSON.parse((fragmentFileResponse as any).data.toString())
+					data
 				};
 			} catch (error) {
 				return null;
