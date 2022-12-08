@@ -84,7 +84,7 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 	};
 
 	const handleChange = (x: CreateOptions) => {
-		setSelectedCreateOption(parseInt(CreateOptions[x]));
+		setSelectedCreateOption(x);
 	};
 
 	return (
