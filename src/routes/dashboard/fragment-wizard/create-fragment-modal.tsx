@@ -129,9 +129,8 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 			<TileGroup
 				className={createFragmentTiles}
 				defaultSelected="IMPORT_JSON"
-				name="radio tile group"
-				onChange={handleChange}
-			>
+				name="Fragment creation"
+				onChange={handleChange}>
 				<RadioTile
 					light={true}
 					value="IMPORT_JSON"
