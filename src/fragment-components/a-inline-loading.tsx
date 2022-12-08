@@ -234,8 +234,8 @@ export const componentInfo: ComponentInfo = {
 							description: "${json.inactiveText || ''}"
 						},
 						finished: {
-							iconDescription: "${json.finishedIconDescription}",
-							description: "${json.successText}"
+							iconDescription: "${json.finishedIconDescription || 'Finished.'}",
+							description: "${json.successText || 'Finished.'}"
 						}
 					}`,
 					[statusDescription]: `const ${statusDescription} = ${status}[state["${name}"] || "${json.status}"].description`,
