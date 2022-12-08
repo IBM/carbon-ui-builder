@@ -203,7 +203,7 @@ export const componentInfo: ComponentInfo = {
 				const status = `state["${nameStringToVariableString(json.codeContext?.name)}"] || "${json.status}"`;
 				return `<InlineLoading
 					onSuccess={() => {
-						if(typeof state.${nameStringToVariableString(json.codeContext?.name)}OnSuccess === "function") {
+						if (typeof state.${nameStringToVariableString(json.codeContext?.name)}OnSuccess === "function") {
 							state.${nameStringToVariableString(json.codeContext?.name)}OnSuccess();
 						}
 					}}
