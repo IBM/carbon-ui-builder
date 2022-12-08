@@ -218,6 +218,7 @@ export const componentInfo: ComponentInfo = {
 				const status = `${name}Status`;
 				const statusDescription = `${name}StatusDescription`;
 				const statusIconDescription = `${name}StatusIconDescription`;
+
 				return {
 					[status]: `const ${status} = {
 						active: {
