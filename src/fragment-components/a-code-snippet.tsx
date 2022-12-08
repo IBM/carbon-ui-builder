@@ -137,7 +137,7 @@ export const componentInfo: ComponentInfo = {
 			imports: ['CodeSnippet'],
 			code: ({ json }) => {
 				return `<CodeSnippet
-					light={${json.light}}
+					light={${!!json.light}}
 					type="${json.variant}">{\`${json.code}\`}
 				</CodeSnippet>`;
 			}
