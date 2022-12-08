@@ -230,8 +230,8 @@ export const componentInfo: ComponentInfo = {
 							description: "${json.errorText || 'Error!'}"
 						},
 						inactive: {
-							iconDescription: "${json.inactiveIconDescription}",
-							description: "${json.inactiveText}"
+							iconDescription: "${json.inactiveIconDescription || ''}",
+							description: "${json.inactiveText || ''}"
 						},
 						finished: {
 							iconDescription: "${json.finishedIconDescription}",
