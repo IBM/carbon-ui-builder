@@ -173,16 +173,7 @@ export const componentInfo: ComponentInfo = {
 	type: 'inline-loading',
 	defaultComponentObj: {
 		type: 'inline-loading',
-		status: 'active',
-		activeText: '',
-		inactiveText: '',
-		successText: '',
-		errorText: '',
-		activeIconDescription: '',
-		errorIconDescription: '',
-		finishedIconDescription: '',
-		inactiveIconDescription: '',
-		successDelay: 1500
+		status: 'active'
 	},
 	image,
 	codeExport: {
