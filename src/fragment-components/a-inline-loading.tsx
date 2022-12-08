@@ -179,10 +179,10 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Status = "${json.status}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}LoadingText = "${json.activeText}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}SuccessText = "${json.successText}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}ErrorText = "${json.errorText}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}SuccessDelay = ${json.successDelay};`,
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}LoadingText = "${json.activeText || 'Loading...'}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}SuccessText = "${json.successText || 'Finished.'}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}ErrorText = "${json.errorText || 'Error!'}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}SuccessDelay = ${json.successDelay === undefined ? 1500 : json.successDelay };`,
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}OnSuccess = new EventEmitter();`,
 			imports: ['InlineLoadingModule'],
 			code: ({ json }) => {
