@@ -226,8 +226,8 @@ export const componentInfo: ComponentInfo = {
 							description: "${json.activeText  || 'Loading...'}"
 						},
 						error: {
-							iconDescription: "${json.errorIconDescription}",
-							description: "${json.errorText}"
+							iconDescription: "${json.errorIconDescription || 'Error!'}",
+							description: "${json.errorText || 'Error!'}"
 						},
 						inactive: {
 							iconDescription: "${json.inactiveIconDescription}",
