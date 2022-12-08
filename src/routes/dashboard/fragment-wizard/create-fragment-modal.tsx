@@ -133,7 +133,7 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 				onChange={handleChange}>
 				<RadioTile
 					light={true}
-					value="IMPORT_JSON"
+					value={CreateOptions.IMPORT_JSON}
 					id="import-json"
 					className={createFragmentTileStyle}>
 					<div className={tileFooter}>
