@@ -126,7 +126,7 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 			<p>Start with a template or create a new fragment from scratch.</p>
 			<TileGroup
 				className={createFragmentTiles}
-				defaultSelected="EMPTY_PAGE"
+				defaultSelected={CreateOptions.EMPTY_PAGE}
 				name="Fragment creation"
 				onChange={setSelectedCreateOption}>
 				<RadioTile
