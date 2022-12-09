@@ -90,7 +90,7 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 			open={props.shouldDisplay}
 			hasForm
 			shouldSubmitOnEnter={false}
-			selectorPrimaryFocus='.bx--tile--selectable'
+			selectorPrimaryFocus='[for="empty-page"]'
 			onSecondarySubmit={() => {
 				props.setShouldDisplay(false);
 				props.setLastVisitedModal(FragmentWizardModals.CREATE_FRAGMENT_MODAL);
