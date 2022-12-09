@@ -46,14 +46,14 @@ export const AInlineLoadingSettingsUI = ({ selectedComponent, setComponent }: an
 		</RadioButtonGroup>
 		<TextInput
 			value={selectedComponent.activeText}
-			labelText='Active text description'
+			labelText='Active text'
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				activeText: event.currentTarget.value
 			})} />
 		<TextInput
 			value={selectedComponent.inactiveText}
-			labelText='Inactive text description'
+			labelText='Inactive text'
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				inactiveText: event.currentTarget.value
@@ -67,7 +67,7 @@ export const AInlineLoadingSettingsUI = ({ selectedComponent, setComponent }: an
 			})} />
 		<TextInput
 			value={selectedComponent.successText}
-			labelText='Success text description'
+			labelText='Success text'
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				successText: event.currentTarget.value
@@ -106,6 +106,7 @@ export const AInlineLoadingSettingsUI = ({ selectedComponent, setComponent }: an
 			label='Success delay (ms)'
 			name='successDelay'
 			value={selectedComponent.successDelay}
+			step={100}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				successDelay: Number(event.imaginaryTarget.value)
@@ -169,19 +170,22 @@ export const componentInfo: ComponentInfo = {
 	codeUI: AInlineLoadingCodeUI,
 	settingsUI: AInlineLoadingSettingsUI,
 	keywords: ['inline', 'loading'],
-	name: 'Inline Loading',
+	name: 'Inline loading',
 	type: 'inline-loading',
 	defaultComponentObj: {
 		type: 'inline-loading',
-		status: 'active'
+		status: 'active',
+		activeText: 'Loading...',
+		successText: 'Finished.',
+		errorText: 'Error!'
 	},
 	image,
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Status = "${json.status}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}LoadingText = "${json.activeText || 'Loading...'}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}SuccessText = "${json.successText || 'Finished.'}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}ErrorText = "${json.errorText || 'Error!'}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}LoadingText = "${json.activeText}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}SuccessText = "${json.successText}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}ErrorText = "${json.errorText}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}SuccessDelay = ${json.successDelay === undefined ? 1500 : json.successDelay };`,
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}OnSuccess = new EventEmitter();`,
 			imports: ['InlineLoadingModule'],
