@@ -85,10 +85,6 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 		navigate(`/edit/${generatedFragment.id}`);
 	};
 
-	const handleChange = (x: CreateOptions) => {
-		setSelectedCreateOption(x);
-	};
-
 	return (
 		<Modal
 			open={props.shouldDisplay}
@@ -132,7 +128,7 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 				className={createFragmentTiles}
 				defaultSelected="IMPORT_JSON"
 				name="Fragment creation"
-				onChange={handleChange}>
+				onChange={setSelectedCreateOption}>
 				<RadioTile
 					light={true}
 					value={CreateOptions.IMPORT_JSON}
