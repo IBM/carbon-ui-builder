@@ -61,7 +61,7 @@ export interface CreateFragmentModalProps {
 }
 
 export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
-	const [selectedCreateOption, setSelectedCreateOption] = useState<CreateOptions>(CreateOptions.IMPORT_JSON);
+	const [selectedCreateOption, setSelectedCreateOption] = useState<CreateOptions>(CreateOptions.EMPTY_PAGE);
 
 	const { addFragment, styleClasses, setStyleClasses } = useContext(GlobalStateContext);
 	const [, dispatchNotification] = useContext(NotificationContext);
