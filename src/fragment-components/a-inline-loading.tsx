@@ -60,7 +60,7 @@ export const AInlineLoadingSettingsUI = ({ selectedComponent, setComponent }: an
 			})} />
 		<TextInput
 			value={selectedComponent.errorText}
-			labelText='Error text description'
+			labelText='Error text'
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				errorText: event.currentTarget.value
