@@ -36,9 +36,11 @@ const tileFooter = css`
 	width: 100%;
 	justify-content: space-between;
 	bottom: 15px;
+
 	p {
 		font-weight: bold;
 	}
+
 	span {
 		margin-right: 30px;
 	}
