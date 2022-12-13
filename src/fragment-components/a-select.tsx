@@ -23,12 +23,14 @@ import { updatedState } from '../components';
 const iconStyle = css`
 	min-height: 1rem;
 	float: right;
-	cursor: pointer`;
+	cursor: pointer;
+`;
 
 const addButtonStyle = css`
 	width: 100%;
 	display: flex;
-	justify-content: center;`;
+	justify-content: center;
+`;
 
 export const ASelectSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
