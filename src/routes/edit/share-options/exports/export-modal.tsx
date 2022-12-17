@@ -37,7 +37,7 @@ const exportCodeModalStyle = css`
 
 const titleWrapper = css`
     display: flex;
-    a, button {
+    form, a, button {
         margin-left: auto;
     }
 `;
@@ -125,8 +125,6 @@ const CodeView = ({ code, selectedFilename }: any) => {
 	</div>;
 };
 
-const generateSandboxUrl = (parameters: any) => (`https://codesandbox.io/api/v1/sandboxes/define?parameters=${parameters}`);
-
 export const ExportModal = () => {
 	const { fragments, settings, setSettings, styleClasses } = useContext(GlobalStateContext);
 	const { fragmentExportModal, hideFragmentExportModal } = useContext(ModalContext);
@@ -169,12 +167,15 @@ export const ExportModal = () => {
 					tabIndex={0}>
 					<div className={titleWrapper}>
 						<h3>Angular Code</h3>
-						<a
-							href={generateSandboxUrl(createFragmentSandbox(angularCode))}
-							target='_blank'
-							rel='noopener noreferrer'>
-							Edit on CodeSandbox
-						</a>
+						<form
+							action='https://codesandbox.io/api/v1/sandboxes/define'
+							method='POST'
+							target='_blank'>
+							<input type='hidden' name='parameters' value={createFragmentSandbox(angularCode)} />
+							<button type='submit' className={css`border: none; cursor: pointer;`}>
+								<img src='https://codesandbox.io/static/img/play-codesandbox.svg' alt='Edit on Codesandbox' />
+							</button>
+						</form>
 					</div>
 					<div className={tabContentStyle}>
 						<FileNames code={angularCode} setSelectedFilename={setSelectedAngularFilename} />
@@ -188,12 +189,15 @@ export const ExportModal = () => {
 					tabIndex={0}>
 					<div className={titleWrapper}>
 						<h3>React Code</h3>
-						<a
-							href={generateSandboxUrl(createFragmentSandbox(reactCode))}
-							target='_blank'
-							rel='noopener noreferrer'>
-							Edit on CodeSandbox
-						</a>
+						<form
+							action='https://codesandbox.io/api/v1/sandboxes/define'
+							method='POST'
+							target='_blank'>
+							<input type='hidden' name='parameters' value={createFragmentSandbox(reactCode)} />
+							<button type='submit' className={css`border: none; cursor: pointer;`}>
+								<img src='https://codesandbox.io/static/img/play-codesandbox.svg' alt='Edit on Codesandbox' />
+							</button>
+						</form>
 					</div>
 					<div className={tabContentStyle}>
 						<FileNames code={reactCode} setSelectedFilename={setSelectedReactFilename} />
