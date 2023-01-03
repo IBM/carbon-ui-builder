@@ -17,6 +17,7 @@ import * as radioGroup from './a-radio-group';
 import * as progressIndicator from './a-progress-indicator';
 import * as row from './a-row';
 import * as tag from './a-tag';
+import * as timepicker from './a-time-picker';
 import * as searchinput from './a-searchinput';
 import * as text from './a-text';
 import * as textarea from './a-text-area';
@@ -58,6 +59,7 @@ export { ATag, ATagSettingsUI } from './a-tag';
 export { AText, ATextSettingsUI } from './a-text';
 export { ATextArea, ATextAreaSettingsUI, ATextAreaCodeUI } from './a-text-area';
 export { ATextInput, ATextInputSettingsUI, ATextInputCodeUI } from './a-text-input';
+export { ATimePicker, ATimePickerSettingsUI, ATimePickerCodeUI } from './a-time-picker';
 export { AOverflowMenu, AOverflowMenuCodeUI, AOverflowMenuSettingsUI } from './a-overflow-menu';
 export { ARadio, ARadioSettingsUI, ARadioCodeUI } from './a-radio';
 export { ARadioGroup, ARadioGroupSettingsUI, ARadioGroupCodeUI } from './a-radio-group';
@@ -98,6 +100,7 @@ export const allComponents = {
 	text,
 	textarea,
 	textinput,
+	timepicker,
 	overflowMenu,
 	// Tiles
 	tile,
