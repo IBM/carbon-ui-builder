@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-	RadioButtonGroup,
-	RadioButton,
+	Accordion,
+	AccordionItem,
 	InlineLoading,
 	TextInput,
+	Dropdown,
 	NumberInput
 } from 'carbon-components-react';
 import { AComponent } from './a-component';
@@ -17,33 +18,35 @@ import {
 } from '../utils/fragment-tools';
 
 export const AInlineLoadingSettingsUI = ({ selectedComponent, setComponent }: any) => {
+	const [isAccordionOpen, setIsAccordionOpen] = useState({} as any);
+
+	useEffect(() => {
+		setIsAccordionOpen({
+			active: selectedComponent.activeIconDescription,
+			error: selectedComponent.errorIconDescription,
+			finished: selectedComponent.finishedIconDescription,
+			inactive: selectedComponent.inactiveIconDescription,
+		});
+	}, [selectedComponent]);
+
+	const statusItems = [
+		{ id: 'inactive', text: 'Inactive' },
+		{ id: 'active', text: 'Active' },
+		{ id: 'finished', text: 'Finished' },
+		{ id: 'error', text: 'Error' }
+	];
 	return <>
-		<legend className='bx--label'>Status</legend>
-		<RadioButtonGroup
-		orientation='vertical'
-		name='status-radio-buttons'
-		valueSelected={selectedComponent.status}
-		onChange={(event: any) => setComponent({
-			...selectedComponent,
-			status: event
-		})}>
-			<RadioButton
-				id='inactive'
-				labelText='Inactive'
-				value='inactive' />
-			<RadioButton
-				id='active'
-				labelText='Active'
-				value='active' />
-			<RadioButton
-				id='finished'
-				labelText='Finished'
-				value='finished' />
-			<RadioButton
-				id='error'
-				labelText='Error'
-				value='error' />
-		</RadioButtonGroup>
+		<Dropdown
+			id='combobox-status-dropdown'
+			label='Status'
+			titleText='Status'
+			items={statusItems}
+			selectedItem={statusItems.find(item => item.id === selectedComponent.status)}
+			itemToString={(item: any) => (item ? item.text : '')}
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				status: event.selectedItem.id
+			})} />
 		<TextInput
 			value={selectedComponent.activeText}
 			labelText='Active text'
@@ -72,34 +75,6 @@ export const AInlineLoadingSettingsUI = ({ selectedComponent, setComponent }: an
 				...selectedComponent,
 				successText: event.currentTarget.value
 			})} />
-		<TextInput
-			value={selectedComponent.activeIconDescription}
-			labelText='Active icon description'
-			onChange={(event: any) => setComponent({
-				...selectedComponent,
-				activeIconDescription: event.currentTarget.value
-			})} />
-		<TextInput
-			value={selectedComponent.errorIconDescription}
-			labelText='Error icon description'
-			onChange={(event: any) => setComponent({
-				...selectedComponent,
-				errorIconDescription: event.currentTarget.value
-			})} />
-		<TextInput
-			value={selectedComponent.finishedIconDescription}
-			labelText='Finished icon description'
-			onChange={(event: any) => setComponent({
-				...selectedComponent,
-				finishedIconDescription: event.currentTarget.value
-			})} />
-		<TextInput
-			value={selectedComponent.inactiveIconDescription}
-			labelText='Inactive icon description'
-			onChange={(event: any) => setComponent({
-				...selectedComponent,
-				inactiveIconDescription: event.currentTarget.value
-			})} />
 		<NumberInput
 			id='successDelay'
 			min={0}
@@ -111,6 +86,47 @@ export const AInlineLoadingSettingsUI = ({ selectedComponent, setComponent }: an
 				...selectedComponent,
 				successDelay: Number(event.imaginaryTarget.value)
 			})} />
+		<Accordion align='start'>
+			<AccordionItem title='Active' open={isAccordionOpen.active}>
+				<TextInput
+					value={selectedComponent.activeIconDescription}
+					labelText='Active icon description'
+					onChange={(event: any) => setComponent({
+						...selectedComponent,
+						activeIconDescription: event.currentTarget.value
+					})} />
+			</AccordionItem>
+
+			<AccordionItem title='Error' open={isAccordionOpen.error}>
+				<TextInput
+					value={selectedComponent.errorIconDescription}
+					labelText='Error icon description'
+					onChange={(event: any) => setComponent({
+						...selectedComponent,
+						errorIconDescription: event.currentTarget.value
+					})} />
+			</AccordionItem>
+
+			<AccordionItem title='Finished' open={isAccordionOpen.finished}>
+				<TextInput
+					value={selectedComponent.finishedIconDescription}
+					labelText='Finished icon description'
+					onChange={(event: any) => setComponent({
+						...selectedComponent,
+						finishedIconDescription: event.currentTarget.value
+					})} />
+			</AccordionItem>
+
+			<AccordionItem title='Inactive' open={isAccordionOpen.inactive}>
+				<TextInput
+					value={selectedComponent.inactiveIconDescription}
+					labelText='Inactive icon description'
+					onChange={(event: any) => setComponent({
+						...selectedComponent,
+						inactiveIconDescription: event.currentTarget.value
+					})} />
+			</AccordionItem>
+		</Accordion>
 	</>;
 };
 
