@@ -15,7 +15,7 @@ export interface DatePickerState {
 	placeholder: string;
 	disabled?: boolean;
 	invalid?: boolean;
-	invalidText?: string
+	invalidText?: string;
 	light?: boolean;
 	size?: string;
 	datePickerType?: string;
@@ -58,5 +58,5 @@ export const UIDatePicker = ({ state }: {
 						invalidText={state.invalidText}
 					/>
 			}
-		</DatePicker>
+		</DatePicker>;
 };
