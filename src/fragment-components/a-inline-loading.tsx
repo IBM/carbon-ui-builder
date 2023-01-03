@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
 	Accordion,
 	AccordionItem,
@@ -18,17 +18,6 @@ import {
 } from '../utils/fragment-tools';
 
 export const AInlineLoadingSettingsUI = ({ selectedComponent, setComponent }: any) => {
-	const [isAccordionOpen, setIsAccordionOpen] = useState({} as any);
-
-	useEffect(() => {
-		setIsAccordionOpen({
-			active: selectedComponent.activeIconDescription,
-			error: selectedComponent.errorIconDescription,
-			finished: selectedComponent.finishedIconDescription,
-			inactive: selectedComponent.inactiveIconDescription,
-		});
-	}, [selectedComponent]);
-
 	const statusItems = [
 		{ id: 'inactive', text: 'Inactive' },
 		{ id: 'active', text: 'Active' },
@@ -87,7 +76,7 @@ export const AInlineLoadingSettingsUI = ({ selectedComponent, setComponent }: an
 				successDelay: Number(event.imaginaryTarget.value)
 			})} />
 		<Accordion align='start'>
-			<AccordionItem title='Active' open={isAccordionOpen.active}>
+			<AccordionItem title='Icon descriptions'>
 				<TextInput
 					value={selectedComponent.activeIconDescription}
 					labelText='Active icon description'
@@ -95,9 +84,6 @@ export const AInlineLoadingSettingsUI = ({ selectedComponent, setComponent }: an
 						...selectedComponent,
 						activeIconDescription: event.currentTarget.value
 					})} />
-			</AccordionItem>
-
-			<AccordionItem title='Error' open={isAccordionOpen.error}>
 				<TextInput
 					value={selectedComponent.errorIconDescription}
 					labelText='Error icon description'
@@ -105,9 +91,6 @@ export const AInlineLoadingSettingsUI = ({ selectedComponent, setComponent }: an
 						...selectedComponent,
 						errorIconDescription: event.currentTarget.value
 					})} />
-			</AccordionItem>
-
-			<AccordionItem title='Finished' open={isAccordionOpen.finished}>
 				<TextInput
 					value={selectedComponent.finishedIconDescription}
 					labelText='Finished icon description'
@@ -115,9 +98,6 @@ export const AInlineLoadingSettingsUI = ({ selectedComponent, setComponent }: an
 						...selectedComponent,
 						finishedIconDescription: event.currentTarget.value
 					})} />
-			</AccordionItem>
-
-			<AccordionItem title='Inactive' open={isAccordionOpen.inactive}>
 				<TextInput
 					value={selectedComponent.inactiveIconDescription}
 					labelText='Inactive icon description'
@@ -202,7 +182,8 @@ export const componentInfo: ComponentInfo = {
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}LoadingText = "${json.activeText}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}SuccessText = "${json.successText}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}ErrorText = "${json.errorText}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}SuccessDelay = ${json.successDelay === undefined ? 1500 : json.successDelay };`,
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}SuccessDelay = ${json.successDelay === undefined ?
+					1500 : json.successDelay };`,
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}OnSuccess = new EventEmitter();`,
 			imports: ['InlineLoadingModule'],
 			code: ({ json }) => {
