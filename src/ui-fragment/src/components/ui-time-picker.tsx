@@ -53,5 +53,5 @@ export const UITimePicker = ({ state }: {
 				/>)
 			}
 		</TimePickerSelect>
-	</TimePicker>
+	</TimePicker>;
 };
