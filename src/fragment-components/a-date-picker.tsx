@@ -88,16 +88,23 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 		})} />
 		<TextInput
 			value={selectedComponent.rangeStartLabel}
-			labelText='Date picker label'
+			labelText= {selectedComponent.datePickerType === 'range' ? 'Date picker range start' : 'Date picker label'}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				rangeStartLabel: event.currentTarget.value
+		})} />
+		<TextInput
+			value={selectedComponent.invalidText}
+			labelText= 'Invalid text'
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				invalidText: event.currentTarget.value
 		})} />
 		{
 			selectedComponent.datePickerType === 'range'
 				&& <TextInput
 				value={selectedComponent.rangeEndLabel}
-				labelText='Date picker label'
+				labelText='Date picker range end'
 				onChange={(event: any) => setComponent({
 					...selectedComponent,
 					rangeEndLabel: event.currentTarget.value
@@ -129,31 +136,27 @@ export const ADatePicker = ({
 		{...rest}>
 			{
 				<DatePicker
-					dateFormat={componentObj.dateFormat}
-					datePickerType={componentObj.datePickerType}
-					light={componentObj.light}>
-						<DatePickerInput
-							id="date-picker-default-id"
-							placeholder={componentObj.placeholder}
-							labelText={componentObj.rangeStartLabel}
-							type="text"
-							size={componentObj.size}
-							disabled={componentObj.disabled}
-							invalid={componentObj.invalid}
-							invalidText={componentObj.invalidText} />
-						{
-							componentObj.datePickerType === 'range' &&
-								<DatePickerInput
-									id="date-picker-range-end"
-									placeholder={componentObj.placeholder}
-									labelText={componentObj.rangeEndLabel}
-									type="text"
-									size={componentObj.size}
-									disabled={componentObj.disabled}
-									invalid={componentObj.invalid}
-									invalidText={componentObj.invalidText} />
-						}
-					</DatePicker>
+				dateFormat={componentObj.dateFormat}
+				datePickerType={componentObj.datePickerType}
+				light={componentObj.light}>
+					<DatePickerInput
+						placeholder={componentObj.placeholder}
+						disabled={componentObj.disabled}
+						invalid={componentObj.invalid}
+						invalidText={componentObj.invalidText}
+						labelText={componentObj.rangeStartLabel}
+						size={componentObj.size} />
+					{
+						componentObj.datePickerType === 'range' &&
+							<DatePickerInput
+								placeholder={componentObj.placeholder}
+								labelText={componentObj.rangeEndLabel}
+								size={componentObj.size}
+								disabled={componentObj.disabled}
+								invalid={componentObj.invalid}
+								invalidText={componentObj.invalidText} />
+					}
+				</DatePicker>
 			}
 		</AComponent>
 	);
@@ -199,14 +202,13 @@ export const componentInfo: ComponentInfo = {
 						[disabled]="${json.disabled}"
 						[size]="${json.size}"
 						[invalid]="${json.invalid}"
-						[invalidText]="${json.invalidText}"
+						[invalidText]="'${json.invalidText}'"
 						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
 					</ibm-date-picker-input>`
 					: json.datePickerType === 'single'
 					? `<ibm-date-picker
 						${angularClassNamesFromComponentObj(json)}
 						[label]="'${json.rangeStartLabel}'"
-						id="initial-value-datepicker"
 						[placeholder]="'${json.placeholder}'"
 						[size]="${json.size}"
 						${json.light
@@ -216,7 +218,7 @@ export const componentInfo: ComponentInfo = {
 						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 						[disabled]="${json.disabled}"
 						[invalid]="${json.invalid}"
-						[invalidText]="${json.invalidText}"
+						[invalidText]="'${json.invalidText}'"
 						[dateFormat]="${json.dateFormat}"
 						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
 					</ibm-date-picker>`
@@ -226,7 +228,6 @@ export const componentInfo: ComponentInfo = {
 						[rangeLabel]="'${json.rangeEndLabel}'"
 						[size]="${json.size}"
 						range="true"
-						id="initial-value-datepicker"
 						[placeholder]="'${json.placeholder}'"
 						${json.light
 							? '[theme]="light"'
@@ -234,7 +235,7 @@ export const componentInfo: ComponentInfo = {
 						}
 						[disabled]="${json.disabled}"
 						[invalid]="${json.invalid}"
-						[invalidText]="${json.invalidText}"
+						[invalidText]="'${json.invalidText}'"
 						[dateFormat]="${json.dateFormat}"
 						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
@@ -251,7 +252,6 @@ export const componentInfo: ComponentInfo = {
 					datePickerType="${json.datePickerType}"
 					light={${json.light}}>
 						<DatePickerInput
-							id="date-picker-default-id"
 							placeholder="${json.placeholder}"
 							labelText="${json.rangeStartLabel}"
 							type="text"
@@ -262,7 +262,6 @@ export const componentInfo: ComponentInfo = {
 						/>
 						${json.datePickerType === 'range'
 							? `<DatePickerInput
-							id="date-picker-range-end"
 							placeholder="${json.placeholder}"
 							labelText="${json.rangeEndLabel}"
 							type="text"

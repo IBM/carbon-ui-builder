@@ -5,12 +5,6 @@ import {
 } from 'carbon-components-react';
 
 export interface DatePickerState {
-	text: string;
-	id: string | number;
-	inline?: boolean;
-	codeContext?: {
-		name: string;
-	};
 	type: string;
 	placeholder: string;
 	disabled?: boolean;
@@ -34,29 +28,26 @@ export const UIDatePicker = ({ state }: {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;
 	}
-	return <DatePicker dateFormat={state.dateFormat} datePickerType={state.datePickerType} light={state.light}>
+	return <DatePicker
+		dateFormat={state.dateFormat}
+		datePickerType={state.datePickerType}
+		light={state.light}>
 			<DatePickerInput
-				id="date-picker-default-id"
 				placeholder={state.placeholder}
 				labelText={state.rangeStartLabel}
-				type="text"
 				size={state.size}
 				disabled={state.disabled}
 				invalid={state.invalid}
-				invalidText={state.invalidText}
-			/>
+				invalidText={state.invalidText} />
 			{
-				state.datePickerType === 'range'
-				&& <DatePickerInput
-						id="date-picker-range-end"
+				state.datePickerType === 'range' &&
+					<DatePickerInput
 						placeholder={state.placeholder}
 						labelText={state.rangeEndLabel}
-						type="text"
 						size={state.size}
 						disabled={state.disabled}
 						invalid={state.invalid}
-						invalidText={state.invalidText}
-					/>
+						invalidText={state.invalidText} />
 			}
 		</DatePicker>;
 };
