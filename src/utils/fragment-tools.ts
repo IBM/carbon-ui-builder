@@ -1,9 +1,9 @@
 import React from 'react';
 import domtoimage from 'dom-to-image';
 import ReactDOM from 'react-dom';
-import { Fragment } from '../components';
 import { camelCase, kebabCase, upperFirst } from 'lodash';
 import { matchPath } from 'react-router-dom';
+import { UIFragment } from '../ui-fragment/src/ui-fragment';
 
 export const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -33,7 +33,7 @@ export const getFragmentsFromLocalStorage = () =>
 
 export const getGlobalStyleClassesFromLocalStorage = () => JSON.parse(localStorage.getItem('globalStyleClasses') as string || '[]');
 
-export const getFragmentPreview = async (fragment: any, props: RenderProps, outline = false) => {
+export const getFragmentPreview = async (fragment: any, props: RenderProps) => {
 	const element = document.createElement('div');
 	element.className = 'render-preview';
 
@@ -41,10 +41,11 @@ export const getFragmentPreview = async (fragment: any, props: RenderProps, outl
 	(element as HTMLElement).style.top = '0';
 	(element as HTMLElement).style.left = '0';
 	(element as HTMLElement).style.zIndex = '-1';
+	(element as HTMLElement).style.backgroundColor = 'white';
 	(element as HTMLElement).style.width = `${props.width || 800}px`;
 	(element as HTMLElement).style.height = `${props.height || 400}px`;
 	(element as HTMLElement).style.minHeight = `${props.height || 400}px`;
-	ReactDOM.render(React.createElement(Fragment, { fragment, outline }), element);
+	ReactDOM.render(React.createElement(UIFragment, { state: fragment, setState: (_state: any) => {} }), element);
 	document.body.appendChild(element);
 
 	await sleep(100); // wait for render to finish
