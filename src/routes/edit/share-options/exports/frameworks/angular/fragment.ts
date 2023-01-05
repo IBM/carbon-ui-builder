@@ -1,135 +1,18 @@
-import { format as formatPrettier, Options } from 'prettier';
-import parserBabel from 'prettier/parser-babel';
-import parserHtml from 'prettier/parser-html';
-import parserCss from 'prettier/parser-postcss';
 import { useContext } from 'react';
 import { GlobalStateContext } from '../../../../../../context';
-import { allComponents } from '../../../../../../fragment-components';
 import { getAllFragmentStyleClasses } from '../../../../../../ui-fragment/src/utils';
 import { classNameFromFragment, hasFragmentStyleClasses, tagNameFromFragment } from '../../../../../../utils/fragment-tools';
-
-const format = (source: string, options?: Options | undefined) => {
-	// we're catching and ignorring errors so live editing doesn't throw errors
-	try {
-		return formatPrettier(source, options);
-	} catch (_) {
-		return source;
-	}
-};
-
-const formatOptionsTypescript: Options = {
-	plugins: [parserBabel],
-	trailingComma: 'none',
-	useTabs: true,
-	parser: 'babel-ts'
-};
-
-const formatOptionsHtml: Options = {
-	plugins: [parserHtml],
-	trailingComma: 'none',
-	useTabs: true,
-	parser: 'html'
-};
-
-const formatOptionsCss: Options = {
-	parser: 'css',
-	plugins: [parserCss]
-};
-
-const addIfNotExist = (arr: any[], items: string[] | undefined) => {
-	items?.forEach(item => {
-		if (!arr.includes(item)) {
-			arr.push(item);
-		}
-	});
-	return arr;
-};
-
-const jsonToAngularImports = (json: any) => {
-	const imports: any[] = [];
-
-	for (const component of Object.values(allComponents)) {
-		if (json.type === component.componentInfo.type) {
-			addIfNotExist(imports, component.componentInfo.codeExport.angular?.imports);
-		}
-	}
-
-	if (json.items) {
-		json.items.forEach((item: any) => {
-			addIfNotExist(imports, jsonToAngularImports(item));
-		});
-	}
-
-	return imports;
-};
-
-const getAngularInputsFromJson = (json: any): string => {
-	const getOne = (json: any) => {
-		for (const component of Object.values(allComponents)) {
-			if (json.type === component.componentInfo.type) {
-				return component.componentInfo.codeExport.angular?.inputs({ json }) || '';
-			}
-		}
-		return '';
-	};
-
-	return `${getOne(json)} ${json.items ? json.items.map((item: any) => getAngularInputsFromJson(item)).join('\n') : ''}
-	`;
-};
-
-const getAngularOutputsFromJson = (json: any): string => {
-	const getOne = (json: any) => {
-		for (const component of Object.values(allComponents)) {
-			if (json.type === component.componentInfo.type) {
-				return component.componentInfo.codeExport.angular?.outputs({ json }) || '';
-			}
-		}
-		return '';
-	};
-
-	return `${getOne(json)} ${json.items ? json.items.map((item: any) => getAngularOutputsFromJson(item)).join('\n') : ''}
-	`;
-};
-
-export const jsonToTemplate = (json: any, fragments: any[]) => {
-	if (typeof json === 'string' || !json) {
-		return json;
-	}
-
-	for (const component of Object.values(allComponents)) {
-		if (json.type === component.componentInfo.type && !component.componentInfo.codeExport.angular.isNotDirectExport) {
-			return component.componentInfo.codeExport.angular.code({ json, jsonToTemplate, fragments });
-		}
-	}
-
-	if (json.items) {
-		return json.items.map((item: any) => jsonToTemplate(item, fragments)).join('\n');
-	}
-};
-
-const getAllSubfragments = (json: any, fragments: any[]) => {
-	let sharedComponents: any = {};
-
-	if (json.type === 'fragment') {
-		const fragment = fragments.find(f => f.id === json.fragmentId);
-
-		sharedComponents[tagNameFromFragment(fragment)] = fragment;
-
-		sharedComponents = {
-			...sharedComponents,
-			...getAllSubfragments(fragment.data, fragments)
-		};
-	}
-
-	json.items?.forEach((item: any) => {
-		sharedComponents = {
-			...sharedComponents,
-			...getAllSubfragments(item, fragments)
-		};
-	});
-
-	return sharedComponents;
-};
+import { format } from '../utils';
+import {
+	formatOptionsCss,
+	formatOptionsHtml,
+	formatOptionsTypescript,
+	getAllSubfragments,
+	getAngularInputsFromJson,
+	getAngularOutputsFromJson,
+	jsonToAngularImports,
+	jsonToTemplate
+} from './utils';
 
 const getComponentCode = (fragment: any, fragments: any[]) => {
 	const componentCode: any = {};
