@@ -11,8 +11,8 @@ import { css } from 'emotion';
 import Editor, { monaco } from '@monaco-editor/react';
 
 import { createFragmentSandbox } from './create-fragment-sandbox';
-import { createReactApp } from './frameworks/react-fragment';
-import { createAngularApp } from './frameworks/angular-fragment';
+import { createReactApp } from './frameworks/react/react-fragment';
+import { createAngularApp } from './frameworks/angular/angular-fragment';
 
 import { ModalContext } from '../../../../context/modal-context';
 import { saveBlob } from '../../../../utils/file-tools';

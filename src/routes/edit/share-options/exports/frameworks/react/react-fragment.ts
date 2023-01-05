@@ -3,10 +3,10 @@ import { format as formatPrettier, Options } from 'prettier';
 import parserBabel from 'prettier/parser-babel';
 import parserCss from 'prettier/parser-postcss';
 import { useContext } from 'react';
-import { GlobalStateContext } from '../../../../../context';
-import { allComponents } from '../../../../../fragment-components';
-import { getAllFragmentStyleClasses } from '../../../../../ui-fragment/src/utils';
-import { classNameFromFragment, hasFragmentStyleClasses, tagNameFromFragment } from '../../../../../utils/fragment-tools';
+import { GlobalStateContext } from '../../../../../../context';
+import { allComponents } from '../../../../../../fragment-components';
+import { getAllFragmentStyleClasses } from '../../../../../../ui-fragment/src/utils';
+import { classNameFromFragment, hasFragmentStyleClasses, tagNameFromFragment } from '../../../../../../utils/fragment-tools';
 
 const format = (source: string, options?: Options | undefined) => {
 	// we're catching and ignorring errors so live editing doesn't throw errors
