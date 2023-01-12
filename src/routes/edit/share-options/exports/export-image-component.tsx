@@ -28,7 +28,6 @@ const exportSettingFormGroup = css`
 `;
 const previewContainer = css`
 	float: left;
-	background-color: #e0e0e0;
 	width: 100%;
 	height: 100%;
 	margin-left: 1rem;

@@ -1,127 +1,16 @@
-import { sortedUniq } from 'lodash';
-import { format as formatPrettier, Options } from 'prettier';
-import parserBabel from 'prettier/parser-babel';
-import parserCss from 'prettier/parser-postcss';
 import { useContext } from 'react';
-import { GlobalStateContext } from '../../../../../context';
-import { allComponents } from '../../../../../fragment-components';
-import { getAllFragmentStyleClasses } from '../../../../../ui-fragment/src/utils';
-import { classNameFromFragment, hasFragmentStyleClasses, tagNameFromFragment } from '../../../../../utils/fragment-tools';
-
-const format = (source: string, options?: Options | undefined) => {
-	// we're catching and ignorring errors so live editing doesn't throw errors
-	try {
-		return formatPrettier(source, options);
-	} catch (_) {
-		return source;
-	}
-};
-
-const formatOptions: Options = {
-	plugins: [parserBabel],
-	trailingComma: 'none',
-	useTabs: true
-};
-
-const formatOptionsCss: Options = {
-	parser: 'css',
-	plugins: [parserCss]
-};
-
-const addIfNotExist = (arr: any[], items: any[]) => {
-	items.forEach(item => {
-		if (!arr.includes(item)) {
-			arr.push(item);
-		}
-	});
-	return arr;
-};
-
-const jsonToCarbonImports = (json: any) => {
-	const imports: any[] = [];
-
-	for (const component of Object.values(allComponents)) {
-		if (json.type === component.componentInfo.type) {
-			const componentImport = Array.isArray(component.componentInfo.codeExport.react.imports) ?
-				component.componentInfo.codeExport.react.imports : component.componentInfo.codeExport.react.imports({ json });
-
-			addIfNotExist(imports, componentImport);
-		}
-	}
-
-	if (json.items) {
-		json.items.forEach((item: any) => {
-			addIfNotExist(imports, jsonToCarbonImports(item));
-		});
-	}
-
-	return imports;
-};
-
-export const jsonToTemplate = (json: any, fragments: any[]) => {
-	if (typeof json === 'string' || !json) {
-		return json;
-	}
-
-	for (const component of Object.values(allComponents)) {
-		if (json.type === component.componentInfo.type && !component.componentInfo.codeExport.react.isNotDirectExport) {
-			return component.componentInfo.codeExport.react.code({ json, jsonToTemplate, fragments });
-		}
-	}
-
-	if (json.items) {
-		return json.items.map((item: any) => jsonToTemplate(item, fragments)).join('\n');
-	}
-};
-
-export const getAdditionalCode = (componentObj: any, fragments: any[]) => {
-	if (typeof componentObj === 'string' || !componentObj) {
-		return componentObj;
-	}
-	let collectedCode = {};
-
-	for (const component of Object.values(allComponents)) {
-		if (componentObj.type === component.componentInfo.type && !component.componentInfo.codeExport.react.isNotDirectExport) {
-			if (component.componentInfo.codeExport.react.additionalCode) {
-				collectedCode = { ...collectedCode, ...component.componentInfo.codeExport.react.additionalCode(componentObj) };
-			}
-		}
-	}
-
-	if (componentObj.items) {
-		componentObj.items.forEach((item: any) => {
-			collectedCode = { ...collectedCode, ...getAdditionalCode(item, fragments) };
-		});
-	}
-
-	return collectedCode;
-};
-
-const getAdditionalCodeAsString = (componentObj: any, fragments: any[]) => {
-	const collectedCode = getAdditionalCode(componentObj, fragments);
-	return Object.values(collectedCode).join('\n');
-};
-
-const otherImportsFromComponentObj = (json: any, fragments?: any[]) => {
-	let imports = '';
-	for (const component of Object.values(allComponents)) {
-		if (json.type === component.componentInfo.type) {
-			if (component.componentInfo.codeExport.react.otherImports) {
-				imports += component.componentInfo.codeExport.react.otherImports({ json, fragments });
-				break;
-			}
-		}
-	}
-
-	if (json.items) {
-		imports += json.items.map((item: any) => otherImportsFromComponentObj(item, fragments)).join('\n');
-	}
-
-	// remove duplicate imports
-	imports = sortedUniq(imports.split('\n')).join('\n');
-
-	return imports;
-};
+import { GlobalStateContext } from '../../../../../../context';
+import { getAllFragmentStyleClasses } from '../../../../../../ui-fragment/src/utils';
+import { classNameFromFragment, hasFragmentStyleClasses, tagNameFromFragment } from '../../../../../../utils/fragment-tools';
+import { format } from '../utils';
+import {
+	formatOptions,
+	formatOptionsCss,
+	getAdditionalCodeAsString,
+	jsonToCarbonImports,
+	jsonToTemplate,
+	otherImportsFromComponentObj
+} from './utils';
 
 const generateTemplate = (json: any, fragments: any[]) => {
 	const carbonImports = jsonToCarbonImports(json);
