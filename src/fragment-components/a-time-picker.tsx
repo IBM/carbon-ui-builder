@@ -81,6 +81,14 @@ export const ATimePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 				disabled: checked
 		})} />
 		<Checkbox
+			labelText='Hide label'
+			id='hide-label'
+			checked={selectedComponent.hideLabel}
+			onChange={(checked: boolean) => setComponent({
+				...selectedComponent,
+				hideLabel: checked
+		})} />
+		<Checkbox
 			labelText='Invalid'
 			id='invalid'
 			checked={selectedComponent.invalid}
@@ -159,6 +167,7 @@ export const ATimePicker = ({
 				invalid={componentObj.invalid}
 				invalidText={componentObj.invalidText}
 				placeholder={componentObj.placeholder}
+				hideLabel={componentObj.hideLabel}
 				labelText={componentObj.label}
 				light={componentObj.light}
 				size={componentObj.size}>
@@ -195,6 +204,7 @@ export const componentInfo: ComponentInfo = {
 		invalidText: 'A valid value is required',
 		placeholder: 'hh:mm',
 		label: 'Select a time',
+		hideLabel: false,
 		light: false,
 		size: 'md',
 		value: '',
@@ -221,6 +231,9 @@ export const componentInfo: ComponentInfo = {
 					label="${json.label}"
 					${json.light ? '[theme]="light"' : '[theme]="dark"'}
 					[invalid]="${json.invalid}"
+					[placeholder]="'${json.placeholder}'"
+					[size]="'${json.size}'"
+					[hideLabel]="${json.hideLabel}"
 					[invalidText]="'${json.invalidText}'"
 					(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
 					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
@@ -262,6 +275,7 @@ export const componentInfo: ComponentInfo = {
 					invalid={${json.invalid}}
 					invalidText="${json.invalidText}"
 					placeholder="${json.placeholder}"
+					hideLabel={${json.hideLabel}}
 					light={${json.light}}>
 						<TimePickerSelect labelText="time-picker-1" id="time-picker-select-1">
 							<SelectItem value="AM" text="AM" />
