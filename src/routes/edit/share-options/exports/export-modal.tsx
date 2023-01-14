@@ -8,7 +8,7 @@ import {
 } from 'carbon-components-react';
 import { Copy16, Document16 } from '@carbon/icons-react';
 import { css } from 'emotion';
-import Editor, { monaco } from '@monaco-editor/react';
+import Editor, { loader } from '@monaco-editor/react';
 
 import { createFragmentSandbox } from './create-fragment-sandbox';
 import { createReactApp } from './frameworks/react/fragment-v10';
@@ -21,7 +21,7 @@ import { ExportImageComponent } from './export-image-component';
 import { filenameToLanguage } from '../../tools';
 import { getAllFragmentStyleClasses } from '../../../../ui-fragment/src/utils';
 
-monaco.init().then(monaco => {
+loader.init().then(monaco => {
 	monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
 		noSemanticValidation: true,
 		noSyntaxValidation: true
