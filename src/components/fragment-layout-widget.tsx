@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button } from 'carbon-components-react';
-import { HierarchyList } from 'carbon-addons-iot-react';
 import {
 	Edit16,
 	TrashCan16,
@@ -53,6 +52,7 @@ const getReorderedComponentObjFromHierarchyListItem = (hierchyListItem: any, com
 
 	return {
 		...component,
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		items: hierchyListItem.children?.map((child: any) => getReorderedComponentObjFromHierarchyListItem(child, componentObj))
 	};
 };
@@ -92,25 +92,10 @@ export const FragmentLayoutWidget = ({ fragment, setFragment, title }: any) => {
 					</Button>
 				</>
 			},
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			children: componentObj.items?.map((item: any) => getHierarchyListItemsFromComponentObj(item))
 		};
 	};
 
-	// HierarchyList (from PAL library) crashes in unpredictable ways and takes the app with it
-	try {
-		return <HierarchyList
-			title={title}
-			className={fragmentLayoutStyle}
-			items={getHierarchyListItemsFromComponentObj(fragment.data)?.children || []}
-			onListUpdated={(updatedItems: any[]) => {
-				setFragment({
-					...fragment,
-					data: getReorderedComponentObjFromHierarchyListItem({ id: 1, children: updatedItems }, fragment.data)
-				});
-			}}
-			editingStyle='single'
-		/>;
-	} catch (_) {
-		return <div className={css`text-align: center; padding-bottom: 1rem;`}><Book32 /></div>;
-	}
+	return <div className={css`text-align: center; padding-bottom: 1rem;`}><Book32 /></div>;
 };

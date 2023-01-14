@@ -16,7 +16,7 @@ import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { getSelectedComponent, updatedState } from '../../components/fragment';
 import { allComponents } from '../../fragment-components';
 import { SelectedComponentBreadcrumbs } from './selected-component-breadcrumbs';
-import { FragmentLayoutWidget } from '../../components/fragment-layout-widget';
+// import { FragmentLayoutWidget } from '../../components/fragment-layout-widget';
 import { GlobalStateContext } from '../../context';
 
 const styleContextPaneStyle = css`
@@ -221,8 +221,9 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 				Layout
 			</Button>
 			{
-				settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen
-				&& <FragmentLayoutWidget fragment={fragment} setFragment={setFragment} />
+				// Commenting out since we removed fragment layout
+				// settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen
+				// && <FragmentLayoutWidget fragment={fragment} setFragment={setFragment} />
 			}
 			<Button
 			kind='ghost'
