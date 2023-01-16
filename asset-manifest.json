@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.32ba2794.css",
-    "main.js": "/static/js/main.ca9705be.js",
+    "main.js": "/static/js/main.7d26ddc2.js",
     "static/media/chart-404.svg": "/static/media/chart-404.0cbc4226f4ef1a83fbdfe88bf5f398d3.svg",
     "static/media/tile-clickable.svg": "/static/media/tile-clickable.dc9f4bb46dc5a7a320bb0b1cf8f6354c.svg",
     "static/media/overflowMenu.svg": "/static/media/overflowMenu.fb1228933b92077c0c9baba8b0c2ed18.svg",
@@ -15,6 +15,7 @@
     "static/media/button.svg": "/static/media/button.40ab8013db3ffdfb54492f4853dcf1b4.svg",
     "static/media/accordion.svg": "/static/media/accordion.74ce695161cf553a376ae618f66592c8.svg",
     "static/media/radio.svg": "/static/media/radio.5d70d2bbda78f6d89b54d918841b14ae.svg",
+    "static/media/inline-loading.svg": "/static/media/inline-loading.5b86b50729fbbc28dc5a48fe5fbd8062.svg",
     "static/media/dropdown.svg": "/static/media/dropdown.cd5ea48731032566f6dead2c34d81740.svg",
     "static/media/text.svg": "/static/media/text.c8f0b2d902a101cd8c3c0b80d9eb7012.svg",
     "index.html": "/index.html",
@@ -36,10 +37,10 @@
     "static/media/tile.svg": "/static/media/tile.faa170c0e2c6e37d9135ee12f6fc8e41.svg",
     "static/media/hotkeys.md": "/static/media/hotkeys.c48756993ac57912057b.md",
     "main.32ba2794.css.map": "/static/css/main.32ba2794.css.map",
-    "main.ca9705be.js.map": "/static/js/main.ca9705be.js.map"
+    "main.7d26ddc2.js.map": "/static/js/main.7d26ddc2.js.map"
   },
   "entrypoints": [
     "static/css/main.32ba2794.css",
-    "static/js/main.ca9705be.js"
+    "static/js/main.7d26ddc2.js"
   ]
 }
