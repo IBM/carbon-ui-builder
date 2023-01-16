@@ -14,6 +14,7 @@ import { UIDropdown } from './components/ui-dropdown';
 import { UIExpandableTile } from './components/ui-expandable-tile';
 import { UIGrid } from './components/ui-grid';
 import { UILink } from './components/ui-link';
+import { UIInlineLoading } from './components/ui-inline-loading';
 import { UILoading } from './components/ui-loading';
 import { UINumberInput } from './components/ui-number-input';
 import { UIOverflowMenu } from './components/ui-overflow-menu';
@@ -150,6 +151,9 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'loading':
 			return <UILoading key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'inline-loading':
+			return <UIInlineLoading key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'radio-group':
 			return <UIRadioGroup key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
