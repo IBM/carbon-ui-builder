@@ -1,8 +1,9 @@
 import React from 'react';
 import domtoimage from 'dom-to-image';
 import ReactDOM from 'react-dom';
-import { camelCase, kebabCase, upperFirst } from 'lodash';
+import { camelCase, kebabCase, uniq, upperFirst } from 'lodash';
 import { matchPath } from 'react-router-dom';
+import { getAllFragmentStyleClasses } from '../ui-fragment/src/utils';
 import { UIFragment } from '../ui-fragment/src/ui-fragment';
 
 export const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -188,3 +189,69 @@ export const angularClassNamesFromComponentObj = (componentObj: any) =>
 		: '';
 
 export const nameStringToVariableString = (name: string) => camelCase(name);
+
+export const hasMicroLayouts = (fragment: any): boolean => {
+	if (fragment.type === 'fragment') {
+		return true;
+	}
+
+	if (fragment.data) {
+		return hasMicroLayouts(fragment.data);
+	}
+
+	if (fragment.items) {
+		return fragment.items.some((item: any) => hasMicroLayouts(item));
+	}
+
+	return false;
+};
+
+export const getShallowFragmentJsonExport = (fragment: any, fragments: any[], styleClasses: any[]) => {
+	return {
+		id: fragment.id,
+		lastModified: fragment.lastModified,
+		title: fragment.title,
+		data: fragment.data,
+		cssClasses: fragment.cssClasses,
+		allCssClasses: getAllFragmentStyleClasses(fragment, [], styleClasses),
+		labels: fragment.labels
+	};
+};
+
+export const getAllMicrolayoutIdsFromFragment = (fragment: any): any[] => {
+	if (fragment.type === 'fragment') {
+		return [fragment.fragmentId];
+	}
+
+	if (fragment.data) {
+		return getAllMicrolayoutIdsFromFragment(fragment.data);
+	}
+
+	if (fragment.items) {
+		return uniq(fragment.items
+			.flatMap((item: any) => getAllMicrolayoutIdsFromFragment(item))
+			.filter((item: any) => !!item));
+	}
+
+	return [];
+};
+
+export const getFragmentJsonExport = (fragment: any, fragments: any[], styleClasses: any[]) => {
+	if (!hasMicroLayouts(fragment)) {
+		return getShallowFragmentJsonExport(fragment, fragments, styleClasses);
+	}
+
+	// get all microlayouts
+	const microlayoutIds = getAllMicrolayoutIdsFromFragment(fragment);
+
+	const microlayouts = fragments.filter((f: any) => microlayoutIds.includes(f.id));
+
+	return [
+		getShallowFragmentJsonExport(fragment, fragments, styleClasses),
+		...microlayouts
+	];
+};
+
+export const getFragmentJsonExportString = (fragment: any, fragments: any[], styleClasses: any[]) => {
+	return JSON.stringify(getFragmentJsonExport(fragment, fragments, styleClasses), null, 2);
+};
