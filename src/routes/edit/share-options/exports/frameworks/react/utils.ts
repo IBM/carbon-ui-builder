@@ -4,7 +4,7 @@ import parserCss from 'prettier/parser-postcss';
 import { sortedUniq } from 'lodash';
 
 import { allComponents } from '../../../../../../fragment-components';
-import { addIfNotExist } from '../utils';
+import { addIfNotExist } from '../../../../../../ui-fragment/src/utils';
 
 export const formatOptions: Options = {
 	plugins: [parserBabel],
