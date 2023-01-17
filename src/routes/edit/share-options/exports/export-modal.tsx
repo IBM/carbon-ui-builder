@@ -19,7 +19,7 @@ import { saveBlob } from '../../../../utils/file-tools';
 import { GlobalStateContext } from '../../../../context';
 import { ExportImageComponent } from './export-image-component';
 import { filenameToLanguage } from '../../tools';
-import { getAllFragmentStyleClasses } from '../../../../ui-fragment/src/utils';
+import { getFragmentJsonExportString } from '../../../../utils/fragment-tools';
 
 monaco.init().then(monaco => {
 	monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
@@ -137,15 +137,7 @@ export const ExportModal = () => {
 		return null;
 	}
 
-	const jsonCode: any = JSON.stringify({
-		id: fragmentExportModal.fragment.id,
-		lastModified: fragmentExportModal.fragment.lastModified,
-		title: fragmentExportModal.fragment.title,
-		data: fragmentExportModal.fragment.data,
-		cssClasses: fragmentExportModal.fragment.cssClasses,
-		allCssClasses: getAllFragmentStyleClasses(fragmentExportModal.fragment, [], styleClasses),
-		labels: fragmentExportModal.fragment.labels
-	}, null, 2);
+	const jsonCode: any = getFragmentJsonExportString(fragmentExportModal.fragment, fragments, styleClasses);
 	const reactCode: any = createReactApp(fragmentExportModal.fragment, fragments);
 	const angularCode: any = createAngularApp(fragmentExportModal.fragment, fragments);
 
