@@ -29,8 +29,14 @@ export const validInitialFragments = (localFragments: any[] | undefined) => {
 	return localFragments.filter((fragment: any) => !!fragment.id && typeof fragment.id === 'string');
 };
 
-export const getFragmentsFromLocalStorage = () =>
-	validInitialFragments(JSON.parse(localStorage.getItem('localFragments') as string)) || [];
+export const getFragmentsFromLocalStorage = () => {
+	try {
+		return validInitialFragments(JSON.parse(localStorage.getItem('localFragments') as string)) || [];
+	} catch (error) {
+		console.warn(error);
+		return [];
+	}
+};
 
 export const getGlobalStyleClassesFromLocalStorage = () => JSON.parse(localStorage.getItem('globalStyleClasses') as string || '[]');
 
