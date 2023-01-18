@@ -60,6 +60,9 @@ export const addIfNotExist = (arr: any[], items: any[]) => {
 export const jsonToState = (json: any, allFragments: any[]) => {
 	if (json.type === 'fragment' && json.fragmentId) {
 		const fragment = allFragments.find((fragment: any) => fragment.id === json.fragmentId);
+		if (!fragment) {
+			return {};
+		}
 		return {
 			...fragment.data,
 			allCssClasses: [...fragment.allCssClasses]
