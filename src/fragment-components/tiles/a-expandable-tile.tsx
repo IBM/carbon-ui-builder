@@ -7,7 +7,7 @@ import {
 } from 'carbon-components-react';
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { ComponentInfo } from '..';
 import image from '../../assets/component-icons/tile-expandable.svg';
 import {
@@ -15,6 +15,10 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
+
+const preventCheckEvent = css`
+	pointer-events: none;
+`;
 
 export const AExpandableSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -95,11 +99,11 @@ export const AExpandableTile = ({
 		{...rest}>
 			<ExpandableTile
 			light={componentObj.light}
-			className={`${
+			className={cx(preventCheckEvent,`${
 					componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')
 				} ${
 					(componentObj.outline || outline === true) && outline !== false ? outlineStyle : ''
-				}`
+				}`)
 			}
 			expanded={componentObj.expanded}>
 				<TileAboveTheFoldContent onDrop={onDrop}>
