@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import Editor from '@monaco-editor/react';
 import { Button } from 'carbon-components-react';
-import { Edit32 } from '@carbon/icons-react';
+import { Edit32, Copy16 } from '@carbon/icons-react';
 import { GlobalStateContext } from '../../context';
 import { UIFragment } from '../../ui-fragment/src/ui-fragment';
 import { generateNewFragment } from '../dashboard/fragment-wizard/generate-new-fragment';
@@ -36,6 +36,10 @@ const contentContainerStyle = css`
 	margin-top: 1rem;
 	margin-bottom: 2rem;
 `;
+
+const copyToClipboard = (codeString: string | undefined) => {
+	navigator.clipboard.writeText(codeString || '');
+};
 
 export const FromJson = () => {
 	const { styleClasses, setStyleClasses, addFragment } = useContext(GlobalStateContext);
@@ -103,6 +107,7 @@ export const FromJson = () => {
 			</p>
 			<Button
 			renderIcon={Edit32}
+			size='xl'
 			onClick={openInEditor}>
 				Edit & Export
 			</Button>
@@ -116,7 +121,17 @@ export const FromJson = () => {
 					: 'Failed to parse JSON.'
 			}
 		</div>
-		<h2>JSON model</h2>
+		<h2>
+			JSON model
+			<Button
+				kind='ghost'
+				className={css`margin-top: -6px;`}
+				hasIconOnly
+				tooltipPosition='right'
+				iconDescription='Copy to clipboard'
+				onClick={() => copyToClipboard(state.parseSucceeded ? JSON.stringify(state.fragmentState, null, 2) : params.json)}
+				renderIcon={Copy16} />
+		</h2>
 		<Editor
 			className={blockContainerStyle}
 			height={'500px'}
