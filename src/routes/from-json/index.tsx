@@ -103,6 +103,7 @@ export const FromJson = () => {
 			</p>
 			<Button
 			renderIcon={Edit32}
+			size='xl'
 			onClick={openInEditor}>
 				Edit & Export
 			</Button>
