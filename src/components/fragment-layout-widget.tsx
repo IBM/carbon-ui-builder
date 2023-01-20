@@ -1,116 +1,109 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from 'carbon-components-react';
-import { HierarchyList } from 'carbon-addons-iot-react';
 import {
 	Edit16,
 	TrashCan16,
-	Book32
+	ChevronDown16,
+	ChevronUp16
 } from '@carbon/icons-react';
 import { css } from 'emotion';
 import { actionIconStyle } from '../routes';
 import { stateWithoutComponent } from './fragment';
 
-const fragmentLayoutStyle = css`
-	margin-left: 1px;
+const widgetItemStyle = css`
+	display: flex;
+	line-height: 2rem;
+	height: 2rem;
 
-	.iot--list--page {
-		display: none;
+	&:not(:last-child) {
+		border-bottom: 1px solid #e0e0e0;
 	}
 
-	.iot--list-item-editable--drag-preview {
-		right: 99999999px;
+	button {
+		height: 2rem;
 	}
 `;
 
-const getComponentObjById = (id: string, componentObj: any) => {
-	if (componentObj.id === id) {
-		return componentObj;
-	}
+const buttonStyle = css`
+	width: 2rem;
+	padding: 2px 7px;
+	min-height: 2rem;
+`;
 
-	if (!componentObj.items) {
-		return undefined;
-	}
+export const FragmentLayoutWidget = ({ fragment, setFragment }: any) => {
+	const [expansion, setExpansion] = useState({} as any);
 
-	for (const item of componentObj.items) {
-		const foundComponentObj: any = getComponentObjById(id, item);
-		if (foundComponentObj) {
-			return foundComponentObj;
-		}
-	}
-	return undefined;
-};
+	useEffect(() => {
+		setExpansion({});
+	}, [fragment.id]);
 
-const getReorderedComponentObjFromHierarchyListItem = (hierchyListItem: any, componentObj: any) => {
-	if (!hierchyListItem) {
-		return undefined;
-	}
-
-	const component = getComponentObjById(hierchyListItem.id, componentObj);
-
-	if (!component) {
-		return undefined;
-	}
-
-	return {
-		...component,
-		items: hierchyListItem.children?.map((child: any) => getReorderedComponentObjFromHierarchyListItem(child, componentObj))
-	};
-};
-
-export const FragmentLayoutWidget = ({ fragment, setFragment, title }: any) => {
-	const getHierarchyListItemsFromComponentObj = (componentObj: any) => {
-		if (!componentObj) {
-			return null;
-		}
-
-		return {
-			id: componentObj.id,
-			content: {
-				value: componentObj.type,
-				rowActions: () => <>
-					<Button
-						kind='ghost'
-						aria-label='Edit'
-						title='Edit'
-						onClick={() => setFragment({
-							...fragment,
-							selectedComponentId: componentObj.id
-						}, false)}>
-						<Edit16 className={actionIconStyle} />
-					</Button>
-					<Button
-						kind='ghost'
-						aria-label='Delete'
-						title='Delete'
-						onClick={() => setFragment({
-							...fragment,
-							// for whatever reason it's reporting this problem here for .data
-							// eslint-disable-next-line react/prop-types
-							data: stateWithoutComponent(fragment.data, componentObj.id)
-						})}>
-						<TrashCan16 className={actionIconStyle} />
-					</Button>
-				</>
-			},
-			children: componentObj.items?.map((item: any) => getHierarchyListItemsFromComponentObj(item))
-		};
+	const setExpanded = (component: any, expanded: boolean) => {
+		setExpansion({
+			...expansion,
+			[component.id]: expanded
+		});
 	};
 
-	// HierarchyList (from PAL library) crashes in unpredictable ways and takes the app with it
-	try {
-		return <HierarchyList
-			title={title}
-			className={fragmentLayoutStyle}
-			items={getHierarchyListItemsFromComponentObj(fragment.data)?.children || []}
-			onListUpdated={(updatedItems: any[]) => {
-				setFragment({
-					...fragment,
-					data: getReorderedComponentObjFromHierarchyListItem({ id: 1, children: updatedItems }, fragment.data)
-				});
-			}}
-			editingStyle='single'
-		/>;
-	} catch (_) {
-		return <div className={css`text-align: center; padding-bottom: 1rem;`}><Book32 /></div>;
-	}
+	const isExpanded = (component: any) => !!expansion[component.id];
+
+	const LayoutWidgetItem = ({ componentObj, depth = 0 }: any) => {
+		return <>
+			<div className={widgetItemStyle}>
+				<div className={css`width: ${depth}rem;`} />
+				{
+					componentObj.items && componentObj.items.length
+					? <Button
+						kind='ghost'
+						aria-label='Toggle expanded'
+						title='Toggle expanded'
+						className={buttonStyle}
+						onClick={() => setExpanded(componentObj, !isExpanded(componentObj))}>
+								{
+									isExpanded(componentObj)
+									? <ChevronUp16 className={actionIconStyle} />
+									: <ChevronDown16 className={actionIconStyle} />
+								}
+						</Button>
+					: <div className={css`min-width: 32px;`} />
+				}
+				<span className={css`width: 100%;`}>{componentObj.type}</span>
+				<Button
+					kind='ghost'
+					aria-label='Edit'
+					title='Edit'
+					className={buttonStyle}
+					onClick={() => setFragment({
+						...fragment,
+						selectedComponentId: componentObj.id
+					}, false)}>
+					<Edit16 className={actionIconStyle} />
+				</Button>
+				<Button
+					kind='ghost'
+					aria-label='Delete'
+					title='Delete'
+					className={buttonStyle}
+					onClick={() => setFragment({
+						...fragment,
+						// for whatever reason it's reporting this problem here for .data
+						// eslint-disable-next-line react/prop-types
+						data: stateWithoutComponent(fragment.data, componentObj.id)
+					})}>
+					<TrashCan16 className={actionIconStyle} />
+				</Button>
+			</div>
+			{
+				isExpanded(componentObj)
+				&& componentObj.items?.map((component: any) =>
+					<LayoutWidgetItem key={component.id} componentObj={component} depth={depth + 1} />
+				)
+			}
+		</>;
+	};
+
+	return <div>
+		{
+			fragment.data.items?.map((component: any) => <LayoutWidgetItem key={component.id} componentObj={component} />)
+		}
+	</div>;
 };
