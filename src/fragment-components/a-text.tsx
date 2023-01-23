@@ -16,7 +16,7 @@ export const ATextSettingsUI = ({ selectedComponent, setComponent }: any) => {
 					...selectedComponent,
 					text: event
 			});
-		}} />
+		}} />;
 };
 
 export const AText = ({
