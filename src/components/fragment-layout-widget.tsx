@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button } from 'carbon-components-react';
 import {
+	Draggable16,
 	Edit16,
 	TrashCan16,
 	ChevronDown16,
 	ChevronUp16
 } from '@carbon/icons-react';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { actionIconStyle } from '../routes';
-import { stateWithoutComponent } from './fragment';
+import { getParentComponent, stateWithoutComponent, updatedState } from './fragment';
 
 const widgetItemStyle = css`
 	display: flex;
@@ -30,8 +31,211 @@ const buttonStyle = css`
 	min-height: 2rem;
 `;
 
+const dragHandlerStyle = css`
+	padding: 3px 0px 0px 6px;
+	cursor: grab;
+
+	&:active {
+		cursor: grabbing;
+	}
+`;
+
+const droppableAreaStyle = css`
+	width: 100%;
+	position: relative;
+	transition: margin-top 100ms, margin-bottom 100ms, height 100ms;
+	display: none;
+
+	&.drag-in-progress {
+		display: block;
+		margin-top: -2px;
+		margin-bottom: -14px;
+		height: 16px;
+		z-index: 999999999;
+	}
+
+	&.drag-over {
+		border: 1px solid #0f62fe;
+		margin-top: 0;
+		margin-bottom: 0;
+		height: 32px;
+	}
+`;
+
+const LayoutWidgetItem = ({
+	componentObj,
+	depth = 0,
+	showDropTargetAfter = false,
+	index,
+	isDragging,
+	setIsDragging,
+	isExpanded,
+	setExpanded,
+	fragment,
+	setFragment
+}: any) => {
+	const draggedItemRef = useRef(null);
+	const [isDragOver, setIsDragOver] = useState({
+		before: false,
+		after: false
+	});
+
+	const onDragStart = (event: React.DragEvent<HTMLDivElement>) => {
+		setIsDragging(true);
+
+		event.dataTransfer.setDragImage(draggedItemRef.current || document.body, 0, 0);
+		event.dataTransfer.setData('drag-object', JSON.stringify({
+			component: componentObj,
+			type: 'move'
+		}));
+	};
+
+	const onDragEnd = (_: any) => {
+		setIsDragging(false);
+		setIsDragOver({
+			before: false,
+			after: false
+		});
+	};
+
+	const onDragOver = (event: any) => {
+		event.preventDefault();
+		setIsDragOver({
+			before: true,
+			after: false
+		});
+	};
+
+	const onDragOverAfter = (event: any) => {
+		event.preventDefault();
+		setIsDragOver({
+			before: false,
+			after: true
+		});
+	};
+
+	const onDragLeave = (_event: any) => {
+		setIsDragOver({
+			before: false,
+			after: false
+		});
+	};
+
+	const onDrop = (event: any) => {
+		event.preventDefault();
+		setIsDragOver({
+			before: false,
+			after: false
+		});
+
+		// parse only if data exists
+		const data = event.dataTransfer.getData('drag-object');
+		if (!data) {
+			return false;
+		}
+		const dragObj = JSON.parse(data);
+
+		setFragment({
+			...fragment,
+			data: updatedState(
+				fragment.data,
+				dragObj,
+				getParentComponent(fragment.data, componentObj).id,
+				index
+			)
+		});
+	};
+
+	return <>
+		<div
+			className={cx(droppableAreaStyle, isDragging ? 'drag-in-progress' : '', isDragOver.before ? 'drag-over' : '')}
+			onDragOver={onDragOver}
+			onDrop={onDrop}
+			onDragLeave={onDragLeave} />
+		<div className={widgetItemStyle} ref={draggedItemRef}>
+			<div
+			draggable
+			className={dragHandlerStyle}
+			onDragStart={onDragStart}
+			onDragEnd={onDragEnd}>
+				<Draggable16 />
+			</div>
+
+			<div className={css`width: ${depth}rem;`} />
+			{
+				componentObj.items && componentObj.items.length
+				? <Button
+					kind='ghost'
+					aria-label='Toggle expanded'
+					title='Toggle expanded'
+					className={buttonStyle}
+					onClick={() => setExpanded(componentObj, !isExpanded(componentObj))}>
+							{
+								isExpanded(componentObj)
+								? <ChevronUp16 className={actionIconStyle} />
+								: <ChevronDown16 className={actionIconStyle} />
+							}
+					</Button>
+				: <div className={css`min-width: 32px;`} />
+			}
+
+			<span className={css`width: 100%;`}>{componentObj.type}</span>
+
+			<Button
+				kind='ghost'
+				aria-label='Edit'
+				title='Edit'
+				className={buttonStyle}
+				onClick={() => setFragment({
+					...fragment,
+					selectedComponentId: componentObj.id
+				}, false)}>
+				<Edit16 className={actionIconStyle} />
+			</Button>
+			<Button
+				kind='ghost'
+				aria-label='Delete'
+				title='Delete'
+				className={buttonStyle}
+				onClick={() => setFragment({
+					...fragment,
+					// for whatever reason it's reporting this problem here for .data
+					// eslint-disable-next-line react/prop-types
+					data: stateWithoutComponent(fragment.data, componentObj.id)
+				})}>
+				<TrashCan16 className={actionIconStyle} />
+			</Button>
+		</div>
+		{
+			isExpanded(componentObj)
+			&& componentObj.items?.map((component: any, index: number) =>
+				<LayoutWidgetItem
+					key={component.id}
+					componentObj={component}
+					depth={depth + 1}
+					index={index}
+					isDragging={isDragging}
+					setIsDragging={setIsDragging}
+					isExpanded={isExpanded}
+					setExpanded={setExpanded}
+					fragment={fragment}
+					setFragment={setFragment} />
+			)
+		}
+		{
+			showDropTargetAfter
+			&& <div
+				className={cx(droppableAreaStyle, isDragging ? 'drag-in-progress' : '', isDragOver.after ? 'drag-over' : '')}
+				onDragOver={onDragOverAfter}
+				onDrop={onDrop}
+				onDragLeave={onDragLeave} />
+		}
+	</>;
+};
+
 export const FragmentLayoutWidget = ({ fragment, setFragment }: any) => {
 	const [expansion, setExpansion] = useState({} as any);
+	const [isDragging, setIsDragging_] = useState(false);
 
 	useEffect(() => {
 		setExpansion({});
@@ -44,66 +248,25 @@ export const FragmentLayoutWidget = ({ fragment, setFragment }: any) => {
 		});
 	};
 
-	const isExpanded = (component: any) => !!expansion[component.id];
+	// delay to grab a picture of dragging element before visual guides turn on
+	const setIsDragging = (is: boolean) => setTimeout(() => setIsDragging_(is));
 
-	const LayoutWidgetItem = ({ componentObj, depth = 0 }: any) => {
-		return <>
-			<div className={widgetItemStyle}>
-				<div className={css`width: ${depth}rem;`} />
-				{
-					componentObj.items && componentObj.items.length
-					? <Button
-						kind='ghost'
-						aria-label='Toggle expanded'
-						title='Toggle expanded'
-						className={buttonStyle}
-						onClick={() => setExpanded(componentObj, !isExpanded(componentObj))}>
-								{
-									isExpanded(componentObj)
-									? <ChevronUp16 className={actionIconStyle} />
-									: <ChevronDown16 className={actionIconStyle} />
-								}
-						</Button>
-					: <div className={css`min-width: 32px;`} />
-				}
-				<span className={css`width: 100%;`}>{componentObj.type}</span>
-				<Button
-					kind='ghost'
-					aria-label='Edit'
-					title='Edit'
-					className={buttonStyle}
-					onClick={() => setFragment({
-						...fragment,
-						selectedComponentId: componentObj.id
-					}, false)}>
-					<Edit16 className={actionIconStyle} />
-				</Button>
-				<Button
-					kind='ghost'
-					aria-label='Delete'
-					title='Delete'
-					className={buttonStyle}
-					onClick={() => setFragment({
-						...fragment,
-						// for whatever reason it's reporting this problem here for .data
-						// eslint-disable-next-line react/prop-types
-						data: stateWithoutComponent(fragment.data, componentObj.id)
-					})}>
-					<TrashCan16 className={actionIconStyle} />
-				</Button>
-			</div>
-			{
-				isExpanded(componentObj)
-				&& componentObj.items?.map((component: any) =>
-					<LayoutWidgetItem key={component.id} componentObj={component} depth={depth + 1} />
-				)
-			}
-		</>;
-	};
+	const isExpanded = (component: any) => !!expansion[component.id];
 
 	return <div>
 		{
-			fragment.data.items?.map((component: any) => <LayoutWidgetItem key={component.id} componentObj={component} />)
+			fragment.data.items?.map((component: any, index: number, { length }: {length: number}) =>
+				<LayoutWidgetItem
+					key={component.id}
+					componentObj={component}
+					index={index}
+					isDragging={isDragging}
+					setIsDragging={setIsDragging}
+					isExpanded={isExpanded}
+					setExpanded={setExpanded}
+					fragment={fragment}
+					setFragment={setFragment}
+					showDropTargetAfter={index + 1 === length} />)
 		}
 	</div>;
 };
