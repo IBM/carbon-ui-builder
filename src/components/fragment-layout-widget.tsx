@@ -253,7 +253,7 @@ export const FragmentLayoutWidget = ({ fragment, setFragment }: any) => {
 
 	const isExpanded = (component: any) => !!expansion[component.id];
 
-	return <div>
+	return <div onDragOver={() => setIsDragging(true)}>
 		{
 			fragment.data.items?.map((component: any, index: number, { length }: {length: number}) =>
 				<LayoutWidgetItem
