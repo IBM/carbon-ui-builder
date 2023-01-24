@@ -88,11 +88,30 @@ const LayoutWidgetItem = ({
 	setFragment
 }: any) => {
 	const draggedItemRef = useRef(null);
+	const expansionTimerRef = useRef(null as any);
 	const [isDragOver, setIsDragOver] = useState({
 		before: false,
 		center: false,
 		after: false
 	});
+
+	const expandOnLongHover = () => {
+		if (expansionTimerRef.current !== null) {
+			// already waiting, don't start second timer
+			return;
+		}
+
+		expansionTimerRef.current = setTimeout(() => {
+			if (componentObj.items) {
+				setExpanded(componentObj, true);
+			}
+		}, 900);
+	};
+
+	const cancelExpansion = () => {
+		clearTimeout(expansionTimerRef.current);
+		expansionTimerRef.current = null;
+	};
 
 	const onDragStart = (event: React.DragEvent<HTMLDivElement>) => {
 		setIsDragging(true);
@@ -124,6 +143,8 @@ const LayoutWidgetItem = ({
 
 	const onDragOverCenter = (event: any) => {
 		event.preventDefault();
+		expandOnLongHover();
+
 		setIsDragOver({
 			before: false,
 			center: true,
@@ -146,6 +167,7 @@ const LayoutWidgetItem = ({
 			center: false,
 			after: false
 		});
+		cancelExpansion();
 	};
 
 	const dropHelper = (event: any) => {
