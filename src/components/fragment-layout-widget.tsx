@@ -54,11 +54,24 @@ const droppableAreaStyle = css`
 		z-index: 999999999;
 	}
 
+	&.drag-in-progress-center {
+		margin-top: 4px;
+		margin-bottom: -28px;
+		height: 24px;
+	}
+
 	&.drag-over {
 		border: 1px solid #0f62fe;
 		margin-top: 0;
 		margin-bottom: 0;
 		height: 32px;
+	}
+
+	&.drag-over-center {
+		border: 1px solid #0f62fe;
+		margin-top: 4px;
+		margin-bottom: -28px;
+		height: 24px;
 	}
 `;
 
@@ -77,6 +90,7 @@ const LayoutWidgetItem = ({
 	const draggedItemRef = useRef(null);
 	const [isDragOver, setIsDragOver] = useState({
 		before: false,
+		center: false,
 		after: false
 	});
 
@@ -94,6 +108,7 @@ const LayoutWidgetItem = ({
 		setIsDragging(false);
 		setIsDragOver({
 			before: false,
+			center: false,
 			after: false
 		});
 	};
@@ -102,6 +117,16 @@ const LayoutWidgetItem = ({
 		event.preventDefault();
 		setIsDragOver({
 			before: true,
+			center: false,
+			after: false
+		});
+	};
+
+	const onDragOverCenter = (event: any) => {
+		event.preventDefault();
+		setIsDragOver({
+			before: false,
+			center: true,
 			after: false
 		});
 	};
@@ -110,6 +135,7 @@ const LayoutWidgetItem = ({
 		event.preventDefault();
 		setIsDragOver({
 			before: false,
+			center: false,
 			after: true
 		});
 	};
@@ -117,16 +143,19 @@ const LayoutWidgetItem = ({
 	const onDragLeave = (_event: any) => {
 		setIsDragOver({
 			before: false,
+			center: false,
 			after: false
 		});
 	};
 
-	const onDrop = (event: any) => {
+	const dropHelper = (event: any) => {
 		event.preventDefault();
 		setIsDragOver({
 			before: false,
+			center: false,
 			after: false
 		});
+		setIsDragging(false);
 
 		// parse only if data exists
 		const data = event.dataTransfer.getData('drag-object');
@@ -134,6 +163,12 @@ const LayoutWidgetItem = ({
 			return false;
 		}
 		const dragObj = JSON.parse(data);
+
+		return dragObj;
+	};
+
+	const onDropBefore = (event: any) => {
+		const dragObj = dropHelper(event);
 
 		setFragment({
 			...fragment,
@@ -146,11 +181,47 @@ const LayoutWidgetItem = ({
 		});
 	};
 
+	const onDropIn = (event: any) => {
+		const dragObj = dropHelper(event);
+
+		setFragment({
+			...fragment,
+			data: updatedState(
+				fragment.data,
+				dragObj,
+				componentObj.id
+			)
+		});
+	};
+
+	const onDropAfter = (event: any) => {
+		const dragObj = dropHelper(event);
+
+		setFragment({
+			...fragment,
+			data: updatedState(
+				fragment.data,
+				dragObj,
+				getParentComponent(fragment.data, componentObj).id,
+				index + 1
+			)
+		});
+	};
+
 	return <>
 		<div
 			className={cx(droppableAreaStyle, isDragging ? 'drag-in-progress' : '', isDragOver.before ? 'drag-over' : '')}
 			onDragOver={onDragOver}
-			onDrop={onDrop}
+			onDrop={onDropBefore}
+			onDragLeave={onDragLeave} />
+		<div
+			className={cx(
+				droppableAreaStyle,
+				isDragging ? 'drag-in-progress drag-in-progress-center' : '',
+				isDragOver.center ? 'drag-over-center' : ''
+			)}
+			onDragOver={onDragOverCenter}
+			onDrop={onDropIn}
 			onDragLeave={onDragLeave} />
 		<div className={widgetItemStyle} ref={draggedItemRef}>
 			<div
@@ -227,7 +298,7 @@ const LayoutWidgetItem = ({
 			&& <div
 				className={cx(droppableAreaStyle, isDragging ? 'drag-in-progress' : '', isDragOver.after ? 'drag-over' : '')}
 				onDragOver={onDragOverAfter}
-				onDrop={onDrop}
+				onDrop={onDropAfter}
 				onDragLeave={onDragLeave} />
 		}
 	</>;
@@ -253,7 +324,9 @@ export const FragmentLayoutWidget = ({ fragment, setFragment }: any) => {
 
 	const isExpanded = (component: any) => !!expansion[component.id];
 
-	return <div onDragOver={() => setIsDragging(true)}>
+	return <div
+	onDragOver={() => setIsDragging(true)}
+	onDragLeave={() => setIsDragging(false)}>
 		{
 			fragment.data.items?.map((component: any, index: number, { length }: {length: number}) =>
 				<LayoutWidgetItem
