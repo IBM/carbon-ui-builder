@@ -246,7 +246,7 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 							lineDecorationsWidth: 2,
 							lineNumbersMinChars: 4
 						}}
-						onChange= {(_, value: any) => {
+						onChange= {(value: any) => {
 							if (selectedComponent) {
 								throttledSetComponent({
 									...selectedComponent,
