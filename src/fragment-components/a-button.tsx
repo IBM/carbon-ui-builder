@@ -11,6 +11,7 @@ import image from './../assets/component-icons/button.svg';
 import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 import { ActionsEditor } from '../routes/edit/actions';
 import { time } from 'console';
+import { useFragment } from '../context';
 
 export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const kindItems = [
@@ -64,14 +65,14 @@ export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	</>;
 };
 
-export const AButtonCodeUI = ({ selectedComponent, setComponent, fragment }: any) => {
-
+export const AButtonCodeUI = ({ selectedComponent, setComponent }: any) => {
+	const [fragment, setFragment] = useFragment();
 	console.log('CONNOR fragment #2', fragment);
-
-	// Default value
+	// Default value (?)
+	// Maybe always have 1 signal of each type in the UI that can't be deleted
+	// + or X buttons add or remove additional signals, if only 1 click signal, no delete?
 	const signals: {text: string; value: string}[] = [
-		{ text: 'On Click', value: 'onclick'},
-		{ text: 'On Hover', value: 'onhover'}
+		{ text: 'On Click', value: 'onclick'}
 	];
 
 	return (
