@@ -99,11 +99,11 @@ export const componentInfo: ComponentInfo = {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : ''}';`,
 			outputs: (_) => '',
 			imports: ['TilesModule'],
-			code: ({ json, fragments, jsonToTemplate }) => {
+			code: ({ json, actions, fragments, jsonToTemplate }) => {
 				return `<ibm-tile
 					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 					${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, actions, fragments)).join('\n')}
 				</ibm-tile>`;
 			}
 		},

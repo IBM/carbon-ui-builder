@@ -96,12 +96,12 @@ export const componentInfo: ComponentInfo = {
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";`,
 			outputs: () => '',
 			imports: ['AccordionModule'],
-			code: ({ json, fragments, jsonToTemplate }) => {
+			code: ({ json, actions, fragments, jsonToTemplate }) => {
 				return `<ibm-accordion
 					[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
 					[align]="${nameStringToVariableString(json.codeContext?.name)}Align"
 					${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, actions, fragments)).join('\n')}
 				</ibm-accordion>`;
 			}
 		},

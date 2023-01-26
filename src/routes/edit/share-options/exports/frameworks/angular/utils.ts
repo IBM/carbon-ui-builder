@@ -57,32 +57,32 @@ export const getAngularInputsFromJson = (json: any): string => {
 	`;
 };
 
-export const getAngularOutputsFromJson = (json: any): string => {
+export const getAngularOutputsFromJson = (json: any, actions: any[]): string => {
 	const getOne = (json: any) => {
 		for (const component of Object.values(allComponents)) {
 			if (json.type === component.componentInfo.type) {
-				return component.componentInfo.codeExport.angular?.outputs({ json }) || '';
+				return component.componentInfo.codeExport.angular?.outputs({ json, actions }) || '';
 			}
 		}
 		return '';
 	};
 
-	return `${getOne(json)} ${json.items ? json.items.map((item: any) => getAngularOutputsFromJson(item)).join('\n') : ''}
+	return `${getOne(json)} ${json.items ? json.items.map((item: any) => getAngularOutputsFromJson(item, actions)).join('\n') : ''}
 	`;
 };
-export const jsonToTemplate = (json: any, fragments: any[]) => {
+export const jsonToTemplate = (json: any, actions: any[], fragments: any[]) => {
 	if (typeof json === 'string' || !json) {
 		return json;
 	}
 
 	for (const component of Object.values(allComponents)) {
 		if (json.type === component.componentInfo.type && !component.componentInfo.codeExport.angular.isNotDirectExport) {
-			return component.componentInfo.codeExport.angular.code({ json, jsonToTemplate, fragments });
+			return component.componentInfo.codeExport.angular.code({ json, actions, jsonToTemplate, fragments });
 		}
 	}
 
 	if (json.items) {
-		return json.items.map((item: any) => jsonToTemplate(item, fragments)).join('\n');
+		return json.items.map((item: any) => jsonToTemplate(item, actions, fragments)).join('\n');
 	}
 };
 

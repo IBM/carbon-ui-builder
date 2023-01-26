@@ -14,7 +14,7 @@ import {
 	jsonToTemplate
 } from './utils';
 
-const getComponentCode = (fragment: any, fragments: any[]) => {
+const getComponentCode = (fragment: any, actions: any[], fragments: any[]) => {
 	const componentCode: any = {};
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { styleClasses: globalStyleClasses } = useContext(GlobalStateContext);
@@ -30,13 +30,13 @@ const getComponentCode = (fragment: any, fragments: any[]) => {
 		})
 		export class ${classNameFromFragment(fragment)} {
 			${getAngularInputsFromJson(fragment.data)}
-			${getAngularOutputsFromJson(fragment.data)}
+			${getAngularOutputsFromJson(fragment.data, actions)}
 		}
 	`, formatOptionsTypescript);
 
 	// component.html
 	componentCode[`src/app/components/${tagNameFromFragment(fragment)}/${tagNameFromFragment(fragment)}.component.html`] =
-		format(jsonToTemplate(fragment.data, fragments), formatOptionsHtml);
+		format(jsonToTemplate(fragment.data, actions, fragments), formatOptionsHtml);
 
 	// module.ts
 	componentCode[`src/app/components/${tagNameFromFragment(fragment)}/${tagNameFromFragment(fragment)}.module.ts`] = format(
@@ -75,14 +75,14 @@ const getComponentCode = (fragment: any, fragments: any[]) => {
 	return componentCode;
 };
 
-const getAllComponentsCode = (json: any, fragments: any[]) => {
+const getAllComponentsCode = (json: any, actions: any[], fragments: any[]) => {
 	let allComponents: any = {};
 
 	if (json.data) {
 		allComponents = {
 			...allComponents,
-			...getComponentCode(json, fragments),
-			...getAllComponentsCode(json.data, fragments)
+			...getComponentCode(json, actions, fragments),
+			...getAllComponentsCode(json.data, actions, fragments)
 		};
 	}
 
@@ -91,15 +91,15 @@ const getAllComponentsCode = (json: any, fragments: any[]) => {
 
 		allComponents = {
 			...allComponents,
-			...getComponentCode(fragment, fragments),
-			...getAllComponentsCode(fragment.data, fragments)
+			...getComponentCode(fragment, actions, fragments),
+			...getAllComponentsCode(fragment.data, actions, fragments)
 		};
 	}
 
 	json.items?.forEach((item: any) => {
 		allComponents = {
 			...allComponents,
-			...getAllComponentsCode(item, fragments)
+			...getAllComponentsCode(item, actions, fragments)
 		};
 	});
 
@@ -110,7 +110,7 @@ export const createAngularApp = (fragment: any, fragments: any[]) => {
 	const tagName = tagNameFromFragment(fragment);
 	const className = classNameFromFragment(fragment);
 
-	const allComponents = getAllComponentsCode(fragment, fragments);
+	const allComponents = getAllComponentsCode(fragment, fragment.data.actions, fragments);
 
 	const appComponentHtml =
 		`<app-${tagName}></app-${tagName}>

@@ -169,7 +169,7 @@ export const componentInfo: ComponentInfo = {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Expanded = ${json.expanded}`,
 			outputs: () => '',
 			imports: ['TilesModule'],
-			code: ({ json, fragments, jsonToTemplate }) => {
+			code: ({ json, actions, fragments, jsonToTemplate }) => {
 				const { aboveFold, belowFold } = getFoldObjects(json);
 				/**
 				 * @todo - CCA does not support light
@@ -179,9 +179,9 @@ export const componentInfo: ComponentInfo = {
 					${json.expanded !== undefined ? `[expanded]="${nameStringToVariableString(json.codeContext?.name)}Expanded"` : ''}
 					${angularClassNamesFromComponentObj(json)}>
 						<span class="bx--tile-content__above-the-fold">
-							${aboveFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${aboveFold.map((element: any) => jsonToTemplate(element, actions, fragments)).join('\n')}
 						</span>
-						${belowFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+						${belowFold.map((element: any) => jsonToTemplate(element, actions, fragments)).join('\n')}
 				</ibm-expandable-tile>`;
 			}
 		},

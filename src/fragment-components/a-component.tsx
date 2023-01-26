@@ -53,10 +53,15 @@ export interface ComponentInfo {
 	codeExport: {
 		angular: {
 			inputs: (props: { json: any }) => string;
-			outputs: (props: { json: any }) => string;
+			outputs: (props: { json: any; actions: any[] }) => string;
 			imports: string[];
 			isNotDirectExport?: boolean;
-			code: (props: {json: any; jsonToTemplate: (json: any, fragments: any[]) => string; fragments: any[]}) => string;
+			code: (props: {
+				json: any;
+				actions: any[];
+				jsonToTemplate: (json: any, actions: any[], fragments: any[]) => string;
+				fragments: any[];
+			}) => string;
 		};
 		react: {
 			imports: ((props: {json: any}) => string[]) | string[];

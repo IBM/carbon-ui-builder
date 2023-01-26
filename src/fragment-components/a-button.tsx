@@ -118,19 +118,57 @@ export const componentInfo: ComponentInfo = {
 		type: 'button',
 		kind: 'primary',
 		text: 'Button',
-		size: ''
+		size: '',
+		disabled: false
 	},
 	image,
 	codeExport: {
 		angular: {
 			inputs: (_) => '',
-			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
+			outputs: ({ json, actions }) => {
+				const name = nameStringToVariableString(json.codeContext?.name);
+				let res = '';
+				let clickAdded = false;
+
+				actions.forEach((a: any) => {
+					if (a.source === name && a.signal === 'click' && !clickAdded) {
+						res += `@Output() ${name}ClickedSignal: boolean = false;`;
+						clickAdded = true;
+					}
+				});
+
+				return `@Output() ${name}Clicked = new EventEmitter();` + res;
+			},
 			imports: ['ButtonModule'],
-			code: ({ json }) => {
+			code: ({ json, actions }) => {
+				const name = nameStringToVariableString(json.codeContext?.name);
+				let clickAction = '';
+				let disabled = '';
+				let clickAdded = false;
+
+				if (actions) {
+					actions.forEach((a: any) => {
+						if (a.source === name) {
+							if (a.signal === 'click' && !clickAdded) {
+								clickAction += `${name}ClickedSignal = !${name}ClickedSignal;`;
+								clickAdded = true;
+							}
+						}
+
+						if (a.destination === name) {
+							if (a.slot === 'isVisible') {
+								disabled += (disabled !== '' ? ' || ' : '');
+								disabled += `${a.source}ClickedSignal`;
+							}
+						}
+					});
+				}
+
 				return `<button
 					${json.kind ? `ibmButton='${json.kind}'` : 'ibmButton'}
 					${json.size ? `size='${json.size === 'default' ? 'normal' : json.size}'` : ''}
-					(click)='${nameStringToVariableString(json.codeContext?.name)}Clicked.emit()'
+					(click)='${name}Clicked.emit(); ${clickAdded ? clickAction : ''}'
+					${disabled === '' ? '' : '[disabled]="' + disabled + '"'}
 					${angularClassNamesFromComponentObj(json)}>
 						${json.text}
 				</button>`;
