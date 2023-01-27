@@ -22,6 +22,10 @@ const pageContainerStyle = css`
 		margin-bottom: 1rem;
 	}
 
+	ul.bx--accordion {
+		list-style: none;
+	}
+
 	ul {
 		list-style: disc;
 		margin-left: 2rem;
