@@ -16,16 +16,15 @@ const blockContainerStyle = css`
 
 const pageContainerStyle = css`
 	margin: 4rem 3rem 1rem;
-
 	p {
 		margin-top: 1rem;
 		margin-bottom: 1rem;
 	}
+`;
 
-	ul.bx--accordion {
-		list-style: none;
-	}
-
+const contentContainerStyle = css`
+	margin-top: 1rem;
+	margin-bottom: 2rem;
 	ul {
 		list-style: disc;
 		margin-left: 2rem;
@@ -34,11 +33,6 @@ const pageContainerStyle = css`
 			list-style: circle;
 		}
 	}
-`;
-
-const contentContainerStyle = css`
-	margin-top: 1rem;
-	margin-bottom: 2rem;
 `;
 
 const copyToClipboard = (codeString: string | undefined) => {
