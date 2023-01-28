@@ -16,6 +16,7 @@ const blockContainerStyle = css`
 
 const pageContainerStyle = css`
 	margin: 4rem 3rem 1rem;
+
 	p {
 		margin-top: 1rem;
 		margin-bottom: 1rem;
