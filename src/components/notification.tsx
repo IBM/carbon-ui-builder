@@ -15,7 +15,7 @@ const notificationAreaStyle = css`
 	position: absolute;
 	z-index: 4;
 	min-width: 30rem;
-	top: 2rem;
+	top: 3rem;
 `;
 
 export const Notification = () => {
