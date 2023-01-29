@@ -14,6 +14,7 @@ import { UIDropdown } from './components/ui-dropdown';
 import { UIExpandableTile } from './components/ui-expandable-tile';
 import { UIGrid } from './components/ui-grid';
 import { UILink } from './components/ui-link';
+import { UIInlineLoading } from './components/ui-inline-loading';
 import { UILoading } from './components/ui-loading';
 import { UINumberInput } from './components/ui-number-input';
 import { UIOverflowMenu } from './components/ui-overflow-menu';
@@ -45,6 +46,64 @@ export const setItemInState = (item: any, state: any, setState: (state: any) => 
 			...state.items.slice(itemIndex + 1)
 		]
 	});
+};
+
+export const addIfNotExist = (arr: any[], items: any[]) => {
+	items.forEach(item => {
+		if (!arr.includes(item)) {
+			arr.push(item);
+		}
+	});
+	return arr;
+};
+
+export const jsonToState = (json: any, allFragments: any[]) => {
+	if (json.type === 'fragment' && json.fragmentId) {
+		const fragment = allFragments.find((fragment: any) => fragment.id === json.fragmentId);
+		if (!fragment) {
+			return {};
+		}
+		return {
+			...fragment.data,
+			allCssClasses: [...fragment.allCssClasses]
+		};
+	}
+
+	if (json.data) {
+		return {
+			...json.data,
+			allCssClasses: json.allCssClasses,
+			items: json.data.items
+				? json.data.items.map((item: any) => jsonToState(item, allFragments))
+				: json.data.items
+		};
+	}
+
+	return {
+		...json,
+		items: json.items
+			? json.items.map((item: any) => jsonToState(item, allFragments))
+			: json.items
+	};
+};
+
+export const expandJsonToState = (json: any) => {
+	if (!Array.isArray(json)) {
+		return json;
+	}
+
+	const state = jsonToState(json[0], json);
+
+	// add css from all the fragments to state
+	const allCssClasses = [...state.allCssClasses];
+	json.forEach((fragment: any) => {
+		addIfNotExist(allCssClasses, fragment.allCssClasses);
+	});
+
+	return {
+		...state,
+		allCssClasses
+	};
 };
 
 export const getAllComponentStyleClasses = (componentObj: any, fragments: any[], globalStyleClasses: any[]) => {
@@ -150,6 +209,9 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'loading':
 			return <UILoading key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'inline-loading':
+			return <UIInlineLoading key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'radio-group':
 			return <UIRadioGroup key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;

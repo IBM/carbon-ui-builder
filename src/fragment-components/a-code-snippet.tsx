@@ -53,7 +53,7 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 			language={codeLanguage} height="10rem"
 			value={selectedComponent.code}
 			options= {{ quickSuggestions: false }}
-			onChange= {(_, value: any) => {
+			onChange= {(value: any) => {
 				setComponent({
 				...selectedComponent,
 				code: value

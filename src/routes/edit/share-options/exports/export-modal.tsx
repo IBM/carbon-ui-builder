@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import {
 	Button,
@@ -11,7 +11,7 @@ import {
 } from '@carbon/react';
 import { Copy, Document } from '@carbon/react/icons';
 import { css } from 'emotion';
-import Editor, { loader } from '@monaco-editor/react';
+import Editor, { useMonaco } from '@monaco-editor/react';
 
 import { createFragmentSandbox } from './create-fragment-sandbox';
 import { createReactApp } from './frameworks/react/fragment-v10';
@@ -22,14 +22,7 @@ import { saveBlob } from '../../../../utils/file-tools';
 import { GlobalStateContext } from '../../../../context';
 import { ExportImageComponent } from './export-image-component';
 import { filenameToLanguage } from '../../tools';
-import { getAllFragmentStyleClasses } from '../../../../ui-fragment/src/utils';
-
-loader.init().then(monaco => {
-	monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
-		noSemanticValidation: true,
-		noSyntaxValidation: true
-	});
-});
+import { getFragmentJsonExportString } from '../../../../utils/fragment-tools';
 
 const exportCodeModalStyle = css`
 	.cds--tab-content {
@@ -135,20 +128,20 @@ export const ExportModal = () => {
 	const { fragmentExportModal, hideFragmentExportModal } = useContext(ModalContext);
 	const [selectedAngularFilename, setSelectedAngularFilename] = useState('src/app/app.component.ts' as string);
 	const [selectedReactFilename, setSelectedReactFilename] = useState('src/component.js' as string);
+	const monaco = useMonaco();
+
+	useEffect(() => {
+		monaco?.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+			noSemanticValidation: true,
+			noSyntaxValidation: true
+		});
+	}, [monaco]);
 
 	if (!fragmentExportModal?.fragment) {
 		return null;
 	}
 
-	const jsonCode: any = JSON.stringify({
-		id: fragmentExportModal.fragment.id,
-		lastModified: fragmentExportModal.fragment.lastModified,
-		title: fragmentExportModal.fragment.title,
-		data: fragmentExportModal.fragment.data,
-		cssClasses: fragmentExportModal.fragment.cssClasses,
-		allCssClasses: getAllFragmentStyleClasses(fragmentExportModal.fragment, [], styleClasses),
-		labels: fragmentExportModal.fragment.labels
-	}, null, 2);
+	const jsonCode: any = getFragmentJsonExportString(fragmentExportModal.fragment, fragments, styleClasses);
 	const reactCode: any = createReactApp(fragmentExportModal.fragment, fragments);
 	const angularCode: any = createAngularApp(fragmentExportModal.fragment, fragments);
 

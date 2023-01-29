@@ -3,8 +3,8 @@ import parserBabel from 'prettier/parser-babel';
 import parserHtml from 'prettier/parser-html';
 import parserCss from 'prettier/parser-postcss';
 import { allComponents } from '../../../../../../fragment-components';
+import { addIfNotExist } from '../../../../../../ui-fragment/src/utils';
 import { tagNameFromFragment } from '../../../../../../utils/fragment-tools';
-import { addIfNotExist } from '../utils';
 
 export const formatOptionsTypescript: Options = {
 	plugins: [parserBabel],

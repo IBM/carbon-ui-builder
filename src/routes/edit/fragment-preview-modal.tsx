@@ -14,7 +14,6 @@ import { UIFragment } from '../../ui-fragment/src/ui-fragment';
 import { useNavigate } from 'react-router-dom';
 import { GlobalStateContext } from '../../context';
 import { getFragmentDuplicate } from '../../utils/fragment-tools';
-import { getAllFragmentStyleClasses } from '../../ui-fragment/src/utils';
 
 const exportCodeModalStyle = css`
 	.cds--tab-content {
@@ -42,13 +41,15 @@ const controlsContainerStyle = css`
 export const FragmentPreviewModal = () => {
 	const navigate = useNavigate();
 	const { fragmentPreviewModal, hideFragmentPreviewModal } = useContext(ModalContext);
-	const { addFragment, styleClasses } = useContext(GlobalStateContext);
-	const [fragmentState, setFragmentState] = useState(JSON.parse(JSON.stringify(fragmentPreviewModal?.fragment || {})));
+	const { addFragment, getExpandedFragmentState } = useContext(GlobalStateContext);
+
+	const [fragmentState, setFragmentState] = useState(getExpandedFragmentState(JSON.parse(JSON.stringify(fragmentPreviewModal?.fragment || {}))));
 	const [currentFragmentIndex, setCurrentFragmentIndex] = useState(fragmentPreviewModal?.fragments?.indexOf(fragmentPreviewModal?.fragment));
 
 	useEffect(() => {
-		setFragmentState(JSON.parse(JSON.stringify(fragmentPreviewModal?.fragment || {})));
+		setFragmentState(getExpandedFragmentState(fragmentPreviewModal?.fragment || {}));
 		setCurrentFragmentIndex(fragmentPreviewModal?.fragments?.indexOf(fragmentPreviewModal?.fragment));
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [fragmentPreviewModal, fragmentPreviewModal?.fragment]);
 
 	if (!fragmentPreviewModal.fragment || !fragmentPreviewModal.fragments) {
@@ -57,7 +58,7 @@ export const FragmentPreviewModal = () => {
 
 	const selectFragmentByIndex = (index: number) => {
 		setCurrentFragmentIndex(index);
-		setFragmentState(JSON.parse(JSON.stringify(fragmentPreviewModal?.fragments[index])));
+		setFragmentState(getExpandedFragmentState(JSON.parse(JSON.stringify(fragmentPreviewModal?.fragments[index]))));
 	};
 
 	const editOrCloneFragment = () => {
@@ -114,10 +115,7 @@ export const FragmentPreviewModal = () => {
 			}
 			<div className={fragmentContainerStyle}>
 				<UIFragment
-					state={{
-						...fragmentState,
-						allCssClasses: getAllFragmentStyleClasses(fragmentState, [], styleClasses)
-					}}
+					state={fragmentState}
 					setState={setFragmentState} />
 			</div>
 		</Modal>

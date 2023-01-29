@@ -1,4 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+	useContext,
+	useEffect,
+	useRef,
+	useState
+} from 'react';
 
 import { Loading } from '@carbon/react';
 
@@ -9,6 +14,7 @@ import {
 	RenderProps,
 	sleep
 } from '../utils/fragment-tools';
+import { GlobalStateContext } from '../context';
 
 const fragmentImage = css`
 	width: auto;
@@ -33,6 +39,9 @@ const spinner = css`
 
 export const FragmentPreview = ({ fragment, resetPreview }: any) => {
 	const [previewUrl, setPreviewUrl] = useState('');
+	const { getExpandedFragmentState } = useContext(GlobalStateContext);
+	const fragmentState = getExpandedFragmentState(fragment);
+
 	const dbRef = useRef({
 		transaction: (_storeNames: string | Iterable<string>, _mode?: IDBTransactionMode) => (undefined as unknown as IDBTransaction)
 	} as IDBDatabase);
@@ -40,8 +49,8 @@ export const FragmentPreview = ({ fragment, resetPreview }: any) => {
 	const requestRef = useRef(indexedDB.open('imagePreviewFiles', dbVersion));
 
 	const renderProps: RenderProps = {
-		id: fragment.id,
-		name: fragment.title,
+		id: fragmentState.id,
+		name: fragmentState.title,
 		width: 800,
 		height: 400,
 		preview: {
@@ -61,9 +70,9 @@ export const FragmentPreview = ({ fragment, resetPreview }: any) => {
 
 		// Put the blob into the dabase
 		transaction.objectStore('imagePreviews').put({
-			lastModified: fragment.lastModified,
+			lastModified: fragmentState.lastModified,
 			image: blob
-		}, fragment.id);
+		}, fragmentState.id);
 	};
 
 	const getImagePreviewFromDb = async (): Promise<{ lastModified: string; image: any } | undefined> => {
@@ -88,7 +97,7 @@ export const FragmentPreview = ({ fragment, resetPreview }: any) => {
 					return;
 				}
 
-				const request = transaction.objectStore('imagePreviews').get(fragment.id);
+				const request = transaction.objectStore('imagePreviews').get(fragmentState.id);
 				request.onsuccess = (event: any) => {
 					resolve((event.target as any)?.result);
 				};
@@ -100,7 +109,7 @@ export const FragmentPreview = ({ fragment, resetPreview }: any) => {
 	};
 
 	const updatePreviewUrl = async () => {
-		const imageBlob = await getFragmentPreview(fragment, renderProps);
+		const imageBlob = await getFragmentPreview(fragmentState, renderProps);
 		putImagePreviewInDb(imageBlob);
 		setPreviewUrl(await getUrlFromBlob(imageBlob) as string);
 	};
@@ -114,7 +123,7 @@ export const FragmentPreview = ({ fragment, resetPreview }: any) => {
 
 		let imgFile = imagePreviewInfo?.image;
 		if (!imgFile) {
-			const imageBlob = await getFragmentPreview(fragment, renderProps);
+			const imageBlob = await getFragmentPreview(fragmentState, renderProps);
 			putImagePreviewInDb(imageBlob);
 			imgFile = imageBlob;
 		}

@@ -44,16 +44,17 @@ export const SelectedComponentBreadcrumbs = ({ selectedComponent }: any) => {
 			<BreadcrumbItem
 			href="#"
 			key={component.id}
-			isCurrentPage={!component.type}
 			onClick={(event: any) => {
 				event.nativeEvent.preventDefault();
 				if (!component.type) {
 					// happens when clicking root element
+					// we select the fragment
+					selectComponent({ id: null });
 					return;
 				}
 				selectComponent(component);
 			}}>
-				{component.type || 'root'}
+				{component.type || 'fragment'}
 			</BreadcrumbItem>
 		)}
 		<BreadcrumbItem href="#" onClick={(event: any) => event.nativeEvent.preventDefault()} isCurrentPage>
