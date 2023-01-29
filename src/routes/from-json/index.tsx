@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import Editor from '@monaco-editor/react';
-import { Button } from 'carbon-components-react';
-import { Edit32, Copy16 } from '@carbon/icons-react';
+import { Button } from '@carbon/react';
+import { Edit, Copy } from '@carbon/react/icons';
 import { GlobalStateContext } from '../../context';
 import { UIFragment } from '../../ui-fragment/src/ui-fragment';
 import { generateNewFragment } from '../dashboard/fragment-wizard/generate-new-fragment';
@@ -106,10 +106,9 @@ export const FromJson = () => {
 				To add this fragment to your fragments, modify and export it, click the button below.
 			</p>
 			<Button
-			renderIcon={Edit32}
 			size='xl'
 			onClick={openInEditor}>
-				Edit & Export
+				Edit & Export <Edit size={32} />
 			</Button>
 		</div>
 
@@ -130,7 +129,7 @@ export const FromJson = () => {
 				tooltipPosition='right'
 				iconDescription='Copy to clipboard'
 				onClick={() => copyToClipboard(state.parseSucceeded ? JSON.stringify(state.fragmentState, null, 2) : params.json)}
-				renderIcon={Copy16} />
+				renderIcon={Copy} />
 		</h2>
 		<Editor
 			className={blockContainerStyle}

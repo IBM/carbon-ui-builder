@@ -6,7 +6,7 @@ import {
 	TextInput,
 	Dropdown,
 	NumberInput
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent } from './a-component';
 import { ComponentInfo } from '.';
 import { css } from 'emotion';
