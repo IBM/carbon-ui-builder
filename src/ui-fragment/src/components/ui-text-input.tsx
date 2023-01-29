@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput } from 'carbon-components-react';
+import { TextInput } from '@carbon/react';
 import { CssClasses } from '../types';
 
 export interface TextInputState {

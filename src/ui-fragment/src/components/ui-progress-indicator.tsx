@@ -1,5 +1,5 @@
 import React from 'react';
-import { ProgressIndicator, ProgressStep } from 'carbon-components-react';
+import { ProgressIndicator, ProgressStep } from '@carbon/react';
 import { CssClasses } from '../types';
 
 export interface ProgressIndicatorState {

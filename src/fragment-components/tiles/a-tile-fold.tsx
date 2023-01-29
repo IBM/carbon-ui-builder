@@ -1,7 +1,7 @@
 import React from 'react';
 import {
 	TileBelowTheFoldContent
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent, ComponentInfo } from '../a-component';
 import {
 	angularClassNamesFromComponentObj,
@@ -57,9 +57,9 @@ export const componentInfo: ComponentInfo = {
 				// Appends below the fold class to class list
 				let classes = angularClassNamesFromComponentObj(json);
 				if (classes) {
-					classes = classes.split('="').join('="bx--tile-content__below-the-fold ');
+					classes = classes.split('="').join('="cds--tile-content__below-the-fold ');
 				} else {
-					classes = 'class="bx--tile-content__below-the-fold"';
+					classes = 'class="cds--tile-content__below-the-fold"';
 				}
 
 				return `<span ${classes}>

@@ -3,7 +3,7 @@ import {
 	Dropdown,
 	TextInput,
 	RadioButtonGroup
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent, ComponentInfo } from './a-component';
 import image from './../assets/component-icons/radio-group.svg';
 import {
@@ -172,7 +172,7 @@ export const componentInfo: ComponentInfo = {
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 			imports: ['RadioModule'],
 			code: ({ json, fragments, jsonToTemplate }) => {
-				return `<legend class="bx--label">{{${nameStringToVariableString(json.codeContext?.name)}LegendText}}</legend>
+				return `<legend class="cds--label">{{${nameStringToVariableString(json.codeContext?.name)}LegendText}}</legend>
 				<ibm-radio-group
 					[name]="${nameStringToVariableString(json.codeContext?.name)}Name"
 					[orientation]="${nameStringToVariableString(json.codeContext?.name)}Orientation"

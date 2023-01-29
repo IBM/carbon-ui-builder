@@ -1,5 +1,5 @@
 import React from 'react';
-import { Checkbox, TextInput } from 'carbon-components-react';
+import { Checkbox, TextInput } from '@carbon/react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
 import { ComponentInfo } from '.';
@@ -22,7 +22,7 @@ export const ACheckboxSettingsUI = ({ selectedComponent, setComponent }: any) =>
 			labelText='Checked'
 			id='checkbox-checked'
 			checked={selectedComponent.checked}
-			onChange={(checked: any) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				checked
 			})} />

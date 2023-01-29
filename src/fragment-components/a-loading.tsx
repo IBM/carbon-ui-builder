@@ -4,7 +4,7 @@ import {
 	Loading,
 	TextInput,
 	Dropdown
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent } from './a-component';
 import { ComponentInfo } from '.';
 import { css } from 'emotion';
@@ -15,7 +15,7 @@ import {
 	angularClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 const overlayStyle = css`
-.bx--loading-overlay {
+.cds--loading-overlay {
 	position: absolute;
 };`;
 
@@ -39,7 +39,7 @@ export const ALoadingSettingsUI = ({ selectedComponent, setComponent }: any) => 
 			labelText='With overlay'
 			id='with-overlay'
 			checked={selectedComponent.overlay}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					overlay: checked
@@ -50,7 +50,7 @@ export const ALoadingSettingsUI = ({ selectedComponent, setComponent }: any) => 
 			id='active'
 			disabled
 			checked={selectedComponent.active}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					active: checked

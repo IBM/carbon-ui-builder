@@ -7,7 +7,7 @@ import {
 	FileUploaderDropContainer,
 	FileUploaderItem,
 	TextArea
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { FragmentWizardModals } from './fragment-wizard';
 import { generateNewFragment } from './generate-new-fragment';
 
@@ -207,7 +207,7 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 		<Modal
 			open={props.shouldDisplay}
 			shouldSubmitOnEnter={false}
-			selectorPrimaryFocus='.bx--tile--selectable'
+			selectorPrimaryFocus='.cds--tile--selectable'
 			onRequestSubmit={() => {
 				generateFragment();
 				props.setLastVisitedModal(FragmentWizardModals.IMPORT_JSON_MODAL);
@@ -223,19 +223,18 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 				props.setDisplayedModal(props.lastVisitedModal);
 				props.setLastVisitedModal(FragmentWizardModals.IMPORT_JSON_MODAL);
 			}}
-			hasForm
 			modalHeading='Import JSON'
 			primaryButtonText='Done'
 			primaryButtonDisabled={!jsonString || jsonParseError}
 			secondaryButtonText='Back'>
 			<div className={fragmentOptions}>
 				<FormItem>
-					<p className='bx--file--label'>Upload file</p>
-					<p className='bx--label-description'>
+					<p className='cds--file--label'>Upload file</p>
+					<p className='cds--label-description'>
 						Max file size is 500kb. Supported file type is .json
 					</p>
 					<FileUploaderDropContainer accept={['.json']} onAddFiles={onAddFiles} />
-					<div className={'bx--file-container'} style={{ width: '100%' }}>
+					<div className={'cds--file-container'} style={{ width: '100%' }}>
 						{files.map(
 							({
 								uuid,

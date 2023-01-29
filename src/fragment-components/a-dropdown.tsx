@@ -4,7 +4,7 @@ import {
 	Dropdown,
 	MultiSelect,
 	TextInput
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
 import { ComponentInfo } from '.';
@@ -67,7 +67,7 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 						labelText='Is default selected'
 						id={`invalid-select-${index}`}
 						checked={item.selected}
-						onChange={(checked: any) => handleItemUpdate('selected', checked, index)} />
+						onChange={(_: any, { checked }: any) => handleItemUpdate('selected', checked, index)} />
 				</div>
 			}
 		</>;
@@ -85,7 +85,7 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 			labelText='Is multiselect'
 			id='multiselect-label'
 			checked={selectedComponent.isMulti}
-			onChange={(checked: any) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				isMulti: checked
 			})} />
@@ -93,7 +93,7 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 			labelText='Is inline'
 			id='inline-label'
 			checked={selectedComponent.isInline}
-			onChange={(checked: any) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				isInline: checked
 			})} />
@@ -142,7 +142,7 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 			labelText='Hide label'
 			id='hide-label'
 			checked={selectedComponent.hideLabel}
-			onChange={(checked: any) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				hideLabel: checked
 			})} />
@@ -182,7 +182,7 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 			labelText='Light theme'
 			id='theme-select'
 			checked={selectedComponent.light}
-			onChange={(checked: any) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				light: checked
 			})} />

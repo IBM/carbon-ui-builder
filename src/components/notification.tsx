@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { InlineNotification, NotificationActionButton } from 'carbon-components-react';
+import { InlineNotification, NotificationActionButton } from '@carbon/react';
 import {
 	NotificationContext,
 	NotificationActionType,

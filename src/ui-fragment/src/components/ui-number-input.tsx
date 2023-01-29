@@ -1,5 +1,5 @@
 import React from 'react';
-import { NumberInput } from 'carbon-components-react';
+import { NumberInput } from '@carbon/react';
 import { CssClasses } from '../types';
 
 export interface NumberInputState {

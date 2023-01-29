@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { TextInput, Checkbox } from 'carbon-components-react';
+import { TextInput, Checkbox } from '@carbon/react';
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
 import { getParentComponent, updatedState } from '../../components';
@@ -21,7 +21,7 @@ export const ASelectableTileGroupSettingsUI = ({ selectedComponent, setComponent
 			labelText='Light theme'
 			id='theme-select'
 			checked={selectedComponent.light}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				/**
 				 * It usually is not common for users to have different theme for each tile,
 				 * this approach will ensure users don't have to go through each child `tile` & update theme

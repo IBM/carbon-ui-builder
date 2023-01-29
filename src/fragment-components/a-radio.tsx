@@ -3,7 +3,7 @@ import {
 	RadioButton,
 	TextInput,
 	Checkbox
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent, ComponentInfo } from './a-component';
 import { useFragment } from '../context';
 import { css, cx } from 'emotion';
@@ -27,7 +27,7 @@ export const ARadioSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			labelText='Default selected'
 			id='defaultSelected'
 			checked={selectedComponent.defaultChecked}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...parentComponent,
 					defaultSelected: checked ? `${selectedComponent.id}` : '',
@@ -42,7 +42,7 @@ export const ARadioSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			labelText='Disable button'
 			id='disable'
 			checked={selectedComponent.disabled}
-			onChange={(checked: boolean) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				disabled: checked
 			})}/>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput, Dropdown } from 'carbon-components-react';
+import { TextInput, Dropdown } from '@carbon/react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
 import { ComponentInfo } from '.';

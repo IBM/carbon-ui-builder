@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput } from 'carbon-components-react';
+import { TextInput } from '@carbon/react';
 import { css } from 'emotion';
 
 const loginGithubStyle = css`
@@ -7,7 +7,7 @@ const loginGithubStyle = css`
 		margin-bottom: 0.5rem;
 	}
 
-	.bx--form-item {
+	.cds--form-item {
 		margin-top: 1rem;
 	}
 `;
@@ -24,6 +24,7 @@ export const LoginGithub = ({
 		<p>When your token expires, you&apos;ll need to generate a new one.</p>
 
 		<TextInput
+			id="github-token"
 			labelText='Your GitHub token'
 			name='github-token'
 			placeholder='Paste your token here'

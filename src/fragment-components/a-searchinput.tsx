@@ -5,7 +5,7 @@ import {
 	Checkbox,
 	Search,
 	ExpandableSearch
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
 import { ComponentInfo } from '.';
@@ -29,7 +29,7 @@ export const ASearchInputSettingsUI = ({ selectedComponent, setComponent }: any)
 			labelText='Expandable'
 			id='expandable'
 			checked={selectedComponent.expandable}
-			onChange={(checked: any) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				expandable: checked
 			})} />
@@ -37,7 +37,7 @@ export const ASearchInputSettingsUI = ({ selectedComponent, setComponent }: any)
 			labelText='Disabled'
 			id='disabled'
 			checked={selectedComponent.disabled}
-			onChange={(checked: any) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				disabled: checked
 			})} />
@@ -45,7 +45,7 @@ export const ASearchInputSettingsUI = ({ selectedComponent, setComponent }: any)
 			labelText='Light'
 			id='light'
 			checked={selectedComponent.light}
-			onChange={(checked: any) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				light: checked
 			})} />
@@ -53,7 +53,7 @@ export const ASearchInputSettingsUI = ({ selectedComponent, setComponent }: any)
 			labelText='Auto complete'
 			id='autocomplete'
 			checked={selectedComponent.autocomplete === 'on'}
-			onChange={(checked: any) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				autocomplete: checked ? 'on' : 'off'
 			})} />

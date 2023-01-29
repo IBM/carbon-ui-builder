@@ -1,5 +1,5 @@
 import React from 'react';
-import { Toggle } from 'carbon-components-react';
+import { Toggle } from '@carbon/react';
 import { CssClasses } from '../types';
 
 export interface ToggleState {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Checkbox } from 'carbon-components-react';
+import { Checkbox } from '@carbon/react';
 import { CssClasses } from '../types';
 
 export interface CheckboxState {

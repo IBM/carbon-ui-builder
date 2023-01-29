@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextArea, TextInput } from 'carbon-components-react';
+import { TextArea, TextInput } from '@carbon/react';
 import { AComponent } from './a-component';
 import { ComponentInfo } from '.';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row } from 'carbon-components-react';
+import { Row } from '@carbon/react';
 import { CssClasses } from '../types';
 import { renderComponents, setItemInState } from '../utils';
 

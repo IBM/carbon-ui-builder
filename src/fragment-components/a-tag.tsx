@@ -4,7 +4,7 @@ import {
 	Dropdown,
 	Tag,
 	TextInput
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent, ComponentInfo } from './a-component';
 
 import image from './../assets/component-icons/tag.svg';
@@ -86,7 +86,7 @@ export const ATagSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			labelText='Is filter'
 			id='filter'
 			checked={selectedComponent.filter}
-			onChange={(checked: boolean) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					filter: checked
@@ -98,7 +98,7 @@ export const ATagSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			labelText='Disabled'
 			id='disabled'
 			checked={selectedComponent.disabled}
-			onChange={(checked: boolean) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					disabled: checked

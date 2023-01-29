@@ -1,5 +1,5 @@
 import React from 'react';
-import { OverflowMenu } from 'carbon-components-react';
+import { OverflowMenu } from '@carbon/react';
 import { renderComponents, setItemInState } from '../utils';
 import { CssClasses } from '../types';
 import { OverflowMenuItemState } from './ui-overflow-menu-item';

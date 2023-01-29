@@ -4,7 +4,7 @@ import {
 	ExpandableTile,
 	TileAboveTheFoldContent,
 	TextInput
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
 import { css } from 'emotion';
@@ -23,7 +23,7 @@ export const AExpandableSettingsUI = ({ selectedComponent, setComponent }: any) 
 			labelText='Light theme'
 			id='theme-select'
 			checked={selectedComponent.light}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					light: checked
@@ -34,7 +34,7 @@ export const AExpandableSettingsUI = ({ selectedComponent, setComponent }: any) 
 			labelText='Expanded'
 			id='expanded'
 			checked={selectedComponent.expanded}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					expanded: checked
@@ -45,7 +45,7 @@ export const AExpandableSettingsUI = ({ selectedComponent, setComponent }: any) 
 			labelText='Show outline'
 			id='outline'
 			checked={selectedComponent.outline}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					outline: checked
@@ -72,8 +72,8 @@ export const AExpandableTileCodeUI = ({ selectedComponent, setComponent }: any) 
 };
 
 const outlineStyle = css`
-	span.bx--tile-content__above-the-fold,
-	span.bx--tile-content__below-the-fold {
+	span.cds--tile-content__above-the-fold,
+	span.cds--tile-content__below-the-fold {
 		min-height: 16px;
 		outline: 1px dashed #78a9ff;
 	}
@@ -174,7 +174,7 @@ export const componentInfo: ComponentInfo = {
 				return `<ibm-expandable-tile
 					${json.expanded !== undefined ? `[expanded]="${nameStringToVariableString(json.codeContext?.name)}Expanded"` : ''}
 					${angularClassNamesFromComponentObj(json)}>
-						<span class="bx--tile-content__above-the-fold">
+						<span class="cds--tile-content__above-the-fold">
 							${aboveFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
 						</span>
 						${belowFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}

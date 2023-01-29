@@ -1,5 +1,5 @@
 import React from 'react';
-import { CodeSnippet } from 'carbon-components-react';
+import { CodeSnippet } from '@carbon/react';
 import { CssClasses } from '../types';
 
 export interface CodeSnippetState {

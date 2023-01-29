@@ -12,8 +12,8 @@ import {
 	Checkbox,
 	NumberInput,
 	Loading
-} from 'carbon-components-react';
-import { Save32 } from '@carbon/icons-react';
+} from '@carbon/react';
+import { Save } from '@carbon/react/icons';
 import { css } from 'emotion';
 import debounce from 'lodash/debounce';
 import { saveBlob, getFullFileName } from '../../../../utils/file-tools';
@@ -124,7 +124,7 @@ const ExportImageSettings = ({ inputs, handleChange, onSave }: any) => {
 				id='ratioLock'
 				labelText='Preserve aspect ratio'
 				defaultChecked={inputs.ratioLock}
-				onChange={(event: any) => handleChange('ratioLock', event)} />
+				onChange={(_: any, { checked }: any) => handleChange('ratioLock', checked)} />
 			<Select
 			className={selectInput}
 			value={inputs.unit}
@@ -144,7 +144,7 @@ const ExportImageSettings = ({ inputs, handleChange, onSave }: any) => {
 				<SelectItem text='bmp' value='image/bmp' />
 				<SelectItem text='gif' value='image/gif' />
 			</Select>
-			<Button renderIcon={Save32} onClick={onSave}>Save image</Button>
+			<Button renderIcon={Save} onClick={onSave}>Save image</Button>
 		</Form>
 	);
 };

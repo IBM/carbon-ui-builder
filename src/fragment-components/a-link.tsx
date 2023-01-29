@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Checkbox, TextInput } from 'carbon-components-react';
+import { Link, Checkbox, TextInput } from '@carbon/react';
 import { AComponent, ComponentInfo } from './a-component';
 
 import image from './../assets/component-icons/link.svg';
@@ -25,7 +25,7 @@ export const ALinkSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			labelText='Disabled'
 			id='disable-label'
 			checked={selectedComponent.disabled}
-			onChange={(checked: boolean) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					disabled: checked
@@ -36,7 +36,7 @@ export const ALinkSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			labelText='Inline'
 			id='Inline-select'
 			checked={selectedComponent.inline}
-			onChange={(checked: boolean) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					inline: checked

@@ -4,7 +4,7 @@ export const drag = (event: any, dragObj: any) => {
 };
 
 const draggableSelectorDirect = ':scope > [draggable]';
-const draggableSelectorColumn = ':scope > .bx--col > [draggable]';
+const draggableSelectorColumn = ':scope > .cds--col > [draggable]';
 const draggableSelector = `${draggableSelectorDirect}, ${draggableSelectorColumn}`;
 
 export const isHorizontalContainer = (containerElement: HTMLElement) => {

@@ -4,7 +4,7 @@ import {
 	TextInput,
 	CodeSnippet,
 	Checkbox
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
 import { ComponentInfo } from '.';
@@ -34,7 +34,7 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 			labelText='Light theme'
 			id='theme-select'
 			checked={selectedComponent.light}
-			onChange={(checked: any) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				light: checked
 		})} />
@@ -48,7 +48,7 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setCodeLanguage(event.selectedItem.id)} />
 
-		<label className='bx--label'>Code</label>
+		<label className='cds--label'>Code</label>
 		<Editor
 			language={codeLanguage} height="10rem"
 			value={selectedComponent.code}

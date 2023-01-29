@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import {
 	FormLabel,
 	Tag
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { GlobalStateContext } from '../context';
 
 const compareClasses = (sc1: any, sc2: any) => sc1.name < sc2.name ? -1 : 1;

@@ -4,7 +4,7 @@ import {
 	Dropdown,
 	TextInput,
 	NumberInput
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
 import { ComponentInfo } from '.';
@@ -34,7 +34,7 @@ export const ANumberInputSettingsUI = ({ selectedComponent, setComponent }: any)
 			labelText='Hide label'
 			id='hide-label'
 			checked={selectedComponent.hideLabel}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					hideLabel: checked
@@ -64,30 +64,30 @@ export const ANumberInputSettingsUI = ({ selectedComponent, setComponent }: any)
 		<NumberInput
 			value={selectedComponent.min}
 			label='Min'
-			onChange={(event: any) => {
+			onChange={(_: any, { value }: any) => {
 				setComponent({
 					...selectedComponent,
-					min: +event.imaginaryTarget.value
+					min: value
 				});
 			}}
 		/>
 		<NumberInput
 			value={selectedComponent.max}
 			label='Max'
-			onChange={(event: any) => {
+			onChange={(_: any, { value }: any) => {
 				setComponent({
 					...selectedComponent,
-					max: +event.imaginaryTarget.value
+					max: value
 				});
 			}}
 		/>
 		<NumberInput
 			value={selectedComponent.step}
 			label='Step'
-			onChange={(event: any) => {
+			onChange={(_: any, { value }: any) => {
 				setComponent({
 					...selectedComponent,
-					step: +event.imaginaryTarget.value
+					step: value
 				});
 			}}
 		/>
@@ -115,7 +115,7 @@ export const ANumberInputSettingsUI = ({ selectedComponent, setComponent }: any)
 			labelText='Light theme'
 			id='theme-select'
 			checked={selectedComponent.light}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					light: checked

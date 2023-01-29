@@ -3,7 +3,7 @@ import React, {
 	useContext,
 	useEffect
 } from 'react';
-import { Loading } from 'carbon-components-react';
+import { Loading } from '@carbon/react';
 import { css, cx } from 'emotion';
 import { DashboardSearch, SortDirection } from './dashboard-search';
 import { FragmentGroupDisplayed, DashboardHeader } from './dashboard-header';
@@ -32,7 +32,7 @@ const headerRowSyles = css`
 	margin: 0 -2rem;
 	padding-top: 2rem;
 	margin-top: -2rem;
-	.bx--col {
+	.cds--col {
 		padding: 0;
 	}
 `;
@@ -43,7 +43,7 @@ const searchRowStyles = css`
 	padding-left: 1rem;
 	margin: 0 -2rem;
 	border-bottom: 1px solid #d6d6d6;
-	.bx--col {
+	.cds--col {
 		padding-right: 0;
 	}
 `;

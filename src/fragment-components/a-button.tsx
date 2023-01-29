@@ -3,7 +3,7 @@ import {
 	Button,
 	Dropdown,
 	TextInput
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { css } from 'emotion';
 import { AComponent, ComponentInfo } from './a-component';
 

@@ -3,7 +3,7 @@ import {
 	AccordionItem,
 	Checkbox,
 	TextInput
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent, ComponentInfo } from '../a-component';
 
 import image from '../../assets/component-icons/accordion-item.svg';
@@ -36,7 +36,7 @@ export const AAccordionItemSettingsUI = ({ selectedComponent, setComponent }: an
 			labelText='Disabled'
 			id='disabled'
 			checked={selectedComponent.disabled}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					disabled: checked

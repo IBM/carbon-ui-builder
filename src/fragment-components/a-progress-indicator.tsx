@@ -4,7 +4,7 @@ import {
 	ProgressIndicator,
 	ProgressStep,
 	TextInput
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
 import { ComponentInfo } from '.';
@@ -53,13 +53,13 @@ export const AProgressIndicatorSettingsUI = ({ selectedComponent, setComponent }
 					labelText='Is invalid'
 					id={`invalid-select-${index}`}
 					checked={item.invalid}
-					onChange={(checked: any) => handleStepUpdate('invalid', checked, index)} />
+					onChange={(_: any, { checked }: any) => handleStepUpdate('invalid', checked, index)} />
 				<Checkbox
 					style={{ display: 'inline-flex' }}
 					labelText='Is disabled'
 					id={`disabled-select-${index}`}
 					checked={item.disabled}
-					onChange={(checked: any) => handleStepUpdate('disabled', checked, index)} />
+					onChange={(_: any, { checked }: any) => handleStepUpdate('disabled', checked, index)} />
 			</div>
 		</>;
 	};
@@ -76,7 +76,7 @@ export const AProgressIndicatorSettingsUI = ({ selectedComponent, setComponent }
 			labelText='Is vertical'
 			id='layout-select'
 			checked={selectedComponent.isVertical}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					isVertical: checked

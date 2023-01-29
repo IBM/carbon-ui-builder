@@ -5,14 +5,14 @@ import {
 	OverflowMenuItem,
 	SkeletonText,
 	Tile
-} from 'carbon-components-react';
+} from '@carbon/react';
 import {
-	Copy16,
-	DocumentExport16,
-	Edit16,
-	View16,
-	TrashCan16
-} from '@carbon/icons-react';
+	Copy,
+	DocumentExport,
+	Edit,
+	View,
+	TrashCan
+} from '@carbon/react/icons';
 import { css } from 'emotion';
 import { ModalContext } from '../../context/modal-context';
 import { FragmentPreview } from '../../components/fragment-preview';
@@ -86,20 +86,20 @@ export const FragmentTile = ({
 						onClick={(event: { stopPropagation: () => void }) => event.stopPropagation()}>
 							{
 								!isFeaturedFragment && <OverflowMenuItem
-									itemText={<div className={menuItemStyle}><Edit16 /> Edit</div>}
+									itemText={<div className={menuItemStyle}><Edit size={16} /> Edit</div>}
 									onClick={() => navigate(`/edit/${fragment.id}`)} />
 							}
 							<OverflowMenuItem
-								itemText={<div className={menuItemStyle}><DocumentExport16 /> Export</div>}
+								itemText={<div className={menuItemStyle}><DocumentExport size={16} /> Export</div>}
 								onClick={() => showFragmentExportModal(fragment)} />
 							<OverflowMenuItem
-								itemText={<div className={menuItemStyle}><Copy16 /> Duplicate</div>}
+								itemText={<div className={menuItemStyle}><Copy size={16} /> Duplicate</div>}
 								onClick={() => showFragmentDuplicateModal(fragment)} />
 							<OverflowMenuItem
-								itemText={<div className={menuItemStyle}><View16 /> Open preview</div>}
+								itemText={<div className={menuItemStyle}><View size={16} /> Open preview</div>}
 								onClick={() => showFragmentPreviewModal(fragment, fragments, isFeaturedFragment)} />
 							<OverflowMenuItem
-								itemText={<div className={menuItemStyle}><TrashCan16 /> Delete</div>}
+								itemText={<div className={menuItemStyle}><TrashCan size={16} /> Delete</div>}
 								onClick={() => showFragmentDeleteModal(fragment.id)}
 								isDelete />
 						</OverflowMenu>

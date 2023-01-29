@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Breadcrumb, BreadcrumbItem } from 'carbon-components-react';
+import { Breadcrumb, BreadcrumbItem } from '@carbon/react';
 
 import { getParentComponent, getSelectedComponent } from '../../components/fragment';
 import { useFragment } from '../../context';

@@ -3,7 +3,7 @@ import React, {
 	useEffect,
 	useState
 } from 'react';
-import { Modal } from 'carbon-components-react';
+import { Modal } from '@carbon/react';
 import { GithubContext, ModalContext } from '../context';
 import { LoginGithub } from './login-github';
 

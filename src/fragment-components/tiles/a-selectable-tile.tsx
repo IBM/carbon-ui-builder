@@ -3,7 +3,7 @@ import {
 	TextInput,
 	Checkbox,
 	SelectableTile
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
 import { css } from 'emotion';
@@ -31,7 +31,7 @@ export const ASelectableTileSettingsUI = ({ selectedComponent, setComponent }: a
 					labelText='Light theme'
 					id='theme-select'
 					checked={selectedComponent.light}
-					onChange={(checked: any) => {
+					onChange={(_: any, { checked }: any) => {
 						setComponent({
 							...selectedComponent,
 							light: checked
@@ -44,7 +44,7 @@ export const ASelectableTileSettingsUI = ({ selectedComponent, setComponent }: a
 			labelText='Selected'
 			id='selected'
 			checked={selectedComponent.selected}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					selected: checked
@@ -55,7 +55,7 @@ export const ASelectableTileSettingsUI = ({ selectedComponent, setComponent }: a
 			labelText='Disabled'
 			id='disabled'
 			checked={selectedComponent.disabled}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					disabled: checked
@@ -114,7 +114,7 @@ export const ASelectableTileCodeUI = ({ selectedComponent, setComponent }: any) 
 // Prevent users from clicking on the selectable tile
 const preventCheckEvent = css`
 	pointer-events: none;
-	.bx--tile-content {
+	.cds--tile-content {
 		pointer-events: initial;
 	}
 `;
@@ -153,7 +153,7 @@ export const ASelectableTile = ({
 	// Removing `for` attribute so users can select text and other non-form elements.
 	useEffect(() => {
 		const tileElement = document.getElementById(componentObj.codeContext.name);
-		const labelElement = tileElement?.parentElement?.querySelector('label.bx--tile.bx--tile--selectable');
+		const labelElement = tileElement?.parentElement?.querySelector('label.cds--tile.cds--tile--selectable');
 		// Setting to empty instead of removing so users can select non-form elements within tile when a form element is present
 		// Although form elements should never be added within another
 		labelElement?.setAttribute('for', '');

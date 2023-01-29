@@ -1,6 +1,6 @@
 import React from 'react';
 import { css } from 'emotion';
-import { Button } from 'carbon-components-react';
+import { Button } from '@carbon/react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/header';
 // import the img placeholder svg

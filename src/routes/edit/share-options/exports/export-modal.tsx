@@ -4,9 +4,12 @@ import {
 	Button,
 	Modal,
 	Tab,
-	Tabs
-} from 'carbon-components-react';
-import { Copy16, Document16 } from '@carbon/icons-react';
+	Tabs,
+	TabList,
+	TabPanels,
+	TabPanel
+} from '@carbon/react';
+import { Copy, Document } from '@carbon/react/icons';
 import { css } from 'emotion';
 import Editor, { loader } from '@monaco-editor/react';
 
@@ -29,7 +32,7 @@ loader.init().then(monaco => {
 });
 
 const exportCodeModalStyle = css`
-	.bx--tab-content {
+	.cds--tab-content {
 		height: calc(100% - 40px);
 		overflow: hidden;
 	}
@@ -69,11 +72,11 @@ const fileNameStyle = css`
 	display: block;
 	width: 100%;
 
-	&.bx--btn--ghost.bx--btn--sm {
+	&.cds--btn--ghost.cds--btn--sm {
 		padding-left: 2rem;
 	}
 
-	svg.bx--btn__icon {
+	svg.cds--btn__icon {
 		position: absolute;
 		top: 7px;
 		left: 0;
@@ -87,7 +90,7 @@ const FileNames = ({ code, setSelectedFilename }: any) => <div className={fileNa
 				key={fileName}
 				className={fileNameStyle}
 				kind='ghost'
-				renderIcon={Document16}
+				renderIcon={() => <Document size={16} />}
 				size='sm'
 				onClick={() => setSelectedFilename(fileName)}>
 				{fileName}
@@ -114,7 +117,7 @@ const CodeView = ({ code, selectedFilename }: any) => {
 				hasIconOnly
 				iconDescription='Copy to clipboard'
 				onClick={() => copyToClipboard(codeString)}
-				renderIcon={Copy16} />
+				renderIcon={() => <Copy size={16} />} />
 		</p>
 		<Editor
 			height='calc(100% - 32px)'
@@ -157,88 +160,78 @@ export const ExportModal = () => {
 			size='lg'
 			modalHeading={`Export "${fragmentExportModal.fragment.title}" code`}
 			className={exportCodeModalStyle}>
-			<Tabs
-				selected={settings.selectedExportTabIndex || 0}
-				onSelectionChange={(tabIndex: number) => {
+			<Tabs onChange={(tabIndex: number) => {
 					setSettings({ ...settings, selectedExportTabIndex: tabIndex });
 				}}>
-				<Tab
-					id='Angular'
-					label='Angular'
-					role='presentation'
-					tabIndex={0}>
-					<div className={titleWrapper}>
-						<h3>Angular Code</h3>
-						<a
-							href={generateSandboxUrl(createFragmentSandbox(angularCode))}
-							target='_blank'
-							rel='noopener noreferrer'>
-							Edit on CodeSandbox
-						</a>
-					</div>
-					<div className={tabContentStyle}>
-						<FileNames code={angularCode} setSelectedFilename={setSelectedAngularFilename} />
-						<CodeView code={angularCode} selectedFilename={selectedAngularFilename} />
-					</div>
-				</Tab>
-				<Tab
-					id='react'
-					label='React'
-					role='presentation'
-					tabIndex={0}>
-					<div className={titleWrapper}>
-						<h3>React Code</h3>
-						<a
-							href={generateSandboxUrl(createFragmentSandbox(reactCode))}
-							target='_blank'
-							rel='noopener noreferrer'>
-							Edit on CodeSandbox
-						</a>
-					</div>
-					<div className={tabContentStyle}>
-						<FileNames code={reactCode} setSelectedFilename={setSelectedReactFilename} />
-						<CodeView code={reactCode} selectedFilename={selectedReactFilename} />
-					</div>
-				</Tab>
-				<Tab
-					id='json'
-					label='JSON'
-					role='presentation'
-					tabIndex={0}>
-					<div className={titleWrapper}>
-						<h3>
-							JSON
+				<TabList aria-label="Export list">
+					<Tab>Angular</Tab>
+					<Tab>React</Tab>
+					<Tab>JSON</Tab>
+					<Tab>Image</Tab>
+				</TabList>
+				<TabPanels>
+					<TabPanel>
+						<div className={titleWrapper}>
+							<h3>Angular Code</h3>
+							<a
+								href={generateSandboxUrl(createFragmentSandbox(angularCode))}
+								target='_blank'
+								rel='noopener noreferrer'>
+								Edit on CodeSandbox
+							</a>
+						</div>
+						<div className={tabContentStyle}>
+							<FileNames code={angularCode} setSelectedFilename={setSelectedAngularFilename} />
+							<CodeView code={angularCode} selectedFilename={selectedAngularFilename} />
+						</div>
+					</TabPanel>
+					<TabPanel>
+						<div className={titleWrapper}>
+							<h3>React Code</h3>
+							<a
+								href={generateSandboxUrl(createFragmentSandbox(reactCode))}
+								target='_blank'
+								rel='noopener noreferrer'>
+								Edit on CodeSandbox
+							</a>
+						</div>
+						<div className={tabContentStyle}>
+							<FileNames code={reactCode} setSelectedFilename={setSelectedReactFilename} />
+							<CodeView code={reactCode} selectedFilename={selectedReactFilename} />
+						</div>
+					</TabPanel>
+					<TabPanel>
+						<div className={titleWrapper}>
+							<h3>
+								JSON
+								<Button
+									kind='ghost'
+									className={css`margin-top: -6px;`}
+									hasIconOnly
+									tooltipPosition='right'
+									iconDescription='Copy to clipboard'
+									onClick={() => copyToClipboard(jsonCode)}
+									renderIcon={() => <Copy size={16} />} />
+							</h3>
 							<Button
 								kind='ghost'
-								className={css`margin-top: -6px;`}
-								hasIconOnly
-								tooltipPosition='right'
-								iconDescription='Copy to clipboard'
-								onClick={() => copyToClipboard(jsonCode)}
-								renderIcon={Copy16} />
-						</h3>
-						<Button
-							kind='ghost'
-							onClick={() => saveBlob(new Blob([jsonCode]), `${fragmentExportModal.fragment.title}.json`)}>
-							Download JSON
-						</Button>
-					</div>
-					<Editor
-						height={contentHeight}
-						language='json'
-						value={jsonCode}
-						options={{ readOnly: true }} />
-				</Tab>
-				<Tab
-					id='image'
-					label='Image'
-					role='presentation'
-					tabIndex={0}>
-					<div className={titleWrapper}>
-						<h3>Image</h3>
-					</div>
-					<ExportImageComponent fragment={fragmentExportModal.fragment} />
-				</Tab>
+								onClick={() => saveBlob(new Blob([jsonCode]), `${fragmentExportModal.fragment.title}.json`)}>
+								Download JSON
+							</Button>
+						</div>
+						<Editor
+							height={contentHeight}
+							language='json'
+							value={jsonCode}
+							options={{ readOnly: true }} />
+					</TabPanel>
+					<TabPanel>
+						<div className={titleWrapper}>
+							<h3>Image</h3>
+						</div>
+						<ExportImageComponent fragment={fragmentExportModal.fragment} />
+					</TabPanel>
+				</TabPanels>
 			</Tabs>
 		</Modal>
 	);

@@ -1,14 +1,15 @@
 import React from 'react';
-import { Button } from 'carbon-components-react';
+import { Button } from '@carbon/react';
 import {
-	Edit16,
-	TrashCan16,
-	Book32
-} from '@carbon/icons-react';
+	Edit,
+	TrashCan,
+	Book
+} from '@carbon/react/icons';
 import { css } from 'emotion';
 import { actionIconStyle } from '../routes';
 import { stateWithoutComponent } from './fragment';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const fragmentLayoutStyle = css`
 	margin-left: 1px;
 
@@ -57,7 +58,7 @@ const getReorderedComponentObjFromHierarchyListItem = (hierchyListItem: any, com
 	};
 };
 
-export const FragmentLayoutWidget = ({ fragment, setFragment, title }: any) => {
+export const FragmentLayoutWidget = ({ fragment, setFragment }: any) => {
 	const getHierarchyListItemsFromComponentObj = (componentObj: any) => {
 		if (!componentObj) {
 			return null;
@@ -76,7 +77,7 @@ export const FragmentLayoutWidget = ({ fragment, setFragment, title }: any) => {
 							...fragment,
 							selectedComponentId: componentObj.id
 						}, false)}>
-						<Edit16 className={actionIconStyle} />
+						<Edit size={16} className={actionIconStyle} />
 					</Button>
 					<Button
 						kind='ghost'
@@ -88,7 +89,7 @@ export const FragmentLayoutWidget = ({ fragment, setFragment, title }: any) => {
 							// eslint-disable-next-line react/prop-types
 							data: stateWithoutComponent(fragment.data, componentObj.id)
 						})}>
-						<TrashCan16 className={actionIconStyle} />
+						<TrashCan size={16} className={actionIconStyle} />
 					</Button>
 				</>
 			},
@@ -97,5 +98,5 @@ export const FragmentLayoutWidget = ({ fragment, setFragment, title }: any) => {
 		};
 	};
 
-	return <div className={css`text-align: center; padding-bottom: 1rem;`}><Book32 /></div>;
+	return <div className={css`text-align: center; padding-bottom: 1rem;`}><Book size={32} /></div>;
 };

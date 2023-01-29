@@ -9,8 +9,8 @@ import {
 	TextArea,
 	TextInput,
 	Tag
-} from 'carbon-components-react';
-import { Add16 } from '@carbon/icons-react';
+} from '@carbon/react';
+import { Add } from '@carbon/react/icons';
 import { leftPane, leftPaneContent } from '.';
 import { GlobalStateContext } from '../../context';
 import { kebabCase } from 'lodash';
@@ -128,12 +128,13 @@ export const StylePane = ({ isActive }: any) => {
 					<Search
 						id='styles-search'
 						light
+						size="lg"
 						labelText='Filter classes'
 						placeholder='Filter classes'
 						onChange={(event: any) => setFilterString(event.target.value)} />
 					<Button
 						kind='ghost'
-						renderIcon={Add16}
+						renderIcon={() => <Add size={16} />}
 						iconDescription='Add new class'
 						hasIconOnly
 						tooltipPosition='left'
@@ -170,7 +171,7 @@ export const StylePane = ({ isActive }: any) => {
 						labelText='Add descriptive name'
 						disabled={!getSelectedClass().id}
 						checked={hasDescriptiveName()}
-						onChange={(event: any) => setHasDescriptiveName(event)} />
+						onChange={(_: any, { checked }: any) => setHasDescriptiveName(checked)} />
 					{
 						hasDescriptiveName() && <TextInput
 							id='descriptive-name-text-input'

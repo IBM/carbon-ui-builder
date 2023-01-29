@@ -1,5 +1,5 @@
 import React from 'react';
-import { ExpandableTile, TileAboveTheFoldContent } from 'carbon-components-react';
+import { ExpandableTile, TileAboveTheFoldContent } from '@carbon/react';
 import { CssClasses } from '../types';
 import { renderComponents, setItemInState } from '../utils';
 

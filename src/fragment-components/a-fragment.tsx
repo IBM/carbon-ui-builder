@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import {
 	Checkbox,
 	TextInput
-} from 'carbon-components-react';
-import { Edit32 } from '@carbon/icons-react';
+} from '@carbon/react';
+import { Edit } from '@carbon/react/icons';
 import { css, cx } from 'emotion';
 import { AComponent, ComponentInfo } from './a-component';
 
@@ -18,7 +18,7 @@ export const AFragmentSettingsUI = ({ selectedComponent, setComponent }: any) =>
 		<LinkButton
 		kind='secondary'
 		size='sm'
-		renderIcon={Edit32}
+		renderIcon={Edit}
 		className={css`margin-bottom: 1rem`}
 		to={`/edit/${selectedComponent.fragmentId}`}>
 			Edit fragment
@@ -27,7 +27,7 @@ export const AFragmentSettingsUI = ({ selectedComponent, setComponent }: any) =>
 			labelText='Show outline'
 			id='fragment-outline'
 			checked={selectedComponent.outline}
-			onChange={(checked: boolean) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				outline: checked
 			})} />

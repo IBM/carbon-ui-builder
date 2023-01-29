@@ -1,5 +1,5 @@
 import React from 'react';
-import { RadioButtonGroup } from 'carbon-components-react';
+import { RadioButtonGroup } from '@carbon/react';
 import { CssClasses } from '../types';
 import { renderComponents, setItemInState } from '../utils';
 import { RadioState } from './ui-radio';

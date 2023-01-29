@@ -1,5 +1,5 @@
 import React from 'react';
-import { Checkbox, Dropdown, Toggle, TextInput } from 'carbon-components-react';
+import { Checkbox, Dropdown, Toggle, TextInput } from '@carbon/react';
 import { AComponent, ComponentInfo } from './a-component';
 import image from './../assets/component-icons/toggle.svg';
 import {
@@ -32,7 +32,7 @@ export const AToggleSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			labelText='Disabled'
 			id='disabled'
 			checked={selectedComponent.disabled}
-			onChange={(checked: boolean) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					disabled: checked
@@ -43,7 +43,7 @@ export const AToggleSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			labelText='Checked'
 			id='checked'
 			checked={selectedComponent.checked}
-			onChange={(checked: boolean) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					checked: checked
@@ -180,7 +180,7 @@ export const componentInfo: ComponentInfo = {
 							name: "${json.codeContext?.name}",
 							value: checked
 						}
-					})} 
+					})}
 					${reactClassNamesFromComponentObj(json)} />`;
 			}
 		}

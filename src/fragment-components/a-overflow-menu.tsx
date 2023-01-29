@@ -5,7 +5,7 @@ import {
 	OverflowMenu,
 	TextInput,
 	OverflowMenuItem
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent, ComponentInfo } from './a-component';
 import image from './../assets/component-icons/overflowMenu.svg';
 import {
@@ -65,17 +65,17 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 					labelText='Disabled'
 					id={`disabled-${index}`}
 					checked={item.disabled}
-					onChange={(checked: boolean) => updateListItems('disabled', checked, index)}/>
+					onChange={(_: any, { checked }: any) => updateListItems('disabled', checked, index)}/>
 				<Checkbox
 					labelText='Is delete'
 					id={`isDelete-${index}`}
 					checked={item.isDelete}
-					onChange={(checked: boolean) => updateListItems('isDelete', checked, index)} />
+					onChange={(_: any, { checked }: any) => updateListItems('isDelete', checked, index)} />
 				<Checkbox
 					labelText='Has divider'
 					id={`hasDivider-${index}`}
 					checked={item.hasDivider}
-					onChange={(checked: boolean) => updateListItems('hasDivider', checked, index)} />
+					onChange={(_: any, { checked }: any) => updateListItems('hasDivider', checked, index)} />
 			</div>
 		</>;
 	};
@@ -90,7 +90,7 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 			labelText='Flip left'
 			id='flipped'
 			checked={selectedComponent.flipped}
-			onChange={(checked: boolean) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				flipped: checked
 			})} />

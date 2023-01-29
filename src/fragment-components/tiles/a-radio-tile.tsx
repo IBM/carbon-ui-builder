@@ -3,7 +3,7 @@ import {
 	TextInput,
 	Checkbox,
 	RadioTile
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent } from '../a-component';
 import { css } from 'emotion';
 import { useFragment } from '../../context';
@@ -43,11 +43,11 @@ export const ARadioTileSettingsUI = ({ selectedComponent, setComponent }: any) =
 			labelText='Default checked'
 			id='default-checked'
 			checked={selectedComponent.defaultChecked}
-			onChange={(defaultChecked: any) => {
-				updateParentDefaultChecked(defaultChecked);
+			onChange={(_: any, { checked }: any) => {
+				updateParentDefaultChecked(checked);
 				setComponent({
 					...selectedComponent,
-					defaultChecked
+					defaultChecked: checked
 				});
 			}}
 		/>
@@ -55,7 +55,7 @@ export const ARadioTileSettingsUI = ({ selectedComponent, setComponent }: any) =
 			labelText='Disabled'
 			id='disabled'
 			checked={selectedComponent.disabled}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					disabled: checked
@@ -111,7 +111,7 @@ export const ARadioTile = ({
 	// Removing `for` attribute so users can select text and other non-form elements.
 	useEffect(() => {
 		const tileElement = document.getElementById(componentObj.codeContext?.name);
-		const labelElement = tileElement?.parentElement?.querySelector('label.bx--tile.bx--tile--selectable');
+		const labelElement = tileElement?.parentElement?.querySelector('label.cds--tile.cds--tile--selectable');
 		// Setting to empty instead of removing so users can select non-form elements within tile when a form element is present
 		// Although form elements should never be added within another
 		labelElement?.setAttribute('for', '');

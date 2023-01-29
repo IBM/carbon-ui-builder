@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { css, cx } from 'emotion';
-import { Search } from 'carbon-components-react';
+import { Search } from '@carbon/react';
 
 import { ElementTile } from '../../components/element-tile';
 import { FragmentPreview } from '../../components/fragment-preview';
@@ -57,6 +57,7 @@ export const ElementsPane = ({ isActive }: any) => {
 			<div className={leftPaneHeader}>
 				<Search
 					id='elements-search'
+					size="lg"
 					light
 					labelText='Filter elements'
 					placeholder='Filter elements'

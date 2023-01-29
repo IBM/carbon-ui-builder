@@ -5,13 +5,13 @@ import {
 	OverflowMenu,
 	OverflowMenuItem,
 	Search
-} from 'carbon-components-react';
+} from '@carbon/react';
 
 import {
-	DocumentAdd16,
-	ArrowsVertical16,
-	CheckmarkFilled16
-} from '@carbon/icons-react';
+	DocumentAdd,
+	ArrowsVertical,
+	CheckmarkFilled
+} from '@carbon/react/icons';
 
 import { css } from 'emotion';
 
@@ -69,7 +69,7 @@ export const DashboardSearch = ({
 		<OverflowMenu
 			className={sortButton}
 			ariaLabel='Sort fragment'
-			renderIcon={() => <ArrowsVertical16 />}
+			renderIcon={() => <ArrowsVertical size={16} />}
 			onClick={(event: { stopPropagation: () => void }) => event.stopPropagation()}>
 			<OverflowMenuItem
 				itemText={(
@@ -77,7 +77,7 @@ export const DashboardSearch = ({
 						Newest to oldest
 						{
 							sortDirection === SortDirection.Ascending
-								? <CheckmarkFilled16 />
+								? <CheckmarkFilled size={16} />
 								: null
 						}
 					</div>
@@ -89,7 +89,7 @@ export const DashboardSearch = ({
 						Oldest to newest
 						{
 							sortDirection === SortDirection.Descending
-								? <CheckmarkFilled16 />
+								? <CheckmarkFilled size={16} />
 								: null
 						}
 					</div>
@@ -101,7 +101,7 @@ export const DashboardSearch = ({
 		title='Add new fragment'
 		aria-label='Add new fragment'>
 			New fragment
-			<DocumentAdd16 className='bx--btn__icon' />
+			<DocumentAdd size={16} className='cds--btn__icon' />
 		</Button>
 	</div>
 );

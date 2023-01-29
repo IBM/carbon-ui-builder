@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { SelectableTile } from 'carbon-components-react';
+import { SelectableTile } from '@carbon/react';
 
 import { FragmentPreview } from '../../../components/fragment-preview';
 import './choose-fragment-modal.scss';

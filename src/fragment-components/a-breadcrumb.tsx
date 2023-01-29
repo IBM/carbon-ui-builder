@@ -4,7 +4,7 @@ import {
 	TextInput,
 	BreadcrumbItem,
 	Checkbox
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent, ComponentInfo } from './a-component';
 import image from './../assets/component-icons/breadcrumb.svg';
 import {
@@ -67,7 +67,7 @@ export const ABreadcumbSettingsUI = ({ selectedComponent, setComponent }: any) =
 			labelText='Use trailing slash'
 			id='trailing-slash'
 			checked={!selectedComponent.noTrailingSlash}
-			onChange={(checked: boolean) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					noTrailingSlash: !checked

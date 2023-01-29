@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dropdown } from 'carbon-components-react';
+import { Dropdown } from '@carbon/react';
 import { getParentComponent, updatedState } from '../../components';
 import { useFragment } from '../../context';
 

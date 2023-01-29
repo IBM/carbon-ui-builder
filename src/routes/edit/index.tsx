@@ -19,18 +19,21 @@ import {
 	SideNav,
 	SideNavLink,
 	SideNavItems,
+	Tab,
 	Tabs,
-	Tab
-} from 'carbon-components-react';
+	TabList,
+	TabPanels,
+	TabPanel
+} from '@carbon/react';
 import {
-	Code16,
-	ColorPalette16,
-	SettingsAdjust16,
-	Copy32,
-	Development16,
-	Information16,
-	TrashCan32
-} from '@carbon/icons-react';
+	Code,
+	ColorPalette,
+	SettingsAdjust,
+	Copy,
+	Development,
+	Information,
+	TrashCan
+} from '@carbon/react/icons';
 
 import { ElementsPane } from './elements-pane';
 import { StylePane } from './style-pane';
@@ -72,13 +75,13 @@ const editPageContent = css`
 const sideRail = css`
 	transition: left ${transitionDetails};
 
-	&.bx--side-nav, &.bx--side-nav:hover {
-		.bx--side-nav__item .bx--side-nav__link {
+	&.cds--side-nav, &.cds--side-nav:hover {
+		.cds--side-nav__item .cds--side-nav__link {
 			height: 3rem;
 		}
 	}
 
-	&.bx--side-nav--ux {
+	&.cds--side-nav--ux {
 		top: 7rem;
 		box-shadow: inset -1px 0px #d8d8d8;
 	}
@@ -87,7 +90,7 @@ const sideRail = css`
 		left: ${leftPaneWidth};
 	}
 
-	.bx--side-nav__items {
+	.cds--side-nav__items {
 		padding: 0;
 	}
 `;
@@ -119,7 +122,7 @@ export const leftPaneHeader = css`
 export const leftPaneContent = css`
 	padding: 0 15px;
 
-	.bx--form-item {
+	.cds--form-item {
 		margin-top: 1rem;
 	}
 `;
@@ -127,7 +130,7 @@ export const leftPaneContent = css`
 export const actionIconStyle = css`
 	color: black;
 
-	.bx--btn--ghost:disabled & {
+	.cds--btn--ghost:disabled & {
 		color: #8d8d8d;
 	}
 `;
@@ -142,9 +145,16 @@ const rightPanel = css`
 	box-shadow: inset 1px 0px #d8d8d8;
 	z-index: 1;
 
-	.bx--tabs--scrollable__nav-item .bx--tabs--scrollable__nav-link {
-		width: 100px;
+	.cds--tab--list {
+		flex: auto;
+	}
+
+	.cds--tabs .cds--tabs__nav-link {
 		text-align: center;
+	}
+
+	.cds--tab-content {
+		padding: 0;
 	}
 
 	.context-pane-content {
@@ -155,23 +165,23 @@ const rightPanel = css`
 			width: 15px;
 		}
 
-		.bx--accordion__content {
+		.cds--accordion__content {
 			padding-left: 1rem;
 			padding-right: 1rem;
 			margin-left: 0;
 		}
 
-		.iot--list-item {
-			padding-right: 0;
-		}
+		// .iot--list-item {
+		// 	padding-right: 0;
+		// }
 
-		.iot--list-item--content--row-actions {
-			margin-right: 0;
+		// .iot--list-item--content--row-actions {
+		// 	margin-right: 0;
 
-			.bx--btn--ghost {
-				padding: 0.5rem;
-			}
-		}
+		// 	.cds--btn--ghost {
+		// 		padding: 0.5rem;
+		// 	}
+		// }
 	}
 
 	#properties-settings__panel {
@@ -296,20 +306,20 @@ export const Edit = () => {
 			isRail>
 				<SideNavItems>
 					<SideNavLink
-					renderIcon={Development16}
+					renderIcon={() => <Development size={16} />}
 					onClick={() => onRailClick(SelectedLeftPane.ELEMENTS)}
 					isActive={selectedLeftPane === SelectedLeftPane.ELEMENTS}>
 						Elements
 					</SideNavLink>
 					<SideNavLink
-					renderIcon={ColorPalette16}
+					renderIcon={() => <ColorPalette size={16} />}
 					onClick={() => onRailClick(SelectedLeftPane.STYLE)}
 					isActive={selectedLeftPane === SelectedLeftPane.STYLE}>
 						Style
 					</SideNavLink>
 					{ /* hide Code pane for now */
 					/* <SideNavLink
-					renderIcon={Code16}
+					renderIcon={<Code size={16} />}
 					onClick={() => onRailClick(SelectedLeftPane.CODE)}
 					isActive={selectedLeftPane === SelectedLeftPane.CODE}>
 						Code
@@ -326,27 +336,34 @@ export const Edit = () => {
 			</div>
 			<div className={rightPanel}>
 				<Tabs>
-					<Tab
-					id='properties-settings'
-					label={<SettingsAdjust16 />}>
-						<SettingsContextPane fragment={fragment} setFragment={updateFragment} />
-					</Tab>
-					<Tab
-					id='properties-code'
-					label={<Code16 />}>
-						<CodeContextPane fragment={fragment} setFragment={updateFragment} />
-					</Tab>
-					<Tab
-					id='properties-info'
-					label={<Information16 />}>
-						info
-					</Tab>
+					<TabList aria-label="List of properties">
+						<Tab id='properties-settings'>
+							<SettingsAdjust size={16} />
+						</Tab>
+						<Tab id='properties-code'>
+							<Code size={16} />
+						</Tab>
+						<Tab id='properties-info'>
+							<Information size={16} />
+						</Tab>
+					</TabList>
+					<TabPanels>
+						<TabPanel>
+							<SettingsContextPane fragment={fragment} setFragment={updateFragment} />
+						</TabPanel>
+						<TabPanel>
+							<CodeContextPane fragment={fragment} setFragment={updateFragment} />
+						</TabPanel>
+						<TabPanel>
+							info
+						</TabPanel>
+					</TabPanels>
 				</Tabs>
 				<div className={actionsStyle}>
 					<Button
 					kind='secondary'
 					disabled={!fragment.selectedComponentId} // disabled for fragment
-					renderIcon={Copy32}
+					renderIcon={Copy}
 					className={css`margin-right: 8px`}
 					onClick={duplicateSelectedComponent}>
 						Duplicate
@@ -354,7 +371,7 @@ export const Edit = () => {
 					<Button
 					kind='danger'
 					disabled={!fragment.selectedComponentId} // disabled for fragment
-					renderIcon={TrashCan32}
+					renderIcon={TrashCan}
 					onClick={() => deleteSelectedComponent()}>
 						Delete
 					</Button>

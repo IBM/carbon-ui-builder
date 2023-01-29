@@ -1,5 +1,5 @@
 import React from 'react';
-import { SelectableTile } from 'carbon-components-react';
+import { SelectableTile } from '@carbon/react';
 import { CssClasses } from '../types';
 import { renderComponents, setItemInState } from '../utils';
 

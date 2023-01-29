@@ -1,5 +1,5 @@
 import React from 'react';
-import { Loading } from 'carbon-components-react';
+import { Loading } from '@carbon/react';
 import { CssClasses } from '../types';
 
 export interface LoadingState {

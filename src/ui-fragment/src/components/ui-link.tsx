@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'carbon-components-react';
+import { Link } from '@carbon/react';
 import { CssClasses } from '../types';
 
 export interface LinkState {

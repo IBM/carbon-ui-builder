@@ -5,7 +5,7 @@ import {
 	Dropdown,
 	ContentSwitcher,
 	Switch
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent, ComponentInfo } from './a-component';
 import { DraggableTileList } from '../components';
 import image from './../assets/component-icons/content-switcher.svg';
@@ -65,7 +65,7 @@ export const AContentSwitcherSettingsUI = ({ selectedComponent, setComponent }: 
 				labelText='Disabled'
 				id={`disabled-${index}`}
 				checked={selectedComponent.disabled}
-				onChange={(checked: boolean) => {
+				onChange={(_: any, { checked }: any) => {
 					updateItem('disabled', checked, index);
 				}} />
 		</>;

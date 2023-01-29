@@ -1,7 +1,7 @@
 import { css, cx } from 'emotion';
 import React, { useRef, useState } from 'react';
 
-import { Draggable32, TrashCan32 } from '@carbon/icons-react';
+import { Draggable, TrashCan } from '@carbon/react/icons';
 import { drag, getDropIndex } from '../routes/edit/tools';
 import { useFragment } from '../context';
 import { updatedState } from '../components';
@@ -184,8 +184,8 @@ export const AComponent = ({
 				<span className={css`margin-right: 1rem`}>
 					{componentObj && componentObj.type ? componentObj.type : 'Header'}
 				</span>
-				<Draggable32 className={iconStyle} />
-				<TrashCan32 onClick={(event: any) => {
+				<Draggable size={32} className={iconStyle} />
+				<TrashCan size={32} onClick={(event: any) => {
 					event.stopPropagation();
 					if (remove) {
 						remove();

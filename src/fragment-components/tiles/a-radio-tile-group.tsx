@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { TextInput, Checkbox } from 'carbon-components-react';
+import { TextInput, Checkbox } from '@carbon/react';
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
 import { getParentComponent, updatedState } from '../../components';
@@ -33,7 +33,7 @@ export const ARadioTileGroupSettingsUI = ({ selectedComponent, setComponent }: a
 			labelText='Light theme'
 			id='theme-select'
 			checked={selectedComponent.light}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				/**
 				 * It usually is not common for users to have different theme for each tile,
 				 * this approach will ensure users don't have to go through each child `tile` & update theme
@@ -52,7 +52,7 @@ export const ARadioTileGroupSettingsUI = ({ selectedComponent, setComponent }: a
 			labelText='Disabled'
 			id='disabled'
 			checked={selectedComponent.disabled}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					disabled: checked
@@ -133,10 +133,10 @@ export const ARadioTileGroup = ({
 			selected={selected}
 			{...rest}>
 				<fieldset
-				className={`bx--tile-group ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}`}
+				className={`cds--tile-group ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}`}
 				disabled={componentObj.disabled}>
 					{(componentObj.legend !== undefined && componentObj.legend !== '') &&
-					<legend className="bx--label">
+					<legend className="cds--label">
 						{componentObj.legend}
 					</legend>}
 					{children}

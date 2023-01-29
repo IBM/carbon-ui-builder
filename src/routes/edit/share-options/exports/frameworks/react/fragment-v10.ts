@@ -18,7 +18,7 @@ const generateTemplate = (json: any, fragments: any[]) => {
 		string += `${curr}, `
 	), '');
 	return {
-		imports: `import { ${carbonImportsString} } from 'carbon-components-react';
+		imports: `import { ${carbonImportsString} } from '@carbon/react';
 			${otherImportsFromComponentObj(json, fragments)}`,
 		template: jsonToTemplate(json, fragments),
 		additionalCode: getAdditionalCodeAsString(json, fragments)
@@ -130,8 +130,8 @@ ReactDOM.render(<App />, document.getElementById('root'));
 		dependencies: {
 			'carbon-components': '10.58.0',
 			'carbon-icons': '7.0.7',
-			'@carbon/icons-react': '10.15.0',
-			'carbon-components-react': '7.50.0',
+			'@carbon/react/icons': '10.15.0',
+			'@carbon/react': '7.50.0',
 			react: '16.12.0',
 			'react-dom': '16.12.0',
 			'react-scripts': '3.0.1',

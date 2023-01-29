@@ -1,4 +1,7 @@
-@import '~carbon-components/scss/globals/scss/styles';
+@use '@carbon/react';
+@use '@carbon/react/scss/grid';
+
+@include grid.flex-grid();
 
 // chrome bug
 // https://bugs.chromium.org/p/chromium/issues/detail?id=1370030&sort=-modified%20-opened%20target&q=drag&can=1

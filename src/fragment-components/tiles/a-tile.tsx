@@ -3,7 +3,7 @@ import {
 	Checkbox,
 	TextInput,
 	Tile
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
 import { css } from 'emotion';
@@ -23,7 +23,7 @@ export const ATileSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			labelText='Light theme'
 			id='theme-select'
 			checked={selectedComponent.light}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					light: checked
