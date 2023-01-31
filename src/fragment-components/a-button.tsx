@@ -1,4 +1,3 @@
-import React from 'react';
 import {
 	Button,
 	Dropdown,
@@ -12,6 +11,8 @@ import { angularClassNamesFromComponentObj, nameStringToVariableString, reactCla
 import { ActionsEditor } from '../routes/edit/actions';
 import { time } from 'console';
 import { useFragment } from '../context';
+import { idText } from 'typescript';
+import { useState } from 'react';
 
 export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const kindItems = [
@@ -65,15 +66,82 @@ export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	</>;
 };
 
+
 export const AButtonCodeUI = ({ selectedComponent, setComponent }: any) => {
 	const [fragment, setFragment] = useFragment();
-	console.log('CONNOR fragment #2', fragment);
+
+	const [actions, setActions] = useState([
+		{ 	
+			text: 'On click',
+			source: selectedComponent.codeContext.name, 
+			signal: 'onclick',
+			destination: '', 
+			slot: '',
+			id: 1,
+		},
+	] as { 
+		text: string;
+		source: string;
+		signal: string;
+		destination: string;
+		slot: string;
+		id: number;
+	}[]);
+
 	// Default value (?)
 	// Maybe always have 1 signal of each type in the UI that can't be deleted
 	// + or X buttons add or remove additional signals, if only 1 click signal, no delete?
-	const signals: {text: string; value: string}[] = [
-		{ text: 'On Click', value: 'onclick'}
-	];
+	// const signals: { text: string; source: string; signal: string; destination: string; slot: string; id: number; }[] = [
+	// 	{ 	
+	// 		text: 'On click',
+	// 		source: selectedComponent.codeContext.name, 
+	// 		signal: 'onclick',
+	// 		destination: '', 
+	// 		slot: '',
+	// 		id: 1,
+	// 	},
+	// ];
+
+	// setFragment({...fragment, data: {
+	// 	...fragment.data, actions: signals}});
+	// console.log('fragment 2', fragment);
+
+	const addAction = (text: string, source: string, signal: string) => {
+
+		// Don't allow adding if there is an empty action present
+
+		let id = 0;
+		// Create a unique id (largest id value in the array)
+		actions.forEach(signal => id = (signal.id >= id) ? id = signal.id + 1 : id);
+
+		setActions([...actions, {
+				text: text,
+				source: source,
+				signal: signal,
+				destination: '',
+				slot: '',
+				id: id,
+			}]);
+
+		// signals.push({
+		// 	text: text,
+		// 	source: source,
+		// 	signal: signal,
+		// 	destination: '',
+		// 	slot: '',
+		// 	id: id,
+		// });
+
+		// const newSignals = signals;
+		console.log('signals 1', actions);
+		// setComponent({...selectedComponent, signals: newSignals});
+
+		// setFragment({...fragment, data: {
+		// // 	...fragment.data, actions: signals}});
+		// console.log('fragment 3', fragment);
+	}
+
+	console.log('signals 2', actions);
 
 	return (
 		<>
@@ -90,12 +158,13 @@ export const AButtonCodeUI = ({ selectedComponent, setComponent }: any) => {
 					});
 				}}
 			/>
-			{ signals.map((item) => {
-				return <ActionsEditor text={item.text} value={item.value} />;
+			{ actions.map((item) => {
+				return <ActionsEditor signal={item} addAction={addAction} key={item.id} />;
 			})}
 		</>
 	);
 };
+
 
 export const AButton = ({
 	children,
@@ -119,6 +188,7 @@ export const AButton = ({
 	);
 };
 
+// TODO: Make up 2/3 data structures for where to store what actions (signals AND slots) the button supports
 export const componentInfo: ComponentInfo = {
 	component: AButton,
 	settingsUI: AButtonSettingsUI,

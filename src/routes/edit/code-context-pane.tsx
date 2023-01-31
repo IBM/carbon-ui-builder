@@ -14,7 +14,6 @@ const showComponentCodeOptions = (selectedComponent: any, setComponent: any, fra
 			return <component.componentInfo.codeUI
 				selectedComponent={selectedComponent}
 				setComponent={setComponent} 
-				fragment={fragment} 
 				/>;
 		}
 	}
