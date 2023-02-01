@@ -21,7 +21,11 @@ const pageContainerStyle = css`
 		margin-top: 1rem;
 		margin-bottom: 1rem;
 	}
+`;
 
+const contentContainerStyle = css`
+	margin-top: 1rem;
+	margin-bottom: 2rem;
 	ul {
 		list-style: disc;
 		margin-left: 2rem;
@@ -30,11 +34,6 @@ const pageContainerStyle = css`
 			list-style: circle;
 		}
 	}
-`;
-
-const contentContainerStyle = css`
-	margin-top: 1rem;
-	margin-bottom: 2rem;
 `;
 
 const copyToClipboard = (codeString: string | undefined) => {
