@@ -56,9 +56,7 @@ export const ATextSettingsUI = ({ selectedComponent, setComponent }: any) => {
 				}}
 			/>
 		}
-
 	</>;
-
 };
 
 export const AText = ({
@@ -122,7 +120,6 @@ export const componentInfo: ComponentInfo = {
 					}
 					return json.text;
 				}
-
 			}
 		},
 		react: {
