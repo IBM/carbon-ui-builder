@@ -2,21 +2,63 @@ import React from 'react';
 import { AComponent } from './a-component';
 import { ComponentInfo } from '.';
 import ReactQuill from 'react-quill';
+import { Checkbox, TextInput } from 'carbon-components-react';
 import 'react-quill/dist/quill.snow.css';
 import image from './../assets/component-icons/text.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const ATextSettingsUI = ({ selectedComponent, setComponent }: any) => {
-	return <ReactQuill
-			key={selectedComponent.id}
-			theme="snow"
-			value={selectedComponent.text}
-			onChange={(event: any) => {
+	return <>
+		<Checkbox
+			labelText='Use rich text editor'
+			id='useRichTextEditor'
+			checked={selectedComponent.useRichTextEditor}
+			onChange={(checked: boolean) => {
 				setComponent({
 					...selectedComponent,
-					text: event
-			});
-		}} />;
+					useRichTextEditor: checked
+				});
+			}}
+		/>
+		{
+			selectedComponent.useRichTextEditor
+			? <>
+				<Checkbox
+					labelText='Use section as parent wrapper tag'
+					id='use-section'
+					checked={selectedComponent.useSectionTag}
+					onChange={(checked: boolean) => {
+						setComponent({
+							...selectedComponent,
+							useSectionTag: checked
+						});
+					}}
+				/>
+				<ReactQuill
+					key={selectedComponent.id}
+					theme="snow"
+					value={selectedComponent.richText}
+					onChange={(event: any) => {
+						setComponent({
+							...selectedComponent,
+							richText: event
+					});
+				}} />
+			</> :
+				<TextInput
+					value={selectedComponent.text}
+					labelText='Text'
+					onChange={(event: any) => {
+						setComponent({
+							...selectedComponent,
+							text: event.currentTarget.value
+						});
+					}}
+				/>
+		}
+
+	</>
+
 };
 
 export const AText = ({
@@ -43,7 +85,12 @@ export const componentInfo: ComponentInfo = {
 		select={select}
 		remove={remove}
 		selected={selected}>
-			<div dangerouslySetInnerHTML={{ __html: componentObj.text }} />
+			{
+				componentObj.useRichTextEditor
+				? <div dangerouslySetInnerHTML={{ __html: componentObj.richText }} />
+				:  componentObj.text
+			}
+
 
 	</AText>,
 	keywords: ['text'],
@@ -51,7 +98,10 @@ export const componentInfo: ComponentInfo = {
 	type: 'text',
 	defaultComponentObj: {
 		type: 'text',
-		text: 'Text'
+		text: 'Text',
+		richText: 'Text',
+		useRichTextEditor: false,
+		useSectionTag: false
 	},
 	image,
 	codeExport: {
@@ -60,19 +110,38 @@ export const componentInfo: ComponentInfo = {
 			outputs: (_) => '',
 			imports: [],
 			code: ({ json }) => {
-				if (json.cssClasses.length) {
-					return `<span ${angularClassNamesFromComponentObj(json)}>${json.text}</span>`;
+				if (json.useRichTextEditor) {
+					if (json.cssClasses.length) {
+						return json.useSectionTag
+						? `<section ${angularClassNamesFromComponentObj(json)}>${json.richText}</section>`
+						: `<div ${angularClassNamesFromComponentObj(json)}>${json.richText}</div>`;
+					}
+					return json.richText;
+				} else {
+					if (json.cssClasses.length) {
+						return `<span ${angularClassNamesFromComponentObj(json)}>${json.text}</span>`;
+					}
+					return json.text;
 				}
-				return json.text;
+
 			}
 		},
 		react: {
 			imports: [],
 			code: ({ json }) => {
-				if (json.cssClasses.length) {
-					return `<span ${reactClassNamesFromComponentObj(json)}>${json.text}</span>`;
+				if (json.useRichTextEditor) {
+					if (json.cssClasses.length) {
+						return json.useSectionTag
+						? `<section ${reactClassNamesFromComponentObj(json)}>${json.richText}</section>`
+						: `<div ${reactClassNamesFromComponentObj(json)}>${json.richText}</div>`;
+					}
+					return json.richText;
+				} else {
+					if (json.cssClasses.length) {
+						return `<span ${reactClassNamesFromComponentObj(json)}>${json.text}</span>`;
+					}
+					return json.text;
 				}
-				return json.text;
 			}
 		}
 	}
