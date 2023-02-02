@@ -8,7 +8,7 @@ import {
 import { AComponent } from './a-component';
 import { css } from 'emotion';
 import { ComponentInfo } from '.';
-import { ControlledEditor } from '@monaco-editor/react';
+import Editor from '@monaco-editor/react';
 import image from './../assets/component-icons/code-snippet.svg';
 import { nameStringToVariableString } from '../utils/fragment-tools';
 
@@ -49,11 +49,11 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 			onChange={(event: any) => setCodeLanguage(event.selectedItem.id)} />
 
 		<label className='bx--label'>Code</label>
-		<ControlledEditor
+		<Editor
 			language={codeLanguage} height="10rem"
 			value={selectedComponent.code}
 			options= {{ quickSuggestions: false }}
-			onChange= {(_, value: any) => {
+			onChange= {(value: any) => {
 				setComponent({
 				...selectedComponent,
 				code: value
