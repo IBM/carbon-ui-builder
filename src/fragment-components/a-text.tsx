@@ -18,34 +18,32 @@ export const ATextSettingsUI = ({ selectedComponent, setComponent }: any) => {
 					...selectedComponent,
 					useRichTextEditor: checked
 				});
-			}}
-		/>
+			}} />
 		{
 			selectedComponent.useRichTextEditor
 				? <>
-			<Checkbox
-				labelText='Use section as parent wrapper tag'
-				id='use-section'
-				checked={selectedComponent.useSectionTag}
-				onChange={(checked: boolean) => {
-					setComponent({
-						...selectedComponent,
-						useSectionTag: checked
-					});
-				}}
-			/>
-			<ReactQuill
-				key={selectedComponent.id}
-				theme="snow"
-				value={selectedComponent.richText}
-				onChange={(event: any) => {
-					setComponent({
-						...selectedComponent,
-						richText: event
-				});
-			}} />
-				</> :
-			<TextInput
+					<Checkbox
+						labelText='Use section as parent wrapper tag'
+						id='use-section'
+						checked={selectedComponent.useSectionTag}
+						onChange={(checked: boolean) => {
+							setComponent({
+								...selectedComponent,
+								useSectionTag: checked
+							});
+						}} />
+					<ReactQuill
+						key={selectedComponent.id}
+						theme="snow"
+						value={selectedComponent.richText}
+						onChange={(event: any) => {
+							setComponent({
+								...selectedComponent,
+								richText: event
+							});
+						}} />
+				</>
+				: <TextInput
 				value={selectedComponent.text}
 				labelText='Text'
 				onChange={(event: any) => {
@@ -53,8 +51,7 @@ export const ATextSettingsUI = ({ selectedComponent, setComponent }: any) => {
 						...selectedComponent,
 						text: event.currentTarget.value
 					});
-				}}
-			/>
+				}} />
 		}
 	</>;
 };
@@ -107,37 +104,35 @@ export const componentInfo: ComponentInfo = {
 			outputs: (_) => '',
 			imports: [],
 			code: ({ json }) => {
-				if (json.useRichTextEditor) {
-					if (json.cssClasses.length) {
-						return json.useSectionTag
-							? `<section ${angularClassNamesFromComponentObj(json)}>${json.richText}</section>`
-							: `<div ${angularClassNamesFromComponentObj(json)}>${json.richText}</div>`;
-					}
-					return json.richText;
-				} else {
-					if (json.cssClasses.length) {
-						return `<span ${angularClassNamesFromComponentObj(json)}>${json.text}</span>`;
-					}
-					return json.text;
+				if (json.useRichTextEditor && json.cssClasses.length) {
+					return json.useSectionTag
+						? `<section ${angularClassNamesFromComponentObj(json)}>${json.richText}</section>`
+						: `<div ${angularClassNamesFromComponentObj(json)}>${json.richText}</div>`;
 				}
+				if (json.useRichTextEditor && !json.cssClasses.length) {
+					return json.richText;
+				}
+				if (json.cssClasses.length) {
+					return `<span ${angularClassNamesFromComponentObj(json)}>${json.text}</span>`;
+				}
+				return json.text;
 			}
 		},
 		react: {
 			imports: [],
 			code: ({ json }) => {
-				if (json.useRichTextEditor) {
-					if (json.cssClasses.length) {
-						return json.useSectionTag
-							? `<section ${reactClassNamesFromComponentObj(json)}>${json.richText}</section>`
-							: `<div ${reactClassNamesFromComponentObj(json)}>${json.richText}</div>`;
-					}
-					return json.richText;
-				} else {
-					if (json.cssClasses.length) {
-						return `<span ${reactClassNamesFromComponentObj(json)}>${json.text}</span>`;
-					}
-					return json.text;
+				if (json.useRichTextEditor && json.cssClasses.length) {
+					return json.useSectionTag
+						? `<section ${reactClassNamesFromComponentObj(json)}>${json.richText}</section>`
+						: `<div ${reactClassNamesFromComponentObj(json)}>${json.richText}</div>`;
 				}
+				if (json.useRichTextEditor && !json.cssClasses.length) {
+					return json.richText;
+				}
+				if (json.cssClasses.length) {
+					return `<span ${reactClassNamesFromComponentObj(json)}>${json.text}</span>`;
+				}
+				return json.text;
 			}
 		}
 	}
