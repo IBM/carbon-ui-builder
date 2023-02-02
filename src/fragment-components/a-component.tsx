@@ -45,6 +45,8 @@ export interface ComponentInfo {
 	keywords: string[];
 	name: string;
 	defaultComponentObj: any;
+	signals?: [string];
+	slots?: [string];
 	image: any; // whatever fits in the <img src="here">
 	settingsUI: any;
 	codeUI?: any;

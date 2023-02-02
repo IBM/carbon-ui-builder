@@ -66,27 +66,63 @@ export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	</>;
 };
 
-
 export const AButtonCodeUI = ({ selectedComponent, setComponent }: any) => {
 	const [fragment, setFragment] = useFragment();
 
-	const [actions, setActions] = useState([
-		{ 	
-			text: 'On click',
-			source: selectedComponent.codeContext.name, 
-			signal: 'onclick',
-			destination: '', 
-			slot: '',
-			id: 1,
-		},
-	] as { 
-		text: string;
-		source: string;
-		signal: string;
-		destination: string;
-		slot: string;
-		id: number;
-	}[]);
+	// let id = 0;
+	// fragment.data.actions.forEach((action: any) => id = (action.id >= id) ? id = action.id + 1 : id);
+
+	// If the actions object doesn't exist, create it with the default action 
+	if(!fragment.data.actions) {
+		setFragment({...fragment, data: {
+			...fragment.data, 
+				actions: []
+		}});
+	// Remove unfilled actions
+	} else if(fragment.data.actions.every((action: any) => 
+		action.source + action.signal + action.id !== selectedComponent.codeContext.name + 'onclick' + 1)) {
+			setFragment({...fragment, data: {
+				...fragment.data, actions: [ 
+					...fragment.data.actions, 
+						{ 	
+							text: 'On click',
+							source: selectedComponent.codeContext.name, 
+							signal: 'onclick',
+							destination: '', 
+							slot: '',
+							id: 1,
+						}
+				]
+			}});
+	}
+	
+
+	// { 	
+	// 	text: 'On click',
+	// 	source: selectedComponent.codeContext.name, 
+	// 	signal: 'onclick',
+	// 	destination: '', 
+	// 	slot: '',
+	// 	id: 1,
+	// }
+
+	// const [actions, setActions] = useState([
+	// 	{ 	
+	// 		text: 'On click',
+	// 		source: selectedComponent.codeContext.name, 
+	// 		signal: 'onclick',
+	// 		destination: '', 
+	// 		slot: '',
+	// 		id: 1,
+	// 	},
+	// ] as { 
+	// 	text: string;
+	// 	source: string;
+	// 	signal: string;
+	// 	destination: string;
+	// 	slot: string;
+	// 	id: number;
+	// }[]);
 
 	// Default value (?)
 	// Maybe always have 1 signal of each type in the UI that can't be deleted
@@ -107,21 +143,37 @@ export const AButtonCodeUI = ({ selectedComponent, setComponent }: any) => {
 	// console.log('fragment 2', fragment);
 
 	const addAction = (text: string, source: string, signal: string) => {
-
 		// Don't allow adding if there is an empty action present
+		// const actions = fragment.data.actions;
 
 		let id = 0;
-		// Create a unique id (largest id value in the array)
-		actions.forEach(signal => id = (signal.id >= id) ? id = signal.id + 1 : id);
+		fragment.data.actions.forEach((action: any) => id = (action.id >= id) ? id = action.id + 1 : id);
 
-		setActions([...actions, {
-				text: text,
-				source: source,
-				signal: signal,
-				destination: '',
-				slot: '',
-				id: id,
-			}]);
+		setFragment({...fragment, data: {
+			...fragment.data, actions: [
+				...fragment.data.actions, 
+					{ 	
+						text: 'On click',
+						source: selectedComponent.codeContext.name, 
+						signal: 'onclick',
+						destination: '', 
+						slot: '',
+						id: id,
+					}
+			]
+		}});
+	}
+
+
+
+		// setActions([...actions, {
+		// 		text: text,
+		// 		source: source,
+		// 		signal: signal,
+		// 		destination: '',
+		// 		slot: '',
+		// 		id: id,
+		// 	}]);
 
 		// signals.push({
 		// 	text: text,
@@ -133,15 +185,15 @@ export const AButtonCodeUI = ({ selectedComponent, setComponent }: any) => {
 		// });
 
 		// const newSignals = signals;
-		console.log('signals 1', actions);
+		// console.log('signals 1', actions);
 		// setComponent({...selectedComponent, signals: newSignals});
 
 		// setFragment({...fragment, data: {
 		// // 	...fragment.data, actions: signals}});
 		// console.log('fragment 3', fragment);
-	}
+	
 
-	console.log('signals 2', actions);
+	// console.log('signals 2', actions);
 
 	return (
 		<>
@@ -158,8 +210,8 @@ export const AButtonCodeUI = ({ selectedComponent, setComponent }: any) => {
 					});
 				}}
 			/>
-			{ actions.map((item) => {
-				return <ActionsEditor signal={item} addAction={addAction} key={item.id} />;
+			{ fragment.data.actions.map((item: any) => {
+				return <ActionsEditor action={item} addAction={addAction} key={item.id} />;
 			})}
 		</>
 	);
@@ -209,6 +261,8 @@ export const componentInfo: ComponentInfo = {
 		text: 'Button',
 		size: ''
 	},
+	signals: ['onclick'],
+	slots: ['disable'],
 	image,
 	codeExport: {
 		angular: {
