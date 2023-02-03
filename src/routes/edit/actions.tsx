@@ -9,13 +9,12 @@ import { isPropertySignature } from 'typescript';
 import { allComponents } from '../../fragment-components/index'
 
 // TODO: Come up with a new name for file & Component
-export const ActionsEditor = ({ action, addAction }: any) => {
+export const ActionsPane = ({ action, addAction }: any) => {
     const [fragment, setFragment] = useFragment();
 
     //*******************
     // Elements Dropdown
     //*******************
-
     const actionSupportedElementTypes: string[] = 
         Object.values(allComponents).filter(component => component.componentInfo.signals)
         .map(component => component.componentInfo.type);
@@ -57,44 +56,76 @@ export const ActionsEditor = ({ action, addAction }: any) => {
 	const actionableElements = getActionableElements();
     const elementDropdownItems = actionableElements.map(element => ({ text: element }));
 
-
     //*******************
     // Slots Dropdown
     //*******************
 
-    // TODO: Ideally should be implemented in AllComponents
-
-    // Current feature set is just disabling buttons
+    // TODO: Ideally should be implemented using AllComponents
+    // Current feature set is just disabling buttons so this implementation fits
     // Future state this dropdown will need to be dynamic
-    // Will be dependant on what element is selected
+    // Using AllComponents, check what slots are available for the selected element 
+
+    // const slotDropdownItems: string[] = [];
     const slotDropdownItems: { text: string }[] = [
         { text: 'Toggle Disable' },
         // { text: 'Toggle Visibility' }
     ];    
+
+    const elementSelected = (element: any) => {
+        // Current set of actions - but we remove the target action that we're changing
+        const newActions = fragment.data.actions.filter((element: any) => element.id != action.id);
+
+        // Add the target action back with destination property
+        newActions.push({ 	
+            text: action.signal, // TODO: need a way to get title with proper captialization
+            source: action.source, 
+            signal: action.signal,
+            destination: element.selectedItem.text, 
+            slot: '',
+            id: action.id,
+        });
+
+        setFragment({...fragment, data: {
+            ...fragment.data, actions: newActions
+        }});
+    } 
+
+    const slotSelected = (slot: any) => {
+        // Current set of actions - but we remove the target action that we're changing
+        const newActions = fragment.data.actions.filter((element: any) => element.id != action.id);
+
+        // Add the target action back with destination property
+        newActions.push({ 	
+            text: action.signal, // TODO: need a way to get title with proper captialization
+            source: action.source, 
+            signal: action.signal,
+            destination: action.destination, 
+            slot: slot.selectedItem.text,
+            id: action.id,
+        });
+
+        setFragment({...fragment, data: {
+            ...fragment.data, actions: newActions
+        }});
+    }
     
     return <div className={css`border: 2px #525252 solid; padding: 10px; margin: 5px;`}>
         <h6 className={css`color: #323232, marginBottom: 5px; fontWeight: normal; textDecoration: underline;`}>{action.text}</h6>
         <Dropdown
             id='elementDropdown'
             titleText='Element'
-            helperText='Your existing elements'
             label=''
             items={elementDropdownItems}
             itemToString={(item: any) => (item ? item.text : '')}
-            onChange={(selectedItem: any) => {
-                action.destination = selectedItem
-            }}
+            onChange={(element: any) => elementSelected(element)}
         />
         <Dropdown
             id='slotDropdown'
             titleText='Slot'
-            helperText='What changes on the element'
             label=''
             items={slotDropdownItems}
             itemToString={(item: any) => (item ? item.text : '')}
-            onChange={(selectedItem: any) => {
-                action.slot = selectedItem
-            }}
+            onChange={(slot: any) => slotSelected(slot)}
         />
         <Button kind='ghost' onClick={() => addAction(action.text, action.source, action.signal)}>
             +
