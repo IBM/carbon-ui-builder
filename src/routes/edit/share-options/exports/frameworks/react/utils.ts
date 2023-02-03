@@ -117,7 +117,7 @@ export const getReactCodeForActions = (signals: any, slots: any, codeContextName
 		}
 		if (slots[codeContextName]) {
 			slots[codeContextName].forEach((property: string) => {
-				codeForActions += `${property}={state["${codeContextName}"]}`;
+				codeForActions += `${property}={state["${codeContextName}"]?.${property}}`;
 			})
 		}
 	}
