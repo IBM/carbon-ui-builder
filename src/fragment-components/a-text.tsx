@@ -2,21 +2,23 @@ import React from 'react';
 import { AComponent } from './a-component';
 import { ComponentInfo } from '.';
 import ReactQuill from 'react-quill';
-import { Checkbox, TextInput } from 'carbon-components-react';
+import { Checkbox, TextInput, Toggle } from 'carbon-components-react';
 import 'react-quill/dist/quill.snow.css';
 import image from './../assets/component-icons/text.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 
 export const ATextSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
-		<Checkbox
-			labelText='Use rich text editor'
+		<Toggle
 			id='useRichTextEditor'
 			checked={selectedComponent.useRichTextEditor}
-			onChange={(checked: boolean) => {
+			labelA='Text editor'
+			labelB='Rich text editor'
+			labelText='Text editor switch'
+			onClick={(event: any) => {
 				setComponent({
 					...selectedComponent,
-					useRichTextEditor: checked
+					useRichTextEditor: event.currentTarget.checked
 				});
 			}} />
 		{
