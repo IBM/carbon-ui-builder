@@ -6,15 +6,18 @@ import { Checkbox, TextInput, Toggle } from 'carbon-components-react';
 import 'react-quill/dist/quill.snow.css';
 import image from './../assets/component-icons/text.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
+import { css } from 'emotion';
 
 export const ATextSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
 		<Toggle
 			id='useRichTextEditor'
 			checked={selectedComponent.useRichTextEditor}
-			labelA='Text editor'
-			labelB='Rich text editor'
-			labelText='Text editor switch'
+			labelA='Off'
+			labelB='On'
+			size='sm'
+			labelText='Use rich text'
+			className={css`margin-bottom: 1rem;`}
 			onClick={(event: any) => {
 				setComponent({
 					...selectedComponent,
@@ -25,7 +28,7 @@ export const ATextSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			selectedComponent.useRichTextEditor
 				? <>
 					<Checkbox
-						labelText='Use section as parent wrapper tag'
+						labelText='This text is a content section'
 						id='use-section'
 						checked={selectedComponent.useSectionTag}
 						onChange={(checked: boolean) => {
