@@ -104,12 +104,13 @@ export const componentInfo: ComponentInfo = {
 			outputs: (_) => '',
 			imports: [],
 			code: ({ json }) => {
-				if (json.useRichTextEditor && json.cssClasses.length) {
-					return json.useSectionTag
-						? `<section ${angularClassNamesFromComponentObj(json)}>${json.richText}</section>`
-						: `<div ${angularClassNamesFromComponentObj(json)}>${json.richText}</div>`;
-				}
-				if (json.useRichTextEditor && !json.cssClasses.length) {
+				if (json.useRichTextEditor) {
+					if (json.cssClasses.length) {
+						if (json.useSectionTag) {
+							return `<section ${angularClassNamesFromComponentObj(json)}>${json.richText}</section>`;
+						}
+						return `<div ${angularClassNamesFromComponentObj(json)}>${json.richText}</div>`;
+					}
 					return json.richText;
 				}
 				if (json.cssClasses.length) {
@@ -121,12 +122,13 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			imports: [],
 			code: ({ json }) => {
-				if (json.useRichTextEditor && json.cssClasses.length) {
-					return json.useSectionTag
-						? `<section ${reactClassNamesFromComponentObj(json)}>${json.richText}</section>`
-						: `<div ${reactClassNamesFromComponentObj(json)}>${json.richText}</div>`;
-				}
-				if (json.useRichTextEditor && !json.cssClasses.length) {
+				if (json.useRichTextEditor) {
+					if (json.cssClasses.length) {
+						if (json.useSectionTag) {
+							return `<section ${reactClassNamesFromComponentObj(json)}>${json.richText}</section>`;
+						}
+						return `<div ${reactClassNamesFromComponentObj(json)}>${json.richText}</div>`;
+					}
 					return json.richText;
 				}
 				if (json.cssClasses.length) {
