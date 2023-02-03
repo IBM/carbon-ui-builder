@@ -152,12 +152,12 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: ['AccordionItem'],
-			code: ({ json, fragments, jsonToTemplate }) => {
+			code: ({ json, signals, slots, fragments, jsonToTemplate }) => {
 				return `<AccordionItem
 					title="${json.title || ''}"
 					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
 					${reactClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, signals, slots, fragments)).join('\n')}
 				</AccordionItem>`;
 			}
 		}

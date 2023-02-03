@@ -185,7 +185,7 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: ['RadioButtonGroup'],
-			code: ({ json, fragments, jsonToTemplate }) => {
+			code: ({ json, signals, slots, fragments, jsonToTemplate }) => {
 				return `<RadioButtonGroup
 					name="${json.codeContext?.name}"
 					legendText="${json.legend}"
@@ -199,7 +199,7 @@ export const componentInfo: ComponentInfo = {
 							name: "${json.codeContext?.name}"
 						}
 					})}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, signals, slots, fragments)).join('\n')}
 				</RadioButtonGroup>`;
 			}
 		}

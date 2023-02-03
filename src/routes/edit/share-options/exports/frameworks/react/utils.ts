@@ -66,19 +66,19 @@ export const jsonToCarbonImports = (json: any) => {
 	return imports;
 };
 
-export const jsonToTemplate = (json: any, fragments: any[]) => {
+export const jsonToTemplate = (json: any, signals: any, slots: any, fragments: any[]) => {
 	if (typeof json === 'string' || !json) {
 		return json;
 	}
 
 	for (const component of Object.values(allComponents)) {
 		if (json.type === component.componentInfo.type && !component.componentInfo.codeExport.react.isNotDirectExport) {
-			return component.componentInfo.codeExport.react.code({ json, jsonToTemplate, fragments });
+			return component.componentInfo.codeExport.react.code({ json, signals, slots, jsonToTemplate, fragments });
 		}
 	}
 
 	if (json.items) {
-		return json.items.map((item: any) => jsonToTemplate(item, fragments)).join('\n');
+		return json.items.map((item: any) => jsonToTemplate(item, signals, slots, fragments)).join('\n');
 	}
 };
 
@@ -101,4 +101,25 @@ export const otherImportsFromComponentObj = (json: any, fragments?: any[]) => {
 	imports = sortedUniq(imports.split('\n')).join('\n');
 
 	return imports;
+};
+
+export const getReactCodeForActions = (signals: any, slots: any, codeContextName: string) => {
+	let codeForActions = '';
+	if (codeContextName) {
+		if (signals[codeContextName]) {
+			Object.keys(signals[codeContextName]).forEach(eventName => {
+				codeForActions += `${eventName}={() => {
+					handlePropertiesChange({
+						targets: ${JSON.stringify(signals[codeContextName][eventName])}
+					});
+				}}`
+			})
+		}
+		if (slots[codeContextName]) {
+			slots[codeContextName].forEach((property: string) => {
+				codeForActions += `${property}={state["${codeContextName}"]}`;
+			})
+		}
+	}
+	return codeForActions;
 };

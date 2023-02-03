@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { GlobalStateContext } from '../../../../../../context';
 import { getAllFragmentStyleClasses } from '../../../../../../ui-fragment/src/utils';
 import { classNameFromFragment, hasFragmentStyleClasses, tagNameFromFragment } from '../../../../../../utils/fragment-tools';
-import { format } from '../utils';
+import { action, format, signalReactEvent } from '../utils';
 import {
 	formatOptions,
 	formatOptionsCss,
@@ -17,10 +17,33 @@ const generateTemplate = (json: any, fragments: any[]) => {
 	const carbonImportsString = carbonImports.reduce((string: string, curr: string) => (
 		string += `${curr}, `
 	), '');
+	const signals: any = {};
+	const slots: any = {};
+	if (json.actions) {
+		json.actions.forEach((action: action) => {
+			const eventName = signalReactEvent[action.signal];
+			if (!signals[action.source]) {
+				signals[action.source] = {};
+			}
+			if (!signals[action.source][eventName]) {
+				signals[action.source][eventName] = [];
+			}
+			signals[action.source][eventName] = [...signals[action.source][eventName], {
+				name: action.destination,
+				property: action.slot,
+				value: JSON.parse(action.slot_param)
+			}];
+			
+			if (!slots[action.destination]) {
+				slots[action.destination] = new Set<string>();
+			}
+			slots[action.destination].add(action.slot);
+		})
+	}
 	return {
 		imports: `import { ${carbonImportsString} } from 'carbon-components-react';
 			${otherImportsFromComponentObj(json, fragments)}`,
-		template: jsonToTemplate(json, fragments),
+		template: jsonToTemplate(json, signals, slots, fragments),
 		additionalCode: getAdditionalCodeAsString(json, fragments)
 	};
 };
@@ -42,6 +65,16 @@ const jsonToSharedComponents = (json: any, fragments: any[]) => {
 			export const ${classNameFromFragment(fragment)} = ({state, setState}) => {
 				const handleInputChange = (event) => {
 					setState({...state, [event.target.name]: event.target.value});
+				};
+
+				const handlePropertiesChange = (event) => {
+					const newState = state;
+					if (event.targets) {
+					  	event.targets.forEach(target => {
+							newState[target.name] = { ...newState[target.name], [target.property]: target.value };
+					  	});
+					}
+					setState({ ...state, ...newState });
 				};
 
 				${fragmentTemplate.additionalCode}
@@ -89,6 +122,16 @@ ${hasFragmentStyleClasses(fragment) ? "\nimport './component.scss';\n" : ''}
 export const FragmentComponent = ({state, setState}) => {
 	const handleInputChange = (event) => {
 		setState({...state, [event.target.name]: event.target.value});
+	};
+
+	const handlePropertiesChange = (event) => {
+		const newState = state;
+		if (event.targets) {
+		  	event.targets.forEach(target => {
+				newState[target.name] = { ...newState[target.name], [target.property]: target.value };
+		  	});
+		}
+		setState({ ...state, ...newState });
 	};
 
 	${fragmentTemplate.additionalCode}

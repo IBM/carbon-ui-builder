@@ -187,16 +187,16 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: ['ExpandableTile', 'TileAboveTheFoldContent', 'TileBelowTheFoldContent'],
-			code: ({ json, jsonToTemplate, fragments }) => {
+			code: ({ json, signals, slots, jsonToTemplate, fragments }) => {
 				const { aboveFold, belowFold } = getFoldObjects(json);
 				return `<ExpandableTile
 					${json.light !== undefined && !!json.light ? `light={${json.light}}` : ''}
 					${json.expanded !== undefined && !!json.expanded ? `expanded={${json.expanded}}` : ''}
 					${reactClassNamesFromComponentObj(json)}>
 						<TileAboveTheFoldContent>
-							${aboveFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${aboveFold.map((element: any) => jsonToTemplate(element, signals, slots, fragments)).join('\n')}
 						</TileAboveTheFoldContent>
-						${belowFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+						${belowFold.map((element: any) => jsonToTemplate(element, signals, slots, fragments)).join('\n')}
 				</ExpandableTile>`;
 			}
 		}

@@ -210,7 +210,7 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: ['TileGroup'],
-			code: ({ json, jsonToTemplate, fragments }) => {
+			code: ({ json, signals, slots, jsonToTemplate, fragments }) => {
 				return `<TileGroup
 					${json.legend !== undefined && json.legend !== '' ? `legend="${json.legend}"` : ''}
 					name="${json.codeContext?.name}"
@@ -222,7 +222,7 @@ export const componentInfo: ComponentInfo = {
 							value: radio
 						}
 					})}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, signals, slots, fragments)).join('\n')}
 				</TileGroup>`;
 			}
 		}
