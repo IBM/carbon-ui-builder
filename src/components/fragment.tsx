@@ -47,6 +47,10 @@ const allowDrop = (event: any) => {
 
 let componentCounter = 2; // actually initialized (again) in Fragment
 
+export const resetIds = () => {
+	componentCounter = 2;
+}
+
 export const getComponentById = (componentObj: any, id: number) => {
 	if (!componentObj || !id) {
 		return undefined;
