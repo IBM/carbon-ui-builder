@@ -17,4 +17,4 @@ export interface action {
 	destination: string;
 	slot: string;
 	slot_param: string;
-};
+}

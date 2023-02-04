@@ -22,7 +22,7 @@ export const signalReactEvent: Record<signalType, string> = {
 	click: 'onClick',
 	hover: 'onHover',
 	focus: 'onFocus'
-}
+};
 
 export const getAdditionalCode = (componentObj: any, fragments: any[]) => {
 	if (typeof componentObj === 'string' || !componentObj) {
