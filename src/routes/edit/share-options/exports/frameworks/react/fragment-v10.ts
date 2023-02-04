@@ -2,14 +2,15 @@ import { useContext } from 'react';
 import { GlobalStateContext } from '../../../../../../context';
 import { getAllFragmentStyleClasses } from '../../../../../../ui-fragment/src/utils';
 import { classNameFromFragment, hasFragmentStyleClasses, tagNameFromFragment } from '../../../../../../utils/fragment-tools';
-import { action, format, signalReactEvent } from '../utils';
+import { action, format } from '../utils';
 import {
 	formatOptions,
 	formatOptionsCss,
 	getAdditionalCodeAsString,
 	jsonToCarbonImports,
 	jsonToTemplate,
-	otherImportsFromComponentObj
+	otherImportsFromComponentObj,
+	signalReactEvent
 } from './utils';
 
 const generateTemplate = (json: any, fragments: any[]) => {
@@ -33,12 +34,12 @@ const generateTemplate = (json: any, fragments: any[]) => {
 				property: action.slot,
 				value: JSON.parse(action.slot_param)
 			}];
-			
+
 			if (!slots[action.destination]) {
 				slots[action.destination] = new Set<string>();
 			}
 			slots[action.destination].add(action.slot);
-		})
+		});
 	}
 	return {
 		imports: `import { ${carbonImportsString} } from 'carbon-components-react';

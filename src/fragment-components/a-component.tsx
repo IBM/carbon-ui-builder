@@ -62,7 +62,11 @@ export interface ComponentInfo {
 			imports: ((props: {json: any}) => string[]) | string[];
 			otherImports?: (props: {json: any; fragments?: any[]}) => string;
 			isNotDirectExport?: boolean;
-			code: (props: {json: any; signals: any; slots: any, jsonToTemplate: (json: any, signals: any, slots: any, fragments: any[]) => string; fragments: any[]}) => string;
+			code: (props: {
+				json: any; 
+				signals: any; 
+				slots: any; 
+				jsonToTemplate: (json: any, signals: any, slots: any, fragments: any[]) => string; fragments: any[]}) => string;
 			additionalCode?: (componentObj: any) => any;
 		};
 	};

@@ -5,6 +5,7 @@ import { sortedUniq } from 'lodash';
 
 import { allComponents } from '../../../../../../fragment-components';
 import { addIfNotExist } from '../../../../../../ui-fragment/src/utils';
+import { signalType } from '../utils';
 
 export const formatOptions: Options = {
 	plugins: [parserBabel],
@@ -16,6 +17,12 @@ export const formatOptionsCss: Options = {
 	parser: 'css',
 	plugins: [parserCss]
 };
+
+export const signalReactEvent: Record<signalType, string> = {
+	click: 'onClick',
+	hover: 'onHover',
+	focus: 'onFocus'
+}
 
 export const getAdditionalCode = (componentObj: any, fragments: any[]) => {
 	if (typeof componentObj === 'string' || !componentObj) {
@@ -112,13 +119,13 @@ export const getReactCodeForActions = (signals: any, slots: any, codeContextName
 					handlePropertiesChange({
 						targets: ${JSON.stringify(signals[codeContextName][eventName])}
 					});
-				}}`
-			})
+				}}`;
+			});
 		}
 		if (slots[codeContextName]) {
 			slots[codeContextName].forEach((property: string) => {
 				codeForActions += `${property}={state["${codeContextName}"]?.${property}}`;
-			})
+			});
 		}
 	}
 	return codeForActions;

@@ -69,7 +69,7 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: [],
-			code: ({ json, signals, slots,  jsonToTemplate, fragments }) => {
+			code: ({ json, signals, slots, jsonToTemplate, fragments }) => {
 				return `<TileBelowTheFoldContent
 					${reactClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element, signals, slots, fragments)).join('\n')}

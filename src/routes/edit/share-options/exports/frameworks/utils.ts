@@ -9,18 +9,12 @@ export const format = (source: string, options?: Options | undefined) => {
 	}
 };
 
-export type signalType = "click" | "hover" | "focus";
+export type signalType = 'click' | 'hover' | 'focus';
 
 export interface action {
-    source: string;
-    signal: signalType;
-    destination: string;
-    slot: string;
-    slot_param: string;
-}
-
-export const signalReactEvent: Record<signalType, string> = {
-	click: "onClick",
-	hover: "onHover",
-	focus: "onFocus"
-}
+	source: string;
+	signal: signalType;
+	destination: string;
+	slot: string;
+	slot_param: string;
+};
