@@ -8,6 +8,7 @@ import { generateNewFragment } from './generate-new-fragment';
 import { GlobalStateContext, NotificationActionType, NotificationContext } from '../../../context';
 import { componentInfo as gridComponentInfo } from '../../../fragment-components/a-grid';
 import { initializeIds } from '../../../components';
+import { getMostFrequentFragmentSelection } from '../../../utils/fragment-tools';
 
 const createFragmentTiles = css`
 	div {
@@ -53,6 +54,11 @@ export enum CreateOptions {
 	IMPORT_JSON
 }
 
+export const isCreateOption = (value: any): value is CreateOptions => {
+	// check if create option enum has value
+	return Object.values(CreateOptions).includes(value);
+};
+
 export interface CreateFragmentModalProps {
 	shouldDisplay: boolean;
 	setShouldDisplay: (shouldDisplay: boolean) => void;
@@ -61,9 +67,9 @@ export interface CreateFragmentModalProps {
 }
 
 export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
-	const [selectedCreateOption, setSelectedCreateOption] = useState<CreateOptions>(CreateOptions.EMPTY_PAGE);
+	const [selectedCreateOption, setSelectedCreateOption] = useState<CreateOptions>(getMostFrequentFragmentSelection());
 
-	const { addFragment, styleClasses, setStyleClasses } = useContext(GlobalStateContext);
+	const { addFragment, styleClasses, setStyleClasses, setFragmentSelectionCount } = useContext(GlobalStateContext);
 	const [, dispatchNotification] = useContext(NotificationContext);
 
 	const navigate: NavigateFunction = useNavigate();
@@ -98,16 +104,19 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 			onRequestSubmit={() => {
 				if (selectedCreateOption === CreateOptions.IMPORT_JSON) {
 					// open modal with file upload
+					setFragmentSelectionCount(selectedCreateOption);
 					props.setDisplayedModal(FragmentWizardModals.IMPORT_JSON_MODAL);
 					props.setLastVisitedModal(FragmentWizardModals.CREATE_FRAGMENT_MODAL);
 					return;
 				}
 				if (selectedCreateOption === CreateOptions.EMPTY_FRAGMENT) {
+					setFragmentSelectionCount(selectedCreateOption);
 					generateFragment();
 					props.setShouldDisplay(false);
 					return;
 				}
 				if (selectedCreateOption === CreateOptions.EMPTY_PAGE) {
+					setFragmentSelectionCount(selectedCreateOption);
 					generateFragment([initializeIds(gridComponentInfo.defaultComponentObj)]);
 					props.setShouldDisplay(false);
 					return;
@@ -126,7 +135,7 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 			<p>Start with a template or create a new fragment from scratch.</p>
 			<TileGroup
 				className={createFragmentTiles}
-				defaultSelected={CreateOptions.EMPTY_PAGE}
+				defaultSelected={selectedCreateOption}
 				name="Fragment creation"
 				onChange={setSelectedCreateOption}>
 				<RadioTile

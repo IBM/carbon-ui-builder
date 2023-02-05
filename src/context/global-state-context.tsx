@@ -8,6 +8,7 @@ import assign from 'lodash/assign';
 import { getFragmentHelpers } from './fragments-context-helper';
 import { getFragmentJsonExport as getFragmentJsonExport_, getFragmentsFromLocalStorage } from '../utils/fragment-tools';
 import { expandJsonToState } from '../ui-fragment/src/utils';
+import { CreateOptions } from '../routes/dashboard/fragment-wizard/create-fragment-modal';
 
 const GlobalStateContext: React.Context<any> = createContext(null);
 GlobalStateContext.displayName = 'GlobalStateContext';
@@ -40,7 +41,8 @@ const GlobalStateContextProvider = ({ children }: any) => {
 	const [fragments, _setFragments] = useState<any[]>(getFragmentsFromLocalStorage());
 	const [actionHistory, setActionHistory] = useState([] as any[]);
 	const [actionHistoryIndex, setActionHistoryIndex] = useState(-1);
-
+	const [fragmentSelectionCount, _setFragmentSelectionCount] = useState(JSON.parse(localStorage.getItem('fragmentSelectionCount') as string
+	|| '{}'));
 	const [styleClasses, _setStyleClasses] = useState(JSON.parse(localStorage.getItem('globalStyleClasses') as string || '[]') as any[]);
 	const [settings, _setSettings] = useState(JSON.parse(localStorage.getItem('globalSettings') as string || '{}') as any);
 
@@ -161,6 +163,17 @@ const GlobalStateContextProvider = ({ children }: any) => {
 		return expandJsonToState(getFragmentJsonExport(fragment));
 	};
 
+	const setFragmentSelectionCount = (fragmentid: any) => {
+		const fragmentoption = CreateOptions[fragmentid];
+		const newfragmentSelectionCount = fragmentSelectionCount;
+		if (fragmentSelectionCount[fragmentoption] === undefined) {
+			newfragmentSelectionCount[fragmentoption] = 0;
+		}
+		newfragmentSelectionCount[fragmentoption]++;
+		localStorage.setItem('fragmentSelectionCount', JSON.stringify(newfragmentSelectionCount));
+		_setFragmentSelectionCount(newfragmentSelectionCount);
+	};
+
 	useEffect(() => {
 		const localFragments = JSON.parse(localStorage.getItem('localFragments') as string || '[]');
 		// clean up the hidden fragments (those marked for deletion but failed to be deleted)
@@ -202,7 +215,11 @@ const GlobalStateContextProvider = ({ children }: any) => {
 
 			// GITHUB TOKENS
 			githubToken,
-			setGithubToken
+			setGithubToken,
+
+			// TILE SELECTION
+			fragmentSelectionCount,
+			setFragmentSelectionCount
 		}}>
 			{children}
 		</GlobalStateContext.Provider>

@@ -5,6 +5,7 @@ import { camelCase, kebabCase, uniq, upperFirst } from 'lodash';
 import { matchPath } from 'react-router-dom';
 import { getAllFragmentStyleClasses } from '../ui-fragment/src/utils';
 import { UIFragment } from '../ui-fragment/src/ui-fragment';
+import { CreateOptions, isCreateOption } from '../routes/dashboard/fragment-wizard/create-fragment-modal';
 
 export const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -52,7 +53,7 @@ export const getFragmentPreview = async (fragment: any, props: RenderProps) => {
 	(element as HTMLElement).style.width = `${props.width || 800}px`;
 	(element as HTMLElement).style.height = `${props.height || 400}px`;
 	(element as HTMLElement).style.minHeight = `${props.height || 400}px`;
-	ReactDOM.render(React.createElement(UIFragment, { state: fragment, setState: (_state: any) => {} }), element);
+	ReactDOM.render(React.createElement(UIFragment, { state: fragment, setState: (_state: any) => { } }), element);
 	document.body.appendChild(element);
 
 	await sleep(100); // wait for render to finish
@@ -260,4 +261,24 @@ export const getFragmentJsonExport = (fragment: any, fragments: any[], styleClas
 
 export const getFragmentJsonExportString = (fragment: any, fragments: any[], styleClasses: any[]) => {
 	return JSON.stringify(getFragmentJsonExport(fragment, fragments, styleClasses), null, 2);
+};
+
+export const getMostFrequentFragmentSelection = (): CreateOptions => {
+	const fragmentSelectionCount = JSON.parse(localStorage.getItem('fragmentSelectionCount') as string || '{}');
+
+	const keys = Object.keys(fragmentSelectionCount);
+
+	if (keys.length === 0) {
+		return CreateOptions.IMPORT_JSON;
+	}
+
+	let mostfrequentselection = keys[0];
+
+	for (const key of keys) {
+		if ((fragmentSelectionCount[key] > fragmentSelectionCount[mostfrequentselection])) {
+			mostfrequentselection = key;
+		}
+	}
+
+	return isCreateOption(mostfrequentselection) ? parseInt(CreateOptions[mostfrequentselection]) : CreateOptions.IMPORT_JSON;
 };
