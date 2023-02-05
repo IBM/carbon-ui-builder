@@ -280,5 +280,5 @@ export const getMostFrequentFragmentSelection = (): CreateOptions => {
 		}
 	}
 
-	return isCreateOption(mostfrequentselection) ? parseInt(CreateOptions[mostfrequentselection]) : CreateOptions.IMPORT_JSON;
+	return isCreateOption(mostfrequentselection) ? parseInt(CreateOptions[mostfrequentselection], 10) : CreateOptions.IMPORT_JSON;
 };
