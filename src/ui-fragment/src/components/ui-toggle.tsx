@@ -25,6 +25,7 @@ export const UIToggle = ({ state, setState }: {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;
 	}
+
 	return <Toggle
 		labelA={state.offText}
 		labelB={state.onText}
