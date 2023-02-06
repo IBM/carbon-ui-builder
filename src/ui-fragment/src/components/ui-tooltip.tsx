@@ -22,6 +22,7 @@ export const UITooltip = ({ state }: {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;
 	}
+
 	return <Tooltip
 		description={state.description}
 		direction={state.direction ? state.direction : 'top'}
