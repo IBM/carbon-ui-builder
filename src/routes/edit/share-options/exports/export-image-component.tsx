@@ -1,7 +1,8 @@
 import React, {
 	useState,
 	useEffect,
-	useRef
+	useRef,
+	useContext
 } from 'react';
 import {
 	Button,
@@ -18,6 +19,7 @@ import { css } from 'emotion';
 import debounce from 'lodash/debounce';
 import { saveBlob, getFullFileName } from '../../../../utils/file-tools';
 import { getFragmentPreview, RenderProps } from '../../../../utils/fragment-tools';
+import { GlobalStateContext } from '../../../../context';
 
 const exportSettingForm = css`
 	width: 23rem;
@@ -28,7 +30,6 @@ const exportSettingFormGroup = css`
 `;
 const previewContainer = css`
 	float: left;
-	background-color: #e0e0e0;
 	width: 100%;
 	height: 100%;
 	margin-left: 1rem;
@@ -151,6 +152,7 @@ const ExportImageSettings = ({ inputs, handleChange, onSave }: any) => {
 };
 
 export const ExportImageComponent = ({ fragment }: any) => {
+	const { getExpandedFragmentState } = useContext(GlobalStateContext);
 	const exportSettings = {
 		width: 800,
 		height: 400,
@@ -161,10 +163,16 @@ export const ExportImageComponent = ({ fragment }: any) => {
 		curRatio: 0
 	};
 	const [inputs, setInputs] = useState(exportSettings);
+	const [fragmentState, setFragmentState] = useState(getExpandedFragmentState(fragment));
 	const [previewUrl, setPreviewUrl] = useState(fragment.preview);
 	const [isPerformingAction, setIsPerformingAction] = useState(false);
 	const previewContainerRef = useRef<HTMLDivElement>(null);
 	const [imageContainerSize, setImageContainerSize] = useState<any>();
+
+	useEffect(() => {
+		setFragmentState(getExpandedFragmentState(fragment));
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [fragment]);
 
 	handleResize = () => {
 		if (!previewContainerRef || !previewContainerRef.current) {
@@ -203,7 +211,7 @@ export const ExportImageComponent = ({ fragment }: any) => {
 	updatePreviewUrl = async () => {
 		const previewSize = getPreviewSize(inputs.width, inputs.height);
 		const renderProps: RenderProps = {
-			id: fragment.id,
+			id: fragmentState.id,
 			name: inputs.fragmentName,
 			width: inputs.width,
 			height: inputs.height,
@@ -213,7 +221,7 @@ export const ExportImageComponent = ({ fragment }: any) => {
 				height: previewSize.height
 			}
 		};
-		const imageBlob = await getFragmentPreview(fragment, renderProps);
+		const imageBlob = await getFragmentPreview(fragmentState, renderProps);
 		const reader = new FileReader();
 		reader.readAsDataURL(imageBlob ? imageBlob : new Blob());
 		reader.onloadend = () => {
@@ -228,13 +236,13 @@ export const ExportImageComponent = ({ fragment }: any) => {
 		}
 		setIsPerformingAction(true);
 		const renderProps: RenderProps = {
-			id: fragment.id,
+			id: fragmentState.id,
 			name: inputs.fragmentName,
 			width: inputs.width,
 			height: inputs.height,
 			format: inputs.format
 		};
-		const imageBlob = await getFragmentPreview(fragment, renderProps);
+		const imageBlob = await getFragmentPreview(fragmentState, renderProps);
 		const fileName = getFullFileName(inputs.fragmentName, inputs.format);
 		saveBlob(imageBlob, fileName);
 		setIsPerformingAction(false);
@@ -267,7 +275,7 @@ export const ExportImageComponent = ({ fragment }: any) => {
 						id="previewimg"
 						className={fragmentImage}
 						src={previewUrl}
-						alt={`fragment preview: ${fragment.title}`} />
+						alt={`fragment preview: ${fragmentState.title}`} />
 				</div>
 			</div>
 			<Loading active={isPerformingAction} />

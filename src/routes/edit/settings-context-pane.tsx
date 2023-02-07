@@ -9,7 +9,7 @@ import {
 	ChevronUp16
 } from '@carbon/icons-react';
 import { css, cx } from 'emotion';
-import { ControlledEditor } from '@monaco-editor/react';
+import Editor from '@monaco-editor/react';
 import { throttle } from 'lodash';
 
 import { ComponentCssClassSelector } from '../../components/css-class-selector';
@@ -236,7 +236,7 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 			{
 				settings.contextPane?.settings?.notesAccordionOpen &&
 				<div className={fullWidthWidgetStyle}>
-					<ControlledEditor
+					<Editor
 						height='300px'
 						language='markdown'
 						options={{
@@ -246,7 +246,7 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 							lineDecorationsWidth: 2,
 							lineNumbersMinChars: 4
 						}}
-						onChange= {(_, value: any) => {
+						onChange= {(value: any) => {
 							if (selectedComponent) {
 								throttledSetComponent({
 									...selectedComponent,
