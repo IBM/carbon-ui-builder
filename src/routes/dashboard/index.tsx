@@ -55,7 +55,7 @@ export const Dashboard = ({
 	setDisplayedModal
 }: any) => {
 	const { fragments, updateFragments } = useContext(GlobalStateContext);
-	const { getFeaturedFragments } = useContext(GithubContext);
+	const { getFeaturedFragments, getBuiltInTemplates } = useContext(GithubContext);
 	const [fragmentGroupDisplayed, setFragmentGroupDisplayed] = useState(FragmentGroupDisplayed.AllFragments);
 	const [fragmentTitleFilter, setFragmentTitleFilter] = useState('');
 	const [displayedFragments, setDisplayedFragments] = useState([]);
@@ -80,6 +80,11 @@ export const Dashboard = ({
 		switch (fragmentGroupDisplayed) {
 			case FragmentGroupDisplayed.Templates: {
 				setDisplayedFragments(filterFragments(getFragmentTemplates(fragments)));
+				setIsLoading(true);
+				getBuiltInTemplates().then((value: any) => {
+					setDisplayedFragments(filterFragments([...value, getFragmentTemplates(fragments)]));
+					setIsLoading(false);
+				});
 				break;
 			}
 			case FragmentGroupDisplayed.FeaturedFragments: {
@@ -138,7 +143,10 @@ export const Dashboard = ({
 						</div>
 						: <FragmentTileList
 							fragments={displayedFragments}
-							isFeaturedFragment={fragmentGroupDisplayed === FragmentGroupDisplayed.FeaturedFragments}
+							isFeaturedFragment={
+								fragmentGroupDisplayed === FragmentGroupDisplayed.FeaturedFragments
+								|| fragmentGroupDisplayed === FragmentGroupDisplayed.Templates
+							}
 							setModalFragment={setModalFragment}
 							setDisplayedModal={setDisplayedModal}
 							displayWizard={displayWizard}
