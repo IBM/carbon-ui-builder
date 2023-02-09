@@ -113,6 +113,7 @@ export const leftPaneHeader = css`
 	position: fixed;
 	width: 300px;
 	background: white;
+	z-index: 1;
 `;
 
 export const leftPaneContent = css`
