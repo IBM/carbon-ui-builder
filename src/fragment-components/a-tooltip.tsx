@@ -113,6 +113,7 @@ export const componentInfo: ComponentInfo = {
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Direction = "${json.direction}";`,
 			outputs: (_) => '',
 			imports: ['DialogModule, PlaceholderModule, TagModule, IconModule'],
+			usePlaceholder: true,
 			code: ({ json }) => {
 				return `<div class="bx--tooltip__label">
 					{{${nameStringToVariableString(json.codeContext?.name)}TriggerText}}
@@ -125,8 +126,7 @@ export const componentInfo: ComponentInfo = {
 							<svg ibmIcon="information--filled" size="16"></svg>
 						</div>
 					</span>
-				</div>
-				<ibm-placeholder></ibm-placeholder>`;
+				</div>`;
 			}
 		},
 		react: {

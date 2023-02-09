@@ -91,6 +91,22 @@ const getAngularOutputsFromJson = (json: any): string => {
 	`;
 };
 
+const checkForPlaceholder = (json: any) => {
+	for (const component of Object.values(allComponents)) {
+		if (json.type === component.componentInfo.type && component.componentInfo.codeExport.angular?.usePlaceholder) {
+			return true;
+		}
+	}
+
+	if (json.items) {
+		return json.items.some((item: any) => {
+			return checkForPlaceholder(item);
+		});
+	}
+
+	return false;
+};
+
 export const jsonToTemplate = (json: any, fragments: any[]) => {
 	if (typeof json === 'string' || !json) {
 		return json;
@@ -228,6 +244,7 @@ export const createAngularApp = (fragment: any, fragments: any[]) => {
 	const className = classNameFromFragment(fragment);
 
 	const allComponents = getAllComponentsCode(fragment, fragments);
+	const hasPlaceholder = checkForPlaceholder(fragment.data);
 
 	const appComponentHtml =
 		`<app-${tagName}></app-${tagName}>
@@ -266,6 +283,7 @@ export const createAngularApp = (fragment: any, fragments: any[]) => {
 			</head>
 			<body>
 				<app-root></app-root>
+				${hasPlaceholder ? '<ibm-placeholder></ibm-placeholder>' : ''}
 			</body>
 		</html>
 		`;
