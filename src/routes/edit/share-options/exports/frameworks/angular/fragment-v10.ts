@@ -91,6 +91,7 @@ const hasPlaceholder = (json: any) => {
 
 	return false;
 };
+
 const getAllComponentsCode = (json: any, fragments: any[]) => {
 	let allComponents: any = {};
 
@@ -127,7 +128,6 @@ export const createAngularApp = (fragment: any, fragments: any[]) => {
 	const className = classNameFromFragment(fragment);
 
 	const allComponents = getAllComponentsCode(fragment, fragments);
-	const requirePlaceholderTag = hasPlaceholder(fragment.data);
 
 	const appComponentHtml =
 		`<app-${tagName}></app-${tagName}>
@@ -166,7 +166,7 @@ export const createAngularApp = (fragment: any, fragments: any[]) => {
 			</head>
 			<body>
 				<app-root></app-root>
-				${requirePlaceholderTag ? '<ibm-placeholder></ibm-placeholder>' : ''}
+				${hasPlaceholder(fragment.data) ? '<ibm-placeholder></ibm-placeholder>' : ''}
 			</body>
 		</html>
 		`;

@@ -262,12 +262,6 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 		case 'clickable-tile':
 			return <UIClickableTile key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
-		case 'toggle':
-			return <UIToggle key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
-
-		case 'tooltip':
-			return <UITooltip key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
-
 		case 'expandable-tile':
 			return <UIExpandableTile key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
@@ -279,6 +273,12 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'radio-tile-group':
 			return <UIRadioTileGroup key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'toggle':
+			return <UIToggle key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'tooltip':
+			return <UITooltip key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		default:
 			break;
