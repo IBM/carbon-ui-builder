@@ -56,7 +56,7 @@ export interface ComponentInfo {
 			outputs: (props: { json: any }) => string;
 			imports: string[];
 			isNotDirectExport?: boolean;
-			usePlaceholder?: boolean;
+			needsPlaceholder?: boolean;
 			code: (props: {json: any; jsonToTemplate: (json: any, fragments: any[]) => string; fragments: any[]}) => string;
 		};
 		react: {

@@ -76,22 +76,21 @@ const getComponentCode = (fragment: any, fragments: any[]) => {
 	return componentCode;
 };
 
-const checkForPlaceholder = (json: any) => {
-	for (const component of Object.values(allComponents)) {
-		if (json.type === component.componentInfo.type && component.componentInfo.codeExport.angular?.usePlaceholder) {
-			return true;
-		}
+const hasPlaceholder = (json: any) => {
+	const checkComponent = (component: any) =>
+	json.type === component.componentInfo.type &&
+	component.componentInfo.codeExport.angular?.needsPlaceholder;
+
+	if (Object.values(allComponents).some(checkComponent)) {
+		return true;
 	}
 
 	if (json.items) {
-		return json.items.some((item: any) => {
-			return checkForPlaceholder(item);
-		});
+		return json.items.some(hasPlaceholder);
 	}
 
 	return false;
 };
-
 const getAllComponentsCode = (json: any, fragments: any[]) => {
 	let allComponents: any = {};
 
@@ -128,7 +127,7 @@ export const createAngularApp = (fragment: any, fragments: any[]) => {
 	const className = classNameFromFragment(fragment);
 
 	const allComponents = getAllComponentsCode(fragment, fragments);
-	const hasPlaceholder = checkForPlaceholder(fragment.data);
+	const requirePlaceholderTag = hasPlaceholder(fragment.data);
 
 	const appComponentHtml =
 		`<app-${tagName}></app-${tagName}>
@@ -167,7 +166,7 @@ export const createAngularApp = (fragment: any, fragments: any[]) => {
 			</head>
 			<body>
 				<app-root></app-root>
-				${hasPlaceholder ? '<ibm-placeholder></ibm-placeholder>' : ''}
+				${requirePlaceholderTag ? '<ibm-placeholder></ibm-placeholder>' : ''}
 			</body>
 		</html>
 		`;

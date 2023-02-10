@@ -29,12 +29,12 @@ import { UISelectableTileGroup } from './components/ui-selectable-tile-group';
 import { UISearchInput } from './components/ui-serach-input';
 import { UITag } from './components/ui-tag';
 import { UIText } from './components/ui-text';
-import { UITooltip } from './components/ui-tooltip';
 import { UITextAreaInput } from './components/ui-text-area';
 import { UITextInput } from './components/ui-text-input';
 import { UITile } from './components/ui-tile';
 import { UITileFold } from './components/ui-tile-fold';
 import { UIToggle } from './components/ui-toggle';
+import { UITooltip } from './components/ui-tooltip';
 
 export const setItemInState = (item: any, state: any, setState: (state: any) => void) => {
 	const itemIndex = state.items.findIndex((i: any) => i.id === item.id);
@@ -241,9 +241,6 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 		case 'text':
 			return <UIText key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
-		case 'tooltip':
-			return <UITooltip key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
-
 		case 'text-area':
 			return <UITextAreaInput key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
@@ -267,6 +264,9 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'toggle':
 			return <UIToggle key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'tooltip':
+			return <UITooltip key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'expandable-tile':
 			return <UIExpandableTile key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;

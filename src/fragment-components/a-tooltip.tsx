@@ -101,7 +101,7 @@ export const componentInfo: ComponentInfo = {
 	type: 'tooltip',
 	defaultComponentObj: {
 		type: 'tooltip',
-		direction: 'top',
+		direction: '',
 		description: 'This is tooltip text',
 		triggerText: 'Tooltip label'
 	},
@@ -113,7 +113,7 @@ export const componentInfo: ComponentInfo = {
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Direction = "${json.direction}";`,
 			outputs: (_) => '',
 			imports: ['DialogModule, PlaceholderModule, TagModule, IconModule'],
-			usePlaceholder: true,
+			needsPlaceholder: true,
 			code: ({ json }) => {
 				return `<div class="bx--tooltip__label">
 					{{${nameStringToVariableString(json.codeContext?.name)}TriggerText}}
@@ -121,7 +121,7 @@ export const componentInfo: ComponentInfo = {
 						${angularClassNamesFromComponentObj(json)}
 						[ibmTooltip]="${nameStringToVariableString(json.codeContext?.name)}Description"
 						trigger="click"
-						[placement]="${json.direction ? `${nameStringToVariableString(json.codeContext?.name)}Direction` : 'top'}">
+						${json.direction ? `[placement]='${nameStringToVariableString(json.codeContext?.name)}Direction` : ''}>
 						<div role="button">
 							<svg ibmIcon="information--filled" size="16"></svg>
 						</div>
