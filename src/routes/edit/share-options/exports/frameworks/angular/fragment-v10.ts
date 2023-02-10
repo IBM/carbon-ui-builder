@@ -78,7 +78,7 @@ const getComponentCode = (fragment: any, fragments: any[]) => {
 
 const hasPlaceholder = (json: any) => {
 	const checkComponent = (component: any) =>
-	json.type === component.componentInfo.type &&
+		json.type === component.componentInfo.type &&
 	component.componentInfo.codeExport.angular?.needsPlaceholder;
 
 	if (Object.values(allComponents).some(checkComponent)) {
