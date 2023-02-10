@@ -15,9 +15,13 @@ export const ActionsPane = ({ action, addAction }: any) => {
     //*******************
     // Elements Dropdown
     //*******************
+
+    // Remove this helper array
+    // Check for each action supported element type directly in recursive function
     const actionSupportedElementTypes: string[] = 
-        Object.values(allComponents).filter(component => component.componentInfo.signals)
-        .map(component => component.componentInfo.type);
+        Object.values(allComponents)
+            .filter(component => component.componentInfo.signals)
+            .map(component => component.componentInfo.type);
         
     
     /**
@@ -38,7 +42,6 @@ export const ActionsPane = ({ action, addAction }: any) => {
      * @returns final value of actionableElements, all the codeContext.name values for elements of our fragment that support actions
      */
 	const searchForActionableElements = (actionableElements: string[], items: any): string[] => {
-        
         for(let i = 0; i < items.length; i++) {
 			if(actionSupportedElementTypes.includes(items[i].type)) {
 				actionableElements.push(items[i].codeContext.name);
@@ -104,13 +107,18 @@ export const ActionsPane = ({ action, addAction }: any) => {
             id: action.id,
         });
 
-        setFragment({...fragment, data: {
-            ...fragment.data, actions: newActions
-        }});
+        // TODO: Check other setFragments to format like below
+        setFragment({
+            ...fragment, 
+            data: {
+                ...fragment.data, 
+                actions: newActions
+            }
+        });
     }
     
     return <div className={css`border: 2px #525252 solid; padding: 10px; margin: 5px;`}>
-        <h6 className={css`color: #323232, marginBottom: 5px; fontWeight: normal; textDecoration: underline;`}>{action.text}</h6>
+        <h6 className={css`color: #323232; marginBottom: 5px; fontWeight: normal; textDecoration: underline;`}>{action.text}</h6>
         <Dropdown
             id='elementDropdown'
             titleText='Element'

@@ -70,13 +70,16 @@ export const AButtonCodeUI = ({ selectedComponent, setComponent }: any) => {
 	const [fragment, setFragment] = useFragment();
 
 	// If the actions object doesn't exist, create it with the default action 
-	if(!fragment.data.actions) {
-		setFragment({...fragment, data: {
-			...fragment.data, 
-				actions: []
-		}});
-	} 
-	
+	// if(!fragment.data.actions) {
+	// 	setFragment({...fragment, data: {
+	// 		...fragment.data, 
+	// 			actions: []
+	// 	}});
+	// } 
+
+	// Only add action to the JSON if its finished
+	// Only display actions for the target element
+
 	// Add default action for this component if its not already present in fragment
 	if(fragment.data.actions.every((action: any) => 
 		action.source + action.signal + action.id !== selectedComponent.codeContext.name + 'onclick' + 1)) {
@@ -101,15 +104,15 @@ export const AButtonCodeUI = ({ selectedComponent, setComponent }: any) => {
 
 		setFragment({...fragment, data: {
 			...fragment.data, actions: [
-				...fragment.data.actions, 
-					{ 	
-						text: 'On click',
-						source: selectedComponent.codeContext.name, 
-						signal: 'onclick',
-						destination: '', 
-						slot: '',
-						id: id,
-					}
+				...(fragment.data.actions || []), 
+				{ 	
+					text: 'On click',
+					source: selectedComponent.codeContext.name, 
+					signal: 'onclick',
+					destination: '', 
+					slot: '',
+					id: id,
+				}
 			]
 		}});
 	}
