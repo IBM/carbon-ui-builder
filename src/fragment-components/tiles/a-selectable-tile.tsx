@@ -217,7 +217,8 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Selected = ${json.selected || false};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = '${json.value}';`,
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = '${json.value}';
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : 'dark'}';`,
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Change = new EventEmitter<Event>();`,
 			imports: ['TilesModule'],
 			code: ({ json, fragments, jsonToTemplate }) => {
@@ -226,6 +227,7 @@ export const componentInfo: ComponentInfo = {
 				 * https://github.com/IBM/carbon-components-angular/issues/1999
 				 */
 				return `<ibm-selection-tile
+					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 					[selected]="${nameStringToVariableString(json.codeContext?.name)}Selected"
 					${json.standalone ? `(change)="${nameStringToVariableString(json.codeContext?.name)}Change.emit($event)"` : ''}

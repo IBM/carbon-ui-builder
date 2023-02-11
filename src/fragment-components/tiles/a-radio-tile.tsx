@@ -200,6 +200,7 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${json.checked || false};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : 'dark'}';
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = '${json.value}';`,
 			outputs: () => '',
 			imports: ['TilesModule'],
@@ -209,6 +210,7 @@ export const componentInfo: ComponentInfo = {
 				 * https://github.com/IBM/carbon-components-angular/issues/1999
 				 */
 				return `<ibm-selection-tile
+					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 					[selected]="${nameStringToVariableString(json.codeContext?.name)}Selected"
 					${angularClassNamesFromComponentObj(json)}>
