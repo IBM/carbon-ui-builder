@@ -205,10 +205,6 @@ export const componentInfo: ComponentInfo = {
 			outputs: () => '',
 			imports: ['TilesModule'],
 			code: ({ json, fragments, jsonToTemplate }) => {
-				/**
-				 * @todo - CCA does not support light & disabled
-				 * https://github.com/IBM/carbon-components-angular/issues/1999
-				 */
 				return `<ibm-selection-tile
 					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"

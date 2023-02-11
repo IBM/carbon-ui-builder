@@ -172,10 +172,6 @@ export const componentInfo: ComponentInfo = {
 			imports: ['TilesModule'],
 			code: ({ json, fragments, jsonToTemplate }) => {
 				const { aboveFold, belowFold } = getFoldObjects(json);
-				/**
-				 * @todo - CCA does not support light
-				 * https://github.com/IBM/carbon-components-angular/issues/1999
-				 */
 				return `<ibm-expandable-tile
 					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 					${json.expanded !== undefined ? `[expanded]="${nameStringToVariableString(json.codeContext?.name)}Expanded"` : ''}
