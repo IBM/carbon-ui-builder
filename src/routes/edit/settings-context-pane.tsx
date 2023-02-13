@@ -16,7 +16,6 @@ import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { getSelectedComponent, updatedState } from '../../components/fragment';
 import { allComponents } from '../../fragment-components';
 import { SelectedComponentBreadcrumbs } from './selected-component-breadcrumbs';
-import { FragmentLayoutWidget } from '../../components/fragment-layout-widget';
 import { GlobalStateContext } from '../../context';
 
 const styleContextPaneStyle = css`
@@ -24,7 +23,7 @@ const styleContextPaneStyle = css`
 	display: inline-flex;
 }`;
 
-const accordionButtonStyle = css`
+export const accordionButtonStyle = css`
 	display: block;
 	color: #161616;
 	width: 100%;
@@ -190,19 +189,6 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 					</>
 				}
 				</div>
-			}
-			<Button
-			kind='ghost'
-			className={accordionButtonStyle}
-			renderIcon={settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen ? ChevronUp16 : ChevronDown16}
-			onClick={() => updateContextPaneSettings({
-				fragmentLayoutWidgetAccordionOpen: !settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen
-			})}>
-				Layout
-			</Button>
-			{
-				settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen
-				&& <FragmentLayoutWidget fragment={fragment} setFragment={setFragment} />
 			}
 			<Button
 			kind='ghost'
