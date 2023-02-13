@@ -211,7 +211,7 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 			onClick={() => updateContextPaneSettings({
 				customCSSAccordionOpen: !settings.contextPane?.settings?.customCSSAccordionOpen
 			})}>
-				Custom CSS classes
+				Advanced styling
 			</Button>
 			{
 				settings.contextPane?.settings?.customCSSAccordionOpen &&
