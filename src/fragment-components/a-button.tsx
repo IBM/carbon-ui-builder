@@ -8,7 +8,11 @@ import { css } from 'emotion';
 import { AComponent, ComponentInfo } from './a-component';
 
 import image from './../assets/component-icons/button.svg';
-import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
+import {
+	angularClassNamesFromComponentObj,
+	getFragmentById, nameStringToVariableString,
+	reactClassNamesFromComponentObj
+} from '../utils/fragment-tools';
 
 export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const kindItems = [
@@ -131,7 +135,7 @@ export const componentInfo: ComponentInfo = {
 				let clickAdded = false;
 
 				actions.forEach((a: any) => {
-					if (a.source === name && a.signal === 'click' && !clickAdded) {
+					if (a.source === json.id && a.signal === 'click' && !clickAdded) {
 						res += `@Output() ${name}ClickedSignal: boolean = false;`;
 						clickAdded = true;
 					}
@@ -140,7 +144,7 @@ export const componentInfo: ComponentInfo = {
 				return `@Output() ${name}Clicked = new EventEmitter();` + res;
 			},
 			imports: ['ButtonModule'],
-			code: ({ json, actions }) => {
+			code: ({ json, actions, fragments }) => {
 				const name = nameStringToVariableString(json.codeContext?.name);
 				let clickAction = '';
 				let disabled = '';
@@ -148,17 +152,19 @@ export const componentInfo: ComponentInfo = {
 
 				if (actions) {
 					actions.forEach((a: any) => {
-						if (a.source === name) {
+						if (a.source === json.id) {
 							if (a.signal === 'click' && !clickAdded) {
 								clickAction += `${name}ClickedSignal = !${name}ClickedSignal;`;
 								clickAdded = true;
 							}
 						}
 
-						if (a.destination === name) {
+						if (a.destination === json.id) {
 							if (a.slot === 'isVisible') {
+								const source = getFragmentById(fragments[0], a.source);
+								const sName = nameStringToVariableString(source.codeContext?.name);
 								disabled += (disabled !== '' ? ' || ' : '');
-								disabled += `${a.source}ClickedSignal`;
+								disabled += `${sName}ClickedSignal`;
 							}
 						}
 					});
