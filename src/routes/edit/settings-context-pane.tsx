@@ -194,6 +194,19 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 			<Button
 			kind='ghost'
 			className={accordionButtonStyle}
+			renderIcon={settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen ? ChevronUp16 : ChevronDown16}
+			onClick={() => updateContextPaneSettings({
+				fragmentLayoutWidgetAccordionOpen: !settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen
+			})}>
+				Layout
+			</Button>
+			{
+				settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen
+				&& <FragmentLayoutWidget fragment={fragment} setFragment={setFragment} />
+			}
+			<Button
+			kind='ghost'
+			className={accordionButtonStyle}
 			renderIcon={settings.contextPane?.settings?.customCSSAccordionOpen ? ChevronUp16 : ChevronDown16}
 			onClick={() => updateContextPaneSettings({
 				customCSSAccordionOpen: !settings.contextPane?.settings?.customCSSAccordionOpen
@@ -210,19 +223,6 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 						selectedComponent && <ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 					}
 				</div>
-			}
-			<Button
-			kind='ghost'
-			className={accordionButtonStyle}
-			renderIcon={settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen ? ChevronUp16 : ChevronDown16}
-			onClick={() => updateContextPaneSettings({
-				fragmentLayoutWidgetAccordionOpen: !settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen
-			})}>
-				Layout
-			</Button>
-			{
-				settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen
-				&& <FragmentLayoutWidget fragment={fragment} setFragment={setFragment} />
 			}
 			<Button
 			kind='ghost'
