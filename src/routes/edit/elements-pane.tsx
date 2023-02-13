@@ -1,14 +1,17 @@
 import React, { useContext, useState } from 'react';
 import { css, cx } from 'emotion';
-import { Search } from 'carbon-components-react';
+import { Button, Search } from 'carbon-components-react';
+import { ChevronUp16, ChevronDown16 } from '@carbon/icons-react';
 
 import { ElementTile } from '../../components/element-tile';
 import { FragmentPreview } from '../../components/fragment-preview';
 
 import { leftPane, leftPaneContent, leftPaneHeader } from '.';
 import { allComponents } from '../../fragment-components';
-import { GlobalStateContext } from '../../context';
+import { GlobalStateContext, useFragment } from '../../context';
 import { getEditScreenParams } from '../../utils/fragment-tools';
+import { FragmentLayoutWidget } from '../../components/fragment-layout-widget';
+import { accordionButtonStyle } from './settings-context-pane';
 
 const elementTileListStyleBase = css`
 	display: flex;
@@ -33,7 +36,25 @@ const elementTileListStyleMicroLayouts = cx(elementTileListStyleBase, css`
 
 export const ElementsPane = ({ isActive }: any) => {
 	const [filterString, setFilterString] = useState('');
-	const { fragments } = useContext(GlobalStateContext);
+	const [fragment, setFragment] = useFragment();
+	const { fragments, settings, setSettings } = useContext(GlobalStateContext);
+
+	const isLayoutWidgetOpen = settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen;
+
+	const updateContextPaneSettings = (s: any) => {
+		setSettings({
+			...settings,
+			contextPane: {
+				...(settings.contextPane || {}),
+				settings: {
+					...(settings.contextPane?.settings || {}),
+					...s
+				}
+			}
+		});
+	};
+
+	const layoutWidgetHeight = 300;
 
 	const microLayouts = fragments.filter((fragment: any) => fragment.labels?.includes('micro-layout'));
 
@@ -54,41 +75,66 @@ export const ElementsPane = ({ isActive }: any) => {
 
 	return (
 		<div className={cx(leftPane, isActive ? 'is-active' : '')}>
-			<div className={leftPaneHeader}>
-				<Search
-					id='elements-search'
-					light
-					labelText='Filter elements'
-					placeholder='Filter elements'
-					onChange={(event: any) => setFilterString(event.target.value)} />
-			</div>
-			<div className={leftPaneContent}>
-				<div className={elementTileListStyle}>
+			<div className={css`
+			height: calc(100vh - 112px - 3rem ${isLayoutWidgetOpen ? `- ${layoutWidgetHeight}px` : ''});
+			overflow-y: auto;`}>
+				<div className={leftPaneHeader}>
+					<Search
+						id='elements-search'
+						light
+						labelText='Filter elements'
+						placeholder='Filter elements'
+						onChange={(event: any) => setFilterString(event.target.value)} />
+				</div>
+				<div className={leftPaneContent}>
+					<div className={elementTileListStyle}>
+						{
+							Object.values(allComponents)
+								.filter((component: any) =>
+									!component.componentInfo.hideFromElementsPane
+									&& shouldShow(component.componentInfo.keywords))
+								.map((component: any) =>
+									<ElementTile componentObj={component.componentInfo.defaultComponentObj} key={component.componentInfo.name}>
+										<img src={component.componentInfo.image} alt={component.componentInfo.name} />
+										<span className='title'>{component.componentInfo.name}</span>
+									</ElementTile>)
+						}
+					</div>
 					{
-						Object.values(allComponents)
-							.filter((component: any) =>
-								!component.componentInfo.hideFromElementsPane
-								&& shouldShow(component.componentInfo.keywords))
-							.map((component: any) =>
-								<ElementTile componentObj={component.componentInfo.defaultComponentObj} key={component.componentInfo.name}>
-									<img src={component.componentInfo.image} alt={component.componentInfo.name} />
-									<span className='title'>{component.componentInfo.name}</span>
-								</ElementTile>)
+						visibleMicroLayouts && visibleMicroLayouts.length > 0 && <>
+							<h4>Micro layouts</h4>
+							<div className={elementTileListStyleMicroLayouts}>
+								{
+									visibleMicroLayouts.map((component: any) =>
+										<ElementTile componentObj={{ type: 'fragment', fragmentId: component.id }} key={component.id}>
+											<FragmentPreview fragment={component} />
+											<span className='title'>{component.title}</span>
+										</ElementTile>)
+								}
+							</div>
+						</>
 					}
 				</div>
+			</div>
+			<div>
+				<Button
+				kind='ghost'
+				className={accordionButtonStyle}
+				renderIcon={isLayoutWidgetOpen ? ChevronDown16 : ChevronUp16}
+				onClick={() => updateContextPaneSettings({
+					fragmentLayoutWidgetAccordionOpen: !isLayoutWidgetOpen
+				})}>
+					Layout tree
+				</Button>
 				{
-					visibleMicroLayouts && visibleMicroLayouts.length > 0 && <>
-						<h4>Micro layouts</h4>
-						<div className={elementTileListStyleMicroLayouts}>
-							{
-								visibleMicroLayouts.map((component: any) =>
-									<ElementTile componentObj={{ type: 'fragment', fragmentId: component.id }} key={component.id}>
-										<FragmentPreview fragment={component} />
-										<span className='title'>{component.title}</span>
-									</ElementTile>)
-							}
-						</div>
-					</>
+					isLayoutWidgetOpen
+					&& <FragmentLayoutWidget
+						className={css`
+							overflow-y: auto;
+							height: ${isLayoutWidgetOpen ? `${layoutWidgetHeight}px` : '2rem'};
+						`}
+						fragment={fragment}
+						setFragment={setFragment} />
 				}
 			</div>
 		</div>
