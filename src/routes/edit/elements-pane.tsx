@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { css, cx } from 'emotion';
 import { Button, Search } from 'carbon-components-react';
 import { ChevronUp16, ChevronDown16 } from '@carbon/icons-react';
@@ -36,6 +36,9 @@ const elementTileListStyleMicroLayouts = cx(elementTileListStyleBase, css`
 
 export const ElementsPane = ({ isActive }: any) => {
 	const [filterString, setFilterString] = useState('');
+	const [layoutWidgetHeight, setLayoutWidgetHeight] = useState(300);
+	const mouseYStart = useRef(0);
+	const heightStart = useRef(0);
 	const [fragment, setFragment] = useFragment();
 	const { fragments, settings, setSettings } = useContext(GlobalStateContext);
 
@@ -54,8 +57,6 @@ export const ElementsPane = ({ isActive }: any) => {
 		});
 	};
 
-	const layoutWidgetHeight = 300;
-
 	const microLayouts = fragments.filter((fragment: any) => fragment.labels?.includes('micro-layout'));
 
 	/**
@@ -72,6 +73,24 @@ export const ElementsPane = ({ isActive }: any) => {
 	const visibleMicroLayouts = microLayouts?.filter((component: any) =>
 		shouldShow([component.title, ...component.labels])
 		&& component.id !== editScreenParams?.id);
+
+	const resize = (e: any) => {
+		const newY = mouseYStart.current - e.pageY;
+
+		const minHeight = 60;
+
+		let newHeight = heightStart.current + newY;
+		if (newHeight < minHeight) {
+			newHeight = minHeight;
+		}
+
+		setLayoutWidgetHeight(newHeight);
+	};
+
+	const stopResize = () => {
+		window.removeEventListener('mousemove', resize);
+		window.removeEventListener('mouseup', stopResize);
+	};
 
 	return (
 		<div className={cx(leftPane, isActive ? 'is-active' : '')}>
@@ -116,7 +135,26 @@ export const ElementsPane = ({ isActive }: any) => {
 					}
 				</div>
 			</div>
-			<div>
+			<div className={css`position: relative;`}>
+				<div
+					className={css`
+						position: absolute;
+						top: 0;
+						z-index: 1;
+						height: 3px;
+						width: 100%;
+						&:hover {
+							background-color: #0f62fe;
+							cursor: ns-resize;
+						}
+					`}
+					onMouseDown={(e) => {
+						e.preventDefault();
+						mouseYStart.current = e.pageY;
+						heightStart.current = layoutWidgetHeight;
+						window.addEventListener('mousemove', resize);
+						window.addEventListener('mouseup', stopResize);
+					}} />
 				<Button
 				kind='ghost'
 				className={accordionButtonStyle}
