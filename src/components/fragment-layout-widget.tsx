@@ -326,7 +326,7 @@ const LayoutWidgetItem = ({
 	</>;
 };
 
-export const FragmentLayoutWidget = ({ fragment, setFragment }: any) => {
+export const FragmentLayoutWidget = ({ fragment, setFragment, className }: any) => {
 	const [expansion, setExpansion] = useState({} as any);
 	const [isDragging, setIsDragging_] = useState(false);
 
@@ -348,7 +348,8 @@ export const FragmentLayoutWidget = ({ fragment, setFragment }: any) => {
 
 	return <div
 	onDragOver={() => setIsDragging(true)}
-	onDragLeave={() => setIsDragging(false)}>
+	onDragLeave={() => setIsDragging(false)}
+	className={className}>
 		{
 			fragment.data.items?.map((component: any, index: number, { length }: {length: number}) =>
 				<LayoutWidgetItem
