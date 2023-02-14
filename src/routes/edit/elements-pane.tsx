@@ -36,18 +36,31 @@ const elementTileListStyleMicroLayouts = cx(elementTileListStyleBase, css`
 
 export const ElementsPane = ({ isActive }: any) => {
 	const [filterString, setFilterString] = useState('');
-	const [layoutWidgetHeight, setLayoutWidgetHeight] = useState(300);
 	const paneRef = useRef(null as unknown as HTMLDivElement);
 	const mouseYStart = useRef(0);
 	const heightStart = useRef(0);
 	const [fragment, setFragment] = useFragment();
 	const { fragments, settings, setSettings } = useContext(GlobalStateContext);
 
-	const isLayoutWidgetOpen = settings.fragmentLayoutWidgetAccordionOpen;
+	const isLayoutWidgetOpen = settings.layoutWidget?.isAccordionOpen;
 	const setIsLayoutWidgetOpen = (is = true) => {
 		setSettings({
 			...settings,
-			fragmentLayoutWidgetAccordionOpen: is
+			layoutWidget: {
+				...(settings.layoutWidget || {}),
+				isAccordionOpen: is
+			}
+		});
+	};
+
+	const layoutWidgetHeight = settings.layoutWidget?.height || 300;
+	const setLayoutWidgetHeight = (height: number) => {
+		setSettings({
+			...settings,
+			layoutWidget: {
+				...(settings.layoutWidget || {}),
+				height
+			}
 		});
 	};
 
