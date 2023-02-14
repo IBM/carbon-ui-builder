@@ -201,6 +201,7 @@ export const componentInfo: ComponentInfo = {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${json.checked || false};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : 'dark'}';
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled || false}
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = '${json.value}';`,
 			outputs: () => '',
 			imports: ['TilesModule'],
@@ -208,6 +209,7 @@ export const componentInfo: ComponentInfo = {
 				return `<ibm-selection-tile
 					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
+					[disabled]=${nameStringToVariableString(json.codeContext?.name)}Disabled
 					[selected]="${nameStringToVariableString(json.codeContext?.name)}Selected"
 					${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}

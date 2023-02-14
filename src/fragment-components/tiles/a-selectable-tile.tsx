@@ -218,6 +218,7 @@ export const componentInfo: ComponentInfo = {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Selected = ${json.selected || false};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = '${json.value}';
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled || false}
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : 'dark'}';`,
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Change = new EventEmitter<Event>();`,
 			imports: ['TilesModule'],
@@ -225,6 +226,7 @@ export const componentInfo: ComponentInfo = {
 				return `<ibm-selection-tile
 					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
+					[disabled]=${nameStringToVariableString(json.codeContext?.name)}Disabled
 					[selected]="${nameStringToVariableString(json.codeContext?.name)}Selected"
 					${json.standalone ? `(change)="${nameStringToVariableString(json.codeContext?.name)}Change.emit($event)"` : ''}
 					${angularClassNamesFromComponentObj(json)}>
