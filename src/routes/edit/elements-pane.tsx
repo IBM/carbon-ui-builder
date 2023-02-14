@@ -37,6 +37,7 @@ const elementTileListStyleMicroLayouts = cx(elementTileListStyleBase, css`
 export const ElementsPane = ({ isActive }: any) => {
 	const [filterString, setFilterString] = useState('');
 	const [layoutWidgetHeight, setLayoutWidgetHeight] = useState(300);
+	const paneRef = useRef(null as unknown as HTMLDivElement);
 	const mouseYStart = useRef(0);
 	const heightStart = useRef(0);
 	const [fragment, setFragment] = useFragment();
@@ -78,10 +79,15 @@ export const ElementsPane = ({ isActive }: any) => {
 		const newY = mouseYStart.current - e.pageY;
 
 		const minHeight = 60;
+		const maxHeight = paneRef.current?.clientHeight - 2.5 * minHeight;
 
 		let newHeight = heightStart.current + newY;
 		if (newHeight < minHeight) {
 			newHeight = minHeight;
+		}
+
+		if (newHeight > maxHeight) {
+			newHeight = maxHeight;
 		}
 
 		setLayoutWidgetHeight(newHeight);
@@ -93,7 +99,7 @@ export const ElementsPane = ({ isActive }: any) => {
 	};
 
 	return (
-		<div className={cx(leftPane, isActive ? 'is-active' : '')}>
+		<div className={cx(leftPane, isActive ? 'is-active' : '')} ref={paneRef}>
 			<div className={css`
 			height: calc(100vh - 112px - 3rem ${isLayoutWidgetOpen ? `- ${layoutWidgetHeight}px` : ''});
 			overflow-y: auto;`}>
