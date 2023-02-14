@@ -43,18 +43,11 @@ export const ElementsPane = ({ isActive }: any) => {
 	const [fragment, setFragment] = useFragment();
 	const { fragments, settings, setSettings } = useContext(GlobalStateContext);
 
-	const isLayoutWidgetOpen = settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen;
-
-	const updateContextPaneSettings = (s: any) => {
+	const isLayoutWidgetOpen = settings.fragmentLayoutWidgetAccordionOpen;
+	const setIsLayoutWidgetOpen = (is = true) => {
 		setSettings({
 			...settings,
-			contextPane: {
-				...(settings.contextPane || {}),
-				settings: {
-					...(settings.contextPane?.settings || {}),
-					...s
-				}
-			}
+			fragmentLayoutWidgetAccordionOpen: is
 		});
 	};
 
@@ -165,9 +158,7 @@ export const ElementsPane = ({ isActive }: any) => {
 				kind='ghost'
 				className={accordionButtonStyle}
 				renderIcon={isLayoutWidgetOpen ? ChevronDown16 : ChevronUp16}
-				onClick={() => updateContextPaneSettings({
-					fragmentLayoutWidgetAccordionOpen: !isLayoutWidgetOpen
-				})}>
+				onClick={() => setIsLayoutWidgetOpen(!isLayoutWidgetOpen)}>
 					Layout tree
 				</Button>
 				{
