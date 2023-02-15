@@ -108,6 +108,22 @@ export const ATagSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	</>;
 };
 
+export const ATagCodeUI = ({ selectedComponent, setComponent }: any) => {
+	return <TextInput
+			value={selectedComponent.codeContext?.name}
+			labelText='Input name'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						name: event.currentTarget.value
+					}
+				});
+			}}
+		/>;
+};
+
 export const ATag = ({
 	children,
 	componentObj,
@@ -132,6 +148,7 @@ export const ATag = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ATag,
+	codeUI: ATagCodeUI,
 	settingsUI: ATagSettingsUI,
 	render: ({ componentObj, select, remove, selected }) => <ATag
 		componentObj={componentObj}

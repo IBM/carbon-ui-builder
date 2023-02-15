@@ -3,7 +3,8 @@ import {
 	Accordion,
 	AccordionItem,
 	Column,
-	NumberInput
+	NumberInput,
+	TextInput
 } from 'carbon-components-react';
 import { Add32, Help32 } from '@carbon/icons-react';
 import { css, cx } from 'emotion';
@@ -193,6 +194,22 @@ const iconStyle = css`
 	float: right;
 	cursor: pointer`;
 
+export const AColumnCodeUI = ({ selectedComponent, setComponent }: any) => {
+	return <TextInput
+			value={selectedComponent.codeContext?.name}
+			labelText='Input name'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						name: event.currentTarget.value
+					}
+				});
+			}}
+		/>;
+};
+
 export const AColumn = ({
 	children,
 	componentObj,
@@ -320,6 +337,7 @@ export const AColumn = ({
 
 export const componentInfo: ComponentInfo = {
 	component: AColumn,
+	codeUI: AColumnCodeUI,
 	settingsUI: AColumnSettingsUI,
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline }) => <AColumn
 		componentObj={componentObj}

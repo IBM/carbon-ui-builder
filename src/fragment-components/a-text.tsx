@@ -80,6 +80,22 @@ export const ATextSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	</>;
 };
 
+export const ATextCodeUI = ({ selectedComponent, setComponent }: any) => {
+	return <TextInput
+			value={selectedComponent.codeContext?.name}
+			labelText='Input name'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						name: event.currentTarget.value
+					}
+				});
+			}}
+		/>;
+};
+
 export const AText = ({
 	children,
 	componentObj,
@@ -98,6 +114,7 @@ export const AText = ({
 
 export const componentInfo: ComponentInfo = {
 	component: AText,
+	codeUI: ATextCodeUI,
 	settingsUI: ATextSettingsUI,
 	render: ({ componentObj, select, remove, selected }) => <AText
 		componentObj={componentObj}

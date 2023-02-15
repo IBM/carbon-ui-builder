@@ -128,6 +128,7 @@ const getFoldObjects = (json: any) => {
 
 export const componentInfo: ComponentInfo = {
 	component: AExpandableTile,
+	codeUI: AExpandableTileCodeUI,
 	settingsUI: AExpandableSettingsUI,
 	keywords: ['tile', 'fold', 'expandable'],
 	name: 'Expandable tile',

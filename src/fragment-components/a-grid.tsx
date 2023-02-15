@@ -1,5 +1,5 @@
 import React from 'react';
-import { Checkbox, Grid } from 'carbon-components-react';
+import { Checkbox, Grid, TextInput } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css, cx } from 'emotion';
 import { ComponentInfo } from '.';
@@ -59,6 +59,22 @@ const outlineStyle = css`
 		outline: 1px dashed #78a9ff;
 	}
 `;
+
+export const AGridCodeUI = ({ selectedComponent, setComponent }: any) => {
+	return <TextInput
+			value={selectedComponent.codeContext?.name}
+			labelText='Input name'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						name: event.currentTarget.value
+					}
+				});
+			}}
+		/>;
+};
 
 export const AGrid = ({
 	children,
@@ -151,6 +167,7 @@ const getOffsetsString = (cell: any) => {
 
 export const componentInfo: ComponentInfo = {
 	component: AGrid,
+	codeUI: AGridCodeUI,
 	settingsUI: AGridSettingsUI,
 	keywords: ['grid', 'row', 'column'],
 	name: 'Grid',

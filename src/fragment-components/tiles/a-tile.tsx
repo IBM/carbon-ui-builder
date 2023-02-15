@@ -76,6 +76,7 @@ export const ATile = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ATile,
+	codeUI: ATileCodeUI,
 	settingsUI: ATileSettingsUI,
 	keywords: ['tile', 'card'],
 	name: 'Tile',
