@@ -279,7 +279,7 @@ export const componentInfo: ComponentInfo = {
 		direction: 'bottom',
 		size: 'md',
 		label: 'Label',
-		helperText: 'Optional helper text here',
+		helperText: 'Optional helper text',
 		listItems: [
 			{
 				text: 'Text'
