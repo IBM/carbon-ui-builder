@@ -110,16 +110,30 @@ export const otherImportsFromComponentObj = (json: any, fragments?: any[]) => {
 	return imports;
 };
 
+export const getEventHandlerSetStateStatements = (signalEventActions: any) => {
+	let setStateStatements = 'setState({...state,';
+	Object.keys(signalEventActions).forEach((destination: any, destinationIndex: number) => {
+		setStateStatements += `"${destination}": {
+			...state["${destination}"],`;
+		signalEventActions[destination].forEach((propertyValue: any, propertyIndex: number) => {
+			const isLast = propertyIndex !== signalEventActions[destination].length - 1;
+			setStateStatements +=
+			`${propertyValue.property}: ${propertyValue.value}${isLast ? ', ' : ''}`;
+		});
+		const isLast = destinationIndex === Object.keys(signalEventActions).length - 1;
+		setStateStatements += isLast ? '}' : '},';
+	});
+	setStateStatements += '})';
+	return setStateStatements;
+};
+
 export const getReactCodeForActions = (signals: any, slots: any, codeContextName: string) => {
 	let codeForActions = '';
 	if (codeContextName) {
 		if (signals[codeContextName]) {
 			Object.keys(signals[codeContextName]).forEach(eventName => {
-				codeForActions += `${eventName}={() => {
-					handlePropertiesChange({
-						targets: ${JSON.stringify(signals[codeContextName][eventName])}
-					});
-				}}`;
+				codeForActions +=
+				`${eventName}={() => {${getEventHandlerSetStateStatements(signals[codeContextName][eventName])}}}`;
 			});
 		}
 		if (slots[codeContextName]) {
@@ -129,4 +143,21 @@ export const getReactCodeForActions = (signals: any, slots: any, codeContextName
 		}
 	}
 	return codeForActions;
+};
+
+export const getIdContextNameMap = (json: any, itemIds: Set<any>, map: any) => {
+	if (typeof json === 'string' || !json) {
+		return json;
+	}
+
+	if (json.items) {
+		json.items.forEach((item: any) => {
+			if (itemIds.has(item.id)) {
+				map[item.id] = item.codeContext?.name;
+			}
+			map = getIdContextNameMap(item, itemIds, map);
+		});
+	}
+
+	return map;
 };
