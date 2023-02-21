@@ -46,6 +46,22 @@ export const ActionsPane = ({ addAction }: any) => {
 		return actionableElements;
 
 	};
+	// const searchForActionableElements = (actionableElements: string[], items: any): string[] => {
+	// 	items.forEach((item: any) => {
+	// 		if (actionSupportedElementTypes.includes(item.type)) {
+	// 			actionableElements = [
+	// 				...actionableElements,
+	// 				item.id
+	// 			];
+	// 		}
+
+	// 		if (item.items) {
+	// 			searchForActionableElements(actionableElements, item.items);
+	// 		}
+
+	// 	});
+	// 	return actionableElements;
+	// };
 
 	const actionableElements = getActionableElements();
 	const elementDropdownItems = actionableElements.map(element => ({ text: element }));
@@ -59,14 +75,12 @@ export const ActionsPane = ({ addAction }: any) => {
 	// Future state this dropdown will need to be dynamic
 	// Using AllComponents, check what slots are available for the selected element
 
-	// const slotDropdownItems: string[] = [];
 	const slotDropdownItems: { text: string }[] = [
 		{ text: 'Toggle Disable' }
 		// { text: 'Toggle Visibility' }
 	];
 
 	const handleActionUpdate = (action: any, item: any, updateType: String) => {
-		// Current set of actions - but we remove the target action that we're changing
 		const filteredActions = fragment.data.actions.map((val: any) => {
 			if (updateType === 'actions') {
 				val.destination = action.selectedItem.text;
@@ -76,15 +90,23 @@ export const ActionsPane = ({ addAction }: any) => {
 			return val;
 		});
 
-		setFragment({ ...fragment, data: {
-			...fragment.data, actions: filteredActions
-		} });
+		setFragment({
+			...fragment,
+			data: {
+				...fragment.data,
+				actions: filteredActions
+			}
+		});
 	};
 
 	const updateActionsList = (newList: any[]) => {
-		setFragment({ ...fragment, data: {
-			...fragment.data, actions: newList
-		} });
+		setFragment({
+			...fragment,
+			data: {
+				...fragment.data,
+				actions: newList
+			}
+		});
 	};
 
 	const template = (item: any, _index: number) => {

@@ -69,33 +69,23 @@ export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 export const AButtonCodeUI = ({ selectedComponent, setComponent }: any) => {
 	const [fragment, setFragment] = useFragment();
 
-	// If the actions object doesn't exist, create it with the default action 
-	// if(!fragment.data.actions) {
-	// 	setFragment({...fragment, data: {
-	// 		...fragment.data, 
-	// 			actions: []
-	// 	}});
-	// } 
-
-	// Only add action to the JSON if its finished
-	// Only display actions for the target element
-
 	// Add default action for this component if its not already present in fragment
 	if(fragment.data.actions.every((action: any) => 
 		action.source + action.signal + action.id !== selectedComponent.codeContext.name + 'onclick' + 1)) {
-			setFragment({...fragment, data: {
-				...fragment.data, actions: [ 
-					...fragment.data.actions, 
-						{ 	
-							text: 'On click',
-							source: selectedComponent.codeContext.name, 
-							signal: 'onclick',
-							destination: '', 
-							slot: '',
-							id: 1,
-						}
-				]
-			}});
+		setFragment({ ...fragment, data: {
+			...fragment.data, actions: [
+				...fragment.data.actions,
+				{
+					text: 'On click',
+					// source: selectedComponent.codeContext.id,
+					source: selectedComponent.codeContext.name,
+					signal: 'onclick',
+					destination: '',
+					slot: '',
+					id: 1
+				}
+			]
+		} });
 	}
 	
 	const addAction = (text: string, source: string, signal: string) => {
@@ -107,7 +97,8 @@ export const AButtonCodeUI = ({ selectedComponent, setComponent }: any) => {
 				...(fragment.data.actions || []), 
 				{ 	
 					text: 'On click',
-					source: selectedComponent.codeContext.name, 
+					// source: selectedComponent.codeContext.id,
+					source: selectedComponent.codeContext.name,
 					signal: 'onclick',
 					destination: '', 
 					slot: '',
@@ -134,6 +125,11 @@ export const AButtonCodeUI = ({ selectedComponent, setComponent }: any) => {
 			/>
 			{ fragment.data.actions.map((item: any) => {
 				return <ActionsPane action={item} addAction={addAction} key={item.id} />;
+				// if (item.source === selectedComponent.codeContext.id) {
+				// 	return <ActionsPane action={item} addAction={addAction} key={item.id} />;
+				// } else {
+				// 	return <div />;
+				// }
 			})}
 		</>
 	);
