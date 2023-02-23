@@ -59,21 +59,18 @@ export const AExpandableSettingsUI = ({ selectedComponent, setComponent }: any) 
 	</>;
 };
 
-export const AExpandableTileCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>;
-};
+export const AExpandableTileCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 const outlineStyle = css`
 	span.bx--tile-content__above-the-fold,
