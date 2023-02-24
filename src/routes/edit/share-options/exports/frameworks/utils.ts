@@ -8,3 +8,19 @@ export const format = (source: string, options?: Options | undefined) => {
 		return source;
 	}
 };
+
+export type signalType = 'click' | 'hover' | 'focus';
+export type slotProp = 'isVisible';
+
+export interface slotInfo {
+	type: string;
+	action: string;
+}
+
+export interface action {
+	source: string;
+	signal: signalType;
+	destination: string;
+	slot: string;
+	slot_param: string;
+}

@@ -179,12 +179,12 @@ export const componentInfo: ComponentInfo = {
 			inputs: (_) => '',
 			outputs: (_) => '',
 			imports: ['GridModule'],
-			code: ({ json, actions, fragments, jsonToTemplate }) => {
+			code: ({ json, signals, slots, fragments, jsonToTemplate }) => {
 				return `<div ibmGrid ${angularClassNamesFromComponentObj(json)}>
 					${json.items.map((row: any) => `<div ibmRow ${angularClassNamesFromComponentObj(row)}>
 						${row.items.map((cell: any) =>
 							`<div ibmCol ${getColumnNumbersString(cell)} ${getOffsetsString(cell)} ${angularClassNamesFromComponentObj(cell)}>
-								${jsonToTemplate(cell, actions, fragments)}
+								${jsonToTemplate(cell, signals, slots, fragments)}
 						</div>`).join('\n')}
 					</div>`).join('\n')}
 				</div>`;

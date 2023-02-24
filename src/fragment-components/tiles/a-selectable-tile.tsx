@@ -220,7 +220,7 @@ export const componentInfo: ComponentInfo = {
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = '${json.value}';`,
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Change = new EventEmitter<Event>();`,
 			imports: ['TilesModule'],
-			code: ({ json, actions, fragments, jsonToTemplate }) => {
+			code: ({ json, signals, slots, fragments, jsonToTemplate }) => {
 				/**
 				 * @todo - CCA does not support light & disabled
 				 * https://github.com/IBM/carbon-components-angular/issues/1999
@@ -230,7 +230,7 @@ export const componentInfo: ComponentInfo = {
 					[selected]="${nameStringToVariableString(json.codeContext?.name)}Selected"
 					${json.standalone ? `(change)="${nameStringToVariableString(json.codeContext?.name)}Change.emit($event)"` : ''}
 					${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element, actions, fragments)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, signals, slots, fragments)).join('\n')}
 					</ibm-selection-tile>`;
 			}
 		},

@@ -10,9 +10,10 @@ import { AComponent, ComponentInfo } from './a-component';
 import image from './../assets/component-icons/button.svg';
 import {
 	angularClassNamesFromComponentObj,
-	getFragmentById, nameStringToVariableString,
+	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
+import { getItemCode } from '../routes/edit/share-options/exports/frameworks/angular/utils';
 
 export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const kindItems = [
@@ -129,52 +130,16 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: (_) => '',
-			outputs: ({ json, actions }) => {
+			outputs: ({ json }) => {
 				const name = nameStringToVariableString(json.codeContext?.name);
-				let res = '';
-				let clickAdded = false;
-
-				actions.forEach((a: any) => {
-					if (a.source === json.id && a.signal === 'click' && !clickAdded) {
-						res += `@Output() ${name}ClickedSignal: boolean = false;`;
-						clickAdded = true;
-					}
-				});
-
-				return `@Output() ${name}Clicked = new EventEmitter();` + res;
+				return `@Output() ${name}Clicked = new EventEmitter()`;
 			},
 			imports: ['ButtonModule'],
-			code: ({ json, actions, fragments }) => {
-				const name = nameStringToVariableString(json.codeContext?.name);
-				let clickAction = '';
-				let disabled = '';
-				let clickAdded = false;
-
-				if (actions) {
-					actions.forEach((a: any) => {
-						if (a.source === json.id) {
-							if (a.signal === 'click' && !clickAdded) {
-								clickAction += `${name}ClickedSignal = !${name}ClickedSignal;`;
-								clickAdded = true;
-							}
-						}
-
-						if (a.destination === json.id) {
-							if (a.slot === 'isVisible') {
-								const source = getFragmentById(fragments[0], a.source);
-								const sName = nameStringToVariableString(source.codeContext?.name);
-								disabled += (disabled !== '' ? ' || ' : '');
-								disabled += `${sName}ClickedSignal`;
-							}
-						}
-					});
-				}
-
+			code: ({ json, signals, slots }) => {
 				return `<button
 					${json.kind ? `ibmButton='${json.kind}'` : 'ibmButton'}
 					${json.size ? `size='${json.size === 'default' ? 'normal' : json.size}'` : ''}
-					(click)='${name}Clicked.emit(); ${clickAdded ? clickAction : ''}'
-					${disabled === '' ? '' : '[disabled]="' + disabled + '"'}
+					${getItemCode(signals, slots, json.id, json.codeContext?.name)}
 					${angularClassNamesFromComponentObj(json)}>
 						${json.text}
 				</button>`;

@@ -53,7 +53,7 @@ export const componentInfo: ComponentInfo = {
 			inputs: () => '',
 			outputs: () => '',
 			imports: [],
-			code: ({ json, actions, fragments, jsonToTemplate }) => {
+			code: ({ json, signals, slots, fragments, jsonToTemplate }) => {
 				// Appends below the fold class to class list
 				let classes = angularClassNamesFromComponentObj(json);
 				if (classes) {
@@ -63,7 +63,7 @@ export const componentInfo: ComponentInfo = {
 				}
 
 				return `<span ${classes}>
-						${json.items.map((element: any) => jsonToTemplate(element, actions, fragments)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, signals, slots, fragments)).join('\n')}
 				</span>`;
 			}
 		},
