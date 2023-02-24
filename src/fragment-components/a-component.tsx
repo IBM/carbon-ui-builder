@@ -56,13 +56,19 @@ export interface ComponentInfo {
 			outputs: (props: { json: any }) => string;
 			imports: string[];
 			isNotDirectExport?: boolean;
-			code: (props: {json: any; jsonToTemplate: (json: any, fragments: any[]) => string; fragments: any[]}) => string;
+			code: (props: { json: any; jsonToTemplate: (json: any, fragments: any[]) => string; fragments: any[] }) => string;
 		};
 		react: {
-			imports: ((props: {json: any}) => string[]) | string[];
-			otherImports?: (props: {json: any; fragments?: any[]}) => string;
+			imports: ((props: { json: any }) => string[]) | string[];
+			otherImports?: (props: { json: any; fragments?: any[] }) => string;
 			isNotDirectExport?: boolean;
-			code: (props: {json: any; jsonToTemplate: (json: any, fragments: any[]) => string; fragments: any[]}) => string;
+			code: (props: {
+				json: any;
+				signals: any;
+				slots: any;
+				jsonToTemplate: (json: any, signals: any, slots: any, fragments: any[]) => string;
+				fragments: any[];
+			}) => string;
 			additionalCode?: (componentObj: any) => any;
 		};
 	};
@@ -145,41 +151,41 @@ export const AComponent = ({
 
 	return (
 		<span
-		className={cx(className, showDragOverIndicator ? dropIndicatorStyle : '')}
-		ref={holderRef}
-		onClick={(event) => {
-			event.stopPropagation();
-			select();
-		}}
-		draggable='true' // TODO make Draggable32 the drag handle and this element as preview
-		onDragStart={(event: any) => drag(event, {
-			component: componentObj,
-			type: 'move'
-		})}
-		onDragEnter={(event: any) => {
-			if (shouldRejectDrop(event)) {
-				return true;
-			}
-			event.stopPropagation();
-			event.preventDefault();
-			setShowDragOverIndicator(true);
-		}}
-		onDragLeave={(event: any) => {
-			if (shouldRejectDrop(event)) {
-				return true;
-			}
-			event.stopPropagation();
-			event.preventDefault();
-			setShowDragOverIndicator(false);
-		}}
-		onDragOver={(event) => {
-			if (shouldRejectDrop(event)) {
-				return true;
-			}
-			event.stopPropagation();
-			event.preventDefault();
-		}}
-		onDrop={onDrop}>
+			className={cx(className, showDragOverIndicator ? dropIndicatorStyle : '')}
+			ref={holderRef}
+			onClick={(event) => {
+				event.stopPropagation();
+				select();
+			}}
+			draggable='true' // TODO make Draggable32 the drag handle and this element as preview
+			onDragStart={(event: any) => drag(event, {
+				component: componentObj,
+				type: 'move'
+			})}
+			onDragEnter={(event: any) => {
+				if (shouldRejectDrop(event)) {
+					return true;
+				}
+				event.stopPropagation();
+				event.preventDefault();
+				setShowDragOverIndicator(true);
+			}}
+			onDragLeave={(event: any) => {
+				if (shouldRejectDrop(event)) {
+					return true;
+				}
+				event.stopPropagation();
+				event.preventDefault();
+				setShowDragOverIndicator(false);
+			}}
+			onDragOver={(event) => {
+				if (shouldRejectDrop(event)) {
+					return true;
+				}
+				event.stopPropagation();
+				event.preventDefault();
+			}}
+			onDrop={onDrop}>
 			<span className={cx(headerStyle, headingCss, selected ? css`` : css`display: none`)}>
 				<span className={css`margin-right: 1rem`}>
 					{componentObj && componentObj.type ? componentObj.type : 'Header'}

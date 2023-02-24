@@ -5,6 +5,7 @@ import { sortedUniq } from 'lodash';
 
 import { allComponents } from '../../../../../../fragment-components';
 import { addIfNotExist } from '../../../../../../ui-fragment/src/utils';
+import { signalType } from '../utils';
 
 export const formatOptions: Options = {
 	plugins: [parserBabel],
@@ -15,6 +16,12 @@ export const formatOptions: Options = {
 export const formatOptionsCss: Options = {
 	parser: 'css',
 	plugins: [parserCss]
+};
+
+export const signalReactEvent: Record<signalType, string> = {
+	click: 'onClick',
+	hover: 'onHover',
+	focus: 'onFocus'
 };
 
 export const getAdditionalCode = (componentObj: any, fragments: any[]) => {
@@ -66,19 +73,19 @@ export const jsonToCarbonImports = (json: any) => {
 	return imports;
 };
 
-export const jsonToTemplate = (json: any, fragments: any[]) => {
+export const jsonToTemplate = (json: any, signals: any, slots: any, fragments: any[]) => {
 	if (typeof json === 'string' || !json) {
 		return json;
 	}
 
 	for (const component of Object.values(allComponents)) {
 		if (json.type === component.componentInfo.type && !component.componentInfo.codeExport.react.isNotDirectExport) {
-			return component.componentInfo.codeExport.react.code({ json, jsonToTemplate, fragments });
+			return component.componentInfo.codeExport.react.code({ json, signals, slots, jsonToTemplate, fragments });
 		}
 	}
 
 	if (json.items) {
-		return json.items.map((item: any) => jsonToTemplate(item, fragments)).join('\n');
+		return json.items.map((item: any) => jsonToTemplate(item, signals, slots, fragments)).join('\n');
 	}
 };
 
@@ -101,4 +108,56 @@ export const otherImportsFromComponentObj = (json: any, fragments?: any[]) => {
 	imports = sortedUniq(imports.split('\n')).join('\n');
 
 	return imports;
+};
+
+export const getEventHandlerSetStateStatements = (signalEventActions: any) => {
+	let setStateStatements = 'setState({...state,';
+	Object.keys(signalEventActions).forEach((destination: any, destinationIndex: number) => {
+		setStateStatements += `"${destination}": {
+			...state["${destination}"],`;
+		signalEventActions[destination].forEach((propertyValue: any, propertyIndex: number) => {
+			const isLast = propertyIndex !== signalEventActions[destination].length - 1;
+			setStateStatements +=
+			`${propertyValue.property}: ${propertyValue.value}${isLast ? ', ' : ''}`;
+		});
+		const isLast = destinationIndex === Object.keys(signalEventActions).length - 1;
+		setStateStatements += isLast ? '}' : '},';
+	});
+	setStateStatements += '})';
+	return setStateStatements;
+};
+
+export const getReactCodeForActions = (signals: any, slots: any, codeContextName: string) => {
+	let codeForActions = '';
+	if (codeContextName) {
+		if (signals[codeContextName]) {
+			Object.keys(signals[codeContextName]).forEach(eventName => {
+				codeForActions +=
+				`${eventName}={() => {${getEventHandlerSetStateStatements(signals[codeContextName][eventName])}}}`;
+			});
+		}
+		if (slots[codeContextName]) {
+			slots[codeContextName].forEach((property: string) => {
+				codeForActions += `${property}={state["${codeContextName}"]?.${property}}`;
+			});
+		}
+	}
+	return codeForActions;
+};
+
+export const getIdContextNameMap = (json: any, itemIds: Set<any>, map: any) => {
+	if (typeof json === 'string' || !json) {
+		return json;
+	}
+
+	if (json.items) {
+		json.items.forEach((item: any) => {
+			if (itemIds.has(item.id)) {
+				map[item.id] = item.codeContext?.name;
+			}
+			map = getIdContextNameMap(item, itemIds, map);
+		});
+	}
+
+	return map;
 };

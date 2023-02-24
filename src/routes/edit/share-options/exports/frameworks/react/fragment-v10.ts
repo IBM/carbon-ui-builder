@@ -2,14 +2,16 @@ import { useContext } from 'react';
 import { GlobalStateContext } from '../../../../../../context';
 import { getAllFragmentStyleClasses } from '../../../../../../ui-fragment/src/utils';
 import { classNameFromFragment, hasFragmentStyleClasses, tagNameFromFragment } from '../../../../../../utils/fragment-tools';
-import { format } from '../utils';
+import { action, format } from '../utils';
 import {
 	formatOptions,
 	formatOptionsCss,
 	getAdditionalCodeAsString,
 	jsonToCarbonImports,
 	jsonToTemplate,
-	otherImportsFromComponentObj
+	otherImportsFromComponentObj,
+	signalReactEvent,
+	getIdContextNameMap
 } from './utils';
 
 const generateTemplate = (json: any, fragments: any[]) => {
@@ -17,10 +19,37 @@ const generateTemplate = (json: any, fragments: any[]) => {
 	const carbonImportsString = carbonImports.reduce((string: string, curr: string) => (
 		string += `${curr}, `
 	), '');
+	const signals: any = {};
+	const slots: any = {};
+	if (json.actions) {
+		json.actions.forEach((action: action) => {
+			const itemIdsWithActions = new Set(json.actions.map((action: action) => [action.source, action.destination]).flat());
+			const idContextNameMap = getIdContextNameMap(json, itemIdsWithActions, {});
+			const eventName = signalReactEvent[action.signal];
+			if (!signals[idContextNameMap[action.source]]) {
+				signals[idContextNameMap[action.source]] = {};
+			}
+			if (!signals[idContextNameMap[action.source]][eventName]) {
+				signals[idContextNameMap[action.source]][eventName] = {};
+			}
+			if (!signals[idContextNameMap[action.source]][eventName][idContextNameMap[action.destination]]) {
+				signals[idContextNameMap[action.source]][eventName][idContextNameMap[action.destination]] = [];
+			}
+			signals[idContextNameMap[action.source]][eventName][idContextNameMap[action.destination]].push({
+				property: action.slot,
+				value: JSON.parse(action.slot_param)
+			});
+
+			if (!slots[idContextNameMap[action.destination]]) {
+				slots[idContextNameMap[action.destination]] = new Set<string>();
+			}
+			slots[idContextNameMap[action.destination]].add(action.slot);
+		});
+	}
 	return {
 		imports: `import { ${carbonImportsString} } from 'carbon-components-react';
 			${otherImportsFromComponentObj(json, fragments)}`,
-		template: jsonToTemplate(json, fragments),
+		template: jsonToTemplate(json, signals, slots, fragments),
 		additionalCode: getAdditionalCodeAsString(json, fragments)
 	};
 };
