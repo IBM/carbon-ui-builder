@@ -204,22 +204,19 @@ export const AComboBoxSettingsUI = ({ selectedComponent, setComponent }: any) =>
 	</>;
 };
 
-export const AComboBoxCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-		id='combobox-input-name-text-input'
-		value={selectedComponent.codeContext?.name}
-		labelText='Input name'
-		onChange={(event: any) => {
-			setComponent({
-				...selectedComponent,
-				codeContext: {
-					...selectedComponent.codeContext,
-					name: event.currentTarget.value
-				}
-			});
-		}}
-	/>;
-};
+export const AComboBoxCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	id='combobox-input-name-text-input'
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 const preventClickStyle = css`
 	pointer-events: none;

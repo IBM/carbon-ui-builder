@@ -41,22 +41,17 @@ export const ATextAreaSettingsUI = ({ selectedComponent, setComponent }: any) =>
 	</>;
 };
 
-export const ATextAreaCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return (
-		<TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>
-	);
-};
+export const ATextAreaCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const ATextArea = ({
 	componentObj,

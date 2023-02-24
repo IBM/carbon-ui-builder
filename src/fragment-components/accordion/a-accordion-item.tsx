@@ -45,22 +45,19 @@ export const AAccordionItemSettingsUI = ({ selectedComponent, setComponent }: an
 	</>;
 };
 
-export const AAccordionItemCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-		id='accordion-item-input-name-text-input'
-		value={selectedComponent.codeContext?.name}
-		labelText='Input name'
-		onChange={(event: any) => {
-			setComponent({
-				...selectedComponent,
-				codeContext: {
-					...selectedComponent.codeContext,
-					name: event.currentTarget.value
-				}
-			});
-		}}
-	/>;
-};
+export const AAccordionItemCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	id='accordion-item-input-name-text-input'
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const AAccordionItem = ({
 	children,

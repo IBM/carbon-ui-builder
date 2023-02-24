@@ -119,8 +119,7 @@ export const AInlineLoadingCodeUI = ({ selectedComponent, setComponent }: any) =
 			...selectedComponent.codeContext,
 			name: event.currentTarget.value
 		}
-	})}
-/>;
+	})} />;
 
 export const AInlineLoading = ({
 	componentObj,

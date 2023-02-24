@@ -84,8 +84,7 @@ export const ARadioTileGroupCodeUI = ({ selectedComponent, setComponent }: any) 
 					}
 				}))
 			});
-		}}
-	/>;
+		}} />;
 };
 
 export const ARadioTileGroup = ({

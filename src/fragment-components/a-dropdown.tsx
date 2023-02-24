@@ -200,22 +200,19 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 	</>;
 };
 
-export const ADropdownCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-			id='input-name-text-input'
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>;
-};
+export const ADropdownCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	id='input-name-text-input'
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 const preventClickStyle = css`
 	pointer-events: none;
