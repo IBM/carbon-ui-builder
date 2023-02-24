@@ -16,10 +16,11 @@ export interface OverflowMenuState {
 	};
 }
 
-export const UIOverflowMenu = ({ state, setState, setGlobalState }: {
+export const UIOverflowMenu = ({ state, setState, setGlobalState, sendSignal }: {
 	state: OverflowMenuState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'overflow-menu') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -33,7 +34,7 @@ export const UIOverflowMenu = ({ state, setState, setGlobalState }: {
 		{
 			state.items?.map((item: any) => {
 				const setItem = (i: any) => setItemInState(i, state, setState);
-				return renderComponents(item, setItem, setGlobalState);
+				return renderComponents(item, setItem, setGlobalState, sendSignal);
 			})
 		}
 	</OverflowMenu>;

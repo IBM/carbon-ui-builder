@@ -17,10 +17,11 @@ export interface TagState {
 	};
 }
 
-export const UITag = ({ state }: {
+export const UITag = ({ state, sendSignal }: {
 	state: TagState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'tag') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment

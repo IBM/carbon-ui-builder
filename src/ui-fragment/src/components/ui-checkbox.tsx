@@ -13,10 +13,11 @@ export interface CheckboxState {
 	};
 }
 
-export const UICheckbox = ({ state, setState }: {
+export const UICheckbox = ({ state, setState, sendSignal }: {
 	state: CheckboxState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'checkbox') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment

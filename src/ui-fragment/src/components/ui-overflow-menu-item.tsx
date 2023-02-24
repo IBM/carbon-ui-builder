@@ -14,10 +14,11 @@ export interface OverflowMenuItemState {
 	};
 }
 
-export const UIOverflowMenuItem = ({ state }: {
+export const UIOverflowMenuItem = ({ state, sendSignal }: {
 	state: OverflowMenuItemState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'overflow-menu-item') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment

@@ -18,10 +18,11 @@ export interface RadioGroupState {
 	};
 }
 
-export const UIRadioGroup = ({ state, setState, setGlobalState }: {
+export const UIRadioGroup = ({ state, setState, setGlobalState, sendSignal }: {
 	state: RadioGroupState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'radio-group') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -39,7 +40,7 @@ export const UIRadioGroup = ({ state, setState, setGlobalState }: {
 		{
 			state.items?.map((item: any) => {
 				const setItem = (i: any) => setItemInState(i, state, setState);
-				return renderComponents(item, setItem, setGlobalState);
+				return renderComponents(item, setItem, setGlobalState, sendSignal);
 			})
 		}
 	</RadioButtonGroup>;

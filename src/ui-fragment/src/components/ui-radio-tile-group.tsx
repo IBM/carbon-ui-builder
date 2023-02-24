@@ -28,10 +28,11 @@ export interface RadioTileState {
 	};
 }
 
-export const UIRadioTileGroup = ({ state, setState, setGlobalState }: {
+export const UIRadioTileGroup = ({ state, setState, setGlobalState, sendSignal }: {
 	state: RadioTileGroupState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'radio-tile-group') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -59,7 +60,7 @@ export const UIRadioTileGroup = ({ state, setState, setGlobalState }: {
 						{
 							radioTile.items?.map((item: any) => {
 								const setItem = (i: any) => setItemInState(i, item, setRadioTile);
-								return renderComponents(item, setItem, setGlobalState);
+								return renderComponents(item, setItem, setGlobalState, sendSignal);
 							})
 						}
 				</RadioTile>;

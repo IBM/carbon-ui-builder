@@ -14,10 +14,11 @@ export interface LoadingState {
 	};
 }
 
-export const UILoading = ({ state }: {
+export const UILoading = ({ state, sendSignal }: {
 	state: LoadingState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'loading') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment

@@ -29,10 +29,11 @@ export interface ComboBoxState {
 	};
 }
 
-export const UIComboBox = ({ state, setState }: {
+export const UIComboBox = ({ state, setState, sendSignal }: {
 	state: ComboBoxState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'combobox') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment

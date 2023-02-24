@@ -6,16 +6,22 @@ export interface TextState {
 	text?: string;
 	richText?: string;
 	isSection?: boolean;
+	isVisible: boolean | string;
 	cssClasses?: CssClasses[];
 }
 
-export const UIText = ({ state }: {
+export const UIText = ({ state, sendSignal }: {
 	state: TextState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'text') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
+		return <></>;
+	}
+	if (state.isVisible == 'false') {
+		console.log('Hit!')
 		return <></>;
 	}
 

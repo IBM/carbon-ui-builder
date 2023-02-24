@@ -16,10 +16,11 @@ export interface ToggleState {
 	};
 }
 
-export const UIToggle = ({ state, setState }: {
+export const UIToggle = ({ state, setState, sendSignal }: {
 	state: ToggleState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'toggle') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment

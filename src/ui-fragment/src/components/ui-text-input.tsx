@@ -23,6 +23,7 @@ export const UITextInput = ({ state, setState, name }: {
 	name?: string;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'text-input') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment

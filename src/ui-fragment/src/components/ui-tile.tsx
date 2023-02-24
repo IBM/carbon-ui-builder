@@ -13,10 +13,11 @@ export interface TileState {
 	};
 }
 
-export const UITile = ({ state, setState, setGlobalState }: {
+export const UITile = ({ state, setState, setGlobalState, sendSignal }: {
 	state: TileState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'tile') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -29,7 +30,7 @@ export const UITile = ({ state, setState, setGlobalState }: {
 		{
 			state.items?.map((item: any) => {
 				const setItem = (i: any) => setItemInState(i, state, setState);
-				return renderComponents(item, setItem, setGlobalState);
+				return renderComponents(item, setItem, setGlobalState, sendSignal);
 			})
 		}
 	</Tile>;
