@@ -151,7 +151,7 @@ export const componentInfo: ComponentInfo = {
 			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<ClickableTile
 					${json.codeContext?.href !== undefined && json.codeContext?.href !== '' ? `href='${json.codeContext?.href}'` : ''}
-					${json.light !== undefined ? `light="${json.light}"` : ''}
+					${json.light !== undefined ? `light={${json.light}}` : ''}
 					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
 					${reactClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}

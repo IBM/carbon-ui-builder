@@ -346,7 +346,7 @@ export const componentInfo: ComponentInfo = {
 					${json.selectionFeedback !== 'top-after-reopen' && json.isMulti ? `selectionFeedback="${json.selectionFeedback}"` : ''}
 					${json.hideLabel !== undefined ? `hideLabel={${json.hideLabel}}` : ''}
 					${json.direction !== 'bottom' ? `direction="${json.direction}"` : ''}
-					${json.light ? `light="${json.light}"` : ''}
+					${json.light ? `light={${json.light}}` : ''}
 					${json.size !== 'md' ? `size="${json.size}"` : ''}
 					items={${name}Items}
 					itemToString={${name}ItemsToString}
