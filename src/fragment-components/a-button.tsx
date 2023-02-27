@@ -71,25 +71,6 @@ export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 export const AButtonCodeUI = ({ selectedComponent, setComponent }: any) => {
 	const [fragment, setFragment] = useFragment();
 
-	// Add default action for this component if its not already present in fragment
-/* 	if (fragment.data.actions && fragment.data.actions.every((action: any) =>
-		action.source + action.signal + action.id !== selectedComponent.codeContext.name + 'onclick' + 1)) {
-		setFragment({ ...fragment, data: {
-			...fragment.data, actions: [
-				...fragment.data.actions,
-				{
-					text: 'On click',
-					// source: selectedComponent.codeContext.id,
-					source: selectedComponent.codeContext.name,
-					signal: 'onclick',
-					destination: '',
-					slot: '',
-					id: 1
-				}
-			]
-		} });
-	}
- */
 	const addAction = (_text: string, _source: string, _signal: string) => {
 		let id = 0;
 		fragment.data.actions.forEach((action: any) => id = (action.id >= id) ? id = action.id + 1 : id);
@@ -99,8 +80,9 @@ export const AButtonCodeUI = ({ selectedComponent, setComponent }: any) => {
 				...(fragment.data.actions || []), 
 				{ 	
 					text: 'On click',
+					// source: selectedComponent.codeContext.name,
 					// source: selectedComponent.codeContext.id,
-					source: selectedComponent.codeContext.name,
+					source: selectedComponent.id,
 					signal: 'onclick',
 					destination: '', 
 					slot: '',
@@ -125,15 +107,15 @@ export const AButtonCodeUI = ({ selectedComponent, setComponent }: any) => {
 					});
 				}}
 			/>
-			<ActionsPane addAction={addAction} />
-			{ fragment.data.actions && fragment.data.actions.map((item: any) => {
+			<ActionsPane addAction={addAction} sourceComponent={selectedComponent}/>
+			{/* { fragment.data.actions && fragment.data.actions.map((item: any) => {
 				return ;
 				// if (item.source === selectedComponent.codeContext.id) {
 				// 	return <ActionsPane action={item} addAction={addAction} key={item.id} />;
 				// } else {
 				// 	return <div />;
 				// }
-			})}
+			})} */}
 		</>
 	);
 };

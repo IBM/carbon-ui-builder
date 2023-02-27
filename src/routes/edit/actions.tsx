@@ -20,15 +20,18 @@ interface ActionProps {
 	id: Number;
 }
 
-// TODO: Come up with a new name for file & Component
-export const ActionsPane = ({ addAction }: any) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const ActionsPane = ({ addAction, sourceComponent }: any) => {
 	const [fragment, setFragment] = useFragment();
 
-	const [actionState, setActionState] = useState<ActionProps[]>(fragment.data.actions || []);
+	// Collect the actions stored in the fragment that are relevant to the currently selected component
+	const relatedActions = (fragment.data.actions) ? fragment.data.actions.filter((action: any) => action.source === sourceComponent.id) : [];
 
-	//* ******************
-	// Elements Dropdown
-	//* ******************
+	// Create actionState, default value is the collection of related actions from the fragment
+	const [actionState, setActionState] = useState<ActionProps[]>(relatedActions);
+
+	// Remove this helper array
+	// Check for each action supported element type directly in recursive function
 	const actionSupportedElementTypes: string[] =
         Object.values(allComponents)
         	.filter(component => component.componentInfo.signals)
@@ -45,49 +48,29 @@ export const ActionsPane = ({ addAction }: any) => {
      * @returns final value of actionableElements, all the codeContext.name values for elements of our fraxrgment that support actions
      */
 	const searchForActionableElements = (actionableElements: string[], items: any): string[] => {
-
-		for (let i = 0; i < items.length; i++) {
-			if (actionSupportedElementTypes.includes(items[i].type)) {
-				actionableElements.push(items[i].codeContext.name);
+		items.forEach((item: any) => {
+			if (actionSupportedElementTypes.includes(item.type)) {
+				actionableElements = [
+					...actionableElements,
+					item.codeContext.name
+				];
 			}
 
-			if (items[i].items) {
-				searchForActionableElements(actionableElements, items[i].items);
+			if (item.items) {
+				actionableElements = searchForActionableElements(actionableElements, item.items);
 			}
-		}
 
+		});
 		return actionableElements;
 
 	};
-	// const searchForActionableElements = (actionableElements: string[], items: any): string[] => {
-	// 	items.forEach((item: any) => {
-	// 		if (actionSupportedElementTypes.includes(item.type)) {
-	// 			actionableElements = [
-	// 				...actionableElements,
-	// 				item.id
-	// 			];
-	// 		}
 
-	// 		if (item.items) {
-	// 			searchForActionableElements(actionableElements, item.items);
-	// 		}
-
-	// 	});
-	// 	return actionableElements;
-	// };
-
-	const actionableElements = getActionableElements();
+	const actionableElements = searchForActionableElements([], fragment.data.items);
+	console.log('actionableElements', actionableElements);
 	const elementDropdownItems = actionableElements.map(element => ({ text: element }));
-
-	//* ******************
-	// Slots Dropdown
-	//* ******************
 
 	// TODO: Ideally should be implemented using AllComponents
 	// Current feature set is just disabling buttons so this implementation fits
-	// Future state this dropdown will need to be dynamic
-	// Using AllComponents, check what slots are available for the selected element
-
 	const slotDropdownItems: { text: string }[] = [
 		{ text: 'Toggle Disable' }
 		// { text: 'Toggle Visibility' }
@@ -109,11 +92,12 @@ export const ActionsPane = ({ addAction }: any) => {
 
 	useEffect(() => {
 		const completedActions = actionState.filter(currentAction => currentAction.destination !== '' && currentAction.slot !== '');
+		const unrelatedActions = (fragment.data.actions) ? fragment.data.actions.filter((action: any) => action.source !== sourceComponent.id) : [];
 		setFragment({
 			...fragment,
 			data: {
 				...fragment.data,
-				actions: completedActions
+				actions: [...unrelatedActions, ...completedActions]
 			}
 		});
 	}, [actionState]);
@@ -160,7 +144,7 @@ export const ActionsPane = ({ addAction }: any) => {
     template={template}
     defaultObject={{
 			text: 'On click',
-			source: '',
+			source: sourceComponent.id,
 			signal: 'onclick',
 			destination: '',
 			slot: '',
