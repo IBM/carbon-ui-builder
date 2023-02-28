@@ -1,11 +1,11 @@
-import React, { useState, useRef } from 'react';
-import { Button, Tile } from 'carbon-components-react';
-import { css, cx } from 'emotion';
 import {
 	AddAlt32,
 	Draggable16,
 	TrashCan32
 } from '@carbon/icons-react';
+import { Button, Tile } from 'carbon-components-react';
+import React, { useRef, useState } from 'react';
+import { css, cx } from 'emotion';
 
 const addDragTargetStyle = css`
 	height: var(--drag-target-height, 32px);
@@ -45,6 +45,7 @@ const draggableIconStyle = css`
 
 const tileStyle = css`
 	position: relative;
+	z-index: 100;
 `;
 
 export const DraggableTileList = ({
