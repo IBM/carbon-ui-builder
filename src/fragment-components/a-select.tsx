@@ -162,7 +162,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent }: any) => {
 				id={`hidden-${index}`}
 				checked={selectItem.hidden}
 				onChange={(checked: boolean) => updateListItems('hidden', checked, index, selectedComponent)} />
-			</>
+				</>
 		}
 	</>;
 
