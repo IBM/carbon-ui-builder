@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
-import { Dropdown, TextInput, CodeSnippet } from 'carbon-components-react';
+import {
+	Dropdown,
+	TextInput,
+	CodeSnippet,
+	Checkbox
+} from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css } from 'emotion';
 import { ComponentInfo } from '.';
-import { ControlledEditor } from '@monaco-editor/react';
+import Editor from '@monaco-editor/react';
 import image from './../assets/component-icons/code-snippet.svg';
 import { nameStringToVariableString } from '../utils/fragment-tools';
 
@@ -25,6 +30,15 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 	const [codeLanguage, setCodeLanguage] = useState('text');
 
 	return <>
+		<Checkbox
+			labelText='Light theme'
+			id='theme-select'
+			checked={selectedComponent.light}
+			onChange={(checked: any) => setComponent({
+				...selectedComponent,
+				light: checked
+		})} />
+
 		<Dropdown
 			label='Code language selector'
 			titleText='Code language selector'
@@ -33,17 +47,19 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 			selectedItem={languages.find(item => item.id === codeLanguage)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setCodeLanguage(event.selectedItem.id)} />
+
 		<label className='bx--label'>Code</label>
-		<ControlledEditor
+		<Editor
 			language={codeLanguage} height="10rem"
 			value={selectedComponent.code}
 			options= {{ quickSuggestions: false }}
-			onChange= {(_, value: any) => {
+			onChange= {(value: any) => {
 				setComponent({
-					...selectedComponent,
-					code: value
-				});
-			}} />
+				...selectedComponent,
+				code: value
+			});
+		}} />
+
 		<Dropdown
 			label='Variant selector'
 			titleText='Variant selector'
@@ -80,6 +96,7 @@ export const ACodeSnippet = ({
 		rejectDrop={true}
 		{...rest}>
 			<CodeSnippet
+			light={componentObj.light}
 			type={componentObj.variant}
 			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 				{componentObj.code}
@@ -104,11 +121,13 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Type = "${json.variant}"
+			@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}"
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Code = \`${json.code}\``,
 			outputs: () => '',
 			imports: ['CodeSnippetModule'],
 			code: ({ json }) => {
 				return `<ibm-code-snippet
+					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 					display={{${nameStringToVariableString(json.codeContext?.name)}Type}}>{{
 						${nameStringToVariableString(json.codeContext?.name)}Code
 					}}</ibm-code-snippet>`;
@@ -118,6 +137,7 @@ export const componentInfo: ComponentInfo = {
 			imports: ['CodeSnippet'],
 			code: ({ json }) => {
 				return `<CodeSnippet
+					light={${!!json.light}}
 					type="${json.variant}">{\`${json.code}\`}
 				</CodeSnippet>`;
 			}

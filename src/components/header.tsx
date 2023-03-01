@@ -32,7 +32,7 @@ import { FragmentWizardModals } from '../routes/dashboard/fragment-wizard/fragme
 import { saveBlob } from '../utils/file-tools';
 import { GlobalStateContext } from '../context';
 import { ModalContext } from '../context/modal-context';
-import { getEditScreenParams } from '../utils/fragment-tools';
+import { getEditScreenParams, getFragmentJsonExportString } from '../utils/fragment-tools';
 import { UserContext } from '../context/user-context';
 
 const dividerStyle = css`
@@ -138,7 +138,12 @@ export const Header = ({
 						params?.id && fragment?.data &&
 						<HeaderMenuItem
 						className={headerName}
-						onClick={() => saveBlob(new Blob([JSON.stringify(fragment.data, null, 2)]), `${fragment.title}.json`)}>
+						onClick={
+							() => saveBlob(
+								new Blob([getFragmentJsonExportString(fragment, globalState.fragments, globalState.styleClasses)]),
+								`${fragment.title}.json`
+							)
+						}>
 							<Download16 /> Save as .json
 						</HeaderMenuItem>
 					}
