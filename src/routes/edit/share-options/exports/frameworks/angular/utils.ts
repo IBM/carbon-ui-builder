@@ -30,13 +30,13 @@ export const formatOptionsCss: Options = {
 };
 
 export const signalAngularEvent: Record<signalType, Array<string>> = {
-	click: ['click'],
+	onclick: ['click'],
 	hover: ['mouseenter', 'mouseleave'],
 	focus: ['focus', 'focusout']
 };
 
 export const slotAngularEvent: Record<slotProp, slotInfo> = {
-	isVisible: {
+	isDisable: {
 		type: 'boolean',
 		action: 'disabled'
 	}
@@ -183,6 +183,8 @@ export const getItemCode = (signals: any, slots: any, id: string, contextName: s
 			// This sends the signal to disable
 			Object.keys(signals[id].events).forEach((eventName) => {
 				const actions = signalAngularEvent[eventName as signalType];
+				console.log(actions);
+				console.log(eventName);
 				const name = nameStringToVariableString(contextName);
 				actions.forEach(event => {
 					codeForActions += `(${event}) = '`;
