@@ -119,8 +119,7 @@ export const AContentSwitcherCodeUI = ({ selectedComponent, setComponent }: any)
 				name: event.currentTarget.value
 			}
 		});
-	}}
-/>;
+	}} />;
 
 export const AContentSwitcher = ({
 	componentObj,

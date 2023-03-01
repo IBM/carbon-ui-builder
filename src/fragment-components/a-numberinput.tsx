@@ -125,23 +125,18 @@ export const ANumberInputSettingsUI = ({ selectedComponent, setComponent }: any)
 	</>;
 };
 
-export const ANumberInputCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return (
-		<TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>
-	);
-};
+export const ANumberInputCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const ANumberInput = ({
 	componentObj,

@@ -9,22 +9,22 @@ import {
 	ChevronUp16
 } from '@carbon/icons-react';
 import { css, cx } from 'emotion';
-import { ControlledEditor } from '@monaco-editor/react';
+import Editor from '@monaco-editor/react';
 import { throttle } from 'lodash';
 
 import { ComponentCssClassSelector } from '../../components/css-class-selector';
 import { getSelectedComponent, updatedState } from '../../components/fragment';
 import { allComponents } from '../../fragment-components';
 import { SelectedComponentBreadcrumbs } from './selected-component-breadcrumbs';
-import { FragmentLayoutWidget } from '../../components/fragment-layout-widget';
 import { GlobalStateContext } from '../../context';
+import { LayoutWidget } from '../../components/layout-widget';
 
 const styleContextPaneStyle = css`
 .bx--form-item.bx--checkbox-wrapper {
 	display: inline-flex;
 }`;
 
-const accordionButtonStyle = css`
+export const accordionButtonStyle = css`
 	display: block;
 	color: #161616;
 	width: 100%;
@@ -191,17 +191,38 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 				}
 				</div>
 			}
+			{
+				selectedComponent && <>
+					<Button
+					kind='ghost'
+					className={accordionButtonStyle}
+					renderIcon={settings.contextPane?.settings?.layoutAccordionOpen ? ChevronUp16 : ChevronDown16}
+					onClick={() => updateContextPaneSettings({
+						layoutAccordionOpen: !settings.contextPane?.settings?.layoutAccordionOpen
+					})}>
+						Layout
+					</Button>
+					{
+						settings.contextPane?.settings?.layoutAccordionOpen &&
+						<div className={accordionContentStyle}>
+							{
+								selectedComponent && <LayoutWidget component={selectedComponent} setComponent={setComponent} />
+							}
+						</div>
+					}
+				</>
+			}
 			<Button
 			kind='ghost'
 			className={accordionButtonStyle}
-			renderIcon={settings.contextPane?.settings?.customCSSAccordionOpen ? ChevronUp16 : ChevronDown16}
+			renderIcon={settings.contextPane?.settings?.advancedStylingAccordionOpen ? ChevronUp16 : ChevronDown16}
 			onClick={() => updateContextPaneSettings({
-				customCSSAccordionOpen: !settings.contextPane?.settings?.customCSSAccordionOpen
+				advancedStylingAccordionOpen: !settings.contextPane?.settings?.advancedStylingAccordionOpen
 			})}>
-				Custom CSS classes
+				Advanced styling
 			</Button>
 			{
-				settings.contextPane?.settings?.customCSSAccordionOpen &&
+				settings.contextPane?.settings?.advancedStylingAccordionOpen &&
 				<div className={accordionContentStyle}>
 					{
 						!selectedComponent && <ComponentCssClassSelector componentObj={fragment} setComponent={setFragment} />
@@ -210,19 +231,6 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 						selectedComponent && <ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
 					}
 				</div>
-			}
-			<Button
-			kind='ghost'
-			className={accordionButtonStyle}
-			renderIcon={settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen ? ChevronUp16 : ChevronDown16}
-			onClick={() => updateContextPaneSettings({
-				fragmentLayoutWidgetAccordionOpen: !settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen
-			})}>
-				Layout
-			</Button>
-			{
-				settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen
-				&& <FragmentLayoutWidget fragment={fragment} setFragment={setFragment} />
 			}
 			<Button
 			kind='ghost'
@@ -236,7 +244,7 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 			{
 				settings.contextPane?.settings?.notesAccordionOpen &&
 				<div className={fullWidthWidgetStyle}>
-					<ControlledEditor
+					<Editor
 						height='300px'
 						language='markdown'
 						options={{
@@ -246,7 +254,7 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 							lineDecorationsWidth: 2,
 							lineNumbersMinChars: 4
 						}}
-						onChange= {(_, value: any) => {
+						onChange= {(value: any) => {
 							if (selectedComponent) {
 								throttledSetComponent({
 									...selectedComponent,
