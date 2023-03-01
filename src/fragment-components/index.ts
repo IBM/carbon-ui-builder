@@ -24,6 +24,7 @@ import * as textarea from './a-text-area';
 import * as textinput from './a-text-input';
 import * as link from './a-link';
 import * as loading from './a-loading';
+import * as inlineLoading from './a-inline-loading';
 import * as overflowMenu from './a-overflow-menu';
 // Tiles
 import * as tile from './tiles/a-tile';
@@ -42,22 +43,23 @@ export { AAccordionItem, AAccordionItemCodeUI, AAccordionItemSettingsUI } from '
 export { AButton, AButtonCodeUI, AButtonSettingsUI } from './a-button';
 export { ACodeSnippet, ACodeSnippetSettingsUI, ACodeSnippetCodeUI } from './a-code-snippet';
 export { ACheckbox, ACheckboxSettingsUI, ACheckboxCodeUI } from './a-checkbox';
-export { AColumn, AColumnSettingsUI } from './a-column';
+export { AColumn, AColumnCodeUI, AColumnSettingsUI } from './a-column';
 export { AComboBox, AComboBoxSettingsUI, AComboBoxCodeUI } from './a-combobox';
 export { AContentSwitcher, AContentSwitcherSettingsUI, AContentSwitcherCodeUI } from './a-content-switcher';
 export { ADropdown, ADropdownSettingsUI, ADropdownCodeUI } from './a-dropdown';
 export * from './a-component';
 export { AFragment, AFragmentSettingsUI, AFragmentCodeUI } from './a-fragment';
-export { AGrid, AGridSettingsUI } from './a-grid';
+export { AGrid, AGridCodeUI, AGridSettingsUI } from './a-grid';
 export { ALoading, ALoadingCodeUI, ALoadingSettingsUI } from './a-loading';
 export { ALink, ALinkSettingsUI, ALinkCodeUI } from './a-link';
+export { AInlineLoading, AInlineLoadingCodeUI, AInlineLoadingSettingsUI } from './a-inline-loading';
 export { ANumberInput, ANumberInputSettingsUI, ANumberInputCodeUI } from './a-numberinput';
 export { AProgressIndicator, AProgressIndicatorSettingsUI, AProgressIndicatorCodeUI } from './a-progress-indicator';
-export { ARow, ARowSettingsUI } from './a-row';
+export { ARow, ARowCodeUI, ARowSettingsUI } from './a-row';
 export { ASelect, ASelectCodeUI, ASelectSettingsUI } from './a-select';
 export { ASearchInput, ASearchInputSettingsUI, ASearchInputCodeUI } from './a-searchinput';
-export { ATag, ATagSettingsUI } from './a-tag';
-export { AText, ATextSettingsUI } from './a-text';
+export { ATag, ATagCodeUI, ATagSettingsUI } from './a-tag';
+export { AText, ATextCodeUI, ATextSettingsUI } from './a-text';
 export { ATextArea, ATextAreaSettingsUI, ATextAreaCodeUI } from './a-text-area';
 export { ATextInput, ATextInputSettingsUI, ATextInputCodeUI } from './a-text-input';
 export { AOverflowMenu, AOverflowMenuCodeUI, AOverflowMenuSettingsUI } from './a-overflow-menu';
@@ -89,6 +91,7 @@ export const allComponents = {
 	fragment,
 	grid,
 	loading,
+	inlineLoading,
 	radio,
 	radioGroup,
 	link,

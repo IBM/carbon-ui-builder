@@ -21,7 +21,12 @@ export const generateNewFragment = (fragment: any, styleClasses: any[], setStyle
 
 	if (fragment.data) {
 		addOrReplaceClasses(fragment.allCssClasses);
-		return fragment;
+
+		return {
+			...fragment,
+			id: fragment.id || fragmentID,
+			lastModified: fragment.lastModified || new Date().toISOString()
+		};
 	}
 
 	return {

@@ -33,21 +33,18 @@ export const ATileSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	</>;
 };
 
-export const ATileCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-		value={selectedComponent.codeContext?.name}
-		labelText='Input name'
-		onChange={(event: any) => {
-			setComponent({
-				...selectedComponent,
-				codeContext: {
-					...selectedComponent.codeContext,
-					name: event.currentTarget.value
-				}
-			});
-		}}
-	/>;
-};
+export const ATileCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const ATile = ({
 	children,
@@ -76,6 +73,7 @@ export const ATile = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ATile,
+	codeUI: ATileCodeUI,
 	settingsUI: ATileSettingsUI,
 	keywords: ['tile', 'card'],
 	name: 'Tile',

@@ -79,8 +79,7 @@ export const ARadioTileCodeUI = ({ selectedComponent, setComponent }: any) => {
 						name: event.currentTarget.value
 					}
 				});
-			}}
-		/>
+			}} />
 		<TextInput
 			id='radio-tile-value-text-input'
 			value={selectedComponent.codeContext?.value || ''}
@@ -94,8 +93,7 @@ export const ARadioTileCodeUI = ({ selectedComponent, setComponent }: any) => {
 						value: event.currentTarget.value
 					}
 				});
-			}}
-		/>
+			}} />
 	</>;
 };
 

@@ -98,22 +98,19 @@ export const AProgressIndicatorSettingsUI = ({ selectedComponent, setComponent }
 	</>;
 };
 
-export const AProgressIndicatorCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-		id='progress-indicator-input-name-text-input'
-		value={selectedComponent.codeContext?.name}
-		labelText='Input name'
-		onChange={(event: any) => {
-			setComponent({
-				...selectedComponent,
-				codeContext: {
-					...selectedComponent.codeContext,
-					name: event.currentTarget.value
-				}
-			});
-		}}
-	/>;
-};
+export const AProgressIndicatorCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	id='progress-indicator-input-name-text-input'
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const AProgressIndicator = ({
 	componentObj,

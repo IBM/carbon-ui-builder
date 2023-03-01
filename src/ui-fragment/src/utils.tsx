@@ -14,6 +14,7 @@ import { UIDropdown } from './components/ui-dropdown';
 import { UIExpandableTile } from './components/ui-expandable-tile';
 import { UIGrid } from './components/ui-grid';
 import { UILink } from './components/ui-link';
+import { UIInlineLoading } from './components/ui-inline-loading';
 import { UILoading } from './components/ui-loading';
 import { UINumberInput } from './components/ui-number-input';
 import { UIOverflowMenu } from './components/ui-overflow-menu';
@@ -34,6 +35,7 @@ import { UITextInput } from './components/ui-text-input';
 import { UITile } from './components/ui-tile';
 import { UITileFold } from './components/ui-tile-fold';
 import { UIToggle } from './components/ui-toggle';
+import { kebabCase } from 'lodash';
 
 export const setItemInState = (item: any, state: any, setState: (state: any) => void) => {
 	const itemIndex = state.items.findIndex((i: any) => i.id === item.id);
@@ -47,6 +49,81 @@ export const setItemInState = (item: any, state: any, setState: (state: any) => 
 		]
 	});
 };
+
+export const addIfNotExist = (arr: any[], items: any[]) => {
+	items.forEach(item => {
+		if (!arr.includes(item)) {
+			arr.push(item);
+		}
+	});
+	return arr;
+};
+
+export const jsonToState = (json: any, allFragments: any[]) => {
+	if (json.type === 'fragment' && json.fragmentId) {
+		const fragment = allFragments.find((fragment: any) => fragment.id === json.fragmentId);
+		if (!fragment) {
+			return {};
+		}
+		return {
+			...fragment.data,
+			allCssClasses: [...fragment.allCssClasses]
+		};
+	}
+
+	if (json.data) {
+		return {
+			...json.data,
+			allCssClasses: json.allCssClasses,
+			items: json.data.items
+				? json.data.items.map((item: any) => jsonToState(item, allFragments))
+				: json.data.items
+		};
+	}
+
+	return {
+		...json,
+		items: json.items
+			? json.items.map((item: any) => jsonToState(item, allFragments))
+			: json.items
+	};
+};
+
+export const expandJsonToState = (json: any) => {
+	if (!Array.isArray(json)) {
+		return json;
+	}
+
+	const state = jsonToState(json[0], json);
+
+	// add css from all the fragments to state
+	const allCssClasses = [...state.allCssClasses];
+	json.forEach((fragment: any) => {
+		addIfNotExist(allCssClasses, fragment.allCssClasses);
+	});
+
+	return {
+		...state,
+		allCssClasses
+	};
+};
+
+export const styleObjectToString = (styleObj: any) => {
+	if (!styleObj) {
+		return '';
+	}
+
+	return `${styleObj.marginTop ? `margin-top: ${styleObj.marginTop.value || 0}${styleObj.marginTop.units || 'px'};` : ''}
+		${styleObj.marginBottom ? `margin-bottom: ${styleObj.marginBottom.value || 0}${styleObj.marginBottom.units || 'px'};` : ''}
+		${styleObj.marginLeft ? `margin-left: ${styleObj.marginLeft.value || 0}${styleObj.marginLeft.units || 'px'};` : ''}
+		${styleObj.marginRight ? `margin-bottom: ${styleObj.marginRight.value || 0}${styleObj.marginRight.units || 'px'};` : ''}
+		${styleObj.paddingTop ? `padding-top: ${styleObj.paddingTop.value || 0}${styleObj.paddingTop.units || 'px'};` : ''}
+		${styleObj.paddingBottom ? `padding-bottom: ${styleObj.paddingBottom.value || 0}${styleObj.paddingBottom.units || 'px'};` : ''}
+		${styleObj.paddingLeft ? `padding-left: ${styleObj.paddingLeft.value || 0}${styleObj.paddingLeft.units || 'px'};` : ''}
+		${styleObj.paddingRight ? `padding-bottom: ${styleObj.paddingRight.value || 0}${styleObj.paddingRight.units || 'px'};` : ''}`.trim();
+};
+
+export const stringToCssClassName = (inputName: string) => `${kebabCase(inputName)}-style`;
 
 export const getAllComponentStyleClasses = (componentObj: any, fragments: any[], globalStyleClasses: any[]) => {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
@@ -78,6 +155,16 @@ export const getAllComponentStyleClasses = (componentObj: any, fragments: any[],
 			};
 		}
 	});
+
+	if (componentObj.style) {
+		const className = stringToCssClassName(componentObj.codeContext.name);
+
+		styleClasses[className] = {
+			id: className,
+			name: className,
+			content: styleObjectToString(componentObj.style)
+		};
+	}
 
 	return styleClasses;
 };
@@ -151,6 +238,9 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 
 		case 'loading':
 			return <UILoading key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'inline-loading':
+			return <UIInlineLoading key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'radio-group':
 			return <UIRadioGroup key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
