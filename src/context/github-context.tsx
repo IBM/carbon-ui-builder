@@ -7,6 +7,7 @@ import React, {
 import { Octokit } from 'octokit';
 import { Buffer } from 'buffer';
 import { GlobalStateContext } from './global-state-context';
+import { isFragment } from '../ui-fragment/src/utils';
 
 const GithubContext: React.Context<any> = createContext({});
 
@@ -101,7 +102,7 @@ const GithubContextProvider = ({ children }: any) => {
 
 		try {
 			const responseObject = JSON.parse(`${data}`);
-			if (!responseObject.id || !responseObject.items || !Array.isArray(responseObject.items)) {
+			if (!isFragment(responseObject)) {
 				throw Error('JSON is not a fragment');
 			}
 
@@ -155,11 +156,45 @@ const GithubContextProvider = ({ children }: any) => {
 		const allFeaturedFragments = await Promise.all(((featuredFragmentsResponse as any).data as any[]).map(async (item) => {
 			const fragmentFileResponse = await getContent('IBM', 'carbon-ui-builder-featured-fragments', item.path, 'raw');
 			try {
+				const data = JSON.parse((fragmentFileResponse as any).data.toString());
+
+				// I know what this looks like but if data has data, it's a fragment
+				if (data.data) {
+					return data;
+				}
+
 				return {
 					id: item.path,
 					title: item.name.substring(0, item.name.length - 5),
 					lastModified: new Date((fragmentFileResponse as any).headers['last-modified'] || '').toISOString(),
-					data: JSON.parse((fragmentFileResponse as any).data.toString())
+					data
+				};
+			} catch (error) {
+				return null;
+			}
+		}));
+
+		return allFeaturedFragments.filter(fragment => fragment !== null);
+	};
+
+	const getBuiltInTemplates = async () => {
+		const featuredFragmentsResponse = await getContent('IBM', 'carbon-ui-builder-featured-fragments', 'built-in-templates', 'raw');
+
+		const allFeaturedFragments = await Promise.all(((featuredFragmentsResponse as any).data as any[]).map(async (item) => {
+			const fragmentFileResponse = await getContent('IBM', 'carbon-ui-builder-featured-fragments', item.path, 'raw');
+			try {
+				const data = JSON.parse((fragmentFileResponse as any).data.toString());
+
+				// I know what this looks like but if data has data, it's a fragment
+				if (data.data) {
+					return data;
+				}
+
+				return {
+					id: item.path,
+					title: item.name.substring(0, item.name.length - 5),
+					lastModified: new Date((fragmentFileResponse as any).headers['last-modified'] || '').toISOString(),
+					data
 				};
 			} catch (error) {
 				return null;
@@ -174,6 +209,7 @@ const GithubContextProvider = ({ children }: any) => {
 			token: githubToken,
 			setToken: setGithubToken,
 			getFeaturedFragments,
+			getBuiltInTemplates,
 			getContent,
 			getContentWithFolder,
 			getUser,

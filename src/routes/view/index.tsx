@@ -4,15 +4,15 @@ import { GlobalStateContext } from '../../context';
 import { UIFragment } from '../../ui-fragment/src/ui-fragment';
 
 export const View = () => {
-	const {
-		fragments
-	} = useContext(GlobalStateContext);
+	const { fragments, getExpandedFragmentState } = useContext(GlobalStateContext);
 
 	const params = useParams();
 
 	const fragment = fragments.find((fragment: any) => fragment.id === params.id);
 
-	const [fragmentState, setFragmentState] = useState(fragment.data);
+	const [fragmentState, setFragmentState] = useState(getExpandedFragmentState(fragment));
 
-	return <UIFragment state={fragmentState} setState={(state) => setFragmentState(state)} />;
+	return <UIFragment
+		state={fragmentState}
+		setState={(state) => setFragmentState(state)} />;
 };

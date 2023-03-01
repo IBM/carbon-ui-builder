@@ -59,8 +59,7 @@ export const ALinkCodeUI = ({ selectedComponent, setComponent }: any) => {
 						name: event.currentTarget.value
 					}
 				});
-			}}
-		/>
+			}} />
 		<TextInput
 			value={selectedComponent.codeContext?.href || ''}
 			labelText='href'
@@ -72,8 +71,7 @@ export const ALinkCodeUI = ({ selectedComponent, setComponent }: any) => {
 						href: event.currentTarget.value
 					}
 				});
-			}}
-		/>
+			}} />
 	</>;
 };
 

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import {
 	Button,
@@ -8,24 +8,18 @@ import {
 } from 'carbon-components-react';
 import { Copy16, Document16 } from '@carbon/icons-react';
 import { css } from 'emotion';
-import Editor, { monaco } from '@monaco-editor/react';
+import Editor, { useMonaco } from '@monaco-editor/react';
 
 import { createFragmentSandbox } from './create-fragment-sandbox';
-import { createReactApp } from './frameworks/react-fragment';
-import { createAngularApp } from './frameworks/angular-fragment';
+import { createReactApp } from './frameworks/react/fragment-v10';
+import { createAngularApp } from './frameworks/angular/fragment-v10';
 
 import { ModalContext } from '../../../../context/modal-context';
 import { saveBlob } from '../../../../utils/file-tools';
 import { GlobalStateContext } from '../../../../context';
 import { ExportImageComponent } from './export-image-component';
 import { filenameToLanguage } from '../../tools';
-
-monaco.init().then(monaco => {
-	monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
-		noSemanticValidation: true,
-		noSyntaxValidation: true
-	});
-});
+import { getFragmentJsonExportString } from '../../../../utils/fragment-tools';
 
 const exportCodeModalStyle = css`
 	.bx--tab-content {
@@ -127,16 +121,24 @@ const CodeView = ({ code, selectedFilename }: any) => {
 const generateSandboxUrl = (parameters: any) => (`https://codesandbox.io/api/v1/sandboxes/define?parameters=${parameters}`);
 
 export const ExportModal = () => {
-	const { fragments, settings, setSettings } = useContext(GlobalStateContext);
+	const { fragments, settings, setSettings, styleClasses } = useContext(GlobalStateContext);
 	const { fragmentExportModal, hideFragmentExportModal } = useContext(ModalContext);
 	const [selectedAngularFilename, setSelectedAngularFilename] = useState('src/app/app.component.ts' as string);
 	const [selectedReactFilename, setSelectedReactFilename] = useState('src/component.js' as string);
+	const monaco = useMonaco();
+
+	useEffect(() => {
+		monaco?.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+			noSemanticValidation: true,
+			noSyntaxValidation: true
+		});
+	}, [monaco]);
 
 	if (!fragmentExportModal?.fragment) {
 		return null;
 	}
 
-	const jsonCode: any = JSON.stringify(fragmentExportModal.fragment.data, null, 2);
+	const jsonCode: any = getFragmentJsonExportString(fragmentExportModal.fragment, fragments, styleClasses);
 	const reactCode: any = createReactApp(fragmentExportModal.fragment, fragments);
 	const angularCode: any = createAngularApp(fragmentExportModal.fragment, fragments);
 
@@ -203,6 +205,7 @@ export const ExportModal = () => {
 								kind='ghost'
 								className={css`margin-top: -6px;`}
 								hasIconOnly
+								tooltipPosition='right'
 								iconDescription='Copy to clipboard'
 								onClick={() => copyToClipboard(jsonCode)}
 								renderIcon={Copy16} />

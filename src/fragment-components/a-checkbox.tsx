@@ -29,22 +29,17 @@ export const ACheckboxSettingsUI = ({ selectedComponent, setComponent }: any) =>
 	</>;
 };
 
-export const ACheckboxCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return (
-		<TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>
-	);
-};
+export const ACheckboxCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const ACheckbox = ({
 	componentObj,

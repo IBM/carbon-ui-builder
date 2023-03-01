@@ -1,9 +1,10 @@
 import React from 'react';
 import domtoimage from 'dom-to-image';
 import ReactDOM from 'react-dom';
-import { Fragment } from '../components';
-import { camelCase, kebabCase, upperFirst } from 'lodash';
+import { camelCase, kebabCase, uniq, upperFirst } from 'lodash';
 import { matchPath } from 'react-router-dom';
+import { getAllFragmentStyleClasses, stringToCssClassName } from '../ui-fragment/src/utils';
+import { UIFragment } from '../ui-fragment/src/ui-fragment';
 
 export const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -28,10 +29,18 @@ export const validInitialFragments = (localFragments: any[] | undefined) => {
 	return localFragments.filter((fragment: any) => !!fragment.id && typeof fragment.id === 'string');
 };
 
-export const getFragmentsFromLocalStorage = () =>
-	validInitialFragments(JSON.parse(localStorage.getItem('localFragments') as string)) || [];
+export const getFragmentsFromLocalStorage = () => {
+	try {
+		return validInitialFragments(JSON.parse(localStorage.getItem('localFragments') as string)) || [];
+	} catch (error) {
+		console.warn(error);
+		return [];
+	}
+};
 
-export const getFragmentPreview = async (fragment: any, props: RenderProps, outline = false) => {
+export const getGlobalStyleClassesFromLocalStorage = () => JSON.parse(localStorage.getItem('globalStyleClasses') as string || '[]');
+
+export const getFragmentPreview = async (fragment: any, props: RenderProps) => {
 	const element = document.createElement('div');
 	element.className = 'render-preview';
 
@@ -39,10 +48,11 @@ export const getFragmentPreview = async (fragment: any, props: RenderProps, outl
 	(element as HTMLElement).style.top = '0';
 	(element as HTMLElement).style.left = '0';
 	(element as HTMLElement).style.zIndex = '-1';
+	(element as HTMLElement).style.backgroundColor = 'white';
 	(element as HTMLElement).style.width = `${props.width || 800}px`;
 	(element as HTMLElement).style.height = `${props.height || 400}px`;
 	(element as HTMLElement).style.minHeight = `${props.height || 400}px`;
-	ReactDOM.render(React.createElement(Fragment, { fragment, outline }), element);
+	ReactDOM.render(React.createElement(UIFragment, { state: fragment, setState: (_state: any) => {} }), element);
 	document.body.appendChild(element);
 
 	await sleep(100); // wait for render to finish
@@ -170,18 +180,100 @@ export const openFragmentPreview = (fragment: any) => {
 	);
 };
 
-export const reactClassNamesFromComponentObj = (componentObj: any) =>
-	componentObj.cssClasses
-		&& Array.isArray(componentObj.cssClasses)
-		&& componentObj.cssClasses.length > 0
-		? `className='${componentObj.cssClasses.map((cc: any) => cc.id).join(' ')}'`
-		: '';
+export const reactClassNamesFromComponentObj = (componentObj: any) => {
+	let classList = componentObj.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
 
-export const angularClassNamesFromComponentObj = (componentObj: any) =>
-	componentObj.cssClasses
-		&& Array.isArray(componentObj.cssClasses)
-		&& componentObj.cssClasses.length > 0
-		? `class='${componentObj.cssClasses.map((cc: any) => cc.id).join(' ')}'`
+	if (componentObj.style) {
+		if (classList.length > 0) {
+			classList += ' ';
+		}
+		classList += stringToCssClassName(componentObj.codeContext.name);
+	}
+
+	return classList.length > 0
+		? `className='${classList}'`
 		: '';
+};
+
+export const angularClassNamesFromComponentObj = (componentObj: any) => {
+	let classList = componentObj.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (componentObj.style) {
+		if (classList.length > 0) {
+			classList += ' ';
+		}
+		classList += stringToCssClassName(componentObj.codeContext.name);
+	}
+
+	return classList.length > 0
+		? `class='${classList}'`
+		: '';
+};
 
 export const nameStringToVariableString = (name: string) => camelCase(name);
+
+export const hasMicroLayouts = (fragment: any): boolean => {
+	if (fragment.type === 'fragment') {
+		return true;
+	}
+
+	if (fragment.data) {
+		return hasMicroLayouts(fragment.data);
+	}
+
+	if (fragment.items) {
+		return fragment.items.some((item: any) => hasMicroLayouts(item));
+	}
+
+	return false;
+};
+
+export const getShallowFragmentJsonExport = (fragment: any, fragments: any[], styleClasses: any[]) => {
+	return {
+		id: fragment.id,
+		lastModified: fragment.lastModified,
+		title: fragment.title,
+		data: fragment.data,
+		cssClasses: fragment.cssClasses,
+		allCssClasses: getAllFragmentStyleClasses(fragment, [], styleClasses),
+		labels: fragment.labels
+	};
+};
+
+export const getAllMicrolayoutIdsFromFragment = (fragment: any): any[] => {
+	if (fragment.type === 'fragment') {
+		return [fragment.fragmentId];
+	}
+
+	if (fragment.data) {
+		return getAllMicrolayoutIdsFromFragment(fragment.data);
+	}
+
+	if (fragment.items) {
+		return uniq(fragment.items
+			.flatMap((item: any) => getAllMicrolayoutIdsFromFragment(item))
+			.filter((item: any) => !!item));
+	}
+
+	return [];
+};
+
+export const getFragmentJsonExport = (fragment: any, fragments: any[], styleClasses: any[]) => {
+	if (!hasMicroLayouts(fragment)) {
+		return getShallowFragmentJsonExport(fragment, fragments, styleClasses);
+	}
+
+	// get all microlayouts
+	const microlayoutIds = getAllMicrolayoutIdsFromFragment(fragment);
+
+	const microlayouts = fragments.filter((f: any) => microlayoutIds.includes(f.id));
+
+	return [
+		getShallowFragmentJsonExport(fragment, fragments, styleClasses),
+		...microlayouts
+	];
+};
+
+export const getFragmentJsonExportString = (fragment: any, fragments: any[], styleClasses: any[]) => {
+	return JSON.stringify(getFragmentJsonExport(fragment, fragments, styleClasses), null, 2);
+};

@@ -66,12 +66,14 @@ export const FragmentTileList = ({
 	setDisplayedModal,
 	setDisplayWizard
 }: any) => {
-	const { addFragment } = useContext(GlobalStateContext);
+	const { addFragment, styleClasses, setStyleClasses } = useContext(GlobalStateContext);
 	const navigate: NavigateFunction = useNavigate();
 
 	const generateFragment = (items: any[] = []) => {
 		const generatedFragment = generateNewFragment(
-			{ items, id: 1 }
+			{ items, id: 1 },
+			styleClasses,
+			setStyleClasses
 		);
 
 		addFragment(generatedFragment);
