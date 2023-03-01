@@ -41,13 +41,15 @@ const controlsContainerStyle = css`
 export const FragmentPreviewModal = () => {
 	const navigate = useNavigate();
 	const { fragmentPreviewModal, hideFragmentPreviewModal } = useContext(ModalContext);
-	const { addFragment } = useContext(GlobalStateContext);
-	const [fragmentState, setFragmentState] = useState(JSON.parse(JSON.stringify(fragmentPreviewModal?.fragment?.data || {})));
+	const { addFragment, getExpandedFragmentState } = useContext(GlobalStateContext);
+
+	const [fragmentState, setFragmentState] = useState(getExpandedFragmentState(JSON.parse(JSON.stringify(fragmentPreviewModal?.fragment || {}))));
 	const [currentFragmentIndex, setCurrentFragmentIndex] = useState(fragmentPreviewModal?.fragments?.indexOf(fragmentPreviewModal?.fragment));
 
 	useEffect(() => {
-		setFragmentState(JSON.parse(JSON.stringify(fragmentPreviewModal?.fragment?.data || {})));
+		setFragmentState(getExpandedFragmentState(fragmentPreviewModal?.fragment || {}));
 		setCurrentFragmentIndex(fragmentPreviewModal?.fragments?.indexOf(fragmentPreviewModal?.fragment));
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [fragmentPreviewModal, fragmentPreviewModal?.fragment]);
 
 	if (!fragmentPreviewModal.fragment || !fragmentPreviewModal.fragments) {
@@ -56,7 +58,7 @@ export const FragmentPreviewModal = () => {
 
 	const selectFragmentByIndex = (index: number) => {
 		setCurrentFragmentIndex(index);
-		setFragmentState(JSON.parse(JSON.stringify(fragmentPreviewModal?.fragments[index]?.data)));
+		setFragmentState(getExpandedFragmentState(JSON.parse(JSON.stringify(fragmentPreviewModal?.fragments[index]))));
 	};
 
 	const editOrCloneFragment = () => {
@@ -112,7 +114,9 @@ export const FragmentPreviewModal = () => {
 				</div>
 			}
 			<div className={fragmentContainerStyle}>
-				<UIFragment state={fragmentState} setState={setFragmentState} />
+				<UIFragment
+					state={fragmentState}
+					setState={setFragmentState} />
 			</div>
 		</Modal>
 	);

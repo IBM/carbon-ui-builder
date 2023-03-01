@@ -47,7 +47,7 @@ const uid = (prefix = 'id') => {
 };
 
 export const ImportJsonModal = (props: ImportJsonModalProps) => {
-	const { addFragment } = useContext(GlobalStateContext);
+	const { addFragment, styleClasses, setStyleClasses } = useContext(GlobalStateContext);
 	const [, dispatchNotification] = useContext(NotificationContext);
 	const [files, setFiles] = useState([] as any[]);
 	const [jsonString, _setJsonString] = useState('');
@@ -190,7 +190,7 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 	);
 
 	const generateFragment = () => {
-		const generatedFragment = generateNewFragment(fragmentJson);
+		const generatedFragment = generateNewFragment(fragmentJson, styleClasses, setStyleClasses);
 
 		// close all notifications
 		dispatchNotification({

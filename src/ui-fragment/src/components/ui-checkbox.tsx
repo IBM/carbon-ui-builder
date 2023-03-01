@@ -27,7 +27,7 @@ export const UICheckbox = ({ state, setState }: {
 		labelText={state.label}
 		name={state.codeContext?.name}
 		id={state.codeContext?.name}
-		checked={state.checked}
+		checked={!!state.checked}
 		onChange={(checked: boolean) => setState({ ...state, checked })}
 		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />;
 };

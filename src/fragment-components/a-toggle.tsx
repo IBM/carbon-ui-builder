@@ -83,23 +83,18 @@ export const AToggleSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	</>;
 };
 
-export const AToggleCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return (
-		<TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>
-	);
-};
+export const AToggleCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const AToggle = ({
 	componentObj,
@@ -180,7 +175,7 @@ export const componentInfo: ComponentInfo = {
 							name: "${json.codeContext?.name}",
 							value: checked
 						}
-					})} 
+					})}
 					${reactClassNamesFromComponentObj(json)} />`;
 			}
 		}
