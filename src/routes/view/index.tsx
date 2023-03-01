@@ -14,11 +14,11 @@ export const View = () => {
 	// TEMP, REVERT THIS CHANGE LATER
 	if (!fragment.data.actions) {
 		fragment.data.actions = [{
-					"source": "13",
+					"source": "9",
 					"signal": "click",
-					"destination": "14",
-					"slot": "isVisible",
-					"slot_param": "false"
+					"destination": "10",
+					"slot": "isDisabled",
+					"slot_param": "true"
 				}]
 		}
 

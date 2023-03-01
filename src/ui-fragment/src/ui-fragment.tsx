@@ -45,7 +45,7 @@ export const UIFragment = ({ state, setState }: UIFragmentProps) => {
 				return;
 			}
 
-			changedItems.forEach((item: any) => {
+			changedItems[0].items[1].items[1].items.forEach((item: any) => {
 				if (item.id == action.destination) {
 					item[action.slot] = action.slot_param
 				}
@@ -58,6 +58,7 @@ export const UIFragment = ({ state, setState }: UIFragmentProps) => {
 		})
 		
 		// console.log('handleSignalEnd: ' + JSON.stringify(state))
+		console.log('handleSignalEnd: ' + JSON.stringify(changedItems))
 
 	}
 

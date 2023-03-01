@@ -8,6 +8,7 @@ export interface ButtonState {
 	size: string;
 	text: string;
 	id: string | number;
+	isDisabled: string | boolean;
 	cssClasses?: CssClasses[];
 	codeContext?: {
 		name: string;
@@ -31,6 +32,7 @@ export const UIButton = ({ state, setGlobalState, sendSignal }: {
 	// console.log(state)
 
 	return <Button
+	disabled={state.isDisabled}
 	kind={state.kind}
 	size={state.size}
 	name={state.codeContext?.name}
