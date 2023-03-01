@@ -57,8 +57,7 @@ export const AClickableTileCodeUI = ({ selectedComponent, setComponent }: any) =
 						name: event.currentTarget.value
 					}
 				});
-			}}
-		/>
+			}} />
 		<TextInput
 			value={selectedComponent.codeContext?.href || ''}
 			labelText='href for clickable UI'
@@ -70,8 +69,7 @@ export const AClickableTileCodeUI = ({ selectedComponent, setComponent }: any) =
 						href: event.currentTarget.value
 					}
 				});
-			}}
-		/>
+			}} />
 	</>;
 };
 

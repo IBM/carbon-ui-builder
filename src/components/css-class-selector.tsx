@@ -1,9 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import {
 	FormLabel,
-	Tag
+	Tag,
+	Tooltip
 } from 'carbon-components-react';
+import { ColorPalette16 } from '@carbon/icons-react';
 import { GlobalStateContext } from '../context';
+import { css } from 'emotion';
 
 const compareClasses = (sc1: any, sc2: any) => sc1.name < sc2.name ? -1 : 1;
 
@@ -57,7 +60,14 @@ export const CssClassSelector = ({ selectedClasses, setSelectedClasses }: any) =
 				))
 			}
 			<br />
-			<FormLabel>Available classes</FormLabel>
+			<FormLabel>
+				Available classes
+				<div className={css`display: inline; position: relative; top: 3px;`}>
+					<Tooltip className={css`z-index: 9999;`}>
+						Add or modify classes in the <ColorPalette16 /> Style menu on the left of the editor
+					</Tooltip>
+				</div>
+			</FormLabel>
 			<br />
 			{
 				availableClasses.map((styleClass: any) => (

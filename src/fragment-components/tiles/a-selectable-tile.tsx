@@ -78,8 +78,7 @@ export const ASelectableTileCodeUI = ({ selectedComponent, setComponent }: any) 
 						name: event.currentTarget.value
 					}
 				});
-			}}
-		/>
+			}} />
 		<TextInput
 			value={selectedComponent.codeContext?.title || ''}
 			labelText='Title'
@@ -92,8 +91,7 @@ export const ASelectableTileCodeUI = ({ selectedComponent, setComponent }: any) 
 						title: event.currentTarget.value
 					}
 				});
-			}}
-		/>
+			}} />
 		<TextInput
 			value={selectedComponent.codeContext?.value || ''}
 			labelText='Value'
@@ -106,8 +104,7 @@ export const ASelectableTileCodeUI = ({ selectedComponent, setComponent }: any) 
 						value: event.currentTarget.value
 					}
 				});
-			}}
-		/>
+			}} />
 	</>;
 };
 
