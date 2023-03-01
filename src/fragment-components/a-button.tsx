@@ -9,6 +9,7 @@ import { AComponent, ComponentInfo } from './a-component';
 
 import image from './../assets/component-icons/button.svg';
 import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const kindItems = [
@@ -80,11 +81,15 @@ export const AButton = ({
 	componentObj,
 	...rest
 }: any) => {
+
+	const x = css`${styleObjectToString(componentObj.style)}`;
+	debugger;
 	return (
 		<AComponent
 		componentObj={componentObj}
 		rejectDrop={true}
-		className={css`position: relative; display: inline-flex`}
+		className={css`${styleObjectToString(componentObj.style)}`}
+		// className={css`position: relative; display: inline-flex`}
 		{...rest}>
 			<Button
 			kind={componentObj.kind}
@@ -115,7 +120,15 @@ export const componentInfo: ComponentInfo = {
 		type: 'button',
 		kind: 'primary',
 		text: 'Button',
-		size: ''
+		size: '',
+		style: {
+			position: {
+				value: 'relative'
+			},
+			display: {
+				value: 'inline-flex'
+			}
+		}
 	},
 	image,
 	codeExport: {
