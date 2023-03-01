@@ -7,7 +7,7 @@ import {
 } from 'carbon-components-react';
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { ComponentInfo } from '..';
 import image from '../../assets/component-icons/tile-expandable.svg';
 import {
@@ -15,6 +15,10 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
+
+const preventCheckEvent = css`
+	pointer-events: none;
+`;
 
 export const AExpandableSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -55,21 +59,18 @@ export const AExpandableSettingsUI = ({ selectedComponent, setComponent }: any) 
 	</>;
 };
 
-export const AExpandableTileCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>;
-};
+export const AExpandableTileCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 const outlineStyle = css`
 	span.bx--tile-content__above-the-fold,
@@ -95,11 +96,11 @@ export const AExpandableTile = ({
 		{...rest}>
 			<ExpandableTile
 			light={componentObj.light}
-			className={`${
+			className={cx(preventCheckEvent,`${
 					componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')
 				} ${
 					(componentObj.outline || outline === true) && outline !== false ? outlineStyle : ''
-				}`
+				}`)
 			}
 			expanded={componentObj.expanded}>
 				<TileAboveTheFoldContent onDrop={onDrop}>
@@ -124,6 +125,7 @@ const getFoldObjects = (json: any) => {
 
 export const componentInfo: ComponentInfo = {
 	component: AExpandableTile,
+	codeUI: AExpandableTileCodeUI,
 	settingsUI: AExpandableSettingsUI,
 	keywords: ['tile', 'fold', 'expandable'],
 	name: 'Expandable tile',
