@@ -86,7 +86,8 @@ export const AButtonCodeUI = ({ selectedComponent, setComponent }: any) => {
 					signal: 'onclick',
 					destination: '', 
 					slot: '',
-					id: id,
+					slot_param:'',
+					id: id
 				}
 			]
 		}});

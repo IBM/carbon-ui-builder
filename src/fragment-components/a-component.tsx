@@ -1,10 +1,10 @@
-import { css, cx } from 'emotion';
-import React, { useRef, useState } from 'react';
-
 import { Draggable32, TrashCan32 } from '@carbon/icons-react';
+import React, { useRef, useState } from 'react';
+import { css, cx } from 'emotion';
 import { drag, getDropIndex } from '../routes/edit/tools';
-import { useFragment } from '../context';
+
 import { updatedState } from '../components';
+import { useFragment } from '../context';
 
 export const componentHeaderZIndex = 999;
 
@@ -47,6 +47,7 @@ export interface ComponentInfo {
 	defaultComponentObj: any;
 	signals?: [string];
 	slots?: [string];
+	slot_param?: [string];
 	image: any; // whatever fits in the <img src="here">
 	settingsUI: any;
 	codeUI?: any;

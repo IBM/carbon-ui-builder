@@ -17,6 +17,7 @@ interface ActionProps {
 	signal: String;
 	destination: String;
 	slot: String;
+	slot_param: String;
 	id: Number;
 }
 
@@ -83,6 +84,8 @@ export const ActionsPane = ({ addAction, sourceComponent }: any) => {
 					currentAction.destination = action.selectedItem.text;
 				} else if (updateType === 'slots') {
 					currentAction.slot = action.selectedItem.text;
+				} else if (updateType === 'slotParam') {
+					currentAction.slot_param = action.selectedItem.text;
 				}
 			}
 			return currentAction;
@@ -111,6 +114,7 @@ export const ActionsPane = ({ addAction, sourceComponent }: any) => {
 	};
 
 	const template = (item: any, _index: number) => {
+		console.log(item)
 		return (
 			<>
             <h6 className={css`color: #323232; margin-bottom: 8px; font-weight: normal;`}>{item.text || 'New Action'}</h6>
@@ -135,7 +139,17 @@ export const ActionsPane = ({ addAction, sourceComponent }: any) => {
             selectedItem={{ text: item.slot }}
             className={css`background-color: #fff`}
             />
-
+			<Dropdown
+			id='slotParam'
+			size='sm'
+			titleText='Slot Parameter'
+			label=''
+			items={[{ text: 'True' }, { text: 'False' }]}
+			itemToString={(item: any) => (item ? item.text : '')}
+			onChange={(slot: any) => handleActionUpdate(slot, item, 'slotParam')}
+			selectedItem={{ text: item.slot_param }}
+			className={css`background-color: #fff`}
+            />
 			</>
 		);
 	};
@@ -152,6 +166,7 @@ export const ActionsPane = ({ addAction, sourceComponent }: any) => {
 			signal: 'onclick',
 			destination: '',
 			slot: '',
+			slot_param: '',
 			id: actionState.length
 		}}
 	/>
