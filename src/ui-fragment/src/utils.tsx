@@ -35,6 +35,7 @@ import { UITextInput } from './components/ui-text-input';
 import { UITile } from './components/ui-tile';
 import { UITileFold } from './components/ui-tile-fold';
 import { UIToggle } from './components/ui-toggle';
+import { kebabCase } from 'lodash';
 
 export const setItemInState = (item: any, state: any, setState: (state: any) => void) => {
 	const itemIndex = state.items.findIndex((i: any) => i.id === item.id);
@@ -107,6 +108,23 @@ export const expandJsonToState = (json: any) => {
 	};
 };
 
+export const styleObjectToString = (styleObj: any) => {
+	if (!styleObj) {
+		return '';
+	}
+
+	return `${styleObj.marginTop ? `margin-top: ${styleObj.marginTop.value || 0}${styleObj.marginTop.units || 'px'};` : ''}
+		${styleObj.marginBottom ? `margin-bottom: ${styleObj.marginBottom.value || 0}${styleObj.marginBottom.units || 'px'};` : ''}
+		${styleObj.marginLeft ? `margin-left: ${styleObj.marginLeft.value || 0}${styleObj.marginLeft.units || 'px'};` : ''}
+		${styleObj.marginRight ? `margin-bottom: ${styleObj.marginRight.value || 0}${styleObj.marginRight.units || 'px'};` : ''}
+		${styleObj.paddingTop ? `padding-top: ${styleObj.paddingTop.value || 0}${styleObj.paddingTop.units || 'px'};` : ''}
+		${styleObj.paddingBottom ? `padding-bottom: ${styleObj.paddingBottom.value || 0}${styleObj.paddingBottom.units || 'px'};` : ''}
+		${styleObj.paddingLeft ? `padding-left: ${styleObj.paddingLeft.value || 0}${styleObj.paddingLeft.units || 'px'};` : ''}
+		${styleObj.paddingRight ? `padding-bottom: ${styleObj.paddingRight.value || 0}${styleObj.paddingRight.units || 'px'};` : ''}`.trim();
+};
+
+export const stringToCssClassName = (inputName: string) => `${kebabCase(inputName)}-style`;
+
 export const getAllComponentStyleClasses = (componentObj: any, fragments: any[], globalStyleClasses: any[]) => {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	// const { styleClasses: globalStyleClasses } = useContext(GlobalStateContext) || { styleClasses: getGlobalStyleClassesFromLocalStorage() };
@@ -137,6 +155,16 @@ export const getAllComponentStyleClasses = (componentObj: any, fragments: any[],
 			};
 		}
 	});
+
+	if (componentObj.style) {
+		const className = stringToCssClassName(componentObj.codeContext.name);
+
+		styleClasses[className] = {
+			id: className,
+			name: className,
+			content: styleObjectToString(componentObj.style)
+		};
+	}
 
 	return styleClasses;
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AComponent } from './a-component';
 import { ComponentInfo } from '.';
 import ReactQuill from 'react-quill';
@@ -7,59 +7,92 @@ import 'react-quill/dist/quill.snow.css';
 import image from './../assets/component-icons/text.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 import { css } from 'emotion';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 export const ATextSettingsUI = ({ selectedComponent, setComponent }: any) => {
+	const [isRichText, _setIsRichText] = useState(!!selectedComponent.richText);
+	const [isSection, _setIsSection] = useState(!!selectedComponent.isSection);
+	const [text, _setText] = useState(selectedComponent.text || 'Text');
+	const [richText, _setRichText] = useState(selectedComponent.richText || '<p>Some <strong>rich</strong> text </p>');
+
+	const setIsRichText = (is: boolean) => {
+		_setIsRichText(is);
+		setComponent({
+			...selectedComponent,
+			isSection: is ? isSection : undefined,
+			text: is ? undefined : text,
+			richText: is ? richText : undefined
+		});
+	};
+
+	const setIsSection = (is: boolean) => {
+		_setIsSection(is);
+		setComponent({
+			...selectedComponent,
+			isSection: isRichText ? is : undefined
+		});
+	};
+
+	const setText = (text: string) => {
+		setComponent({
+			...selectedComponent,
+			text
+		});
+		_setText(text);
+	};
+
+	const setRichText = (richText: string) => {
+		_setRichText(richText);
+		setComponent({
+			...selectedComponent,
+			richText
+		});
+	};
+
 	return <>
 		<Toggle
-			id='useRichTextEditor'
-			checked={selectedComponent.useRichTextEditor}
+			id='useRichText'
+			checked={isRichText}
 			labelA='Off'
 			labelB='On'
 			size='sm'
 			labelText='Use rich text'
 			className={css`margin-bottom: 1rem;`}
-			onClick={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					useRichTextEditor: event.currentTarget.checked
-				});
-			}} />
+			onClick={(event: any) => setIsRichText(event.currentTarget.checked)} />
 		{
-			selectedComponent.useRichTextEditor
+			isRichText
 				? <>
 					<Checkbox
 						labelText='This text is a content section'
 						id='use-section'
-						checked={selectedComponent.useSectionTag}
-						onChange={(checked: boolean) => {
-							setComponent({
-								...selectedComponent,
-								useSectionTag: checked
-							});
-						}} />
+						checked={isSection}
+						onChange={(checked: boolean) => setIsSection(checked)} />
 					<ReactQuill
 						key={selectedComponent.id}
-						theme="snow"
-						value={selectedComponent.richText}
-						onChange={(event: any) => {
-							setComponent({
-								...selectedComponent,
-								richText: event
-							});
-						}} />
+						theme='snow'
+						value={richText}
+						onChange={(event: any) => setRichText(event)} />
 				</>
 				: <TextInput
-				value={selectedComponent.text}
-				labelText='Text'
-				onChange={(event: any) => {
-					setComponent({
-						...selectedComponent,
-						text: event.currentTarget.value
-					});
-				}} />
+					value={text}
+					labelText='Text'
+					onChange={(event: any) => setText(event.currentTarget.value)} />
 		}
 	</>;
 };
+
+export const ATextCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const AText = ({
 	children,
@@ -79,6 +112,7 @@ export const AText = ({
 
 export const componentInfo: ComponentInfo = {
 	component: AText,
+	codeUI: ATextCodeUI,
 	settingsUI: ATextSettingsUI,
 	render: ({ componentObj, select, remove, selected }) => <AText
 		componentObj={componentObj}
@@ -86,9 +120,9 @@ export const componentInfo: ComponentInfo = {
 		remove={remove}
 		selected={selected}>
 			{
-				componentObj.useRichTextEditor
-				? <div dangerouslySetInnerHTML={{ __html: componentObj.richText }} />
-				: componentObj.text
+				componentObj.richText
+				? <div className={css`${styleObjectToString(componentObj.style)}`} dangerouslySetInnerHTML={{ __html: componentObj.richText }} />
+				: <span className={css`${styleObjectToString(componentObj.style)}`}>{componentObj.text}</span>
 			}
 
 	</AText>,
@@ -97,10 +131,7 @@ export const componentInfo: ComponentInfo = {
 	type: 'text',
 	defaultComponentObj: {
 		type: 'text',
-		text: 'Text',
-		richText: 'Text',
-		useRichTextEditor: false,
-		useSectionTag: false
+		text: 'Text'
 	},
 	image,
 	codeExport: {
@@ -109,16 +140,13 @@ export const componentInfo: ComponentInfo = {
 			outputs: (_) => '',
 			imports: [],
 			code: ({ json }) => {
-				if (json.useRichTextEditor) {
-					if (!json.cssClasses.length) {
-						return json.richText;
-					}
-					if (json.useSectionTag) {
+				if (json.richText) {
+					if (json.isSection) {
 						return `<section ${angularClassNamesFromComponentObj(json)}>${json.richText}</section>`;
 					}
 					return `<div ${angularClassNamesFromComponentObj(json)}>${json.richText}</div>`;
 				}
-				if (json.cssClasses.length) {
+				if (json.cssClasses?.length) {
 					return `<span ${angularClassNamesFromComponentObj(json)}>${json.text}</span>`;
 				}
 				return json.text;
@@ -127,16 +155,13 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			imports: [],
 			code: ({ json }) => {
-				if (json.useRichTextEditor) {
-					if (!json.cssClasses.length) {
-						return json.richText;
-					}
-					if (json.useSectionTag) {
+				if (json.richText) {
+					if (json.isSection) {
 						return `<section ${reactClassNamesFromComponentObj(json)}>${json.richText}</section>`;
 					}
 					return `<div ${reactClassNamesFromComponentObj(json)}>${json.richText}</div>`;
 				}
-				if (json.cssClasses.length) {
+				if (json.cssClasses?.length) {
 					return `<span ${reactClassNamesFromComponentObj(json)}>${json.text}</span>`;
 				}
 				return json.text;

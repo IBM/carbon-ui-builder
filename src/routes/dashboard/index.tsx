@@ -59,6 +59,8 @@ export const Dashboard = ({
 	const [fragmentGroupDisplayed, setFragmentGroupDisplayed] = useState(FragmentGroupDisplayed.AllFragments);
 	const [fragmentTitleFilter, setFragmentTitleFilter] = useState('');
 	const [displayedFragments, setDisplayedFragments] = useState([]);
+	const [featuredFragments, setFeaturedFragments] = useState([]);
+	const [builtInTemplateFragments, setBuiltInTemplateFragments] = useState([]);
 	const [sortDirection, setSortDirection] = useState(SortDirection.Ascending);
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -79,18 +81,25 @@ export const Dashboard = ({
 	useEffect(() => {
 		switch (fragmentGroupDisplayed) {
 			case FragmentGroupDisplayed.Templates: {
-				setDisplayedFragments(filterFragments(getFragmentTemplates(fragments)));
-				setIsLoading(true);
+				if (builtInTemplateFragments.length <= 0) {
+					setIsLoading(true);
+				}
+				setDisplayedFragments(filterFragments([...builtInTemplateFragments, getFragmentTemplates(fragments)]));
 				getBuiltInTemplates().then((value: any) => {
+					setBuiltInTemplateFragments(value);
 					setDisplayedFragments(filterFragments([...value, getFragmentTemplates(fragments)]));
 					setIsLoading(false);
 				});
 				break;
 			}
 			case FragmentGroupDisplayed.FeaturedFragments: {
-				setIsLoading(true);
+				if (featuredFragments.length <= 0) {
+					setIsLoading(true);
+				}
+				setDisplayedFragments(filterFragments(featuredFragments));
 				getFeaturedFragments().then((value: any) => {
-					setDisplayedFragments(value);
+					setFeaturedFragments(value);
+					setDisplayedFragments(filterFragments(value));
 					setIsLoading(false);
 				});
 				break;
@@ -101,7 +110,7 @@ export const Dashboard = ({
 				break;
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [fragmentGroupDisplayed, fragments]);
+	}, [fragmentGroupDisplayed, fragments, fragmentTitleFilter]);
 
 	return (
 		<Main style={{ marginLeft: '0px' }}>
