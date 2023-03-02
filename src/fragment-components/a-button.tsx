@@ -4,7 +4,7 @@ import {
 	Dropdown,
 	TextInput
 } from 'carbon-components-react';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { AComponent, ComponentInfo } from './a-component';
 
 import image from './../assets/component-icons/button.svg';
@@ -81,21 +81,17 @@ export const AButton = ({
 	componentObj,
 	...rest
 }: any) => {
-
-	const x = css`${styleObjectToString(componentObj.style)}`;
-	debugger;
 	return (
 		<AComponent
 		componentObj={componentObj}
 		rejectDrop={true}
-		className={css`${styleObjectToString(componentObj.style)}`}
-		// className={css`position: relative; display: inline-flex`}
+		className={cx(css`position: relative; display: inline-flex`)}
 		{...rest}>
 			<Button
 			kind={componentObj.kind}
 			size={componentObj.size}
 			disabled={componentObj.disabled}
-			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+			className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}` )}>
 				{children}
 			</Button>
 		</AComponent>
@@ -121,14 +117,6 @@ export const componentInfo: ComponentInfo = {
 		kind: 'primary',
 		text: 'Button',
 		size: '',
-		style: {
-			position: {
-				value: 'relative'
-			},
-			display: {
-				value: 'inline-flex'
-			}
-		}
 	},
 	image,
 	codeExport: {
