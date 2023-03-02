@@ -91,7 +91,7 @@ export const AButton = ({
 			kind={componentObj.kind}
 			size={componentObj.size}
 			disabled={componentObj.disabled}
-			className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}` )}>
+			className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)}>
 				{children}
 			</Button>
 		</AComponent>
@@ -116,7 +116,7 @@ export const componentInfo: ComponentInfo = {
 		type: 'button',
 		kind: 'primary',
 		text: 'Button',
-		size: '',
+		size: ''
 	},
 	image,
 	codeExport: {
