@@ -132,7 +132,7 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Href = '${json.href}';
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled || false}
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled || false};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : 'dark'}';`,
 			outputs: (_) => '',
 			imports: ['TilesModule'],
