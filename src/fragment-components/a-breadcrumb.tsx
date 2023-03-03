@@ -113,8 +113,11 @@ export const ABreadcrumb = ({
 		{...rest}>
 			<Breadcrumb
 			noTrailingSlash={componentObj.noTrailingSlash}
-			className={cx(preventCheckEventStyle, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-				css`${styleObjectToString(componentObj.style)}`)}>
+			className={cx(
+				preventCheckEventStyle,
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				css`${styleObjectToString(componentObj.style)}`
+			)}>
 			{
 				componentObj.items.map((step: any, index: number) => <BreadcrumbItem
 					href={step.href}
