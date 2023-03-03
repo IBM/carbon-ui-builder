@@ -5,7 +5,7 @@ import {
 	TextInput
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from '../a-component';
-
+import { css, cx } from 'emotion';
 import image from '../../assets/component-icons/accordion-item.svg';
 import {
 	angularClassNamesFromComponentObj,
@@ -19,6 +19,7 @@ import {
 	updatedState
 } from '../../components';
 import { APlaceholder } from '../a-placeholder';
+import { styleObjectToString } from '../../ui-fragment/src/utils';
 
 export const AAccordionItemSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -97,7 +98,10 @@ export const AAccordionItem = ({
 				<AccordionItem
 				title={componentObj.title}
 				disabled={componentObj.disabled}
-				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+				className={cx(
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					css`${styleObjectToString(componentObj.style)}`
+				)}>
 					{
 						children && children.length > 0 ? children : <APlaceholder componentObj={componentObj} select={rest.select} />
 					}

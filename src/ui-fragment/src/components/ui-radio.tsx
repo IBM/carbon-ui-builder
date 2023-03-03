@@ -1,6 +1,7 @@
 import React from 'react';
 import { RadioButton } from 'carbon-components-react';
 import { CssClasses } from '../types';
+import { stringToCssClassName } from '../utils';
 
 export interface RadioState {
 	type: string;
@@ -9,9 +10,10 @@ export interface RadioState {
 	disabled?: boolean;
 	checked?: boolean;
 	cssClasses?: CssClasses[];
-	codeContext?: {
+	codeContext: {
 		name: string;
 	};
+	style?: any;
 }
 
 export const UIRadio = ({ state, setState, name }: {
@@ -25,6 +27,15 @@ export const UIRadio = ({ state, setState, name }: {
 		return <></>;
 	}
 
+	let cssClasses = state.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (state.style) {
+		if (cssClasses.length > 0) {
+			cssClasses += ' ';
+		}
+		cssClasses += stringToCssClassName(state.codeContext.name);
+	}
+
 	return <RadioButton
 		id={state.codeContext?.name}
 		name={name}
@@ -33,5 +44,5 @@ export const UIRadio = ({ state, setState, name }: {
 		disabled={state.disabled}
 		checked={!!state.checked}
 		onChange={(id: string) => setState({ ...state, checked: id === state.id })}
-		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />;
+		className={cssClasses} />;
 };

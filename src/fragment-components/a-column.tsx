@@ -13,6 +13,7 @@ import { useFragment } from '../context';
 import { getParentComponent, updatedState } from '../components';
 import { ComponentInfo } from '.';
 import { APlaceholder } from './a-placeholder';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 const helpIconStyle = css`
 	color: #525252;
@@ -265,7 +266,11 @@ export const AColumn = ({
 		// to position right add icon
 		<Column
 		onDrop={onDrop}
-		className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`position: relative`)}
+		className={cx(
+			componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+			css`position: relative`,
+			css`${styleObjectToString(componentObj.style)}`
+		)}
 		sm={{
 			span: componentObj.smallSpan || undefined,
 			offset: componentObj.smallOffset || undefined

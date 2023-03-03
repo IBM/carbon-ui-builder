@@ -1,6 +1,7 @@
 import React from 'react';
 import { NumberInput } from 'carbon-components-react';
 import { CssClasses } from '../types';
+import { stringToCssClassName } from '../utils';
 
 export interface NumberInputState {
 	type: string;
@@ -23,9 +24,10 @@ export interface NumberInputState {
 	light?: boolean;
 	allowEmpty?: boolean;
 	cssClasses?: CssClasses[];
-	codeContext?: {
+	codeContext: {
 		name: string;
 	};
+	style?: any;
 }
 
 export const UINumberInput = ({ state, setState }: {
@@ -36,6 +38,15 @@ export const UINumberInput = ({ state, setState }: {
 	if (state.type !== 'number-input') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;
+	}
+
+	let cssClasses = state.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (state.style) {
+		if (cssClasses.length > 0) {
+			cssClasses += ' ';
+		}
+		cssClasses += stringToCssClassName(state.codeContext.name);
 	}
 
 	return <NumberInput
@@ -59,5 +70,5 @@ export const UINumberInput = ({ state, setState }: {
 		light={state.light}
 		allowEmpty={state.allowEmpty}
 		onChange={(event: any) => setState({ ...state, value: event.imaginaryTarget.value })}
-		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />;
+		className={cssClasses} />;
 };

@@ -11,6 +11,8 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
+import { css, cx } from 'emotion';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 export const ARadioGroupSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const orientationItems = [
@@ -102,7 +104,10 @@ export const ARadioGroup = ({
 		componentObj={componentObj}
 		{...rest}>
 			<RadioButtonGroup
-			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
+			className={cx(
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				css`${styleObjectToString(componentObj.style)}`
+			)}
 			legendText= {componentObj.legend}
 			disabled= {componentObj.disabled}
 			orientation={componentObj.orientation}

@@ -111,7 +111,6 @@ export const styleObjectToString = (styleObj: any) => {
 	if (!styleObj) {
 		return '';
 	}
-
 	return `${styleObj.marginTop ? `margin-top: ${styleObj.marginTop.value || 0}${styleObj.marginTop.units || 'px'};` : ''}
 		${styleObj.marginBottom ? `margin-bottom: ${styleObj.marginBottom.value || 0}${styleObj.marginBottom.units || 'px'};` : ''}
 		${styleObj.marginLeft ? `margin-left: ${styleObj.marginLeft.value || 0}${styleObj.marginLeft.units || 'px'};` : ''}
@@ -119,7 +118,7 @@ export const styleObjectToString = (styleObj: any) => {
 		${styleObj.paddingTop ? `padding-top: ${styleObj.paddingTop.value || 0}${styleObj.paddingTop.units || 'px'};` : ''}
 		${styleObj.paddingBottom ? `padding-bottom: ${styleObj.paddingBottom.value || 0}${styleObj.paddingBottom.units || 'px'};` : ''}
 		${styleObj.paddingLeft ? `padding-left: ${styleObj.paddingLeft.value || 0}${styleObj.paddingLeft.units || 'px'};` : ''}
-		${styleObj.paddingRight ? `padding-bottom: ${styleObj.paddingRight.value || 0}${styleObj.paddingRight.units || 'px'};` : ''}`.trim();
+		${styleObj.paddingRight ? `padding-right: ${styleObj.paddingRight.value || 0}${styleObj.paddingRight.units || 'px'};` : ''}`.trim();
 };
 
 export const stringToCssClassName = (inputName: string) => `${kebabCase(inputName)}-style`;
