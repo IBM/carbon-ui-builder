@@ -1,8 +1,11 @@
 import React from 'react';
 import { TileGroup, RadioTile } from 'carbon-components-react';
 import { CssClasses } from '../types';
-import { renderComponents, setItemInState } from '../utils';
-import { stringToCssClassName } from '../utils';
+import {
+	renderComponents,
+	setItemInState,
+	stringToCssClassName
+} from '../utils';
 
 export interface RadioTileGroupState {
 	type: string;

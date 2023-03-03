@@ -45,7 +45,6 @@ export const UISearchInput = ({ state, setState, name }: {
 		cssClasses += stringToCssClassName(state.codeContext.name);
 	}
 
-
 	return state.expandable
 		? <ExpandableSearch
 			className={cssClasses}

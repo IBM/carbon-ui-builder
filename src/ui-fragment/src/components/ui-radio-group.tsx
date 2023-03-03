@@ -1,9 +1,12 @@
 import React from 'react';
 import { RadioButtonGroup } from 'carbon-components-react';
 import { CssClasses } from '../types';
-import { renderComponents, setItemInState } from '../utils';
+import {
+	renderComponents,
+	setItemInState,
+	stringToCssClassName
+} from '../utils';
 import { RadioState } from './ui-radio';
-import { stringToCssClassName } from '../utils';
 
 export interface RadioGroupState {
 	type: string;

@@ -1,9 +1,12 @@
 import React from 'react';
 import { OverflowMenu } from 'carbon-components-react';
-import { renderComponents, setItemInState } from '../utils';
+import {
+	renderComponents,
+	setItemInState,
+	stringToCssClassName
+} from '../utils';
 import { CssClasses } from '../types';
 import { OverflowMenuItemState } from './ui-overflow-menu-item';
-import { stringToCssClassName } from '../utils';
 
 export interface OverflowMenuState {
 	type: string;

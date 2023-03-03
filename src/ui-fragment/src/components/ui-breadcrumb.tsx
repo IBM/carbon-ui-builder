@@ -1,9 +1,12 @@
 import React from 'react';
 import { Breadcrumb } from 'carbon-components-react';
 import { CssClasses } from '../types';
-import { renderComponents, setItemInState } from '../utils';
 import { BreadcrumbItemState } from './ui-breadcrumb-item';
-import { stringToCssClassName } from '../utils';
+import {
+	renderComponents,
+	setItemInState,
+	stringToCssClassName
+} from '../utils';
 
 export interface BreadcrumbState {
 	type: string;

@@ -1,7 +1,10 @@
 import React from 'react';
 import { CssClasses } from '../types';
-import { renderComponents, setItemInState } from '../utils';
-import { stringToCssClassName } from '../utils';
+import {
+	renderComponents,
+	setItemInState,
+	stringToCssClassName
+} from '../utils';
 
 export interface SelectableTileGroupState {
 	type: string;
