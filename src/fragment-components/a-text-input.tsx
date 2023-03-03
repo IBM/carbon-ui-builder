@@ -113,7 +113,10 @@ export const ATextInput = ({
 				id={componentObj.id}
 				type={componentObj.inputType}
 				labelText={componentObj.label}
-				className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)}
+				className={cx(
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					css`${styleObjectToString(componentObj.style)}`
+				)}
 				defaultValue={componentObj.defaultValue}
 				disabled={componentObj.disabled}
 				helperText={componentObj.helperText}

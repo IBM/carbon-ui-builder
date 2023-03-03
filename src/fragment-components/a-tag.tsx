@@ -137,7 +137,10 @@ export const ATag = ({
 			disabled={componentObj.disabled}
 			size={componentObj.size}
 			filter={componentObj.filter}
-			className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)}>
+			className={cx(
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				css`${styleObjectToString(componentObj.style)}`
+			)}>
 				{children}
 			</Tag>
 		</AComponent>

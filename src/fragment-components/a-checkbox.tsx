@@ -57,7 +57,10 @@ export const ACheckbox = ({
 				disabled={componentObj.disabled}
 				labelText={componentObj.label}
 				checked={componentObj.checked}
-				className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)} />
+				className={cx(
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					css`${styleObjectToString(componentObj.style)}`
+				)} />
 		</AComponent>
 	);
 };

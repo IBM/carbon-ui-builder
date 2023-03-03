@@ -176,8 +176,11 @@ export const ASelectableTile = ({
 					light={componentObj.light}
 					selected={componentObj.selected}
 					disabled={componentObj.disabled}
-					className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-						preventCheckEvent, css`${styleObjectToString(componentObj.style)}`)}
+					className={cx(
+						componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+						preventCheckEvent,
+						css`${styleObjectToString(componentObj.style)}`
+					)}
 					onDrop={onDrop}>
 						{
 							children && children.length > 0 ? children : <APlaceholder componentObj={componentObj} select={rest.select} />

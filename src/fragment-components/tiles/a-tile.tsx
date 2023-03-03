@@ -62,7 +62,10 @@ export const ATile = ({
 		{...rest}>
 			<Tile
 			onDrop={onDrop}
-			className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)}
+			className={cx(
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				css`${styleObjectToString(componentObj.style)}`
+			)}
 			light={componentObj.light}>
 				{
 					children && children.length > 0 ? children : <APlaceholder componentObj={componentObj} select={rest.select} />

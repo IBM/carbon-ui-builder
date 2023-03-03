@@ -266,8 +266,11 @@ export const AColumn = ({
 		// to position right add icon
 		<Column
 		onDrop={onDrop}
-		className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-			css`position: relative`, css`${styleObjectToString(componentObj.style)}`)}
+		className={cx(
+			componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+			css`position: relative`,
+			css`${styleObjectToString(componentObj.style)}`
+		)}
 		sm={{
 			span: componentObj.smallSpan || undefined,
 			offset: componentObj.smallOffset || undefined

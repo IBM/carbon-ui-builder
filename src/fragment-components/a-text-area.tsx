@@ -66,7 +66,10 @@ export const ATextArea = ({
 				labelText={componentObj.label}
 				placeholder={componentObj.placeholder}
 				helperText={componentObj.helperText}
-				className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)} />
+				className={cx(
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					css`${styleObjectToString(componentObj.style)}`
+				)} />
 		</AComponent>
 	);
 };

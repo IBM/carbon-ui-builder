@@ -59,7 +59,10 @@ export const AAccordion = ({
 			<Accordion
 			align={componentObj.align}
 			size={componentObj.size}
-			className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)}>
+			className={cx(
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				css`${styleObjectToString(componentObj.style)}`
+			)}>
 				{children}
 			</Accordion>
 		</AComponent>

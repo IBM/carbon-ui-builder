@@ -144,8 +144,11 @@ export const AOverflowMenu = ({
 			<OverflowMenu
 				flipped={componentObj.flipped}
 				direction={componentObj.placement}
-				className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-					preventCheckEvent, css`${styleObjectToString(componentObj.style)}`)}>
+				className={cx(
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					preventCheckEvent,
+					css`${styleObjectToString(componentObj.style)}`
+				)}>
 				{
 					componentObj.items.map((step: any, index: number) => <OverflowMenuItem
 						className={step.className}

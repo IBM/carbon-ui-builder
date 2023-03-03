@@ -250,8 +250,11 @@ export const ADropdown = ({
 				invalidText={componentObj.invalidText}
 				direction={componentObj.direction}
 				items={[]}
-				className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-					preventClickStyle, css`${styleObjectToString(componentObj.style)}`)} />
+				className={cx(
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					preventClickStyle,
+					css`${styleObjectToString(componentObj.style)}`
+				)} />
 		</AComponent>
 	);
 };

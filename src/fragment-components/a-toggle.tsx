@@ -115,8 +115,11 @@ export const AToggle = ({
 				labelA={componentObj.offText}
 				labelB={componentObj.onText}
 				labelText={componentObj.header}
-				className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-					preventCheckEvent, css`${styleObjectToString(componentObj.style)}`)} />
+				className={cx(
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					preventCheckEvent,
+					css`${styleObjectToString(componentObj.style)}`
+				)} />
 		</AComponent>
 	);
 };

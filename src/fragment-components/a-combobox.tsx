@@ -259,8 +259,11 @@ export const AComboBox = ({
 				placeholder={componentObj.placeholder}
 				onChange={() => {}}
 				items={[]}
-				className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-					preventClickStyle, css`${styleObjectToString(componentObj.style)}`)} />
+				className={cx(
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					preventClickStyle,
+					css`${styleObjectToString(componentObj.style)}`
+				)} />
 		</AComponent>
 	);
 };

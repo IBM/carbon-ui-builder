@@ -156,7 +156,10 @@ export const ARadioTile = ({
 				checked={componentObj.defaultChecked}
 				disabled={componentObj.disabled}
 				value={componentObj.codeContext?.value}
-				className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)}
+				className={cx(
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					css`${styleObjectToString(componentObj.style)}`
+				)}
 				onDrop={onDrop}>
 					{
 						children && children.length > 0 ? children : <APlaceholder componentObj={componentObj} select={rest.select} />

@@ -152,7 +152,10 @@ export const ASearchInput = ({
 			{
 				componentObj.expandable
 				? <ExpandableSearch
-					className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)}
+					className={cx(
+						componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+						css`${styleObjectToString(componentObj.style)}`
+					)}
 					size={componentObj.inputSize}
 					disabled={componentObj.disabled}
 					autoComplete={componentObj.autocomplete}

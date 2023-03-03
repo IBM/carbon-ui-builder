@@ -99,7 +99,10 @@ export const ACodeSnippet = ({
 			<CodeSnippet
 			light={componentObj.light}
 			type={componentObj.variant}
-			className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)}>
+			className={cx(
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				css`${styleObjectToString(componentObj.style)}`
+			)}>
 				{componentObj.code}
 			</CodeSnippet>
 		</AComponent>

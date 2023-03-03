@@ -97,8 +97,11 @@ export const AClickableTile = ({
 			onDrop={onDrop}
 			light={componentObj.light}
 			href={componentObj.codeContext?.href}
-			className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)}
-			disabled={componentObj.disabled}>
+			disabled={componentObj.disabled}
+			className={cx(
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				css`${styleObjectToString(componentObj.style)}`
+			)}>
 				{
 					children && children.length > 0 ? children : <APlaceholder componentObj={componentObj} select={rest.select} />
 				}

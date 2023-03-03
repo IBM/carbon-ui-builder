@@ -166,7 +166,10 @@ export const ANumberInput = ({
 				invalidText={componentObj.invalidText}
 				light={componentObj.light}
 				allowEmpty={componentObj.allowEmpty}
-				className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)}
+				className={cx(
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					css`${styleObjectToString(componentObj.style)}`
+				)}
 				type='number' />
 		</AComponent>
 	);

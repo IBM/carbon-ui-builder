@@ -90,7 +90,10 @@ export const ALink = ({
 			<Link
 			inline={componentObj.inline}
 			disabled={componentObj.disabled}
-			className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)}>
+			className={cx(
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				css`${styleObjectToString(componentObj.style)}`
+			)}>
 				{children}
 			</Link>
 		</AComponent>

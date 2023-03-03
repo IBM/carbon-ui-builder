@@ -89,7 +89,10 @@ export const ALoading = ({
 				active={componentObj.active}
 				withOverlay={componentObj.overlay}
 				small={componentObj.size === 'small'}
-				className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)} />
+				className={cx(
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					css`${styleObjectToString(componentObj.style)}`
+				)} />
 		</AComponent>
 	);
 };

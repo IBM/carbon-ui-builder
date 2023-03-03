@@ -107,7 +107,10 @@ export const ARadio = ({
 	return (
 		<Adder
 		active={selected}
-		addButtonsCss={cx(addButtonStyle, css`${styleObjectToString(componentObj.style)}`)}
+		addButtonsCss={cx(
+			addButtonStyle,
+			css`${styleObjectToString(componentObj.style)}`
+		)}
 		key={componentObj.id}
 		topAction={parentComponent?.orientation === 'vertical' ? () => addRadio(0) : undefined}
 		leftAction= {parentComponent?.orientation === 'horizontal' ? () => addRadio(0) : undefined}
@@ -121,7 +124,10 @@ export const ARadio = ({
 			componentObj={componentObj}
 			{...rest}>
 				<RadioButton
-					className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)}
+					className={cx(
+						componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+						css`${styleObjectToString(componentObj.style)}`
+					)}
 					id={componentObj.id}
 					name={componentObj.codeContext?.name}
 					labelText={componentObj.labelText}

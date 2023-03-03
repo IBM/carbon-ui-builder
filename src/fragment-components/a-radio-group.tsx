@@ -104,7 +104,10 @@ export const ARadioGroup = ({
 		componentObj={componentObj}
 		{...rest}>
 			<RadioButtonGroup
-			className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)}
+			className={cx(
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				css`${styleObjectToString(componentObj.style)}`
+			)}
 			legendText= {componentObj.legend}
 			disabled= {componentObj.disabled}
 			orientation={componentObj.orientation}

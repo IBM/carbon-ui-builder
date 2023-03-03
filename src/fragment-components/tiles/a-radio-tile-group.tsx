@@ -133,8 +133,11 @@ export const ARadioTileGroup = ({
 			selected={selected}
 			{...rest}>
 				<fieldset
-				className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-					css`${styleObjectToString(componentObj.style)}`, 'bx--tile-group')}
+				className={cx(
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					css`${styleObjectToString(componentObj.style)}`,
+					'bx--tile-group'
+				)}
 				disabled={componentObj.disabled}>
 					{(componentObj.legend !== undefined && componentObj.legend !== '') &&
 					<legend className="bx--label">

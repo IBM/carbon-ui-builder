@@ -126,7 +126,10 @@ export const AProgressIndicator = ({
 			<ProgressIndicator
 			currentIndex={componentObj.currentIndex}
 			vertical={componentObj.isVertical}
-			className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)}>
+			className={cx(
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				css`${styleObjectToString(componentObj.style)}`
+			)}>
 				{
 					componentObj.progressSteps.map((step: any, index: number) => (
 						<ProgressStep {...step} key={index} />

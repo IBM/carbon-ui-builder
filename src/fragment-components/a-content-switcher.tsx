@@ -133,8 +133,11 @@ export const AContentSwitcher = ({
 			<ContentSwitcher
 			size={componentObj.size}
 			selectedIndex={componentObj.selectedIndex}
-			className={cx(preventCheckEvent, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-				css`${styleObjectToString(componentObj.style)}`)}>
+			className={cx(
+				preventCheckEvent,
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				css`${styleObjectToString(componentObj.style)}`
+			)}>
 			{
 				componentObj.items.map((step: any, index: number) => <Switch
 					className={step.className}

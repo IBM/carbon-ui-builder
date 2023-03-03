@@ -83,9 +83,10 @@ export const AGrid = ({
 	return (
 		<AComponent componentObj={componentObj} rejectDrop={true} {...rest}>
 			<Grid
-			className={cx(css`${styleObjectToString(componentObj.style)}`,
-			componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-			(componentObj.outline || outline === true) && outline !== false ? outlineStyle : ''
+			className={cx(
+				css`${styleObjectToString(componentObj.style)}`,
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				(componentObj.outline || outline === true) && outline !== false ? outlineStyle : ''
 			)}
 			condensed={componentObj.condensed}
 			fullWidth={componentObj.fullWidth}

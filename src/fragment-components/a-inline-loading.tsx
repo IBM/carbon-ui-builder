@@ -156,7 +156,10 @@ export const AInlineLoading = ({
 				description={status[componentObj.status].description}
 				iconDescription={status[componentObj.status].iconDescription}
 				status={componentObj.status}
-				className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)} />
+				className={cx(
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					css`${styleObjectToString(componentObj.style)}`
+				)} />
 		</AComponent>
 	);
 };
