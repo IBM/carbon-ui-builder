@@ -3,7 +3,7 @@ import { TextInput, Checkbox } from 'carbon-components-react';
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
 import { getParentComponent, updatedState } from '../../components';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { useFragment } from '../../context';
 import { ComponentInfo } from '..';
 
@@ -13,6 +13,7 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
+import { styleObjectToString } from '../../ui-fragment/src/utils';
 
 export const ASelectableTileGroupSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -107,7 +108,7 @@ export const ASelectableTileGroup = ({
 			{...rest}>
 				<div
 				role="group"
-				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
+				className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)}
 				aria-label="Selectable tiles">
 					{children}
 				</div>

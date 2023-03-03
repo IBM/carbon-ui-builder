@@ -6,7 +6,7 @@ import {
 } from 'carbon-components-react';
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { ComponentInfo } from '..';
 import image from '../../assets/component-icons/tile-clickable.svg';
 import {
@@ -15,6 +15,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 import { APlaceholder } from '../a-placeholder';
+import { styleObjectToString } from '../../ui-fragment/src/utils';
 
 export const AClickableTileSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -96,7 +97,7 @@ export const AClickableTile = ({
 			onDrop={onDrop}
 			light={componentObj.light}
 			href={componentObj.codeContext?.href}
-			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
+			className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)}
 			disabled={componentObj.disabled}>
 				{
 					children && children.length > 0 ? children : <APlaceholder componentObj={componentObj} select={rest.select} />

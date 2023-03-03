@@ -7,7 +7,7 @@ import {
 	ExpandableSearch
 } from 'carbon-components-react';
 import { AComponent } from './a-component';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/search.svg';
@@ -16,6 +16,7 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 export const ASearchInputSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
@@ -151,6 +152,7 @@ export const ASearchInput = ({
 			{
 				componentObj.expandable
 				? <ExpandableSearch
+					className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)}
 					size={componentObj.inputSize}
 					disabled={componentObj.disabled}
 					autoComplete={componentObj.autocomplete}
@@ -166,7 +168,7 @@ export const ASearchInput = ({
 					size={componentObj.inputSize}
 					labelText={componentObj.label}
 					placeholder={componentObj.placeholder}
-					className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
+					className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)}
 					id={componentObj.id}
 					autoComplete={componentObj.autocomplete}
 					closeButtonLabelText={componentObj.closeButtonLabelText}

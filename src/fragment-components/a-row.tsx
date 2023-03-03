@@ -11,6 +11,7 @@ import { css, cx } from 'emotion';
 import { useFragment } from '../context';
 import { ComponentInfo } from '.';
 import { getDropIndex } from '../routes/edit/tools';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 export const ARowSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -175,7 +176,8 @@ export const ARow = ({
 			<Row
 			className={cx(
 				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-				css`position: relative`
+				css`position: relative`,
+				css`${styleObjectToString(componentObj.style)}`
 			)}
 			condensed={componentObj.condensed}
 			narrow={componentObj.narrow}>

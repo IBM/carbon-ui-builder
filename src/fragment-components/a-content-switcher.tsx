@@ -15,6 +15,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 import { css, cx } from 'emotion';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 const preventCheckEvent = css`
 	pointer-events: none;
@@ -132,7 +133,8 @@ export const AContentSwitcher = ({
 			<ContentSwitcher
 			size={componentObj.size}
 			selectedIndex={componentObj.selectedIndex}
-			className={cx(preventCheckEvent, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}>
+			className={cx(preventCheckEvent, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				css`${styleObjectToString(componentObj.style)}`)}>
 			{
 				componentObj.items.map((step: any, index: number) => <Switch
 					className={step.className}

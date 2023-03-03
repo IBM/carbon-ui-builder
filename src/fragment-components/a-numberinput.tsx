@@ -6,11 +6,12 @@ import {
 	NumberInput
 } from 'carbon-components-react';
 import { AComponent } from './a-component';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/number-input.svg';
 import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 export const ANumberInputSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
@@ -165,7 +166,7 @@ export const ANumberInput = ({
 				invalidText={componentObj.invalidText}
 				light={componentObj.light}
 				allowEmpty={componentObj.allowEmpty}
-				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
+				className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)}
 				type='number' />
 		</AComponent>
 	);

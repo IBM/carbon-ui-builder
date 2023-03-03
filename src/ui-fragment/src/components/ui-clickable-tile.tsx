@@ -2,6 +2,7 @@ import React from 'react';
 import { ClickableTile } from 'carbon-components-react';
 import { CssClasses } from '../types';
 import { renderComponents, setItemInState } from '../utils';
+import { stringToCssClassName } from '../utils';
 
 export interface ClickableTileState {
 	type: string;
@@ -9,9 +10,10 @@ export interface ClickableTileState {
 	disabled?: boolean;
 	items?: any[];
 	cssClasses?: CssClasses[];
-	codeContext?: {
+	codeContext: {
 		name: string;
 	};
+	style?: any;
 }
 
 export const UIClickableTile = ({ state, setState, setGlobalState }: {
@@ -24,10 +26,19 @@ export const UIClickableTile = ({ state, setState, setGlobalState }: {
 		return <></>;
 	}
 
+	let cssClasses = state.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (state.style) {
+		if (cssClasses.length > 0) {
+			cssClasses += ' ';
+		}
+		cssClasses += stringToCssClassName(state.codeContext.name);
+	}
+
 	return <ClickableTile
 	light={state.light}
 	disabled={state.disabled}
-	className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+	className={cssClasses}>
 		{
 			state.items?.map((item: any) => {
 				const setItem = (i: any) => setItemInState(i, state, setState);

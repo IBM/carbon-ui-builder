@@ -6,13 +6,14 @@ import {
 	TextInput
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
-
+import { css, cx } from 'emotion';
 import image from './../assets/component-icons/tag.svg';
 import {
 	angularClassNamesFromComponentObj,
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 export const ATagSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const typeItems = [
@@ -136,7 +137,7 @@ export const ATag = ({
 			disabled={componentObj.disabled}
 			size={componentObj.size}
 			filter={componentObj.filter}
-			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+			className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)}>
 				{children}
 			</Tag>
 		</AComponent>

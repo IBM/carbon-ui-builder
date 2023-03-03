@@ -7,13 +7,13 @@ export interface ButtonState {
 	type: string;
 	kind: string;
 	size: string;
-	style?: any;
 	text: string;
 	id: string | number;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
 	};
+	style?: any;
 }
 
 export const UIButton = ({ state }: {
@@ -34,6 +34,7 @@ export const UIButton = ({ state }: {
 		}
 		cssClasses += stringToCssClassName(state.codeContext.name);
 	}
+
 	return <Button
 	kind={state.kind}
 	size={state.size}

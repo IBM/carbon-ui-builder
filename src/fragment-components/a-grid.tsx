@@ -6,6 +6,7 @@ import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/grid.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 export const AGridSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -82,7 +83,7 @@ export const AGrid = ({
 	return (
 		<AComponent componentObj={componentObj} rejectDrop={true} {...rest}>
 			<Grid
-			className={cx(
+			className={cx(css`${styleObjectToString(componentObj.style)}`,
 			componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
 			(componentObj.outline || outline === true) && outline !== false ? outlineStyle : ''
 			)}
