@@ -177,8 +177,8 @@ export const ASelectableTile = ({
 					selected={componentObj.selected}
 					disabled={componentObj.disabled}
 					className={cx(
-						componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
 						preventCheckEvent,
+						componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
 						css`${styleObjectToString(componentObj.style)}`
 					)}
 					onDrop={onDrop}>
