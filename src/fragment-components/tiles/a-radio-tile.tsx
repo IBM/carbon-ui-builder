@@ -201,7 +201,7 @@ export const componentInfo: ComponentInfo = {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${json.checked || false};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : 'dark'}';
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled || false}
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled || false};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = '${json.value}';`,
 			outputs: () => '',
 			imports: ['TilesModule'],
