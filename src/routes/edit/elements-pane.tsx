@@ -3,7 +3,7 @@ import { css, cx } from 'emotion';
 import { Button, Search } from 'carbon-components-react';
 import { ChevronUp16, ChevronDown16 } from '@carbon/icons-react';
 
-import { ElementTile } from '../../components/element-tile';
+import { ElementTile } from '../../sdk/src/element-tile';
 import { FragmentPreview } from '../../components/fragment-preview';
 
 import { leftPane, leftPaneContent, leftPaneHeader } from '.';

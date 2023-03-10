@@ -1,6 +1,6 @@
 import React from 'react';
 import { css } from 'emotion';
-import { drag } from '../sdk/src/tools';
+import { drag } from './tools';
 
 const elementTileStyle = css`
 	border: 1px solid #d8d8d8;
