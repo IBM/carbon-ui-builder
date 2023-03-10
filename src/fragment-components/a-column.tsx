@@ -342,6 +342,7 @@ export const componentInfo: ComponentInfo = {
 	codeUI: AColumnCodeUI,
 	settingsUI: AColumnSettingsUI,
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline }) => <AColumn
+		key={componentObj.id}
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
