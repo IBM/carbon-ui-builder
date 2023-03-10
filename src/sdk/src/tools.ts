@@ -28,6 +28,14 @@ export const getComponentById = (componentObj: any, id: number) => {
 	return undefined;
 };
 
+export const getSelectedComponent = (fragment: any) => {
+	if (!fragment) {
+		return undefined;
+	}
+
+	return getComponentById(fragment.data, fragment.selectedComponentId);
+};
+
 export const isHorizontalContainer = (containerElement: HTMLElement) => {
 	const allChildrenElements = containerElement.querySelectorAll(draggableSelector);
 	if (allChildrenElements.length <= 1) {
