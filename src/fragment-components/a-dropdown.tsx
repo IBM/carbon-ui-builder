@@ -55,7 +55,7 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 	const template = (item: any, index: number) => {
 		return <>
 			<TextInput
-				id={`display-text-input-${item.id}`}
+				id={`display-text-input-${item.id || item.text}`}
 				light
 				value={item.text}
 				labelText='Display text'

@@ -151,6 +151,7 @@ export const ANumberInput = ({
 		rejectDrop={true}
 		{...rest}>
 			<NumberInput
+				id={componentObj.id}
 				size={componentObj.size}
 				helperText={componentObj.helperText}
 				warn={componentObj.warn}

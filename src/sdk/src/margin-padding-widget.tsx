@@ -216,13 +216,14 @@ export const MarginPaddingWidget = ({ component, setComponent }: any) => {
 		</div>
 		<div className={unitsStyle}>
 			<NumberInput
+				id='dimension-value'
 				ref={valueInputRef}
 				disabled={!dimension}
 				size='sm'
-				min='-100000'
-				max='100000'
+				min={-100000}
+				max={100000}
 				step={1}
-				hideLabel='true'
+				hideLabel={true}
 				value={dimension && component.style ? (component.style[dimension || '']?.value || 0) : 0}
 				onChange={(event: any) => setComponent({
 					...component,
@@ -235,6 +236,8 @@ export const MarginPaddingWidget = ({ component, setComponent }: any) => {
 					}
 				})} />
 			<Dropdown
+				id='css-units'
+				label='CSS units'
 				disabled={!dimension}
 				size='sm'
 				items={cssUnitsItems}
