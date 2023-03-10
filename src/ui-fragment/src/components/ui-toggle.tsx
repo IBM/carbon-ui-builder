@@ -1,6 +1,7 @@
 import React from 'react';
 import { Toggle } from 'carbon-components-react';
 import { CssClasses } from '../types';
+import { stringToCssClassName } from '../utils';
 
 export interface ToggleState {
 	type: string;
@@ -11,9 +12,10 @@ export interface ToggleState {
 	disabled?: string | boolean;
 	id: string | number;
 	cssClasses?: CssClasses[];
-	codeContext?: {
+	codeContext: {
 		name: string;
 	};
+	style?: any;
 }
 
 export const UIToggle = ({ state, setState, sendSignal }: {
@@ -27,6 +29,15 @@ export const UIToggle = ({ state, setState, sendSignal }: {
 		return <></>;
 	}
 
+	let cssClasses = state.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (state.style) {
+		if (cssClasses.length > 0) {
+			cssClasses += ' ';
+		}
+		cssClasses += stringToCssClassName(state.codeContext.name);
+	}
+
 	return <Toggle
 		labelA={state.offText}
 		labelB={state.onText}
@@ -36,5 +47,5 @@ export const UIToggle = ({ state, setState, sendSignal }: {
 		size={state.size}
 		checked={!!state.checked}
 		onChange={(event: any) => setState({ ...state, checked: event.target.checked })}
-		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />;
+		className={cssClasses} />;
 };

@@ -1,15 +1,20 @@
 import React from 'react';
 import { CssClasses } from '../types';
-import { renderComponents, setItemInState } from '../utils';
+import {
+	renderComponents,
+	setItemInState,
+	stringToCssClassName
+} from '../utils';
 
 export interface SelectableTileGroupState {
 	type: string;
 	id: string | number;
 	items?: any[];
 	cssClasses?: CssClasses[];
-	codeContext?: {
+	codeContext: {
 		name: string;
 	};
+	style?: any;
 }
 
 export const UISelectableTileGroup = ({ state, setState, setGlobalState, sendSignal }: {
@@ -23,10 +28,19 @@ export const UISelectableTileGroup = ({ state, setState, setGlobalState, sendSig
 		return <></>;
 	}
 
+	let cssClasses = state.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (state.style) {
+		if (cssClasses.length > 0) {
+			cssClasses += ' ';
+		}
+		cssClasses += stringToCssClassName(state.codeContext.name);
+	}
+
 	return <div
 	role='group'
 	aria-label='selectable tiles'
-	className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+	className={cssClasses}>
 		{
 			state.items?.map((item: any) => {
 				const setItem = (i: any) => setItemInState(i, state, setState);

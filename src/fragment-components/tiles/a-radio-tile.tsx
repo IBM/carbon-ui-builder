@@ -5,7 +5,7 @@ import {
 	RadioTile
 } from 'carbon-components-react';
 import { AComponent } from '../a-component';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { useFragment } from '../../context';
 import { ComponentInfo } from '..';
 import {
@@ -19,6 +19,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 import { APlaceholder } from '../a-placeholder';
+import { styleObjectToString } from '../../ui-fragment/src/utils';
 
 export const ARadioTileSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const [fragment] = useFragment();
@@ -79,8 +80,7 @@ export const ARadioTileCodeUI = ({ selectedComponent, setComponent }: any) => {
 						name: event.currentTarget.value
 					}
 				});
-			}}
-		/>
+			}} />
 		<TextInput
 			id='radio-tile-value-text-input'
 			value={selectedComponent.codeContext?.value || ''}
@@ -94,8 +94,7 @@ export const ARadioTileCodeUI = ({ selectedComponent, setComponent }: any) => {
 						value: event.currentTarget.value
 					}
 				});
-			}}
-		/>
+			}} />
 	</>;
 };
 
@@ -157,7 +156,10 @@ export const ARadioTile = ({
 				checked={componentObj.defaultChecked}
 				disabled={componentObj.disabled}
 				value={componentObj.codeContext?.value}
-				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
+				className={cx(
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					css`${styleObjectToString(componentObj.style)}`
+				)}
 				onDrop={onDrop}>
 					{
 						children && children.length > 0 ? children : <APlaceholder componentObj={componentObj} select={rest.select} />

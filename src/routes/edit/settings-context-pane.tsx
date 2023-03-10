@@ -17,6 +17,7 @@ import { getSelectedComponent, updatedState } from '../../components/fragment';
 import { allComponents } from '../../fragment-components';
 import { SelectedComponentBreadcrumbs } from './selected-component-breadcrumbs';
 import { GlobalStateContext } from '../../context';
+import { LayoutWidget } from '../../components/layout-widget';
 
 const styleContextPaneStyle = css`
 .bx--form-item.bx--checkbox-wrapper {
@@ -190,17 +191,38 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 				}
 				</div>
 			}
+			{
+				selectedComponent && <>
+					<Button
+					kind='ghost'
+					className={accordionButtonStyle}
+					renderIcon={settings.contextPane?.settings?.layoutAccordionOpen ? ChevronUp16 : ChevronDown16}
+					onClick={() => updateContextPaneSettings({
+						layoutAccordionOpen: !settings.contextPane?.settings?.layoutAccordionOpen
+					})}>
+						Layout
+					</Button>
+					{
+						settings.contextPane?.settings?.layoutAccordionOpen &&
+						<div className={accordionContentStyle}>
+							{
+								selectedComponent && <LayoutWidget component={selectedComponent} setComponent={setComponent} />
+							}
+						</div>
+					}
+				</>
+			}
 			<Button
 			kind='ghost'
 			className={accordionButtonStyle}
-			renderIcon={settings.contextPane?.settings?.customCSSAccordionOpen ? ChevronUp16 : ChevronDown16}
+			renderIcon={settings.contextPane?.settings?.advancedStylingAccordionOpen ? ChevronUp16 : ChevronDown16}
 			onClick={() => updateContextPaneSettings({
-				customCSSAccordionOpen: !settings.contextPane?.settings?.customCSSAccordionOpen
+				advancedStylingAccordionOpen: !settings.contextPane?.settings?.advancedStylingAccordionOpen
 			})}>
 				Advanced styling
 			</Button>
 			{
-				settings.contextPane?.settings?.customCSSAccordionOpen &&
+				settings.contextPane?.settings?.advancedStylingAccordionOpen &&
 				<div className={accordionContentStyle}>
 					{
 						!selectedComponent && <ComponentCssClassSelector componentObj={fragment} setComponent={setFragment} />

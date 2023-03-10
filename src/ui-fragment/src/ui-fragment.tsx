@@ -1,9 +1,7 @@
 import React from 'react';
 import { css } from 'emotion';
-import { renderComponents } from './utils';
+import { getAllFragmentStyleClasses, renderComponents } from './utils';
 import { Action } from './types';
-import { contentType } from 'mime-types';
-import { sign } from 'crypto';
 
 export interface UIFragmentProps {
 	state: any;
@@ -13,7 +11,7 @@ export interface UIFragmentProps {
 export const UIFragment = ({ state, setState }: UIFragmentProps) => {
 
 	const styles = css`${
-		Object.values(state.allCssClasses || []).map((styleClass: any) => `.${styleClass.id} {
+		getAllFragmentStyleClasses(state, [], state.allCssClasses).map((styleClass: any) => `.${styleClass.id} {
 			${styleClass.content}
 		}`)
 	}`;

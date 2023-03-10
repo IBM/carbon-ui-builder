@@ -9,13 +9,14 @@ import {
 } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { ComponentInfo } from '.';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import image from './../assets/component-icons/inline-loading.svg';
 import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj,
 	angularClassNamesFromComponentObj
 } from '../utils/fragment-tools';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 export const AInlineLoadingSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const statusItems = [
@@ -119,8 +120,7 @@ export const AInlineLoadingCodeUI = ({ selectedComponent, setComponent }: any) =
 			...selectedComponent.codeContext,
 			name: event.currentTarget.value
 		}
-	})}
-/>;
+	})} />;
 
 export const AInlineLoading = ({
 	componentObj,
@@ -156,7 +156,10 @@ export const AInlineLoading = ({
 				description={status[componentObj.status].description}
 				iconDescription={status[componentObj.status].iconDescription}
 				status={componentObj.status}
-				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
+				className={cx(
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					css`${styleObjectToString(componentObj.style)}`
+				)} />
 		</AComponent>
 	);
 };

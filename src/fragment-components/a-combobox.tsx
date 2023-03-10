@@ -7,7 +7,7 @@ import {
 	TextInput
 } from 'carbon-components-react';
 import { AComponent } from './a-component';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { ComponentInfo } from '.';
 import { DraggableTileList } from '../components';
 
@@ -17,6 +17,7 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 export const AComboBoxSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
@@ -204,22 +205,19 @@ export const AComboBoxSettingsUI = ({ selectedComponent, setComponent }: any) =>
 	</>;
 };
 
-export const AComboBoxCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-		id='combobox-input-name-text-input'
-		value={selectedComponent.codeContext?.name}
-		labelText='Input name'
-		onChange={(event: any) => {
-			setComponent({
-				...selectedComponent,
-				codeContext: {
-					...selectedComponent.codeContext,
-					name: event.currentTarget.value
-				}
-			});
-		}}
-	/>;
-};
+export const AComboBoxCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	id='combobox-input-name-text-input'
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 const preventClickStyle = css`
 	pointer-events: none;
@@ -261,7 +259,11 @@ export const AComboBox = ({
 				placeholder={componentObj.placeholder}
 				onChange={() => {}}
 				items={[]}
-				className={`${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} ${preventClickStyle}`} />
+				className={cx(
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					preventClickStyle,
+					css`${styleObjectToString(componentObj.style)}`
+				)} />
 		</AComponent>
 	);
 };
@@ -282,7 +284,7 @@ export const componentInfo: ComponentInfo = {
 		direction: 'bottom',
 		size: 'md',
 		label: 'Label',
-		helperText: 'Optional helper text here',
+		helperText: 'Optional helper text',
 		listItems: [
 			{
 				text: 'Text'

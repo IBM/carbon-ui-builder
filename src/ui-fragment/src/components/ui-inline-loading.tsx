@@ -1,6 +1,7 @@
 import React from 'react';
 import { InlineLoading } from 'carbon-components-react';
 import { CssClasses } from '../types';
+import { stringToCssClassName } from '../utils';
 
 export interface InlineLoadingState {
 	type: string;
@@ -15,9 +16,10 @@ export interface InlineLoadingState {
 	successText: string;
 	successDelay: number;
 	cssClasses?: CssClasses[];
-	codeContext?: {
+	codeContext: {
 		name: string;
 	};
+	style?: any;
 }
 
 export const UIInlineLoading = ({ state, sendSignal }: {
@@ -30,6 +32,16 @@ export const UIInlineLoading = ({ state, sendSignal }: {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;
 	}
+
+	let cssClasses = state.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (state.style) {
+		if (cssClasses.length > 0) {
+			cssClasses += ' ';
+		}
+		cssClasses += stringToCssClassName(state.codeContext.name);
+	}
+
 	const status: any = {
 		active: {
 			iconDescription: state.activeIconDescription,
@@ -53,5 +65,5 @@ export const UIInlineLoading = ({ state, sendSignal }: {
 		description={status[state.status].description}
 		iconDescription={status[state.status].iconDescription}
 		status={state.status}
-		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />;
+		className={cssClasses} />;
 };

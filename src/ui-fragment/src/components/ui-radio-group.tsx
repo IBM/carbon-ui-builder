@@ -1,7 +1,11 @@
 import React from 'react';
 import { RadioButtonGroup } from 'carbon-components-react';
 import { CssClasses } from '../types';
-import { renderComponents, setItemInState } from '../utils';
+import {
+	renderComponents,
+	setItemInState,
+	stringToCssClassName
+} from '../utils';
 import { RadioState } from './ui-radio';
 
 export interface RadioGroupState {
@@ -13,9 +17,10 @@ export interface RadioGroupState {
 	labelPosition: string;
 	defaultSelected: string;
 	cssClasses?: CssClasses[];
-	codeContext?: {
+	codeContext: {
 		name: string;
 	};
+	style?: any;
 }
 
 export const UIRadioGroup = ({ state, setState, setGlobalState, sendSignal }: {
@@ -29,6 +34,15 @@ export const UIRadioGroup = ({ state, setState, setGlobalState, sendSignal }: {
 		return <></>;
 	}
 
+	let cssClasses = state.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (state.style) {
+		if (cssClasses.length > 0) {
+			cssClasses += ' ';
+		}
+		cssClasses += stringToCssClassName(state.codeContext.name);
+	}
+
 	return <RadioButtonGroup
 	name={state.codeContext?.name}
 	legendText={state.legend}
@@ -36,7 +50,7 @@ export const UIRadioGroup = ({ state, setState, setGlobalState, sendSignal }: {
 	labelPosition={state.labelPosition}
 	defaultSelected={state.defaultSelected}
 	valueChecked={state.defaultSelected}
-	className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+	className={cssClasses}>
 		{
 			state.items?.map((item: any) => {
 				const setItem = (i: any) => setItemInState(i, state, setState);

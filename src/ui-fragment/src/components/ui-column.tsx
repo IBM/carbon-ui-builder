@@ -1,7 +1,11 @@
 import React from 'react';
 import { Column } from 'carbon-components-react';
 import { CssClasses } from '../types';
-import { renderComponents, setItemInState } from '../utils';
+import {
+	renderComponents,
+	setItemInState,
+	stringToCssClassName
+} from '../utils';
 
 export interface ColumnState {
 	type: string;
@@ -18,9 +22,10 @@ export interface ColumnState {
 	maxSpan?: number;
 	maxOffset?: number;
 	cssClasses?: CssClasses[];
-	codeContext?: {
+	codeContext: {
 		name: string;
 	};
+	style?: any;
 }
 
 export const UIColumn = ({ state, setState, setGlobalState, sendSignal }: {
@@ -34,8 +39,17 @@ export const UIColumn = ({ state, setState, setGlobalState, sendSignal }: {
 		return <></>;
 	}
 
+	let cssClasses = state.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (state.style) {
+		if (cssClasses.length > 0) {
+			cssClasses += ' ';
+		}
+		cssClasses += stringToCssClassName(state.codeContext.name);
+	}
+
 	return <Column
-	className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}
+	className={cssClasses}
 	sm={{ span: state.smallSpan || undefined, offset: state.smallOffset || undefined }}
 	md={{ span: state.mediumSpan || undefined, offset: state.mediumOffset || undefined }}
 	lg={{ span: state.largeSpan || undefined, offset: state.largeOffset || undefined }}

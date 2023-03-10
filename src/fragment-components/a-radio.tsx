@@ -18,6 +18,7 @@ import {
 	angularClassNamesFromComponentObj,
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 export const ARadioSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const [fragment] = useFragment();
@@ -60,21 +61,18 @@ export const ARadioSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	</>;
 };
 
-export const ARadioCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>;
-};
+export const ARadioCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 const addButtonStyle = css`
 	position: relative;
@@ -109,7 +107,10 @@ export const ARadio = ({
 	return (
 		<Adder
 		active={selected}
-		addButtonsCss={addButtonStyle}
+		addButtonsCss={cx(
+			addButtonStyle,
+			css`${styleObjectToString(componentObj.style)}`
+		)}
 		key={componentObj.id}
 		topAction={parentComponent?.orientation === 'vertical' ? () => addRadio(0) : undefined}
 		leftAction= {parentComponent?.orientation === 'horizontal' ? () => addRadio(0) : undefined}
@@ -123,6 +124,10 @@ export const ARadio = ({
 			componentObj={componentObj}
 			{...rest}>
 				<RadioButton
+					className={cx(
+						componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+						css`${styleObjectToString(componentObj.style)}`
+					)}
 					id={componentObj.id}
 					name={componentObj.codeContext?.name}
 					labelText={componentObj.labelText}

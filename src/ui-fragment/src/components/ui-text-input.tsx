@@ -1,6 +1,7 @@
 import React from 'react';
 import { TextInput } from 'carbon-components-react';
 import { CssClasses } from '../types';
+import { stringToCssClassName } from '../utils';
 
 export interface TextInputState {
 	type: string;
@@ -13,9 +14,10 @@ export interface TextInputState {
 	disabled?: string | boolean;
 	light?: boolean;
 	cssClasses?: CssClasses[];
-	codeContext?: {
+	codeContext: {
 		name: string;
 	};
+	style?: any;
 }
 
 export const UITextInput = ({ state, setState, name }: {
@@ -30,6 +32,15 @@ export const UITextInput = ({ state, setState, name }: {
 		return <></>;
 	}
 
+	let cssClasses = state.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (state.style) {
+		if (cssClasses.length > 0) {
+			cssClasses += ' ';
+		}
+		cssClasses += stringToCssClassName(state.codeContext.name);
+	}
+
 	return <TextInput
 		id={state.codeContext?.name}
 		name={name}
@@ -41,5 +52,5 @@ export const UITextInput = ({ state, setState, name }: {
 		disabled={state.disabled}
 		light={state.light}
 		onChange={(event: any) => setState({ ...state, value: event.target.value })}
-		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />;
+		className={cssClasses} />;
 };

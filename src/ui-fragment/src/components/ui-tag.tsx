@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tag } from 'carbon-components-react';
 import { CssClasses } from '../types';
+import { stringToCssClassName } from '../utils';
 
 export interface TagState {
 	type: string;
@@ -12,9 +13,10 @@ export interface TagState {
 	filter?: boolean;
 	disabled?: string | boolean;
 	cssClasses?: CssClasses[];
-	codeContext?: {
+	codeContext: {
 		name: string;
 	};
+	style?: any;
 }
 
 export const UITag = ({ state, sendSignal }: {
@@ -28,13 +30,22 @@ export const UITag = ({ state, sendSignal }: {
 		return <></>;
 	}
 
+	let cssClasses = state.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (state.style) {
+		if (cssClasses.length > 0) {
+			cssClasses += ' ';
+		}
+		cssClasses += stringToCssClassName(state.codeContext.name);
+	}
+
 	return <Tag
 	type={state.kind}
 	size={state.size}
 	disabled={state.disabled}
 	filter={state.filter}
 	title={state.closeLabel}
-	className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+	className={cssClasses}>
 		{state.title}
 	</Tag>;
 };

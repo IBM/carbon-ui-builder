@@ -1,6 +1,7 @@
 import React from 'react';
 import { Dropdown, MultiSelect } from 'carbon-components-react';
 import { CssClasses } from '../types';
+import { stringToCssClassName } from '../utils';
 
 export interface DropdownState {
 	type: string;
@@ -23,9 +24,10 @@ export interface DropdownState {
 	helperText?: string;
 	itemToString?: (item: any) => string;
 	cssClasses?: CssClasses[];
-	codeContext?: {
+	codeContext: {
 		name: string;
 	};
+	style?: any;
 }
 
 export const UIDropdown = ({ state, setState, sendSignal }: {
@@ -37,6 +39,15 @@ export const UIDropdown = ({ state, setState, sendSignal }: {
 	if (state.type !== 'dropdown') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;
+	}
+
+	let cssClasses = state.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (state.style) {
+		if (cssClasses.length > 0) {
+			cssClasses += ' ';
+		}
+		cssClasses += stringToCssClassName(state.codeContext.name);
 	}
 
 	const DropdownOrMulti = state.isMulti ? MultiSelect : Dropdown;
@@ -63,5 +74,5 @@ export const UIDropdown = ({ state, setState, sendSignal }: {
 			...state,
 			selectedItem: state.listItems?.find((item) => item.text === selectedItem.text)
 		})}
-		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />;
+		className={cssClasses} />;
 };

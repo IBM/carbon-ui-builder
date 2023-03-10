@@ -6,13 +6,14 @@ import {
 	TextInput
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
-
+import { css, cx } from 'emotion';
 import image from './../assets/component-icons/tag.svg';
 import {
 	angularClassNamesFromComponentObj,
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 export const ATagSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const typeItems = [
@@ -108,6 +109,19 @@ export const ATagSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	</>;
 };
 
+export const ATagCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
+
 export const ATag = ({
 	children,
 	componentObj,
@@ -123,7 +137,10 @@ export const ATag = ({
 			disabled={componentObj.disabled}
 			size={componentObj.size}
 			filter={componentObj.filter}
-			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+			className={cx(
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				css`${styleObjectToString(componentObj.style)}`
+			)}>
 				{children}
 			</Tag>
 		</AComponent>
@@ -132,6 +149,7 @@ export const ATag = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ATag,
+	codeUI: ATagCodeUI,
 	settingsUI: ATagSettingsUI,
 	render: ({ componentObj, select, remove, selected }) => <ATag
 		componentObj={componentObj}

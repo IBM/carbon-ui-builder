@@ -1,6 +1,7 @@
 import React from 'react';
 import { ContentSwitcher, Switch } from 'carbon-components-react';
 import { CssClasses } from '../types';
+import { stringToCssClassName } from '../utils';
 
 export interface ContentSwitcherState {
 	type: string;
@@ -9,6 +10,10 @@ export interface ContentSwitcherState {
 	selectedIndex: number;
 	disabled?: string | boolean;
 	cssClasses?: CssClasses[];
+	style?: any;
+	codeContext: {
+		name: string;
+	};
 }
 
 export const UIContentSwitcher = ({ state, sendSignal }: {
@@ -22,10 +27,19 @@ export const UIContentSwitcher = ({ state, sendSignal }: {
 		return <></>;
 	}
 
+	let cssClasses = state.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (state.style) {
+		if (cssClasses.length > 0) {
+			cssClasses += ' ';
+		}
+		cssClasses += stringToCssClassName(state.codeContext.name);
+	}
+
 	return <ContentSwitcher
 	size={state.size}
 	selectedIndex={state.selectedIndex}
-	className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+	className={cssClasses}>
 		{
 			state.items.map((step: any, index: number) => <Switch
 				className={step.className}
