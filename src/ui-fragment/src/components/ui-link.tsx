@@ -6,7 +6,7 @@ export interface LinkState {
 	type: string;
 	text: string;
 	id: string | number;
-	disabled?: boolean;
+	disabled?: string | boolean;
 	inline?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext?: {

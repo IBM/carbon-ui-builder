@@ -10,7 +10,7 @@ export interface TagState {
 	size?: string;
 	closeLabel?: string;
 	filter?: boolean;
-	disabled?: boolean;
+	disabled?: string | boolean;
 	cssClasses?: CssClasses[];
 	codeContext?: {
 		name: string;

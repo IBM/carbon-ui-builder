@@ -8,7 +8,7 @@ export interface AccordionItemState {
 	items?: any[]; // TODO type
 	title: string;
 	id: string | number;
-	disabled?: boolean;
+	disabled?: string | boolean;
 	cssClasses?: CssClasses[];
 	codeContext?: {
 		name: string;

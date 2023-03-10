@@ -8,7 +8,7 @@ export interface ToggleState {
 	offText: string;
 	size: string;
 	checked?: boolean;
-	disabled?: boolean;
+	disabled?: string | boolean;
 	id: string | number;
 	cssClasses?: CssClasses[];
 	codeContext?: {

@@ -6,7 +6,7 @@ import { renderComponents, setItemInState } from '../utils';
 export interface ClickableTileState {
 	type: string;
 	light?: boolean;
-	disabled?: boolean;
+	disabled?: string | boolean;
 	items?: any[];
 	cssClasses?: CssClasses[];
 	codeContext?: {

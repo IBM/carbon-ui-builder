@@ -11,7 +11,7 @@ export interface SearchState {
 	value?: string;
 	closeButtonLabelText?: string;
 	defaultValue?: string;
-	disabled?: boolean;
+	disabled?: string | boolean;
 	light?: boolean;
 	role?: string;
 	expandable: boolean;

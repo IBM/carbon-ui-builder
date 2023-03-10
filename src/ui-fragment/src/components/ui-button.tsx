@@ -8,7 +8,7 @@ export interface ButtonState {
 	size: string;
 	text: string;
 	id: string | number;
-	isDisabled: string | boolean;
+	disabled?: string | boolean;
 	cssClasses?: CssClasses[];
 	codeContext?: {
 		name: string;
@@ -21,18 +21,14 @@ export const UIButton = ({ state, setGlobalState, sendSignal }: {
 	setGlobalState: (state: any) => void;
 	sendSignal: (id: number | string, signal: string) => void;
 }) => {
-	// TODO read global state
-	// console.log("global: " + JSON.stringify(globalState))
 
 	if (state.type !== 'button') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;
 	}
 
-	// console.log(state)
-
 	return <Button
-	disabled={state.isDisabled}
+	disabled={state.disabled}
 	kind={state.kind}
 	size={state.size}
 	name={state.codeContext?.name}

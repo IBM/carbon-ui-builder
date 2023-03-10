@@ -5,8 +5,6 @@ import { Action } from './types';
 import { contentType } from 'mime-types';
 import { sign } from 'crypto';
 
-// THIS IS WHERE HANDLERS ARE GOING
-
 export interface UIFragmentProps {
 	state: any;
 	setState: (state: any) => void;
@@ -29,11 +27,7 @@ export const UIFragment = ({ state, setState }: UIFragmentProps) => {
 		});
 	};
 
-	// console.log(JSON.stringify(state))
-
-	const sendSignal = (id: number | string, signal: string) => {
-		// console.log('handleSignalStart: ' + JSON.stringify(state))
-
+	const sendSignal = (id: number | string, signal: string, otherStateChanges?: any) => {
 		if (!state.data.actions) {
 			return;
 		}
@@ -41,14 +35,14 @@ export const UIFragment = ({ state, setState }: UIFragmentProps) => {
 		let changedItems = JSON.parse(JSON.stringify(state.data.items))
 
 		state.data.actions.forEach((action: Action) => {
+			// Check if the ID and signal combination provided match any of the actions in the state
 			if (!(action.source == id && action.signal == signal)) {
 				return;
 			}
 
-			changedItems[0].items[1].items[1].items.forEach((item: any) => {
-				if (item.id == action.destination) {
-					item[action.slot] = action.slot_param
-				}
+			// If we find an action, iterate through the state data and change the state of the components listed
+			changedItems.forEach((item: any) => {
+				iterateItems(item, action, otherStateChanges)
 			})
 		})
 
@@ -56,29 +50,27 @@ export const UIFragment = ({ state, setState }: UIFragmentProps) => {
 			...state.data,
 			items: changedItems
 		})
-		
-		// console.log('handleSignalEnd: ' + JSON.stringify(state))
-		console.log('handleSignalEnd: ' + JSON.stringify(changedItems))
-
 	}
 
-	// const iterMatches = (state: any) => {
-	// 	if (Object(state) !== state) return; // A primitive
-	// 	for (const [key, value] of Object.entries(state)) {
-	// 		if (value instanceof Object) {
-	// 			iterMatches(value)
-	// 		} else if (key == 'id' && value == 14) {
-	// 			value = 
-	// 		}
-	// 	}
-	// 	return state
-	// }
-
-	// iterMatches(state)
+	const iterateItems = (item: any, action: Action, otherStateChanges: any) => {
+		// Checks if there is a micro layout and begins iterating through it
+		if ("items" in item) {
+			item.items.forEach((childItem: any) => {
+				iterateItems(childItem, action, otherStateChanges)
+			})
+		}
+		// Allows additional state changes for use in merging set state calls that are called from a single event.
+		if (otherStateChanges && item.id == otherStateChanges.id) {
+			Object.assign(item, otherStateChanges);
+		}
+		// Perform action by changing state
+		if (item.id == action.destination) {
+			item[action.slot] = action.slot_param
+		}
+	}
 
 	// state.data and setStateData render fragment json; state and setState render component json
 	// setStateData is setGlobalData
-	// PASS in the global state so components can see!!!!
 	return <div className={styles}>
 		{ renderComponents(state.data || state, state.data ? setStateData : setState, setStateData, sendSignal) }
 	</div>;

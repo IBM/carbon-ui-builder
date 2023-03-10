@@ -7,6 +7,7 @@ export interface CheckboxState {
 	label: string;
 	checked: boolean;
 	id: string | number;
+	disabled?: string | boolean;
 	cssClasses?: CssClasses[];
 	codeContext?: {
 		name: string;
@@ -25,6 +26,7 @@ export const UICheckbox = ({ state, setState, sendSignal }: {
 	}
 
 	return <Checkbox
+		disabled={state.disabled}
 		labelText={state.label}
 		name={state.codeContext?.name}
 		id={state.codeContext?.name}

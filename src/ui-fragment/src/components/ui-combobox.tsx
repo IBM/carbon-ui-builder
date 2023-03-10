@@ -15,7 +15,7 @@ export interface ComboBoxState {
 	isInline?: boolean;
 	warn?: boolean;
 	warnText?: string;
-	disabled?: boolean;
+	disabled?: string | boolean;
 	selectionFeedback?: string;
 	direction?: string;
 	size?: string;

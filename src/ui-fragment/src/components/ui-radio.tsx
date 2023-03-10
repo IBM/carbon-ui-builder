@@ -6,7 +6,7 @@ export interface RadioState {
 	type: string;
 	id: string | number;
 	labelText: string;
-	disabled?: boolean;
+	disabled?: string | boolean;
 	checked?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext?: {

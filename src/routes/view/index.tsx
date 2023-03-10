@@ -17,7 +17,7 @@ export const View = () => {
 					"source": "9",
 					"signal": "click",
 					"destination": "10",
-					"slot": "isDisabled",
+					"slot": "disabled",
 					"slot_param": "true"
 				}]
 		}

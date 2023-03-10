@@ -16,7 +16,7 @@ export interface NumberInputState {
 	warn?: boolean;
 	hideLabel?: boolean;
 	hideSteppers?: boolean;
-	disabled?: boolean;
+	disabled?: string | boolean;
 	readOnly?: boolean;
 	invalid?: boolean;
 	invalidText?: string;

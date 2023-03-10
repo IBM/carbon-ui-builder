@@ -6,7 +6,7 @@ export interface TextState {
 	text?: string;
 	richText?: string;
 	isSection?: boolean;
-	isVisible: boolean | string;
+	hidden?: boolean | string;
 	cssClasses?: CssClasses[];
 }
 
@@ -20,8 +20,7 @@ export const UIText = ({ state, sendSignal }: {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;
 	}
-	if (state.isVisible == 'false') {
-		console.log('Hit!')
+	if (state.hidden == 'true' || state.hidden == true) {
 		return <></>;
 	}
 
