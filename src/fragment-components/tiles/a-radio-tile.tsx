@@ -9,7 +9,6 @@ import { css, cx } from 'emotion';
 import { useFragment } from '../../context';
 import { ComponentInfo } from '..';
 import {
-	Adder,
 	getParentComponent,
 	updatedState
 } from '../../components';
@@ -20,6 +19,7 @@ import {
 } from '../../utils/fragment-tools';
 import { APlaceholder } from '../a-placeholder';
 import { styleObjectToString } from '../../ui-fragment/src/utils';
+import { Adder } from '../../sdk/src/adder';
 
 export const ARadioTileSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const [fragment] = useFragment();
