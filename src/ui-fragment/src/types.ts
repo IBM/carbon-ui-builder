@@ -5,9 +5,9 @@ export interface CssClasses {
 }
 
 export interface Action {
-	source: string | number;
+	source: number;
 	signal: string;
-	destination: string | number;
+	destination: number;
 	slot: string;
-	slot_param: string;
+	slot_param: string | number | boolean;
 }

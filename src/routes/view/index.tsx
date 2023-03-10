@@ -11,17 +11,6 @@ export const View = () => {
 	// Gets JSON from editor
 	const fragment = fragments.find((fragment: any) => fragment.id === params.id);
 
-	// TEMP, REVERT THIS CHANGE LATER
-	if (!fragment.data.actions) {
-		fragment.data.actions = [{
-					"source": "9",
-					"signal": "click",
-					"destination": "10",
-					"slot": "disabled",
-					"slot_param": "true"
-				}]
-		}
-
 	// Converts JSON to React State
 	const [fragmentState, setFragmentState] = useState(getExpandedFragmentState(fragment));
 
