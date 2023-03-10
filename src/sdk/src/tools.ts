@@ -7,6 +7,27 @@ const draggableSelectorDirect = ':scope > [draggable]';
 const draggableSelectorColumn = ':scope > .bx--col > [draggable]';
 const draggableSelector = `${draggableSelectorDirect}, ${draggableSelectorColumn}`;
 
+export const getComponentById = (componentObj: any, id: number) => {
+	if (!componentObj || !id) {
+		return undefined;
+	}
+
+	if (componentObj.id === id) {
+		return componentObj;
+	}
+
+	if (componentObj.items) {
+		for (let i = 0; i < componentObj.items.length; i++) {
+			const component: any = getComponentById(componentObj.items[i], id);
+			if (component) {
+				return component;
+			}
+		}
+	}
+
+	return undefined;
+};
+
 export const isHorizontalContainer = (containerElement: HTMLElement) => {
 	const allChildrenElements = containerElement.querySelectorAll(draggableSelector);
 	if (allChildrenElements.length <= 1) {

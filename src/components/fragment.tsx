@@ -7,7 +7,7 @@ import { allComponents, ComponentInfoRenderProps } from '../fragment-components'
 import { getFragmentsFromLocalStorage, getRandomId } from '../utils/fragment-tools';
 import { GlobalStateContext } from '../context';
 import { getAllFragmentStyleClasses } from '../ui-fragment/src/utils';
-import { getDropIndex } from '../sdk/src/tools';
+import { getComponentById, getDropIndex } from '../sdk/src/tools';
 
 const canvas = css`
 	border: 2px solid #d8d8d8;
@@ -46,27 +46,6 @@ const allowDrop = (event: any) => {
 };
 
 let componentCounter = 2; // actually initialized (again) in Fragment
-
-export const getComponentById = (componentObj: any, id: number) => {
-	if (!componentObj || !id) {
-		return undefined;
-	}
-
-	if (componentObj.id === id) {
-		return componentObj;
-	}
-
-	if (componentObj.items) {
-		for (let i = 0; i < componentObj.items.length; i++) {
-			const component: any = getComponentById(componentObj.items[i], id);
-			if (component) {
-				return component;
-			}
-		}
-	}
-
-	return undefined;
-};
 
 export const getSelectedComponent = (fragment: any) => {
 	if (!fragment) {
