@@ -10,8 +10,8 @@ import { getParentComponent, updatedState } from '../components';
 import { css, cx } from 'emotion';
 import { useFragment } from '../context';
 import { ComponentInfo } from '.';
-import { getDropIndex } from '../routes/edit/tools';
 import { styleObjectToString } from '../ui-fragment/src/utils';
+import { getDropIndex } from '../sdk/src/tools';
 
 export const ARowSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>

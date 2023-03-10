@@ -6,8 +6,8 @@ import { css, cx } from 'emotion';
 import { allComponents, ComponentInfoRenderProps } from '../fragment-components';
 import { getFragmentsFromLocalStorage, getRandomId } from '../utils/fragment-tools';
 import { GlobalStateContext } from '../context';
-import { getDropIndex } from '../routes/edit/tools';
 import { getAllFragmentStyleClasses } from '../ui-fragment/src/utils';
+import { getDropIndex } from '../sdk/src/tools';
 
 const canvas = css`
 	border: 2px solid #d8d8d8;
