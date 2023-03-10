@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { css, cx } from 'emotion';
 import {
 	Button,
@@ -93,7 +93,13 @@ undefined
 | 'paddingRight';
 
 export const MarginPaddingWidget = ({ component, setComponent }: any) => {
-	const [dimension, setDimension] = useState(undefined as Dimension);
+	const [dimension, _setDimension] = useState(undefined as Dimension);
+	const valueInputRef = useRef(null as any);
+
+	const setDimension = (d: Dimension) => {
+		valueInputRef.current.focus();
+		_setDimension(d);
+	};
 
 	const dimensionUnits = component.style?.[dimension || '']?.units || 'px';
 	const selectedUnitsItem = cssUnitsItems.find(item => dimensionUnits === item.text);
@@ -210,6 +216,7 @@ export const MarginPaddingWidget = ({ component, setComponent }: any) => {
 		</div>
 		<div className={unitsStyle}>
 			<NumberInput
+				ref={valueInputRef}
 				disabled={!dimension}
 				size='sm'
 				min='-100000'
