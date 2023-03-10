@@ -12,7 +12,7 @@ import { css, cx } from 'emotion';
 import Editor from '@monaco-editor/react';
 import { throttle } from 'lodash';
 
-import { ComponentCssClassSelector } from '../../components/css-class-selector';
+import { ComponentCssClassSelector } from '../../sdk/src/css-class-selector';
 import { getSelectedComponent, updatedState } from '../../components/fragment';
 import { allComponents } from '../../fragment-components';
 import { SelectedComponentBreadcrumbs } from './selected-component-breadcrumbs';
@@ -76,7 +76,7 @@ const throttledSetFragment = throttle((component: any) => proxySetFragment(compo
 
 export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 	const selectedComponent = getSelectedComponent(fragment);
-	const { settings, setSettings } = useContext(GlobalStateContext);
+	const { settings, setSettings, styleClasses } = useContext(GlobalStateContext);
 
 	const updateContextPaneSettings = (s: any) => {
 		setSettings({
@@ -225,10 +225,12 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 				settings.contextPane?.settings?.advancedStylingAccordionOpen &&
 				<div className={accordionContentStyle}>
 					{
-						!selectedComponent && <ComponentCssClassSelector componentObj={fragment} setComponent={setFragment} />
+						!selectedComponent
+						&& <ComponentCssClassSelector componentObj={fragment} setComponent={setFragment} styleClasses={styleClasses} />
 					}
 					{
-						selectedComponent && <ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
+						selectedComponent
+						&& <ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} styleClasses={styleClasses} />
 					}
 				</div>
 			}
