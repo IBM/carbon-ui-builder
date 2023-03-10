@@ -17,7 +17,7 @@ import { getSelectedComponent, updatedState } from '../../components/fragment';
 import { allComponents } from '../../fragment-components';
 import { SelectedComponentBreadcrumbs } from './selected-component-breadcrumbs';
 import { GlobalStateContext } from '../../context';
-import { LayoutWidget } from '../../components/layout-widget';
+import { LayoutWidget } from '../../sdk/src/layout-widget';
 
 const styleContextPaneStyle = css`
 .bx--form-item.bx--checkbox-wrapper {
