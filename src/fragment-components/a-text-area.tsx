@@ -2,9 +2,10 @@ import React from 'react';
 import { TextArea, TextInput } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { ComponentInfo } from '.';
-
+import { css, cx } from 'emotion';
 import image from './../assets/component-icons/text-area.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 export const ATextAreaSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -41,22 +42,17 @@ export const ATextAreaSettingsUI = ({ selectedComponent, setComponent }: any) =>
 	</>;
 };
 
-export const ATextAreaCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return (
-		<TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>
-	);
-};
+export const ATextAreaCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const ATextArea = ({
 	componentObj,
@@ -70,7 +66,10 @@ export const ATextArea = ({
 				labelText={componentObj.label}
 				placeholder={componentObj.placeholder}
 				helperText={componentObj.helperText}
-				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
+				className={cx(
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					css`${styleObjectToString(componentObj.style)}`
+				)} />
 		</AComponent>
 	);
 };

@@ -2,9 +2,9 @@ import { css, cx } from 'emotion';
 import React, { useRef, useState } from 'react';
 
 import { Draggable32, TrashCan32 } from '@carbon/icons-react';
-import { drag, getDropIndex } from '../routes/edit/tools';
 import { useFragment } from '../context';
 import { updatedState } from '../components';
+import { drag, getDropIndex } from '../sdk/src/tools';
 
 export const componentHeaderZIndex = 999;
 

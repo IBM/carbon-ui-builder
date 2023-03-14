@@ -7,7 +7,6 @@ import {
 	Switch
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
-import { DraggableTileList } from '../components';
 import image from './../assets/component-icons/content-switcher.svg';
 import {
 	angularClassNamesFromComponentObj,
@@ -15,6 +14,8 @@ import {
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 import { css, cx } from 'emotion';
+import { styleObjectToString } from '../ui-fragment/src/utils';
+import { DraggableTileList } from '../sdk/src/draggable-list';
 
 const preventCheckEvent = css`
 	pointer-events: none;
@@ -119,8 +120,7 @@ export const AContentSwitcherCodeUI = ({ selectedComponent, setComponent }: any)
 				name: event.currentTarget.value
 			}
 		});
-	}}
-/>;
+	}} />;
 
 export const AContentSwitcher = ({
 	componentObj,
@@ -133,7 +133,11 @@ export const AContentSwitcher = ({
 			<ContentSwitcher
 			size={componentObj.size}
 			selectedIndex={componentObj.selectedIndex}
-			className={cx(preventCheckEvent, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}>
+			className={cx(
+				preventCheckEvent,
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				css`${styleObjectToString(componentObj.style)}`
+			)}>
 			{
 				componentObj.items.map((step: any, index: number) => <Switch
 					className={step.className}

@@ -7,7 +7,9 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
+import { styleObjectToString } from '../ui-fragment/src/utils';
+
 const preventCheckEvent = css`
 	pointer-events: none;
 `;
@@ -83,23 +85,18 @@ export const AToggleSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	</>;
 };
 
-export const AToggleCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return (
-		<TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>
-	);
-};
+export const AToggleCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const AToggle = ({
 	componentObj,
@@ -118,7 +115,11 @@ export const AToggle = ({
 				labelA={componentObj.offText}
 				labelB={componentObj.onText}
 				labelText={componentObj.header}
-				className={` ${preventCheckEvent} ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} `} />
+				className={cx(
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					preventCheckEvent,
+					css`${styleObjectToString(componentObj.style)}`
+				)} />
 		</AComponent>
 	);
 };
@@ -180,7 +181,7 @@ export const componentInfo: ComponentInfo = {
 							name: "${json.codeContext?.name}",
 							value: checked
 						}
-					})} 
+					})}
 					${reactClassNamesFromComponentObj(json)} />`;
 			}
 		}

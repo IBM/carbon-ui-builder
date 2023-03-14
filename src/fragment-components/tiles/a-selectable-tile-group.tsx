@@ -3,7 +3,7 @@ import { TextInput, Checkbox } from 'carbon-components-react';
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
 import { getParentComponent, updatedState } from '../../components';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { useFragment } from '../../context';
 import { ComponentInfo } from '..';
 
@@ -13,6 +13,7 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
+import { styleObjectToString } from '../../ui-fragment/src/utils';
 
 export const ASelectableTileGroupSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -39,30 +40,27 @@ export const ASelectableTileGroupSettingsUI = ({ selectedComponent, setComponent
 	</>;
 };
 
-export const ASelectableTileGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-		value={selectedComponent.codeContext?.name}
-		labelText='Input name'
-		onChange={(event: any) => {
-			setComponent({
-				...selectedComponent,
+export const ASelectableTileGroupCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			},
+			// Grouped form elements (Radio) within a fieldset should have the same name
+			items: selectedComponent.items.map((tile: any) => ({
+				...tile,
 				codeContext: {
-					...selectedComponent.codeContext,
-					name: event.currentTarget.value
-				},
-				// Grouped form elements (Radio) within a fieldset should have the same name
-				items: selectedComponent.items.map((tile: any) => ({
-					...tile,
-					codeContext: {
-						...tile.codeContext,
-						// Selectable Tiles (Children) use formItemName
-						formItemName: event.currentTarget.value
-					}
-				}))
-			});
-		}}
-	/>;
-};
+					...tile.codeContext,
+					// Selectable Tiles (Children) use formItemName
+					formItemName: event.currentTarget.value
+				}
+			}))
+		});
+	}} />;
 
 export const ASelectableTileGroup = ({
 	children,
@@ -110,7 +108,10 @@ export const ASelectableTileGroup = ({
 			{...rest}>
 				<div
 				role="group"
-				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
+				className={cx(
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					css`${styleObjectToString(componentObj.style)}`
+				)}
 				aria-label="Selectable tiles">
 					{children}
 				</div>

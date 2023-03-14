@@ -11,6 +11,8 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
+import { css, cx } from 'emotion';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 export const ARadioGroupSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const orientationItems = [
@@ -79,23 +81,18 @@ export const ARadioGroupSettingsUI = ({ selectedComponent, setComponent }: any) 
 	</>;
 };
 
-export const ARadioGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return (
-		<TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>
-	);
-};
+export const ARadioGroupCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const ARadioGroup = ({
 	children,
@@ -107,7 +104,10 @@ export const ARadioGroup = ({
 		componentObj={componentObj}
 		{...rest}>
 			<RadioButtonGroup
-			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
+			className={cx(
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				css`${styleObjectToString(componentObj.style)}`
+			)}
 			legendText= {componentObj.legend}
 			disabled= {componentObj.disabled}
 			orientation={componentObj.orientation}

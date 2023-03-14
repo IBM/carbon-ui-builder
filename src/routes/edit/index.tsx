@@ -7,7 +7,6 @@ import { css, cx } from 'emotion';
 import {
 	Fragment,
 	getParentComponent,
-	getSelectedComponent,
 	initializeIds,
 	stateWithoutComponent,
 	updatedState
@@ -40,6 +39,7 @@ import { SettingsContextPane } from './settings-context-pane';
 import { CodeContextPane } from './code-context-pane';
 import { useParams } from 'react-router-dom';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { getSelectedComponent } from '../../sdk/src/tools';
 
 const leftPaneWidth = '300px';
 const rightPaneWidth = '302px';

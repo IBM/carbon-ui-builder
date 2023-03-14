@@ -1,24 +1,21 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	FormLabel,
 	Tag,
 	Tooltip
 } from 'carbon-components-react';
 import { ColorPalette16 } from '@carbon/icons-react';
-import { GlobalStateContext } from '../context';
 import { css } from 'emotion';
 
 const compareClasses = (sc1: any, sc2: any) => sc1.name < sc2.name ? -1 : 1;
 
-export const CssClassSelector = ({ selectedClasses, setSelectedClasses }: any) => {
-	const { styleClasses } = useContext(GlobalStateContext);
-
+export const CssClassSelector = ({ selectedClasses, setSelectedClasses, styleClasses }: any) => {
 	const getAvailableClasses = () => {
 		// available is anything in styleClasses, not yet in selecteClasses, sorted
 		return styleClasses
-			.filter((sc: any) => !selectedClasses?.find((ssc: any) => ssc.id === sc.id))
+			?.filter((sc: any) => !selectedClasses?.find((ssc: any) => ssc.id === sc.id))
 			.map((sc: any) => ({ id: sc.id, name: sc.name })) // content is fetched from global as needed and we don't want stale content here
-			.sort(compareClasses);
+			.sort(compareClasses) || [];
 	};
 
 	const [availableClasses, setAvailableClasses] = useState(getAvailableClasses());
@@ -82,7 +79,7 @@ export const CssClassSelector = ({ selectedClasses, setSelectedClasses }: any) =
 	);
 };
 
-export const ComponentCssClassSelector = ({ componentObj, setComponent }: any) => {
+export const ComponentCssClassSelector = ({ componentObj, setComponent, styleClasses }: any) => {
 	const setSelectedClasses = (cssClasses: any[], updateActionHistory = true) => {
 		setComponent(
 			{
@@ -97,6 +94,6 @@ export const ComponentCssClassSelector = ({ componentObj, setComponent }: any) =
 		<CssClassSelector
 			selectedClasses={componentObj.cssClasses}
 			setSelectedClasses={setSelectedClasses}
-		/>
+			styleClasses={styleClasses} />
 	);
 };

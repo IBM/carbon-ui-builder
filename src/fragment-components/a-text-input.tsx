@@ -1,11 +1,12 @@
 import React from 'react';
 import { TextInput, Dropdown } from 'carbon-components-react';
 import { AComponent } from './a-component';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/text-input.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 export const ATextInputSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const typeItems = [
@@ -84,23 +85,18 @@ export const ATextInputSettingsUI = ({ selectedComponent, setComponent }: any) =
 	</>;
 };
 
-export const ATextInputCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return (
-		<TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>
-	);
-};
+export const ATextInputCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const ATextInput = ({
 	componentObj,
@@ -117,7 +113,10 @@ export const ATextInput = ({
 				id={componentObj.id}
 				type={componentObj.inputType}
 				labelText={componentObj.label}
-				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
+				className={cx(
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					css`${styleObjectToString(componentObj.style)}`
+				)}
 				defaultValue={componentObj.defaultValue}
 				disabled={componentObj.disabled}
 				helperText={componentObj.helperText}

@@ -6,7 +6,7 @@ import {
 } from 'carbon-components-react';
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { ComponentInfo } from '../';
 import image from '../../assets/component-icons/tile.svg';
 import {
@@ -15,6 +15,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 import { APlaceholder } from '../a-placeholder';
+import { styleObjectToString } from '../../ui-fragment/src/utils';
 
 export const ATileSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -33,21 +34,18 @@ export const ATileSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	</>;
 };
 
-export const ATileCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-		value={selectedComponent.codeContext?.name}
-		labelText='Input name'
-		onChange={(event: any) => {
-			setComponent({
-				...selectedComponent,
-				codeContext: {
-					...selectedComponent.codeContext,
-					name: event.currentTarget.value
-				}
-			});
-		}}
-	/>;
-};
+export const ATileCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const ATile = ({
 	children,
@@ -64,7 +62,10 @@ export const ATile = ({
 		{...rest}>
 			<Tile
 			onDrop={onDrop}
-			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
+			className={cx(
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				css`${styleObjectToString(componentObj.style)}`
+			)}
 			light={componentObj.light}>
 				{
 					children && children.length > 0 ? children : <APlaceholder componentObj={componentObj} select={rest.select} />
@@ -76,6 +77,7 @@ export const ATile = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ATile,
+	codeUI: ATileCodeUI,
 	settingsUI: ATileSettingsUI,
 	keywords: ['tile', 'card'],
 	name: 'Tile',

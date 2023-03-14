@@ -6,11 +6,12 @@ import {
 	NumberInput
 } from 'carbon-components-react';
 import { AComponent } from './a-component';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/number-input.svg';
 import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 export const ANumberInputSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
@@ -125,23 +126,18 @@ export const ANumberInputSettingsUI = ({ selectedComponent, setComponent }: any)
 	</>;
 };
 
-export const ANumberInputCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return (
-		<TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>
-	);
-};
+export const ANumberInputCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const ANumberInput = ({
 	componentObj,
@@ -155,6 +151,7 @@ export const ANumberInput = ({
 		rejectDrop={true}
 		{...rest}>
 			<NumberInput
+				id={componentObj.id}
 				size={componentObj.size}
 				helperText={componentObj.helperText}
 				warn={componentObj.warn}
@@ -170,7 +167,10 @@ export const ANumberInput = ({
 				invalidText={componentObj.invalidText}
 				light={componentObj.light}
 				allowEmpty={componentObj.allowEmpty}
-				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
+				className={cx(
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					css`${styleObjectToString(componentObj.style)}`
+				)}
 				type='number' />
 		</AComponent>
 	);

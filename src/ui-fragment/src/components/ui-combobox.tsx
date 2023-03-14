@@ -1,6 +1,7 @@
 import React from 'react';
 import { ComboBox, FilterableMultiSelect } from 'carbon-components-react';
 import { CssClasses } from '../types';
+import { stringToCssClassName } from '../utils';
 
 export interface ComboBoxState {
 	type: string;
@@ -24,9 +25,10 @@ export interface ComboBoxState {
 	helperText?: string;
 	itemToString?: (item: any) => string;
 	cssClasses?: CssClasses[];
-	codeContext?: {
+	codeContext: {
 		name: string;
 	};
+	style?: any;
 }
 
 export const UIComboBox = ({ state, setState }: {
@@ -37,6 +39,15 @@ export const UIComboBox = ({ state, setState }: {
 	if (state.type !== 'combobox') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;
+	}
+
+	let cssClasses = state.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (state.style) {
+		if (cssClasses.length > 0) {
+			cssClasses += ' ';
+		}
+		cssClasses += stringToCssClassName(state.codeContext.name);
 	}
 
 	const ComboOrMulti = state.isMulti ? FilterableMultiSelect : ComboBox;
@@ -66,5 +77,5 @@ export const UIComboBox = ({ state, setState }: {
 			...state,
 			selectedItem: state.listItems?.find((item) => item.text === selectedItem.text)
 		})}
-		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />;
+		className={cssClasses} />;
 };

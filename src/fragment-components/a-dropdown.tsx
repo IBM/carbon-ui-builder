@@ -6,9 +6,8 @@ import {
 	TextInput
 } from 'carbon-components-react';
 import { AComponent } from './a-component';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { ComponentInfo } from '.';
-import { DraggableTileList } from '../components';
 
 import image from './../assets/component-icons/dropdown.svg';
 import {
@@ -16,6 +15,8 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
+import { styleObjectToString } from '../ui-fragment/src/utils';
+import { DraggableTileList } from '../sdk/src/draggable-list';
 
 export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
@@ -54,7 +55,7 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 	const template = (item: any, index: number) => {
 		return <>
 			<TextInput
-				id={`display-text-input-${item.id}`}
+				id={`display-text-input-${item.id || item.text}`}
 				light
 				value={item.text}
 				labelText='Display text'
@@ -200,22 +201,19 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 	</>;
 };
 
-export const ADropdownCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-			id='input-name-text-input'
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>;
-};
+export const ADropdownCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	id='input-name-text-input'
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 const preventClickStyle = css`
 	pointer-events: none;
@@ -252,7 +250,11 @@ export const ADropdown = ({
 				invalidText={componentObj.invalidText}
 				direction={componentObj.direction}
 				items={[]}
-				className={`${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} ${preventClickStyle}`} />
+				className={cx(
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					preventClickStyle,
+					css`${styleObjectToString(componentObj.style)}`
+				)} />
 		</AComponent>
 	);
 };

@@ -3,7 +3,7 @@ import { TextInput, Checkbox } from 'carbon-components-react';
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
 import { getParentComponent, updatedState } from '../../components';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { useFragment } from '../../context';
 import { ComponentInfo } from '../';
 
@@ -13,6 +13,7 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
+import { styleObjectToString } from '../../ui-fragment/src/utils';
 
 export const ARadioTileGroupSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -84,8 +85,7 @@ export const ARadioTileGroupCodeUI = ({ selectedComponent, setComponent }: any) 
 					}
 				}))
 			});
-		}}
-	/>;
+		}} />;
 };
 
 export const ARadioTileGroup = ({
@@ -133,7 +133,11 @@ export const ARadioTileGroup = ({
 			selected={selected}
 			{...rest}>
 				<fieldset
-				className={`bx--tile-group ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}`}
+				className={cx(
+					'bx--tile-group',
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					css`${styleObjectToString(componentObj.style)}`
+				)}
 				disabled={componentObj.disabled}>
 					{(componentObj.legend !== undefined && componentObj.legend !== '') &&
 					<legend className="bx--label">
