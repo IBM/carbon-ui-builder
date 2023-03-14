@@ -10,7 +10,7 @@ export const format = (source: string, options?: Options | undefined) => {
 };
 
 export type signalType = 'onclick' | 'hover' | 'focus';
-export type slotProp = 'isDisable';
+export type slotProp = 'disabled';
 
 export interface slotInfo {
 	type: string;
