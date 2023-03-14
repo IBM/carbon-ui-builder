@@ -18,8 +18,8 @@ import { ModalContext } from '../../../../context/modal-context';
 import { saveBlob } from '../../../../utils/file-tools';
 import { GlobalStateContext } from '../../../../context';
 import { ExportImageComponent } from './export-image-component';
-import { filenameToLanguage } from '../../tools';
 import { getFragmentJsonExportString } from '../../../../utils/fragment-tools';
+import { filenameToLanguage } from '../../../../sdk/src/tools';
 
 const exportCodeModalStyle = css`
 	.bx--tab-content {

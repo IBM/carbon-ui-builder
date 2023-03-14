@@ -1,7 +1,11 @@
 import React from 'react';
 import { AccordionItem } from 'carbon-components-react';
 import { CssClasses } from '../types';
-import { renderComponents, setItemInState } from '../utils';
+import {
+	renderComponents,
+	setItemInState,
+	stringToCssClassName
+} from '../utils';
 
 export interface AccordionItemState {
 	type: string;
@@ -10,9 +14,10 @@ export interface AccordionItemState {
 	id: string | number;
 	disabled?: boolean;
 	cssClasses?: CssClasses[];
-	codeContext?: {
+	codeContext: {
 		name: string;
 	};
+	style?: any;
 }
 
 export const UIAccordionItem = ({ state, setState, setGlobalState }: {
@@ -25,10 +30,19 @@ export const UIAccordionItem = ({ state, setState, setGlobalState }: {
 		return <></>;
 	}
 
+	let cssClasses = state.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (state.style) {
+		if (cssClasses.length > 0) {
+			cssClasses += ' ';
+		}
+		cssClasses += stringToCssClassName(state.codeContext.name);
+	}
+
 	return <AccordionItem
 	title={state.title}
 	disabled={state.disabled}
-	className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+	className={cssClasses}>
 		{
 			state.items?.map((item: any) => {
 				const setItem = (i: any) => setItemInState(i, state, setState);

@@ -3,7 +3,7 @@ import { css, cx } from 'emotion';
 import { Button, Search } from 'carbon-components-react';
 import { ChevronUp16, ChevronDown16 } from '@carbon/icons-react';
 
-import { ElementTile } from '../../components/element-tile';
+import { ElementTile } from '../../sdk/src/element-tile';
 import { FragmentPreview } from '../../components/fragment-preview';
 
 import { leftPane, leftPaneContent, leftPaneHeader } from '.';
@@ -36,23 +36,32 @@ const elementTileListStyleMicroLayouts = cx(elementTileListStyleBase, css`
 
 export const ElementsPane = ({ isActive }: any) => {
 	const [filterString, setFilterString] = useState('');
-	const [layoutWidgetHeight, setLayoutWidgetHeight] = useState(300);
+	const paneRef = useRef(null as unknown as HTMLDivElement);
 	const mouseYStart = useRef(0);
 	const heightStart = useRef(0);
 	const [fragment, setFragment] = useFragment();
 	const { fragments, settings, setSettings } = useContext(GlobalStateContext);
 
-	const isLayoutWidgetOpen = settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen;
-
-	const updateContextPaneSettings = (s: any) => {
+	const isLayoutWidgetOpen = settings.layoutWidget?.isAccordionOpen === undefined
+		? true // open by default
+		: settings.layoutWidget?.isAccordionOpen;
+	const setIsLayoutWidgetOpen = (is = true) => {
 		setSettings({
 			...settings,
-			contextPane: {
-				...(settings.contextPane || {}),
-				settings: {
-					...(settings.contextPane?.settings || {}),
-					...s
-				}
+			layoutWidget: {
+				...(settings.layoutWidget || {}),
+				isAccordionOpen: is
+			}
+		});
+	};
+
+	const layoutWidgetHeight = settings.layoutWidget?.height || 300;
+	const setLayoutWidgetHeight = (height: number) => {
+		setSettings({
+			...settings,
+			layoutWidget: {
+				...(settings.layoutWidget || {}),
+				height
 			}
 		});
 	};
@@ -78,10 +87,15 @@ export const ElementsPane = ({ isActive }: any) => {
 		const newY = mouseYStart.current - e.pageY;
 
 		const minHeight = 60;
+		const maxHeight = paneRef.current?.clientHeight - 2.5 * minHeight;
 
 		let newHeight = heightStart.current + newY;
 		if (newHeight < minHeight) {
 			newHeight = minHeight;
+		}
+
+		if (newHeight > maxHeight) {
+			newHeight = maxHeight;
 		}
 
 		setLayoutWidgetHeight(newHeight);
@@ -93,7 +107,7 @@ export const ElementsPane = ({ isActive }: any) => {
 	};
 
 	return (
-		<div className={cx(leftPane, isActive ? 'is-active' : '')}>
+		<div className={cx(leftPane, isActive ? 'is-active' : '')} ref={paneRef}>
 			<div className={css`
 			height: calc(100vh - 112px - 3rem ${isLayoutWidgetOpen ? `- ${layoutWidgetHeight}px` : ''});
 			overflow-y: auto;`}>
@@ -159,9 +173,7 @@ export const ElementsPane = ({ isActive }: any) => {
 				kind='ghost'
 				className={accordionButtonStyle}
 				renderIcon={isLayoutWidgetOpen ? ChevronDown16 : ChevronUp16}
-				onClick={() => updateContextPaneSettings({
-					fragmentLayoutWidgetAccordionOpen: !isLayoutWidgetOpen
-				})}>
+				onClick={() => setIsLayoutWidgetOpen(!isLayoutWidgetOpen)}>
 					Layout tree
 				</Button>
 				{

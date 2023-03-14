@@ -15,6 +15,7 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
+import { styleObjectToString } from '../../ui-fragment/src/utils';
 
 const preventCheckEvent = css`
 	pointer-events: none;
@@ -59,21 +60,18 @@ export const AExpandableSettingsUI = ({ selectedComponent, setComponent }: any) 
 	</>;
 };
 
-export const AExpandableTileCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>;
-};
+export const AExpandableTileCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 const outlineStyle = css`
 	span.bx--tile-content__above-the-fold,
@@ -103,8 +101,8 @@ export const AExpandableTile = ({
 					componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')
 				} ${
 					(componentObj.outline || outline === true) && outline !== false ? outlineStyle : ''
-				}`)
-			}
+				}`, css`${styleObjectToString(componentObj.style)}`
+			)}
 			expanded={componentObj.expanded}>
 				<TileAboveTheFoldContent onDrop={onDrop}>
 					{children.filter(({ props }: any) => props && props.componentObj.type !== 'tile-fold')}
@@ -128,6 +126,7 @@ const getFoldObjects = (json: any) => {
 
 export const componentInfo: ComponentInfo = {
 	component: AExpandableTile,
+	codeUI: AExpandableTileCodeUI,
 	settingsUI: AExpandableSettingsUI,
 	keywords: ['tile', 'fold', 'expandable'],
 	name: 'Expandable tile',

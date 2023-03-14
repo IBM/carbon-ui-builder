@@ -1,11 +1,12 @@
 import React from 'react';
-import { Checkbox, Grid } from 'carbon-components-react';
+import { Checkbox, Grid, TextInput } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css, cx } from 'emotion';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/grid.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 export const AGridSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -60,6 +61,19 @@ const outlineStyle = css`
 	}
 `;
 
+export const AGridCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
+
 export const AGrid = ({
 	children,
 	componentObj,
@@ -70,8 +84,9 @@ export const AGrid = ({
 		<AComponent componentObj={componentObj} rejectDrop={true} {...rest}>
 			<Grid
 			className={cx(
-			componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-			(componentObj.outline || outline === true) && outline !== false ? outlineStyle : ''
+				css`${styleObjectToString(componentObj.style)}`,
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				(componentObj.outline || outline === true) && outline !== false ? outlineStyle : ''
 			)}
 			condensed={componentObj.condensed}
 			fullWidth={componentObj.fullWidth}
@@ -151,6 +166,7 @@ const getOffsetsString = (cell: any) => {
 
 export const componentInfo: ComponentInfo = {
 	component: AGrid,
+	codeUI: AGridCodeUI,
 	settingsUI: AGridSettingsUI,
 	keywords: ['grid', 'row', 'column'],
 	name: 'Grid',

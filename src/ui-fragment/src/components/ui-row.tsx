@@ -1,16 +1,21 @@
 import React from 'react';
 import { Row } from 'carbon-components-react';
 import { CssClasses } from '../types';
-import { renderComponents, setItemInState } from '../utils';
+import {
+	renderComponents,
+	setItemInState,
+	stringToCssClassName
+} from '../utils';
 
 export interface RowState {
 	type: string;
 	items: any[]; // TODO row type
 	id: string | number;
 	cssClasses?: CssClasses[];
-	codeContext?: {
+	codeContext: {
 		name: string;
 	};
+	style?: any;
 }
 
 export const UIRow = ({ state, setState, setGlobalState }: {
@@ -23,7 +28,16 @@ export const UIRow = ({ state, setState, setGlobalState }: {
 		return <></>;
 	}
 
-	return <Row className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+	let cssClasses = state.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (state.style) {
+		if (cssClasses.length > 0) {
+			cssClasses += ' ';
+		}
+		cssClasses += stringToCssClassName(state.codeContext.name);
+	}
+
+	return <Row className={cssClasses}>
 		{
 			state.items?.map((item: any) => {
 				const setItem = (i: any) => setItemInState(i, state, setState);

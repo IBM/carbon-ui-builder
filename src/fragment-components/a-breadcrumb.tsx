@@ -12,8 +12,9 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
-import { DraggableTileList } from '../components';
 import { css, cx } from 'emotion';
+import { styleObjectToString } from '../ui-fragment/src/utils';
+import { DraggableTileList } from '../sdk/src/draggable-list';
 
 const preventCheckEventStyle = css`
 	pointer-events: none;
@@ -88,21 +89,18 @@ export const ABreadcumbSettingsUI = ({ selectedComponent, setComponent }: any) =
 	</>;
 };
 
-export const ABreadcrumbCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>;
-};
+export const ABreadcrumbCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const ABreadcrumb = ({
 	componentObj,
@@ -115,7 +113,11 @@ export const ABreadcrumb = ({
 		{...rest}>
 			<Breadcrumb
 			noTrailingSlash={componentObj.noTrailingSlash}
-			className={cx(preventCheckEventStyle, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}>
+			className={cx(
+				preventCheckEventStyle,
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				css`${styleObjectToString(componentObj.style)}`
+			)}>
 			{
 				componentObj.items.map((step: any, index: number) => <BreadcrumbItem
 					href={step.href}

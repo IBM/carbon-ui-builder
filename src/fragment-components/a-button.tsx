@@ -4,7 +4,7 @@ import {
 	Dropdown,
 	TextInput
 } from 'carbon-components-react';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { AComponent, ComponentInfo } from './a-component';
 
 import image from './../assets/component-icons/button.svg';
@@ -14,6 +14,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 import { getItemCode } from '../routes/edit/share-options/exports/frameworks/angular/utils';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const kindItems = [
@@ -67,21 +68,18 @@ export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	</>;
 };
 
-export const AButtonCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>;
-};
+export const AButtonCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const AButton = ({
 	children,
@@ -98,7 +96,10 @@ export const AButton = ({
 			kind={componentObj.kind}
 			size={componentObj.size}
 			disabled={componentObj.disabled}
-			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+			className={cx(
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				css`${styleObjectToString(componentObj.style)}`
+			)}>
 				{children}
 			</Button>
 		</AComponent>

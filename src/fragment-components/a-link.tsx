@@ -8,6 +8,8 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
+import { css, cx } from 'emotion';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 export const ALinkSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -59,8 +61,7 @@ export const ALinkCodeUI = ({ selectedComponent, setComponent }: any) => {
 						name: event.currentTarget.value
 					}
 				});
-			}}
-		/>
+			}} />
 		<TextInput
 			value={selectedComponent.codeContext?.href || ''}
 			labelText='href'
@@ -72,8 +73,7 @@ export const ALinkCodeUI = ({ selectedComponent, setComponent }: any) => {
 						href: event.currentTarget.value
 					}
 				});
-			}}
-		/>
+			}} />
 	</>;
 };
 
@@ -90,7 +90,10 @@ export const ALink = ({
 			<Link
 			inline={componentObj.inline}
 			disabled={componentObj.disabled}
-			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+			className={cx(
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				css`${styleObjectToString(componentObj.style)}`
+			)}>
 				{children}
 			</Link>
 		</AComponent>

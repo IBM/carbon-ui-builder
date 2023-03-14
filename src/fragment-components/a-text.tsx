@@ -7,6 +7,7 @@ import 'react-quill/dist/quill.snow.css';
 import image from './../assets/component-icons/text.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
 import { css } from 'emotion';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 export const ATextSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const [isRichText, _setIsRichText] = useState(!!selectedComponent.richText);
@@ -68,7 +69,7 @@ export const ATextSettingsUI = ({ selectedComponent, setComponent }: any) => {
 						onChange={(checked: boolean) => setIsSection(checked)} />
 					<ReactQuill
 						key={selectedComponent.id}
-						theme="snow"
+						theme='snow'
 						value={richText}
 						onChange={(event: any) => setRichText(event)} />
 				</>
@@ -79,6 +80,19 @@ export const ATextSettingsUI = ({ selectedComponent, setComponent }: any) => {
 		}
 	</>;
 };
+
+export const ATextCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const AText = ({
 	children,
@@ -98,6 +112,7 @@ export const AText = ({
 
 export const componentInfo: ComponentInfo = {
 	component: AText,
+	codeUI: ATextCodeUI,
 	settingsUI: ATextSettingsUI,
 	render: ({ componentObj, select, remove, selected }) => <AText
 		componentObj={componentObj}
@@ -106,8 +121,8 @@ export const componentInfo: ComponentInfo = {
 		selected={selected}>
 			{
 				componentObj.richText
-				? <div dangerouslySetInnerHTML={{ __html: componentObj.richText }} />
-				: componentObj.text
+				? <div className={css`${styleObjectToString(componentObj.style)}`} dangerouslySetInnerHTML={{ __html: componentObj.richText }} />
+				: <span className={css`${styleObjectToString(componentObj.style)}`}>{componentObj.text}</span>
 			}
 
 	</AText>,

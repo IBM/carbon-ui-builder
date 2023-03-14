@@ -1,7 +1,6 @@
 import React from 'react';
 import { Add16 } from '@carbon/icons-react';
 import { css, cx } from 'emotion';
-import { componentHeaderZIndex } from '../fragment-components';
 
 const addStyle = css`
 	position: absolute;
@@ -9,7 +8,7 @@ const addStyle = css`
 	background: white;
 	border: 2px solid #d8d8d8;
 	line-height: 21px;
-	z-index: ${componentHeaderZIndex + 1};
+	z-index: 1000;
 `;
 
 const addStyleTop = cx(addStyle, css`
