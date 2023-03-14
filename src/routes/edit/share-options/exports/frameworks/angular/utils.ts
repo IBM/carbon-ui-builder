@@ -36,7 +36,7 @@ export const signalAngularEvent: Record<signalType, Array<string>> = {
 };
 
 export const slotAngularEvent: Record<slotProp, slotInfo> = {
-	isDisable: {
+	disabled: {
 		type: 'boolean',
 		action: 'disabled'
 	}
