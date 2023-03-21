@@ -15,7 +15,7 @@ export interface DropdownState {
 	isInline?: boolean;
 	warn?: boolean;
 	warnText?: string;
-	disabled?: boolean;
+	disabled?: string | boolean;
 	hideLabel?: boolean;
 	direction?: string;
 	size?: string;
@@ -30,10 +30,11 @@ export interface DropdownState {
 	style?: any;
 }
 
-export const UIDropdown = ({ state, setState }: {
+export const UIDropdown = ({ state, setState, sendSignal }: {
 	state: DropdownState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'dropdown') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment

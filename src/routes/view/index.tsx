@@ -8,8 +8,10 @@ export const View = () => {
 
 	const params = useParams();
 
+	// Gets JSON from editor
 	const fragment = fragments.find((fragment: any) => fragment.id === params.id);
 
+	// Converts JSON to React State
 	const [fragmentState, setFragmentState] = useState(getExpandedFragmentState(fragment));
 
 	return <UIFragment

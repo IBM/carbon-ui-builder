@@ -22,10 +22,11 @@ export interface InlineLoadingState {
 	style?: any;
 }
 
-export const UIInlineLoading = ({ state }: {
+export const UIInlineLoading = ({ state, sendSignal }: {
 	state: InlineLoadingState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'inline-loading') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment

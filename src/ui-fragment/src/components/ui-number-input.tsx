@@ -17,7 +17,7 @@ export interface NumberInputState {
 	warn?: boolean;
 	hideLabel?: boolean;
 	hideSteppers?: boolean;
-	disabled?: boolean;
+	disabled?: string | boolean;
 	readOnly?: boolean;
 	invalid?: boolean;
 	invalidText?: string;
@@ -30,10 +30,11 @@ export interface NumberInputState {
 	style?: any;
 }
 
-export const UINumberInput = ({ state, setState }: {
+export const UINumberInput = ({ state, setState, sendSignal }: {
 	state: NumberInputState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'number-input') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment

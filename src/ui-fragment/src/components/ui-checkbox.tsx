@@ -8,6 +8,7 @@ export interface CheckboxState {
 	label: string;
 	checked: boolean;
 	id: string | number;
+	disabled?: string | boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
@@ -15,10 +16,11 @@ export interface CheckboxState {
 	style?: any;
 }
 
-export const UICheckbox = ({ state, setState }: {
+export const UICheckbox = ({ state, setState, sendSignal }: {
 	state: CheckboxState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'checkbox') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -35,6 +37,7 @@ export const UICheckbox = ({ state, setState }: {
 	}
 
 	return <Checkbox
+		disabled={state.disabled}
 		labelText={state.label}
 		name={state.codeContext?.name}
 		id={state.codeContext?.name}

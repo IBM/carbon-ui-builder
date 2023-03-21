@@ -12,7 +12,7 @@ export interface SearchState {
 	value?: string;
 	closeButtonLabelText?: string;
 	defaultValue?: string;
-	disabled?: boolean;
+	disabled?: string | boolean;
 	light?: boolean;
 	role?: string;
 	expandable: boolean;
@@ -30,6 +30,7 @@ export const UISearchInput = ({ state, setState, name }: {
 	name?: string;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'search') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment

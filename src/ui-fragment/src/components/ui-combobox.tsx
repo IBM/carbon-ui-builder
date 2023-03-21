@@ -16,7 +16,7 @@ export interface ComboBoxState {
 	isInline?: boolean;
 	warn?: boolean;
 	warnText?: string;
-	disabled?: boolean;
+	disabled?: string | boolean;
 	selectionFeedback?: string;
 	direction?: string;
 	size?: string;
@@ -31,10 +31,11 @@ export interface ComboBoxState {
 	style?: any;
 }
 
-export const UIComboBox = ({ state, setState }: {
+export const UIComboBox = ({ state, setState, sendSignal }: {
 	state: ComboBoxState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'combobox') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment

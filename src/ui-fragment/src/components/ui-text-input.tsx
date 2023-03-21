@@ -11,7 +11,7 @@ export interface TextInputState {
 	value?: string;
 	helperText?: string;
 	defaultValue?: string;
-	disabled?: boolean;
+	disabled?: string | boolean;
 	light?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
@@ -25,6 +25,7 @@ export const UITextInput = ({ state, setState, name }: {
 	name?: string;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'text-input') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment

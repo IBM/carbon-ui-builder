@@ -11,7 +11,7 @@ export interface RadioTileGroupState {
 	type: string;
 	id: string | number;
 	legend?: string;
-	disabled?: boolean;
+	disabled?: string | boolean;
 	valueSelected?: string | number;
 	items?: any[];
 	cssClasses?: CssClasses[];
@@ -34,10 +34,11 @@ export interface RadioTileState {
 	style?: any;
 }
 
-export const UIRadioTileGroup = ({ state, setState, setGlobalState }: {
+export const UIRadioTileGroup = ({ state, setState, setGlobalState, sendSignal }: {
 	state: RadioTileGroupState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'radio-tile-group') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -84,7 +85,7 @@ export const UIRadioTileGroup = ({ state, setState, setGlobalState }: {
 						{
 							radioTile.items?.map((item: any) => {
 								const setItem = (i: any) => setItemInState(i, item, setRadioTile);
-								return renderComponents(item, setItem, setGlobalState);
+								return renderComponents(item, setItem, setGlobalState, sendSignal);
 							})
 						}
 				</RadioTile>;

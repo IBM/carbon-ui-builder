@@ -9,7 +9,7 @@ export interface ToggleState {
 	offText: string;
 	size: string;
 	checked?: boolean;
-	disabled?: boolean;
+	disabled?: string | boolean;
 	id: string | number;
 	cssClasses?: CssClasses[];
 	codeContext: {
@@ -18,10 +18,11 @@ export interface ToggleState {
 	style?: any;
 }
 
-export const UIToggle = ({ state, setState }: {
+export const UIToggle = ({ state, setState, sendSignal }: {
 	state: ToggleState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'toggle') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment

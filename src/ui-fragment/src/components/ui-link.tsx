@@ -7,7 +7,7 @@ export interface LinkState {
 	type: string;
 	text: string;
 	id: string | number;
-	disabled?: boolean;
+	disabled?: string | boolean;
 	inline?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
@@ -17,10 +17,11 @@ export interface LinkState {
 	style?: any;
 }
 
-export const UILink = ({ state }: {
+export const UILink = ({ state, sendSignal }: {
 	state: LinkState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'link') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment

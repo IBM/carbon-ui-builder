@@ -9,6 +9,7 @@ export interface ButtonState {
 	size: string;
 	text: string;
 	id: string | number;
+	disabled?: string | boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
@@ -16,11 +17,13 @@ export interface ButtonState {
 	style?: any;
 }
 
-export const UIButton = ({ state }: {
+export const UIButton = ({ state, setGlobalState, sendSignal }: {
 	state: ButtonState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
+
 	if (state.type !== 'button') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;
@@ -36,9 +39,11 @@ export const UIButton = ({ state }: {
 	}
 
 	return <Button
+	disabled={state.disabled}
 	kind={state.kind}
 	size={state.size}
 	name={state.codeContext?.name}
+	onClick={() => sendSignal(state.id, 'click')}
 	className={cssClasses}>
 		{state.text}
 	</Button>;

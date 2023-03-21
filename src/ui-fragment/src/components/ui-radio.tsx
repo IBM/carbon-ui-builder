@@ -7,7 +7,7 @@ export interface RadioState {
 	type: string;
 	id: string | number;
 	labelText: string;
-	disabled?: boolean;
+	disabled?: string | boolean;
 	checked?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
@@ -21,6 +21,7 @@ export const UIRadio = ({ state, setState, name }: {
 	name?: string;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'radio') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
