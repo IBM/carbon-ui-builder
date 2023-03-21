@@ -7,7 +7,6 @@ import {
 	Switch
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
-import { DraggableTileList } from '../components';
 import image from './../assets/component-icons/content-switcher.svg';
 import {
 	angularClassNamesFromComponentObj,
@@ -16,6 +15,7 @@ import {
 } from '../utils/fragment-tools';
 import { css, cx } from 'emotion';
 import { styleObjectToString } from '../ui-fragment/src/utils';
+import { DraggableTileList } from '../sdk/src/draggable-list';
 
 const preventCheckEvent = css`
 	pointer-events: none;

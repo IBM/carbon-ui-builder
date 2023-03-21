@@ -9,13 +9,13 @@ import { AComponent } from './a-component';
 import { css, cx } from 'emotion';
 import { ComponentInfo } from '.';
 import image from './../assets/component-icons/progress-indicator.svg';
-import { DraggableTileList } from '../components';
 import {
 	angularClassNamesFromComponentObj,
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 import { styleObjectToString } from '../ui-fragment/src/utils';
+import { DraggableTileList } from '../sdk/src/draggable-list';
 
 export const AProgressIndicatorSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const handleStepUpdate = (key: string, value: any, index: number) => {

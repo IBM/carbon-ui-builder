@@ -8,7 +8,6 @@ import {
 import { AComponent } from './a-component';
 import { css, cx } from 'emotion';
 import { ComponentInfo } from '.';
-import { DraggableTileList } from '../components';
 
 import image from './../assets/component-icons/dropdown.svg';
 import {
@@ -17,6 +16,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 import { styleObjectToString } from '../ui-fragment/src/utils';
+import { DraggableTileList } from '../sdk/src/draggable-list';
 
 export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
@@ -55,7 +55,7 @@ export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) =>
 	const template = (item: any, index: number) => {
 		return <>
 			<TextInput
-				id={`display-text-input-${item.id}`}
+				id={`display-text-input-${item.id || item.text}`}
 				light
 				value={item.text}
 				labelText='Display text'

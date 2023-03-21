@@ -14,12 +14,12 @@ import {
 } from '../../utils/fragment-tools';
 import { useFragment } from '../../context';
 import {
-	Adder,
 	getParentComponent,
 	updatedState
 } from '../../components';
 import { APlaceholder } from '../a-placeholder';
 import { styleObjectToString } from '../../ui-fragment/src/utils';
+import { Adder } from '../../sdk/src/adder';
 
 export const AAccordionItemSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -117,6 +117,7 @@ export const componentInfo: ComponentInfo = {
 	settingsUI: AAccordionItemSettingsUI,
 	codeUI: AAccordionItemCodeUI,
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline }) => <AAccordionItem
+		key={componentObj.id}
 		componentObj={componentObj}
 		select={select}
 		remove={remove}

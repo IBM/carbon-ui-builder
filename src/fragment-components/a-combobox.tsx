@@ -9,7 +9,6 @@ import {
 import { AComponent } from './a-component';
 import { css, cx } from 'emotion';
 import { ComponentInfo } from '.';
-import { DraggableTileList } from '../components';
 
 import image from './../assets/component-icons/combobox.svg';
 import {
@@ -18,6 +17,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 import { styleObjectToString } from '../ui-fragment/src/utils';
+import { DraggableTileList } from '../sdk/src/draggable-list';
 
 export const AComboBoxSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [

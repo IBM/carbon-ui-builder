@@ -9,8 +9,7 @@ import { useFragment } from '../context';
 import { css, cx } from 'emotion';
 import {
 	getParentComponent,
-	updatedState,
-	Adder
+	updatedState
 } from '../components';
 import image from './../assets/component-icons/radio.svg';
 import {
@@ -19,6 +18,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
 import { styleObjectToString } from '../ui-fragment/src/utils';
+import { Adder } from '../sdk/src/adder';
 
 export const ARadioSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const [fragment] = useFragment();

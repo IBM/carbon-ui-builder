@@ -13,9 +13,9 @@ import {
 	angularClassNamesFromComponentObj,
 	nameStringToVariableString
 } from '../utils/fragment-tools';
-import { DraggableTileList } from '../components';
 import { css, cx } from 'emotion';
 import { styleObjectToString } from '../ui-fragment/src/utils';
+import { DraggableTileList } from '../sdk/src/draggable-list';
 
 const preventCheckEvent = css`
 	pointer-events: none;

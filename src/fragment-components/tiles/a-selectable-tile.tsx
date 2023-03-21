@@ -11,7 +11,6 @@ import { useFragment } from '../../context';
 import { ComponentInfo } from '..';
 import image from '../../assets/component-icons/tile-selectable.svg';
 import {
-	Adder,
 	getParentComponent,
 	updatedState
 } from '../../components';
@@ -22,6 +21,7 @@ import {
 } from '../../utils/fragment-tools';
 import { APlaceholder } from '../a-placeholder';
 import { styleObjectToString } from '../../ui-fragment/src/utils';
+import { Adder } from '../../sdk/src/adder';
 
 export const ASelectableTileSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>

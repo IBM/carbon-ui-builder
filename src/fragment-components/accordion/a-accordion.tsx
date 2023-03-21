@@ -73,6 +73,7 @@ export const componentInfo: ComponentInfo = {
 	component: AAccordion,
 	settingsUI: AAccordionSettingsUI,
 	render: ({ componentObj, select, remove, selected, renderComponents, outline }) => <AAccordion
+		key={componentObj.id}
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
