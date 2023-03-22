@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from '@carbon/react';
 import { CssClasses } from '../types';
+import { stringToCssClassName } from '../utils';
 
 export interface ButtonState {
 	type: string;
@@ -9,9 +10,10 @@ export interface ButtonState {
 	text: string;
 	id: string | number;
 	cssClasses?: CssClasses[];
-	codeContext?: {
+	codeContext: {
 		name: string;
 	};
+	style?: any;
 }
 
 export const UIButton = ({ state }: {
@@ -24,11 +26,20 @@ export const UIButton = ({ state }: {
 		return <></>;
 	}
 
+	let cssClasses = state.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (state.style) {
+		if (cssClasses.length > 0) {
+			cssClasses += ' ';
+		}
+		cssClasses += stringToCssClassName(state.codeContext.name);
+	}
+
 	return <Button
 	kind={state.kind}
 	size={state.size}
 	name={state.codeContext?.name}
-	className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+	className={cssClasses}>
 		{state.text}
 	</Button>;
 };

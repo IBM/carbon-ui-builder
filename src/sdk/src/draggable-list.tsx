@@ -139,8 +139,9 @@ export const DraggableTileList = ({
 			onDragOver={(event: any) => onDragOver(event)}
 			onDragLeave={(event: any) => onDragLeave(event)}
 			className={cx(addDragTargetStyle, (dragging ? addButtonDraggingStyle : css``))}>
-				{!dragging &&
-					<Button
+				{
+					!dragging
+					&& <Button
 						className={addButtonStyle}
 						size="sm"
 						kind="ghost"

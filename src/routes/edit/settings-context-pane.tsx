@@ -4,27 +4,25 @@ import {
 	Checkbox,
 	DefinitionTooltip
 } from '@carbon/react';
-import {
-	ChevronDown,
-	ChevronUp
-} from '@carbon/react/icons';
+import { ChevronDown,ChevronUp } from '@carbon/react/icons';
 import { css, cx } from 'emotion';
 import Editor from '@monaco-editor/react';
 import { throttle } from 'lodash';
 
-import { ComponentCssClassSelector } from '../../components/css-class-selector';
-import { getSelectedComponent, updatedState } from '../../components/fragment';
+import { ComponentCssClassSelector } from '../../sdk/src/css-class-selector';
+import { updatedState } from '../../components/fragment';
 import { allComponents } from '../../fragment-components';
 import { SelectedComponentBreadcrumbs } from './selected-component-breadcrumbs';
-// import { FragmentLayoutWidget } from '../../components/fragment-layout-widget';
 import { GlobalStateContext } from '../../context';
+import { LayoutWidget } from '../../sdk/src/layout-widget';
+import { getSelectedComponent } from '../../sdk/src/tools';
 
 const styleContextPaneStyle = css`
 .cds--form-item.cds--checkbox-wrapper {
 	display: inline-flex;
 }`;
 
-const accordionButtonStyle = css`
+export const accordionButtonStyle = css`
 	display: block;
 	color: #161616;
 	width: 100%;
@@ -76,7 +74,7 @@ const throttledSetFragment = throttle((component: any) => proxySetFragment(compo
 
 export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 	const selectedComponent = getSelectedComponent(fragment);
-	const { settings, setSettings } = useContext(GlobalStateContext);
+	const { settings, setSettings, styleClasses } = useContext(GlobalStateContext);
 
 	const updateContextPaneSettings = (s: any) => {
 		setSettings({
@@ -191,39 +189,48 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 				}
 				</div>
 			}
-			<Button
-			kind='ghost'
-			className={accordionButtonStyle}
-			renderIcon={settings.contextPane?.settings?.customCSSAccordionOpen ? ChevronUp : ChevronDown }
-			onClick={() => updateContextPaneSettings({
-				customCSSAccordionOpen: !settings.contextPane?.settings?.customCSSAccordionOpen
-			})}>
-				Custom CSS classes
-			</Button>
 			{
-				settings.contextPane?.settings?.customCSSAccordionOpen &&
-				<div className={accordionContentStyle}>
+				selectedComponent && <>
+					<Button
+					kind='ghost'
+					className={accordionButtonStyle}
+					renderIcon={settings.contextPane?.settings?.layoutAccordionOpen ? ChevronUp : ChevronDown}
+					onClick={() => updateContextPaneSettings({
+						layoutAccordionOpen: !settings.contextPane?.settings?.layoutAccordionOpen
+					})}>
+						Layout
+					</Button>
 					{
-						!selectedComponent && <ComponentCssClassSelector componentObj={fragment} setComponent={setFragment} />
+						settings.contextPane?.settings?.layoutAccordionOpen &&
+						<div className={accordionContentStyle}>
+							{
+								selectedComponent && <LayoutWidget component={selectedComponent} setComponent={setComponent} />
+							}
+						</div>
 					}
-					{
-						selectedComponent && <ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-					}
-				</div>
+				</>
 			}
 			<Button
 			kind='ghost'
 			className={accordionButtonStyle}
-			renderIcon={settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen ? ChevronUp : ChevronDown}
+			renderIcon={settings.contextPane?.settings?.advancedStylingAccordionOpen ? ChevronUp : ChevronDown}
 			onClick={() => updateContextPaneSettings({
-				fragmentLayoutWidgetAccordionOpen: !settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen
+				advancedStylingAccordionOpen: !settings.contextPane?.settings?.advancedStylingAccordionOpen
 			})}>
-				Layout
+				Advanced styling
 			</Button>
 			{
-				// Commenting out since we removed fragment layout
-				// settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen
-				// && <FragmentLayoutWidget fragment={fragment} setFragment={setFragment} />
+				settings.contextPane?.settings?.advancedStylingAccordionOpen &&
+				<div className={accordionContentStyle}>
+					{
+						!selectedComponent
+						&& <ComponentCssClassSelector componentObj={fragment} setComponent={setFragment} styleClasses={styleClasses} />
+					}
+					{
+						selectedComponent
+						&& <ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} styleClasses={styleClasses} />
+					}
+				</div>
 			}
 			<Button
 			kind='ghost'

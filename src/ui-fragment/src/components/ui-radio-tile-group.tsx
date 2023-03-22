@@ -1,7 +1,11 @@
 import React from 'react';
 import { TileGroup, RadioTile } from '@carbon/react';
 import { CssClasses } from '../types';
-import { renderComponents, setItemInState } from '../utils';
+import {
+	renderComponents,
+	setItemInState,
+	stringToCssClassName
+} from '../utils';
 
 export interface RadioTileGroupState {
 	type: string;
@@ -14,6 +18,7 @@ export interface RadioTileGroupState {
 	codeContext: {
 		name: string;
 	};
+	style?: any;
 }
 
 export interface RadioTileState {
@@ -26,6 +31,7 @@ export interface RadioTileState {
 		name?: string;
 		value: string;
 	};
+	style?: any;
 }
 
 export const UIRadioTileGroup = ({ state, setState, setGlobalState }: {
@@ -38,24 +44,43 @@ export const UIRadioTileGroup = ({ state, setState, setGlobalState }: {
 		return <></>;
 	}
 
+	let cssClasses = state.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (state.style) {
+		if (cssClasses.length > 0) {
+			cssClasses += ' ';
+		}
+		cssClasses += stringToCssClassName(state.codeContext.name);
+	}
+
 	return <TileGroup
 	legend={state.legend}
 	name={state.codeContext?.name}
 	disabled={state.disabled}
 	valueSelected={state.valueSelected}
 	onChange={(radio: string | number) => setState({ ...state, valueSelected: radio })}
-	className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+	className={cssClasses}>
 		{
 			state.items?.map((radioTile: any) => {
 				// NOTE: Carbon requires RadioTile to be a direct child so we can't use UIRadioTile here...
 				const setRadioTile = (i: any) => setItemInState(i, radioTile, setState);
+
+				let radioTileCssClasses = radioTile.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+				if (radioTile.style) {
+					if (radioTileCssClasses.length > 0) {
+						radioTileCssClasses += ' ';
+					}
+					radioTileCssClasses += stringToCssClassName(radioTile.codeContext.name);
+				}
+
 				return <RadioTile
 					key={radioTile.id}
 					light={radioTile.light}
 					id={radioTile.id}
 					name={radioTile.codeContext.name}
 					value={radioTile.codeContext.value}
-					className={radioTile.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+					className={radioTileCssClasses}>
 						{
 							radioTile.items?.map((item: any) => {
 								const setItem = (i: any) => setItemInState(i, item, setRadioTile);

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Loading } from '@carbon/react';
 import { CssClasses } from '../types';
+import { stringToCssClassName } from '../utils';
 
 export interface LoadingState {
 	type: string;
@@ -9,9 +10,10 @@ export interface LoadingState {
 	active?: boolean;
 	overlay?: boolean;
 	cssClasses?: CssClasses[];
-	codeContext?: {
+	codeContext: {
 		name: string;
 	};
+	style?: any;
 }
 
 export const UILoading = ({ state }: {
@@ -24,10 +26,19 @@ export const UILoading = ({ state }: {
 		return <></>;
 	}
 
+	let cssClasses = state.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (state.style) {
+		if (cssClasses.length > 0) {
+			cssClasses += ' ';
+		}
+		cssClasses += stringToCssClassName(state.codeContext.name);
+	}
+
 	return <Loading
 		active={state.active}
 		withOverlay={state.overlay}
 		small={state.size === 'small'}
 		name={state.codeContext?.name}
-		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />;
+		className={cssClasses} />;
 };
