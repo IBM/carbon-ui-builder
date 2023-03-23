@@ -11,7 +11,7 @@ import {
 	Tag,
 	Tooltip
 } from '@carbon/react';
-import { Add } from '@carbon/react/icons';
+import { Add, Information } from '@carbon/react/icons';
 import { leftPane, leftPaneContent } from '.';
 import { GlobalStateContext } from '../../context';
 import { kebabCase } from 'lodash';
@@ -142,9 +142,13 @@ export const StylePane = ({ isActive }: any) => {
 						onClick={addNewStyleClass} />
 				</div>
 				<div className={leftPaneContent}>
-					<div className={css`position: absolute; right 0; top: 3rem; z-index: 1; padding: 1rem;`}>
-						<Tooltip className={css`z-index: 9999;`}>
-							Create the CSS classes and use them in the &quot;Advanced styling&quot; menu on the right of the editor.
+				<div className={css`position: absolute; right 0; top: 3rem; z-index: 1; padding: 1rem;`}>
+						<Tooltip
+							align="right"
+							label="Create the CSS classes and use them in the &quot;Advanced styling&quot; menu on the right of the editor.">
+								<button className="tooltip-trigger" type="button">
+									<Information />
+								</button>
 						</Tooltip>
 					</div>
 					{

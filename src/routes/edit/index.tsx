@@ -97,7 +97,7 @@ const sideRail = css`
 
 export const leftPane = css`
 	position: absolute;
-	background: white;
+	background-color: white;
 	transition: left 0.11s cubic-bezier(0.2, 0, 1, 0.9);
 	width: ${leftPaneWidth};
 	left: -${leftPaneWidth};
@@ -115,7 +115,7 @@ export const leftPane = css`
 export const leftPaneHeader = css`
 	position: fixed;
 	width: 300px;
-	background: white;
+	background-color: white;
 	z-index: 1;
 `;
 
@@ -140,7 +140,7 @@ const rightPanel = css`
 	position: absolute;
 	right: 0;
 	top: 4rem;
-	background: white;
+	background-color: white;
 	min-height: calc(100vh - 7rem);
 	box-shadow: inset 1px 0px #d8d8d8;
 	z-index: 1;

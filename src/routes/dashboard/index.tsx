@@ -27,7 +27,7 @@ const fragmentSort = (sortDirection: SortDirection) => function(a: any, b: any) 
 // styles for the header (title and content switcher)
 // to override carbon styling for <main>
 const headerRowSyles = css`
-	background: white;
+	background-color: white;
 	padding: 0 2rem;
 	margin: 0 -2rem;
 	padding-top: 2rem;

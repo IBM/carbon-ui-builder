@@ -4,7 +4,7 @@ import {
 	Tag,
 	Tooltip
 } from '@carbon/react';
-import { ColorPalette } from '@carbon/react/icons';
+import { ColorPalette, Information } from '@carbon/react/icons';
 import { css } from 'emotion';
 
 const compareClasses = (sc1: any, sc2: any) => sc1.name < sc2.name ? -1 : 1;
@@ -60,8 +60,12 @@ export const CssClassSelector = ({ selectedClasses, setSelectedClasses, styleCla
 			<FormLabel>
 				Available classes
 				<div className={css`display: inline; position: relative; top: 3px;`}>
-					<Tooltip className={css`z-index: 9999;`}>
-						Add or modify classes in the <ColorPalette /> Style menu on the left of the editor
+					<Tooltip
+						label={`Add or modify classes in the ${<ColorPalette />} Style menu on the left of the editor`}
+						className={css`z-index: 9999;`}>
+							<button className="tooltip-trigger" type="button">
+								<Information />
+							</button>
 					</Tooltip>
 				</div>
 			</FormLabel>

@@ -23,7 +23,7 @@ import { openFragmentPreview } from '../../utils/fragment-tools';
 
 const editHeader = css`
 	left: 16rem;
-	background: #fff;
+	background-color: #fff;
 	box-shadow: inset 0px -1px #d8d8d8;
 
 	.edit-wrapper {
