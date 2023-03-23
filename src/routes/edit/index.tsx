@@ -63,7 +63,7 @@ const editPageContent = css`
 		width: calc(100% - ${rightPaneWidth} - ${railWidth});
 		height: calc(100% - 64px);
 		transition: margin-left ${transitionDetails}, width ${transitionDetails};
-		overflow: auto;
+		overflow: visible;
 
 		&.is-side-panel-active {
 			margin-left: calc(${railWidth} + ${leftPaneWidth});
@@ -103,9 +103,8 @@ export const leftPane = css`
 	left: -${leftPaneWidth};
 	height: calc(100% - 4rem);
 	box-shadow: inset -1px 0px #d8d8d8;
-	z-index: 999;
-	overflow-y: auto;
-	overflow-x: hidden;
+	z-index: 8001;
+	overflow: visible;
 
 	&.is-active {
 		left: 0;
@@ -158,7 +157,7 @@ const rightPanel = css`
 	}
 
 	.context-pane-content {
-		overflow: auto;
+		overflow: visible;
 		height: calc(100vh - 15rem);
 
 		div[title='Drag handle'] {

@@ -59,10 +59,9 @@ export const CssClassSelector = ({ selectedClasses, setSelectedClasses, styleCla
 			<br />
 			<FormLabel>
 				Available classes
-				<div className={css`display: inline; position: relative; top: 3px;`}>
+				<div className={css`display: inline; position: relative; top: 3px; margin-left: 0.5rem;`}>
 					<Tooltip
-						label={`Add or modify classes in the ${<ColorPalette />} Style menu on the left of the editor`}
-						className={css`z-index: 9999;`}>
+						label={`Add or modify classes in the ${<ColorPalette />} Style menu on the left of the editor`}>
 							<button className="tooltip-trigger" type="button">
 								<Information />
 							</button>
