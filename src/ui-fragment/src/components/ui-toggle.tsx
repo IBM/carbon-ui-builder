@@ -44,7 +44,7 @@ export const UIToggle = ({ state, setState }: {
 		id={state.codeContext?.name}
 		disabled={state.disabled}
 		size={state.size}
-		checked={!!state.checked}
+		toggled={!!state.checked}
 		onChange={(event: any) => setState({ ...state, checked: event.target.checked })}
 		className={cssClasses} />;
 };

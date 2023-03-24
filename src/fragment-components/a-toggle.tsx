@@ -110,7 +110,7 @@ export const AToggle = ({
 			<Toggle
 				size={componentObj.size}
 				disabled={componentObj.disabled}
-				checked={componentObj.checked}
+				toggled={componentObj.checked}
 				id={componentObj.id}
 				labelA={componentObj.offText}
 				labelB={componentObj.onText}
@@ -175,7 +175,7 @@ export const componentInfo: ComponentInfo = {
 					${json.checked ? `toggled="${json.checked}"` : ''}
 					size="${json.size}"
 					id="${json.codeContext?.name}"
-					checked={state["${json.codeContext?.name}"]?.checked}
+					toggled={state["${json.codeContext?.name}"]?.checked}
 					onToggle={(checked) => handleInputChange({
 						target: {
 							name: "${json.codeContext?.name}",
