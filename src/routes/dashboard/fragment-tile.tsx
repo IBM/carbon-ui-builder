@@ -79,30 +79,31 @@ export const FragmentTile = ({
 							}
 							<span>{lastModified ? lastModified : 'Last modified date unknown'}</span>
 						</div>
-						<OverflowMenu
-						className='fragment-overflow'
-						ariaLabel='Fragment options'
-						iconDescription='fragment menu'
-						onClick={(event: { stopPropagation: () => void }) => event.stopPropagation()}>
-							{
-								!isFeaturedFragment && <OverflowMenuItem
-									itemText={<div className={menuItemStyle}><Edit size={16} /> Edit</div>}
-									onClick={() => navigate(`/edit/${fragment.id}`)} />
-							}
-							<OverflowMenuItem
-								itemText={<div className={menuItemStyle}><DocumentExport size={16} /> Export</div>}
-								onClick={() => showFragmentExportModal(fragment)} />
-							<OverflowMenuItem
-								itemText={<div className={menuItemStyle}><Copy size={16} /> Duplicate</div>}
-								onClick={() => showFragmentDuplicateModal(fragment)} />
-							<OverflowMenuItem
-								itemText={<div className={menuItemStyle}><View size={16} /> Open preview</div>}
-								onClick={() => showFragmentPreviewModal(fragment, fragments, isFeaturedFragment)} />
-							<OverflowMenuItem
-								itemText={<div className={menuItemStyle}><TrashCan size={16} /> Delete</div>}
-								onClick={() => showFragmentDeleteModal(fragment.id)}
-								isDelete />
-						</OverflowMenu>
+						<span className='fragment-overflow'>
+							<OverflowMenu
+							ariaLabel='Fragment options'
+							iconDescription='fragment menu'
+							onClick={(event: { stopPropagation: () => void }) => event.stopPropagation()}>
+								{
+									!isFeaturedFragment && <OverflowMenuItem
+										itemText={<div className={menuItemStyle}><Edit size={16} /> Edit</div>}
+										onClick={() => navigate(`/edit/${fragment.id}`)} />
+								}
+								<OverflowMenuItem
+									itemText={<div className={menuItemStyle}><DocumentExport size={16} /> Export</div>}
+									onClick={() => showFragmentExportModal(fragment)} />
+								<OverflowMenuItem
+									itemText={<div className={menuItemStyle}><Copy size={16} /> Duplicate</div>}
+									onClick={() => showFragmentDuplicateModal(fragment)} />
+								<OverflowMenuItem
+									itemText={<div className={menuItemStyle}><View size={16} /> Open preview</div>}
+									onClick={() => showFragmentPreviewModal(fragment, fragments, isFeaturedFragment)} />
+								<OverflowMenuItem
+									itemText={<div className={menuItemStyle}><TrashCan size={16} /> Delete</div>}
+									onClick={() => showFragmentDeleteModal(fragment.id)}
+									isDelete />
+							</OverflowMenu>
+						</span>
 					</div>
 				</div>
 			</Tile>
