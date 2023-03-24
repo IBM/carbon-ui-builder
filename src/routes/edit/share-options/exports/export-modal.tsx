@@ -167,9 +167,9 @@ export const ExportModal = () => {
 						<div className={titleWrapper}>
 							<h3>Angular Code</h3>
 							<a
-								href={generateSandboxUrl(createFragmentSandbox(angularCode))}
-								target='_blank'
-								rel='noopener noreferrer'>
+							href={generateSandboxUrl(createFragmentSandbox(angularCode))}
+							target='_blank'
+							rel='noopener noreferrer'>
 								Edit on CodeSandbox
 							</a>
 						</div>
