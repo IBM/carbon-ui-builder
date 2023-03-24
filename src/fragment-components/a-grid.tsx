@@ -211,7 +211,7 @@ export const componentInfo: ComponentInfo = {
 			}
 		},
 		react: {
-			imports: ['Grid', 'Column', 'Row'],
+			imports: ['FlexGrid', 'Column', 'Row'],
 			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<FlexGrid ${reactClassNamesFromComponentObj(json)}>
 					${json.items.map((row: any) => `<Row ${reactClassNamesFromComponentObj(row)}>
