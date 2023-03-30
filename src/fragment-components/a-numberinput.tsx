@@ -238,23 +238,24 @@ export const componentInfo: ComponentInfo = {
 			imports: ['NumberInput'],
 			code: ({ json }) => {
 				return `<NumberInput
+					id="${json.id}"
 					size="${json.size}"
 					name="${json.codeContext?.name}"
 					helperText="${json.helperText}"
-					min="${json.min}"
-					max="${json.max}"
-					step="${json.step}"
+					min={${json.min}}
+					max={${json.max}}
+					step={${json.step}}
 					label="${json.label}"
 					${json.warnText !== undefined && json.warnText !== '' ? `warnText="${json.warnText}"` : ''}
-					${json.warn !== undefined ? `warn="${json.warn}"` : ''}
-					${json.hideLabel !== undefined ? `hideLabel="${json.hideLabel}"` : ''}
-					${json.hideSteppers !== undefined ? `hideSteppers="${json.hideSteppers}"` : ''}
-					${json.disabled !== undefined ? `disabled="${json.disabled}"` : ''}
-					${json.readOnly !== undefined ? `readOnly="${json.readOnly}"` : ''}
-					${json.invalid !== undefined ? `invalid="${json.invalid}"` : ''}
+					${json.warn !== undefined ? `warn={${json.warn}}` : ''}
+					${json.hideLabel !== undefined ? `hideLabel={${json.hideLabel}}` : ''}
+					${json.hideSteppers !== undefined ? `hideSteppers={${json.hideSteppers}}` : ''}
+					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
+					${json.readOnly !== undefined ? `readOnly={${json.readOnly}}` : ''}
+					${json.invalid !== undefined ? `invalid={${json.invalid}}` : ''}
 					${json.invalidText !== undefined ? `invalidText="${json.invalidText}"` : ''}
-					${json.light !== undefined ? `light="${json.light}"` : ''}
-					${json.allowEmpty !== undefined ? `allowEmpty="${json.allowEmpty}"` : ''}
+					${json.light !== undefined ? `light={${json.light}}` : ''}
+					${json.allowEmpty !== undefined ? `allowEmpty={${json.allowEmpty}}` : ''}
 					value={state["${json.codeContext?.name}"]}
 					${reactClassNamesFromComponentObj(json)}
 					onChange={handleInputChange} />`;
