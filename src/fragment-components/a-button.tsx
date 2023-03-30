@@ -8,7 +8,12 @@ import { css, cx } from 'emotion';
 import { AComponent, ComponentInfo } from './a-component';
 
 import image from './../assets/component-icons/button.svg';
-import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
+import {
+	angularClassNamesFromComponentObj,
+	nameStringToVariableString,
+	reactClassNamesFromComponentObj
+} from '../utils/fragment-tools';
+import { getItemCode } from '../routes/edit/share-options/exports/frameworks/angular/utils';
 import { styleObjectToString } from '../ui-fragment/src/utils';
 
 export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
@@ -119,19 +124,23 @@ export const componentInfo: ComponentInfo = {
 		type: 'button',
 		kind: 'primary',
 		text: 'Button',
-		size: ''
+		size: '',
+		disabled: false
 	},
 	image,
 	codeExport: {
 		angular: {
 			inputs: (_) => '',
-			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
+			outputs: ({ json }) => {
+				const name = nameStringToVariableString(json.codeContext?.name);
+				return `@Output() ${name}Clicked = new EventEmitter()`;
+			},
 			imports: ['ButtonModule'],
-			code: ({ json }) => {
+			code: ({ json, signals, slots }) => {
 				return `<button
 					${json.kind ? `ibmButton='${json.kind}'` : 'ibmButton'}
 					${json.size ? `size='${json.size === 'default' ? 'normal' : json.size}'` : ''}
-					(click)='${nameStringToVariableString(json.codeContext?.name)}Clicked.emit()'
+					${getItemCode(signals, slots, json.id, json.codeContext?.name)}
 					${angularClassNamesFromComponentObj(json)}>
 						${json.text}
 				</button>`;

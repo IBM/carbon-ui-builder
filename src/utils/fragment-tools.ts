@@ -1,7 +1,7 @@
 import React from 'react';
 import domtoimage from 'dom-to-image';
 import ReactDOM from 'react-dom';
-import { camelCase, kebabCase, uniq, upperFirst } from 'lodash';
+import { camelCase, kebabCase, uniq, upperFirst, isEmpty } from 'lodash';
 import { matchPath } from 'react-router-dom';
 import { getAllFragmentStyleClasses, stringToCssClassName } from '../ui-fragment/src/utils';
 import { UIFragment } from '../ui-fragment/src/ui-fragment';
@@ -276,4 +276,23 @@ export const getFragmentJsonExport = (fragment: any, fragments: any[], styleClas
 
 export const getFragmentJsonExportString = (fragment: any, fragments: any[], styleClasses: any[]) => {
 	return JSON.stringify(getFragmentJsonExport(fragment, fragments, styleClasses), null, 2);
+};
+
+export const getFragmentById = (json: any, id: string): any => {
+	if (json.id === id) {
+		return json;
+	}
+
+	if (json.data) {
+		return getFragmentById(json.data, id);
+	}
+
+	if (json.items) {
+		for (const item of json.items) {
+			const res = getFragmentById(item, id);
+			if (!isEmpty(res)) {
+				return res;
+			}
+		}
+	}
 };

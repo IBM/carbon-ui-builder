@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { GlobalStateContext } from '../../../../../../context';
 import { getAllFragmentStyleClasses } from '../../../../../../ui-fragment/src/utils';
 import { classNameFromFragment, hasFragmentStyleClasses, tagNameFromFragment } from '../../../../../../utils/fragment-tools';
-import { format } from '../utils';
+import { action, format } from '../utils';
 import {
 	formatOptionsCss,
 	formatOptionsHtml,
@@ -10,11 +10,13 @@ import {
 	getAllSubfragments,
 	getAngularInputsFromJson,
 	getAngularOutputsFromJson,
+	getIdContextNameMap,
+	getVariables,
 	jsonToAngularImports,
 	jsonToTemplate
 } from './utils';
 
-const getComponentCode = (fragment: any, fragments: any[]) => {
+const getComponentCode = (fragment: any, signals: any, slots: any, fragments: any[]) => {
 	const componentCode: any = {};
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { styleClasses: globalStyleClasses } = useContext(GlobalStateContext);
@@ -29,30 +31,30 @@ const getComponentCode = (fragment: any, fragments: any[]) => {
 			styleUrls: ['./${tagNameFromFragment(fragment)}.component.scss']` : ''}
 		})
 		export class ${classNameFromFragment(fragment)} {
+			${getVariables(slots)}
 			${getAngularInputsFromJson(fragment.data)}
-			${getAngularOutputsFromJson(fragment.data)}
+			${getAngularOutputsFromJson(fragment.data, signals, slots)}
 		}
 	`, formatOptionsTypescript);
 
 	// component.html
 	componentCode[`src/app/components/${tagNameFromFragment(fragment)}/${tagNameFromFragment(fragment)}.component.html`] =
-		format(jsonToTemplate(fragment.data, fragments), formatOptionsHtml);
+		format(jsonToTemplate(fragment.data, signals, slots, fragments), formatOptionsHtml);
 
 	// module.ts
 	componentCode[`src/app/components/${tagNameFromFragment(fragment)}/${tagNameFromFragment(fragment)}.module.ts`] = format(
 		`import { NgModule } from "@angular/core";
 		import { ${jsonToAngularImports(fragment.data).join(', ')} } from 'carbon-components-angular';
 		import { ${classNameFromFragment(fragment)} } from "./${tagNameFromFragment(fragment)}.component";
-		${
-			Object.values(subFragments).map((f) =>
-				`import { ${classNameFromFragment(f)}Module} from "../${tagNameFromFragment(f)}/${tagNameFromFragment(f)}.module";`).join('\n')
+		${Object.values(subFragments).map((f) =>
+			`import { ${classNameFromFragment(f)}Module} from "../${tagNameFromFragment(f)}/${tagNameFromFragment(f)}.module";`).join('\n')
 		}
 
 		@NgModule({
 			imports: [${[
-				...jsonToAngularImports(fragment.data),
-				...Object.values(subFragments).map((fragment) => `${classNameFromFragment(fragment)}Module`)
-			].join(', ')}],
+			...jsonToAngularImports(fragment.data),
+			...Object.values(subFragments).map((fragment) => `${classNameFromFragment(fragment)}Module`)
+		].join(', ')}],
 			declarations: [${classNameFromFragment(fragment)}],
 			exports: [${classNameFromFragment(fragment)}]
 		})
@@ -75,14 +77,14 @@ const getComponentCode = (fragment: any, fragments: any[]) => {
 	return componentCode;
 };
 
-const getAllComponentsCode = (json: any, fragments: any[]) => {
+const getAllComponentsCode = (json: any, signals: any, slots: any, fragments: any[]) => {
 	let allComponents: any = {};
 
 	if (json.data) {
 		allComponents = {
 			...allComponents,
-			...getComponentCode(json, fragments),
-			...getAllComponentsCode(json.data, fragments)
+			...getComponentCode(json, signals, slots, fragments),
+			...getAllComponentsCode(json.data, signals, slots, fragments)
 		};
 	}
 
@@ -91,26 +93,79 @@ const getAllComponentsCode = (json: any, fragments: any[]) => {
 
 		allComponents = {
 			...allComponents,
-			...getComponentCode(fragment, fragments),
-			...getAllComponentsCode(fragment.data, fragments)
+			...getComponentCode(fragment, signals, slots, fragments),
+			...getAllComponentsCode(fragment.data, signals, slots, fragments)
 		};
 	}
 
 	json.items?.forEach((item: any) => {
 		allComponents = {
 			...allComponents,
-			...getAllComponentsCode(item, fragments)
+			...getAllComponentsCode(item, signals, slots, fragments)
 		};
 	});
 
 	return allComponents;
 };
 
+const getActions = (data: any) => {
+	const signals: any = {};
+	const slots: any = {};
+	if (data.actions) {
+		data.actions.forEach((action: action) => {
+			const itemIdsWithActions = new Set(
+				data.actions
+					.map((action: action) => [action.source, action.destination])
+					.flat()
+			);
+
+			const idContextNameMap = getIdContextNameMap(
+				data,
+				itemIdsWithActions,
+				{}
+			);
+
+			if (!signals[action.source]) {
+				signals[action.source] = {
+					contextName: idContextNameMap[action.source],
+					events: {}
+				};
+			}
+
+			if (!signals[action.source].events[action.signal]) {
+				signals[action.source].events[action.signal] = {};
+			}
+			if (!signals[action.source].events[action.signal][action.destination]) {
+				signals[action.source].events[action.signal][action.destination] = [];
+			}
+			signals[action.source].events[action.signal][action.destination].push({
+				property: action.slot,
+				value: JSON.parse(action.slot_param)
+			});
+
+			if (!slots[action.destination]) {
+				slots[action.destination] = {
+					contextName: idContextNameMap[action.destination],
+					events: {}
+				};
+			}
+			slots[action.destination].events[action.slot] = JSON.parse(
+				action.slot_param
+			);
+		});
+	}
+
+	return {
+		signals: signals,
+		slots: slots
+	};
+};
+
 export const createAngularApp = (fragment: any, fragments: any[]) => {
 	const tagName = tagNameFromFragment(fragment);
 	const className = classNameFromFragment(fragment);
-
-	const allComponents = getAllComponentsCode(fragment, fragments);
+	const { signals, slots } = getActions(fragment.data);
+	const allComponents = getAllComponentsCode(fragment, signals, slots, fragments);
 
 	const appComponentHtml =
 		`<app-${tagName}></app-${tagName}>
