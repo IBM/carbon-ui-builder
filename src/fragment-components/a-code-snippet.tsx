@@ -6,11 +6,12 @@ import {
 	Checkbox
 } from 'carbon-components-react';
 import { AComponent } from './a-component';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { ComponentInfo } from '.';
 import Editor from '@monaco-editor/react';
 import image from './../assets/component-icons/code-snippet.svg';
 import { nameStringToVariableString } from '../utils/fragment-tools';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const variantItems = [
@@ -98,7 +99,10 @@ export const ACodeSnippet = ({
 			<CodeSnippet
 			light={componentObj.light}
 			type={componentObj.variant}
-			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+			className={cx(
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				css`${styleObjectToString(componentObj.style)}`
+			)}>
 				{componentObj.code}
 			</CodeSnippet>
 		</AComponent>

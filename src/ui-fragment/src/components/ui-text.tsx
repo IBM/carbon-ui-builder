@@ -1,12 +1,17 @@
 import React from 'react';
 import { CssClasses } from '../types';
+import { stringToCssClassName } from '../utils';
 
 export interface TextState {
 	type: string;
 	text?: string;
 	richText?: string;
 	isSection?: boolean;
+	style?: any;
 	cssClasses?: CssClasses[];
+	codeContext: {
+		name: string;
+	};
 }
 
 export const UIText = ({ state }: {
@@ -19,7 +24,14 @@ export const UIText = ({ state }: {
 		return <></>;
 	}
 
-	const cssClasses = state.cssClasses?.map((cc: any) => cc.id).join(' ');
+	let cssClasses = state.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (state.style) {
+		if (cssClasses.length > 0) {
+			cssClasses += ' ';
+		}
+		cssClasses += stringToCssClassName(state.codeContext.name);
+	}
 
 	if (state.richText) {
 		if (state.isSection) {

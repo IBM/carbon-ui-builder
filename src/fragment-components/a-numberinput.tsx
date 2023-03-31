@@ -6,11 +6,12 @@ import {
 	NumberInput
 } from 'carbon-components-react';
 import { AComponent } from './a-component';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/number-input.svg';
 import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 export const ANumberInputSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
@@ -125,23 +126,18 @@ export const ANumberInputSettingsUI = ({ selectedComponent, setComponent }: any)
 	</>;
 };
 
-export const ANumberInputCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return (
-		<TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>
-	);
-};
+export const ANumberInputCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const ANumberInput = ({
 	componentObj,
@@ -155,6 +151,7 @@ export const ANumberInput = ({
 		rejectDrop={true}
 		{...rest}>
 			<NumberInput
+				id={componentObj.id}
 				size={componentObj.size}
 				helperText={componentObj.helperText}
 				warn={componentObj.warn}
@@ -170,7 +167,10 @@ export const ANumberInput = ({
 				invalidText={componentObj.invalidText}
 				light={componentObj.light}
 				allowEmpty={componentObj.allowEmpty}
-				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}
+				className={cx(
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					css`${styleObjectToString(componentObj.style)}`
+				)}
 				type='number' />
 		</AComponent>
 	);
@@ -238,23 +238,24 @@ export const componentInfo: ComponentInfo = {
 			imports: ['NumberInput'],
 			code: ({ json }) => {
 				return `<NumberInput
+					id="${json.id}"
 					size="${json.size}"
 					name="${json.codeContext?.name}"
 					helperText="${json.helperText}"
-					min="${json.min}"
-					max="${json.max}"
-					step="${json.step}"
+					min={${json.min}}
+					max={${json.max}}
+					step={${json.step}}
 					label="${json.label}"
 					${json.warnText !== undefined && json.warnText !== '' ? `warnText="${json.warnText}"` : ''}
-					${json.warn !== undefined ? `warn="${json.warn}"` : ''}
-					${json.hideLabel !== undefined ? `hideLabel="${json.hideLabel}"` : ''}
-					${json.hideSteppers !== undefined ? `hideSteppers="${json.hideSteppers}"` : ''}
-					${json.disabled !== undefined ? `disabled="${json.disabled}"` : ''}
-					${json.readOnly !== undefined ? `readOnly="${json.readOnly}"` : ''}
-					${json.invalid !== undefined ? `invalid="${json.invalid}"` : ''}
+					${json.warn !== undefined ? `warn={${json.warn}}` : ''}
+					${json.hideLabel !== undefined ? `hideLabel={${json.hideLabel}}` : ''}
+					${json.hideSteppers !== undefined ? `hideSteppers={${json.hideSteppers}}` : ''}
+					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
+					${json.readOnly !== undefined ? `readOnly={${json.readOnly}}` : ''}
+					${json.invalid !== undefined ? `invalid={${json.invalid}}` : ''}
 					${json.invalidText !== undefined ? `invalidText="${json.invalidText}"` : ''}
-					${json.light !== undefined ? `light="${json.light}"` : ''}
-					${json.allowEmpty !== undefined ? `allowEmpty="${json.allowEmpty}"` : ''}
+					${json.light !== undefined ? `light={${json.light}}` : ''}
+					${json.allowEmpty !== undefined ? `allowEmpty={${json.allowEmpty}}` : ''}
 					value={state["${json.codeContext?.name}"]}
 					${reactClassNamesFromComponentObj(json)}
 					onChange={handleInputChange} />`;

@@ -5,7 +5,7 @@ import {
 	TextInput
 } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from '../a-component';
-
+import { css, cx } from 'emotion';
 import image from '../../assets/component-icons/accordion-item.svg';
 import {
 	angularClassNamesFromComponentObj,
@@ -14,11 +14,12 @@ import {
 } from '../../utils/fragment-tools';
 import { useFragment } from '../../context';
 import {
-	Adder,
 	getParentComponent,
 	updatedState
 } from '../../components';
 import { APlaceholder } from '../a-placeholder';
+import { styleObjectToString } from '../../ui-fragment/src/utils';
+import { Adder } from '../../sdk/src/adder';
 
 export const AAccordionItemSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -45,22 +46,19 @@ export const AAccordionItemSettingsUI = ({ selectedComponent, setComponent }: an
 	</>;
 };
 
-export const AAccordionItemCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-		id='accordion-item-input-name-text-input'
-		value={selectedComponent.codeContext?.name}
-		labelText='Input name'
-		onChange={(event: any) => {
-			setComponent({
-				...selectedComponent,
-				codeContext: {
-					...selectedComponent.codeContext,
-					name: event.currentTarget.value
-				}
-			});
-		}}
-	/>;
-};
+export const AAccordionItemCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	id='accordion-item-input-name-text-input'
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const AAccordionItem = ({
 	children,
@@ -100,7 +98,10 @@ export const AAccordionItem = ({
 				<AccordionItem
 				title={componentObj.title}
 				disabled={componentObj.disabled}
-				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+				className={cx(
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					css`${styleObjectToString(componentObj.style)}`
+				)}>
 					{
 						children && children.length > 0 ? children : <APlaceholder componentObj={componentObj} select={rest.select} />
 					}
@@ -116,6 +117,7 @@ export const componentInfo: ComponentInfo = {
 	settingsUI: AAccordionItemSettingsUI,
 	codeUI: AAccordionItemCodeUI,
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline }) => <AAccordionItem
+		key={componentObj.id}
 		componentObj={componentObj}
 		select={select}
 		remove={remove}

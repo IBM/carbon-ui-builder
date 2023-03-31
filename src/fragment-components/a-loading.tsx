@@ -7,13 +7,15 @@ import {
 } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { ComponentInfo } from '.';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import image from './../assets/component-icons/loading.svg';
 import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj,
 	angularClassNamesFromComponentObj
 } from '../utils/fragment-tools';
+import { styleObjectToString } from '../ui-fragment/src/utils';
+
 const overlayStyle = css`
 .bx--loading-overlay {
 	position: absolute;
@@ -87,7 +89,10 @@ export const ALoading = ({
 				active={componentObj.active}
 				withOverlay={componentObj.overlay}
 				small={componentObj.size === 'small'}
-				className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} />
+				className={cx(
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					css`${styleObjectToString(componentObj.style)}`
+				)} />
 		</AComponent>
 	);
 };

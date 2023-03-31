@@ -8,6 +8,8 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
+import { css, cx } from 'emotion';
+import { styleObjectToString } from '../../ui-fragment/src/utils';
 
 export const AAccordionSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
@@ -57,7 +59,10 @@ export const AAccordion = ({
 			<Accordion
 			align={componentObj.align}
 			size={componentObj.size}
-			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+			className={cx(
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				css`${styleObjectToString(componentObj.style)}`
+			)}>
 				{children}
 			</Accordion>
 		</AComponent>
@@ -68,6 +73,7 @@ export const componentInfo: ComponentInfo = {
 	component: AAccordion,
 	settingsUI: AAccordionSettingsUI,
 	render: ({ componentObj, select, remove, selected, renderComponents, outline }) => <AAccordion
+		key={componentObj.id}
 		componentObj={componentObj}
 		select={select}
 		remove={remove}

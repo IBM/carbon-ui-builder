@@ -2,9 +2,10 @@ import React from 'react';
 
 import { Breadcrumb, BreadcrumbItem } from 'carbon-components-react';
 
-import { getParentComponent, getSelectedComponent } from '../../components/fragment';
+import { getParentComponent } from '../../components/fragment';
 import { useFragment } from '../../context';
 import { css } from 'emotion';
+import { getSelectedComponent } from '../../sdk/src/tools';
 
 const getAncestors = (state: any, component: any) => {
 	const ancestors: any[] = [];

@@ -6,12 +6,11 @@ import {
 } from 'carbon-components-react';
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { useFragment } from '../../context';
 import { ComponentInfo } from '..';
 import image from '../../assets/component-icons/tile-selectable.svg';
 import {
-	Adder,
 	getParentComponent,
 	updatedState
 } from '../../components';
@@ -21,6 +20,8 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 import { APlaceholder } from '../a-placeholder';
+import { styleObjectToString } from '../../ui-fragment/src/utils';
+import { Adder } from '../../sdk/src/adder';
 
 export const ASelectableTileSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -78,8 +79,7 @@ export const ASelectableTileCodeUI = ({ selectedComponent, setComponent }: any) 
 						name: event.currentTarget.value
 					}
 				});
-			}}
-		/>
+			}} />
 		<TextInput
 			value={selectedComponent.codeContext?.title || ''}
 			labelText='Title'
@@ -92,8 +92,7 @@ export const ASelectableTileCodeUI = ({ selectedComponent, setComponent }: any) 
 						title: event.currentTarget.value
 					}
 				});
-			}}
-		/>
+			}} />
 		<TextInput
 			value={selectedComponent.codeContext?.value || ''}
 			labelText='Value'
@@ -106,8 +105,7 @@ export const ASelectableTileCodeUI = ({ selectedComponent, setComponent }: any) 
 						value: event.currentTarget.value
 					}
 				});
-			}}
-		/>
+			}} />
 	</>;
 };
 
@@ -178,7 +176,11 @@ export const ASelectableTile = ({
 					light={componentObj.light}
 					selected={componentObj.selected}
 					disabled={componentObj.disabled}
-					className={`${preventCheckEvent} ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}`}
+					className={cx(
+						preventCheckEvent,
+						componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+						css`${styleObjectToString(componentObj.style)}`
+					)}
 					onDrop={onDrop}>
 						{
 							children && children.length > 0 ? children : <APlaceholder componentObj={componentObj} select={rest.select} />

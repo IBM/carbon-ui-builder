@@ -3,7 +3,8 @@ import {
 	Accordion,
 	AccordionItem,
 	Column,
-	NumberInput
+	NumberInput,
+	TextInput
 } from 'carbon-components-react';
 import { Add32, Help32 } from '@carbon/icons-react';
 import { css, cx } from 'emotion';
@@ -12,6 +13,7 @@ import { useFragment } from '../context';
 import { getParentComponent, updatedState } from '../components';
 import { ComponentInfo } from '.';
 import { APlaceholder } from './a-placeholder';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 const helpIconStyle = css`
 	color: #525252;
@@ -193,6 +195,19 @@ const iconStyle = css`
 	float: right;
 	cursor: pointer`;
 
+export const AColumnCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
+
 export const AColumn = ({
 	children,
 	componentObj,
@@ -251,7 +266,11 @@ export const AColumn = ({
 		// to position right add icon
 		<Column
 		onDrop={onDrop}
-		className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`position: relative`)}
+		className={cx(
+			componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+			css`position: relative`,
+			css`${styleObjectToString(componentObj.style)}`
+		)}
 		sm={{
 			span: componentObj.smallSpan || undefined,
 			offset: componentObj.smallOffset || undefined
@@ -320,8 +339,10 @@ export const AColumn = ({
 
 export const componentInfo: ComponentInfo = {
 	component: AColumn,
+	codeUI: AColumnCodeUI,
 	settingsUI: AColumnSettingsUI,
 	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline }) => <AColumn
+		key={componentObj.id}
 		componentObj={componentObj}
 		select={select}
 		remove={remove}

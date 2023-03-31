@@ -6,15 +6,16 @@ import {
 	TextInput
 } from 'carbon-components-react';
 import { AComponent } from './a-component';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { ComponentInfo } from '.';
 import image from './../assets/component-icons/progress-indicator.svg';
-import { DraggableTileList } from '../components';
 import {
 	angularClassNamesFromComponentObj,
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
+import { styleObjectToString } from '../ui-fragment/src/utils';
+import { DraggableTileList } from '../sdk/src/draggable-list';
 
 export const AProgressIndicatorSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const handleStepUpdate = (key: string, value: any, index: number) => {
@@ -98,22 +99,19 @@ export const AProgressIndicatorSettingsUI = ({ selectedComponent, setComponent }
 	</>;
 };
 
-export const AProgressIndicatorCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return <TextInput
-		id='progress-indicator-input-name-text-input'
-		value={selectedComponent.codeContext?.name}
-		labelText='Input name'
-		onChange={(event: any) => {
-			setComponent({
-				...selectedComponent,
-				codeContext: {
-					...selectedComponent.codeContext,
-					name: event.currentTarget.value
-				}
-			});
-		}}
-	/>;
-};
+export const AProgressIndicatorCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	id='progress-indicator-input-name-text-input'
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const AProgressIndicator = ({
 	componentObj,
@@ -128,7 +126,10 @@ export const AProgressIndicator = ({
 			<ProgressIndicator
 			currentIndex={componentObj.currentIndex}
 			vertical={componentObj.isVertical}
-			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+			className={cx(
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				css`${styleObjectToString(componentObj.style)}`
+			)}>
 				{
 					componentObj.progressSteps.map((step: any, index: number) => (
 						<ProgressStep {...step} key={index} />
