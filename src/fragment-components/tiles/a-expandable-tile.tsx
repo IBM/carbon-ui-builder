@@ -165,16 +165,14 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Expanded = ${json.expanded}`,
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Expanded = ${json.expanded};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : 'dark'}';`,
 			outputs: () => '',
 			imports: ['TilesModule'],
 			code: ({ json, fragments, jsonToTemplate }) => {
 				const { aboveFold, belowFold } = getFoldObjects(json);
-				/**
-				 * @todo - CCA does not support light
-				 * https://github.com/IBM/carbon-components-angular/issues/1999
-				 */
 				return `<ibm-expandable-tile
+					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 					${json.expanded !== undefined ? `[expanded]="${nameStringToVariableString(json.codeContext?.name)}Expanded"` : ''}
 					${angularClassNamesFromComponentObj(json)}>
 						<span class="bx--tile-content__above-the-fold">

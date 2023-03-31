@@ -134,15 +134,13 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Href = '${json.href}';
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled || false}`,
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled || false};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : 'dark'}';`,
 			outputs: (_) => '',
 			imports: ['TilesModule'],
 			code: ({ json, fragments, jsonToTemplate }) => {
-				/**
-				 * @todo - CCA does not support light
-				 * https://github.com/IBM/carbon-components-angular/issues/1999
-				 */
 				return `<ibm-clickable-tile
+					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 					[href]=${nameStringToVariableString(json.codeContext?.name)}Href
 					[disabled]=${nameStringToVariableString(json.codeContext?.name)}Disabled
 					${angularClassNamesFromComponentObj(json)}>
