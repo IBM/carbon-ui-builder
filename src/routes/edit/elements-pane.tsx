@@ -42,7 +42,9 @@ export const ElementsPane = ({ isActive }: any) => {
 	const [fragment, setFragment] = useFragment();
 	const { fragments, settings, setSettings } = useContext(GlobalStateContext);
 
-	const isLayoutWidgetOpen = settings.layoutWidget?.isAccordionOpen;
+	const isLayoutWidgetOpen = settings.layoutWidget?.isAccordionOpen === undefined
+		? true // open by default
+		: settings.layoutWidget?.isAccordionOpen;
 	const setIsLayoutWidgetOpen = (is = true) => {
 		setSettings({
 			...settings,

@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
 import {
 	Row,
-	Checkbox
+	Checkbox,
+	TextInput
 } from 'carbon-components-react';
 import { Add32 } from '@carbon/icons-react';
 import { AComponent } from './a-component';
@@ -71,6 +72,19 @@ const iconStyle = css`
 	width: 1rem;
 	float: right;
 	cursor: pointer`;
+
+export const ARowCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const ARow = ({
 	children,
@@ -199,6 +213,7 @@ export const ARow = ({
 
 export const componentInfo: ComponentInfo = {
 	component: ARow,
+	codeUI: ARowCodeUI,
 	settingsUI: ARowSettingsUI,
 	keywords: ['grid', 'row'],
 	name: 'Row',

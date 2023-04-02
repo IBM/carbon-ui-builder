@@ -3,7 +3,7 @@ import domtoimage from 'dom-to-image';
 import ReactDOM from 'react-dom';
 import { camelCase, kebabCase, uniq, upperFirst } from 'lodash';
 import { matchPath } from 'react-router-dom';
-import { getAllFragmentStyleClasses } from '../ui-fragment/src/utils';
+import { getAllFragmentStyleClasses, stringToCssClassName } from '../ui-fragment/src/utils';
 import { UIFragment } from '../ui-fragment/src/ui-fragment';
 
 export const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -180,19 +180,35 @@ export const openFragmentPreview = (fragment: any) => {
 	);
 };
 
-export const reactClassNamesFromComponentObj = (componentObj: any) =>
-	componentObj.cssClasses
-		&& Array.isArray(componentObj.cssClasses)
-		&& componentObj.cssClasses.length > 0
-		? `className='${componentObj.cssClasses.map((cc: any) => cc.id).join(' ')}'`
-		: '';
+export const reactClassNamesFromComponentObj = (componentObj: any) => {
+	let classList = componentObj.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
 
-export const angularClassNamesFromComponentObj = (componentObj: any) =>
-	componentObj.cssClasses
-		&& Array.isArray(componentObj.cssClasses)
-		&& componentObj.cssClasses.length > 0
-		? `class='${componentObj.cssClasses.map((cc: any) => cc.id).join(' ')}'`
+	if (componentObj.style) {
+		if (classList.length > 0) {
+			classList += ' ';
+		}
+		classList += stringToCssClassName(componentObj.codeContext.name);
+	}
+
+	return classList.length > 0
+		? `className='${classList}'`
 		: '';
+};
+
+export const angularClassNamesFromComponentObj = (componentObj: any) => {
+	let classList = componentObj.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (componentObj.style) {
+		if (classList.length > 0) {
+			classList += ' ';
+		}
+		classList += stringToCssClassName(componentObj.codeContext.name);
+	}
+
+	return classList.length > 0
+		? `class='${classList}'`
+		: '';
+};
 
 export const nameStringToVariableString = (name: string) => camelCase(name);
 

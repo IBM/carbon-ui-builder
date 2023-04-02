@@ -124,23 +124,18 @@ export const ASearchInputSettingsUI = ({ selectedComponent, setComponent }: any)
 	</>;
 };
 
-export const ASearchInputCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return (
-		<TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>
-	);
-};
+export const ASearchInputCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const ASearchInput = ({
 	componentObj,

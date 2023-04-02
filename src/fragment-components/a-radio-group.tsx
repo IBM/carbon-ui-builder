@@ -79,23 +79,18 @@ export const ARadioGroupSettingsUI = ({ selectedComponent, setComponent }: any) 
 	</>;
 };
 
-export const ARadioGroupCodeUI = ({ selectedComponent, setComponent }: any) => {
-	return (
-		<TextInput
-			value={selectedComponent.codeContext?.name}
-			labelText='Input name'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					codeContext: {
-						...selectedComponent.codeContext,
-						name: event.currentTarget.value
-					}
-				});
-			}}
-		/>
-	);
-};
+export const ARadioGroupCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+	value={selectedComponent.codeContext?.name}
+	labelText='Input name'
+	onChange={(event: any) => {
+		setComponent({
+			...selectedComponent,
+			codeContext: {
+				...selectedComponent.codeContext,
+				name: event.currentTarget.value
+			}
+		});
+	}} />;
 
 export const ARadioGroup = ({
 	children,
