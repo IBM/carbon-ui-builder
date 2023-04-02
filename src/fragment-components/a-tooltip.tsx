@@ -11,7 +11,8 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../utils/fragment-tools';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
+import { styleObjectToString } from '../ui-fragment/src/utils';
 
 const preventCheckEvent = css`
 .bx--tooltip__label {
@@ -85,7 +86,10 @@ export const ATooltip = ({
 			direction={componentObj.direction}
 			description={componentObj.description}
 			triggerText={componentObj.triggerText}
-			className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+			className={cx(
+				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+				css`${styleObjectToString(componentObj.style)}`
+			)}>
 				{componentObj.description}
 			</Tooltip>
 		</AComponent>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tooltip } from 'carbon-components-react';
 import { CssClasses } from '../types';
+import { stringToCssClassName } from '../utils';
 
 export interface TooltipState {
 	type: string;
@@ -8,9 +9,10 @@ export interface TooltipState {
 	description: string | number;
 	triggerText: string;
 	cssClasses?: CssClasses[];
-	codeContext?: {
+	codeContext: {
 		name: string;
 	};
+	style?: any;
 }
 
 export const UITooltip = ({ state }: {
@@ -23,12 +25,21 @@ export const UITooltip = ({ state }: {
 		return <></>;
 	}
 
+	let cssClasses = state.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (state.style) {
+		if (cssClasses.length > 0) {
+			cssClasses += ' ';
+		}
+		cssClasses += stringToCssClassName(state.codeContext.name);
+	}
+
 	return <Tooltip
 		description={state.description}
 		direction={state.direction ? state.direction : 'top'}
 		name={state.codeContext?.name}
 		triggerText={state.triggerText}
-		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+		className={cssClasses}>
 			{state.description}
 		</Tooltip>;
 };
