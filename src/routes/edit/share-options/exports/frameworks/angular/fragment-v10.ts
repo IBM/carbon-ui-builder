@@ -76,17 +76,17 @@ const getComponentCode = (fragment: any, fragments: any[]) => {
 	return componentCode;
 };
 
-const hasPlaceholder = (json: any) => {
+const needsPlaceholder = (json: any) => {
 	const checkComponent = (component: any) =>
-		json.type === component.componentInfo.type &&
-	component.componentInfo.codeExport.angular?.needsPlaceholder;
+		json.type === component.componentInfo.type
+		&& component.componentInfo.codeExport.angular?.needsPlaceholder;
 
 	if (Object.values(allComponents).some(checkComponent)) {
 		return true;
 	}
 
 	if (json.items) {
-		return json.items.some(hasPlaceholder);
+		return json.items.some(needsPlaceholder);
 	}
 
 	return false;
@@ -166,7 +166,7 @@ export const createAngularApp = (fragment: any, fragments: any[]) => {
 			</head>
 			<body>
 				<app-root></app-root>
-				${hasPlaceholder(fragment.data) ? '<ibm-placeholder></ibm-placeholder>' : ''}
+				${needsPlaceholder(fragment.data) ? '<ibm-placeholder></ibm-placeholder>' : ''}
 			</body>
 		</html>
 		`;

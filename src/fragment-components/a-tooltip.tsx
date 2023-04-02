@@ -101,7 +101,6 @@ export const componentInfo: ComponentInfo = {
 	type: 'tooltip',
 	defaultComponentObj: {
 		type: 'tooltip',
-		direction: '',
 		description: 'This is tooltip text',
 		triggerText: 'Tooltip label'
 	},
