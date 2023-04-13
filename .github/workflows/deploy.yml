@@ -32,8 +32,17 @@ jobs:
           npm install
           npm run build
 
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@4.1.5
+       - name: Upload artifact 📦
+        uses: actions/upload-pages-artifact@v1
         with:
-          branch: gh-pages
-          folder: build
+          folder: build # The folder that contains the files to be deployed.
+
+       - name: Deploy 🚀
+        uses: actions/deploy-pages@v1
+        with:
+          branch: gh-pages # The branch where the deployment should go.
+        permissions:
+          pages: write # Required for Pages deployment.
+          id-token: write # Required for verifying deployment source.
+        environment:
+          name: github-pages # The environment name for deployment tracking.
