@@ -41,8 +41,8 @@ jobs:
         uses: actions/deploy-pages@v1
         with:
           branch: gh-pages # The branch where the deployment should go.
-        permissions:
-          pages: write # Required for Pages deployment.
-          id-token: write # Required for verifying deployment source.
-        environment:
-          name: github-pages # The environment name for deployment tracking.
+          permissions:
+            pages: write # Required for Pages deployment.
+            id-token: write # Required for verifying deployment source.
+          environment:
+            name: github-pages # The environment name for deployment tracking.
