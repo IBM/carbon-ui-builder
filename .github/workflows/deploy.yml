@@ -37,6 +37,6 @@ jobs:
           folder: build # The folder that contains the files to be deployed.
           path: build
       - name: Deploy 🚀
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v2
         with:
           branch: gh-pages # The branch where the deployment should go.+
