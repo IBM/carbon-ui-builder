@@ -35,6 +35,7 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           folder: build # The folder that contains the files to be deployed.
+          path: build
       - name: Deploy 🚀
         uses: actions/deploy-pages@v1
         with:
