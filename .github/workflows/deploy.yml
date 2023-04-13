@@ -32,12 +32,12 @@ jobs:
           npm install
           npm run build
 
-       - name: Upload artifact 📦
+      - name: Upload artifact 📦
         uses: actions/upload-pages-artifact@v1
         with:
           folder: build # The folder that contains the files to be deployed.
 
-       - name: Deploy 🚀
+      - name: Deploy 🚀
         uses: actions/deploy-pages@v1
         with:
           branch: gh-pages # The branch where the deployment should go.
