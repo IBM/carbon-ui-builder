@@ -41,4 +41,5 @@ jobs:
           folder: build # The folder that contains the files to be deployed.
           path: build
       - name: Deploy 🚀
+        id: deployment
         uses: actions/deploy-pages@v2
