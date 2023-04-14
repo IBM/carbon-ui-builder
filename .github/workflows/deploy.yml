@@ -42,5 +42,3 @@ jobs:
           path: build
       - name: Deploy 🚀
         uses: actions/deploy-pages@v2
-        with:
-          branch: gh-pages # The branch where the deployment should go.+
