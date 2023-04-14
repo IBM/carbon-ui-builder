@@ -46,7 +46,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
-	steps:
+    steps:
       - name: Deploy 🚀
         id: deployment
         uses: actions/deploy-pages@v2
