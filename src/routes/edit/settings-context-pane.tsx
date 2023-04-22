@@ -72,8 +72,8 @@ const showComponentSettingsUI = (selectedComponent: any, setComponent: any) => {
 let setComponent = (_component: any) => console.log('setComponent not inizialized yet');
 const throttledSetComponent = throttle((component: any) => setComponent(component), 150);
 
-let proxySetFragment = (_component: any) => console.log('proxySetFragment not inizialized yet');
-const throttledSetFragment = throttle((component: any) => proxySetFragment(component), 150);
+let proxySetFragment = (_fragment: any) => console.log('proxySetFragment not inizialized yet');
+const throttledSetFragment = throttle((fragment: any) => proxySetFragment(fragment), 150);
 
 export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 	const selectedComponent = getSelectedComponent(fragment);
@@ -257,7 +257,17 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 							lineDecorationsWidth: 2,
 							lineNumbersMinChars: 4
 						}}
-						onChange= {(value: any) => {
+						onChange= {(value: string | undefined, event: any) => {
+							if (event?.changes?.some((change: any) => change?.forceMoveMarkers)) {
+								// when a user selects a different component from the previously selected
+								// the editor seems to clear before the our context reflects it. This
+								// calls Editor onChange with an empty value, which in turn clears the
+								// value from notes in the state.
+								// `forceMoveMarkers` seems to be set to true only when this happens and
+								// it allows us to skip updating in that case
+								// _there might be a better way to do this_
+								return;
+							}
 							if (selectedComponent) {
 								throttledSetComponent({
 									...selectedComponent,
