@@ -1,8 +1,75 @@
+import React from 'react';
+import domtoimage from 'dom-to-image';
+import ReactDOM from 'react-dom';
+import { UIFragment } from '../../ui-fragment/src/ui-fragment';
+import { expandJsonToState, getAllFragmentStyleClasses } from '../../ui-fragment/src/utils';
+import { uniq } from 'lodash';
+
+export let componentCounter = 2; // actually initialized (again) in Fragment TODO refactor this
+
+export interface RenderProps {
+	id: string;
+	name: string;
+	width?: number;
+	height?: number;
+	format?: string;
+	preview?: { // only sent for preview
+		format?: string; // optional
+		width: number;
+		height: number;
+	};
+}
+
 export const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export const getRandomId = () => `${Math.random().toString().slice(2)}${Math.random().toString().slice(2)}`;
 
-export let componentCounter = 2; // actually initialized (again) in Fragment TODO refactor this
+export const getUrlFromBlob = async (blob: any) => {
+	return new Promise((resolve) => {
+		const reader = new FileReader();
+		reader.readAsDataURL(blob ? blob : new Blob());
+		reader.onloadend = () => resolve(reader.result ? reader.result.toString() : '');
+	});
+};
+
+export const getFragmentPreview = async (fragment: any, props: RenderProps) => {
+	const element = document.createElement('div');
+	element.className = 'render-preview';
+
+	(element as HTMLElement).style.position = 'absolute';
+	(element as HTMLElement).style.top = '0';
+	(element as HTMLElement).style.left = '0';
+	(element as HTMLElement).style.zIndex = '-1';
+	(element as HTMLElement).style.backgroundColor = 'white';
+	(element as HTMLElement).style.width = `${props.width || 800}px`;
+	(element as HTMLElement).style.height = `${props.height || 400}px`;
+	(element as HTMLElement).style.minHeight = `${props.height || 400}px`;
+	ReactDOM.render(React.createElement(UIFragment, { state: fragment, setState: (_state: any) => {} }), element);
+	document.body.appendChild(element);
+
+	await sleep(100); // wait for render to finish
+
+	const imageBlob = await domtoimage.toBlob(element as Node);
+	(element as HTMLElement).remove();
+	return imageBlob;
+};
+
+export const getFragmentPreviewUrl = async (fragment: any) => {
+	const renderProps: RenderProps = {
+		id: fragment.id,
+		name: fragment.title,
+		width: 800,
+		height: 400,
+		preview: {
+			format: 'png',
+			width: 330,
+			height: 200
+		}
+	};
+
+	const imageBlob = await getFragmentPreview(fragment, renderProps);
+	return getUrlFromBlob(imageBlob);
+};
 
 export const drag = (event: any, dragObj: any) => {
 	event.stopPropagation();
@@ -193,6 +260,76 @@ export const getComponentById = (componentObj: any, id: number) => {
 	}
 
 	return undefined;
+};
+
+export const hasMicroLayouts = (fragment: any): boolean => {
+	if (fragment.type === 'fragment') {
+		return true;
+	}
+
+	if (fragment.data) {
+		return hasMicroLayouts(fragment.data);
+	}
+
+	if (fragment.items) {
+		return fragment.items.some((item: any) => hasMicroLayouts(item));
+	}
+
+	return false;
+};
+
+export const getShallowFragmentJsonExport = (fragment: any, fragments: any[], styleClasses: any[]) => {
+	return {
+		id: fragment.id,
+		lastModified: fragment.lastModified,
+		title: fragment.title,
+		data: fragment.data,
+		cssClasses: fragment.cssClasses,
+		allCssClasses: getAllFragmentStyleClasses(fragment, [], styleClasses),
+		labels: fragment.labels
+	};
+};
+
+export const getAllMicrolayoutIdsFromFragment = (fragment: any): any[] => {
+	if (fragment.type === 'fragment') {
+		return [fragment.fragmentId];
+	}
+
+	if (fragment.data) {
+		return getAllMicrolayoutIdsFromFragment(fragment.data);
+	}
+
+	if (fragment.items) {
+		return uniq(fragment.items
+			.flatMap((item: any) => getAllMicrolayoutIdsFromFragment(item))
+			.filter((item: any) => !!item));
+	}
+
+	return [];
+};
+
+export const getFragmentJsonExport = (fragment: any, fragments: any[], styleClasses: any[]) => {
+	if (!hasMicroLayouts(fragment)) {
+		return getShallowFragmentJsonExport(fragment, fragments, styleClasses);
+	}
+
+	// get all microlayouts
+	const microlayoutIds = getAllMicrolayoutIdsFromFragment(fragment);
+
+	const microlayouts = fragments.filter((f: any) => microlayoutIds.includes(f.id));
+
+	return [
+		getShallowFragmentJsonExport(fragment, fragments, styleClasses),
+		...microlayouts
+	];
+};
+
+export const getFragmentJsonExportString = (fragment: any, fragments: any[], styleClasses: any[]) => {
+	return JSON.stringify(getFragmentJsonExport(fragment, fragments, styleClasses), null, 2);
+};
+
+export const getExpandedFragmentState = (fragment: any, fragments: any[] = [], styleClasses: any[] = []) => {
+	return expandJsonToState(getFragmentJsonExport(fragment, fragments, styleClasses));
 };
 
 export const getSelectedComponent = (fragment: any) => {

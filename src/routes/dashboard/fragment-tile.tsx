@@ -15,8 +15,9 @@ import {
 } from '@carbon/icons-react';
 import { css } from 'emotion';
 import { ModalContext } from '../../context/modal-context';
-import { FragmentPreview } from '../../components/fragment-preview';
+import { FragmentPreview } from '../../sdk/src/components/fragment-preview';
 import './fragment-tile.scss';
+import { GlobalStateContext } from '../../context';
 
 const menuItemStyle = css`
 	display: flex;
@@ -40,6 +41,7 @@ export const FragmentTile = ({
 	isFeaturedFragment
 }: any) => {
 	const navigate = useNavigate();
+	const { styleClasses, fragments: allFragments } = useContext(GlobalStateContext);
 	const {
 		showFragmentDuplicateModal,
 		showFragmentDeleteModal,
@@ -57,10 +59,10 @@ export const FragmentTile = ({
 						? <section
 						className={clickableStyle}
 						onClick={() => showFragmentPreviewModal(fragment, fragments, isFeaturedFragment)}>
-							<FragmentPreview fragment={fragment} resetPreview={resetPreview} />
+							<FragmentPreview fragment={fragment} fragments={allFragments} styleClasses={styleClasses} resetPreview={resetPreview} />
 						</section>
 						: <Link to={to}>
-							<FragmentPreview fragment={fragment} resetPreview={resetPreview} />
+							<FragmentPreview fragment={fragment} fragments={allFragments} styleClasses={styleClasses} resetPreview={resetPreview} />
 						</Link>
 					}
 

@@ -32,8 +32,9 @@ import { FragmentWizardModals } from '../routes/dashboard/fragment-wizard/fragme
 import { saveBlob } from '../utils/file-tools';
 import { GlobalStateContext } from '../context';
 import { ModalContext } from '../context/modal-context';
-import { getEditScreenParams, getFragmentJsonExportString } from '../utils/fragment-tools';
+import { getEditScreenParams } from '../utils/fragment-tools';
 import { UserContext } from '../context/user-context';
+import { getFragmentJsonExportString } from '../sdk/src/tools';
 
 const dividerStyle = css`
 	margin: 2px 1rem;

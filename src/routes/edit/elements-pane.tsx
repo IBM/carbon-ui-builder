@@ -4,7 +4,7 @@ import { Button, Search } from 'carbon-components-react';
 import { ChevronUp16, ChevronDown16 } from '@carbon/icons-react';
 
 import { ElementTile } from '../../sdk/src/element-tile';
-import { FragmentPreview } from '../../components/fragment-preview';
+import { FragmentPreview } from '../../sdk/src/components/fragment-preview';
 
 import { leftPane, leftPaneContent, leftPaneHeader } from '.';
 import { allComponents } from '../../fragment-components';
@@ -40,7 +40,7 @@ export const ElementsPane = ({ isActive }: any) => {
 	const mouseYStart = useRef(0);
 	const heightStart = useRef(0);
 	const [fragment, setFragment] = useFragment();
-	const { fragments, settings, setSettings } = useContext(GlobalStateContext);
+	const { fragments, settings, setSettings, styleClasses } = useContext(GlobalStateContext);
 
 	const isLayoutWidgetOpen = settings.layoutWidget?.isAccordionOpen === undefined
 		? true // open by default
@@ -140,7 +140,7 @@ export const ElementsPane = ({ isActive }: any) => {
 								{
 									visibleMicroLayouts.map((component: any) =>
 										<ElementTile componentObj={{ type: 'fragment', fragmentId: component.id }} key={component.id}>
-											<FragmentPreview fragment={component} />
+											<FragmentPreview fragment={component} fragments={fragments} styleClasses={styleClasses} />
 											<span className='title'>{component.title}</span>
 										</ElementTile>)
 								}

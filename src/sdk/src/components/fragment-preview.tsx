@@ -1,5 +1,4 @@
 import React, {
-	useContext,
 	useEffect,
 	useRef,
 	useState
@@ -8,13 +7,14 @@ import React, {
 import { Loading } from 'carbon-components-react';
 
 import { css } from 'emotion';
+
 import {
+	RenderProps,
+	getExpandedFragmentState,
 	getFragmentPreview,
 	getUrlFromBlob,
-	RenderProps
-} from '../utils/fragment-tools';
-import { GlobalStateContext } from '../context';
-import { sleep } from '../sdk/src/tools';
+	sleep
+} from '../tools';
 
 const fragmentImage = css`
 	width: auto;
@@ -24,9 +24,11 @@ const fragmentImage = css`
 	display: block;
 	padding-top: 8px;
 `;
+
 const imagePlaceholderStyle = css`
 	height: 173px;
 `;
+
 const spinner = css`
 	position: absolute;
 	top: calc(50% - 44px - 32px);
@@ -37,10 +39,14 @@ const spinner = css`
 	}
 `;
 
-export const FragmentPreview = ({ fragment, resetPreview }: any) => {
+/**
+ * @param fragment the fragment to preview
+ * @param fragments optional list of fragments pool to render microlayouts from
+ * @param styleClasses optional list of available styles classes to apply
+ */
+export const FragmentPreview = ({ fragment, fragments = [], styleClasses = [], resetPreview }: any) => {
 	const [previewUrl, setPreviewUrl] = useState('');
-	const { getExpandedFragmentState } = useContext(GlobalStateContext);
-	const fragmentState = getExpandedFragmentState(fragment);
+	const fragmentState = getExpandedFragmentState(fragment, fragments, styleClasses);
 
 	const dbRef = useRef({
 		transaction: (_storeNames: string | Iterable<string>, _mode?: IDBTransactionMode) => (undefined as unknown as IDBTransaction)
