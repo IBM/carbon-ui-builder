@@ -171,6 +171,7 @@ export const ExportImageComponent = ({ fragment }: any) => {
 
 	useEffect(() => {
 		setFragmentState(getExpandedFragmentState(fragment));
+		updatePreviewUrl();
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [fragment]);
 
