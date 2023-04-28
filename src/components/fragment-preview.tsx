@@ -11,10 +11,10 @@ import { css } from 'emotion';
 import {
 	getFragmentPreview,
 	getUrlFromBlob,
-	RenderProps,
-	sleep
+	RenderProps
 } from '../utils/fragment-tools';
 import { GlobalStateContext } from '../context';
+import { sleep } from '../sdk/src/tools';
 
 const fragmentImage = css`
 	width: auto;

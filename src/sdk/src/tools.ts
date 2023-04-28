@@ -1,3 +1,9 @@
+export const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+export const getRandomId = () => `${Math.random().toString().slice(2)}${Math.random().toString().slice(2)}`;
+
+export let componentCounter = 2; // actually initialized (again) in Fragment TODO refactor this
+
 export const drag = (event: any, dragObj: any) => {
 	event.stopPropagation();
 	event.dataTransfer.setData('drag-object', JSON.stringify(dragObj));
@@ -6,6 +12,167 @@ export const drag = (event: any, dragObj: any) => {
 const draggableSelectorDirect = ':scope > [draggable]';
 const draggableSelectorColumn = ':scope > .bx--col > [draggable]';
 const draggableSelector = `${draggableSelectorDirect}, ${draggableSelectorColumn}`;
+
+export const getParentComponent = (state: any, child: any) => {
+	if (state && state.items) {
+		if (state.items.includes(child)) {
+			return state;
+		}
+		for (let i = 0; i < state.items.length; i++) {
+			const component = state.items[i];
+			const parent: any = getParentComponent(component, child);
+			if (parent) {
+				return parent;
+			}
+		}
+	}
+
+	return null;
+};
+
+const updatedList = (list: any[], item: any, dropInIndex?: number) => {
+	if (dropInIndex === undefined) {
+		return [...list, item];
+	}
+
+	return [...list.slice(0, dropInIndex), item, ...list.slice(dropInIndex)];
+};
+
+export const getHighestId = (componentObj: any) => {
+	if (!componentObj) {
+		return 0;
+	}
+
+	if (!componentObj.items || !componentObj.items.length) {
+		return +componentObj.id || 0;
+	}
+
+	return Math.max(...componentObj.items.map((item: any) => getHighestId(item)), (+componentObj.id || 0));
+};
+
+export const updateComponentCounter = (componentObj: any) => {
+	componentCounter = getHighestId(componentObj) + 1;
+};
+
+export const getNewId = () => {
+	const id = '' + componentCounter++;
+
+	// beyond 20 digits, js goes to scientific notation so we'd get collisions
+	if (id.length > 20) {
+		return getRandomId();
+	}
+
+	return id;
+};
+
+export const stateWithoutComponent = (state: any, componentId: number) => {
+	if (state.items) {
+		const componentIndex = state.items.findIndex((component: any) => component.id === componentId);
+		if (componentIndex >= 0) {
+			return {
+				...state,
+				items: [...state.items.slice(0, componentIndex), ...state.items.slice(componentIndex + 1)]
+			};
+		}
+
+		return {
+			...state,
+			items: state.items.map((item: any) => stateWithoutComponent(item, componentId))
+		};
+	}
+
+	return { ...state };
+};
+
+export const initializeIds = (componentObj: any, forceNewIds = false) => {
+	let id = null;
+	if (forceNewIds) {
+		id = getNewId();
+	}
+	id = id || componentObj.id || getNewId();
+	// name is used in form items and for angular inputs and outputs variable names
+	let name = componentObj.codeContext?.name;
+	if (name === undefined || forceNewIds) {
+		name = `${componentObj.type}-${id}`;
+	}
+
+	return {
+		...componentObj,
+		id,
+		items: componentObj.items ? componentObj.items.map((co: any) => initializeIds(co, forceNewIds)) : undefined,
+		codeContext: {
+			...componentObj.codeContext,
+			name
+		}
+	};
+};
+
+export const updatedState = (state: any, dragObj: any, dropInId?: number, dropInIndex?: number) => {
+	if (!state) { // NOTE is this needed?
+		return;
+	}
+
+	// give unique ids to newly dropped components
+	dragObj.component = initializeIds(dragObj.component);
+
+	// only update
+	if (dragObj.type === 'update') {
+		if (state.id && state.id === dragObj.component.id) {
+			return {
+				...state,
+				...dragObj.component
+			};
+		}
+		if (state.items) {
+			state.items = state.items.map((item: any) => updatedState(item, dragObj, dropInId, dropInIndex));
+		}
+
+		return { ...state };
+	}
+
+	if (dragObj.type === 'move') {
+		state = stateWithoutComponent(state, dragObj.component.id);
+		dragObj.type = 'insert';
+	}
+
+	if (state.items) {
+		state.items = state.items.map((item: any) => updatedState(item, dragObj, dropInId, dropInIndex));
+	}
+
+	if (!dropInId) {
+		return state.items && !state.type ? {
+			...state,
+			items: updatedList(state.items, dragObj.component, dropInIndex)
+		} : { ...state };
+	}
+	/// ////////// TODO NOTE clean the container items with 1 item //////////////
+	if (state.id && state.id === dropInId) {
+		// add data into state
+		if (state.items) {
+			return {
+				...state,
+				items: updatedList(state.items, dragObj.component, dropInIndex),
+				id: state.id
+			};
+		}
+
+		// convert into a list of components, move current component into list
+		return {
+			// TODO should this be a `type: container`?
+			id: getNewId(),
+			items: updatedList([{ ...state }], dragObj.component, dropInIndex)
+		};
+	}
+
+	if (dropInId) { // probably don't wanna add it here since it didn't match anything and it should somewhere
+		return { ...state };
+	}
+
+	return state.items ? {
+		...state,
+		items: updatedList(state.items, dragObj.component, dropInIndex)
+	} : { ...state };
+};
 
 export const getComponentById = (componentObj: any, id: number) => {
 	if (!componentObj || !id) {

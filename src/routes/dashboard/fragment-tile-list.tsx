@@ -19,7 +19,7 @@ import { FragmentTile } from './fragment-tile';
 import { generateNewFragment } from './fragment-wizard/generate-new-fragment';
 import { GlobalStateContext } from '../../context';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
-import { initializeIds } from '../../components';
+import { initializeIds } from '../../sdk/src/tools';
 import { FragmentWizardModals } from './fragment-wizard/fragment-wizard';
 
 const tileStyle = css`

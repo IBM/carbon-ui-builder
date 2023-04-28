@@ -10,10 +10,7 @@ import { css, cx } from 'emotion';
 import { useFragment } from '../../context';
 import { ComponentInfo } from '..';
 import image from '../../assets/component-icons/tile-selectable.svg';
-import {
-	getParentComponent,
-	updatedState
-} from '../../components';
+import { getParentComponent, updatedState } from '../../sdk/src/tools';
 import {
 	angularClassNamesFromComponentObj,
 	nameStringToVariableString,

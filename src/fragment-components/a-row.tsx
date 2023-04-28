@@ -6,12 +6,11 @@ import {
 } from 'carbon-components-react';
 import { Add32 } from '@carbon/icons-react';
 import { AComponent } from './a-component';
-import { getParentComponent, updatedState } from '../components';
 import { css, cx } from 'emotion';
 import { useFragment } from '../context';
 import { ComponentInfo } from '.';
 import { styleObjectToString } from '../ui-fragment/src/utils';
-import { getDropIndex } from '../sdk/src/tools';
+import { getDropIndex, getParentComponent, updatedState } from '../sdk/src/tools';
 
 export const ARowSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>

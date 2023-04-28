@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dropdown } from 'carbon-components-react';
-import { getParentComponent, updatedState } from '../../components';
+import { getParentComponent, updatedState } from '../../sdk/src/tools';
 import { useFragment } from '../../context';
 
 // Combine all items from 'top' & 'bottom' folds into a single array

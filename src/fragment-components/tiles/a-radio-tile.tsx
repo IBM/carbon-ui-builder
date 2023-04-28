@@ -8,10 +8,7 @@ import { AComponent } from '../a-component';
 import { css, cx } from 'emotion';
 import { useFragment } from '../../context';
 import { ComponentInfo } from '..';
-import {
-	getParentComponent,
-	updatedState
-} from '../../components';
+import { getParentComponent, updatedState } from '../../sdk/src/tools';
 import {
 	angularClassNamesFromComponentObj,
 	nameStringToVariableString,

@@ -10,7 +10,7 @@ import { leftPane, leftPaneContent, leftPaneHeader } from '.';
 import { allComponents } from '../../fragment-components';
 import { GlobalStateContext, useFragment } from '../../context';
 import { getEditScreenParams } from '../../utils/fragment-tools';
-import { FragmentLayoutWidget } from '../../components/fragment-layout-widget';
+import { FragmentLayoutWidget } from '../../sdk/src/components/fragment-layout-widget';
 import { accordionButtonStyle } from './settings-context-pane';
 
 const elementTileListStyleBase = css`

@@ -10,7 +10,7 @@ import { Add32, Help32 } from '@carbon/icons-react';
 import { css, cx } from 'emotion';
 import { AComponent } from './a-component';
 import { useFragment } from '../context';
-import { getParentComponent, updatedState } from '../components';
+import { getParentComponent, updatedState } from '../sdk/src/tools';
 import { ComponentInfo } from '.';
 import { APlaceholder } from './a-placeholder';
 import { styleObjectToString } from '../ui-fragment/src/utils';

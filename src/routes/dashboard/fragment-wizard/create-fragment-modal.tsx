@@ -7,7 +7,7 @@ import { FragmentWizardModals } from './fragment-wizard';
 import { generateNewFragment } from './generate-new-fragment';
 import { GlobalStateContext, NotificationActionType, NotificationContext } from '../../../context';
 import { componentInfo as gridComponentInfo } from '../../../fragment-components/a-grid';
-import { initializeIds } from '../../../components';
+import { initializeIds } from '../../../sdk/src/tools';
 
 const createFragmentTiles = css`
 	div {

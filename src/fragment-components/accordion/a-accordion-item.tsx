@@ -13,10 +13,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../utils/fragment-tools';
 import { useFragment } from '../../context';
-import {
-	getParentComponent,
-	updatedState
-} from '../../components';
+import { getParentComponent, updatedState } from '../../sdk/src/tools';
 import { APlaceholder } from '../a-placeholder';
 import { styleObjectToString } from '../../ui-fragment/src/utils';
 import { Adder } from '../../sdk/src/adder';

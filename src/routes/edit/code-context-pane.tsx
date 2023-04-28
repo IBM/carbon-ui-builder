@@ -5,8 +5,7 @@ import {
 	allComponents
 } from '../../fragment-components';
 
-import { updatedState } from '../../components/fragment';
-import { getSelectedComponent } from '../../sdk/src/tools';
+import { getSelectedComponent, updatedState } from '../../sdk/src/tools';
 
 const showComponentCodeOptions = (selectedComponent: any, setComponent: any) => {
 	for (const component of Object.values(allComponents)) {

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { TextInput, Checkbox } from 'carbon-components-react';
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
-import { getParentComponent, updatedState } from '../../components';
+import { getParentComponent, updatedState } from '../../sdk/src/tools';
 import { css, cx } from 'emotion';
 import { useFragment } from '../../context';
 import { ComponentInfo } from '../';

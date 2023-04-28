@@ -3,8 +3,7 @@ import React, { useRef, useState } from 'react';
 
 import { Draggable32, TrashCan32 } from '@carbon/icons-react';
 import { useFragment } from '../context';
-import { updatedState } from '../components';
-import { drag, getDropIndex } from '../sdk/src/tools';
+import { drag, getDropIndex, updatedState } from '../sdk/src/tools';
 
 export const componentHeaderZIndex = 999;
 

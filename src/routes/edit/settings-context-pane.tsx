@@ -13,12 +13,11 @@ import Editor from '@monaco-editor/react';
 import { throttle } from 'lodash';
 
 import { ComponentCssClassSelector } from '../../sdk/src/css-class-selector';
-import { updatedState } from '../../components/fragment';
 import { allComponents } from '../../fragment-components';
 import { SelectedComponentBreadcrumbs } from './selected-component-breadcrumbs';
 import { GlobalStateContext } from '../../context';
 import { LayoutWidget } from '../../sdk/src/layout-widget';
-import { getSelectedComponent } from '../../sdk/src/tools';
+import { getSelectedComponent, updatedState } from '../../sdk/src/tools';
 
 const styleContextPaneStyle = css`
 .bx--form-item.bx--checkbox-wrapper {

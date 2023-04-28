@@ -5,8 +5,7 @@ import { camelCase, kebabCase, uniq, upperFirst } from 'lodash';
 import { matchPath } from 'react-router-dom';
 import { getAllFragmentStyleClasses, stringToCssClassName } from '../ui-fragment/src/utils';
 import { UIFragment } from '../ui-fragment/src/ui-fragment';
-
-export const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+import { getRandomId, sleep } from '../sdk/src/tools';
 
 export interface RenderProps {
 	id: string;
@@ -136,8 +135,6 @@ export const getUniqueFragmentName = (fragments: Array<any>, baseName: string) =
 
 	return `${nameBase} copy ${highestNumber && count < highestNumber ? highestNumber + 1 : count + 1}`;
 };
-
-export const getRandomId = () => `${Math.random().toString().slice(2)}${Math.random().toString().slice(2)}`;
 
 export const getFragmentDuplicate = (fragments: any, fragment: any, overrides = {}) => {
 	// copy current fragment and change fragment title

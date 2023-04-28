@@ -7,10 +7,7 @@ import {
 import { AComponent, ComponentInfo } from './a-component';
 import { useFragment } from '../context';
 import { css, cx } from 'emotion';
-import {
-	getParentComponent,
-	updatedState
-} from '../components';
+import { getParentComponent, updatedState } from '../sdk/src/tools';
 import image from './../assets/component-icons/radio.svg';
 import {
 	nameStringToVariableString,

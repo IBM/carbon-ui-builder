@@ -8,8 +8,8 @@ import {
 	ChevronUp16
 } from '@carbon/icons-react';
 import { css, cx } from 'emotion';
-import { actionIconStyle } from '../routes';
-import { getParentComponent, stateWithoutComponent, updatedState } from './fragment';
+import { getParentComponent, stateWithoutComponent, updatedState } from '../tools';
+import { actionIconStyle } from '../styles';
 
 const widgetItemStyle = css`
 	display: flex;
