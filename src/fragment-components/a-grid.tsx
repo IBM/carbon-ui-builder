@@ -2,7 +2,7 @@ import React from 'react';
 import { Checkbox, Grid, TextInput } from 'carbon-components-react';
 import { AComponent } from './a-component';
 import { css, cx } from 'emotion';
-import { ComponentInfo } from '.';
+import { ARow, ComponentInfo } from '.';
 
 import image from './../assets/component-icons/grid.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../utils/fragment-tools';
@@ -80,6 +80,21 @@ export const AGrid = ({
 	outline,
 	...rest
 }: any) => {
+	const isARowComponent = (child: any) => {
+		return child && child.type && child.type === ARow;
+	};
+
+	const hasChildren = (child: any) => {
+		return (child?.children || []).length < 1;
+	};
+
+	const nonEmptyChildren = children.filter((child: any) => {
+		if (isARowComponent(child) && hasChildren(child)) {
+			return false;
+		}
+		return true;
+	});
+
 	return (
 		<AComponent componentObj={componentObj} rejectDrop={true} {...rest}>
 			<Grid
@@ -91,7 +106,7 @@ export const AGrid = ({
 			condensed={componentObj.condensed}
 			fullWidth={componentObj.fullWidth}
 			narrow={componentObj.narrow}>
-				{children}
+				{nonEmptyChildren}
 			</Grid>
 		</AComponent>
 	);
