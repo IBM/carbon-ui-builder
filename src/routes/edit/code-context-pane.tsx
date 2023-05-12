@@ -3,7 +3,7 @@ import React from 'react';
 import {
 	AComponentCodeUI,
 	allComponents
-} from '../../fragment-components';
+} from '../../sdk/src/fragment-components';
 
 import { getSelectedComponent, updatedState } from '../../sdk/src/tools';
 

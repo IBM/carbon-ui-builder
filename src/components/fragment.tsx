@@ -3,7 +3,7 @@ import { SkeletonPlaceholder } from 'carbon-components-react';
 import { Add32, DropPhoto32 } from '@carbon/icons-react';
 import './fragment-preview.scss';
 import { css, cx } from 'emotion';
-import { allComponents, ComponentInfoRenderProps } from '../fragment-components';
+import { allComponents, ComponentInfoRenderProps } from '../sdk/src/fragment-components';
 import { getFragmentsFromLocalStorage } from '../utils/fragment-tools';
 import { GlobalStateContext } from '../context';
 import { getAllFragmentStyleClasses } from '../ui-fragment/src/utils';
@@ -132,7 +132,10 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 						remove: () => remove(componentObj),
 						selected: fragment.selectedComponentId === componentObj.id,
 						renderComponents,
-						outline
+						outline,
+						fragments,
+						fragment,
+						setFragment
 					} as ComponentInfoRenderProps);
 				}
 				return <component.componentInfo.component
@@ -141,7 +144,9 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 					select={() => select(componentObj)}
 					remove={() => remove(componentObj)}
 					selected={fragment.selectedComponentId === componentObj.id}
-					outline={outline}>
+					outline={outline}
+					fragment={fragment}
+					setFragment={setFragment}>
 						{componentObj.items && componentObj.items.map((row: any) => renderComponents(row, outline))}
 				</component.componentInfo.component>;
 			}

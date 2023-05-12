@@ -7,7 +7,7 @@ import { ElementTile } from '../../sdk/src/element-tile';
 import { FragmentPreview } from '../../sdk/src/components/fragment-preview';
 
 import { leftPane, leftPaneContent, leftPaneHeader } from '.';
-import { allComponents } from '../../fragment-components';
+import { allComponents } from '../../sdk/src/fragment-components';
 import { GlobalStateContext, useFragment } from '../../context';
 import { getEditScreenParams } from '../../utils/fragment-tools';
 import { FragmentLayoutWidget } from '../../sdk/src/components/fragment-layout-widget';

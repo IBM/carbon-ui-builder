@@ -12,7 +12,7 @@ import {
 	Development32
 } from '@carbon/icons-react';
 import { css } from 'emotion';
-import { componentInfo as gridComponentInfo } from '../../fragment-components/a-grid';
+import { componentInfo as gridComponentInfo } from '../../sdk/src/fragment-components/a-grid';
 
 import { FragmentTile } from './fragment-tile';
 

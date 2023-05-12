@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { GlobalStateContext } from '../../../../../../context';
 import { getAllFragmentStyleClasses } from '../../../../../../ui-fragment/src/utils';
-import { classNameFromFragment, hasFragmentStyleClasses, tagNameFromFragment } from '../../../../../../utils/fragment-tools';
+import { hasFragmentStyleClasses } from '../../../../../../utils/fragment-tools';
 import { format } from '../utils';
 import {
 	formatOptionsCss,
@@ -13,6 +13,7 @@ import {
 	jsonToAngularImports,
 	jsonToTemplate
 } from './utils';
+import { classNameFromFragment, tagNameFromFragment } from '../../../../../../sdk/src/tools';
 
 const getComponentCode = (fragment: any, fragments: any[]) => {
 	const componentCode: any = {};

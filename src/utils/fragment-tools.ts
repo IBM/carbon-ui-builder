@@ -1,6 +1,4 @@
-import { camelCase, kebabCase, upperFirst } from 'lodash';
 import { matchPath } from 'react-router-dom';
-import { stringToCssClassName } from '../ui-fragment/src/utils';
 import { getRandomId } from '../sdk/src/tools';
 
 export const validInitialFragments = (localFragments: any[] | undefined) => {
@@ -25,16 +23,6 @@ export const getGlobalStyleClassesFromLocalStorage = () => JSON.parse(localStora
 export const getFragmentTemplates = (fragments: any[]) => (
 	fragments.filter((fragment: any) => !!fragment.labels?.includes('template'))
 );
-
-export const tagNameFromFragment = (fragment: any) => {
-	// TODO fragment can have a tag name?
-	return kebabCase(fragment.title);
-};
-
-export const classNameFromFragment = (fragment: any) => {
-	// TODO fragment can have a class name?
-	return upperFirst(camelCase(fragment.title));
-};
 
 export const getEditScreenParams = () => {
 	return matchPath('/edit/:id', window.location.pathname)?.params;
@@ -112,35 +100,3 @@ export const openFragmentPreview = (fragment: any) => {
 		`popup,width=${fragment.width || '800'},height=${fragment.height || '600'}`
 	);
 };
-
-export const reactClassNamesFromComponentObj = (componentObj: any) => {
-	let classList = componentObj.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
-
-	if (componentObj.style) {
-		if (classList.length > 0) {
-			classList += ' ';
-		}
-		classList += stringToCssClassName(componentObj.codeContext.name);
-	}
-
-	return classList.length > 0
-		? `className='${classList}'`
-		: '';
-};
-
-export const angularClassNamesFromComponentObj = (componentObj: any) => {
-	let classList = componentObj.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
-
-	if (componentObj.style) {
-		if (classList.length > 0) {
-			classList += ' ';
-		}
-		classList += stringToCssClassName(componentObj.codeContext.name);
-	}
-
-	return classList.length > 0
-		? `class='${classList}'`
-		: '';
-};
-
-export const nameStringToVariableString = (name: string) => camelCase(name);

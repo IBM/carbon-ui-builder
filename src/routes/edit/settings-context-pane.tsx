@@ -13,7 +13,7 @@ import Editor from '@monaco-editor/react';
 import { throttle } from 'lodash';
 
 import { ComponentCssClassSelector } from '../../sdk/src/css-class-selector';
-import { allComponents } from '../../fragment-components';
+import { allComponents } from '../../sdk/src/fragment-components';
 import { SelectedComponentBreadcrumbs } from './selected-component-breadcrumbs';
 import { GlobalStateContext } from '../../context';
 import { LayoutWidget } from '../../sdk/src/layout-widget';
@@ -57,13 +57,15 @@ const tooltipStyle = css`
 }
 `;
 
-const showComponentSettingsUI = (selectedComponent: any, setComponent: any) => {
+const showComponentSettingsUI = (selectedComponent: any, setComponent: any, fragment: any, setFragment: any) => {
 	for (const component of Object.values(allComponents)) {
 		// Find the UI for editing style for our component
 		if (selectedComponent.type === component.componentInfo.type) {
 			return <component.componentInfo.settingsUI
 				selectedComponent={selectedComponent}
-				setComponent={setComponent} />;
+				setComponent={setComponent}
+				fragment={fragment}
+				setFragment={setFragment} />;
 		}
 	}
 };
@@ -129,7 +131,7 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 				<div className={accordionContentStyle}>
 				{
 					selectedComponent && <>
-						{showComponentSettingsUI(selectedComponent, setComponent)}
+						{showComponentSettingsUI(selectedComponent, setComponent, fragment, setFragment)}
 					</>
 				}
 				{

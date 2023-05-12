@@ -2,8 +2,8 @@ import React from 'react';
 import domtoimage from 'dom-to-image';
 import ReactDOM from 'react-dom';
 import { UIFragment } from '../../ui-fragment/src/ui-fragment';
-import { expandJsonToState, getAllFragmentStyleClasses } from '../../ui-fragment/src/utils';
-import { uniq } from 'lodash';
+import { expandJsonToState, getAllFragmentStyleClasses, stringToCssClassName } from '../../ui-fragment/src/utils';
+import { camelCase, kebabCase, uniq, upperFirst } from 'lodash';
 
 export let componentCounter = 2; // actually initialized (again) in Fragment TODO refactor this
 
@@ -431,4 +431,46 @@ export const filenameToLanguage = (filename: string) => {
 	}
 
 	return 'text';
+};
+
+export const reactClassNamesFromComponentObj = (componentObj: any) => {
+	let classList = componentObj.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (componentObj.style) {
+		if (classList.length > 0) {
+			classList += ' ';
+		}
+		classList += stringToCssClassName(componentObj.codeContext.name);
+	}
+
+	return classList.length > 0
+		? `className='${classList}'`
+		: '';
+};
+
+export const angularClassNamesFromComponentObj = (componentObj: any) => {
+	let classList = componentObj.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (componentObj.style) {
+		if (classList.length > 0) {
+			classList += ' ';
+		}
+		classList += stringToCssClassName(componentObj.codeContext.name);
+	}
+
+	return classList.length > 0
+		? `class='${classList}'`
+		: '';
+};
+
+export const nameStringToVariableString = (name: string) => camelCase(name);
+
+export const tagNameFromFragment = (fragment: any) => {
+	// TODO fragment can have a tag name?
+	return kebabCase(fragment.title);
+};
+
+export const classNameFromFragment = (fragment: any) => {
+	// TODO fragment can have a class name?
+	return upperFirst(camelCase(fragment.title));
 };
