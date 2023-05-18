@@ -1,0 +1,14 @@
+<svg id="icon" xmlns="http://www.w3.org/2000/svg" role="img" width="16" height="16" viewBox="0 0 16 16" focusable="false" aria-label="tooltip" >
+    <defs id="defs12">
+        <style
+            id="style10">
+        .cls-1 {
+            fill: none;
+        }
+        </style>
+    </defs>
+    <polygon points="15,22 12,22 12,24 20,24 20,22 17,22 17,14 13,14 13,16 15,16 " id="polygon14" transform="scale(0.5)" style="fill:#525252;fill-opacity:1" />
+    <path d="M 8,4 A 0.75,0.75 0 1 0 8.75,4.75 0.75,0.75 0 0 0 8,4 Z" id="path16" style="stroke-width:0.5;fill:#525252;fill-opacity:1" />
+    <path d="M 8,15 A 7,7 0 1 1 15,8 7,7 0 0 1 8,15 Z M 8,2 A 6,6 0 1 0 14,8 6,6 0 0 0 8,2 Z" id="path18" style="stroke-width:0.5;fill:#525252;fill-opacity:1" />
+    <rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" class="cls-1" width="16" height="16" x="0" y="0" style="stroke-width:0.5" />
+    </svg>

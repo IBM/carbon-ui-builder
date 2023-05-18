@@ -35,6 +35,7 @@ import { UITile } from './components/ui-tile';
 import { UITileFold } from './components/ui-tile-fold';
 import { UIToggle } from './components/ui-toggle';
 import { kebabCase } from 'lodash';
+import { UITooltip } from './components/ui-tooltip';
 
 export const setItemInState = (item: any, state: any, setState: (state: any) => void) => {
 	const itemIndex = state.items.findIndex((i: any) => i.id === item.id);
@@ -200,6 +201,9 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 	switch (state.type) {
 		case 'accordion':
 			return <UIAccordion key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'tooltip':
+			return <UITooltip key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'accordion-item':
 			return <UIAccordionItem key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
