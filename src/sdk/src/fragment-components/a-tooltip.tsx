@@ -25,9 +25,9 @@ export const ATooltipSettingsUI = ({ selectedComponent, setComponent }: any) => 
 	];
 
 	const alignments = [
-		{id: 'start', text: 'Start'},
-		{id: 'center', text: 'Center'},
-		{id: 'end', text: 'End'},
+		{ id: 'start', text: 'Start' },
+		{ id: 'center', text: 'Center' },
+		{ id: 'end', text: 'End' }
 	];
 	return <>
 		<Dropdown
