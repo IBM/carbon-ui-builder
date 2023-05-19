@@ -318,6 +318,8 @@ export const AColumn = ({
 			componentObj={componentObj}
 			className={css`display: block; height: 100%;`}
 			selected={selected}
+			fragment={fragment}
+			setFragment={setFragment}
 			rejectDrop={(dragObj: any) => {
 				// don't allow dropping columns directly into other columns
 				// row drop handler will take over
