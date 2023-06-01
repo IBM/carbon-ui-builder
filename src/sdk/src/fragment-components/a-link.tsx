@@ -23,6 +23,18 @@ export const ALinkSettingsUI = ({ selectedComponent, setComponent }: any) => {
 				});
 			}}
 		/>
+		<TextInput
+			value={selectedComponent.codeContext?.href || ''}
+			labelText='Link'
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					codeContext: {
+						...selectedComponent.codeContext,
+						href: event.currentTarget.value
+					}
+				});
+			}} />
 		<Checkbox
 			labelText='Disabled'
 			id='disable-label'
