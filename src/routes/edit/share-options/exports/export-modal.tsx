@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import {
 	Button,
+	Checkbox,
 	Modal,
 	Tab,
 	Tabs
@@ -124,6 +125,9 @@ export const ExportModal = () => {
 	const { fragmentExportModal, hideFragmentExportModal } = useContext(ModalContext);
 	const [selectedAngularFilename, setSelectedAngularFilename] = useState('src/app/app.component.ts' as string);
 	const [selectedReactFilename, setSelectedReactFilename] = useState('src/component.js' as string);
+	const [shouldStripUnnecessaryProps, setShouldStripUnnecessaryProps] = useState(true);
+	const [shouldExportForPreviewOnly, setShouldExportForPreviewOnly] = useState(false);
+
 	const monaco = useMonaco();
 
 	useEffect(() => {
@@ -230,6 +234,53 @@ export const ExportModal = () => {
 						<h3>Image</h3>
 					</div>
 					<ExportImageComponent fragment={fragmentExportModal.fragment} />
+				</Tab>
+				<Tab
+					id='link'
+					label='Link'
+					role='presentation'
+					tabIndex={0}>
+					<div className={titleWrapper}>
+						<h3>Link</h3>
+					</div>
+					<div>
+						<p className={css`margin-top: 1rem; margin-bottom: 1rem; font-style: italic;`}>
+							Some applications may not be able to handle long URLs or data URLs properly.
+							Different browsers and servers have different maximum lengths for URLs.
+							If you try to encode/pack more data than that, your url may be truncated or rejected,
+							resulting in data loss or corruption.
+						</p>
+						<Checkbox
+							id='strip-unnecessary'
+							checked={shouldStripUnnecessaryProps}
+							labelText='Strip unnecessary properties'
+							onChange={(checked: boolean) => setShouldStripUnnecessaryProps(checked)}/>
+						<Checkbox
+							id='preview-only'
+							checked={shouldExportForPreviewOnly}
+							labelText='Preview only'
+							onChange={(checked: boolean) => setShouldExportForPreviewOnly(checked)}/>
+						<br />
+						<Button onClick={() => {
+							let link = location.protocol + '//' + location.host;
+							const jsonExport = JSON.parse(jsonCode);
+
+							if (shouldStripUnnecessaryProps) {
+								// remove id and lastModified
+								delete jsonExport.id;
+								delete jsonExport.lastModified;
+							}
+
+							if (shouldExportForPreviewOnly) {
+								link += '/preview-json/';
+							} else {
+								link += '/from-json/';
+							}
+							copyToClipboard(link + encodeURIComponent(JSON.stringify(jsonExport)));
+						}}>
+							Copy link
+						</Button>
+					</div>
 				</Tab>
 			</Tabs>
 		</Modal>
