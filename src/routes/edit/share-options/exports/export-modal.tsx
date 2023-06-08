@@ -20,6 +20,7 @@ import { saveBlob } from '../../../../utils/file-tools';
 import { GlobalStateContext } from '../../../../context';
 import { ExportImageComponent } from './export-image-component';
 import { filenameToLanguage, getFragmentJsonExportString } from '../../../../sdk/src/tools';
+import JSONCrush from 'jsoncrush';
 
 const exportCodeModalStyle = css`
 	.bx--tab-content {
@@ -276,7 +277,7 @@ export const ExportModal = () => {
 							} else {
 								link += '/from-json/';
 							}
-							copyToClipboard(link + encodeURIComponent(JSON.stringify(jsonExport)));
+							copyToClipboard(link + encodeURIComponent(JSONCrush.crush(JSON.stringify(jsonExport))));
 						}}>
 							Copy link
 						</Button>
