@@ -66,7 +66,7 @@ export const jsonToState = (json: any, allFragments: any[]) => {
 		}
 		return {
 			...fragment.data,
-			allCssClasses: [...fragment.allCssClasses]
+			allCssClasses: [...(fragment.allCssClasses || [])]
 		};
 	}
 
@@ -98,7 +98,7 @@ export const expandJsonToState = (json: any) => {
 	// add css from all the fragments to state
 	const allCssClasses = [...state.allCssClasses];
 	json.forEach((fragment: any) => {
-		addIfNotExist(allCssClasses, fragment.allCssClasses);
+		addIfNotExist(allCssClasses, (fragment.allCssClasses || []));
 	});
 
 	return {

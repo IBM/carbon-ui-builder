@@ -13,12 +13,11 @@ import Editor from '@monaco-editor/react';
 import { throttle } from 'lodash';
 
 import { ComponentCssClassSelector } from '../../sdk/src/css-class-selector';
-import { updatedState } from '../../components/fragment';
-import { allComponents } from '../../fragment-components';
+import { allComponents } from '../../sdk/src/fragment-components';
 import { SelectedComponentBreadcrumbs } from './selected-component-breadcrumbs';
 import { GlobalStateContext } from '../../context';
 import { LayoutWidget } from '../../sdk/src/layout-widget';
-import { getSelectedComponent } from '../../sdk/src/tools';
+import { getSelectedComponent, updatedState } from '../../sdk/src/tools';
 
 const styleContextPaneStyle = css`
 .bx--form-item.bx--checkbox-wrapper {
@@ -58,13 +57,15 @@ const tooltipStyle = css`
 }
 `;
 
-const showComponentSettingsUI = (selectedComponent: any, setComponent: any) => {
+const showComponentSettingsUI = (selectedComponent: any, setComponent: any, fragment: any, setFragment: any) => {
 	for (const component of Object.values(allComponents)) {
 		// Find the UI for editing style for our component
 		if (selectedComponent.type === component.componentInfo.type) {
 			return <component.componentInfo.settingsUI
 				selectedComponent={selectedComponent}
-				setComponent={setComponent} />;
+				setComponent={setComponent}
+				fragment={fragment}
+				setFragment={setFragment} />;
 		}
 	}
 };
@@ -72,8 +73,8 @@ const showComponentSettingsUI = (selectedComponent: any, setComponent: any) => {
 let setComponent = (_component: any) => console.log('setComponent not inizialized yet');
 const throttledSetComponent = throttle((component: any) => setComponent(component), 150);
 
-let proxySetFragment = (_component: any) => console.log('proxySetFragment not inizialized yet');
-const throttledSetFragment = throttle((component: any) => proxySetFragment(component), 150);
+let proxySetFragment = (_fragment: any) => console.log('proxySetFragment not inizialized yet');
+const throttledSetFragment = throttle((fragment: any) => proxySetFragment(fragment), 150);
 
 export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 	const selectedComponent = getSelectedComponent(fragment);
@@ -130,7 +131,7 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 				<div className={accordionContentStyle}>
 				{
 					selectedComponent && <>
-						{showComponentSettingsUI(selectedComponent, setComponent)}
+						{showComponentSettingsUI(selectedComponent, setComponent, fragment, setFragment)}
 					</>
 				}
 				{
@@ -257,7 +258,17 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 							lineDecorationsWidth: 2,
 							lineNumbersMinChars: 4
 						}}
-						onChange= {(value: any) => {
+						onChange= {(value: string | undefined, event: any) => {
+							if (event?.changes?.some((change: any) => change?.forceMoveMarkers)) {
+								// when a user selects a different component from the previously selected
+								// the editor seems to clear before the our context reflects it. This
+								// calls Editor onChange with an empty value, which in turn clears the
+								// value from notes in the state.
+								// `forceMoveMarkers` seems to be set to true only when this happens and
+								// it allows us to skip updating in that case
+								// _there might be a better way to do this_
+								return;
+							}
 							if (selectedComponent) {
 								throttledSetComponent({
 									...selectedComponent,
