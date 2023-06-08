@@ -1,14 +1,14 @@
-<svg id="icon" xmlns="http://www.w3.org/2000/svg" role="img" width="16" height="16" viewBox="0 0 16 16" focusable="false" aria-label="tooltip" >
-    <defs id="defs12">
-        <style
-            id="style10">
-        .cls-1 {
-            fill: none;
-        }
-        </style>
-    </defs>
-    <polygon points="15,22 12,22 12,24 20,24 20,22 17,22 17,14 13,14 13,16 15,16 " id="polygon14" transform="scale(0.5)" style="fill:#525252;fill-opacity:1" />
-    <path d="M 8,4 A 0.75,0.75 0 1 0 8.75,4.75 0.75,0.75 0 0 0 8,4 Z" id="path16" style="stroke-width:0.5;fill:#525252;fill-opacity:1" />
-    <path d="M 8,15 A 7,7 0 1 1 15,8 7,7 0 0 1 8,15 Z M 8,2 A 6,6 0 1 0 14,8 6,6 0 0 0 8,2 Z" id="path18" style="stroke-width:0.5;fill:#525252;fill-opacity:1" />
-    <rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" class="cls-1" width="16" height="16" x="0" y="0" style="stroke-width:0.5" />
-    </svg>
+<svg id="tooltip_icon_tooltip_" data-name="tooltip / icon tooltip /" xmlns="http://www.w3.org/2000/svg" width="76" height="52" viewBox="0 0 76 52">
+    <g id="tooltip_icon_tooltip_item_arrow_top" data-name="tooltip / icon tooltip / item / arrow top" transform="translate(0 24)">
+        <g id="Container">
+        <rect id="bg" width="75.999" height="28" transform="translate(0.001 0)" fill="none"/>
+        <g id="tooltip_piece_arrow_top" data-name="tooltip / piece / arrow top">
+            <path id="bg-2" data-name="bg" d="M2,28a2,2,0,0,1-2-2V6A2,2,0,0,1,2,4H33.983l4-4,4,4H74a2,2,0,0,1,2,2V26a2,2,0,0,1-2,2Z" fill="#383838"/>
+        </g>
+        </g>
+        <text id="Tooltip" transform="translate(38 21)" fill="#fff" font-size="14" font-family="IBMPlexSans, IBM Plex Sans" letter-spacing="0.011em"><tspan x="-22.004" y="0">Tooltip</tspan></text>
+    </g>
+    <g id="Actions_Controls_settings--adjust_16" data-name="Actions / Controls / settings--adjust / 16" transform="translate(30)">
+        <path id="Fill" d="M5,13.005A2.509,2.509,0,0,1,2.55,11H0V10H2.55a2.5,2.5,0,0,1,4.9,0H14v1H7.45A2.509,2.509,0,0,1,5,13.005ZM5,9a1.5,1.5,0,1,0,1.5,1.5A1.5,1.5,0,0,0,5,9ZM9,5A2.508,2.508,0,0,1,6.55,3H0V2H6.55a2.5,2.5,0,0,1,4.9,0H14V3H11.45A2.509,2.509,0,0,1,9,5ZM9,1a1.5,1.5,0,1,0,1.5,1.5A1.5,1.5,0,0,0,9,1Z" transform="translate(1 1.497)" fill="#161616"/>
+    </g>
+</svg>
