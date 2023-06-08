@@ -11,7 +11,7 @@ export interface RadioTileGroupState {
 	type: string;
 	id: string | number;
 	legend?: string;
-	disabled?: string | boolean;
+	disabled?: boolean;
 	valueSelected?: string | number;
 	items?: any[];
 	cssClasses?: CssClasses[];

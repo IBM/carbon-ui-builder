@@ -12,7 +12,7 @@ export interface AccordionItemState {
 	items?: any[]; // TODO type
 	title: string;
 	id: string | number;
-	disabled?: string | boolean;
+	disabled?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;

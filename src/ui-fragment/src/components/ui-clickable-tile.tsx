@@ -10,7 +10,7 @@ import {
 export interface ClickableTileState {
 	type: string;
 	light?: boolean;
-	disabled?: string | boolean;
+	disabled?: boolean;
 	items?: any[];
 	cssClasses?: CssClasses[];
 	codeContext: {

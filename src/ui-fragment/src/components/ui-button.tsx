@@ -9,7 +9,7 @@ export interface ButtonState {
 	size: string;
 	text: string;
 	id: string | number;
-	disabled?: string | boolean;
+	disabled?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;

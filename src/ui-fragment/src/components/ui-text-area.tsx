@@ -11,7 +11,7 @@ export interface TextAreaState {
 	value?: string;
 	helperText?: string;
 	defaultValue?: string;
-	disabled?: string | boolean;
+	disabled?: boolean;
 	light?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {

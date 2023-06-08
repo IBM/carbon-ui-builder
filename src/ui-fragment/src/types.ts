@@ -9,5 +9,5 @@ export interface Action {
 	signal: string;
 	destination: number;
 	slot: string;
-	slot_param: string | number | boolean;
+	slotParam: string | number | boolean;
 }

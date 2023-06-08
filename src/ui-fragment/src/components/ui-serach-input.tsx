@@ -12,7 +12,7 @@ export interface SearchState {
 	value?: string;
 	closeButtonLabelText?: string;
 	defaultValue?: string;
-	disabled?: string | boolean;
+	disabled?: boolean;
 	light?: boolean;
 	role?: string;
 	expandable: boolean;

@@ -8,7 +8,7 @@ export interface CheckboxState {
 	label: string;
 	checked: boolean;
 	id: string | number;
-	disabled?: string | boolean;
+	disabled?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;

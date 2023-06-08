@@ -15,7 +15,7 @@ export interface DropdownState {
 	isInline?: boolean;
 	warn?: boolean;
 	warnText?: string;
-	disabled?: string | boolean;
+	disabled?: boolean;
 	hideLabel?: boolean;
 	direction?: string;
 	size?: string;

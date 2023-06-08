@@ -25,7 +25,7 @@ export const UIText = ({ state, sendSignal }: {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;
 	}
-	if (state.hidden == 'true' || state.hidden == true) {
+	if (state.hidden === true) {
 		return <></>;
 	}
 
