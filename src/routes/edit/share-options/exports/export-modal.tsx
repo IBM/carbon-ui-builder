@@ -146,6 +146,25 @@ export const ExportModal = () => {
 	const reactCode: any = createReactApp(fragmentExportModal.fragment, fragments);
 	const angularCode: any = createAngularApp(fragmentExportModal.fragment, fragments);
 
+	const getSharableLink = () => {
+		let link = location.protocol + '//' + location.host;
+		const jsonExport = JSON.parse(jsonCode);
+
+		if (shouldStripUnnecessaryProps) {
+			// remove id and lastModified
+			delete jsonExport.id;
+			delete jsonExport.lastModified;
+		}
+
+		if (shouldExportForPreviewOnly) {
+			link += '/preview-json/';
+		} else {
+			link += '/from-json/';
+		}
+
+		return link + encodeURIComponent(JSONCrush.crush(JSON.stringify(jsonExport)));
+	};
+
 	return (
 		<Modal
 			passiveModal
@@ -261,24 +280,10 @@ export const ExportModal = () => {
 							checked={shouldExportForPreviewOnly}
 							labelText='Preview only'
 							onChange={(checked: boolean) => setShouldExportForPreviewOnly(checked)}/>
-						<br />
-						<Button onClick={() => {
-							let link = location.protocol + '//' + location.host;
-							const jsonExport = JSON.parse(jsonCode);
-
-							if (shouldStripUnnecessaryProps) {
-								// remove id and lastModified
-								delete jsonExport.id;
-								delete jsonExport.lastModified;
-							}
-
-							if (shouldExportForPreviewOnly) {
-								link += '/preview-json/';
-							} else {
-								link += '/from-json/';
-							}
-							copyToClipboard(link + encodeURIComponent(JSONCrush.crush(JSON.stringify(jsonExport))));
-						}}>
+						<iframe
+							src={getSharableLink()}
+							className={css`width: 100%; height: calc(100vh - 550px); margin-bottom: 1rem; margin-top: 1rem;`} />
+						<Button onClick={() => copyToClipboard(getSharableLink()) }>
 							Copy link
 						</Button>
 					</div>
