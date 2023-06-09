@@ -5,7 +5,7 @@ import { stringToCssClassName } from '../utils';
 
 export interface TooltipState {
 	type: string;
-	placement?: string;
+	direction?: string;
 	alignment?: string;
 	description: string | number;
 	triggerText: string;
@@ -36,7 +36,7 @@ export const UITooltip = ({ state }: {
 	}
 	return <Tooltip
 		description={state.description}
-		direction={state.placement ? state.placement : 'top'}
+		direction={state.direction ? state.direction : 'top'}
 		align={state.alignment ? state.alignment : 'center'}
 		name={state.codeContext?.name}
 		triggerText={state.triggerText}

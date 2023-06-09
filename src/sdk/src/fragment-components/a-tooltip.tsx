@@ -32,15 +32,15 @@ export const ATooltipSettingsUI = ({ selectedComponent, setComponent }: any) => 
 
 	return <>
 		<Dropdown
-			id='placement'
+			id='direction'
 			label='Placement of the pop up'
 			titleText='Placement'
 			items={placements}
-			selectedItem={placements.find(item => item.id === selectedComponent.placement)}
+			selectedItem={placements.find(item => item.id === selectedComponent.direction)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
-				placement: event.selectedItem.id
+				direction: event.selectedItem.id
 			})} />
 		<Dropdown
 			id='alignment'
@@ -98,7 +98,7 @@ export const ATooltip = ({
 			<Tooltip
 				className={css`${styleObjectToString(componentObj.style)}`}
 				triggerText={componentObj.triggerText}
-				direction={componentObj.placement}
+				direction={componentObj.direction}
 				align={componentObj.alignment}>
 					{componentObj.description}
 			</Tooltip>
@@ -126,7 +126,7 @@ export const componentInfo: ComponentInfo = {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Description = "${json.description}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}TriggerText = "${json.triggerText}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Direction = "${json.placement}";`,
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Direction = "${json.direction}";`,
 			outputs: () => '',
 			imports: ['TooltipModule'],
 			code: ({ json }) => `<div class="bx--tooltip__label">
@@ -135,7 +135,7 @@ export const componentInfo: ComponentInfo = {
 					${angularClassNamesFromComponentObj(json)}
 					[ibmTooltip]="${nameStringToVariableString(json.codeContext?.name)}Description"
 					trigger="click"
-					${json.placement ? `[placement]='${nameStringToVariableString(json.codeContext?.name)}Direction` : ''}>
+					${json.direction ? `[direction]='${nameStringToVariableString(json.codeContext?.name)}Direction` : ''}>
 					<div role="button">
 						<svg ibmIcon="information--filled" size="16"></svg>
 					</div>
@@ -150,7 +150,7 @@ export const componentInfo: ComponentInfo = {
 					className="tooltip-trigger"
 					triggerText="${json.triggerText}"
 					${json.alignment ? `align="${json.alignment}"` : ''}
-					${json.placement ? `direction="${json.placement}"` : ''}>
+					${json.direction ? `direction="${json.direction}"` : ''}>
 						${json.description}
 				</Tooltip>`
 		}
