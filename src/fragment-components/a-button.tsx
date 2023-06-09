@@ -144,8 +144,9 @@ export const componentInfo: ComponentInfo = {
 					${json.kind ? `kind="${json.kind}"` : ''}
 					${json.size ? `size="${json.size}"` : ''}
 					${reactClassNamesFromComponentObj(json)}
-					${getReactCodeForActions(signals, slots, json.codeContext?.name)}
-					>${json.text}</Button>`;
+					${getReactCodeForActions(signals, slots, json.codeContext?.name)}>
+						${json.text}
+					</Button>`;
 			}
 		}
 	}
