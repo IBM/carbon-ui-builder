@@ -125,7 +125,7 @@ export const componentInfo: ComponentInfo = {
 		kind: 'primary',
 		text: 'Button',
 		size: '',
-		disabled: false
+		disabled: false 
 	},
 	image,
 	codeExport: {
