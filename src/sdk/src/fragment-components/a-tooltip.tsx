@@ -29,6 +29,7 @@ export const ATooltipSettingsUI = ({ selectedComponent, setComponent }: any) => 
 		{ id: 'center', text: 'Center' },
 		{ id: 'end', text: 'End' }
 	];
+
 	return <>
 		<Dropdown
 			id='placement'
@@ -91,7 +92,6 @@ export const ATooltip = ({
 		<AComponent
 		componentObj={componentObj}
 		rejectDrop={true}
-		// className={css`position: relative; display: inline-flex`}
 		// make the icon hover only and whatever other customer css classes to be augmented
 		className={`${preventCheckEvent} ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} `}
 		{...rest}>
@@ -114,18 +114,12 @@ export const componentInfo: ComponentInfo = {
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
-		selected={selected}>
-
-	</ATooltip>,
+		selected={selected} />,
 	keywords: ['tooltip'],
 	name: 'Tooltip',
 	type: 'tooltip',
 	defaultComponentObj: {
-		type: 'tooltip',
-		placement: 'top',
-		alignment: 'center',
-		description: 'Tooltip description',
-		triggerText: 'Default tooltip label'
+		type: 'tooltip'
 	},
 	image,
 	codeExport: {
@@ -135,34 +129,30 @@ export const componentInfo: ComponentInfo = {
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Direction = "${json.placement}";`,
 			outputs: () => '',
 			imports: ['TooltipModule'],
-			code: ({ json }) => {
-				return `<div class="bx--tooltip__label">
-							{{${nameStringToVariableString(json.codeContext?.name)}TriggerText}}
-							<span
-								${angularClassNamesFromComponentObj(json)}
-								[ibmTooltip]="${nameStringToVariableString(json.codeContext?.name)}Description"
-								trigger="click"
-								${json.placement ? `[placement]='${nameStringToVariableString(json.codeContext?.name)}Direction` : ''}>
-								<div role="button">
-									<svg ibmIcon="information--filled" size="16"></svg>
-								</div>
-							</span>
-						</div>`;
-			}
+			code: ({ json }) => `<div class="bx--tooltip__label">
+				{{${nameStringToVariableString(json.codeContext?.name)}TriggerText}}
+				<span
+					${angularClassNamesFromComponentObj(json)}
+					[ibmTooltip]="${nameStringToVariableString(json.codeContext?.name)}Description"
+					trigger="click"
+					${json.placement ? `[placement]='${nameStringToVariableString(json.codeContext?.name)}Direction` : ''}>
+					<div role="button">
+						<svg ibmIcon="information--filled" size="16"></svg>
+					</div>
+				</span>
+			</div>`
 		},
 		react: {
 			imports: ['Tooltip'],
-			code: ({ json }) => {
-				return `<Tooltip
-							${reactClassNamesFromComponentObj(json)}
-							description="${json.description}"
-							className="tooltip-trigger"
-							triggerText="${json.triggerText}"
-							${json.alignment ? `align="${json.alignment}"` : ''}
-							${json.placement ? `direction="${json.placement}"` : ''}>
-								${json.description}
-						</Tooltip>`;
-			}
+			code: ({ json }) => `<Tooltip
+					${reactClassNamesFromComponentObj(json)}
+					description="${json.description}"
+					className="tooltip-trigger"
+					triggerText="${json.triggerText}"
+					${json.alignment ? `align="${json.alignment}"` : ''}
+					${json.placement ? `direction="${json.placement}"` : ''}>
+						${json.description}
+				</Tooltip>`
 		}
 	}
 };
