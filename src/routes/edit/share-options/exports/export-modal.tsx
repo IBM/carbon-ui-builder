@@ -280,12 +280,17 @@ export const ExportModal = () => {
 							checked={shouldExportForPreviewOnly}
 							labelText='Preview only'
 							onChange={(checked: boolean) => setShouldExportForPreviewOnly(checked)}/>
+
 						<iframe
 							src={getSharableLink()}
 							className={css`width: 100%; height: calc(100vh - 550px); margin-bottom: 1rem; margin-top: 1rem;`} />
-						<Button onClick={() => copyToClipboard(getSharableLink()) }>
+
+						<Button className={css`margin-right: 1rem;`} onClick={() => copyToClipboard(getSharableLink())}>
 							Copy link
 						</Button>
+						<a className='bx--link--inline bx--btn bx--btn--secondary' href={getSharableLink()} target='_blank' rel="noreferrer">
+							Open in new tab
+						</a>
 					</div>
 				</Tab>
 			</Tabs>
