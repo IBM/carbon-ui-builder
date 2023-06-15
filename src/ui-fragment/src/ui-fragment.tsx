@@ -9,7 +9,6 @@ export interface UIFragmentProps {
 }
 
 export const UIFragment = ({ state, setState }: UIFragmentProps) => {
-
 	const styles = css`${
 		getAllFragmentStyleClasses(state, [], state.allCssClasses).map((styleClass: any) => `.${styleClass.id} {
 			${styleClass.content}
