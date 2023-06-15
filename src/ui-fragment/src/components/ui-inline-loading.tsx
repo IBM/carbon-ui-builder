@@ -22,7 +22,7 @@ export interface InlineLoadingState {
 	style?: any;
 }
 
-export const UIInlineLoading = ({ state, sendSignal }: {
+export const UIInlineLoading = ({ state }: {
 	state: InlineLoadingState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;

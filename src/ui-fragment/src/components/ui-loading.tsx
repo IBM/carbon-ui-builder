@@ -16,7 +16,7 @@ export interface LoadingState {
 	style?: any;
 }
 
-export const UILoading = ({ state, sendSignal }: {
+export const UILoading = ({ state }: {
 	state: LoadingState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;

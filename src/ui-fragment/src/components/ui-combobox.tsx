@@ -31,7 +31,7 @@ export interface ComboBoxState {
 	style?: any;
 }
 
-export const UIComboBox = ({ state, setState, sendSignal }: {
+export const UIComboBox = ({ state, setState }: {
 	state: ComboBoxState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;

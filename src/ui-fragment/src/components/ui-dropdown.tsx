@@ -30,7 +30,7 @@ export interface DropdownState {
 	style?: any;
 }
 
-export const UIDropdown = ({ state, setState, sendSignal }: {
+export const UIDropdown = ({ state, setState }: {
 	state: DropdownState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;

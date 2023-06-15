@@ -14,7 +14,7 @@ export interface OverflowMenuItemState {
 	};
 }
 
-export const UIOverflowMenuItem = ({ state, sendSignal }: {
+export const UIOverflowMenuItem = ({ state }: {
 	state: OverflowMenuItemState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;

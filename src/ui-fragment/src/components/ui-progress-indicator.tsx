@@ -22,7 +22,7 @@ export interface ProgressIndicatorState {
 	style?: any;
 }
 
-export const UIProgressIndicator = ({ state, setState, sendSignal }: {
+export const UIProgressIndicator = ({ state, setState }: {
 	state: ProgressIndicatorState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;

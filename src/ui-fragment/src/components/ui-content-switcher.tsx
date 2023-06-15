@@ -16,7 +16,7 @@ export interface ContentSwitcherState {
 	};
 }
 
-export const UIContentSwitcher = ({ state, sendSignal }: {
+export const UIContentSwitcher = ({ state }: {
 	state: ContentSwitcherState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;

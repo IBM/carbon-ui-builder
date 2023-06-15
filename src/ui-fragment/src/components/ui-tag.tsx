@@ -19,7 +19,7 @@ export interface TagState {
 	style?: any;
 }
 
-export const UITag = ({ state, sendSignal }: {
+export const UITag = ({ state }: {
 	state: TagState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;

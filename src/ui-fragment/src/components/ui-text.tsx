@@ -15,17 +15,14 @@ export interface TextState {
 	};
 }
 
-export const UIText = ({ state, sendSignal }: {
+export const UIText = ({ state }: {
 	state: TextState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
 	sendSignal: (id: number | string, signal: string) => void;
 }) => {
-	if (state.type !== 'text') {
+	if (state.type !== 'text' || state.hidden) {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
-		return <></>;
-	}
-	if (state.hidden === true) {
 		return <></>;
 	}
 

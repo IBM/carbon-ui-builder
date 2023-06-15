@@ -16,7 +16,7 @@ export interface CodeSnippetState {
 	style?: any;
 }
 
-export const UICodeSnippet = ({ state, sendSignal }: {
+export const UICodeSnippet = ({ state }: {
 	state: CodeSnippetState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;

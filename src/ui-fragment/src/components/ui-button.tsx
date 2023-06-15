@@ -17,7 +17,7 @@ export interface ButtonState {
 	style?: any;
 }
 
-export const UIButton = ({ state, setGlobalState, sendSignal }: {
+export const UIButton = ({ state, sendSignal }: {
 	state: ButtonState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;

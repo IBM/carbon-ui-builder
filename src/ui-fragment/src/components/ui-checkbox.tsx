@@ -16,7 +16,7 @@ export interface CheckboxState {
 	style?: any;
 }
 
-export const UICheckbox = ({ state, setState, sendSignal }: {
+export const UICheckbox = ({ state, setState }: {
 	state: CheckboxState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;

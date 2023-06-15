@@ -18,7 +18,7 @@ export interface ToggleState {
 	style?: any;
 }
 
-export const UIToggle = ({ state, setState, sendSignal }: {
+export const UIToggle = ({ state, setState }: {
 	state: ToggleState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;

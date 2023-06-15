@@ -14,7 +14,7 @@ export interface BreadcrumbItemState {
 	};
 }
 
-export const UIBreadcrumbItem = ({ state, sendSignal }: {
+export const UIBreadcrumbItem = ({ state }: {
 	state: BreadcrumbItemState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;

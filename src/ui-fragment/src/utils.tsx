@@ -196,7 +196,6 @@ export const isFragment = (json: any) => {
 		&& Array.isArray(json.items);
 };
 
-
 export const renderComponents = (
 	state: any,
 	setState: (state: any) => void,

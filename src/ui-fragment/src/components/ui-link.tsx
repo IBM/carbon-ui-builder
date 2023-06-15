@@ -17,7 +17,7 @@ export interface LinkState {
 	style?: any;
 }
 
-export const UILink = ({ state, sendSignal }: {
+export const UILink = ({ state }: {
 	state: LinkState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;

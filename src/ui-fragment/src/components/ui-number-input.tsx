@@ -30,7 +30,7 @@ export interface NumberInputState {
 	style?: any;
 }
 
-export const UINumberInput = ({ state, setState, sendSignal }: {
+export const UINumberInput = ({ state, setState }: {
 	state: NumberInputState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
