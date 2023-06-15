@@ -9,6 +9,7 @@ export const View = () => {
 	const params = useParams();
 
 	const fragment = fragments.find((fragment: any) => fragment.id === params.id);
+
 	const [fragmentState, setFragmentState] = useState(getExpandedFragmentState(fragment));
 
 	return <UIFragment
