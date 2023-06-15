@@ -23,7 +23,6 @@ export const UIButton = ({ state, setGlobalState, sendSignal }: {
 	setGlobalState: (state: any) => void;
 	sendSignal: (id: number | string, signal: string) => void;
 }) => {
-
 	if (state.type !== 'button') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;
