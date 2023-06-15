@@ -320,4 +320,3 @@ export const renderComponents = (
 		return state.items.map((item: any) => renderComponents(item, setItem, setState, sendSignal));
 	}
 };
-
