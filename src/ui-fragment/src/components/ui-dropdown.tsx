@@ -34,6 +34,7 @@ export const UIDropdown = ({ state, setState }: {
 	state: DropdownState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'dropdown') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
