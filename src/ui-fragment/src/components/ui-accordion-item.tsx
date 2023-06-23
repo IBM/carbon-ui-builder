@@ -20,6 +20,8 @@ export interface AccordionItemState {
 	style?: any;
 }
 
+export const type = 'accordion-item';
+
 export const UIAccordionItem = ({ state, setState, setGlobalState, sendSignal }: {
 	state: AccordionItemState;
 	setState: (state: any) => void;

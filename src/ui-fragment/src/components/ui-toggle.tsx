@@ -1,6 +1,6 @@
 import React from 'react';
 import { Toggle } from 'carbon-components-react';
-import { CssClasses } from '../types';
+import { CssClasses, SendSignal } from '../types';
 import { stringToCssClassName } from '../utils';
 
 export interface ToggleState {
@@ -8,6 +8,7 @@ export interface ToggleState {
 	onText: string;
 	offText: string;
 	size: string;
+	header?: string;
 	checked?: boolean;
 	disabled?: boolean;
 	id: string | number;
@@ -18,11 +19,32 @@ export interface ToggleState {
 	style?: any;
 }
 
-export const UIToggle = ({ state, setState }: {
+export const type = 'toggle';
+
+export const slots = {
+	disable: (state: ToggleState) => ({
+		...state,
+		disabled: true
+	}),
+	enable: (state: ToggleState) => ({
+		...state,
+		disabled: false
+	}),
+	toggleDisabled: (state: ToggleState) => ({
+		...state,
+		disabled: !state.disabled
+	}),
+	setDisabled: (state: ToggleState, value: any[]) => ({
+		...state,
+		disabled: value[0]
+	})
+};
+
+export const UIToggle = ({ state, sendSignal }: {
 	state: ToggleState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
-	sendSignal: (id: number | string, signal: string) => void;
+	sendSignal: SendSignal;
 }) => {
 	if (state.type !== 'toggle') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -46,6 +68,9 @@ export const UIToggle = ({ state, setState }: {
 		disabled={state.disabled}
 		size={state.size}
 		checked={!!state.checked}
-		onChange={(event: any) => setState({ ...state, checked: event.target.checked })}
+		labelText={state.header}
+		onChange={(event: any) => {
+			sendSignal(state.id, 'toggle', [event.target.checked], { ...state, checked: event.target.checked });
+		}}
 		className={cssClasses} />;
 };

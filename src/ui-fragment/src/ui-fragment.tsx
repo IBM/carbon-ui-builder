@@ -1,12 +1,47 @@
 import React from 'react';
 import { css } from 'emotion';
 import { getAllFragmentStyleClasses, renderComponents } from './utils';
-import { Action } from './types';
+import { Action, SendSignal } from './types';
+
+import { allComponents } from './components';
 
 export interface UIFragmentProps {
 	state: any;
 	setState: (state: any) => void;
 }
+
+const slotsFromType = (type: string) => {
+	const componentModule = Object.values(allComponents).find(component => 'type' in component && component.type === type);
+	return componentModule && 'slots' in componentModule ? componentModule.slots : {};
+};
+
+const updatedStateData = (stateData: any, actions: Action[], signalValue?: any[], newSenderState?: any) => {
+	let newStateData = {
+		...stateData
+	};
+
+	if (stateData.id === newSenderState?.id) {
+		newStateData = { ...newSenderState };
+	}
+
+	const action = actions.find((a: Action) => a.destination === stateData.id);
+
+	if (action) {
+		// check if slot is a function
+		const slots = slotsFromType(stateData.type);
+		// TODO signalValue needs to be correctly mapped to slots and/or to function calls
+		if (action.slot in slots) {
+			newStateData = (slots as any)[action.slot](stateData, signalValue);
+		} else {
+			newStateData[action.slot] = signalValue !== undefined && Array.isArray(signalValue) ? signalValue[0] : action.slotParam;
+		}
+	}
+
+	return {
+		...newStateData,
+		items: stateData?.items?.map((item: any) => updatedStateData(item, actions, signalValue, newSenderState))
+	};
+};
 
 export const UIFragment = ({ state, setState }: UIFragmentProps) => {
 	const styles = css`${
@@ -24,46 +59,14 @@ export const UIFragment = ({ state, setState }: UIFragmentProps) => {
 		});
 	};
 
-	const iterateItems = (item: any, action: Action, otherStateChanges: any) => {
-		// Checks if there is a layout and begins iterating through it
-		if (item.items) {
-			item.items.forEach((childItem: any) => {
-				iterateItems(childItem, action, otherStateChanges);
-			});
-		}
-		// Allows additional state changes for use in merging set state calls that are called from a single event.
-		if (otherStateChanges && item.id === otherStateChanges.id) {
-			Object.assign(item, otherStateChanges);
-		}
-		// Perform action by changing state
-		if (item.id === action.destination) {
-			item[action.slot] = action.slotParam;
-		}
-	};
-
-	const sendSignal = (id: number | string, signal: string, otherStateChanges?: any) => {
+	const sendSignal: SendSignal = (id: number | string, signal: string, value?: any[], newComponentState?: any) => {
 		if (!state.data.actions) {
 			return;
 		}
 
-		const changedItems = JSON.parse(JSON.stringify(state.data.items));
+		const subscriptions = state.data.actions.filter((action: Action) => action.source === id && action.signal === signal);
 
-		state.data.actions.forEach((action: Action) => {
-			// Check if the ID and signal combination provided match any of the actions in the state
-			if (!(action.source === id && action.signal === signal)) {
-				return;
-			}
-
-			// If we find an action, iterate through the state data and change the state of the components listed
-			changedItems.forEach((item: any) => {
-				iterateItems(item, action, otherStateChanges);
-			});
-		});
-
-		setStateData({
-			...state.data,
-			items: changedItems
-		});
+		setStateData(updatedStateData(state.data, subscriptions, value, newComponentState));
 	};
 
 	// state.data and setStateData render fragment json; state and setState render component json

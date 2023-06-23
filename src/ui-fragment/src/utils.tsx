@@ -26,7 +26,7 @@ import { UIRadioTileGroup } from './components/ui-radio-tile-group';
 import { UIRow } from './components/ui-row';
 import { UISelectableTile } from './components/ui-selectable-tile';
 import { UISelectableTileGroup } from './components/ui-selectable-tile-group';
-import { UISearchInput } from './components/ui-serach-input';
+import { UISearchInput } from './components/ui-search-input';
 import { UITag } from './components/ui-tag';
 import { UIText } from './components/ui-text';
 import { UITextAreaInput } from './components/ui-text-area';
