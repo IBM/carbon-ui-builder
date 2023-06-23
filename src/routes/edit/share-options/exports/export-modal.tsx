@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import {
 	Button,
+	Checkbox,
 	Modal,
 	Tab,
 	Tabs
@@ -18,8 +19,8 @@ import { ModalContext } from '../../../../context/modal-context';
 import { saveBlob } from '../../../../utils/file-tools';
 import { GlobalStateContext } from '../../../../context';
 import { ExportImageComponent } from './export-image-component';
-import { getFragmentJsonExportString } from '../../../../utils/fragment-tools';
-import { filenameToLanguage } from '../../../../sdk/src/tools';
+import { filenameToLanguage, getFragmentJsonExportString } from '../../../../sdk/src/tools';
+import JSONCrush from 'jsoncrush';
 
 const exportCodeModalStyle = css`
 	.bx--tab-content {
@@ -125,6 +126,9 @@ export const ExportModal = () => {
 	const { fragmentExportModal, hideFragmentExportModal } = useContext(ModalContext);
 	const [selectedAngularFilename, setSelectedAngularFilename] = useState('src/app/app.component.ts' as string);
 	const [selectedReactFilename, setSelectedReactFilename] = useState('src/component.js' as string);
+	const [shouldStripUnnecessaryProps, setShouldStripUnnecessaryProps] = useState(true);
+	const [shouldExportForPreviewOnly, setShouldExportForPreviewOnly] = useState(false);
+
 	const monaco = useMonaco();
 
 	useEffect(() => {
@@ -141,6 +145,25 @@ export const ExportModal = () => {
 	const jsonCode: any = getFragmentJsonExportString(fragmentExportModal.fragment, fragments, styleClasses);
 	const reactCode: any = createReactApp(fragmentExportModal.fragment, fragments);
 	const angularCode: any = createAngularApp(fragmentExportModal.fragment, fragments);
+
+	const getSharableLink = () => {
+		let link = location.protocol + '//' + location.host;
+		const jsonExport = JSON.parse(jsonCode);
+
+		if (shouldStripUnnecessaryProps) {
+			// remove id and lastModified
+			delete jsonExport.id;
+			delete jsonExport.lastModified;
+		}
+
+		if (shouldExportForPreviewOnly) {
+			link += '/preview-json/';
+		} else {
+			link += '/from-json/';
+		}
+
+		return link + encodeURIComponent(JSONCrush.crush(JSON.stringify(jsonExport)));
+	};
 
 	return (
 		<Modal
@@ -231,6 +254,44 @@ export const ExportModal = () => {
 						<h3>Image</h3>
 					</div>
 					<ExportImageComponent fragment={fragmentExportModal.fragment} />
+				</Tab>
+				<Tab
+					id='link'
+					label='Link'
+					role='presentation'
+					tabIndex={0}>
+					<div className={titleWrapper}>
+						<h3>Link</h3>
+					</div>
+					<div>
+						<p className={css`margin-top: 1rem; margin-bottom: 1rem; font-style: italic;`}>
+							Some applications may not be able to handle long URLs or data URLs properly.
+							Different browsers and servers have different maximum lengths for URLs.
+							If you try to encode/pack more data than that, your url may be truncated or rejected,
+							resulting in data loss or corruption.
+						</p>
+						<Checkbox
+							id='strip-unnecessary'
+							checked={shouldStripUnnecessaryProps}
+							labelText='Strip unnecessary properties'
+							onChange={(checked: boolean) => setShouldStripUnnecessaryProps(checked)}/>
+						<Checkbox
+							id='preview-only'
+							checked={shouldExportForPreviewOnly}
+							labelText='Preview only'
+							onChange={(checked: boolean) => setShouldExportForPreviewOnly(checked)}/>
+
+						<iframe
+							src={getSharableLink()}
+							className={css`width: 100%; height: calc(100vh - 550px); margin-bottom: 1rem; margin-top: 1rem;`} />
+
+						<Button className={css`margin-right: 1rem;`} onClick={() => copyToClipboard(getSharableLink())}>
+							Copy link
+						</Button>
+						<a className='bx--link--inline bx--btn bx--btn--secondary' href={getSharableLink()} target='_blank' rel="noreferrer">
+							Open in new tab
+						</a>
+					</div>
 				</Tab>
 			</Tabs>
 		</Modal>
