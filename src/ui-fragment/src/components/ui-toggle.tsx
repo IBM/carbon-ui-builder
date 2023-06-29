@@ -33,10 +33,6 @@ export const slots = {
 	toggleDisabled: (state: ToggleState) => ({
 		...state,
 		disabled: !state.disabled
-	}),
-	setDisabled: (state: ToggleState, value: any[]) => ({
-		...state,
-		disabled: value[0]
 	})
 };
 
