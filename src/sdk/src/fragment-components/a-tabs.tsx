@@ -114,7 +114,6 @@ export const ATabs = ({
 						key={index}>
 						{
 							<section ref={holderRef} onDrop={(event) => {
-                                debugger
 								event.stopPropagation();
 								event.preventDefault();
 								const dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
