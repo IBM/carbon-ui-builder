@@ -196,7 +196,10 @@ export const ExportImageComponent = ({ fragment }: any) => {
 
 	const getPreviewSize = (width: number, height: number) => {
 		let fitRatio: number;
-		if (width <= height) {
+
+		if (!imageContainerSize) {
+			fitRatio = 1;
+		} else if (width <= height) {
 			// preview is square or tall rectangle (mobile)
 			fitRatio = imageContainerSize.height / height;
 		} else {

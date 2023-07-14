@@ -173,7 +173,7 @@ export const Header = ({
 				className={headerName}>
 					<HeaderMenuItem
 					className={headerName}
-					href='https://github.com/IBM/carbon-ui-builder/issues/new'
+					href='https://github.com/IBM/carbon-ui-builder/issues/new?labels=bug&template=bug_report.yml'
 					target='_blank'>
 						<Debug16 /> I found a bug
 					</HeaderMenuItem>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'carbon-components-react';
-import { CssClasses } from '../types';
+import { CssClasses, SendSignal } from '../types';
 import { stringToCssClassName } from '../utils';
 
 export interface ButtonState {
@@ -9,6 +9,7 @@ export interface ButtonState {
 	size: string;
 	text: string;
 	id: string | number;
+	disabled?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
@@ -16,10 +17,32 @@ export interface ButtonState {
 	style?: any;
 }
 
-export const UIButton = ({ state }: {
+export const type = 'button';
+
+export const slots = {
+	disable: (state: ButtonState) => ({
+		...state,
+		disabled: true
+	}),
+	enable: (state: ButtonState) => ({
+		...state,
+		disabled: false
+	}),
+	toggleDisabled: (state: ButtonState) => ({
+		...state,
+		disabled: !state.disabled
+	}),
+	setDisabled: (state: ButtonState, value: any[]) => ({
+		...state,
+		disabled: value[0]
+	})
+};
+
+export const UIButton = ({ state, sendSignal }: {
 	state: ButtonState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: SendSignal;
 }) => {
 	if (state.type !== 'button') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -36,9 +59,11 @@ export const UIButton = ({ state }: {
 	}
 
 	return <Button
+	disabled={state.disabled}
 	kind={state.kind}
 	size={state.size}
 	name={state.codeContext?.name}
+	onClick={() => sendSignal(state.id, 'click')}
 	className={cssClasses}>
 		{state.text}
 	</Button>;

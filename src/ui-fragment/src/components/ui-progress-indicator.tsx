@@ -26,6 +26,7 @@ export const UIProgressIndicator = ({ state, setState }: {
 	state: ProgressIndicatorState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'progress-indicator') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment

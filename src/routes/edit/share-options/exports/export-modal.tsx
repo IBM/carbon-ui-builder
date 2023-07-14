@@ -173,127 +173,130 @@ export const ExportModal = () => {
 			size='lg'
 			modalHeading={`Export "${fragmentExportModal.fragment.title}" code`}
 			className={exportCodeModalStyle}>
-			<Tabs
-				selected={settings.selectedExportTabIndex || 0}
-				onSelectionChange={(tabIndex: number) => {
-					setSettings({ ...settings, selectedExportTabIndex: tabIndex });
-				}}>
-				<Tab
-					id='Angular'
-					label='Angular'
-					role='presentation'
-					tabIndex={0}>
-					<div className={titleWrapper}>
-						<h3>Angular Code</h3>
-						<a
-							href={generateSandboxUrl(createFragmentSandbox(angularCode))}
-							target='_blank'
-							rel='noopener noreferrer'>
-							Edit on CodeSandbox
-						</a>
-					</div>
-					<div className={tabContentStyle}>
-						<FileNames code={angularCode} setSelectedFilename={setSelectedAngularFilename} />
-						<CodeView code={angularCode} selectedFilename={selectedAngularFilename} />
-					</div>
-				</Tab>
-				<Tab
-					id='react'
-					label='React'
-					role='presentation'
-					tabIndex={0}>
-					<div className={titleWrapper}>
-						<h3>React Code</h3>
-						<a
-							href={generateSandboxUrl(createFragmentSandbox(reactCode))}
-							target='_blank'
-							rel='noopener noreferrer'>
-							Edit on CodeSandbox
-						</a>
-					</div>
-					<div className={tabContentStyle}>
-						<FileNames code={reactCode} setSelectedFilename={setSelectedReactFilename} />
-						<CodeView code={reactCode} selectedFilename={selectedReactFilename} />
-					</div>
-				</Tab>
-				<Tab
-					id='json'
-					label='JSON'
-					role='presentation'
-					tabIndex={0}>
-					<div className={titleWrapper}>
-						<h3>
-							JSON
+			{
+				fragmentExportModal.isVisible
+				&& <Tabs
+					selected={settings.selectedExportTabIndex || 0}
+					onSelectionChange={(tabIndex: number) => {
+						setSettings({ ...settings, selectedExportTabIndex: tabIndex });
+					}}>
+					<Tab
+						id='Angular'
+						label='Angular'
+						role='presentation'
+						tabIndex={0}>
+						<div className={titleWrapper}>
+							<h3>Angular Code</h3>
+							<a
+								href={generateSandboxUrl(createFragmentSandbox(angularCode))}
+								target='_blank'
+								rel='noopener noreferrer'>
+								Edit on CodeSandbox
+							</a>
+						</div>
+						<div className={tabContentStyle}>
+							<FileNames code={angularCode} setSelectedFilename={setSelectedAngularFilename} />
+							<CodeView code={angularCode} selectedFilename={selectedAngularFilename} />
+						</div>
+					</Tab>
+					<Tab
+						id='react'
+						label='React'
+						role='presentation'
+						tabIndex={0}>
+						<div className={titleWrapper}>
+							<h3>React Code</h3>
+							<a
+								href={generateSandboxUrl(createFragmentSandbox(reactCode))}
+								target='_blank'
+								rel='noopener noreferrer'>
+								Edit on CodeSandbox
+							</a>
+						</div>
+						<div className={tabContentStyle}>
+							<FileNames code={reactCode} setSelectedFilename={setSelectedReactFilename} />
+							<CodeView code={reactCode} selectedFilename={selectedReactFilename} />
+						</div>
+					</Tab>
+					<Tab
+						id='json'
+						label='JSON'
+						role='presentation'
+						tabIndex={0}>
+						<div className={titleWrapper}>
+							<h3>
+								JSON
+								<Button
+									kind='ghost'
+									className={css`margin-top: -6px;`}
+									hasIconOnly
+									tooltipPosition='right'
+									iconDescription='Copy to clipboard'
+									onClick={() => copyToClipboard(jsonCode)}
+									renderIcon={Copy16} />
+							</h3>
 							<Button
 								kind='ghost'
-								className={css`margin-top: -6px;`}
-								hasIconOnly
-								tooltipPosition='right'
-								iconDescription='Copy to clipboard'
-								onClick={() => copyToClipboard(jsonCode)}
-								renderIcon={Copy16} />
-						</h3>
-						<Button
-							kind='ghost'
-							onClick={() => saveBlob(new Blob([jsonCode]), `${fragmentExportModal.fragment.title}.json`)}>
-							Download JSON
-						</Button>
-					</div>
-					<Editor
-						height={contentHeight}
-						language='json'
-						value={jsonCode}
-						options={{ readOnly: true }} />
-				</Tab>
-				<Tab
-					id='image'
-					label='Image'
-					role='presentation'
-					tabIndex={0}>
-					<div className={titleWrapper}>
-						<h3>Image</h3>
-					</div>
-					<ExportImageComponent fragment={fragmentExportModal.fragment} />
-				</Tab>
-				<Tab
-					id='link'
-					label='Link'
-					role='presentation'
-					tabIndex={0}>
-					<div className={titleWrapper}>
-						<h3>Link</h3>
-					</div>
-					<div>
-						<p className={css`margin-top: 1rem; margin-bottom: 1rem; font-style: italic;`}>
-							Some applications may not be able to handle long URLs or data URLs properly.
-							Different browsers and servers have different maximum lengths for URLs.
-							If you try to encode/pack more data than that, your url may be truncated or rejected,
-							resulting in data loss or corruption.
-						</p>
-						<Checkbox
-							id='strip-unnecessary'
-							checked={shouldStripUnnecessaryProps}
-							labelText='Strip unnecessary properties'
-							onChange={(checked: boolean) => setShouldStripUnnecessaryProps(checked)}/>
-						<Checkbox
-							id='preview-only'
-							checked={shouldExportForPreviewOnly}
-							labelText='Preview only'
-							onChange={(checked: boolean) => setShouldExportForPreviewOnly(checked)}/>
+								onClick={() => saveBlob(new Blob([jsonCode]), `${fragmentExportModal.fragment.title}.json`)}>
+								Download JSON
+							</Button>
+						</div>
+						<Editor
+							height={contentHeight}
+							language='json'
+							value={jsonCode}
+							options={{ readOnly: true }} />
+					</Tab>
+					<Tab
+						id='image'
+						label='Image'
+						role='presentation'
+						tabIndex={0}>
+						<div className={titleWrapper}>
+							<h3>Image</h3>
+						</div>
+						<ExportImageComponent fragment={fragmentExportModal.fragment} />
+					</Tab>
+					<Tab
+						id='link'
+						label='Link'
+						role='presentation'
+						tabIndex={0}>
+						<div className={titleWrapper}>
+							<h3>Link</h3>
+						</div>
+						<div>
+							<p className={css`margin-top: 1rem; margin-bottom: 1rem; font-style: italic;`}>
+								Some applications may not be able to handle long URLs or data URLs properly.
+								Different browsers and servers have different maximum lengths for URLs.
+								If you try to encode/pack more data than that, your url may be truncated or rejected,
+								resulting in data loss or corruption.
+							</p>
+							<Checkbox
+								id='strip-unnecessary'
+								checked={shouldStripUnnecessaryProps}
+								labelText='Strip unnecessary properties'
+								onChange={(checked: boolean) => setShouldStripUnnecessaryProps(checked)} />
+							<Checkbox
+								id='preview-only'
+								checked={shouldExportForPreviewOnly}
+								labelText='Preview only'
+								onChange={(checked: boolean) => setShouldExportForPreviewOnly(checked)} />
 
-						<iframe
-							src={getSharableLink()}
-							className={css`width: 100%; height: calc(100vh - 550px); margin-bottom: 1rem; margin-top: 1rem;`} />
+							<iframe
+								src={getSharableLink()}
+								className={css`width: 100%; height: calc(100vh - 550px); margin-bottom: 1rem; margin-top: 1rem;`} />
 
-						<Button className={css`margin-right: 1rem;`} onClick={() => copyToClipboard(getSharableLink())}>
-							Copy link
-						</Button>
-						<a className='bx--link--inline bx--btn bx--btn--secondary' href={getSharableLink()} target='_blank' rel="noreferrer">
-							Open in new tab
-						</a>
-					</div>
-				</Tab>
-			</Tabs>
+							<Button className={css`margin-right: 1rem;`} onClick={() => copyToClipboard(getSharableLink())}>
+								Copy link
+							</Button>
+							<a className='bx--link--inline bx--btn bx--btn--secondary' href={getSharableLink()} target='_blank' rel="noreferrer">
+								Open in new tab
+							</a>
+						</div>
+					</Tab>
+				</Tabs>
+			}
 		</Modal>
 	);
 };
