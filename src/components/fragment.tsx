@@ -3,11 +3,11 @@ import { SkeletonPlaceholder } from 'carbon-components-react';
 import { Add32, DropPhoto32 } from '@carbon/icons-react';
 import './fragment-preview.scss';
 import { css, cx } from 'emotion';
-import { allComponents, ComponentInfoRenderProps } from '../fragment-components';
-import { getFragmentsFromLocalStorage, getRandomId } from '../utils/fragment-tools';
+import { allComponents, ComponentInfoRenderProps } from '../sdk/src/fragment-components';
+import { getFragmentsFromLocalStorage } from '../utils/fragment-tools';
 import { GlobalStateContext } from '../context';
 import { getAllFragmentStyleClasses } from '../ui-fragment/src/utils';
-import { getDropIndex } from '../sdk/src/tools';
+import { getDropIndex, stateWithoutComponent, updateComponentCounter, updatedState } from '../sdk/src/tools';
 
 const canvas = css`
 	border: 2px solid #d8d8d8;
@@ -45,165 +45,6 @@ const allowDrop = (event: any) => {
 	event.preventDefault();
 };
 
-let componentCounter = 2; // actually initialized (again) in Fragment
-
-export const getHighestId = (componentObj: any) => {
-	if (!componentObj) {
-		return 0;
-	}
-
-	if (!componentObj.items || !componentObj.items.length) {
-		return +componentObj.id || 0;
-	}
-
-	return Math.max(...componentObj.items.map((item: any) => getHighestId(item)), (+componentObj.id || 0));
-};
-
-export const getNewId = () => {
-	const id = '' + componentCounter++;
-
-	// beyond 20 digits, js goes to scientific notation so we'd get collisions
-	if (id.length > 20) {
-		return getRandomId();
-	}
-
-	return id;
-};
-
-export const stateWithoutComponent = (state: any, componentId: number) => {
-	if (state.items) {
-		const componentIndex = state.items.findIndex((component: any) => component.id === componentId);
-		if (componentIndex >= 0) {
-			return {
-				...state,
-				items: [...state.items.slice(0, componentIndex), ...state.items.slice(componentIndex + 1)]
-			};
-		}
-
-		return {
-			...state,
-			items: state.items.map((item: any) => stateWithoutComponent(item, componentId))
-		};
-	}
-
-	return { ...state };
-};
-
-export const initializeIds = (componentObj: any, forceNewIds = false) => {
-	let id = null;
-	if (forceNewIds) {
-		id = getNewId();
-	}
-	id = id || componentObj.id || getNewId();
-	// name is used in form items and for angular inputs and outputs variable names
-	let name = componentObj.codeContext?.name;
-	if (name === undefined || forceNewIds) {
-		name = `${componentObj.type}-${id}`;
-	}
-
-	return {
-		...componentObj,
-		id,
-		items: componentObj.items ? componentObj.items.map((co: any) => initializeIds(co, forceNewIds)) : undefined,
-		codeContext: {
-			...componentObj.codeContext,
-			name
-		}
-	};
-};
-
-const updatedList = (list: any[], item: any, dropInIndex?: number) => {
-	if (dropInIndex === undefined) {
-		return [...list, item];
-	}
-
-	return [...list.slice(0, dropInIndex), item, ...list.slice(dropInIndex)];
-};
-
-export const updatedState = (state: any, dragObj: any, dropInId?: number, dropInIndex?: number) => {
-	if (!state) { // NOTE is this needed?
-		return;
-	}
-
-	// give unique ids to newly dropped components
-	dragObj.component = initializeIds(dragObj.component);
-
-	// only update
-	if (dragObj.type === 'update') {
-		if (state.id && state.id === dragObj.component.id) {
-			return {
-				...state,
-				...dragObj.component
-			};
-		}
-		if (state.items) {
-			state.items = state.items.map((item: any) => updatedState(item, dragObj, dropInId, dropInIndex));
-		}
-
-		return { ...state };
-	}
-
-	if (dragObj.type === 'move') {
-		state = stateWithoutComponent(state, dragObj.component.id);
-		dragObj.type = 'insert';
-	}
-
-	if (state.items) {
-		state.items = state.items.map((item: any) => updatedState(item, dragObj, dropInId, dropInIndex));
-	}
-
-	if (!dropInId) {
-		return state.items && !state.type ? {
-			...state,
-			items: updatedList(state.items, dragObj.component, dropInIndex)
-		} : { ...state };
-	}
-	/// ////////// TODO NOTE clean the container items with 1 item //////////////
-	if (state.id && state.id === dropInId) {
-		// add data into state
-		if (state.items) {
-			return {
-				...state,
-				items: updatedList(state.items, dragObj.component, dropInIndex),
-				id: state.id
-			};
-		}
-
-		// convert into a list of components, move current component into list
-		return {
-			// TODO should this be a `type: container`?
-			id: getNewId(),
-			items: updatedList([{ ...state }], dragObj.component, dropInIndex)
-		};
-	}
-
-	if (dropInId) { // probably don't wanna add it here since it didn't match anything and it should somewhere
-		return { ...state };
-	}
-
-	return state.items ? {
-		...state,
-		items: updatedList(state.items, dragObj.component, dropInIndex)
-	} : { ...state };
-};
-
-export const getParentComponent = (state: any, child: any) => {
-	if (state && state.items) {
-		if (state.items.includes(child)) {
-			return state;
-		}
-		for (let i = 0; i < state.items.length; i++) {
-			const component = state.items[i];
-			const parent: any = getParentComponent(component, child);
-			if (parent) {
-				return parent;
-			}
-		}
-	}
-
-	return null;
-};
-
 export const Fragment = ({ fragment, setFragment, outline }: any) => {
 	const globalState = useContext(GlobalStateContext);
 	const [showDragOverIndicator, setShowDragOverIndicator] = useState(false);
@@ -218,7 +59,7 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 	const { fragments } = globalState || { fragments: getFragmentsFromLocalStorage() };
 
 	// initialize component counter
-	componentCounter = getHighestId(fragment.data) + 1;
+	updateComponentCounter(fragment.data);
 
 	const drop = (event: any) => {
 		event.stopPropagation();
@@ -291,7 +132,10 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 						remove: () => remove(componentObj),
 						selected: fragment.selectedComponentId === componentObj.id,
 						renderComponents,
-						outline
+						outline,
+						fragments,
+						fragment,
+						setFragment
 					} as ComponentInfoRenderProps);
 				}
 				return <component.componentInfo.component
@@ -300,7 +144,9 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 					select={() => select(componentObj)}
 					remove={() => remove(componentObj)}
 					selected={fragment.selectedComponentId === componentObj.id}
-					outline={outline}>
+					outline={outline}
+					fragment={fragment}
+					setFragment={setFragment}>
 						{componentObj.items && componentObj.items.map((row: any) => renderComponents(row, outline))}
 				</component.componentInfo.component>;
 			}

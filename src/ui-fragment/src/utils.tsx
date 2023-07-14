@@ -34,6 +34,7 @@ import { UITextInput } from './components/ui-text-input';
 import { UITile } from './components/ui-tile';
 import { UITileFold } from './components/ui-tile-fold';
 import { UIToggle } from './components/ui-toggle';
+import { UISelect } from './components/ui-select';
 import { kebabCase } from 'lodash';
 
 export const setItemInState = (item: any, state: any, setState: (state: any) => void) => {
@@ -66,7 +67,7 @@ export const jsonToState = (json: any, allFragments: any[]) => {
 		}
 		return {
 			...fragment.data,
-			allCssClasses: [...fragment.allCssClasses]
+			allCssClasses: [...(fragment.allCssClasses || [])]
 		};
 	}
 
@@ -98,7 +99,7 @@ export const expandJsonToState = (json: any) => {
 	// add css from all the fragments to state
 	const allCssClasses = [...state.allCssClasses];
 	json.forEach((fragment: any) => {
-		addIfNotExist(allCssClasses, fragment.allCssClasses);
+		addIfNotExist(allCssClasses, (fragment.allCssClasses || []));
 	});
 
 	return {
@@ -198,6 +199,9 @@ export const isFragment = (json: any) => {
 
 export const renderComponents = (state: any, setState: (state: any) => void, setGlobalState: (state: any) => void) => {
 	switch (state.type) {
+		case 'select':
+			return <UISelect key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+
 		case 'accordion':
 			return <UIAccordion key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 

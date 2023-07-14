@@ -4,13 +4,7 @@ import React, {
 	useState
 } from 'react';
 import { css, cx } from 'emotion';
-import {
-	Fragment,
-	getParentComponent,
-	initializeIds,
-	stateWithoutComponent,
-	updatedState
-} from '../../components';
+import { Fragment } from '../../components';
 import { EditHeader } from './edit-header';
 import { GlobalStateContext } from '../../context/global-state-context';
 import {
@@ -39,7 +33,13 @@ import { SettingsContextPane } from './settings-context-pane';
 import { CodeContextPane } from './code-context-pane';
 import { useParams } from 'react-router-dom';
 import { useHotkeys } from 'react-hotkeys-hook';
-import { getSelectedComponent } from '../../sdk/src/tools';
+import {
+	getParentComponent,
+	getSelectedComponent,
+	initializeIds,
+	stateWithoutComponent,
+	updatedState
+} from '../../sdk/src/tools';
 
 const leftPaneWidth = '300px';
 const rightPaneWidth = '302px';
@@ -121,14 +121,6 @@ export const leftPaneContent = css`
 
 	.bx--form-item {
 		margin-top: 1rem;
-	}
-`;
-
-export const actionIconStyle = css`
-	color: black;
-
-	.bx--btn--ghost:disabled & {
-		color: #8d8d8d;
 	}
 `;
 
