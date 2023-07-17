@@ -1,4 +1,4 @@
-import { getRandomId } from '../../../utils/fragment-tools';
+import { getRandomId } from '../../../sdk/src/tools';
 
 export const generateNewFragment = (fragment: any, styleClasses: any[], setStyleClasses: (styleClasses: any[]) => void) => {
 	const addOrReplaceClasses = (newClasses: any[]) => {
@@ -21,7 +21,12 @@ export const generateNewFragment = (fragment: any, styleClasses: any[], setStyle
 
 	if (fragment.data) {
 		addOrReplaceClasses(fragment.allCssClasses);
-		return fragment;
+
+		return {
+			...fragment,
+			id: fragment.id || fragmentID,
+			lastModified: fragment.lastModified || new Date().toISOString()
+		};
 	}
 
 	return {

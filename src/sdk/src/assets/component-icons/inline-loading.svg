@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="78" height="16" viewBox="0 0 78 16">
+  <defs>
+    <clipPath id="clip-path">
+      <path id="Path_3693" data-name="Path 3693" d="M213-757a8,8,0,0,0,8-8,8,8,0,0,0-8-8,8,8,0,0,0-8,8A8,8,0,0,0,213-757Z" fill="none" clip-rule="evenodd"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <path id="Path_3697" data-name="Path 3697" d="M213-773a8,8,0,0,0-8,8,8,8,0,0,0,8,8,8,8,0,0,0,8-8A8,8,0,0,0,213-773Z" fill="none" clip-rule="evenodd"/>
+    </clipPath>
+  </defs>
+  <text id="Loading_message" data-name="Loading message" transform="translate(24 12)" fill="#525252" font-size="12" font-family="IBMPlexSans, IBM Plex Sans" letter-spacing="0.017em"><tspan x="0" y="0">Loading...</tspan></text>
+  <g id="Icon">
+    <g id="base" transform="translate(-205 773)" clip-path="url(#clip-path)">
+      <path id="Path_3690" data-name="Path 3690" d="M8,16A8,8,0,1,0,0,8,8,8,0,0,0,8,16Z" transform="translate(205 -773)" fill="none" stroke="#d7dce3" stroke-width="6"/>
+    </g>
+    <g id="loading" transform="translate(-205 773)" clip-path="url(#clip-path-2)">
+      <path id="Path_3694" data-name="Path 3694" d="M8,16A8,8,0,1,0,0,8,8,8,0,0,0,8,16Z" transform="translate(221 -757) rotate(180)" fill="none" stroke="#0050e6" stroke-width="6" stroke-dasharray="20 33"/>
+    </g>
+  </g>
+</svg>

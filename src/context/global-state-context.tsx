@@ -7,6 +7,8 @@ import React, {
 import assign from 'lodash/assign';
 import { getFragmentHelpers } from './fragments-context-helper';
 import { getFragmentsFromLocalStorage } from '../utils/fragment-tools';
+import { expandJsonToState } from '../ui-fragment/src/utils';
+import { getFragmentJsonExport as getFragmentJsonExport_ } from '../sdk/src/tools';
 
 const GlobalStateContext: React.Context<any> = createContext(null);
 GlobalStateContext.displayName = 'GlobalStateContext';
@@ -152,6 +154,14 @@ const GlobalStateContextProvider = ({ children }: any) => {
 
 	const fragmentHelpers = getFragmentHelpers({ fragments, setFragments });
 
+	const getFragmentJsonExport = (fragment: any) => {
+		return getFragmentJsonExport_(fragment, fragments, styleClasses);
+	};
+
+	const getExpandedFragmentState = (fragment: any) => {
+		return expandJsonToState(getFragmentJsonExport(fragment));
+	};
+
 	useEffect(() => {
 		const localFragments = JSON.parse(localStorage.getItem('localFragments') as string || '[]');
 		// clean up the hidden fragments (those marked for deletion but failed to be deleted)
@@ -167,6 +177,8 @@ const GlobalStateContextProvider = ({ children }: any) => {
 			fragments,
 			setFragments,
 			updateFragment,
+			getFragmentJsonExport,
+			getExpandedFragmentState,
 			...fragmentHelpers,
 
 			// STYLE CLASSES

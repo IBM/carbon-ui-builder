@@ -9,22 +9,22 @@ import {
 	ChevronUp16
 } from '@carbon/icons-react';
 import { css, cx } from 'emotion';
-import { ControlledEditor } from '@monaco-editor/react';
+import Editor from '@monaco-editor/react';
 import { throttle } from 'lodash';
 
-import { ComponentCssClassSelector } from '../../components/css-class-selector';
-import { getSelectedComponent, updatedState } from '../../components/fragment';
-import { allComponents } from '../../fragment-components';
+import { ComponentCssClassSelector } from '../../sdk/src/css-class-selector';
+import { allComponents } from '../../sdk/src/fragment-components';
 import { SelectedComponentBreadcrumbs } from './selected-component-breadcrumbs';
-import { FragmentLayoutWidget } from '../../components/fragment-layout-widget';
 import { GlobalStateContext } from '../../context';
+import { LayoutWidget } from '../../sdk/src/layout-widget';
+import { getSelectedComponent, updatedState } from '../../sdk/src/tools';
 
 const styleContextPaneStyle = css`
 .bx--form-item.bx--checkbox-wrapper {
 	display: inline-flex;
 }`;
 
-const accordionButtonStyle = css`
+export const accordionButtonStyle = css`
 	display: block;
 	color: #161616;
 	width: 100%;
@@ -57,13 +57,15 @@ const tooltipStyle = css`
 }
 `;
 
-const showComponentSettingsUI = (selectedComponent: any, setComponent: any) => {
+const showComponentSettingsUI = (selectedComponent: any, setComponent: any, fragment: any, setFragment: any) => {
 	for (const component of Object.values(allComponents)) {
 		// Find the UI for editing style for our component
 		if (selectedComponent.type === component.componentInfo.type) {
 			return <component.componentInfo.settingsUI
 				selectedComponent={selectedComponent}
-				setComponent={setComponent} />;
+				setComponent={setComponent}
+				fragment={fragment}
+				setFragment={setFragment} />;
 		}
 	}
 };
@@ -71,12 +73,12 @@ const showComponentSettingsUI = (selectedComponent: any, setComponent: any) => {
 let setComponent = (_component: any) => console.log('setComponent not inizialized yet');
 const throttledSetComponent = throttle((component: any) => setComponent(component), 150);
 
-let proxySetFragment = (_component: any) => console.log('proxySetFragment not inizialized yet');
-const throttledSetFragment = throttle((component: any) => proxySetFragment(component), 150);
+let proxySetFragment = (_fragment: any) => console.log('proxySetFragment not inizialized yet');
+const throttledSetFragment = throttle((fragment: any) => proxySetFragment(fragment), 150);
 
 export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 	const selectedComponent = getSelectedComponent(fragment);
-	const { settings, setSettings } = useContext(GlobalStateContext);
+	const { settings, setSettings, styleClasses } = useContext(GlobalStateContext);
 
 	const updateContextPaneSettings = (s: any) => {
 		setSettings({
@@ -129,7 +131,7 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 				<div className={accordionContentStyle}>
 				{
 					selectedComponent && <>
-						{showComponentSettingsUI(selectedComponent, setComponent)}
+						{showComponentSettingsUI(selectedComponent, setComponent, fragment, setFragment)}
 					</>
 				}
 				{
@@ -191,38 +193,48 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 				}
 				</div>
 			}
-			<Button
-			kind='ghost'
-			className={accordionButtonStyle}
-			renderIcon={settings.contextPane?.settings?.customCSSAccordionOpen ? ChevronUp16 : ChevronDown16}
-			onClick={() => updateContextPaneSettings({
-				customCSSAccordionOpen: !settings.contextPane?.settings?.customCSSAccordionOpen
-			})}>
-				Custom CSS classes
-			</Button>
 			{
-				settings.contextPane?.settings?.customCSSAccordionOpen &&
-				<div className={accordionContentStyle}>
+				selectedComponent && <>
+					<Button
+					kind='ghost'
+					className={accordionButtonStyle}
+					renderIcon={settings.contextPane?.settings?.layoutAccordionOpen ? ChevronUp16 : ChevronDown16}
+					onClick={() => updateContextPaneSettings({
+						layoutAccordionOpen: !settings.contextPane?.settings?.layoutAccordionOpen
+					})}>
+						Layout
+					</Button>
 					{
-						!selectedComponent && <ComponentCssClassSelector componentObj={fragment} setComponent={setFragment} />
+						settings.contextPane?.settings?.layoutAccordionOpen &&
+						<div className={accordionContentStyle}>
+							{
+								selectedComponent && <LayoutWidget component={selectedComponent} setComponent={setComponent} />
+							}
+						</div>
 					}
-					{
-						selectedComponent && <ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} />
-					}
-				</div>
+				</>
 			}
 			<Button
 			kind='ghost'
 			className={accordionButtonStyle}
-			renderIcon={settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen ? ChevronUp16 : ChevronDown16}
+			renderIcon={settings.contextPane?.settings?.advancedStylingAccordionOpen ? ChevronUp16 : ChevronDown16}
 			onClick={() => updateContextPaneSettings({
-				fragmentLayoutWidgetAccordionOpen: !settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen
+				advancedStylingAccordionOpen: !settings.contextPane?.settings?.advancedStylingAccordionOpen
 			})}>
-				Layout
+				Advanced styling
 			</Button>
 			{
-				settings.contextPane?.settings?.fragmentLayoutWidgetAccordionOpen
-				&& <FragmentLayoutWidget fragment={fragment} setFragment={setFragment} />
+				settings.contextPane?.settings?.advancedStylingAccordionOpen &&
+				<div className={accordionContentStyle}>
+					{
+						!selectedComponent
+						&& <ComponentCssClassSelector componentObj={fragment} setComponent={setFragment} styleClasses={styleClasses} />
+					}
+					{
+						selectedComponent
+						&& <ComponentCssClassSelector componentObj={selectedComponent} setComponent={setComponent} styleClasses={styleClasses} />
+					}
+				</div>
 			}
 			<Button
 			kind='ghost'
@@ -236,7 +248,7 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 			{
 				settings.contextPane?.settings?.notesAccordionOpen &&
 				<div className={fullWidthWidgetStyle}>
-					<ControlledEditor
+					<Editor
 						height='300px'
 						language='markdown'
 						options={{
@@ -246,7 +258,17 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 							lineDecorationsWidth: 2,
 							lineNumbersMinChars: 4
 						}}
-						onChange= {(_, value: any) => {
+						onChange= {(value: string | undefined, event: any) => {
+							if (event?.changes?.some((change: any) => change?.forceMoveMarkers)) {
+								// when a user selects a different component from the previously selected
+								// the editor seems to clear before the our context reflects it. This
+								// calls Editor onChange with an empty value, which in turn clears the
+								// value from notes in the state.
+								// `forceMoveMarkers` seems to be set to true only when this happens and
+								// it allows us to skip updating in that case
+								// _there might be a better way to do this_
+								return;
+							}
 							if (selectedComponent) {
 								throttledSetComponent({
 									...selectedComponent,

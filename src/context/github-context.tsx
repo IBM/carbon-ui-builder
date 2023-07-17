@@ -177,11 +177,39 @@ const GithubContextProvider = ({ children }: any) => {
 		return allFeaturedFragments.filter(fragment => fragment !== null);
 	};
 
+	const getBuiltInTemplates = async () => {
+		const featuredFragmentsResponse = await getContent('IBM', 'carbon-ui-builder-featured-fragments', 'built-in-templates', 'raw');
+
+		const allFeaturedFragments = await Promise.all(((featuredFragmentsResponse as any).data as any[]).map(async (item) => {
+			const fragmentFileResponse = await getContent('IBM', 'carbon-ui-builder-featured-fragments', item.path, 'raw');
+			try {
+				const data = JSON.parse((fragmentFileResponse as any).data.toString());
+
+				// I know what this looks like but if data has data, it's a fragment
+				if (data.data) {
+					return data;
+				}
+
+				return {
+					id: item.path,
+					title: item.name.substring(0, item.name.length - 5),
+					lastModified: new Date((fragmentFileResponse as any).headers['last-modified'] || '').toISOString(),
+					data
+				};
+			} catch (error) {
+				return null;
+			}
+		}));
+
+		return allFeaturedFragments.filter(fragment => fragment !== null);
+	};
+
 	return (
 		<GithubContext.Provider value={{
 			token: githubToken,
 			setToken: setGithubToken,
 			getFeaturedFragments,
+			getBuiltInTemplates,
 			getContent,
 			getContentWithFolder,
 			getUser,

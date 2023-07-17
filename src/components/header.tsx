@@ -34,6 +34,7 @@ import { GlobalStateContext } from '../context';
 import { ModalContext } from '../context/modal-context';
 import { getEditScreenParams } from '../utils/fragment-tools';
 import { UserContext } from '../context/user-context';
+import { getFragmentJsonExportString } from '../sdk/src/tools';
 
 const dividerStyle = css`
 	margin: 2px 1rem;
@@ -138,7 +139,12 @@ export const Header = ({
 						params?.id && fragment?.data &&
 						<HeaderMenuItem
 						className={headerName}
-						onClick={() => saveBlob(new Blob([JSON.stringify(fragment.data, null, 2)]), `${fragment.title}.json`)}>
+						onClick={
+							() => saveBlob(
+								new Blob([getFragmentJsonExportString(fragment, globalState.fragments, globalState.styleClasses)]),
+								`${fragment.title}.json`
+							)
+						}>
 							<Download16 /> Save as .json
 						</HeaderMenuItem>
 					}
@@ -167,7 +173,7 @@ export const Header = ({
 				className={headerName}>
 					<HeaderMenuItem
 					className={headerName}
-					href='https://github.com/IBM/carbon-ui-builder/issues/new'
+					href='https://github.com/IBM/carbon-ui-builder/issues/new?labels=bug&template=bug_report.yml'
 					target='_blank'>
 						<Debug16 /> I found a bug
 					</HeaderMenuItem>
