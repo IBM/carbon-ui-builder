@@ -204,9 +204,6 @@ export const renderComponents = (
 	sendSignal: (id: number | string, signal: string) => void
 ) => {
 	switch (state.type) {
-		case 'select':
-			return <UISelect key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
-
 		case 'accordion':
 			return <UIAccordion key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
@@ -269,7 +266,10 @@ export const renderComponents = (
 
 		case 'search':
 			return <UISearchInput key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
-
+		
+		case 'select':
+			return <UISelect key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+	
 		case 'tag':
 			return <UITag key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 

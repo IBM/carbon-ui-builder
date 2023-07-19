@@ -7,17 +7,18 @@ import {
 import { CssClasses } from '../types';
 
 export interface SelectState {
-	type: string;
-	inline: boolean;
-	invalid: boolean;
-	disabled: boolean;
-	warn: boolean;
+	id?: string,
+	type?: string;
+	inline?: boolean;
+	invalid?: boolean;
+	disabled?: boolean;
+	warn?: boolean;
 	labelText: string;
-	invalidText: string;
-	warnText: string;
-	size: string;
+	invalidText?: string;
+	warnText?: string;
+	size?: string;
 	defaultValue: string;
-	helperText: string;
+	helperText?: string;
 	items: [];
 	cssClasses?: CssClasses[];
 	codeContext?: {
@@ -31,13 +32,14 @@ export const UISelect = ({ state }: {
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
 }) => {
+
 	if (state.type !== 'select') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;
 	}
 
 	return <Select
-		id="select"
+		id={state.id}
 		defaultValue={state.defaultValue}
 		helperText={state.helperText}
 		invalidText={state.invalidText}
@@ -49,29 +51,29 @@ export const UISelect = ({ state }: {
 		invalid={state.invalid}
 		disabled={state.disabled}>
 		{
-			state.items.map((step: any, index: any) =>
-				step.items && step.items.length > 0
-					?
+			state.items.map((step: any) =>
+				step.items && step.items.length > 0 ?
 				<SelectItemGroup
-				key={index}
-				label={step.label}
-				disabled={step.disabled}>
-				{
-					step.items.map((child: any, index: any) => <SelectItem
-						text={child.text}
-						value={child.value}
-						disabled={child.disabled}
-						hidden={child.hidden}
-						key={index} />)
-				}
-				</SelectItemGroup>
+					key={step.id}
+					label={step.label}
+					disabled={step.disabled}>
+						{
+							step.items.map((child: any) => <SelectItem
+									key={step.id}
+									text={child.text}
+									value={child.value}
+									disabled={child.disabled}
+									hidden={child.hidden}
+								/>)
+						}
+				</SelectItemGroup> 
 					:
 				<SelectItem
+					key={step.id}
 					text={step.text}
 					value={step.value}
 					disabled={step.disabled}
-					hidden={step.hidden}
-					key={index} />
+					hidden={step.hidden} />
 			)
 		}
 	</Select>;

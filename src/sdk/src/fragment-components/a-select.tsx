@@ -69,9 +69,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 				component: {
 					type: 'select-item',
 					text: 'New option',
-					value: 'new-option',
-					disabled: false,
-					hidden: false
+					value: 'new-option'
 				}
 			},
 			itemsList.id,
@@ -91,9 +89,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 					items: [{
 						type: 'select-item',
 						text: 'New option',
-						value: 'new-option',
-						disabled: false,
-						hidden: false
+						value: 'new-option'
 					}]
 				}
 			},
@@ -102,64 +98,64 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 		)
 	});
 
-	const template = (selectItem: any, index: number) => <>
+	const template = (selectedItem: any, index: number) => <>
 		{
-			selectItem.items && selectItem.items.length > 0
-				? <>
-			<TextInput
-				light
-				value={selectItem.label}
-				labelText='Category label'
-				onChange={(event: any) => updateListItems('label', event.currentTarget.value, index, selectedComponent)} />
-			<Checkbox
-				labelText='Disabled'
-				id={`disabled-${index}`}
-				checked={selectItem.disabled}
-				onChange={(checked: boolean) => updateListItems('disabled', checked, index, selectedComponent)} />
-			<Button
-			size="sm"
-			kind="ghost"
-			className={iconStyle}
-			onClick={(event: any) => {
-				event.stopPropagation();
-				addOption(0, selectItem);
-			}}>Add item</Button>
-			{
-				selectItem.items.map((child: any, childIndex: any) => <>
+			selectedItem.items && selectedItem.items.length > 0 ? <>
+				<TextInput
+					light
+					value={selectedItem.label}
+					labelText='Category label'
+					onChange={(event: any) => updateListItems('label', event.currentTarget.value, index, selectedComponent)} />
+				<Checkbox
+					labelText='Disabled'
+					id={`disabled-${index}`}
+					checked={selectedItem.disabled}
+					onChange={(checked: boolean) => updateListItems('disabled', checked, index, selectedComponent)} />
+				<Button
+					size="sm"
+					kind="ghost"
+					className={iconStyle}
+					onClick={(event: any) => {
+						event.stopPropagation();
+						addOption(0, selectedItem);
+					}}>
+						Add item
+				</Button>
+				{
+					selectedItem.items.map((child: any, childIndex: any) => <>
+						<TextInput
+							light
+							value={child.text}
+							key={`child-text-${index}-${childIndex}-${child.text}`}
+							labelText='Option value'
+							onChange={(event: any) => updateListItems('text', event.currentTarget.value, childIndex, selectedItem)} />
+						<Checkbox
+							labelText='Disabled'
+							id={`child-disabled-${index}--${childIndex}-${child.text}`}
+							checked={child.disabled}
+							onChange={(checked: boolean) => updateListItems('disabled', checked, childIndex, selectedItem)} />
+						<Checkbox
+							labelText='Hidden'
+							id={`child-hidden-${index}--${childIndex}-${child.text}`}
+							checked={child.hidden}
+							onChange={(checked: boolean) => updateListItems('hidden', checked, childIndex, selectedItem)} />
+					</>)
+				} </> : <>
 					<TextInput
 						light
-						value={child.text}
-						key={`child-text-${index}-${childIndex}`}
+						value={selectedItem.text}
 						labelText='Option value'
-						onChange={(event: any) => updateListItems('text', event.currentTarget.value, childIndex, selectItem)} />
+						onChange={(event: any) => updateListItems('text', event.currentTarget.value, index, selectedComponent)} />
 					<Checkbox
 						labelText='Disabled'
-						id={`child-disabled-${index}-${childIndex}`}
-						checked={child.disabled}
-						onChange={(checked: boolean) => updateListItems('disabled', checked, childIndex, selectItem)} />
+						id={`disabled-${index}`}
+						checked={selectedItem.disabled}
+						onChange={(checked: boolean) => updateListItems('disabled', checked, index, selectedComponent)} />
 					<Checkbox
 						labelText='Hidden'
-						id={`child-hidden-${index}-${childIndex}`}
-						checked={child.hidden}
-						onChange={(checked: boolean) => updateListItems('hidden', checked, childIndex, selectItem)} />
-				</>)
-			} </>
-				: <>
-			<TextInput
-				light
-				value={selectItem.text}
-				labelText='Option value'
-				onChange={(event: any) => updateListItems('text', event.currentTarget.value, index, selectedComponent)} />
-			<Checkbox
-				labelText='Disabled'
-				id={`disabled-${index}`}
-				checked={selectItem.disabled}
-				onChange={(checked: boolean) => updateListItems('disabled', checked, index, selectedComponent)} />
-			<Checkbox
-				labelText='Hidden'
-				id={`hidden-${index}`}
-				checked={selectItem.hidden}
-				onChange={(checked: boolean) => updateListItems('hidden', checked, index, selectedComponent)} />
+						id={`hidden-${index}`}
+						checked={selectedItem.hidden}
+						onChange={(checked: boolean) => updateListItems('hidden', checked, index, selectedComponent)} />
 				</>
 		}
 	</>;
@@ -167,7 +163,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 	return <>
 		<Dropdown
 			id='size-dropdown'
-			label='Size'
+			label='Select size'
 			titleText='Size'
 			items={sizeItems}
 			selectedItem={sizeItems.find(item => item.id === selectedComponent.size)}
@@ -217,25 +213,25 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 			onChange={(checked: boolean) => setComponent({ ...selectedComponent, invalid: checked })} />
 
 		<Button
-		className={addButtonStyle}
-		size="sm"
-		kind="ghost"
-		onClick={(event: any) => {
-			event.stopPropagation();
-			addNewCategory();
-		}}>Add new category</Button>
-
+			className={addButtonStyle}
+			size="sm"
+			kind="ghost"
+			onClick={(event: any) => {
+				event.stopPropagation();
+				addNewCategory();
+			}}>Add new category</Button>
+		
 		<DraggableTileList
-		dataList={[...selectedComponent.items]}
-		setDataList={updateStepList}
-		updateItem={updateListItems}
-		defaultObject={{
-			text: 'New option',
-			value: 'new-option',
-			disabled: false,
-			hidden: false
-		}}
-		template={template} />
+			dataList={[...selectedComponent.items]}
+			setDataList={updateStepList}
+			updateItem={updateListItems}
+			defaultObject={{
+				text: 'New option',
+				value: 'new-option',
+				disabled: false,
+				hidden: false
+			}}
+			template={template} />
 	</>;
 };
 
@@ -262,7 +258,7 @@ export const ASelect = ({
 		componentObj={componentObj}
 		{...rest}>
 			<Select
-			id="select"
+			id='select'
 			defaultValue={componentObj.defaultValue}
 			helperText={componentObj.helperText}
 			invalidText={componentObj.invalidText}
@@ -319,36 +315,13 @@ export const componentInfo: ComponentInfo = {
 	type: 'select',
 	defaultComponentObj: {
 		type: 'select',
-		inline: false,
-		invalid: false,
-		disabled: false,
-		warn: false,
-		warnText: '',
 		size: 'md',
 		labelText: 'Select',
-		invalidText: '',
-		defaultValue: '',
-		helperText: '',
 		items: [
 			{
-				text: 'Choose an option',
+				text: 'Option 1',
 				value: 'placeholder-item',
-				hidden: false,
-				disabled: false,
 				type: 'select-item'
-			},
-			{
-				label: 'Category 1',
-				disabled: false,
-				items: [
-					{
-						text: 'Choose an option',
-						value: 'placeholder-item',
-						disabled: false,
-						hidden: false,
-						type: 'select-item'
-					}
-				]
 			}
 		]
 	},
@@ -378,9 +351,7 @@ export const componentInfo: ComponentInfo = {
 					${json.inline ? '[display]="inline"' : '[display]="default"'}
 					${angularClassNamesFromComponentObj(json)}>
 					${json.items.map((step: any) =>
-						step.items && step.items.length > 0
-							?
-						`<optgroup
+						step.items && step.items.length > 0 ? `<optgroup
 						label="${step.label}"
 						${step.disabled ? 'disabled' : ''}>
 						${step.items.map((child: any) => `<option
@@ -390,9 +361,7 @@ export const componentInfo: ComponentInfo = {
 								${child.text}
 							</option>`
 						).join('\n')}
-						</optgroup>`
-							:
-						`<option
+						</optgroup>` : `<option
 						value="${step.value}"
 						${step.disabled ? 'disabled' : ''}
 						${step.hidden ? 'hidden' : ''}>
