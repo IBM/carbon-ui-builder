@@ -4,7 +4,8 @@ import { css, cx } from 'emotion';
 import {
 	AddAlt32,
 	Draggable16,
-	TrashCan32
+	TrashCan32,
+	Code32
 } from '@carbon/icons-react';
 
 const addDragTargetStyle = css`
@@ -30,6 +31,16 @@ const trashButtonStyle = css`
 	margin-left: 12px;
 	top: 0;
 	right: 0;
+	border-color: transparent;
+
+	&.bx--btn.bx--btn--icon-only.bx--tooltip__trigger {
+		position: absolute;
+	}
+`;
+
+const developerIconStyle = css`
+	top: 0;
+	right: 24px;
 	border-color: transparent;
 
 	&.bx--btn.bx--btn--icon-only.bx--tooltip__trigger {
@@ -132,6 +143,10 @@ export const DraggableTileList = ({
 		]);
 	};
 
+	const addDeveloperOption = (index: number) => {
+		return false
+	}
+
 	const AddButton = ({ index = 0 }: any) => {
 		return (
 			<div
@@ -167,6 +182,19 @@ export const DraggableTileList = ({
 					onDragStart={(event: any) => onDragStart(event, index)}
 					onDragEnd={(event: any) => onDragEnd(event)}
 					className={tileStyle}>
+						{/* add developer option here */}
+						<Button
+							className={developerIconStyle}
+							align="left" 
+							size="sm" 
+							kind="danger--tertiary" 
+							iconDescription="Change option value"
+							hasIconOnly 
+							renderIcon={Code32}
+							onClick={(event: any) => {
+								event.stopPropagation();
+								addDeveloperOption(index);
+							}} />
 						<Button
 							className={trashButtonStyle}
 							align="left"
