@@ -31,6 +31,11 @@ const addButtonStyle = css`
 	justify-content: center;
 `;
 
+const checkBoxContainer = css`
+	display:flex; 
+	margin-top: 0.1825rem;
+`;
+
 export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, setFragment }: any) => {
 	const sizeItems = [
 		{ id: 'sm', text: 'Small' },
@@ -188,30 +193,37 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 			labelText='Warning text value'
 			onChange={(event: any) => setComponent({ ...selectedComponent, warnText: event.currentTarget.value })} />
 
-		<Checkbox
-			labelText='Warning'
-			id='warning-label'
-			checked={selectedComponent.warn}
-			onChange={(checked: boolean) => setComponent({ ...selectedComponent, warn: checked })} />
+		<section className={checkBoxContainer}>
+			<Checkbox
+				labelText='Warning'
+				id='warning-label'
+				checked={selectedComponent.warn}
+				onChange={(checked: boolean) => setComponent({ ...selectedComponent, warn: checked })} />
 
-		<Checkbox
-			labelText='Disabled'
-			id='disable-label'
-			checked={selectedComponent.disabled}
-			onChange={(checked: boolean) => setComponent({ ...selectedComponent, disabled: checked })} />
+			<Checkbox
+				labelText='Disabled'
+				id='disable-label'
+				checked={selectedComponent.disabled}
+				onChange={(checked: boolean) => setComponent({ ...selectedComponent, disabled: checked })} />
 
-		<Checkbox
-			labelText='Inline'
-			id='inline'
-			checked={selectedComponent.inline}
-			onChange={(checked: boolean) => setComponent({ ...selectedComponent, inline: checked })} />
+		</section>
 
-		<Checkbox
-			labelText='Invalid'
-			id='invalid'
-			checked={selectedComponent.invalid}
-			onChange={(checked: boolean) => setComponent({ ...selectedComponent, invalid: checked })} />
+		<section className={checkBoxContainer}>
+			<Checkbox
+				labelText='Inline'
+				id='inline'
+				checked={selectedComponent.inline}
+				onChange={(checked: boolean) => setComponent({ ...selectedComponent, inline: checked })} />
 
+			<Checkbox
+				labelText='Invalid'
+				id='invalid'
+				checked={selectedComponent.invalid}
+				onChange={(checked: boolean) => setComponent({ ...selectedComponent, invalid: checked })} />
+		</section>
+
+		<hr />
+		<h4>Option items</h4>
 		<Button
 			className={addButtonStyle}
 			size="sm"
