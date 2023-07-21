@@ -7,7 +7,7 @@ import {
 import { CssClasses } from '../types';
 
 export interface SelectState {
-	id?: string,
+	id?: string;
 	type?: string;
 	inline?: boolean;
 	invalid?: boolean;
@@ -66,7 +66,7 @@ export const UISelect = ({ state }: {
 									hidden={child.hidden}
 								/>)
 						}
-				</SelectItemGroup> 
+				</SelectItemGroup>
 					:
 				<SelectItem
 					key={step.id}

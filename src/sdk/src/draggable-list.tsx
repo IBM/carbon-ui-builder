@@ -156,7 +156,7 @@ export const DraggableTileList = ({
 		setDataList([
 			...dataList
 		]);
-	}
+	};
 
 	const AddButton = ({ index = 0 }: any) => {
 		return (
@@ -197,11 +197,11 @@ export const DraggableTileList = ({
 						{/* add developer option here */}
 						<Button
 							className={developerIconStyle}
-							align="left" 
-							size="sm" 
-							kind="tertiary" 
+							align="left"
+							size="sm"
+							kind="tertiary"
 							iconDescription="Change option value"
-							hasIconOnly 
+							hasIconOnly
 							renderIcon={Code32}
 							onClick={(event: any) => {
 								event.stopPropagation();

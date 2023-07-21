@@ -112,6 +112,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 
 	const template = (selectedItem: any, index: number) => <>
 		{
+			// category template conditioned on that it has any chidren items
 			selectedItem.items && selectedItem.items.length > 0 ? <>
 				<TextInput
 					light
@@ -145,7 +146,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 							key={`text-${child.id}`}
 							labelText='Option display text'
 							onChange={(event: any) => updateListItems('text', event.currentTarget.value, childIndex, selectedItem)} />
-						
+
 						<section className={checkBoxContainer}>
 							<Checkbox
 								labelText='Disabled'
@@ -159,7 +160,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 								onChange={(checked: boolean) => updateListItems('hidden', checked, childIndex, selectedItem)} />
 						</section>
 						{
-							child.showDeveloperOption && 
+							child.showDeveloperOption &&
 							<TextInput
 								light
 								value={child.value}
@@ -169,7 +170,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 						}
 					</>)
 				} </> : <>
-					{/* standalone option items */}
+				{/* standalone option items */}
 					<TextInput
 						light
 						value={selectedItem.text}
@@ -188,14 +189,14 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 							onChange={(checked: boolean) => updateListItems('hidden', checked, index, selectedComponent)} />
 					</section>
 					{
-						selectedItem.showDeveloperOption && 
+						selectedItem.showDeveloperOption &&
 						<TextInput
 							light
 							value={selectedItem.value}
 							labelText='Option value'
 							onChange={(event: any) => updateListItems('value', event.currentTarget.value, index, selectedComponent)} />
 					}
-				</>
+			</>
 		}
 	</>;
 
@@ -266,7 +267,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 				event.stopPropagation();
 				addNewCategory();
 			}}>Add new category</Button>
-		
+
 		<DraggableTileList
 			dataList={[...selectedComponent.items]}
 			setDataList={updateStepList}

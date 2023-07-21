@@ -266,10 +266,10 @@ export const renderComponents = (
 
 		case 'search':
 			return <UISearchInput key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
-		
+
 		case 'select':
 			return <UISelect key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
-	
+
 		case 'tag':
 			return <UITag key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
