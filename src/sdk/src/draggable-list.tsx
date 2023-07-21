@@ -144,7 +144,17 @@ export const DraggableTileList = ({
 	};
 
 	const addDeveloperOption = (index: number) => {
-		return false
+		const item = dataList[index];
+		if (item.items) {
+			item.items.forEach((option: any) => option.showDeveloperOption = !option.showDeveloperOption);
+		} else {
+			item.showDeveloperOption = !item.showDeveloperOption;
+		}
+		
+		// for refreshing
+		setDataList([
+			...dataList
+		]);
 	}
 
 	const AddButton = ({ index = 0 }: any) => {
