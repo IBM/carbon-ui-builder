@@ -79,7 +79,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 					type: 'select-item',
 					text: 'New option',
 					value: 'new-option',
-					showDeveloperOption: false
+					showDeveloperOption: itemsList.showDeveloperOption
 				}
 			},
 			itemsList.id,
@@ -96,6 +96,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 				component: {
 					label: 'New category',
 					disabled: false,
+					showDeveloperOption: false,
 					items: [{
 						type: 'select-item',
 						text: 'New option',
@@ -141,19 +142,19 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 						<TextInput
 							light
 							value={child.text}
-							key={`child-text-${index}-${childIndex}-${child.text}`}
+							key={`text-${child.id}`}
 							labelText='Option display text'
 							onChange={(event: any) => updateListItems('text', event.currentTarget.value, childIndex, selectedItem)} />
 						
 						<section className={checkBoxContainer}>
 							<Checkbox
 								labelText='Disabled'
-								id={`child-disabled-${index}--${childIndex}-${child.text}`}
+								id={`isDisabled-checkbox-${child.id}`}
 								checked={child.disabled}
 								onChange={(checked: boolean) => updateListItems('disabled', checked, childIndex, selectedItem)} />
 							<Checkbox
 								labelText='Hidden'
-								id={`child-hidden-${index}--${childIndex}-${child.text}`}
+								id={`isHidden-checkbox-${child.id}`}
 								checked={child.hidden}
 								onChange={(checked: boolean) => updateListItems('hidden', checked, childIndex, selectedItem)} />
 						</section>
