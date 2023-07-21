@@ -273,7 +273,7 @@ export const componentInfo: ComponentInfo = {
 	component: AComboBox,
 	settingsUI: AComboBoxSettingsUI,
 	codeUI: AComboBoxCodeUI,
-	keywords: ['ComboBox', 'filterable', 'multiselect'],
+	keywords: ['combobox', 'filterable', 'multiselect'],
 	name: 'ComboBox',
 	defaultComponentObj: {
 		type: 'combobox',
