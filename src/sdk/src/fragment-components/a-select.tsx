@@ -34,6 +34,10 @@ const addButtonStyle = css`
 const checkBoxContainer = css`
 	display:flex; 
 	margin-top: 0.1825rem;
+
+	.bx--form-item.bx--checkbox-wrapper:first-of-type {
+		margin-top: 0
+	}
 `;
 
 export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, setFragment }: any) => {
