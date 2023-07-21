@@ -172,6 +172,7 @@ export const DraggableTileList = ({
 						size="sm"
 						kind="ghost"
 						iconDescription="Add item"
+						tooltipPosition="bottom"
 						hasIconOnly
 						renderIcon={AddAlt32}
 						onClick={(event: any) => {
