@@ -8,3 +8,5 @@ export const format = (source: string, options?: Options | undefined) => {
 		return source;
 	}
 };
+
+export type signalType = 'click' | 'hover' | 'focus';

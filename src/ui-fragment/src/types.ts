@@ -1,3 +1,5 @@
+import { signalType } from '../../routes/edit/share-options/exports/frameworks/utils';
+
 export interface CssClasses {
 	id: string;
 	name: string;
@@ -6,7 +8,7 @@ export interface CssClasses {
 
 export interface Action {
 	source: number;
-	signal: string;
+	signal: signalType;
 	destination: number;
 	slot: string;
 	slotParam: string | number | boolean;
