@@ -14,6 +14,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../tools';
 import { styleObjectToString } from '../../../ui-fragment/src/utils';
+import { getReactCodeForActions } from '../../../routes/edit/share-options/exports/frameworks/react/utils';
 
 export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const kindItems = [
@@ -143,11 +144,14 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: ['Button'],
-			code: ({ json }) => {
+			code: ({ json, signals, slots }) => {
 				return `<Button
-					${json.kind && `kind="${json.kind}"`}
-					${json.size && `size="${json.size}"`}
-					${reactClassNamesFromComponentObj(json)}>${json.text}</Button>`;
+					${json.kind ? `kind="${json.kind}"` : ''}
+					${json.size ? `size="${json.size}"` : ''}
+					${reactClassNamesFromComponentObj(json)}
+					${getReactCodeForActions(signals, slots, json.codeContext?.name)}>
+						${json.text}
+					</Button>`;
 			}
 		}
 	}

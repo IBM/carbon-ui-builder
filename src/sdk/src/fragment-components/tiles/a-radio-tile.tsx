@@ -219,7 +219,7 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: ['RadioTile'],
-			code: ({ json, jsonToTemplate, fragments }) => {
+			code: ({ json, signals, slots, jsonToTemplate, fragments }) => {
 				return `<RadioTile
 					${
 						(json.codeContext?.formItemName !== undefined && json.codeContext?.formItemName !== '')
@@ -230,7 +230,7 @@ export const componentInfo: ComponentInfo = {
 					${json.defaultChecked ? `checked={${json.defaultChecked}}` : ''}
 					${json.disabled !== undefined && !!json.disabled ? `disabled={${json.disabled}}` : ''}
 					${reactClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, signals, slots, fragments)).join('\n')}
 				</RadioTile>`;
 			}
 		}

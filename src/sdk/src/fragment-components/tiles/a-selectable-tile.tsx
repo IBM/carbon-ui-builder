@@ -241,7 +241,7 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: ['SelectableTile'],
-			code: ({ json, jsonToTemplate, fragments }) => {
+			code: ({ json, signals, slots, jsonToTemplate, fragments }) => {
 				const stateFunction = json.standalone ?
 					`() => {
 						handleInputChange({
@@ -270,7 +270,7 @@ export const componentInfo: ComponentInfo = {
 					${json.disabled !== undefined && !!json.disabled ? `disabled={${json.disabled}}` : ''}
 					${reactClassNamesFromComponentObj(json)}
 					onClick={${stateFunction}}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, signals, slots, fragments)).join('\n')}
 				</SelectableTile>`;
 			},
 			additionalCode: (json) => {

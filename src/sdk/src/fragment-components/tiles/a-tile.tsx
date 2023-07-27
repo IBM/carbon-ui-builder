@@ -111,11 +111,11 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			imports: ['Tile'],
-			code: ({ json, jsonToTemplate, fragments }) => {
+			code: ({ json, signals, slots, jsonToTemplate, fragments }) => {
 				return `<Tile
 					${json.light !== undefined ? `light={${json.light}}` : ''}
 					${reactClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+						${json.items.map((element: any) => jsonToTemplate(element, signals, slots, fragments)).join('\n')}
 				</Tile>`;
 			}
 		}

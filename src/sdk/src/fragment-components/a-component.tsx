@@ -64,7 +64,7 @@ export interface ComponentInfo {
 				json: any;
 				signals: any;
 				slots: any;
-				jsonToTemplate: (json: any, fragments: any[]) => string;
+				jsonToTemplate: (json: any, signals: any, slots: any, fragments: any[]) => string;
 				fragments: any[];
 			}) => string;
 			additionalCode?: (componentObj: any) => any;
