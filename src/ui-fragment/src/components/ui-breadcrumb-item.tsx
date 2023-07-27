@@ -18,6 +18,7 @@ export const UIBreadcrumbItem = ({ state }: {
 	state: BreadcrumbItemState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'breadcrumb-item') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment

@@ -20,10 +20,11 @@ export interface BreadcrumbState {
 	style?: any;
 }
 
-export const UIBreadcrumb = ({ state, setState, setGlobalState }: {
+export const UIBreadcrumb = ({ state, setState, setGlobalState, sendSignal }: {
 	state: BreadcrumbState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'breadcrumb') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -45,7 +46,7 @@ export const UIBreadcrumb = ({ state, setState, setGlobalState }: {
 		{
 			state.items?.map((item: any) => {
 				const setItem = (i: any) => setItemInState(i, state, setState);
-				return renderComponents(item, setItem, setGlobalState);
+				return renderComponents(item, setItem, setGlobalState, sendSignal);
 			})
 		}
 	</Breadcrumb>;

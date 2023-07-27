@@ -1,4 +1,4 @@
-import { getRandomId } from '../../../utils/fragment-tools';
+import { getRandomId } from '../../../sdk/src/tools';
 
 export const generateNewFragment = (fragment: any, styleClasses: any[], setStyleClasses: (styleClasses: any[]) => void) => {
 	const addOrReplaceClasses = (newClasses: any[]) => {

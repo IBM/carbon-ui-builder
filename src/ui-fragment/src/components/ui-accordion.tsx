@@ -21,10 +21,11 @@ export interface AccordionState {
 	style?: any;
 }
 
-export const UIAccordion = ({ state, setState, setGlobalState }: {
+export const UIAccordion = ({ state, sendSignal, setState, setGlobalState }: {
 	state: AccordionState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'accordion') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -47,7 +48,7 @@ export const UIAccordion = ({ state, setState, setGlobalState }: {
 		{
 			state.items?.map((item: any) => {
 				const setItem = (i: any) => setItemInState(i, state, setState);
-				return renderComponents(item, setItem, setGlobalState);
+				return renderComponents(item, setItem, setGlobalState, sendSignal);
 			})
 		}
 	</Accordion>;

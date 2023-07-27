@@ -12,10 +12,11 @@ export interface TileFoldState {
 	};
 }
 
-export const UITileFold = ({ state, setState, setGlobalState }: {
+export const UITileFold = ({ state, setState, setGlobalState, sendSignal }: {
 	state: TileFoldState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'tile-fold') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -27,7 +28,7 @@ export const UITileFold = ({ state, setState, setGlobalState }: {
 		{
 			state.items?.map((item: any) => {
 				const setItem = (i: any) => setItemInState(i, state, setState);
-				return renderComponents(item, setItem, setGlobalState);
+				return renderComponents(item, setItem, setGlobalState, sendSignal);
 			})
 		}
 	</TileBelowTheFoldContent>;

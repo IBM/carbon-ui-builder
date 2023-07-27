@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { GlobalStateContext } from '../../../../../../context';
 import { getAllFragmentStyleClasses } from '../../../../../../ui-fragment/src/utils';
-import { classNameFromFragment, hasFragmentStyleClasses, tagNameFromFragment } from '../../../../../../utils/fragment-tools';
+import { hasFragmentStyleClasses } from '../../../../../../utils/fragment-tools';
 import { format } from '../utils';
 import {
 	formatOptions,
@@ -11,6 +11,7 @@ import {
 	jsonToTemplate,
 	otherImportsFromComponentObj
 } from './utils';
+import { classNameFromFragment, tagNameFromFragment } from '../../../../../../sdk/src/tools';
 
 const generateTemplate = (json: any, fragments: any[]) => {
 	const carbonImports = jsonToCarbonImports(json);

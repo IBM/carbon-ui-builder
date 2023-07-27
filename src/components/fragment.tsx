@@ -3,11 +3,12 @@ import { SkeletonPlaceholder } from '@carbon/react';
 import { Add, DropPhoto } from '@carbon/react/icons';
 import './fragment-preview.scss';
 import { css, cx } from 'emotion';
-import { allComponents, ComponentInfoRenderProps } from '../fragment-components';
-import { getFragmentsFromLocalStorage, getRandomId } from '../utils/fragment-tools';
+import { allComponents, ComponentInfoRenderProps } from '../sdk/src/fragment-components';
+import { getFragmentsFromLocalStorage } from '../utils/fragment-tools';
 import { GlobalStateContext } from '../context';
 import { getAllFragmentStyleClasses } from '../ui-fragment/src/utils';
-import { getDropIndex } from '../sdk/src/tools';
+import { getDropIndex, stateWithoutComponent, updateComponentCounter, updatedState } from '../sdk/src/tools';
+import { throttle } from 'lodash';
 
 const canvas = css`
 	border: 2px solid #d8d8d8;
@@ -40,174 +41,58 @@ const centerStyle = css`
 	}
 `;
 
+const cornerImageStroke = '#b8b8b8';
+const cornerImage = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+	<line x1="0" y1="16" x2="16" y2="0" stroke="${cornerImageStroke}"/>
+	<line x1="4" y1="16" x2="16" y2="4" stroke="${cornerImageStroke}"/>
+	<line x1="8" y1="16" x2="16" y2="8" stroke="${cornerImageStroke}"/>
+	<line x1="12" y1="16" x2="16" y2="12" stroke="${cornerImageStroke}"/>
+</svg>`;
+
+const cornerStyle = css`
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	width: 16px;
+	max-height: 16px;
+	background-image: url("data:image/svg+xml,${encodeURIComponent(cornerImage)}");
+	cursor: nwse-resize;
+
+	&:hover {
+		filter: brightness(60%);
+	}
+`;
+
 const allowDrop = (event: any) => {
 	event.stopPropagation();
 	event.preventDefault();
 };
 
-let componentCounter = 2; // actually initialized (again) in Fragment
-
-export const getHighestId = (componentObj: any) => {
-	if (!componentObj) {
-		return 0;
-	}
-
-	if (!componentObj.items || !componentObj.items.length) {
-		return +componentObj.id || 0;
-	}
-
-	return Math.max(...componentObj.items.map((item: any) => getHighestId(item)), (+componentObj.id || 0));
-};
-
-export const getNewId = () => {
-	const id = '' + componentCounter++;
-
-	// beyond 20 digits, js goes to scientific notation so we'd get collisions
-	if (id.length > 20) {
-		return getRandomId();
-	}
-
-	return id;
-};
-
-export const stateWithoutComponent = (state: any, componentId: number) => {
-	if (state.items) {
-		const componentIndex = state.items.findIndex((component: any) => component.id === componentId);
-		if (componentIndex >= 0) {
-			return {
-				...state,
-				items: [...state.items.slice(0, componentIndex), ...state.items.slice(componentIndex + 1)]
-			};
-		}
-
-		return {
-			...state,
-			items: state.items.map((item: any) => stateWithoutComponent(item, componentId))
-		};
-	}
-
-	return { ...state };
-};
-
-export const initializeIds = (componentObj: any, forceNewIds = false) => {
-	let id = null;
-	if (forceNewIds) {
-		id = getNewId();
-	}
-	id = id || componentObj.id || getNewId();
-	// name is used in form items and for angular inputs and outputs variable names
-	let name = componentObj.codeContext?.name;
-	if (name === undefined || forceNewIds) {
-		name = `${componentObj.type}-${id}`;
-	}
-
-	return {
-		...componentObj,
-		id,
-		items: componentObj.items ? componentObj.items.map((co: any) => initializeIds(co, forceNewIds)) : undefined,
-		codeContext: {
-			...componentObj.codeContext,
-			name
-		}
-	};
-};
-
-const updatedList = (list: any[], item: any, dropInIndex?: number) => {
-	if (dropInIndex === undefined) {
-		return [...list, item];
-	}
-
-	return [...list.slice(0, dropInIndex), item, ...list.slice(dropInIndex)];
-};
-
-export const updatedState = (state: any, dragObj: any, dropInId?: number, dropInIndex?: number) => {
-	if (!state) { // NOTE is this needed?
-		return;
-	}
-
-	// give unique ids to newly dropped components
-	dragObj.component = initializeIds(dragObj.component);
-
-	// only update
-	if (dragObj.type === 'update') {
-		if (state.id && state.id === dragObj.component.id) {
-			return {
-				...state,
-				...dragObj.component
-			};
-		}
-		if (state.items) {
-			state.items = state.items.map((item: any) => updatedState(item, dragObj, dropInId, dropInIndex));
-		}
-
-		return { ...state };
-	}
-
-	if (dragObj.type === 'move') {
-		state = stateWithoutComponent(state, dragObj.component.id);
-		dragObj.type = 'insert';
-	}
-
-	if (state.items) {
-		state.items = state.items.map((item: any) => updatedState(item, dragObj, dropInId, dropInIndex));
-	}
-
-	if (!dropInId) {
-		return state.items && !state.type ? {
-			...state,
-			items: updatedList(state.items, dragObj.component, dropInIndex)
-		} : { ...state };
-	}
-	/// ////////// TODO NOTE clean the container items with 1 item //////////////
-	if (state.id && state.id === dropInId) {
-		// add data into state
-		if (state.items) {
-			return {
-				...state,
-				items: updatedList(state.items, dragObj.component, dropInIndex),
-				id: state.id
-			};
-		}
-
-		// convert into a list of components, move current component into list
-		return {
-			// TODO should this be a `type: container`?
-			id: getNewId(),
-			items: updatedList([{ ...state }], dragObj.component, dropInIndex)
-		};
-	}
-
-	if (dropInId) { // probably don't wanna add it here since it didn't match anything and it should somewhere
-		return { ...state };
-	}
-
-	return state.items ? {
-		...state,
-		items: updatedList(state.items, dragObj.component, dropInIndex)
-	} : { ...state };
-};
-
-export const getParentComponent = (state: any, child: any) => {
-	if (state && state.items) {
-		if (state.items.includes(child)) {
-			return state;
-		}
-		for (let i = 0; i < state.items.length; i++) {
-			const component = state.items[i];
-			const parent: any = getParentComponent(component, child);
-			if (parent) {
-				return parent;
-			}
-		}
-	}
-
-	return null;
-};
-
 export const Fragment = ({ fragment, setFragment, outline }: any) => {
 	const globalState = useContext(GlobalStateContext);
 	const [showDragOverIndicator, setShowDragOverIndicator] = useState(false);
+	const containerRef = useRef(null as any);
 	const holderRef = useRef(null as any);
+
+	const resize = throttle((e: any) => {
+		const rect = containerRef.current.getBoundingClientRect();
+		setFragment({
+			...fragment,
+			width: e.clientX - rect.left,
+			height: e.clientY - rect.top
+		});
+	}, 60);
+
+	const handleMouseUp = () => {
+		window.removeEventListener('mousemove', resize);
+		window.removeEventListener('mouseup', handleMouseUp);
+	};
+
+	const handleMouseDown = (e: any) => {
+		e.preventDefault();
+		window.addEventListener('mousemove', resize);
+		window.addEventListener('mouseup', handleMouseUp);
+	};
 
 	if (!fragment || !fragment.data) {
 		return <SkeletonPlaceholder />;
@@ -218,7 +103,7 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 	const { fragments } = globalState || { fragments: getFragmentsFromLocalStorage() };
 
 	// initialize component counter
-	componentCounter = getHighestId(fragment.data) + 1;
+	updateComponentCounter(fragment.data);
 
 	const drop = (event: any) => {
 		event.stopPropagation();
@@ -275,14 +160,14 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 		}
 
 		for (const component of Object.values(allComponents)) {
-		// TODO fragment should have overwritable properties
-		// overwritten properties are in componentObj in the same level as id, but can go deep, they merge
-		//     with subFragment before rendering
-		// overwriting happens when you select something in the fragment and change its value (a button to reverse to default?)
-		//     default value can be set as placeholder in context?
-		// also provide a clone/duplicate functionality/button that essentially copies the
-		//     componentObj of subFragment in place in our fragment?
-		// JSON export should include json of the subFragment
+			// TODO fragment should have overwritable properties
+			// overwritten properties are in componentObj in the same level as id, but can go deep, they merge
+			//     with subFragment before rendering
+			// overwriting happens when you select something in the fragment and change its value (a button to reverse to default?)
+			//     default value can be set as placeholder in context?
+			// also provide a clone/duplicate functionality/button that essentially copies the
+			//     componentObj of subFragment in place in our fragment?
+			// JSON export should include json of the subFragment
 			if (componentObj.type === component.componentInfo.type) {
 				if (component.componentInfo.render) {
 					return component.componentInfo.render({
@@ -291,7 +176,10 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 						remove: () => remove(componentObj),
 						selected: fragment.selectedComponentId === componentObj.id,
 						renderComponents,
-						outline
+						outline,
+						fragments,
+						fragment,
+						setFragment
 					} as ComponentInfoRenderProps);
 				}
 				return <component.componentInfo.component
@@ -300,8 +188,10 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 					select={() => select(componentObj)}
 					remove={() => remove(componentObj)}
 					selected={fragment.selectedComponentId === componentObj.id}
-					outline={outline}>
-						{componentObj.items && componentObj.items.map((row: any) => renderComponents(row, outline))}
+					outline={outline}
+					fragment={fragment}
+					setFragment={setFragment}>
+					{componentObj.items && componentObj.items.map((row: any) => renderComponents(row, outline))}
 				</component.componentInfo.component>;
 			}
 		}
@@ -313,34 +203,34 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 		return null;
 	};
 
-	const styles = css`${
-		getAllFragmentStyleClasses(fragment, fragments, globalState?.styleClasses).map((styleClass: any) => `.${styleClass.id} {
+	const styles = css`${getAllFragmentStyleClasses(fragment, fragments, globalState?.styleClasses).map((styleClass: any) => `.${styleClass.id} {
 			${styleClass.content}
 		}`)
 	}`;
-	// TODO add fragment.width and fragment.height to database
+
 	return (
 		<div
-		className={cx(
-			canvas,
-			styles,
-			css`width: ${fragment.width || '800'}px; height: ${fragment.height || '600'}px`
-		)}
-		style={{
-			background: showDragOverIndicator ? '#0001' : ''
-		}}
-		onDragEnter={(event: any) => {
-			event.stopPropagation();
-			event.preventDefault();
-			setShowDragOverIndicator(true);
-		}}
-		onDragLeave={(event: any) => {
-			event.stopPropagation();
-			event.preventDefault();
-			setShowDragOverIndicator(false);
-		}}
-		onDragOver={allowDrop}
-		onDrop={drop}>
+			ref={containerRef}
+			className={cx(
+				canvas,
+				styles,
+				css`width: ${fragment.width || '800'}px; height: ${fragment.height || '600'}px`
+			)}
+			style={{
+				background: showDragOverIndicator ? '#0001' : ''
+			}}
+			onDragEnter={(event: any) => {
+				event.stopPropagation();
+				event.preventDefault();
+				setShowDragOverIndicator(true);
+			}}
+			onDragLeave={(event: any) => {
+				event.stopPropagation();
+				event.preventDefault();
+				setShowDragOverIndicator(false);
+			}}
+			onDragOver={allowDrop}
+			onDrop={drop}>
 			<div ref={holderRef} className={`${fragment.cssClasses ? fragment.cssClasses.map((cc: any) => cc.id).join(' ') : ''}`}>
 				{
 					!fragment.data?.items?.length && <div className={centerStyle} onClick={addGrid}>
@@ -352,6 +242,9 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 				}
 				{renderComponents(fragment.data, outline)}
 			</div>
+			<div
+				className={cornerStyle}
+				onMouseDown={handleMouseDown} />
 		</div>
 	);
 };

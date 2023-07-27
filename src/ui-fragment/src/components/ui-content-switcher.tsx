@@ -8,6 +8,7 @@ export interface ContentSwitcherState {
 	items: [];
 	size: [];
 	selectedIndex: number;
+	disabled?: boolean;
 	cssClasses?: CssClasses[];
 	style?: any;
 	codeContext: {
@@ -19,6 +20,7 @@ export const UIContentSwitcher = ({ state }: {
 	state: ContentSwitcherState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'content-switcher') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment

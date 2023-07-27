@@ -34,6 +34,7 @@ export const UINumberInput = ({ state, setState }: {
 	state: NumberInputState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'number-input') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment

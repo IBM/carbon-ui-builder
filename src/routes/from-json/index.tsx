@@ -7,6 +7,7 @@ import { GlobalStateContext } from '../../context';
 import { UIFragment } from '../../ui-fragment/src/ui-fragment';
 import { generateNewFragment } from '../dashboard/fragment-wizard/generate-new-fragment';
 import { css } from 'emotion';
+import JSONCrush from 'jsoncrush';
 
 const blockContainerStyle = css`
 	border: 1px solid lightgrey;
@@ -59,15 +60,25 @@ export const FromJson = () => {
 
 	useEffect(() => {
 		try {
+			// try parsing regular json
 			setState({
 				fragmentState: JSON.parse(params.json || ''),
 				parseSucceeded: true
 			});
 		} catch (error) {
-			setState({
-				fragmentState: {},
-				parseSucceeded: false
-			});
+			// it's not regular json, so maybe it's crushed
+			try {
+				setState({
+					fragmentState: JSON.parse(JSONCrush.uncrush(params.json || '')),
+					parseSucceeded: true
+				});
+			} catch (error) {
+				// it's neither regular or crushed, bail
+				setState({
+					fragmentState: {},
+					parseSucceeded: false
+				});
+			}
 		}
 	}, [params]);
 

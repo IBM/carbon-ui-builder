@@ -32,8 +32,9 @@ import { FragmentWizardModals } from '../routes/dashboard/fragment-wizard/fragme
 import { saveBlob } from '../utils/file-tools';
 import { GlobalStateContext } from '../context';
 import { ModalContext } from '../context/modal-context';
-import { getEditScreenParams, getFragmentJsonExportString } from '../utils/fragment-tools';
+import { getEditScreenParams } from '../utils/fragment-tools';
 import { UserContext } from '../context/user-context';
+import { getFragmentJsonExportString } from '../sdk/src/tools';
 
 const dividerStyle = css`
 	margin: 2px 1rem;
@@ -172,7 +173,7 @@ export const Header = ({
 				className={headerName}>
 					<HeaderMenuItem
 					className={headerName}
-					href='https://github.com/IBM/carbon-ui-builder/issues/new'
+					href='https://github.com/IBM/carbon-ui-builder/issues/new?labels=bug&template=bug_report.yml'
 					target='_blank'>
 						<Debug size={16} /> I found a bug
 					</HeaderMenuItem>
