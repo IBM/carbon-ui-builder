@@ -2,9 +2,9 @@ import { Options } from 'prettier';
 import parserBabel from 'prettier/parser-babel';
 import parserHtml from 'prettier/parser-html';
 import parserCss from 'prettier/parser-postcss';
-import { allComponents } from '../../../../../../fragment-components';
+import { allComponents } from '../../../../../../sdk/src/fragment-components';
 import { addIfNotExist } from '../../../../../../ui-fragment/src/utils';
-import { tagNameFromFragment } from '../../../../../../utils/fragment-tools';
+import { tagNameFromFragment } from '../../../../../../sdk/src/tools';
 
 export const formatOptionsTypescript: Options = {
 	plugins: [parserBabel],

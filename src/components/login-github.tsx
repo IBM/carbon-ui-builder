@@ -25,6 +25,7 @@ export const LoginGithub = ({
 
 		<TextInput
 			labelText='Your GitHub token'
+			id='github-token-input'
 			name='github-token'
 			placeholder='Paste your token here'
 			type='password'

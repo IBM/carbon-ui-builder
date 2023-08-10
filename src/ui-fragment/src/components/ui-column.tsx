@@ -1,7 +1,11 @@
 import React from 'react';
 import { Column } from 'carbon-components-react';
 import { CssClasses } from '../types';
-import { renderComponents, setItemInState } from '../utils';
+import {
+	renderComponents,
+	setItemInState,
+	stringToCssClassName
+} from '../utils';
 
 export interface ColumnState {
 	type: string;
@@ -18,23 +22,34 @@ export interface ColumnState {
 	maxSpan?: number;
 	maxOffset?: number;
 	cssClasses?: CssClasses[];
-	codeContext?: {
+	codeContext: {
 		name: string;
 	};
+	style?: any;
 }
 
-export const UIColumn = ({ state, setState, setGlobalState }: {
+export const UIColumn = ({ state, setState, setGlobalState, sendSignal }: {
 	state: ColumnState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'column') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;
 	}
 
+	let cssClasses = state.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (state.style) {
+		if (cssClasses.length > 0) {
+			cssClasses += ' ';
+		}
+		cssClasses += stringToCssClassName(state.codeContext.name);
+	}
+
 	return <Column
-	className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}
+	className={cssClasses}
 	sm={{ span: state.smallSpan || undefined, offset: state.smallOffset || undefined }}
 	md={{ span: state.mediumSpan || undefined, offset: state.mediumOffset || undefined }}
 	lg={{ span: state.largeSpan || undefined, offset: state.largeOffset || undefined }}
@@ -43,7 +58,7 @@ export const UIColumn = ({ state, setState, setGlobalState }: {
 		{
 			state.items?.map((item: any) => {
 				const setItem = (i: any) => setItemInState(i, state, setState);
-				return renderComponents(item, setItem, setGlobalState);
+				return renderComponents(item, setItem, setGlobalState, sendSignal);
 			})
 		}
 	</Column>;

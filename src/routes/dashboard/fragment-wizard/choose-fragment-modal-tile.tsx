@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { SelectableTile } from 'carbon-components-react';
 
-import { FragmentPreview } from '../../../components/fragment-preview';
+import { FragmentPreview } from '../../../sdk/src/components/fragment-preview';
 import './choose-fragment-modal.scss';
+import { GlobalStateContext } from '../../../context';
 
 export const ChooseFragmentModalTile = ({ fragment, selectedFragment, setSelectedFragment }: any) => {
 	const [previewUrl, setPreviewUrl] = useState('');
+	const { fragments, styleClasses } = useContext(GlobalStateContext);
 
 	return (
 		<div className='modal-tile-wrapper' key={fragment.id}>
@@ -17,6 +19,8 @@ export const ChooseFragmentModalTile = ({ fragment, selectedFragment, setSelecte
 				<div className='tile-inner-wrapper'>
 					<FragmentPreview
 						fragment={fragment}
+						fragments={fragments}
+						styleClasses={styleClasses}
 						previewUrl={previewUrl}
 						setPreviewUrl={setPreviewUrl} />
 					<h3>{fragment.title}</h3>
