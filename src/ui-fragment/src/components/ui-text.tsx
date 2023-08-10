@@ -7,6 +7,7 @@ export interface TextState {
 	text?: string;
 	richText?: string;
 	isSection?: boolean;
+	hidden?: boolean | string;
 	style?: any;
 	cssClasses?: CssClasses[];
 	codeContext: {
@@ -18,8 +19,9 @@ export const UIText = ({ state }: {
 	state: TextState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
-	if (state.type !== 'text') {
+	if (state.type !== 'text' || state.hidden) {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;
 	}

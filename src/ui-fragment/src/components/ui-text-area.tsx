@@ -1,6 +1,7 @@
 import React from 'react';
 import { TextArea } from 'carbon-components-react';
 import { CssClasses } from '../types';
+import { stringToCssClassName } from '../utils';
 
 export interface TextAreaState {
 	type: string;
@@ -13,9 +14,10 @@ export interface TextAreaState {
 	disabled?: boolean;
 	light?: boolean;
 	cssClasses?: CssClasses[];
-	codeContext?: {
+	codeContext: {
 		name: string;
 	};
+	style?: any;
 }
 
 export const UITextAreaInput = ({ state, setState, name }: {
@@ -23,10 +25,20 @@ export const UITextAreaInput = ({ state, setState, name }: {
 	name?: string;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'text-area') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;
+	}
+
+	let cssClasses = state.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (state.style) {
+		if (cssClasses.length > 0) {
+			cssClasses += ' ';
+		}
+		cssClasses += stringToCssClassName(state.codeContext.name);
 	}
 
 	return <TextArea
@@ -40,5 +52,5 @@ export const UITextAreaInput = ({ state, setState, name }: {
 		disabled={state.disabled}
 		light={state.light}
 		onChange={(event: any) => setState({ ...state, value: event.imaginaryTarget.value })}
-		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />;
+		className={cssClasses} />;
 };
