@@ -3,7 +3,7 @@ import parserBabel from 'prettier/parser-babel';
 import parserCss from 'prettier/parser-postcss';
 import { sortedUniq } from 'lodash';
 
-import { allComponents } from '../../../../../../fragment-components';
+import { allComponents } from '../../../../../../sdk/src/fragment-components';
 import { addIfNotExist } from '../../../../../../ui-fragment/src/utils';
 
 export const formatOptions: Options = {

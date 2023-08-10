@@ -6,8 +6,9 @@ import React, {
 } from 'react';
 import assign from 'lodash/assign';
 import { getFragmentHelpers } from './fragments-context-helper';
-import { getFragmentJsonExport as getFragmentJsonExport_, getFragmentsFromLocalStorage } from '../utils/fragment-tools';
+import { getFragmentsFromLocalStorage } from '../utils/fragment-tools';
 import { expandJsonToState } from '../ui-fragment/src/utils';
+import { getFragmentJsonExport as getFragmentJsonExport_ } from '../sdk/src/tools';
 
 const GlobalStateContext: React.Context<any> = createContext(null);
 GlobalStateContext.displayName = 'GlobalStateContext';

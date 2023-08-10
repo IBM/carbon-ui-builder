@@ -16,6 +16,7 @@ import { UIShell } from './components/ui-shell';
 import { css } from 'emotion';
 import { Help } from './routes/help';
 import { View } from './routes/view';
+import { PreviewJson } from './routes/preview-json';
 import { FromJson } from './routes/from-json';
 import { FragmentWizard, FragmentWizardModals } from './routes/dashboard/fragment-wizard/fragment-wizard';
 import { AllModals } from './routes/edit/all-modals';
@@ -63,6 +64,7 @@ export const App = () => {
 					<Routes>
 						<Route element={<Outlet />}>
 							<Route path='/view/:id' element={<View />} />
+							<Route path='/preview-json/:json' element={<PreviewJson />} />
 							<Route path='/launch' element={<Launch />} />
 							<Route path='/launch/:owner' element={<Launch />} />
 							<Route path='/launch/:owner/:repo/*' element={<Launch />} />
