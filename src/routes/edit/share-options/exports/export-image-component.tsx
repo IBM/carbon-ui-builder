@@ -18,7 +18,7 @@ import { Save32 } from '@carbon/icons-react';
 import { css } from 'emotion';
 import debounce from 'lodash/debounce';
 import { saveBlob, getFullFileName } from '../../../../utils/file-tools';
-import { getFragmentPreview, RenderProps } from '../../../../utils/fragment-tools';
+import { RenderProps, getFragmentPreview } from '../../../../sdk/src/tools';
 import { GlobalStateContext } from '../../../../context';
 
 const exportSettingForm = css`
@@ -171,6 +171,7 @@ export const ExportImageComponent = ({ fragment }: any) => {
 
 	useEffect(() => {
 		setFragmentState(getExpandedFragmentState(fragment));
+		updatePreviewUrl();
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [fragment]);
 
@@ -195,7 +196,10 @@ export const ExportImageComponent = ({ fragment }: any) => {
 
 	const getPreviewSize = (width: number, height: number) => {
 		let fitRatio: number;
-		if (width <= height) {
+
+		if (!imageContainerSize) {
+			fitRatio = 1;
+		} else if (width <= height) {
 			// preview is square or tall rectangle (mobile)
 			fitRatio = imageContainerSize.height / height;
 		} else {
