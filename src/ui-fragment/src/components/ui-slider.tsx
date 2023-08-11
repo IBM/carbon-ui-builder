@@ -8,14 +8,14 @@ export interface SliderState {
 	labelText: string;
 	min: number;
 	max: number;
-	disabled: boolean;
-	step: number;
-	hideTextInput: boolean;
-	light: boolean;
+	disabled?: boolean;
+	step?: number;
+	hideTextInput?: boolean;
+	light?: boolean;
 	value: number;
-	stepMultiplier: number;
-	minLabel: string;
-	maxLabel: string;
+	stepMultiplier?: number;
+	minLabel?: string;
+	maxLabel?: string;
 	codeContext?: {
 		name: string;
 	};
@@ -32,7 +32,7 @@ export const UISlider = ({ state }: {
 	}
 
 	return <Slider
-		id="slider"
+		id='slider'
 		labelText={state.labelText}
 		min={state.min}
 		max={state.max}

@@ -56,11 +56,11 @@ export { AInlineLoading, AInlineLoadingCodeUI, AInlineLoadingSettingsUI } from '
 export { ANumberInput, ANumberInputSettingsUI, ANumberInputCodeUI } from './a-numberinput';
 export { AProgressIndicator, AProgressIndicatorSettingsUI, AProgressIndicatorCodeUI } from './a-progress-indicator';
 export { ARow, ARowCodeUI, ARowSettingsUI } from './a-row';
-export { ASearchInput, ASearchInputSettingsUI, ASearchInputCodeUI } from './a-searchinput';
-export { ATextArea, ATextAreaSettingsUI, ATextAreaCodeUI } from './a-text-area';
-export { ASlider, ASliderSettingsUI, ASliderCodeUI } from './a-slider';
 export { ATag, ATagSettingsUI } from './a-tag';
 export { AText, ATextSettingsUI } from './a-text';
+export { ATextArea, ATextAreaSettingsUI, ATextAreaCodeUI } from './a-text-area';
+export { ASearchInput, ASearchInputSettingsUI, ASearchInputCodeUI } from './a-searchinput';
+export { ASlider, ASliderSettingsUI, ASliderCodeUI } from './a-slider';
 export { ATextInput, ATextInputSettingsUI, ATextInputCodeUI } from './a-text-input';
 export { AOverflowMenu, AOverflowMenuCodeUI, AOverflowMenuSettingsUI } from './a-overflow-menu';
 export { ARadio, ARadioSettingsUI, ARadioCodeUI } from './a-radio';

@@ -269,7 +269,7 @@ export const renderComponents = (
 
 		case 'slider':
 			return <UISlider key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
-	
+
 		case 'tag':
 			return <UITag key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 

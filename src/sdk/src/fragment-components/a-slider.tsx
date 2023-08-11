@@ -143,7 +143,7 @@ export const ASlider = ({
 		rejectDrop={true}
 		{...rest}>
 			<Slider
-			id="slider"
+			id='slider'
 			labelText={componentObj.labelText}
 			min={componentObj.min}
 			max={componentObj.max}
@@ -179,15 +179,7 @@ export const componentInfo: ComponentInfo = {
 		type: 'slider',
 		labelText: 'Slider label',
 		min: 0,
-		max: 100,
-		value: 0,
-		disabled: false,
-		hideTextInput: false,
-		light: false,
-		step: 1,
-		stepMultiplier: 4,
-		minLabel: '',
-		maxLabel: ''
+		max: 100
 	},
 	image,
 	codeExport: {
@@ -201,7 +193,6 @@ export const componentInfo: ComponentInfo = {
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}MaxLabel = "${json.maxLabel}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Step = ${json.step};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}StepMultiplier = ${json.stepMultiplier};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}HideTextInput = ${json.hideTextInput};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Light = "${json.light ? 'light' : 'dark'}" `,
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 			imports: ['SliderModule'],
