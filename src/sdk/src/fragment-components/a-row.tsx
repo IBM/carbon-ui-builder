@@ -247,6 +247,18 @@ export const componentInfo: ComponentInfo = {
 			imports: ['Row'],
 			isNotDirectExport: true,
 			code: (_) => ''
+		},
+		angularV10: {
+			inputs: (_) => '',
+			outputs: (_) => '',
+			imports: ['GridModule'],
+			isNotDirectExport: true,
+			code: (_) => ''
+		},
+		reactV10: {
+			imports: ['Row'],
+			isNotDirectExport: true,
+			code: (_) => ''
 		}
 	}
 };

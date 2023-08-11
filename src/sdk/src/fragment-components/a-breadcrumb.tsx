@@ -155,6 +155,36 @@ export const componentInfo: ComponentInfo = {
 			outputs: (_) => '',
 			imports: ['BreadcrumbModule'],
 			code: ({ json }) => {
+				return `<cds-breadcrumb
+					[noTrailingSlash]="${nameStringToVariableString(json.codeContext?.name)}NoTrailingSlash"
+					${angularClassNamesFromComponentObj(json)}>
+					${json.items.map((step: any) => (
+						`<cds-breadcrumb-item
+							href="${step.href}">
+								${step.label}
+						</cds-breadcrumb-item>`
+						)).join('\n')}
+				</cds-breadcrumb>`;
+			}
+		},
+		react: {
+			imports: ['Breadcrumb', 'BreadcrumbItem'],
+			code: ({ json }) => {
+				return `<Breadcrumb
+					noTrailingSlash={${json.noTrailingSlash}}
+					${reactClassNamesFromComponentObj(json)}>
+					${json.items.map((step: any) =>
+						`<BreadcrumbItem href="${step.href}">
+							${step.label}
+						</BreadcrumbItem>`).join('\n')}
+					</Breadcrumb>`;
+			}
+		},
+		angularV10: {
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}NoTrailingSlash = ${json.noTrailingSlash};`,
+			outputs: (_) => '',
+			imports: ['BreadcrumbModule'],
+			code: ({ json }) => {
 				return `<ibm-breadcrumb
 					[noTrailingSlash]="${nameStringToVariableString(json.codeContext?.name)}NoTrailingSlash"
 					${angularClassNamesFromComponentObj(json)}>
@@ -167,7 +197,7 @@ export const componentInfo: ComponentInfo = {
 				</ibm-breadcrumb>`;
 			}
 		},
-		react: {
+		reactV10: {
 			imports: ['Breadcrumb', 'BreadcrumbItem'],
 			code: ({ json }) => {
 				return `<Breadcrumb

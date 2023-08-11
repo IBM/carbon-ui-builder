@@ -218,6 +218,73 @@ export const componentInfo: ComponentInfo = {
 				@Output() ${nameStringToVariableString(json.codeContext?.name)}Change = new EventEmitter<any>();`,
 			imports: ['NumberModule'],
 			code: ({ json }) => {
+				return `<cds-number
+					[helperText]="${nameStringToVariableString(json.codeContext?.name)}HelperText"
+					name="${json.codeContext?.name}"
+					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
+					(change)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
+					[label]="${nameStringToVariableString(json.codeContext?.name)}Label"
+					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+					[min]="${nameStringToVariableString(json.codeContext?.name)}Min"
+					[max]="${nameStringToVariableString(json.codeContext?.name)}Max"
+					[step]="${nameStringToVariableString(json.codeContext?.name)}Step"
+					[invalid]="${nameStringToVariableString(json.codeContext?.name)}Invalid"
+					[invalidText]="${nameStringToVariableString(json.codeContext?.name)}InvalidText"
+					[warn]="${nameStringToVariableString(json.codeContext?.name)}Warn"
+					[warnText]="${nameStringToVariableString(json.codeContext?.name)}WarnText"
+					[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
+					[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
+					${angularClassNamesFromComponentObj(json)}>
+				</cds-number>`;
+			}
+		},
+		react: {
+			imports: ['NumberInput'],
+			code: ({ json }) => {
+				return `<NumberInput
+					id="${json.id}"
+					size="${json.size}"
+					name="${json.codeContext?.name}"
+					helperText="${json.helperText}"
+					min={${json.min}}
+					max={${json.max}}
+					step={${json.step}}
+					label="${json.label}"
+					${json.warnText !== undefined && json.warnText !== '' ? `warnText="${json.warnText}"` : ''}
+					${json.warn !== undefined ? `warn={${json.warn}}` : ''}
+					${json.hideLabel !== undefined ? `hideLabel={${json.hideLabel}}` : ''}
+					${json.hideSteppers !== undefined ? `hideSteppers={${json.hideSteppers}}` : ''}
+					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
+					${json.readOnly !== undefined ? `readOnly={${json.readOnly}}` : ''}
+					${json.invalid !== undefined ? `invalid={${json.invalid}}` : ''}
+					${json.invalidText !== undefined ? `invalidText="${json.invalidText}"` : ''}
+					${json.light !== undefined ? `light={${json.light}}` : ''}
+					${json.allowEmpty !== undefined ? `allowEmpty={${json.allowEmpty}}` : ''}
+					value={state["${json.codeContext?.name}"]}
+					${reactClassNamesFromComponentObj(json)}
+					onChange={handleInputChange} />`;
+			}
+		},
+		angularV10: {
+			inputs: ({ json }) =>
+				`@Input() ${nameStringToVariableString(json.codeContext?.name)}HelperText = "${json.helperText}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = ${Math.round((json.min + json.max) / 2)};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.label}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : ''}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Min = ${json.min};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Max = ${json.max};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Step = ${json.step};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Invalid = ${!!json.invalid};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = ${json.invalidText};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Warn = ${json.warn};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}WarnText = ${json.warnText};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};`,
+			outputs: ({ json }) =>
+				`@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter<number>();
+				@Output() ${nameStringToVariableString(json.codeContext?.name)}Change = new EventEmitter<any>();`,
+			imports: ['NumberModule'],
+			code: ({ json }) => {
 				return `<ibm-number
 					[helperText]="${nameStringToVariableString(json.codeContext?.name)}HelperText"
 					name="${json.codeContext?.name}"
@@ -238,7 +305,7 @@ export const componentInfo: ComponentInfo = {
 				</ibm-number>`;
 			}
 		},
-		react: {
+		reactV10: {
 			imports: ['NumberInput'],
 			code: ({ json }) => {
 				return `<NumberInput

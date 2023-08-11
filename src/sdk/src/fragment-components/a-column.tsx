@@ -383,6 +383,18 @@ export const componentInfo: ComponentInfo = {
 			imports: ['Column'],
 			isNotDirectExport: true,
 			code: (_) => ''
+		},
+		angularV10: {
+			inputs: (_) => '',
+			outputs: (_) => '',
+			imports: ['GridModule'],
+			isNotDirectExport: true,
+			code: (_) => ''
+		},
+		reactV10: {
+			imports: ['Column'],
+			isNotDirectExport: true,
+			code: (_) => ''
 		}
 	}
 };

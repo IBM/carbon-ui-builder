@@ -200,10 +200,10 @@ export const componentInfo: ComponentInfo = {
 			outputs: (_) => '',
 			imports: ['GridModule'],
 			code: ({ json, fragments, jsonToTemplate }) => {
-				return `<div ibmGrid ${angularClassNamesFromComponentObj(json)}>
-					${json.items.map((row: any) => `<div ibmRow ${angularClassNamesFromComponentObj(row)}>
+				return `<div cdsGrid ${angularClassNamesFromComponentObj(json)}>
+					${json.items.map((row: any) => `<div cdsRow ${angularClassNamesFromComponentObj(row)}>
 						${row.items.map((cell: any) =>
-							`<div ibmCol ${getColumnNumbersString(cell)} ${getOffsetsString(cell)} ${angularClassNamesFromComponentObj(cell)}>
+							`<div cdsCol ${getColumnNumbersString(cell)} ${getOffsetsString(cell)} ${angularClassNamesFromComponentObj(cell)}>
 								${jsonToTemplate(cell, fragments)}
 						</div>`).join('\n')}
 					</div>`).join('\n')}
@@ -220,6 +220,33 @@ export const componentInfo: ComponentInfo = {
 						</Column>`).join('\n')}
 					</Row>`).join('\n')}
 				</FlexGrid>`;
+			}
+		},
+		angularV10: {
+			inputs: (_) => '',
+			outputs: (_) => '',
+			imports: ['GridModule'],
+			code: ({ json, fragments, jsonToTemplate }) => {
+				return `<div ibmGrid ${angularClassNamesFromComponentObj(json)}>
+					${json.items.map((row: any) => `<div ibmRow ${angularClassNamesFromComponentObj(row)}>
+						${row.items.map((cell: any) =>
+							`<div ibmCol ${getColumnNumbersString(cell)} ${getOffsetsString(cell)} ${angularClassNamesFromComponentObj(cell)}>
+								${jsonToTemplate(cell, fragments)}
+						</div>`).join('\n')}
+					</div>`).join('\n')}
+				</div>`;
+			}
+		},
+		reactV10: {
+			imports: ['Grid', 'Column', 'Row'],
+			code: ({ json, fragments, jsonToTemplate }) => {
+				return `<Grid ${reactClassNamesFromComponentObj(json)}>
+					${json.items.map((row: any) => `<Row ${reactClassNamesFromComponentObj(row)}>
+						${row.items.map((cell: any) => `<Column ${getCellParamsStringReact(cell)} ${reactClassNamesFromComponentObj(cell)}>
+								${jsonToTemplate(cell, fragments)}
+						</Column>`).join('\n')}
+					</Row>`).join('\n')}
+				</Grid>`;
 			}
 		}
 	}

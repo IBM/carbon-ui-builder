@@ -102,6 +102,28 @@ export const componentInfo: ComponentInfo = {
 			outputs: (_) => '',
 			imports: ['TilesModule'],
 			code: ({ json, fragments, jsonToTemplate }) => {
+				return `<cds-tile
+					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+					${angularClassNamesFromComponentObj(json)}>
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+				</cds-tile>`;
+			}
+		},
+		react: {
+			imports: ['Tile'],
+			code: ({ json, jsonToTemplate, fragments }) => {
+				return `<Tile
+					${json.light !== undefined ? `light={${json.light}}` : ''}
+					${reactClassNamesFromComponentObj(json)}>
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+				</Tile>`;
+			}
+		},
+		angularV10: {
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : ''}';`,
+			outputs: (_) => '',
+			imports: ['TilesModule'],
+			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<ibm-tile
 					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 					${angularClassNamesFromComponentObj(json)}>
@@ -109,7 +131,7 @@ export const componentInfo: ComponentInfo = {
 				</ibm-tile>`;
 			}
 		},
-		react: {
+		reactV10: {
 			imports: ['Tile'],
 			code: ({ json, jsonToTemplate, fragments }) => {
 				return `<Tile

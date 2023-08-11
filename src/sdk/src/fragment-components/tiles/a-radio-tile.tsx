@@ -207,6 +207,41 @@ export const componentInfo: ComponentInfo = {
 			outputs: () => '',
 			imports: ['TilesModule'],
 			code: ({ json, fragments, jsonToTemplate }) => {
+				return `<cds-selection-tile
+					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
+					[disabled]=${nameStringToVariableString(json.codeContext?.name)}Disabled
+					[selected]="${nameStringToVariableString(json.codeContext?.name)}Selected"
+					${angularClassNamesFromComponentObj(json)}>
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+				</cds-selection-tile>`;
+			}
+		},
+		react: {
+			imports: ['RadioTile'],
+			code: ({ json, jsonToTemplate, fragments }) => {
+				return `<RadioTile
+					${
+						(json.codeContext?.formItemName !== undefined && json.codeContext?.formItemName !== '')
+							? `name="${json.codeContext?.formItemName}"` : ''
+					}
+					${(json.codeContext?.value !== undefined && json.codeContext?.value !== '') ? `value="${json.codeContext?.value}"` : ''}
+					${json.light !== undefined ? `light={${json.light}}` : ''}
+					${json.defaultChecked ? `checked={${json.defaultChecked}}` : ''}
+					${json.disabled !== undefined && !!json.disabled ? `disabled={${json.disabled}}` : ''}
+					${reactClassNamesFromComponentObj(json)}>
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+				</RadioTile>`;
+			}
+		},
+		angularV10: {
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${json.checked || false};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : 'dark'}';
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled || false};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = '${json.value}';`,
+			outputs: () => '',
+			imports: ['TilesModule'],
+			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<ibm-selection-tile
 					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
@@ -217,7 +252,7 @@ export const componentInfo: ComponentInfo = {
 				</ibm-selection-tile>`;
 			}
 		},
-		react: {
+		reactV10: {
 			imports: ['RadioTile'],
 			code: ({ json, jsonToTemplate, fragments }) => {
 				return `<RadioTile

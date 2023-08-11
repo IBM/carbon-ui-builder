@@ -119,6 +119,30 @@ export const componentInfo: ComponentInfo = {
 			outputs: (_) => '',
 			imports: ['LoadingModule'],
 			code: ({ json }) => {
+				return `<cds-loading
+							size="${json.size === 'small' ? 'sm' : 'normal'}"
+							[isActive]="${nameStringToVariableString(json.codeContext?.name)}Active"
+							[overlay]="${nameStringToVariableString(json.codeContext?.name)}Overlay"
+							${angularClassNamesFromComponentObj(json)}>
+						</cds-loading>`;
+			}
+		},
+		react: {
+			imports: ['Loading'],
+			code: ({ json }) => {
+				return `<Loading
+							active={${json.active}}
+							withOverlay={${json.overlay}}
+							small={${json.size === 'small'}}
+							${reactClassNamesFromComponentObj(json)} />`;
+			}
+		},
+		angularV10: {
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Overlay = ${json.overlay};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Active = ${json.active};`,
+			outputs: (_) => '',
+			imports: ['LoadingModule'],
+			code: ({ json }) => {
 				return `<ibm-loading
 							size="${json.size === 'small' ? 'sm' : 'normal'}"
 							[isActive]="${nameStringToVariableString(json.codeContext?.name)}Active"
@@ -127,7 +151,7 @@ export const componentInfo: ComponentInfo = {
 						</ibm-loading>`;
 			}
 		},
-		react: {
+		reactV10: {
 			imports: ['Loading'],
 			code: ({ json }) => {
 				return `<Loading

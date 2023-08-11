@@ -206,6 +206,37 @@ export const componentInfo: ComponentInfo = {
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<Event>();`,
 			imports: ['TilesModule'],
 			code: ({ json, fragments, jsonToTemplate }) => {
+				return `<cds-tile-group
+					(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
+					[multiple]="false"
+					${angularClassNamesFromComponentObj(json)}>
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+				</cds-tile-group>`;
+			}
+		},
+		react: {
+			imports: ['TileGroup'],
+			code: ({ json, jsonToTemplate, fragments }) => {
+				return `<TileGroup
+					${json.legend !== undefined && json.legend !== '' ? `legend="${json.legend}"` : ''}
+					name="${json.codeContext?.name}"
+					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
+					${reactClassNamesFromComponentObj(json)}
+					onChange={(radio) => handleInputChange({
+						target: {
+							name: "${json.codeContext?.name}",
+							value: radio
+						}
+					})}>
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+				</TileGroup>`;
+			}
+		},
+		angularV10: {
+			inputs: () => '',
+			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<Event>();`,
+			imports: ['TilesModule'],
+			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<ibm-tile-group
 					(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
 					[multiple]="false"
@@ -214,7 +245,7 @@ export const componentInfo: ComponentInfo = {
 				</ibm-tile-group>`;
 			}
 		},
-		react: {
+		reactV10: {
 			imports: ['TileGroup'],
 			code: ({ json, jsonToTemplate, fragments }) => {
 				return `<TileGroup

@@ -103,6 +103,31 @@ export const componentInfo: ComponentInfo = {
 			outputs: () => '',
 			imports: ['AccordionModule'],
 			code: ({ json, fragments, jsonToTemplate }) => {
+				return `<cds-accordion
+					[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
+					[align]="${nameStringToVariableString(json.codeContext?.name)}Align"
+					${angularClassNamesFromComponentObj(json)}>
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+				</cds-accordion>`;
+			}
+		},
+		react: {
+			imports: ['Accordion'],
+			code: ({ json, fragments, jsonToTemplate }) => {
+				return `<Accordion
+					${json.align !== undefined ? `align='${json.align}'` : ''}
+					${json.size !== undefined ? `size='${json.size}'` : ''}
+					${reactClassNamesFromComponentObj(json)}>
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+				</Accordion>`;
+			}
+		},
+		angularV10: {
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Align = "${json.align}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";`,
+			outputs: () => '',
+			imports: ['AccordionModule'],
+			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<ibm-accordion
 					[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
 					[align]="${nameStringToVariableString(json.codeContext?.name)}Align"
@@ -111,7 +136,7 @@ export const componentInfo: ComponentInfo = {
 				</ibm-accordion>`;
 			}
 		},
-		react: {
+		reactV10: {
 			imports: ['Accordion'],
 			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<Accordion

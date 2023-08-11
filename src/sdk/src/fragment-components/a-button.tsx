@@ -28,7 +28,12 @@ export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 
 	const sizeItems = [
 		{ id: 'sm', text: 'Small' },
-		{ id: 'field', text: 'Medium' },
+		/**
+		 * @todo
+		 * What do we do about scenarios such as this?
+		 * Field is `md` in v11
+		 */
+		{ id: 'md', text: 'Medium' },
 		{ id: 'lg', text: 'Large' },
 		{ id: 'xl', text: 'Extra large' },
 		{ id: 'default', text: 'Default' }
@@ -123,7 +128,7 @@ export const componentInfo: ComponentInfo = {
 		type: 'button',
 		kind: 'primary',
 		text: 'Button',
-		size: ''
+		size: 'lg'
 	},
 	image,
 	codeExport: {
@@ -133,7 +138,7 @@ export const componentInfo: ComponentInfo = {
 			imports: ['ButtonModule'],
 			code: ({ json }) => {
 				return `<button
-					${json.kind ? `ibmButton='${json.kind}'` : 'ibmButton'}
+					${json.kind ? `cdsButton='${json.kind}'` : 'ibmButton'}
 					${json.size ? `size='${json.size === 'default' ? 'normal' : json.size}'` : ''}
 					(click)='${nameStringToVariableString(json.codeContext?.name)}Clicked.emit()'
 					${angularClassNamesFromComponentObj(json)}>
@@ -142,6 +147,30 @@ export const componentInfo: ComponentInfo = {
 			}
 		},
 		react: {
+			imports: ['Button'],
+			code: ({ json }) => {
+				return `<Button
+					${json.kind && `kind="${json.kind}"`}
+					${json.size && `size="${json.size}"`}
+					${reactClassNamesFromComponentObj(json)}>${json.text}</Button>`;
+			}
+		},
+		angularV10: {
+			inputs: (_) => '',
+			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
+			imports: ['ButtonModule'],
+			code: ({ json }) => {
+				const size = json.size === 'default' ? 'normal' : json.size === 'md' ? 'field' : json.size;
+				return `<button
+					${json.kind ? `ibmButton='${json.kind}'` : 'ibmButton'}
+					${json.size ? `size='${size}'` : ''}
+					(click)='${nameStringToVariableString(json.codeContext?.name)}Clicked.emit()'
+					${angularClassNamesFromComponentObj(json)}>
+						${json.text}
+				</button>`;
+			}
+		},
+		reactV10: {
 			imports: ['Button'],
 			code: ({ json }) => {
 				return `<Button

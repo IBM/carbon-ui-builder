@@ -59,6 +59,16 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			imports: [],
 			code: () => ''
+		},
+		angularV10: {
+			inputs: () => '',
+			outputs: () => '',
+			imports: [],
+			code: () => ''
+		},
+		reactV10: {
+			imports: [],
+			code: () => ''
 		}
 	}
 };

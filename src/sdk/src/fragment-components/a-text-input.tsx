@@ -155,7 +155,7 @@ export const componentInfo: ComponentInfo = {
 			outputs: (_) => '',
 			imports: ['InputModule'],
 			code: ({ json }) => {
-				return `<ibm-label
+				return `<cds-text-label
 					helperText="${json.helperText}">
 						${json.label}
 						<input
@@ -164,10 +164,41 @@ export const componentInfo: ComponentInfo = {
 							name="${json.codeContext?.name}"
 							${json.size ? `size="${json.size}"` : ''}
 							placeholder="${json.placeholder}">
-				</ibm-label>`;
+				</cds-text-label>`;
 			}
 		},
 		react: {
+			imports: ['TextInput'],
+			code: ({ json }) => {
+				return `<TextInput
+					labelText="${json.label}"
+					name="${json.codeContext?.name}"
+					helperText="${json.helperText}"
+					placeholder="${json.placeholder}"
+					${json.size ? `size="${json.size}"` : ''}
+					value={state["${json.codeContext?.name}"]}
+					${reactClassNamesFromComponentObj(json)}
+					onChange={handleInputChange} />`;
+			}
+		},
+		angularV10: {
+			inputs: (_) => '',
+			outputs: (_) => '',
+			imports: ['InputModule'],
+			code: ({ json }) => {
+				return `<ibm-text-label
+					helperText="${json.helperText}">
+						${json.label}
+						<input
+							ibmText
+							${angularClassNamesFromComponentObj(json)}
+							name="${json.codeContext?.name}"
+							${json.size ? `size="${json.size}"` : ''}
+							placeholder="${json.placeholder}">
+				</ibm-text-label>`;
+			}
+		},
+		reactV10: {
 			imports: ['TextInput'],
 			code: ({ json }) => {
 				return `<TextInput

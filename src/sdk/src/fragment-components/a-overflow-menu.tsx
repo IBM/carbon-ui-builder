@@ -201,6 +201,49 @@ export const componentInfo: ComponentInfo = {
 							@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
 			imports: ['DialogModule'],
 			code: ({ json }) => {
+				return `<cds-overflow-menu
+					[placement]="${nameStringToVariableString(json.codeContext?.name)}Placement"
+					[flip]="${nameStringToVariableString(json.codeContext?.name)}Flipped"
+					${angularClassNamesFromComponentObj(json)}>
+						${json.items.map((step: any) => (
+						`<cds-overflow-menu-option
+							${step.isDelete ? "type='danger'" : ''}
+							${step.hasDivider ? `[divider]="${step.hasDivider}"` : ''}
+							${step.link !== undefined ? `href="${step.link}"` : ''}
+							${step.disabled ? `disabled="${step.disabled}"` : '' }
+							(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
+							(click)="${nameStringToVariableString(json.codeContext?.name)}Clicked.emit($event)">
+								${step.itemText}
+						</cds-overflow-menu-option>`
+					)).join('\n')}
+				</cds-overflow-menu>`;
+			}
+		},
+		react: {
+			imports: ['OverflowMenu', 'OverflowMenuItem'],
+			code: ({ json }) => {
+				return `<OverflowMenu
+					direction="${json.placement}"
+					flipped={${json.flipped}}
+					${reactClassNamesFromComponentObj(json)}>
+					${json.items.map((step: any) => (
+						`<OverflowMenuItem
+							${step.link !== undefined ? `href="${step.link}"` : ''}
+							${step.isDelete !== undefined ? `isDelete={${step.isDelete}}` : ''}
+							${step.hasDivider !== false ? 'hasDivider': ''}
+							disabled={${step.disabled}}
+							itemText="${step.itemText}"/>`
+					)).join('\n')}
+				</OverflowMenu>`;
+			}
+		},
+		angularV10: {
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Flipped = ${json.flipped};
+									@Input() ${nameStringToVariableString(json.codeContext?.name)}Placement = "${json.placement}";`,
+			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter();
+							@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
+			imports: ['DialogModule'],
+			code: ({ json }) => {
 				return `<ibm-overflow-menu
 					[placement]="${nameStringToVariableString(json.codeContext?.name)}Placement"
 					[flip]="${nameStringToVariableString(json.codeContext?.name)}Flipped"
@@ -219,7 +262,7 @@ export const componentInfo: ComponentInfo = {
 				</ibm-overflow-menu>`;
 			}
 		},
-		react: {
+		reactV10: {
 			imports: ['OverflowMenu', 'OverflowMenuItem'],
 			code: ({ json }) => {
 				return `<OverflowMenu

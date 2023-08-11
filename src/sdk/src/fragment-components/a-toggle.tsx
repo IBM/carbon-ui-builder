@@ -153,7 +153,7 @@ export const componentInfo: ComponentInfo = {
 			outputs: (_) => '',
 			imports: ['ToggleModule'],
 			code: ({ json }) => {
-				return `<ibm-toggle
+				return `<cds-toggle
 					[label]="${nameStringToVariableString(json.codeContext?.name)}Header"
 					[onText]="${nameStringToVariableString(json.codeContext?.name)}OnText"
 					[offText]="${nameStringToVariableString(json.codeContext?.name)}OffText"
@@ -161,7 +161,7 @@ export const componentInfo: ComponentInfo = {
 					[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
 					[checked]="${nameStringToVariableString(json.codeContext?.name)}Checked"
 					${angularClassNamesFromComponentObj(json)}>
-				</ibm-toggle>`;
+				</cds-toggle>`;
 			}
 		},
 		react: {
@@ -176,6 +176,49 @@ export const componentInfo: ComponentInfo = {
 					size="${json.size}"
 					id="${json.codeContext?.name}"
 					toggled={state["${json.codeContext?.name}"]?.checked}
+					onToggle={(checked) => handleInputChange({
+						target: {
+							name: "${json.codeContext?.name}",
+							value: checked
+						}
+					})}
+					${reactClassNamesFromComponentObj(json)} />`;
+			}
+		},
+		angularV10: {
+			inputs: ({ json }) => `
+			@Input() ${nameStringToVariableString(json.codeContext?.name)}Header = "${json.header}";
+			@Input() ${nameStringToVariableString(json.codeContext?.name)}OnText = "${json.onText}";
+			@Input() ${nameStringToVariableString(json.codeContext?.name)}OffText = "${json.offText}";
+			@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";
+			@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
+			@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${json.checked};`,
+			outputs: (_) => '',
+			imports: ['ToggleModule'],
+			code: ({ json }) => {
+				return `<ibm-toggle
+					[label]="${nameStringToVariableString(json.codeContext?.name)}Header"
+					[onText]="${nameStringToVariableString(json.codeContext?.name)}OnText"
+					[offText]="${nameStringToVariableString(json.codeContext?.name)}OffText"
+					[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
+					[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
+					[checked]="${nameStringToVariableString(json.codeContext?.name)}Checked"
+					${angularClassNamesFromComponentObj(json)}>
+				</ibm-toggle>`;
+			}
+		},
+		reactV10: {
+			imports: ['Toggle'],
+			code: ({ json }) => {
+				return `<Toggle
+					labelText="${json.header}"
+					labelA="${json.offText}"
+					labelB="${json.onText}"
+					${json.disabled ? `disabled={${json.disabled}}` : ''}
+					${json.checked ? `toggled={${json.checked}}` : ''}
+					size="${json.size}"
+					id="${json.codeContext?.name}"
+					checked={state["${json.codeContext?.name}"]?.checked}
 					onToggle={(checked) => handleInputChange({
 						target: {
 							name: "${json.codeContext?.name}",

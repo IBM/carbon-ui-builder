@@ -181,6 +181,30 @@ export const componentInfo: ComponentInfo = {
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<Event>();`,
 			imports: ['TilesModule'],
 			code: ({ json, fragments, jsonToTemplate }) => {
+				return `<cds-tile-group
+					(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
+					[multiple]="true"
+					${angularClassNamesFromComponentObj(json)}>
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+				</cds-tile-group>`;
+			}
+		},
+		react: {
+			imports: [],
+			code: ({ json, jsonToTemplate, fragments }) => {
+				return `<div
+					role="group"
+					aria-label="Selectable tiles"
+					${reactClassNamesFromComponentObj(json)}>
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+				</div>`;
+			}
+		},
+		angularV10: {
+			inputs: () => '',
+			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<Event>();`,
+			imports: ['TilesModule'],
+			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<ibm-tile-group
 					(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
 					[multiple]="true"
@@ -189,7 +213,7 @@ export const componentInfo: ComponentInfo = {
 				</ibm-tile-group>`;
 			}
 		},
-		react: {
+		reactV10: {
 			imports: [],
 			code: ({ json, jsonToTemplate, fragments }) => {
 				return `<div

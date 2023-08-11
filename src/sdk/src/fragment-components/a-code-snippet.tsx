@@ -130,6 +130,29 @@ export const componentInfo: ComponentInfo = {
 			outputs: () => '',
 			imports: ['CodeSnippetModule'],
 			code: ({ json }) => {
+				return `<cds-code-snippet
+					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+					display={{${nameStringToVariableString(json.codeContext?.name)}Type}}>{{
+						${nameStringToVariableString(json.codeContext?.name)}Code
+					}}</cds-code-snippet>`;
+			}
+		},
+		react: {
+			imports: ['CodeSnippet'],
+			code: ({ json }) => {
+				return `<CodeSnippet
+					light={${!!json.light}}
+					type="${json.variant}">{\`${json.code}\`}
+				</CodeSnippet>`;
+			}
+		},
+		angularV10: {
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Type = "${json.variant}"
+			@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}"
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Code = \`${json.code}\``,
+			outputs: () => '',
+			imports: ['CodeSnippetModule'],
+			code: ({ json }) => {
 				return `<ibm-code-snippet
 					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 					display={{${nameStringToVariableString(json.codeContext?.name)}Type}}>{{
@@ -137,7 +160,7 @@ export const componentInfo: ComponentInfo = {
 					}}</ibm-code-snippet>`;
 			}
 		},
-		react: {
+		reactV10: {
 			imports: ['CodeSnippet'],
 			code: ({ json }) => {
 				return `<CodeSnippet

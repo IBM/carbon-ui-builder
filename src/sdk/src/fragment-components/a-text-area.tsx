@@ -94,7 +94,7 @@ export const componentInfo: ComponentInfo = {
 			outputs: (_) => '',
 			imports: ['InputModule'],
 			code: ({ json }) => {
-				return `<ibm-label
+				return `<cds-textarea-label
 					helperText="${json.helperText}">
 						${json.label}
 						<textarea
@@ -102,10 +102,39 @@ export const componentInfo: ComponentInfo = {
 							${angularClassNamesFromComponentObj(json)}
 							name="${json.codeContext?.name}"
 							placeholder="${json.placeholder}"></textarea>
-				</ibm-label>`;
+				</cds-textarea-label>`;
 			}
 		},
 		react: {
+			imports: ['TextArea'],
+			code: ({ json }) => {
+				return `<TextArea
+					labelText="${json.label}"
+					name="${json.codeContext?.name}"
+					helperText="${json.helperText}"
+					placeholder="${json.placeholder}"
+					value={state["${json.codeContext?.name}"]}
+					${reactClassNamesFromComponentObj(json)}
+					onChange={handleInputChange} />`;
+			}
+		},
+		angularV10: {
+			inputs: (_) => '',
+			outputs: (_) => '',
+			imports: ['InputModule'],
+			code: ({ json }) => {
+				return `<ibm-textarea-label
+					helperText="${json.helperText}">
+						${json.label}
+						<textarea
+							ibmTextArea
+							${angularClassNamesFromComponentObj(json)}
+							name="${json.codeContext?.name}"
+							placeholder="${json.placeholder}"></textarea>
+				</ibm-textarea-label>`;
+			}
+		},
+		reactV10: {
 			imports: ['TextArea'],
 			code: ({ json }) => {
 				return `<TextArea

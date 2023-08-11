@@ -141,6 +141,34 @@ export const componentInfo: ComponentInfo = {
 			outputs: (_) => '',
 			imports: ['TilesModule'],
 			code: ({ json, fragments, jsonToTemplate }) => {
+				return `<cds-clickable-tile
+					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+					[href]=${nameStringToVariableString(json.codeContext?.name)}Href
+					[disabled]=${nameStringToVariableString(json.codeContext?.name)}Disabled
+					${angularClassNamesFromComponentObj(json)}>
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+				</cds-clickable-tile>`;
+			}
+		},
+		react: {
+			imports: ['ClickableTile'],
+			code: ({ json, fragments, jsonToTemplate }) => {
+				return `<ClickableTile
+					${json.codeContext?.href !== undefined && json.codeContext?.href !== '' ? `href='${json.codeContext?.href}'` : ''}
+					${json.light !== undefined ? `light={${json.light}}` : ''}
+					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
+					${reactClassNamesFromComponentObj(json)}>
+						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+				</ClickableTile>`;
+			}
+		},
+		angularV10: {
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Href = '${json.href}';
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled || false};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : 'dark'}';`,
+			outputs: (_) => '',
+			imports: ['TilesModule'],
+			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<ibm-clickable-tile
 					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 					[href]=${nameStringToVariableString(json.codeContext?.name)}Href
@@ -150,7 +178,7 @@ export const componentInfo: ComponentInfo = {
 				</ibm-clickable-tile>`;
 			}
 		},
-		react: {
+		reactV10: {
 			imports: ['ClickableTile'],
 			code: ({ json, fragments, jsonToTemplate }) => {
 				return `<ClickableTile

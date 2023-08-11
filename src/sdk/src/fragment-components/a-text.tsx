@@ -166,6 +166,38 @@ export const componentInfo: ComponentInfo = {
 				}
 				return json.text;
 			}
+		},
+		angularV10: {
+			inputs: (_) => '',
+			outputs: (_) => '',
+			imports: [],
+			code: ({ json }) => {
+				if (json.richText) {
+					if (json.isSection) {
+						return `<section ${angularClassNamesFromComponentObj(json)}>${json.richText}</section>`;
+					}
+					return `<div ${angularClassNamesFromComponentObj(json)}>${json.richText}</div>`;
+				}
+				if (json.cssClasses?.length) {
+					return `<span ${angularClassNamesFromComponentObj(json)}>${json.text}</span>`;
+				}
+				return json.text;
+			}
+		},
+		reactV10: {
+			imports: [],
+			code: ({ json }) => {
+				if (json.richText) {
+					if (json.isSection) {
+						return `<section ${reactClassNamesFromComponentObj(json)}>${json.richText}</section>`;
+					}
+					return `<div ${reactClassNamesFromComponentObj(json)}>${json.richText}</div>`;
+				}
+				if (json.cssClasses?.length) {
+					return `<span ${reactClassNamesFromComponentObj(json)}>${json.text}</span>`;
+				}
+				return json.text;
+			}
 		}
 	}
 };

@@ -190,6 +190,73 @@ export const componentInfo: ComponentInfo = {
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}OnSuccess = new EventEmitter();`,
 			imports: ['InlineLoadingModule'],
 			code: ({ json }) => {
+				return `<cds-inline-loading
+					(onSuccess)="${nameStringToVariableString(json.codeContext?.name)}OnSuccess.emit($event)"
+					[successDelay]="${nameStringToVariableString(json.codeContext?.name)}SuccessDelay"
+					[state]="${nameStringToVariableString(json.codeContext?.name)}Status"
+					[loadingText]="${nameStringToVariableString(json.codeContext?.name)}LoadingText"
+					[successText]="${nameStringToVariableString(json.codeContext?.name)}SuccessText"
+					[errorText]="${nameStringToVariableString(json.codeContext?.name)}ErrorText"
+					${angularClassNamesFromComponentObj(json)}>
+				</cds-inline-loading>`;
+			}
+		},
+		react: {
+			imports: ['InlineLoading'],
+			code: ({ json }) => {
+				const status = `state["${nameStringToVariableString(json.codeContext?.name)}"] || "${json.status}"`;
+				return `<InlineLoading
+					onSuccess={() => {
+						if (typeof state.${nameStringToVariableString(json.codeContext?.name)}OnSuccess === "function") {
+							state.${nameStringToVariableString(json.codeContext?.name)}OnSuccess();
+						}
+					}}
+					successDelay={${json.successDelay}}
+					description={${nameStringToVariableString(json.codeContext?.name)}StatusDescription}
+					iconDescription={${nameStringToVariableString(json.codeContext?.name)}StatusIconDescription}
+					status={${status}}
+					${reactClassNamesFromComponentObj(json)} />`;
+			},
+			additionalCode: (json) => {
+				const name = nameStringToVariableString(json.codeContext?.name);
+				const status = `${name}Status`;
+				const statusDescription = `${name}StatusDescription`;
+				const statusIconDescription = `${name}StatusIconDescription`;
+
+				return {
+					[status]: `const ${status} = {
+						active: {
+							iconDescription: "${json.activeIconDescription || 'Loading...'}",
+							description: "${json.activeText || 'Loading...'}"
+						},
+						error: {
+							iconDescription: "${json.errorIconDescription || 'Error!'}",
+							description: "${json.errorText || 'Error!'}"
+						},
+						inactive: {
+							iconDescription: "${json.inactiveIconDescription || ''}",
+							description: "${json.inactiveText || ''}"
+						},
+						finished: {
+							iconDescription: "${json.finishedIconDescription || 'Finished.'}",
+							description: "${json.successText || 'Finished.'}"
+						}
+					}`,
+					[statusDescription]: `const ${statusDescription} = ${status}[state["${name}"] || "${json.status}"].description`,
+					[statusIconDescription]: `const ${statusIconDescription} = ${status}[state["${name}"] || "${json.status}"].iconDescription`
+				};
+			}
+		},
+		angularV10: {
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Status = "${json.status}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}LoadingText = "${json.activeText}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}SuccessText = "${json.successText}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}ErrorText = "${json.errorText}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}SuccessDelay = ${json.successDelay === undefined ?
+					1500 : json.successDelay };`,
+			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}OnSuccess = new EventEmitter();`,
+			imports: ['InlineLoadingModule'],
+			code: ({ json }) => {
 				return `<ibm-inline-loading
 					(onSuccess)="${nameStringToVariableString(json.codeContext?.name)}OnSuccess.emit($event)"
 					[successDelay]="${nameStringToVariableString(json.codeContext?.name)}SuccessDelay"
@@ -201,7 +268,7 @@ export const componentInfo: ComponentInfo = {
 				</ibm-inline-loading>`;
 			}
 		},
-		react: {
+		reactV10: {
 			imports: ['InlineLoading'],
 			code: ({ json }) => {
 				const status = `state["${nameStringToVariableString(json.codeContext?.name)}"] || "${json.status}"`;
