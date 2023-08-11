@@ -86,13 +86,15 @@ export const componentInfo: ComponentInfo = {
 		type: 'tile',
 		items: []
 	},
-	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline }) => <ATile
+	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline, fragment, setFragment }) => <ATile
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
 		selected={selected}
 		onDragOver={onDragOver}
-		onDrop={onDrop}>
+		onDrop={onDrop}
+		fragment={fragment}
+		setFragment={setFragment}>
 		{componentObj.items?.map((tile: any) => renderComponents(tile, outline))}
 	</ATile>,
 	image,
