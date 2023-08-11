@@ -209,7 +209,8 @@ export const componentInfo: ComponentInfo = {
 					(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
 					<span minLabel>{{${nameStringToVariableString(json.codeContext?.name)}MinLabel}}</span>
 					<span maxLabel>{{${nameStringToVariableString(json.codeContext?.name)}MaxLabel}}</span>
-                    <input theme="${nameStringToVariableString(json.codeContext?.name)}Light === 'light' ? 'light' : 'dark'}" />
+                    <input theme="${nameStringToVariableString(json.codeContext?.name)}Light === 'light' ? 'light' : 'dark'}" 
+                    ${angularClassNamesFromComponentObj(json)} />
 				</ibm-slider>`;
 			}
 		},
