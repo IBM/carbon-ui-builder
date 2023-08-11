@@ -2,6 +2,7 @@ import React from 'react';
 import {
 	Slider,
 	TextInput,
+	NumberInput,
 	Checkbox
 } from 'carbon-components-react';
 import { css, cx } from 'emotion';
@@ -60,44 +61,46 @@ export const ASliderSettingsUI = ({ selectedComponent, setComponent }: any) => {
 				labelText: event.currentTarget.value
 			})} />
 
-		<TextInput
+		<NumberInput
 			value={selectedComponent.min}
-			labelText='Min'
-			onChange={(event: any) => setComponent({
-				...selectedComponent,
-				min: event.currentTarget.value
-			})} />
+			label='Min'
+			onChange={(event: any, data: any, value: any) => {
+                setComponent({
+                    ...selectedComponent,
+                    min: value ? value : data.value
+                });
+            }} />
 
-		<TextInput
+		<NumberInput
 			value={selectedComponent.max}
-			labelText='Max'
-			onChange={(event: any) => setComponent({
+			label='Max'
+			onChange={(event: any, data: any, value: any) => setComponent({
 				...selectedComponent,
-				max: event.currentTarget.value
+				max: value ? value : data.value
 			})} />
 
-		<TextInput
+		<NumberInput
 			value={selectedComponent.value}
-			labelText='Value'
-			onChange={(event: any) => setComponent({
+			label='Value'
+			onChange={(event: any, data: any, value: any) => setComponent({
 				...selectedComponent,
-				value: event.currentTarget.value
+				value: value ? value : data.value
 			})} />
 
-		<TextInput
+		<NumberInput
 			value={selectedComponent.step}
-			labelText='Step'
-			onChange={(event: any) => setComponent({
+			label='Step'
+			onChange={(event: any, data: any, value: any) => setComponent({
 				...selectedComponent,
-				step: event.currentTarget.value
+				step: value ? value : data.value
 			})} />
 
-		<TextInput
+		<NumberInput
 			value={selectedComponent.stepMultiplier}
-			labelText='Step multiplier'
-			onChange={(event: any) => setComponent({
+			label='Step multiplier'
+			onChange={(event: any, data: any, value: any) => setComponent({
 				...selectedComponent,
-				stepMultiplier: event.currentTarget.value
+				stepMultiplier: value ? value : data.value
 			})} />
 
 		<TextInput
