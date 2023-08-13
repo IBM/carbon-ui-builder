@@ -106,43 +106,47 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: { // TODO exports
 		angular: {
-			inputs: (_) => '',
-			outputs: (_) => '',
-			imports: [],
-			code: ({ json, fragments }) => {
-				const fragment = fragments?.find(f => f.id === json.fragmentId);
-				return `<app-${tagNameFromFragment(fragment)}></app-${tagNameFromFragment(fragment)}>`;
+			latest: {
+				inputs: (_) => '',
+				outputs: (_) => '',
+				imports: [],
+				code: ({ json, fragments }) => {
+					const fragment = fragments?.find(f => f.id === json.fragmentId);
+					return `<app-${tagNameFromFragment(fragment)}></app-${tagNameFromFragment(fragment)}>`;
+				}
+			},
+			v10: {
+				inputs: (_) => '',
+				outputs: (_) => '',
+				imports: [],
+				code: ({ json, fragments }) => {
+					const fragment = fragments?.find(f => f.id === json.fragmentId);
+					return `<app-${tagNameFromFragment(fragment)}></app-${tagNameFromFragment(fragment)}>`;
+				}
 			}
 		},
 		react: {
-			imports: [],
-			otherImports: ({ json, fragments }) => {
-				const fragment = fragments?.find(f => f.id === json.fragmentId);
-				return `import {${classNameFromFragment(fragment)}} from "/src/shared/${tagNameFromFragment(fragment)}.js";`;
+			latest: {
+				imports: [],
+				otherImports: ({ json, fragments }) => {
+					const fragment = fragments?.find(f => f.id === json.fragmentId);
+					return `import {${classNameFromFragment(fragment)}} from "/src/shared/${tagNameFromFragment(fragment)}.js";`;
+				},
+				code: ({ json, fragments }) => {
+					const fragment = fragments?.find(f => f.id === json.fragmentId);
+					return `<${classNameFromFragment(fragment)} state={state} setState={setState} />`;
+				}
 			},
-			code: ({ json, fragments }) => {
-				const fragment = fragments?.find(f => f.id === json.fragmentId);
-				return `<${classNameFromFragment(fragment)} state={state} setState={setState} />`;
-			}
-		},
-		angularV10: {
-			inputs: (_) => '',
-			outputs: (_) => '',
-			imports: [],
-			code: ({ json, fragments }) => {
-				const fragment = fragments?.find(f => f.id === json.fragmentId);
-				return `<app-${tagNameFromFragment(fragment)}></app-${tagNameFromFragment(fragment)}>`;
-			}
-		},
-		reactV10: {
-			imports: [],
-			otherImports: ({ json, fragments }) => {
-				const fragment = fragments?.find(f => f.id === json.fragmentId);
-				return `import {${classNameFromFragment(fragment)}} from "/src/shared/${tagNameFromFragment(fragment)}.js";`;
-			},
-			code: ({ json, fragments }) => {
-				const fragment = fragments?.find(f => f.id === json.fragmentId);
-				return `<${classNameFromFragment(fragment)} state={state} setState={setState} />`;
+			v10: {
+				imports: [],
+				otherImports: ({ json, fragments }) => {
+					const fragment = fragments?.find(f => f.id === json.fragmentId);
+					return `import {${classNameFromFragment(fragment)}} from "/src/shared/${tagNameFromFragment(fragment)}.js";`;
+				},
+				code: ({ json, fragments }) => {
+					const fragment = fragments?.find(f => f.id === json.fragmentId);
+					return `<${classNameFromFragment(fragment)} state={state} setState={setState} />`;
+				}
 			}
 		}
 	}

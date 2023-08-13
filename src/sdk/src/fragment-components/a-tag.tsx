@@ -173,101 +173,105 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Title = "${json.title}";
+			latest: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Title = "${json.title}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Type = "${json.kind}";`,
-			outputs: ({ json }) => `${json.filter
-				? `@Output() ${nameStringToVariableString(json.codeContext?.name)}Click = new EventEmitter();
-					@Output() ${nameStringToVariableString(json.codeContext?.name)}Close = new EventEmitter();`
-				: ''
-			}`,
-			imports: ['TagModule'],
-			code: ({ json }) => {
-				const defaultProps = `
-					[type]="${nameStringToVariableString(json.codeContext?.name)}Type"
-					[title]="${nameStringToVariableString(json.codeContext?.name)}Title"
-					${`size='${json.size ? json.size : 'md'}'`}
-				`;
-				if (json.filter) {
-					return `<cds-tag-filter
-						${defaultProps}
-						(click)='${nameStringToVariableString(json.codeContext?.name)}Click.emit()'
-						(close)='${nameStringToVariableString(json.codeContext?.name)}Close.emit()'
-						${angularClassNamesFromComponentObj(json)}
-						[disabled]='${json.disabled}'
-						${json.closeLabel ? `closeButtonLabel='${json.closeLabel}'` : ''}>
-							${json.title}
-					</ibm-tag-filter>
+				outputs: ({ json }) => `${json.filter
+					? `@Output() ${nameStringToVariableString(json.codeContext?.name)}Click = new EventEmitter();
+						@Output() ${nameStringToVariableString(json.codeContext?.name)}Close = new EventEmitter();`
+					: ''
+				}`,
+				imports: ['TagModule'],
+				code: ({ json }) => {
+					const defaultProps = `
+						[type]="${nameStringToVariableString(json.codeContext?.name)}Type"
+						[title]="${nameStringToVariableString(json.codeContext?.name)}Title"
+						${`size='${json.size ? json.size : 'md'}'`}
 					`;
-				}
+					if (json.filter) {
+						return `<cds-tag-filter
+							${defaultProps}
+							(click)='${nameStringToVariableString(json.codeContext?.name)}Click.emit()'
+							(close)='${nameStringToVariableString(json.codeContext?.name)}Close.emit()'
+							${angularClassNamesFromComponentObj(json)}
+							[disabled]='${json.disabled}'
+							${json.closeLabel ? `closeButtonLabel='${json.closeLabel}'` : ''}>
+								${json.title}
+						</ibm-tag-filter>
+						`;
+					}
 
-				return `<cds-tag
-					${defaultProps}
-					${angularClassNamesFromComponentObj(json)}>
-						${json.title}
-				</cds-tag>`;
+					return `<cds-tag
+						${defaultProps}
+						${angularClassNamesFromComponentObj(json)}>
+							${json.title}
+					</cds-tag>`;
+				}
+			},
+			v10: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Title = "${json.title}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Type = "${json.kind}";`,
+				outputs: ({ json }) => `${json.filter
+					? `@Output() ${nameStringToVariableString(json.codeContext?.name)}Click = new EventEmitter();
+						@Output() ${nameStringToVariableString(json.codeContext?.name)}Close = new EventEmitter();`
+					: ''
+				}`,
+				imports: ['TagModule'],
+				code: ({ json }) => {
+					const defaultProps = `
+						[type]="${nameStringToVariableString(json.codeContext?.name)}Type"
+						[title]="${nameStringToVariableString(json.codeContext?.name)}Title"
+						${`size='${json.size ? json.size : 'md'}'`}
+					`;
+					if (json.filter) {
+						return `<ibm-tag-filter
+							${defaultProps}
+							(click)='${nameStringToVariableString(json.codeContext?.name)}Click.emit()'
+							(close)='${nameStringToVariableString(json.codeContext?.name)}Close.emit()'
+							${angularClassNamesFromComponentObj(json)}
+							[disabled]='${json.disabled}'
+							${json.closeLabel ? `closeButtonLabel='${json.closeLabel}'` : ''}>
+								${json.title}
+						</ibm-tag-filter>
+						`;
+					}
+
+					return `<ibm-tag
+						${defaultProps}
+						${angularClassNamesFromComponentObj(json)}>
+							${json.title}
+					</ibm-tag>`;
+				}
 			}
 		},
 		react: {
-			imports: ['Tag'],
-			code: ({ json }) => {
-				return `<Tag
-					${json.kind && ` type="${json.kind}"`}
-					${`size='${json.size ? json.size : 'md'}'`}
-					${json.closeLabel && `title="${json.closeLabel}"`}
-					disabled={${json.disabled}}
-					filter={${json.filter}}
-					${reactClassNamesFromComponentObj(json)}>
-						${json.title}
-				</Tag>`;
-			}
-		},
-		angularV10: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Title = "${json.title}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Type = "${json.kind}";`,
-			outputs: ({ json }) => `${json.filter
-				? `@Output() ${nameStringToVariableString(json.codeContext?.name)}Click = new EventEmitter();
-					@Output() ${nameStringToVariableString(json.codeContext?.name)}Close = new EventEmitter();`
-				: ''
-			}`,
-			imports: ['TagModule'],
-			code: ({ json }) => {
-				const defaultProps = `
-					[type]="${nameStringToVariableString(json.codeContext?.name)}Type"
-					[title]="${nameStringToVariableString(json.codeContext?.name)}Title"
-					${`size='${json.size ? json.size : 'md'}'`}
-				`;
-				if (json.filter) {
-					return `<ibm-tag-filter
-						${defaultProps}
-						(click)='${nameStringToVariableString(json.codeContext?.name)}Click.emit()'
-						(close)='${nameStringToVariableString(json.codeContext?.name)}Close.emit()'
-						${angularClassNamesFromComponentObj(json)}
-						[disabled]='${json.disabled}'
-						${json.closeLabel ? `closeButtonLabel='${json.closeLabel}'` : ''}>
+			latest: {
+				imports: ['Tag'],
+				code: ({ json }) => {
+					return `<Tag
+						${json.kind && ` type="${json.kind}"`}
+						${`size='${json.size ? json.size : 'md'}'`}
+						${json.closeLabel && `title="${json.closeLabel}"`}
+						disabled={${json.disabled}}
+						filter={${json.filter}}
+						${reactClassNamesFromComponentObj(json)}>
 							${json.title}
-					</ibm-tag-filter>
-					`;
+					</Tag>`;
 				}
-
-				return `<ibm-tag
-					${defaultProps}
-					${angularClassNamesFromComponentObj(json)}>
-						${json.title}
-				</ibm-tag>`;
-			}
-		},
-		reactV10: {
-			imports: ['Tag'],
-			code: ({ json }) => {
-				return `<Tag
-					${json.kind && ` type="${json.kind}"`}
-					${`size='${json.size ? json.size : 'md'}'`}
-					${json.closeLabel && `title="${json.closeLabel}"`}
-					disabled={${json.disabled}}
-					filter={${json.filter}}
-					${reactClassNamesFromComponentObj(json)}>
-						${json.title}
-				</Tag>`;
+			},
+			v10: {
+				imports: ['Tag'],
+				code: ({ json }) => {
+					return `<Tag
+						${json.kind && ` type="${json.kind}"`}
+						${`size='${json.size ? json.size : 'md'}'`}
+						${json.closeLabel && `title="${json.closeLabel}"`}
+						disabled={${json.disabled}}
+						filter={${json.filter}}
+						${reactClassNamesFromComponentObj(json)}>
+							${json.title}
+					</Tag>`;
+				}
 			}
 		}
 	}

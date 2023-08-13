@@ -83,67 +83,71 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${!!json.checked};`,
-			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}CheckedChange = new EventEmitter<boolean>();`,
-			imports: ['CheckboxModule'],
-			code: ({ json }) => {
-				return `<cds-checkbox
-					name="${json.codeContext?.name}"
-					id="${json.codeContext?.name}"
-					[(checked)]="${nameStringToVariableString(json.codeContext?.name)}Checked"
-					(checkedChange)="${nameStringToVariableString(json.codeContext?.name)}CheckedChange.emit($event)"
-					${angularClassNamesFromComponentObj(json)}>
-						${json.label}
-				</cds-checkbox>`;
+			latest: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${!!json.checked};`,
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}CheckedChange = new EventEmitter<boolean>();`,
+				imports: ['CheckboxModule'],
+				code: ({ json }) => {
+					return `<cds-checkbox
+						name="${json.codeContext?.name}"
+						id="${json.codeContext?.name}"
+						[(checked)]="${nameStringToVariableString(json.codeContext?.name)}Checked"
+						(checkedChange)="${nameStringToVariableString(json.codeContext?.name)}CheckedChange.emit($event)"
+						${angularClassNamesFromComponentObj(json)}>
+							${json.label}
+					</cds-checkbox>`;
+				}
+			},
+			v10: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${!!json.checked};`,
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}CheckedChange = new EventEmitter<boolean>();`,
+				imports: ['CheckboxModule'],
+				code: ({ json }) => {
+					return `<ibm-checkbox
+						name="${json.codeContext?.name}"
+						id="${json.codeContext?.name}"
+						[(checked)]="${nameStringToVariableString(json.codeContext?.name)}Checked"
+						(checkedChange)="${nameStringToVariableString(json.codeContext?.name)}CheckedChange.emit($event)"
+						${angularClassNamesFromComponentObj(json)}>
+							${json.label}
+					</ibm-checkbox>`;
+				}
 			}
 		},
 		react: {
-			imports: ['Checkbox'],
-			code: ({ json }) => {
-				return `<Checkbox
-					labelText="${json.label}"
-					name="${json.codeContext?.name}"
-					id="${json.codeContext?.name}"
-					checked={state["${json.codeContext?.name}"]?.checked}
-					${reactClassNamesFromComponentObj(json)}
-					onChange={(_, { checked }) => handleInputChange({
-						target: {
-							name: "${json.codeContext?.name}",
-							value: checked
-						}
-					})} />`;
-			}
-		},
-		angularV10: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${!!json.checked};`,
-			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}CheckedChange = new EventEmitter<boolean>();`,
-			imports: ['CheckboxModule'],
-			code: ({ json }) => {
-				return `<ibm-checkbox
-					name="${json.codeContext?.name}"
-					id="${json.codeContext?.name}"
-					[(checked)]="${nameStringToVariableString(json.codeContext?.name)}Checked"
-					(checkedChange)="${nameStringToVariableString(json.codeContext?.name)}CheckedChange.emit($event)"
-					${angularClassNamesFromComponentObj(json)}>
-						${json.label}
-				</ibm-checkbox>`;
-			}
-		},
-		reactV10: {
-			imports: ['Checkbox'],
-			code: ({ json }) => {
-				return `<Checkbox
-					labelText="${json.label}"
-					name="${json.codeContext?.name}"
-					id="${json.codeContext?.name}"
-					checked={state["${json.codeContext?.name}"]?.checked}
-					${reactClassNamesFromComponentObj(json)}
-					onChange={(checked) => handleInputChange({
-						target: {
-							name: "${json.codeContext?.name}",
-							value: checked
-						}
-					})} />`;
+			latest: {
+				imports: ['Checkbox'],
+				code: ({ json }) => {
+					return `<Checkbox
+						labelText="${json.label}"
+						name="${json.codeContext?.name}"
+						id="${json.codeContext?.name}"
+						checked={state["${json.codeContext?.name}"]?.checked}
+						${reactClassNamesFromComponentObj(json)}
+						onChange={(_, { checked }) => handleInputChange({
+							target: {
+								name: "${json.codeContext?.name}",
+								value: checked
+							}
+						})} />`;
+				}
+			},
+			v10: {
+				imports: ['Checkbox'],
+				code: ({ json }) => {
+					return `<Checkbox
+						labelText="${json.label}"
+						name="${json.codeContext?.name}"
+						id="${json.codeContext?.name}"
+						checked={state["${json.codeContext?.name}"]?.checked}
+						${reactClassNamesFromComponentObj(json)}
+						onChange={(checked) => handleInputChange({
+							target: {
+								name: "${json.codeContext?.name}",
+								value: checked
+							}
+						})} />`;
+				}
 			}
 		}
 	}

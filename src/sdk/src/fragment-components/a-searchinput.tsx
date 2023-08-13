@@ -209,123 +209,127 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Expandable = ${json.expandable};
+			latest: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Expandable = ${json.expandable};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Autocomplete = "${json.autocomplete}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.inputSize}";`,
-			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter<any>();
-				@Output() ${nameStringToVariableString(json.codeContext?.name)}Clear = new EventEmitter<any>();`,
-			imports: ['SearchModule'],
-			code: ({ json }) => {
-				return `<cds-search
-					name="${json.codeContext?.name}"
-					[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
-					[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
-					[placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
-					[autocomplete]="${nameStringToVariableString(json.codeContext?.name)}Autocomplete"
-					[expandable]="${nameStringToVariableString(json.codeContext?.name)}Expandable"
-					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
-					(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event)"
-					(clear)="${nameStringToVariableString(json.codeContext?.name)}Clear.emit()"
-					${angularClassNamesFromComponentObj(json)}>
-				</cds-search>`;
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter<any>();
+					@Output() ${nameStringToVariableString(json.codeContext?.name)}Clear = new EventEmitter<any>();`,
+				imports: ['SearchModule'],
+				code: ({ json }) => {
+					return `<cds-search
+						name="${json.codeContext?.name}"
+						[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
+						[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
+						[placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
+						[autocomplete]="${nameStringToVariableString(json.codeContext?.name)}Autocomplete"
+						[expandable]="${nameStringToVariableString(json.codeContext?.name)}Expandable"
+						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event)"
+						(clear)="${nameStringToVariableString(json.codeContext?.name)}Clear.emit()"
+						${angularClassNamesFromComponentObj(json)}>
+					</cds-search>`;
+				}
+			},
+			v10: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Expandable = ${json.expandable};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Autocomplete = "${json.autocomplete}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.inputSize}";`,
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter<any>();
+					@Output() ${nameStringToVariableString(json.codeContext?.name)}Clear = new EventEmitter<any>();`,
+				imports: ['SearchModule'],
+				code: ({ json }) => {
+					return `<ibm-search
+						name="${json.codeContext?.name}"
+						[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
+						[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
+						[placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
+						[autocomplete]="${nameStringToVariableString(json.codeContext?.name)}Autocomplete"
+						[expandable]="${nameStringToVariableString(json.codeContext?.name)}Expandable"
+						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event)"
+						(clear)="${nameStringToVariableString(json.codeContext?.name)}Clear.emit()"
+						${angularClassNamesFromComponentObj(json)}>
+					</ibm-search>`;
+				}
 			}
 		},
 		react: {
-			imports: ({ json }) => [json.expandable ? 'ExpandableSearch' : 'Search'],
-			code: ({ json }) => {
-				if (json.expandable) {
-					return `<ExpandableSearch
+			latest: {
+				imports: ({ json }) => [json.expandable ? 'ExpandableSearch' : 'Search'],
+				code: ({ json }) => {
+					if (json.expandable) {
+						return `<ExpandableSearch
+							value={state["${json.codeContext?.name}"]}
+							size="${json.inputSize}"
+							disabled={${json.disabled}}
+							autoComplete="${json.autocomplete}"
+							placeholder="${json.placeholder}"
+							light={${json.light}}
+							labelText="${json.label}"
+							defaultValue="${json.defaultValue}"
+							closeButtonLabelText="${json.closeButtonLabelText}"
+							id="${json.id}"
+							role="${json.role}"
+							type="${json.searchType}" />`;
+					}
+					return `<Search
+						${reactClassNamesFromComponentObj(json)}
 						value={state["${json.codeContext?.name}"]}
+						onChange={handleInputChange}
 						size="${json.inputSize}"
-						disabled={${json.disabled}}
-						autoComplete="${json.autocomplete}"
-						placeholder="${json.placeholder}"
-						light={${json.light}}
 						labelText="${json.label}"
-						defaultValue="${json.defaultValue}"
-						closeButtonLabelText="${json.closeButtonLabelText}"
+						placeholder="${json.placeholder}"
 						id="${json.id}"
+						autoComplete="${json.autocomplete}"
+						closeButtonLabelText="${json.closeButtonLabelText}"
+						defaultValue="${json.defaultValue}"
+						disabled={${json.disabled}}
+						light={${json.light}}
 						role="${json.role}"
 						type="${json.searchType}" />`;
 				}
-				return `<Search
-					${reactClassNamesFromComponentObj(json)}
-					value={state["${json.codeContext?.name}"]}
-					onChange={handleInputChange}
-					size="${json.inputSize}"
-					labelText="${json.label}"
-					placeholder="${json.placeholder}"
-					id="${json.id}"
-					autoComplete="${json.autocomplete}"
-					closeButtonLabelText="${json.closeButtonLabelText}"
-					defaultValue="${json.defaultValue}"
-					disabled={${json.disabled}}
-					light={${json.light}}
-					role="${json.role}"
-					type="${json.searchType}" />`;
-			}
-		},
-		angularV10: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Expandable = ${json.expandable};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Autocomplete = "${json.autocomplete}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.inputSize}";`,
-			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter<any>();
-				@Output() ${nameStringToVariableString(json.codeContext?.name)}Clear = new EventEmitter<any>();`,
-			imports: ['SearchModule'],
-			code: ({ json }) => {
-				return `<ibm-search
-					name="${json.codeContext?.name}"
-					[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
-					[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
-					[placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
-					[autocomplete]="${nameStringToVariableString(json.codeContext?.name)}Autocomplete"
-					[expandable]="${nameStringToVariableString(json.codeContext?.name)}Expandable"
-					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
-					(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event)"
-					(clear)="${nameStringToVariableString(json.codeContext?.name)}Clear.emit()"
-					${angularClassNamesFromComponentObj(json)}>
-				</ibm-search>`;
-			}
-		},
-		reactV10: {
-			imports: ({ json }) => [json.expandable ? 'ExpandableSearch' : 'Search'],
-			code: ({ json }) => {
-				if (json.expandable) {
-					return `<ExpandableSearch
+			},
+			v10: {
+				imports: ({ json }) => [json.expandable ? 'ExpandableSearch' : 'Search'],
+				code: ({ json }) => {
+					if (json.expandable) {
+						return `<ExpandableSearch
+							value={state["${json.codeContext?.name}"]}
+							size="${json.inputSize}"
+							disabled={${json.disabled}}
+							autoComplete="${json.autocomplete}"
+							placeholder="${json.placeholder}"
+							light={${json.light}}
+							labelText="${json.label}"
+							defaultValue="${json.defaultValue}"
+							closeButtonLabelText="${json.closeButtonLabelText}"
+							id="${json.id}"
+							role="${json.role}"
+							type="${json.searchType}" />`;
+					}
+					return `<Search
+						${reactClassNamesFromComponentObj(json)}
 						value={state["${json.codeContext?.name}"]}
+						onChange={handleInputChange}
 						size="${json.inputSize}"
-						disabled={${json.disabled}}
-						autoComplete="${json.autocomplete}"
-						placeholder="${json.placeholder}"
-						light={${json.light}}
 						labelText="${json.label}"
-						defaultValue="${json.defaultValue}"
-						closeButtonLabelText="${json.closeButtonLabelText}"
+						placeholder="${json.placeholder}"
 						id="${json.id}"
+						autoComplete="${json.autocomplete}"
+						closeButtonLabelText="${json.closeButtonLabelText}"
+						defaultValue="${json.defaultValue}"
+						disabled={${json.disabled}}
+						light={${json.light}}
 						role="${json.role}"
 						type="${json.searchType}" />`;
 				}
-				return `<Search
-					${reactClassNamesFromComponentObj(json)}
-					value={state["${json.codeContext?.name}"]}
-					onChange={handleInputChange}
-					size="${json.inputSize}"
-					labelText="${json.label}"
-					placeholder="${json.placeholder}"
-					id="${json.id}"
-					autoComplete="${json.autocomplete}"
-					closeButtonLabelText="${json.closeButtonLabelText}"
-					defaultValue="${json.defaultValue}"
-					disabled={${json.disabled}}
-					light={${json.light}}
-					role="${json.role}"
-					type="${json.searchType}" />`;
 			}
 		}
 	}

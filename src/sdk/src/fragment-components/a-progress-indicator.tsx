@@ -165,101 +165,105 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => {
-				const steps = json.progressSteps.map((step: any) => ({
-					text: step.label,
-					description: step.secondaryLabel,
-					state: ['incomplete'],
-					...(step.disabled ? { disabled: step.disabled } : {})
-				}));
-				return `@Input() ${nameStringToVariableString(json.codeContext?.name)}Steps = ${JSON.stringify(steps)};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Orientation = "${json.isVertical ? 'vertical' : 'horizontal'}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Spacing = ${json.spacing || false};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Current = ${json.currentIndex};`;
+			latest: {
+				inputs: ({ json }) => {
+					const steps = json.progressSteps.map((step: any) => ({
+						text: step.label,
+						description: step.secondaryLabel,
+						state: ['incomplete'],
+						...(step.disabled ? { disabled: step.disabled } : {})
+					}));
+					return `@Input() ${nameStringToVariableString(json.codeContext?.name)}Steps = ${JSON.stringify(steps)};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Orientation = "${json.isVertical ? 'vertical' : 'horizontal'}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Spacing = ${json.spacing || false};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Current = ${json.currentIndex};`;
+				},
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}StepSelected = new EventEmitter<Event>();`,
+				imports: ['ProgressIndicatorModule'],
+				code: ({ json }) => {
+					return `<cds-progress-indicator
+						[orientation]="${nameStringToVariableString(json.codeContext?.name)}Orientation"
+						[steps]="${nameStringToVariableString(json.codeContext?.name)}Steps"
+						[current]="${nameStringToVariableString(json.codeContext?.name)}Current"
+						(stepSelected)="${nameStringToVariableString(json.codeContext?.name)}StepSelected.emit($event)"
+						[spacing]="${nameStringToVariableString(json.codeContext?.name)}Spacing"
+						${angularClassNamesFromComponentObj(json)}>
+					</cds-progress-indicator>`;
+				}
 			},
-			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}StepSelected = new EventEmitter<Event>();`,
-			imports: ['ProgressIndicatorModule'],
-			code: ({ json }) => {
-				return `<cds-progress-indicator
-					[orientation]="${nameStringToVariableString(json.codeContext?.name)}Orientation"
-					[steps]="${nameStringToVariableString(json.codeContext?.name)}Steps"
-					[current]="${nameStringToVariableString(json.codeContext?.name)}Current"
-					(stepSelected)="${nameStringToVariableString(json.codeContext?.name)}StepSelected.emit($event)"
-					[spacing]="${nameStringToVariableString(json.codeContext?.name)}Spacing"
-					${angularClassNamesFromComponentObj(json)}>
-				</cds-progress-indicator>`;
+			v10: {
+				inputs: ({ json }) => {
+					const steps = json.progressSteps.map((step: any) => ({
+						text: step.label,
+						description: step.secondaryLabel,
+						state: ['incomplete'],
+						...(step.disabled ? { disabled: step.disabled } : {})
+					}));
+					return `@Input() ${nameStringToVariableString(json.codeContext?.name)}Steps = ${JSON.stringify(steps)};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Orientation = "${json.isVertical ? 'vertical' : 'horizontal'}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Spacing = ${json.spacing || false};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Current = ${json.currentIndex};`;
+				},
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}StepSelected = new EventEmitter<Event>();`,
+				imports: ['ProgressIndicatorModule'],
+				code: ({ json }) => {
+					return `<ibm-progress-indicator
+						[orientation]="${nameStringToVariableString(json.codeContext?.name)}Orientation"
+						[steps]="${nameStringToVariableString(json.codeContext?.name)}Steps"
+						[current]="${nameStringToVariableString(json.codeContext?.name)}Current"
+						(stepSelected)="${nameStringToVariableString(json.codeContext?.name)}StepSelected.emit($event)"
+						[spacing]="${nameStringToVariableString(json.codeContext?.name)}Spacing"
+						${angularClassNamesFromComponentObj(json)}>
+					</ibm-progress-indicator>`;
+				}
 			}
 		},
 		react: {
-			imports: ['ProgressIndicator', 'ProgressStep'],
-			code: ({ json }) => {
-				return `<ProgressIndicator
-					currentIndex={state["${json.codeContext?.name}StepIndex"] || 0}
-					${json.isVertical ? 'vertical={true}' : ''}
-					${reactClassNamesFromComponentObj(json)}
-					onChange={(selectedStep) => handleInputChange({
-						target: {
-							name: "${json.codeContext?.name}",
-							value: selectedStep
-						}
-					})}>
-					${json.progressSteps.map((step: any) => (`<ProgressStep
-							label="${step.label}"
-							${step.invalid ? 'invalid' : ''}
-							${step.disabled ? 'disabled' : ''}
-							${step.secondaryLabel !== undefined || step.secondaryLabel !== '' ? `secondaryLabel="${step.secondaryLabel}"` : ''}
-							${step.description !== undefined || step.description !== '' ? `description="${step.description}"` : ''}
-						/>`)).join('\n')}
-					</ProgressIndicator>`;
-			}
-		},
-		angularV10: {
-			inputs: ({ json }) => {
-				const steps = json.progressSteps.map((step: any) => ({
-					text: step.label,
-					description: step.secondaryLabel,
-					state: ['incomplete'],
-					...(step.disabled ? { disabled: step.disabled } : {})
-				}));
-				return `@Input() ${nameStringToVariableString(json.codeContext?.name)}Steps = ${JSON.stringify(steps)};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Orientation = "${json.isVertical ? 'vertical' : 'horizontal'}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Spacing = ${json.spacing || false};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Current = ${json.currentIndex};`;
+			latest: {
+				imports: ['ProgressIndicator', 'ProgressStep'],
+				code: ({ json }) => {
+					return `<ProgressIndicator
+						currentIndex={state["${json.codeContext?.name}StepIndex"] || 0}
+						${json.isVertical ? 'vertical={true}' : ''}
+						${reactClassNamesFromComponentObj(json)}
+						onChange={(selectedStep) => handleInputChange({
+							target: {
+								name: "${json.codeContext?.name}",
+								value: selectedStep
+							}
+						})}>
+						${json.progressSteps.map((step: any) => (`<ProgressStep
+								label="${step.label}"
+								${step.invalid ? 'invalid' : ''}
+								${step.disabled ? 'disabled' : ''}
+								${step.secondaryLabel !== undefined || step.secondaryLabel !== '' ? `secondaryLabel="${step.secondaryLabel}"` : ''}
+								${step.description !== undefined || step.description !== '' ? `description="${step.description}"` : ''}
+							/>`)).join('\n')}
+						</ProgressIndicator>`;
+				}
 			},
-			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}StepSelected = new EventEmitter<Event>();`,
-			imports: ['ProgressIndicatorModule'],
-			code: ({ json }) => {
-				return `<ibm-progress-indicator
-					[orientation]="${nameStringToVariableString(json.codeContext?.name)}Orientation"
-					[steps]="${nameStringToVariableString(json.codeContext?.name)}Steps"
-					[current]="${nameStringToVariableString(json.codeContext?.name)}Current"
-					(stepSelected)="${nameStringToVariableString(json.codeContext?.name)}StepSelected.emit($event)"
-					[spacing]="${nameStringToVariableString(json.codeContext?.name)}Spacing"
-					${angularClassNamesFromComponentObj(json)}>
-				</ibm-progress-indicator>`;
-			}
-		},
-		reactV10: {
-			imports: ['ProgressIndicator', 'ProgressStep'],
-			code: ({ json }) => {
-				return `<ProgressIndicator
-					currentIndex={state["${json.codeContext?.name}StepIndex"] || 0}
-					${json.isVertical ? 'vertical={true}' : ''}
-					${reactClassNamesFromComponentObj(json)}
-					onChange={(selectedStep) => handleInputChange({
-						target: {
-							name: "${json.codeContext?.name}",
-							value: selectedStep
-						}
-					})}>
-					${json.progressSteps.map((step: any) => (`<ProgressStep
-							label="${step.label}"
-							${step.invalid ? 'invalid' : ''}
-							${step.disabled ? 'disabled' : ''}
-							${step.secondaryLabel !== undefined || step.secondaryLabel !== '' ? `secondaryLabel="${step.secondaryLabel}"` : ''}
-							${step.description !== undefined || step.description !== '' ? `description="${step.description}"` : ''}
-						/>`)).join('\n')}
-					</ProgressIndicator>`;
+			v10: {
+				imports: ['ProgressIndicator', 'ProgressStep'],
+				code: ({ json }) => {
+					return `<ProgressIndicator
+						currentIndex={state["${json.codeContext?.name}StepIndex"] || 0}
+						${json.isVertical ? 'vertical={true}' : ''}
+						${reactClassNamesFromComponentObj(json)}
+						onChange={(selectedStep) => handleInputChange({
+							target: {
+								name: "${json.codeContext?.name}",
+								value: selectedStep
+							}
+						})}>
+						${json.progressSteps.map((step: any) => (`<ProgressStep
+								label="${step.label}"
+								${step.invalid ? 'invalid' : ''}
+								${step.disabled ? 'disabled' : ''}
+								${step.secondaryLabel !== undefined || step.secondaryLabel !== '' ? `secondaryLabel="${step.secondaryLabel}"` : ''}
+								${step.description !== undefined || step.description !== '' ? `description="${step.description}"` : ''}
+							/>`)).join('\n')}
+						</ProgressIndicator>`;
+				}
 			}
 		}
 	}

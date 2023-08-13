@@ -24,9 +24,9 @@ export const getAdditionalCode = (componentObj: any, fragments: any[]) => {
 	let collectedCode = {};
 
 	for (const component of Object.values(allComponents)) {
-		if (componentObj.type === component.componentInfo.type && !component.componentInfo.codeExport.react.isNotDirectExport) {
-			if (component.componentInfo.codeExport.react.additionalCode) {
-				collectedCode = { ...collectedCode, ...component.componentInfo.codeExport.react.additionalCode(componentObj) };
+		if (componentObj.type === component.componentInfo.type && !component.componentInfo.codeExport.react.latest.isNotDirectExport) {
+			if (component.componentInfo.codeExport.react.latest.additionalCode) {
+				collectedCode = { ...collectedCode, ...component.componentInfo.codeExport.react.latest.additionalCode(componentObj) };
 			}
 		}
 	}
@@ -50,8 +50,8 @@ export const jsonToCarbonImports = (json: any) => {
 
 	for (const component of Object.values(allComponents)) {
 		if (json.type === component.componentInfo.type) {
-			const componentImport = Array.isArray(component.componentInfo.codeExport.react.imports) ?
-				component.componentInfo.codeExport.react.imports : component.componentInfo.codeExport.react.imports({ json });
+			const componentImport = Array.isArray(component.componentInfo.codeExport.react.latest.imports) ?
+				component.componentInfo.codeExport.react.latest.imports : component.componentInfo.codeExport.react.latest.imports({ json });
 
 			addIfNotExist(imports, componentImport);
 		}
@@ -72,8 +72,8 @@ export const jsonToTemplate = (json: any, fragments: any[]) => {
 	}
 
 	for (const component of Object.values(allComponents)) {
-		if (json.type === component.componentInfo.type && !component.componentInfo.codeExport.react.isNotDirectExport) {
-			return component.componentInfo.codeExport.react.code({ json, jsonToTemplate, fragments });
+		if (json.type === component.componentInfo.type && !component.componentInfo.codeExport.react.latest.isNotDirectExport) {
+			return component.componentInfo.codeExport.react.latest.code({ json, jsonToTemplate, fragments });
 		}
 	}
 
@@ -86,8 +86,8 @@ export const otherImportsFromComponentObj = (json: any, fragments?: any[]) => {
 	let imports = '';
 	for (const component of Object.values(allComponents)) {
 		if (json.type === component.componentInfo.type) {
-			if (component.componentInfo.codeExport.react.otherImports) {
-				imports += component.componentInfo.codeExport.react.otherImports({ json, fragments });
+			if (component.componentInfo.codeExport.react.latest.otherImports) {
+				imports += component.componentInfo.codeExport.react.latest.otherImports({ json, fragments });
 				break;
 			}
 		}

@@ -50,32 +50,36 @@ export interface ComponentInfo {
 	hideFromElementsPane?: boolean;
 	codeExport: {
 		angular: {
-			inputs: (props: { json: any }) => string;
-			outputs: (props: { json: any }) => string;
-			imports: string[];
-			isNotDirectExport?: boolean;
-			code: (props: {json: any; jsonToTemplate: (json: any, fragments: any[]) => string; fragments: any[]}) => string;
+			latest: {
+				inputs: (props: { json: any }) => string;
+				outputs: (props: { json: any }) => string;
+				imports: string[];
+				isNotDirectExport?: boolean;
+				code: (props: {json: any; jsonToTemplate: (json: any, fragments: any[]) => string; fragments: any[]}) => string;
+			};
+			v10: {
+				inputs: (props: { json: any }) => string;
+				outputs: (props: { json: any }) => string;
+				imports: string[];
+				isNotDirectExport?: boolean;
+				code: (props: {json: any; jsonToTemplate: (json: any, fragments: any[]) => string; fragments: any[]}) => string;
+			};
 		};
 		react: {
-			imports: ((props: {json: any}) => string[]) | string[];
-			otherImports?: (props: {json: any; fragments?: any[]}) => string;
-			isNotDirectExport?: boolean;
-			code: (props: {json: any; jsonToTemplate: (json: any, fragments: any[]) => string; fragments: any[]}) => string;
-			additionalCode?: (componentObj: any) => any;
-		};
-		angularV10: {
-			inputs: (props: { json: any }) => string;
-			outputs: (props: { json: any }) => string;
-			imports: string[];
-			isNotDirectExport?: boolean;
-			code: (props: {json: any; jsonToTemplate: (json: any, fragments: any[]) => string; fragments: any[]}) => string;
-		};
-		reactV10: {
-			imports: ((props: {json: any}) => string[]) | string[];
-			otherImports?: (props: {json: any; fragments?: any[]}) => string;
-			isNotDirectExport?: boolean;
-			code: (props: {json: any; jsonToTemplate: (json: any, fragments: any[]) => string; fragments: any[]}) => string;
-			additionalCode?: (componentObj: any) => any;
+			latest: {
+				imports: ((props: {json: any}) => string[]) | string[];
+				otherImports?: (props: {json: any; fragments?: any[]}) => string;
+				isNotDirectExport?: boolean;
+				code: (props: {json: any; jsonToTemplate: (json: any, fragments: any[]) => string; fragments: any[]}) => string;
+				additionalCode?: (componentObj: any) => any;
+			};
+			v10: {
+				imports: ((props: {json: any}) => string[]) | string[];
+				otherImports?: (props: {json: any; fragments?: any[]}) => string;
+				isNotDirectExport?: boolean;
+				code: (props: {json: any; jsonToTemplate: (json: any, fragments: any[]) => string; fragments: any[]}) => string;
+				additionalCode?: (componentObj: any) => any;
+			};
 		};
 	};
 }

@@ -237,28 +237,32 @@ export const componentInfo: ComponentInfo = {
 	image: undefined,
 	codeExport: {
 		angular: {
-			inputs: (_) => '',
-			outputs: (_) => '',
-			imports: ['GridModule'],
-			isNotDirectExport: true,
-			code: (_) => ''
+			latest: {
+				inputs: (_) => '',
+				outputs: (_) => '',
+				imports: ['GridModule'],
+				isNotDirectExport: true,
+				code: (_) => ''
+			},
+			v10: {
+				inputs: (_) => '',
+				outputs: (_) => '',
+				imports: ['GridModule'],
+				isNotDirectExport: true,
+				code: (_) => ''
+			}
 		},
 		react: {
-			imports: ['Row'],
-			isNotDirectExport: true,
-			code: (_) => ''
-		},
-		angularV10: {
-			inputs: (_) => '',
-			outputs: (_) => '',
-			imports: ['GridModule'],
-			isNotDirectExport: true,
-			code: (_) => ''
-		},
-		reactV10: {
-			imports: ['Row'],
-			isNotDirectExport: true,
-			code: (_) => ''
+			latest: {
+				imports: ['Row'],
+				isNotDirectExport: true,
+				code: (_) => ''
+			},
+			v10: {
+				imports: ['Row'],
+				isNotDirectExport: true,
+				code: (_) => ''
+			}
 		}
 	}
 };

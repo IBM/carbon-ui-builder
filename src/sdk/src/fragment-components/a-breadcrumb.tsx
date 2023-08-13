@@ -151,63 +151,67 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}NoTrailingSlash = ${json.noTrailingSlash};`,
-			outputs: (_) => '',
-			imports: ['BreadcrumbModule'],
-			code: ({ json }) => {
-				return `<cds-breadcrumb
-					[noTrailingSlash]="${nameStringToVariableString(json.codeContext?.name)}NoTrailingSlash"
-					${angularClassNamesFromComponentObj(json)}>
-					${json.items.map((step: any) => (
-						`<cds-breadcrumb-item
-							href="${step.href}">
-								${step.label}
-						</cds-breadcrumb-item>`
-						)).join('\n')}
-				</cds-breadcrumb>`;
+			latest: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}NoTrailingSlash = ${json.noTrailingSlash};`,
+				outputs: (_) => '',
+				imports: ['BreadcrumbModule'],
+				code: ({ json }) => {
+					return `<cds-breadcrumb
+						[noTrailingSlash]="${nameStringToVariableString(json.codeContext?.name)}NoTrailingSlash"
+						${angularClassNamesFromComponentObj(json)}>
+						${json.items.map((step: any) => (
+							`<cds-breadcrumb-item
+								href="${step.href}">
+									${step.label}
+							</cds-breadcrumb-item>`
+							)).join('\n')}
+					</cds-breadcrumb>`;
+				}
+			},
+			v10: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}NoTrailingSlash = ${json.noTrailingSlash};`,
+				outputs: (_) => '',
+				imports: ['BreadcrumbModule'],
+				code: ({ json }) => {
+					return `<ibm-breadcrumb
+						[noTrailingSlash]="${nameStringToVariableString(json.codeContext?.name)}NoTrailingSlash"
+						${angularClassNamesFromComponentObj(json)}>
+						${json.items.map((step: any) => (
+							`<ibm-breadcrumb-item
+								href="${step.href}">
+									${step.label}
+							</ibm-breadcrumb-item>`
+							)).join('\n')}
+					</ibm-breadcrumb>`;
+				}
 			}
 		},
 		react: {
-			imports: ['Breadcrumb', 'BreadcrumbItem'],
-			code: ({ json }) => {
-				return `<Breadcrumb
-					noTrailingSlash={${json.noTrailingSlash}}
-					${reactClassNamesFromComponentObj(json)}>
-					${json.items.map((step: any) =>
-						`<BreadcrumbItem href="${step.href}">
-							${step.label}
-						</BreadcrumbItem>`).join('\n')}
-					</Breadcrumb>`;
-			}
-		},
-		angularV10: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}NoTrailingSlash = ${json.noTrailingSlash};`,
-			outputs: (_) => '',
-			imports: ['BreadcrumbModule'],
-			code: ({ json }) => {
-				return `<ibm-breadcrumb
-					[noTrailingSlash]="${nameStringToVariableString(json.codeContext?.name)}NoTrailingSlash"
-					${angularClassNamesFromComponentObj(json)}>
-					${json.items.map((step: any) => (
-						`<ibm-breadcrumb-item
-							href="${step.href}">
+			latest: {
+				imports: ['Breadcrumb', 'BreadcrumbItem'],
+				code: ({ json }) => {
+					return `<Breadcrumb
+						noTrailingSlash={${json.noTrailingSlash}}
+						${reactClassNamesFromComponentObj(json)}>
+						${json.items.map((step: any) =>
+							`<BreadcrumbItem href="${step.href}">
 								${step.label}
-						</ibm-breadcrumb-item>`
-						)).join('\n')}
-				</ibm-breadcrumb>`;
-			}
-		},
-		reactV10: {
-			imports: ['Breadcrumb', 'BreadcrumbItem'],
-			code: ({ json }) => {
-				return `<Breadcrumb
-					noTrailingSlash={${json.noTrailingSlash}}
-					${reactClassNamesFromComponentObj(json)}>
-					${json.items.map((step: any) =>
-						`<BreadcrumbItem href="${step.href}">
-							${step.label}
-						</BreadcrumbItem>`).join('\n')}
-					</Breadcrumb>`;
+							</BreadcrumbItem>`).join('\n')}
+						</Breadcrumb>`;
+				}
+			},
+			v10: {
+				imports: ['Breadcrumb', 'BreadcrumbItem'],
+				code: ({ json }) => {
+					return `<Breadcrumb
+						noTrailingSlash={${json.noTrailingSlash}}
+						${reactClassNamesFromComponentObj(json)}>
+						${json.items.map((step: any) =>
+							`<BreadcrumbItem href="${step.href}">
+								${step.label}
+							</BreadcrumbItem>`).join('\n')}
+						</Breadcrumb>`;
+				}
 			}
 		}
 	}

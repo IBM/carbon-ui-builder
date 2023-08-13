@@ -167,81 +167,85 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}LegendText = "${json.legend}";
+			latest: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}LegendText = "${json.legend}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Orientation = "${json.orientation}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}LabelPosition = "${json.labelPosition}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Name = "${json.codeContext?.name}";`,
-			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
-			imports: ['RadioModule'],
-			code: ({ json, fragments, jsonToTemplate }) => {
-				return `<cds-radio-group
-					[legend]="${nameStringToVariableString(json.codeContext?.name)}LegendText"
-					[name]="${nameStringToVariableString(json.codeContext?.name)}Name"
-					[orientation]="${nameStringToVariableString(json.codeContext?.name)}Orientation"
-					[labelPlacement]="${nameStringToVariableString(json.codeContext?.name)}LabelPosition"
-					(change)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
-					${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-				</cds-radio-group>`;
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
+				imports: ['RadioModule'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<cds-radio-group
+						[legend]="${nameStringToVariableString(json.codeContext?.name)}LegendText"
+						[name]="${nameStringToVariableString(json.codeContext?.name)}Name"
+						[orientation]="${nameStringToVariableString(json.codeContext?.name)}Orientation"
+						[labelPlacement]="${nameStringToVariableString(json.codeContext?.name)}LabelPosition"
+						(change)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
+						${angularClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</cds-radio-group>`;
+				}
+			},
+			v10: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}LegendText = "${json.legend}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Orientation = "${json.orientation}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}LabelPosition = "${json.labelPosition}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Name = "${json.codeContext?.name}";`,
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
+				imports: ['RadioModule'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<legend class="bx--label">{{${nameStringToVariableString(json.codeContext?.name)}LegendText}}</legend>
+					<ibm-radio-group
+						[name]="${nameStringToVariableString(json.codeContext?.name)}Name"
+						[orientation]="${nameStringToVariableString(json.codeContext?.name)}Orientation"
+						[labelPlacement]="${nameStringToVariableString(json.codeContext?.name)}LabelPosition"
+						(change)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
+						${angularClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</ibm-radio-group>`;
+				}
 			}
 		},
 		react: {
-			imports: ['RadioButtonGroup'],
-			code: ({ json, fragments, jsonToTemplate }) => {
-				return `<RadioButtonGroup
-					name="${json.codeContext?.name}"
-					legendText="${json.legend}"
-					orientation="${json.orientation}"
-					labelPosition="${json.labelPosition}"
-					${json.defaultSelected !== undefined && json.defaultSelected !== '' ? `defaultSelected="${json.defaultSelected}"` : ''}
-					${json.defaultSelected !== undefined && json.defaultSelected !== '' ? `valueChecked="${json.defaultSelected}"` : ''}
-					${reactClassNamesFromComponentObj(json)}
-					onChange={(radio) => handleInputChange({
-						target: {
-							name: "${json.codeContext?.name}"
-						}
-					})}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-				</RadioButtonGroup>`;
-			}
-		},
-		angularV10: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}LegendText = "${json.legend}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Orientation = "${json.orientation}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}LabelPosition = "${json.labelPosition}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Name = "${json.codeContext?.name}";`,
-			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
-			imports: ['RadioModule'],
-			code: ({ json, fragments, jsonToTemplate }) => {
-				return `<legend class="bx--label">{{${nameStringToVariableString(json.codeContext?.name)}LegendText}}</legend>
-				<ibm-radio-group
-					[name]="${nameStringToVariableString(json.codeContext?.name)}Name"
-					[orientation]="${nameStringToVariableString(json.codeContext?.name)}Orientation"
-					[labelPlacement]="${nameStringToVariableString(json.codeContext?.name)}LabelPosition"
-					(change)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
-					${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-				</ibm-radio-group>`;
-			}
-		},
-		reactV10: {
-			imports: ['RadioButtonGroup'],
-			code: ({ json, fragments, jsonToTemplate }) => {
-				return `<RadioButtonGroup
-					name="${json.codeContext?.name}"
-					legendText="${json.legend}"
-					orientation="${json.orientation}"
-					labelPosition="${json.labelPosition}"
-					${json.defaultSelected !== undefined && json.defaultSelected !== '' ? `defaultSelected="${json.defaultSelected}"` : ''}
-					${json.defaultSelected !== undefined && json.defaultSelected !== '' ? `valueChecked="${json.defaultSelected}"` : ''}
-					${reactClassNamesFromComponentObj(json)}
-					onChange={(radio) => handleInputChange({
-						target: {
-							name: "${json.codeContext?.name}"
-						}
-					})}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-				</RadioButtonGroup>`;
+			latest: {
+				imports: ['RadioButtonGroup'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<RadioButtonGroup
+						name="${json.codeContext?.name}"
+						legendText="${json.legend}"
+						orientation="${json.orientation}"
+						labelPosition="${json.labelPosition}"
+						${json.defaultSelected !== undefined && json.defaultSelected !== '' ? `defaultSelected="${json.defaultSelected}"` : ''}
+						${json.defaultSelected !== undefined && json.defaultSelected !== '' ? `valueChecked="${json.defaultSelected}"` : ''}
+						${reactClassNamesFromComponentObj(json)}
+						onChange={(radio) => handleInputChange({
+							target: {
+								name: "${json.codeContext?.name}"
+							}
+						})}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</RadioButtonGroup>`;
+				}
+			},
+			v10: {
+				imports: ['RadioButtonGroup'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<RadioButtonGroup
+						name="${json.codeContext?.name}"
+						legendText="${json.legend}"
+						orientation="${json.orientation}"
+						labelPosition="${json.labelPosition}"
+						${json.defaultSelected !== undefined && json.defaultSelected !== '' ? `defaultSelected="${json.defaultSelected}"` : ''}
+						${json.defaultSelected !== undefined && json.defaultSelected !== '' ? `valueChecked="${json.defaultSelected}"` : ''}
+						${reactClassNamesFromComponentObj(json)}
+						onChange={(radio) => handleInputChange({
+							target: {
+								name: "${json.codeContext?.name}"
+							}
+						})}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</RadioButtonGroup>`;
+				}
 			}
 		}
 	}

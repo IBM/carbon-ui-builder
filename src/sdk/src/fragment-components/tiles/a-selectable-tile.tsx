@@ -221,147 +221,151 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Selected = ${json.selected || false};
+			latest: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Selected = ${json.selected || false};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = '${json.value}';
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled || false};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : 'dark'}';`,
-			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Change = new EventEmitter<Event>();`,
-			imports: ['TilesModule'],
-			code: ({ json, fragments, jsonToTemplate }) => {
-				return `<cds-selection-tile
-					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
-					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
-					[disabled]=${nameStringToVariableString(json.codeContext?.name)}Disabled
-					[selected]="${nameStringToVariableString(json.codeContext?.name)}Selected"
-					${json.standalone ? `(change)="${nameStringToVariableString(json.codeContext?.name)}Change.emit($event)"` : ''}
-					${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-					</cds-selection-tile>`;
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Change = new EventEmitter<Event>();`,
+				imports: ['TilesModule'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<cds-selection-tile
+						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
+						[disabled]=${nameStringToVariableString(json.codeContext?.name)}Disabled
+						[selected]="${nameStringToVariableString(json.codeContext?.name)}Selected"
+						${json.standalone ? `(change)="${nameStringToVariableString(json.codeContext?.name)}Change.emit($event)"` : ''}
+						${angularClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+						</cds-selection-tile>`;
+				}
+			},
+			v10: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Selected = ${json.selected || false};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = '${json.value}';
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled || false};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : 'dark'}';`,
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Change = new EventEmitter<Event>();`,
+				imports: ['TilesModule'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<ibm-selection-tile
+						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
+						[disabled]=${nameStringToVariableString(json.codeContext?.name)}Disabled
+						[selected]="${nameStringToVariableString(json.codeContext?.name)}Selected"
+						${json.standalone ? `(change)="${nameStringToVariableString(json.codeContext?.name)}Change.emit($event)"` : ''}
+						${angularClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+						</ibm-selection-tile>`;
+				}
 			}
 		},
 		react: {
-			imports: ['SelectableTile'],
-			code: ({ json, jsonToTemplate, fragments }) => {
-				const stateFunction = json.standalone ?
-					`() => {
-						handleInputChange({
-							target: {
-								name: "${json.codeContext?.name}",
-								value: "${json.codeContext?.value}"
-							}
-				})}` :
-					`() =>
-						handleSelectableTileChange(
-							"${json.codeContext?.formItemName}",
-							"${json.codeContext?.name}"
-						)
-					`;
-
-				return `<SelectableTile
-					id="${json.codeContext?.name}"
-					${(json.codeContext?.value !== undefined && json.codeContext?.value !== '') ? `value="${json.codeContext?.value}"` : ''}
-					${(json.codeContext?.title !== undefined && json.codeContext?.title !== '') ? `title="${json.codeContext?.title}"` : ''}
-					${
-						(json.codeContext?.formItemName !== undefined && !json.standalone)
-							? `name="${json.codeContext?.formItemName}"` : `name="${json.codeContext?.name}"`
-					}
-					${json.selected !== undefined ? `selected={${json.selected}}` : ''}
-					${json.light !== undefined ? `light={${json.light}}` : ''}
-					${json.disabled !== undefined && !!json.disabled ? `disabled={${json.disabled}}` : ''}
-					${reactClassNamesFromComponentObj(json)}
-					onClick={${stateFunction}}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-				</SelectableTile>`;
-			},
-			additionalCode: (json) => {
-				if (json.standalone) {
-					return {};
-				}
-				return {
-					handleSelectableTileChange: `const handleSelectableTileChange = (name, id) => {
-						handleInputChange({
-							target: {
-								name,
-								value: {
-									...state[name],
-									[id]: !state[name]?.[id]
+			latest: {
+				imports: ['SelectableTile'],
+				code: ({ json, jsonToTemplate, fragments }) => {
+					const stateFunction = json.standalone ?
+						`() => {
+							handleInputChange({
+								target: {
+									name: "${json.codeContext?.name}",
+									value: "${json.codeContext?.value}"
 								}
-							}
-						});
-					};`
-				};
-			}
-		},
-		angularV10: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Selected = ${json.selected || false};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = '${json.value}';
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled || false};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : 'dark'}';`,
-			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Change = new EventEmitter<Event>();`,
-			imports: ['TilesModule'],
-			code: ({ json, fragments, jsonToTemplate }) => {
-				return `<ibm-selection-tile
-					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
-					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
-					[disabled]=${nameStringToVariableString(json.codeContext?.name)}Disabled
-					[selected]="${nameStringToVariableString(json.codeContext?.name)}Selected"
-					${json.standalone ? `(change)="${nameStringToVariableString(json.codeContext?.name)}Change.emit($event)"` : ''}
-					${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-					</ibm-selection-tile>`;
-			}
-		},
-		reactV10: {
-			imports: ['SelectableTile'],
-			code: ({ json, jsonToTemplate, fragments }) => {
-				const stateFunction = json.standalone ?
-					`() => {
-						handleInputChange({
-							target: {
-								name: "${json.codeContext?.name}",
-								value: "${json.codeContext?.value}"
-							}
-				})}` :
-					`() =>
-						handleSelectableTileChange(
-							"${json.codeContext?.formItemName}",
-							"${json.codeContext?.name}"
-						)
-					`;
+					})}` :
+						`() =>
+							handleSelectableTileChange(
+								"${json.codeContext?.formItemName}",
+								"${json.codeContext?.name}"
+							)
+						`;
 
-				return `<SelectableTile
-					id="${json.codeContext?.name}"
-					${(json.codeContext?.value !== undefined && json.codeContext?.value !== '') ? `value="${json.codeContext?.value}"` : ''}
-					${(json.codeContext?.title !== undefined && json.codeContext?.title !== '') ? `title="${json.codeContext?.title}"` : ''}
-					${
-						(json.codeContext?.formItemName !== undefined && !json.standalone)
-							? `name="${json.codeContext?.formItemName}"` : `name="${json.codeContext?.name}"`
+					return `<SelectableTile
+						id="${json.codeContext?.name}"
+						${(json.codeContext?.value !== undefined && json.codeContext?.value !== '') ? `value="${json.codeContext?.value}"` : ''}
+						${(json.codeContext?.title !== undefined && json.codeContext?.title !== '') ? `title="${json.codeContext?.title}"` : ''}
+						${
+							(json.codeContext?.formItemName !== undefined && !json.standalone)
+								? `name="${json.codeContext?.formItemName}"` : `name="${json.codeContext?.name}"`
+						}
+						${json.selected !== undefined ? `selected={${json.selected}}` : ''}
+						${json.light !== undefined ? `light={${json.light}}` : ''}
+						${json.disabled !== undefined && !!json.disabled ? `disabled={${json.disabled}}` : ''}
+						${reactClassNamesFromComponentObj(json)}
+						onClick={${stateFunction}}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</SelectableTile>`;
+				},
+				additionalCode: (json) => {
+					if (json.standalone) {
+						return {};
 					}
-					${json.selected !== undefined ? `selected={${json.selected}}` : ''}
-					${json.light !== undefined ? `light={${json.light}}` : ''}
-					${json.disabled !== undefined && !!json.disabled ? `disabled={${json.disabled}}` : ''}
-					${reactClassNamesFromComponentObj(json)}
-					onClick={${stateFunction}}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-				</SelectableTile>`;
-			},
-			additionalCode: (json) => {
-				if (json.standalone) {
-					return {};
-				}
-				return {
-					handleSelectableTileChange: `const handleSelectableTileChange = (name, id) => {
-						handleInputChange({
-							target: {
-								name,
-								value: {
-									...state[name],
-									[id]: !state[name]?.[id]
+					return {
+						handleSelectableTileChange: `const handleSelectableTileChange = (name, id) => {
+							handleInputChange({
+								target: {
+									name,
+									value: {
+										...state[name],
+										[id]: !state[name]?.[id]
+									}
 								}
-							}
-						});
-					};`
-				};
+							});
+						};`
+					};
+				}
+			},
+			v10: {
+				imports: ['SelectableTile'],
+				code: ({ json, jsonToTemplate, fragments }) => {
+					const stateFunction = json.standalone ?
+						`() => {
+							handleInputChange({
+								target: {
+									name: "${json.codeContext?.name}",
+									value: "${json.codeContext?.value}"
+								}
+					})}` :
+						`() =>
+							handleSelectableTileChange(
+								"${json.codeContext?.formItemName}",
+								"${json.codeContext?.name}"
+							)
+						`;
+
+					return `<SelectableTile
+						id="${json.codeContext?.name}"
+						${(json.codeContext?.value !== undefined && json.codeContext?.value !== '') ? `value="${json.codeContext?.value}"` : ''}
+						${(json.codeContext?.title !== undefined && json.codeContext?.title !== '') ? `title="${json.codeContext?.title}"` : ''}
+						${
+							(json.codeContext?.formItemName !== undefined && !json.standalone)
+								? `name="${json.codeContext?.formItemName}"` : `name="${json.codeContext?.name}"`
+						}
+						${json.selected !== undefined ? `selected={${json.selected}}` : ''}
+						${json.light !== undefined ? `light={${json.light}}` : ''}
+						${json.disabled !== undefined && !!json.disabled ? `disabled={${json.disabled}}` : ''}
+						${reactClassNamesFromComponentObj(json)}
+						onClick={${stateFunction}}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</SelectableTile>`;
+				},
+				additionalCode: (json) => {
+					if (json.standalone) {
+						return {};
+					}
+					return {
+						handleSelectableTileChange: `const handleSelectableTileChange = (name, id) => {
+							handleInputChange({
+								target: {
+									name,
+									value: {
+										...state[name],
+										[id]: !state[name]?.[id]
+									}
+								}
+							});
+						};`
+					};
+				}
 			}
 		}
 	}

@@ -136,67 +136,71 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: (_) => '',
-			outputs: (_) => '',
-			imports: [],
-			code: ({ json }) => {
-				if (json.richText) {
-					if (json.isSection) {
-						return `<section ${angularClassNamesFromComponentObj(json)}>${json.richText}</section>`;
+			latest: {
+				inputs: (_) => '',
+				outputs: (_) => '',
+				imports: [],
+				code: ({ json }) => {
+					if (json.richText) {
+						if (json.isSection) {
+							return `<section ${angularClassNamesFromComponentObj(json)}>${json.richText}</section>`;
+						}
+						return `<div ${angularClassNamesFromComponentObj(json)}>${json.richText}</div>`;
 					}
-					return `<div ${angularClassNamesFromComponentObj(json)}>${json.richText}</div>`;
+					if (json.cssClasses?.length) {
+						return `<span ${angularClassNamesFromComponentObj(json)}>${json.text}</span>`;
+					}
+					return json.text;
 				}
-				if (json.cssClasses?.length) {
-					return `<span ${angularClassNamesFromComponentObj(json)}>${json.text}</span>`;
+			},
+			v10: {
+				inputs: (_) => '',
+				outputs: (_) => '',
+				imports: [],
+				code: ({ json }) => {
+					if (json.richText) {
+						if (json.isSection) {
+							return `<section ${angularClassNamesFromComponentObj(json)}>${json.richText}</section>`;
+						}
+						return `<div ${angularClassNamesFromComponentObj(json)}>${json.richText}</div>`;
+					}
+					if (json.cssClasses?.length) {
+						return `<span ${angularClassNamesFromComponentObj(json)}>${json.text}</span>`;
+					}
+					return json.text;
 				}
-				return json.text;
 			}
 		},
 		react: {
-			imports: [],
-			code: ({ json }) => {
-				if (json.richText) {
-					if (json.isSection) {
-						return `<section ${reactClassNamesFromComponentObj(json)}>${json.richText}</section>`;
+			latest: {
+				imports: [],
+				code: ({ json }) => {
+					if (json.richText) {
+						if (json.isSection) {
+							return `<section ${reactClassNamesFromComponentObj(json)}>${json.richText}</section>`;
+						}
+						return `<div ${reactClassNamesFromComponentObj(json)}>${json.richText}</div>`;
 					}
-					return `<div ${reactClassNamesFromComponentObj(json)}>${json.richText}</div>`;
-				}
-				if (json.cssClasses?.length) {
-					return `<span ${reactClassNamesFromComponentObj(json)}>${json.text}</span>`;
-				}
-				return json.text;
-			}
-		},
-		angularV10: {
-			inputs: (_) => '',
-			outputs: (_) => '',
-			imports: [],
-			code: ({ json }) => {
-				if (json.richText) {
-					if (json.isSection) {
-						return `<section ${angularClassNamesFromComponentObj(json)}>${json.richText}</section>`;
+					if (json.cssClasses?.length) {
+						return `<span ${reactClassNamesFromComponentObj(json)}>${json.text}</span>`;
 					}
-					return `<div ${angularClassNamesFromComponentObj(json)}>${json.richText}</div>`;
+					return json.text;
 				}
-				if (json.cssClasses?.length) {
-					return `<span ${angularClassNamesFromComponentObj(json)}>${json.text}</span>`;
-				}
-				return json.text;
-			}
-		},
-		reactV10: {
-			imports: [],
-			code: ({ json }) => {
-				if (json.richText) {
-					if (json.isSection) {
-						return `<section ${reactClassNamesFromComponentObj(json)}>${json.richText}</section>`;
+			},
+			v10: {
+				imports: [],
+				code: ({ json }) => {
+					if (json.richText) {
+						if (json.isSection) {
+							return `<section ${reactClassNamesFromComponentObj(json)}>${json.richText}</section>`;
+						}
+						return `<div ${reactClassNamesFromComponentObj(json)}>${json.richText}</div>`;
 					}
-					return `<div ${reactClassNamesFromComponentObj(json)}>${json.richText}</div>`;
+					if (json.cssClasses?.length) {
+						return `<span ${reactClassNamesFromComponentObj(json)}>${json.text}</span>`;
+					}
+					return json.text;
 				}
-				if (json.cssClasses?.length) {
-					return `<span ${reactClassNamesFromComponentObj(json)}>${json.text}</span>`;
-				}
-				return json.text;
 			}
 		}
 	}

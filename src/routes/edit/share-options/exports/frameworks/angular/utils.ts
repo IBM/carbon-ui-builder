@@ -30,7 +30,7 @@ export const jsonToAngularImports = (json: any) => {
 
 	for (const component of Object.values(allComponents)) {
 		if (json.type === component.componentInfo.type) {
-			addIfNotExist(imports, component.componentInfo.codeExport.angular?.imports);
+			addIfNotExist(imports, component.componentInfo.codeExport.angular?.latest.imports);
 		}
 	}
 
@@ -47,7 +47,7 @@ export const getAngularInputsFromJson = (json: any): string => {
 	const getOne = (json: any) => {
 		for (const component of Object.values(allComponents)) {
 			if (json.type === component.componentInfo.type) {
-				return component.componentInfo.codeExport.angular?.inputs({ json }) || '';
+				return component.componentInfo.codeExport.angular?.latest.inputs({ json }) || '';
 			}
 		}
 		return '';
@@ -61,7 +61,7 @@ export const getAngularOutputsFromJson = (json: any): string => {
 	const getOne = (json: any) => {
 		for (const component of Object.values(allComponents)) {
 			if (json.type === component.componentInfo.type) {
-				return component.componentInfo.codeExport.angular?.outputs({ json }) || '';
+				return component.componentInfo.codeExport.angular?.latest.outputs({ json }) || '';
 			}
 		}
 		return '';
@@ -76,8 +76,8 @@ export const jsonToTemplate = (json: any, fragments: any[]) => {
 	}
 
 	for (const component of Object.values(allComponents)) {
-		if (json.type === component.componentInfo.type && !component.componentInfo.codeExport.angular.isNotDirectExport) {
-			return component.componentInfo.codeExport.angular.code({ json, jsonToTemplate, fragments });
+		if (json.type === component.componentInfo.type && !component.componentInfo.codeExport.angular.latest.isNotDirectExport) {
+			return component.componentInfo.codeExport.angular.latest.code({ json, jsonToTemplate, fragments });
 		}
 	}
 

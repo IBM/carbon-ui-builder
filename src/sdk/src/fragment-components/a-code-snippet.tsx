@@ -124,49 +124,53 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Type = "${json.variant}"
-			@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}"
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Code = \`${json.code}\``,
-			outputs: () => '',
-			imports: ['CodeSnippetModule'],
-			code: ({ json }) => {
-				return `<cds-code-snippet
-					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
-					display={{${nameStringToVariableString(json.codeContext?.name)}Type}}>{{
-						${nameStringToVariableString(json.codeContext?.name)}Code
-					}}</cds-code-snippet>`;
+			latest: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Type = "${json.variant}"
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}"
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Code = \`${json.code}\``,
+				outputs: () => '',
+				imports: ['CodeSnippetModule'],
+				code: ({ json }) => {
+					return `<cds-code-snippet
+						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+						display={{${nameStringToVariableString(json.codeContext?.name)}Type}}>{{
+							${nameStringToVariableString(json.codeContext?.name)}Code
+						}}</cds-code-snippet>`;
+				}
+			},
+			v10: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Type = "${json.variant}"
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}"
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Code = \`${json.code}\``,
+				outputs: () => '',
+				imports: ['CodeSnippetModule'],
+				code: ({ json }) => {
+					return `<ibm-code-snippet
+						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+						display={{${nameStringToVariableString(json.codeContext?.name)}Type}}>{{
+							${nameStringToVariableString(json.codeContext?.name)}Code
+						}}</ibm-code-snippet>`;
+				}
 			}
 		},
 		react: {
-			imports: ['CodeSnippet'],
-			code: ({ json }) => {
-				return `<CodeSnippet
-					light={${!!json.light}}
-					type="${json.variant}">{\`${json.code}\`}
-				</CodeSnippet>`;
-			}
-		},
-		angularV10: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Type = "${json.variant}"
-			@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}"
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Code = \`${json.code}\``,
-			outputs: () => '',
-			imports: ['CodeSnippetModule'],
-			code: ({ json }) => {
-				return `<ibm-code-snippet
-					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
-					display={{${nameStringToVariableString(json.codeContext?.name)}Type}}>{{
-						${nameStringToVariableString(json.codeContext?.name)}Code
-					}}</ibm-code-snippet>`;
-			}
-		},
-		reactV10: {
-			imports: ['CodeSnippet'],
-			code: ({ json }) => {
-				return `<CodeSnippet
-					light={${!!json.light}}
-					type="${json.variant}">{\`${json.code}\`}
-				</CodeSnippet>`;
+			latest: {
+				imports: ['CodeSnippet'],
+				code: ({ json }) => {
+					return `<CodeSnippet
+						light={${!!json.light}}
+						type="${json.variant}">{\`${json.code}\`}
+					</CodeSnippet>`;
+				}
+			},
+			v10: {
+				imports: ['CodeSnippet'],
+				code: ({ json }) => {
+					return `<CodeSnippet
+						light={${!!json.light}}
+						type="${json.variant}">{\`${json.code}\`}
+					</CodeSnippet>`;
+				}
 			}
 		}
 	}
