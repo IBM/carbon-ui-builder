@@ -4,7 +4,7 @@ import { CssClasses } from '../types';
 
 export interface SliderState {
 	type: string;
-    id: string;
+	id: string;
 	cssClasses?: CssClasses[];
 	labelText: string;
 	min: number;
@@ -32,18 +32,18 @@ export const UISlider = ({ state }: {
 		return <></>;
 	}
 
-    return <Slider
-		id={state.id}
-		labelText={state.labelText}
-		min={state.min}
-		max={state.max}
-		value={state.value}
-		disabled={state.disabled}
-		step={state.step}
-		hideTextInput={state.textInputIsHidden}
-		stepMultiplier={state.stepMultiplier}
-		minLabel={state.minLabel}
-		maxLabel={state.maxLabel}
-		light={state.light}
-		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />;
+	return <Slider
+id={state.id}
+labelText={state.labelText}
+min={state.min}
+max={state.max}
+value={state.value}
+disabled={state.disabled}
+step={state.step}
+hideTextInput={state.textInputIsHidden}
+stepMultiplier={state.stepMultiplier}
+minLabel={state.minLabel}
+maxLabel={state.maxLabel}
+light={state.light}
+className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />;
 };
