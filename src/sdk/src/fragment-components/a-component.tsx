@@ -53,8 +53,8 @@ export interface ComponentInfo {
 			inputs: (props: { json: any }) => string;
 			outputs: (props: { json: any }) => string;
 			imports: string[];
-			isNotDirectExport?: boolean;
 			otherImports?: (props: {json: any }) => string;
+			isNotDirectExport?: boolean;
 			code: (props: {json: any; jsonToTemplate: (json: any, fragments: any[]) => string; fragments: any[]}) => string;
 		};
 		react: {
