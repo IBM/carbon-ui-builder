@@ -90,6 +90,8 @@ export const AAccordionItem = ({
 		topAction={() => addAccordionItem()}
 		bottomAction={() => addAccordionItem(1)}>
 			<AComponent
+			fragment={fragment}
+			setFragment={setFragment}
 			{...rest}
 			componentObj={componentObj}
 			selected={selected}>
