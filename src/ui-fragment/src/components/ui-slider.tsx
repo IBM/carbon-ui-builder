@@ -33,17 +33,17 @@ export const UISlider = ({ state }: {
 	}
 
 	return <Slider
-id={state.id}
-labelText={state.labelText}
-min={state.min}
-max={state.max}
-value={state.value}
-disabled={state.disabled}
-step={state.step}
-hideTextInput={state.textInputIsHidden}
-stepMultiplier={state.stepMultiplier}
-minLabel={state.minLabel}
-maxLabel={state.maxLabel}
-light={state.light}
-className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />;
+		id={state.id}
+		labelText={state.labelText}
+		min={state.min}
+		max={state.max}
+		value={state.value}
+		disabled={state.disabled}
+		step={state.step}
+		hideTextInput={state.textInputIsHidden}
+		stepMultiplier={state.stepMultiplier}
+		minLabel={state.minLabel}
+		maxLabel={state.maxLabel}
+		light={state.light}
+		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />;
 };
