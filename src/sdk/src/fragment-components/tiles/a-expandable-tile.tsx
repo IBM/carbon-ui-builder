@@ -87,6 +87,8 @@ export const AExpandableTile = ({
 	onDrop,
 	outline,
 	selected,
+	fragment,
+	setFragment,
 	...rest
 }: any) => {
 	return (
@@ -94,6 +96,8 @@ export const AExpandableTile = ({
 		componentObj={componentObj}
 		selected={selected}
 		headingCss={css`display: block;`}
+		fragment={fragment}
+		setFragment={setFragment}
 		{...rest}>
 			<ExpandableTile
 			light={componentObj.light}
@@ -104,7 +108,10 @@ export const AExpandableTile = ({
 				}`, css`${styleObjectToString(componentObj.style)}`
 			)}
 			expanded={componentObj.expanded}>
-				<TileAboveTheFoldContent onDrop={onDrop}>
+				<TileAboveTheFoldContent
+				onDrop={onDrop}
+				fragment={fragment}
+				setFragment={setFragment}>
 					{children.filter(({ props }: any) => props && props.componentObj.type !== 'tile-fold')}
 				</TileAboveTheFoldContent>
 				{
@@ -152,14 +159,16 @@ export const componentInfo: ComponentInfo = {
 			}
 		]
 	},
-	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline }) => <AExpandableTile
+	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline, fragment, setFragment }) => <AExpandableTile
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
 		selected={selected}
 		onDragOver={onDragOver}
 		outline={outline}
-		onDrop={onDrop}>
+		onDrop={onDrop}
+		fragment={fragment}
+		setFragment={setFragment}>
 		{componentObj.items.map((fold: any) => renderComponents(fold, outline))}
 	</AExpandableTile>,
 	image,
