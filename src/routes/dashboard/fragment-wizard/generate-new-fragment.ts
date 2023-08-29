@@ -1,4 +1,5 @@
 import { getRandomId } from '../../../sdk/src/tools';
+import { CURRENT_MODEL_VERSION } from '../../../utils/model-convertor';
 
 export const generateNewFragment = (fragment: any, styleClasses: any[], setStyleClasses: (styleClasses: any[]) => void) => {
 	const addOrReplaceClasses = (newClasses: any[]) => {
@@ -30,6 +31,7 @@ export const generateNewFragment = (fragment: any, styleClasses: any[], setStyle
 	}
 
 	return {
+		version: CURRENT_MODEL_VERSION,
 		id: fragmentID,
 		lastModified: new Date().toISOString(),
 		title: fragmentName,

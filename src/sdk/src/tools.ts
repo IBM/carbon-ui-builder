@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { UIFragment } from '../../ui-fragment/src/ui-fragment';
 import { expandJsonToState, getAllFragmentStyleClasses, stringToCssClassName } from '../../ui-fragment/src/utils';
 import { camelCase, kebabCase, uniq, upperFirst } from 'lodash';
+import { CURRENT_MODEL_VERSION } from '../../utils/model-convertor';
 
 export let componentCounter = 2; // actually initialized (again) in Fragment TODO refactor this
 
@@ -280,6 +281,7 @@ export const hasMicroLayouts = (fragment: any): boolean => {
 
 export const getShallowFragmentJsonExport = (fragment: any, fragments: any[], styleClasses: any[]) => {
 	return {
+		version: CURRENT_MODEL_VERSION,
 		id: fragment.id,
 		lastModified: fragment.lastModified,
 		title: fragment.title,

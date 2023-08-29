@@ -9,6 +9,7 @@ import { getFragmentHelpers } from './fragments-context-helper';
 import { getFragmentsFromLocalStorage } from '../utils/fragment-tools';
 import { expandJsonToState } from '../ui-fragment/src/utils';
 import { getFragmentJsonExport as getFragmentJsonExport_ } from '../sdk/src/tools';
+import { CURRENT_MODEL_VERSION, updateModel } from '../utils/model-convertor';
 
 const GlobalStateContext: React.Context<any> = createContext(null);
 GlobalStateContext.displayName = 'GlobalStateContext';
@@ -39,6 +40,19 @@ export const useFragment = (id?: string) => {
 
 const GlobalStateContextProvider = ({ children }: any) => {
 	const [fragments, _setFragments] = useState<any[]>(getFragmentsFromLocalStorage());
+
+	// Execute this only once, on initial builder load
+	useEffect(() => {
+		/**
+		 * Check version & migrate if needed!
+		 */
+		fragments.forEach((frag: any) => {
+			if (frag.version !== CURRENT_MODEL_VERSION) {
+				updateModel(frag);
+			}
+		});
+	}, []);
+
 	const [actionHistory, setActionHistory] = useState([] as any[]);
 	const [actionHistoryIndex, setActionHistoryIndex] = useState(-1);
 
