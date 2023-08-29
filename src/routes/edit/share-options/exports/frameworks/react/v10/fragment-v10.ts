@@ -1,8 +1,6 @@
-import { useContext } from 'react';
-import { GlobalStateContext } from '../../../../../../context';
-import { getAllFragmentStyleClasses } from '../../../../../../ui-fragment/src/utils';
-import { hasFragmentStyleClasses } from '../../../../../../utils/fragment-tools';
-import { format } from '../utils';
+import { getAllFragmentStyleClasses } from '../../../../../../../ui-fragment/src/utils';
+import { hasFragmentStyleClasses } from '../../../../../../../utils/fragment-tools';
+import { format } from '../../utils';
 import {
 	formatOptions,
 	formatOptionsCss,
@@ -10,8 +8,8 @@ import {
 	jsonToCarbonImports,
 	jsonToTemplate,
 	otherImportsFromComponentObj
-} from './utils';
-import { classNameFromFragment, tagNameFromFragment } from '../../../../../../sdk/src/tools';
+} from './utils-v10';
+import { classNameFromFragment, tagNameFromFragment } from '../../../../../../../sdk/src/tools';
 
 const generateTemplate = (json: any, fragments: any[]) => {
 	const carbonImports = jsonToCarbonImports(json);
@@ -26,10 +24,8 @@ const generateTemplate = (json: any, fragments: any[]) => {
 	};
 };
 
-const jsonToSharedComponents = (json: any, fragments: any[]) => {
+const jsonToSharedComponents = (json: any, fragments: any[], globalStyleClasses: any) => {
 	let sharedComponents: any = {};
-	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const { styleClasses: globalStyleClasses } = useContext(GlobalStateContext);
 
 	if (json.type === 'fragment') {
 		const fragment = fragments.find(f => f.id === json.fragmentId);
@@ -60,26 +56,24 @@ const jsonToSharedComponents = (json: any, fragments: any[]) => {
 
 		sharedComponents = {
 			...sharedComponents,
-			...jsonToSharedComponents(fragment.data, fragments)
+			...jsonToSharedComponents(fragment.data, fragments, globalStyleClasses)
 		};
 	}
 
 	json.items?.forEach((item: any) => {
 		sharedComponents = {
 			...sharedComponents,
-			...jsonToSharedComponents(item, fragments)
+			...jsonToSharedComponents(item, fragments, globalStyleClasses)
 		};
 	});
 
 	return sharedComponents;
 };
 
-export const createReactApp = (fragment: any, fragments: any[]) => {
-	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const { styleClasses: globalStyleClasses } = useContext(GlobalStateContext);
+export const createReactApp = (fragment: any, fragments: any[], globalStyleClasses: any) => {
 	const fragmentTemplate = generateTemplate(fragment.data, fragments);
 
-	const sharedComponents = jsonToSharedComponents(fragment.data, fragments);
+	const sharedComponents = jsonToSharedComponents(fragment.data, fragments, globalStyleClasses);
 
 	const indexHtml = `<div id='root'></div>
 `;

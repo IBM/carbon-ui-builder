@@ -165,11 +165,6 @@ const GithubContextProvider = ({ children }: any) => {
 
 				return {
 					id: item.path,
-					/**
-					 * @todo
-					 * Converter from 0.0.0 -> 0.1.0 (Carbon v10 -> v11)
-					 */
-					modelVersion: '0.1.0',
 					title: item.name.substring(0, item.name.length - 5),
 					lastModified: new Date((fragmentFileResponse as any).headers['last-modified'] || '').toISOString(),
 					data

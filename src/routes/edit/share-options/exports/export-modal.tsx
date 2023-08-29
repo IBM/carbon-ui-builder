@@ -8,15 +8,20 @@ import {
 	Tabs,
 	TabList,
 	TabPanel,
-	TabPanels
+	TabPanels,
+	RadioButtonGroup,
+	RadioButton,
+	InlineNotification
 } from '@carbon/react';
 import { Copy, Document } from '@carbon/react/icons';
 import { css } from 'emotion';
 import Editor, { useMonaco } from '@monaco-editor/react';
 
 import { createFragmentSandbox } from './create-fragment-sandbox';
-import { createReactApp } from './frameworks/react/fragment-v10';
-import { createAngularApp } from './frameworks/angular/fragment-v10';
+import { createReactApp as createReactAppv10 } from './frameworks/react/v10/fragment-v10';
+import { createAngularApp as createAngularAppv10 } from './frameworks/angular/v10/fragment-v10';
+import { createReactApp } from './frameworks/react/latest/fragment';
+import { createAngularApp } from './frameworks/angular/latest/fragment';
 
 import { ModalContext } from '../../../../context/modal-context';
 import { saveBlob } from '../../../../utils/file-tools';
@@ -77,6 +82,10 @@ const fileNameStyle = css`
 	}
 `;
 
+const notificationStyle = css`
+	margin-top: 1rem;
+`;
+
 const FileNames = ({ code, setSelectedFilename }: any) => <div className={fileNamesContainerStyle}>
 	{
 		Object.keys(code).map((fileName: string) => (
@@ -131,8 +140,27 @@ export const ExportModal = () => {
 	const [selectedReactFilename, setSelectedReactFilename] = useState('src/component.js' as string);
 	const [shouldStripUnnecessaryProps, setShouldStripUnnecessaryProps] = useState(true);
 	const [shouldExportForPreviewOnly, setShouldExportForPreviewOnly] = useState(false);
+	const [version, setVersion] = useState('V11');
+	const [reactCode, setReactCode] = useState({});
+	const [angularCode, setAngularCode] = useState({});
 
 	const monaco = useMonaco();
+
+	useEffect(() => {
+		if (fragmentExportModal?.fragment) {
+			if (version === 'V11') {
+				setReactCode(createReactApp(fragmentExportModal.fragment, fragments, styleClasses));
+				setAngularCode(createAngularApp(fragmentExportModal.fragment, fragments, styleClasses));
+			} else if (version === 'v10') {
+				setReactCode(createReactAppv10(fragmentExportModal.fragment, fragments, styleClasses));
+				setAngularCode(createAngularAppv10(fragmentExportModal.fragment, fragments, styleClasses));
+			}
+			return;
+		}
+
+		setReactCode({});
+		setAngularCode({});
+	}, [fragmentExportModal.fragment, fragments, styleClasses, version]);
 
 	useEffect(() => {
 		monaco?.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
@@ -146,8 +174,10 @@ export const ExportModal = () => {
 	}
 
 	const jsonCode: any = getFragmentJsonExportString(fragmentExportModal.fragment, fragments, styleClasses);
-	const reactCode: any = createReactApp(fragmentExportModal.fragment, fragments);
-	const angularCode: any = createAngularApp(fragmentExportModal.fragment, fragments);
+
+	const onVersionChange = (event: string) => {
+		setVersion(event);
+	};
 
 	const getSharableLink = () => {
 		let link = location.protocol + '//' + location.host;
@@ -176,6 +206,14 @@ export const ExportModal = () => {
 			size='lg'
 			modalHeading={`Export "${fragmentExportModal.fragment.title}" code`}
 			className={exportCodeModalStyle}>
+			<RadioButtonGroup
+				legendText="Select carbon version"
+				name="carbon-version-picker"
+				defaultSelected="V11"
+				onChange={onVersionChange}>
+				<RadioButton labelText="v11" value="V11" id="V11" />
+				<RadioButton labelText="v10" value="V10" id="V10" />
+			</RadioButtonGroup>
 			{
 				fragmentExportModal.isVisible &&
 				<Tabs onChange={(tabIndex: number) => {
@@ -188,16 +226,30 @@ export const ExportModal = () => {
 						<Tab>Image</Tab>
 						<Tab>Link</Tab>
 					</TabList>
+					{
+						version !== 'V11' &&
+						<InlineNotification
+							className={notificationStyle}
+							kind="info"
+							lowContrast={true}
+							hideCloseButton
+							statusIconDescription="notification"
+							title="Builder uses Carbon 11, hence not all components will translate to v10."
+							/>
+					}
 					<TabPanels>
 						<TabPanel>
 							<div className={titleWrapper}>
 								<h3>Angular Code</h3>
-								<a
-									href={generateSandboxUrl(createFragmentSandbox(angularCode))}
-									target='_blank'
-									rel='noopener noreferrer'>
-									Edit on CodeSandbox
-								</a>
+								{
+									version !== 'V11' &&
+									<a
+										href={generateSandboxUrl(createFragmentSandbox(angularCode))}
+										target='_blank'
+										rel='noopener noreferrer'>
+										Edit on CodeSandbox
+									</a>
+								}
 							</div>
 							<div className={tabContentStyle}>
 								<FileNames code={angularCode} setSelectedFilename={setSelectedAngularFilename} />
