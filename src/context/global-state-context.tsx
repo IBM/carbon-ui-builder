@@ -51,6 +51,7 @@ const GlobalStateContextProvider = ({ children }: any) => {
 				updateModel(frag);
 			}
 		});
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const [actionHistory, setActionHistory] = useState([] as any[]);
