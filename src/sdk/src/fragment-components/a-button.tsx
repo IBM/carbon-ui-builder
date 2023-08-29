@@ -28,15 +28,9 @@ export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 
 	const sizeItems = [
 		{ id: 'sm', text: 'Small' },
-		/**
-		 * @todo
-		 * What do we do about scenarios such as this?
-		 * Field is `md` in v11
-		 */
 		{ id: 'md', text: 'Medium' },
 		{ id: 'lg', text: 'Large' },
-		{ id: 'xl', text: 'Extra large' },
-		{ id: 'default', text: 'Default' }
+		{ id: 'xl', text: 'Extra large' }
 	];
 
 	return <>
