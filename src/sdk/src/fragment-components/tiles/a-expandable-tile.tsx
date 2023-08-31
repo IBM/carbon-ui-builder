@@ -87,8 +87,6 @@ export const AExpandableTile = ({
 	setFragment,
 	...rest
 }: any) => {
-	const onBeforeClick = () => {};
-
 	return (
 		<AComponent
 		componentObj={componentObj}
@@ -105,7 +103,7 @@ export const AExpandableTile = ({
 					(componentObj.outline || outline === true) && outline !== false ? outlineStyle : ''
 				}`, css`${styleObjectToString(componentObj.style)}`
 			)}
-			onBeforeClick={onBeforeClick}
+			onBeforeClick={() => {}}
 			expanded={componentObj.expanded}>
 				<TileAboveTheFoldContent
 				onDrop={onDrop}
