@@ -172,16 +172,9 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'date-picker',
 		placeholder: 'mm/dd/yyyy',
-		disabled: false,
-		invalid: false,
-		invalidText: 'A valid value is required',
-		light: false,
 		size: 'md',
 		datePickerType: 'simple',
 		dateFormat: 'm/d/Y',
-		value: '',
-		rangeStartLabel: 'Date picker label',
-		rangeEndLabel: 'Date picker label'
 	},
 	image,
 	codeExport: {
