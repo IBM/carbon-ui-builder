@@ -87,9 +87,7 @@ export const AExpandableTile = ({
 	setFragment,
 	...rest
 }: any) => {
-	const onBeforeClick = (event: any) => {
-		event.stopPropagation();
-	};
+	const onBeforeClick = () => {};
 
 	return (
 		<AComponent
