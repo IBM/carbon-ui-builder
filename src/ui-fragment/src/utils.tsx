@@ -10,6 +10,7 @@ import { UICodeSnippet } from './components/ui-code-snippet';
 import { UIColumn } from './components/ui-column';
 import { UIComboBox } from './components/ui-combobox';
 import { UIContentSwitcher } from './components/ui-content-switcher';
+import { UIDatePicker } from './components/ui-date-picker';
 import { UIDropdown } from './components/ui-dropdown';
 import { UIExpandableTile } from './components/ui-expandable-tile';
 import { UIGrid } from './components/ui-grid';
@@ -232,7 +233,10 @@ export const renderComponents = (
 
 		case 'content-switcher':
 			return <UIContentSwitcher key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
-
+		
+		case 'date-picker':
+			return <UIDatePicker key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+	
 		case 'dropdown':
 			return <UIDropdown key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
