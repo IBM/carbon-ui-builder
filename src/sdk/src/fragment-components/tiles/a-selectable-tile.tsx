@@ -168,6 +168,8 @@ export const ASelectableTile = ({
 				headingCss={css`display: block;`}
 				className={css`cursor: pointer;`}
 				selected={selected}
+				fragment={fragment}
+				setFragment={setFragment}
 				{...rest}>
 					<SelectableTile
 					id={componentObj.codeContext?.name}

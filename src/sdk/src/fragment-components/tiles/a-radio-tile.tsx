@@ -145,6 +145,8 @@ export const ARadioTile = ({
 			componentObj={componentObj}
 			headingCss={css`display: block;`}
 			selected={selected}
+			fragment={fragment}
+			setFragment={setFragment}
 			{...rest}>
 				<RadioTile
 				id={componentObj.codeContext?.name}
