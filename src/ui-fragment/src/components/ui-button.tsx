@@ -32,11 +32,12 @@ export const slots = {
 		...state,
 		disabled: !state.disabled
 	}),
-	setDisabled: (state: ButtonState, value: any[]) => ({
-		...state,
-		disabled: value[0]
-	})
+	disabled: 'boolean',
+	text: 'string',
+	size: 'string'
 };
+
+export const signals = ['click'];
 
 export const UIButton = ({ state, sendSignal }: {
 	state: ButtonState;
