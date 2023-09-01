@@ -30,7 +30,7 @@ const updatedStateData = (stateData: any, actions: Action[], signalValue?: any[]
 		// check if slot is a function
 		const slots = slotsFromType(stateData.type);
 		// TODO signalValue needs to be correctly mapped to slots and/or to function calls
-		if (action.slot in slots) {
+		if (action.slot in slots && typeof (slots as any)[action.slot] === 'function') {
 			newStateData = (slots as any)[action.slot](stateData, signalValue);
 		} else {
 			newStateData[action.slot] = signalValue !== undefined && Array.isArray(signalValue) ? signalValue[0] : action.slotParam;
