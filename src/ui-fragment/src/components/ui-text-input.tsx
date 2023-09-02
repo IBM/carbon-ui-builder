@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextInput } from 'carbon-components-react';
-import { CssClasses } from '../types';
+import { CssClasses, SendSignal } from '../types';
 import { stringToCssClassName } from '../utils';
 
 export interface TextInputState {
@@ -20,12 +20,36 @@ export interface TextInputState {
 	style?: any;
 }
 
-export const UITextInput = ({ state, setState, name }: {
+export const type = 'text-input';
+
+export const slots = {
+	disable: (state: TextInputState) => ({
+		...state,
+		disabled: true
+	}),
+	enable: (state: TextInputState) => ({
+		...state,
+		disabled: false
+	}),
+	toggleDisabled: (state: TextInputState) => ({
+		...state,
+		disabled: !state.disabled
+	}),
+	disabled: 'boolean',
+	value: 'string',
+	defaultValue: 'string',
+	helperText: 'string',
+	placeholder: 'string'
+};
+
+export const signals = ['change', 'click'];
+
+export const UITextInput = ({ state, name, sendSignal }: {
 	state: TextInputState;
 	name?: string;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
-	sendSignal: (id: number | string, signal: string) => void;
+	sendSignal: SendSignal;
 }) => {
 	if (state.type !== 'text-input') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -51,6 +75,11 @@ export const UITextInput = ({ state, setState, name }: {
 		defaultValue={state.defaultValue}
 		disabled={state.disabled}
 		light={state.light}
-		onChange={(event: any) => setState({ ...state, value: event.target.value })}
+		onClick={() => {
+			sendSignal(state.id, 'click');
+		}}
+		onChange={(event: any) => {
+			sendSignal(state.id, 'change', [event.target.value], { ...state, value: event.target.value });
+		}}
 		className={cssClasses} />;
 };
