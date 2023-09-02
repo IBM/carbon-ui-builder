@@ -502,10 +502,10 @@ export const allComponentsFromFragment = (fragment: any) => {
 };
 
 export const actionDestinationsFromFragment = (fragment: any, _action: Action) => {
-	// const componentsWithSlots = (Object.values(allUIComponents) as any[]).filter((component: any) => !!component.slots);
+	const componentsWithSlots = (Object.values(allUIComponents) as any[]).filter((component: any) => !!component.slots);
 
 	return allComponentsFromFragment(fragment)
-		// .filter((componentObj: any) => componentsWithSlots.find((componentWithSlot: any) => componentWithSlot.type === componentObj.type))
+		.filter((componentObj: any) => componentsWithSlots.find((componentWithSlot: any) => componentWithSlot.type === componentObj.type))
 		.map((componentObj: any) => ({ text: `${componentObj.type}-${componentObj.id}`, id: componentObj.id }));
 };
 
