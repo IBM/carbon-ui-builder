@@ -33,8 +33,28 @@ export const slots = {
 	toggleDisabled: (state: ToggleState) => ({
 		...state,
 		disabled: !state.disabled
-	})
+	}),
+	select: (state: ToggleState) => ({
+		...state,
+		checked: true
+	}),
+	deselect: (state: ToggleState) => ({
+		...state,
+		checked: false
+	}),
+	toggleSelected: (state: ToggleState) => ({
+		...state,
+		checked: !state.checked
+	}),
+	onText: 'string',
+	offText: 'string',
+	size: 'string',
+	header: 'string',
+	checked: 'boolean',
+	disabled: 'boolean'
 };
+
+export const signals = ['toggle'];
 
 export const UIToggle = ({ state, sendSignal }: {
 	state: ToggleState;
