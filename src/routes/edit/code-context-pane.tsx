@@ -35,10 +35,15 @@ export const CodeContextPane = ({ fragment, setFragment }: any) => {
 
 	return (
 		<div className='context-pane-content'>
-			{selectedComponent && showComponentCodeOptions(selectedComponent, setComponent)}
-			<h4>Actions</h4>
-			<em>(experimental)</em>
-			<ActionsConnector fragment={fragment} setFragment={setFragment} sourceComponent={selectedComponent} />
+			{
+				selectedComponent
+				&& <>
+					{showComponentCodeOptions(selectedComponent, setComponent)}
+					<h4>Actions</h4>
+					<em>(experimental)</em>
+					<ActionsConnector fragment={fragment} setFragment={setFragment} sourceComponent={selectedComponent} />
+				</>
+			}
 		</div>
 	);
 };
