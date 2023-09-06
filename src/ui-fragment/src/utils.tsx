@@ -233,10 +233,10 @@ export const renderComponents = (
 
 		case 'content-switcher':
 			return <UIContentSwitcher key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
-		
+
 		case 'date-picker':
 			return <UIDatePicker key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
-	
+
 		case 'dropdown':
 			return <UIDropdown key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 

@@ -174,7 +174,7 @@ export const componentInfo: ComponentInfo = {
 		placeholder: 'mm/dd/yyyy',
 		size: 'md',
 		datePickerType: 'simple',
-		dateFormat: 'm/d/Y',
+		dateFormat: 'm/d/Y'
 	},
 	image,
 	codeExport: {
