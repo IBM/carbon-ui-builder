@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from 'carbon-components-react';
 import { CssClasses, SendSignal } from '../types';
 import { stringToCssClassName } from '../utils';
+import { slotsDisabled, commonSlots } from '../common-slots';
 
 export interface ButtonState {
 	type: string;
@@ -21,32 +22,8 @@ export interface ButtonState {
 export const type = 'button';
 
 export const slots = {
-	disable: (state: ButtonState) => ({
-		...state,
-		disabled: true
-	}),
-	enable: (state: ButtonState) => ({
-		...state,
-		disabled: false
-	}),
-	toggleDisabled: (state: ButtonState) => ({
-		...state,
-		disabled: !state.disabled
-	}),
-	disabled: 'boolean',
-	hide: (state: ButtonState) => ({
-		...state,
-		hidden: true
-	}),
-	show: (state: ButtonState) => ({
-		...state,
-		hidden: false
-	}),
-	toggleVisibility: (state: ButtonState) => ({
-		...state,
-		hidden: !state.hidden
-	}),
-	hidden: 'boolean',
+	...slotsDisabled,
+	...commonSlots,
 	text: 'string',
 	size: 'string'
 };

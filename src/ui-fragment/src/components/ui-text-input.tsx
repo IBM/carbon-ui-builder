@@ -2,6 +2,7 @@ import React from 'react';
 import { TextInput } from 'carbon-components-react';
 import { CssClasses, SendSignal } from '../types';
 import { stringToCssClassName } from '../utils';
+import { commonSlots, slotsDisabled } from '../common-slots';
 
 export interface TextInputState {
 	type: string;
@@ -23,19 +24,8 @@ export interface TextInputState {
 export const type = 'text-input';
 
 export const slots = {
-	disable: (state: TextInputState) => ({
-		...state,
-		disabled: true
-	}),
-	enable: (state: TextInputState) => ({
-		...state,
-		disabled: false
-	}),
-	toggleDisabled: (state: TextInputState) => ({
-		...state,
-		disabled: !state.disabled
-	}),
-	disabled: 'boolean',
+	...commonSlots,
+	...slotsDisabled,
 	value: 'string',
 	defaultValue: 'string',
 	helperText: 'string',

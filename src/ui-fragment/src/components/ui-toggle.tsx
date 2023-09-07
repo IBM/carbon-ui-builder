@@ -2,6 +2,7 @@ import React from 'react';
 import { Toggle } from 'carbon-components-react';
 import { CssClasses, SendSignal } from '../types';
 import { stringToCssClassName } from '../utils';
+import { commonSlots, slotsDisabled } from '../common-slots';
 
 export interface ToggleState {
 	type: string;
@@ -22,18 +23,8 @@ export interface ToggleState {
 export const type = 'toggle';
 
 export const slots = {
-	disable: (state: ToggleState) => ({
-		...state,
-		disabled: true
-	}),
-	enable: (state: ToggleState) => ({
-		...state,
-		disabled: false
-	}),
-	toggleDisabled: (state: ToggleState) => ({
-		...state,
-		disabled: !state.disabled
-	}),
+	...commonSlots,
+	...slotsDisabled,
 	select: (state: ToggleState) => ({
 		...state,
 		checked: true
@@ -50,8 +41,7 @@ export const slots = {
 	offText: 'string',
 	size: 'string',
 	header: 'string',
-	checked: 'boolean',
-	disabled: 'boolean'
+	checked: 'boolean'
 };
 
 export const signals = ['toggle', 'click'];
