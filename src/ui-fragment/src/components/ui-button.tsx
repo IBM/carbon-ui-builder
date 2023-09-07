@@ -10,6 +10,7 @@ export interface ButtonState {
 	text: string;
 	id: string | number;
 	disabled?: boolean;
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
@@ -33,6 +34,19 @@ export const slots = {
 		disabled: !state.disabled
 	}),
 	disabled: 'boolean',
+	hide: (state: ButtonState) => ({
+		...state,
+		hidden: true
+	}),
+	show: (state: ButtonState) => ({
+		...state,
+		hidden: false
+	}),
+	toggleVisibility: (state: ButtonState) => ({
+		...state,
+		hidden: !state.hidden
+	}),
+	hidden: 'boolean',
 	text: 'string',
 	size: 'string'
 };
