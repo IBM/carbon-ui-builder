@@ -54,7 +54,7 @@ export const slots = {
 	disabled: 'boolean'
 };
 
-export const signals = ['toggle'];
+export const signals = ['toggle', 'click'];
 
 export const UIToggle = ({ state, sendSignal }: {
 	state: ToggleState;
@@ -85,6 +85,9 @@ export const UIToggle = ({ state, sendSignal }: {
 		size={state.size}
 		checked={!!state.checked}
 		labelText={state.header}
+		onClick={() => {
+			sendSignal(state.id, 'click');
+		}}
 		onChange={(event: any) => {
 			sendSignal(state.id, 'toggle', [event.target.checked], { ...state, checked: event.target.checked });
 		}}
