@@ -51,12 +51,12 @@ export const UIFragment = ({ state, setState }: UIFragmentProps) => {
 	}`;
 
 	const setStateData = (stateData: any) => {
-		setState({
+		setState((state: any) => ({
 			...state,
 			data: {
-				...stateData
+				...(typeof stateData === 'function' ? stateData(state.data) : stateData)
 			}
-		});
+		}));
 	};
 
 	const sendSignal: SendSignal = (id: number | string, signal: string, value?: any[], newComponentState?: any) => {
@@ -66,7 +66,7 @@ export const UIFragment = ({ state, setState }: UIFragmentProps) => {
 
 		const subscriptions = state.data.actions.filter((action: Action) => action.source === id && action.signal === signal);
 
-		setStateData(updatedStateData(state.data, subscriptions, value, newComponentState));
+		setStateData((stateData: any) => updatedStateData(stateData, subscriptions, value, newComponentState));
 	};
 
 	// state.data and setStateData render fragment json; state and setState render component json
