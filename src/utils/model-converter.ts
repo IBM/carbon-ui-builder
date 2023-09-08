@@ -5,9 +5,9 @@ export const CURRENT_MODEL_VERSION = '0.0.1';
  * Includes the version and all the value changes that need to be updated
  *
  * Defined in the form of an array, if the model version is not `CURRENT_MODEL_VERSION`,
- * then the convertor will update all values for specified component type and keys.
+ * then the converter will update all values for specified component type and keys.
  *
- * Convertor will progressively go through each version changes until the model version
+ * Converter will progressively go through each version changes until the model version
  * is updated to `CURRENT_MODEL_VERSION`.
  */
 const ModelValueChanges = [

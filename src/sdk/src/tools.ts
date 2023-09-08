@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { UIFragment } from '../../ui-fragment/src/ui-fragment';
 import { expandJsonToState, getAllFragmentStyleClasses, stringToCssClassName } from '../../ui-fragment/src/utils';
 import { camelCase, kebabCase, uniq, upperFirst } from 'lodash';
-import { CURRENT_MODEL_VERSION } from '../../utils/model-convertor';
+import { CURRENT_MODEL_VERSION } from '../../utils/model-converter';
 import { allComponents as allUIComponents } from '../../ui-fragment/src/components';
 import { Action } from '../../ui-fragment/src/types';
 

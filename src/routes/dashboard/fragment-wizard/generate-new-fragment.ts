@@ -1,5 +1,5 @@
 import { getRandomId } from '../../../sdk/src/tools';
-import { CURRENT_MODEL_VERSION } from '../../../utils/model-convertor';
+import { CURRENT_MODEL_VERSION } from '../../../utils/model-converter';
 
 export const generateNewFragment = (fragment: any, styleClasses: any[], setStyleClasses: (styleClasses: any[]) => void) => {
 	const addOrReplaceClasses = (newClasses: any[]) => {

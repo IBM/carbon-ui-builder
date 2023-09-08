@@ -9,7 +9,7 @@ import { getFragmentHelpers } from './fragments-context-helper';
 import { getFragmentsFromLocalStorage } from '../utils/fragment-tools';
 import { expandJsonToState } from '../ui-fragment/src/utils';
 import { getFragmentJsonExport as getFragmentJsonExport_ } from '../sdk/src/tools';
-import { CURRENT_MODEL_VERSION, updateModel } from '../utils/model-convertor';
+import { CURRENT_MODEL_VERSION, updateModel } from '../utils/model-converter';
 
 const GlobalStateContext: React.Context<any> = createContext(null);
 GlobalStateContext.displayName = 'GlobalStateContext';
