@@ -43,7 +43,7 @@ const GlobalStateContextProvider = ({ children }: any) => {
 
 	// Execute this only once, on initial builder load
 	useEffect(() => {
-		 // Check version & migrate if needed!
+		// Check version & migrate if needed!
 		fragments.forEach((frag: any) => {
 			if (frag.version !== CURRENT_MODEL_VERSION) {
 				updateModel(frag);
