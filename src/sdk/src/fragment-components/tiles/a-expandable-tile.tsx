@@ -17,10 +17,6 @@ import {
 } from '../../tools';
 import { styleObjectToString } from '../../../../ui-fragment/src/utils';
 
-const preventCheckEvent = css`
-	pointer-events: none;
-`;
-
 export const AExpandableSettingsUI = ({ selectedComponent, setComponent, fragment, setFragment }: any) => {
 	return <>
 		<TileMorphism component={selectedComponent} setComponent={setComponent} fragment={fragment} setFragment={setFragment} />
@@ -101,12 +97,13 @@ export const AExpandableTile = ({
 		{...rest}>
 			<ExpandableTile
 			light={componentObj.light}
-			className={cx(preventCheckEvent,`${
+			className={cx(`${
 					componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')
 				} ${
 					(componentObj.outline || outline === true) && outline !== false ? outlineStyle : ''
 				}`, css`${styleObjectToString(componentObj.style)}`
 			)}
+			onBeforeClick={() => {}}
 			expanded={componentObj.expanded}>
 				<TileAboveTheFoldContent
 				onDrop={onDrop}
