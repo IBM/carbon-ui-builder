@@ -6,6 +6,7 @@ import {
 	setItemInState,
 	stringToCssClassName
 } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface GridState {
 	type: string;
@@ -17,6 +18,12 @@ export interface GridState {
 	};
 	style?: any;
 }
+
+export const type = 'grid';
+
+export const slots = {
+	...commonSlots
+};
 
 export const UIGrid = ({ state, setState, setGlobalState, sendSignal }: {
 	state: GridState;

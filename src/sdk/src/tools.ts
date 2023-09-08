@@ -5,6 +5,8 @@ import { UIFragment } from '../../ui-fragment/src/ui-fragment';
 import { expandJsonToState, getAllFragmentStyleClasses, stringToCssClassName } from '../../ui-fragment/src/utils';
 import { camelCase, kebabCase, uniq, upperFirst } from 'lodash';
 import { CURRENT_MODEL_VERSION } from '../../utils/model-convertor';
+import { allComponents as allUIComponents } from '../../ui-fragment/src/components';
+import { Action } from '../../ui-fragment/src/types';
 
 export let componentCounter = 2; // actually initialized (again) in Fragment TODO refactor this
 
@@ -475,4 +477,66 @@ export const tagNameFromFragment = (fragment: any) => {
 export const classNameFromFragment = (fragment: any) => {
 	// TODO fragment can have a class name?
 	return upperFirst(camelCase(fragment.title));
+};
+
+export const signalsFromType = (type: string) => {
+	for (const component of Object.values(allUIComponents) as any[]) {
+		if (component.type === type) {
+			return component.signals || [];
+		}
+	}
+	return [];
+};
+
+export const allComponentsFromComponent = (componentObj: any) => {
+	let components: any[] = [];
+	if (componentObj.items) {
+		components = [
+			...componentObj.items,
+			...componentObj.items.flatMap((item: any) => allComponentsFromComponent(item)).filter((item: any) => !!item)
+		];
+	}
+	return components;
+};
+
+export const allComponentsFromFragment = (fragment: any) => {
+	return allComponentsFromComponent(fragment.data);
+};
+
+export const actionDestinationsFromFragment = (fragment: any, _action: Action) => {
+	const componentsWithSlots = (Object.values(allUIComponents) as any[]).filter((component: any) => !!component.slots);
+
+	return allComponentsFromFragment(fragment)
+		.filter((componentObj: any) => componentsWithSlots.find((componentWithSlot: any) => componentWithSlot.type === componentObj.type))
+		.map((componentObj: any) => ({ text: `${componentObj.type}-${componentObj.id}`, id: componentObj.id }));
+};
+
+export const slotsFromFragmentSignalAndDestination = (fragment: any, sourceId: number, signal: string, destinationId: number) => {
+	// get sourceType from source id - USED FOR NOT YET SUPPORTED SIGNAL PARAMS
+	// const sourceComponent = getComponentById(fragment.data, sourceId);
+	// if (!sourceComponent) {
+	// 	return [];
+	// }
+
+	// get signal params from sourceType and signal - NOT YET SUPPORTED
+
+	// get destinationType from destination id
+	const destinationComponent = getComponentById(fragment.data, destinationId);
+	if (!destinationComponent) {
+		return [];
+	}
+
+	// get destination slots compatible with signal
+	const destinationModule = (Object.values(allUIComponents) as any[]).find((component: any) => component.type === destinationComponent.type);
+	// TODO filter based on params - NOT YET SUPPORTED
+	return Object.keys(destinationModule?.slots || {});
+};
+
+export const slotsFromType = (type: string) => {
+	for (const component of Object.values(allUIComponents) as any[]) {
+		if (component.type === type) {
+			return component.slots || [];
+		}
+	}
+	return [];
 };

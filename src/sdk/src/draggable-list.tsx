@@ -45,14 +45,18 @@ const draggableIconStyle = css`
 
 const tileStyle = css`
 	position: relative;
+	z-index: 1;
 `;
 
 export const DraggableTileList = ({
 	template, // Functional component
+	Template,
 	onDragOver: dragOver = (_: any) => true,	// Override onDragOver event
 	removeItemFromList: removeFromList = (_: any) => true,	// Override removeItemFromList
 	dataList,
 	setDataList,
+	updateItem,
+	extraTemplateProps,
 	defaultObject // Default object created
 }: any) => {
 	const [dragging, setDragging] = useState(false);
@@ -167,21 +171,24 @@ export const DraggableTileList = ({
 					onDragStart={(event: any) => onDragStart(event, index)}
 					onDragEnd={(event: any) => onDragEnd(event)}
 					className={tileStyle}>
-						<span className={trashButtonStyle}>
-							<Button
-								align="left"
-								size="sm"
-								kind="danger--tertiary"
-								iconDescription="Delete item"
-								hasIconOnly
-								renderIcon={TrashCan}
-								onClick={(event: any) => {
-										event.stopPropagation();
-										removeItemFromList(index);
-								}} />
-						</span>
+						<Button
+							className={trashButtonStyle}
+							align="left"
+							size="sm"
+							kind="danger--tertiary"
+							iconDescription="Delete item"
+							hasIconOnly
+							renderIcon={TrashCan}
+							onClick={(event: any) => {
+									event.stopPropagation();
+									removeItemFromList(index);
+							}} />
 						<Draggable size={16} className={draggableIconStyle} />
-						{template(item, index)}
+						{
+							Template
+							? <Template item={item} index={index} updateItem={updateItem} {...extraTemplateProps} />
+							: template(item, index)
+						}
 					</Tile>
 					<AddButton index={index + 1} />
 				</React.Fragment>)

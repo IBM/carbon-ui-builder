@@ -202,6 +202,10 @@ export const renderComponents = (
 	setGlobalState: (state: any) => void,
 	sendSignal: (id: number | string, signal: string) => void
 ) => {
+	if (state.hidden) {
+		// eslint-disable-next-line react/jsx-no-useless-fragment
+		return <></>;
+	}
 	switch (state.type) {
 		case 'accordion':
 			return <UIAccordion key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;

@@ -30,7 +30,7 @@ const updatedStateData = (stateData: any, actions: Action[], signalValue?: any[]
 		// check if slot is a function
 		const slots = slotsFromType(stateData.type);
 		// TODO signalValue needs to be correctly mapped to slots and/or to function calls
-		if (action.slot in slots) {
+		if (action.slot in slots && typeof (slots as any)[action.slot] === 'function') {
 			newStateData = (slots as any)[action.slot](stateData, signalValue);
 		} else {
 			newStateData[action.slot] = signalValue !== undefined && Array.isArray(signalValue) ? signalValue[0] : action.slotParam;
@@ -51,12 +51,12 @@ export const UIFragment = ({ state, setState }: UIFragmentProps) => {
 	}`;
 
 	const setStateData = (stateData: any) => {
-		setState({
+		setState((state: any) => ({
 			...state,
 			data: {
-				...stateData
+				...(typeof stateData === 'function' ? stateData(state.data) : stateData)
 			}
-		});
+		}));
 	};
 
 	const sendSignal: SendSignal = (id: number | string, signal: string, value?: any[], newComponentState?: any) => {
@@ -66,7 +66,7 @@ export const UIFragment = ({ state, setState }: UIFragmentProps) => {
 
 		const subscriptions = state.data.actions.filter((action: Action) => action.source === id && action.signal === signal);
 
-		setStateData(updatedStateData(state.data, subscriptions, value, newComponentState));
+		setStateData((stateData: any) => updatedStateData(stateData, subscriptions, value, newComponentState));
 	};
 
 	// state.data and setStateData render fragment json; state and setState render component json
