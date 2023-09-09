@@ -164,12 +164,15 @@ export const ExportModal = () => {
 
 	useEffect(() => {
 		if (fragmentExportModal?.fragment) {
-			if (version === 'v11') {
-				setReactCode(createReactApp(fragmentExportModal.fragment, fragments, styleClasses));
-				setAngularCode(createAngularApp(fragmentExportModal.fragment, fragments, styleClasses));
-			} else if (version === 'v10') {
-				setReactCode(createReactAppv10(fragmentExportModal.fragment, fragments, styleClasses));
-				setAngularCode(createAngularAppv10(fragmentExportModal.fragment, fragments, styleClasses));
+			switch (version) {
+				case 'v10':
+					setReactCode(createReactAppv10(fragmentExportModal.fragment, fragments, styleClasses));
+					setAngularCode(createAngularAppv10(fragmentExportModal.fragment, fragments, styleClasses));
+					break;
+				default:
+					setReactCode(createReactApp(fragmentExportModal.fragment, fragments, styleClasses));
+					setAngularCode(createAngularApp(fragmentExportModal.fragment, fragments, styleClasses));
+					break;
 			}
 			return;
 		}
