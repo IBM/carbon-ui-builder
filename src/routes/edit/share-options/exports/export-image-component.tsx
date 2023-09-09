@@ -27,6 +27,7 @@ const exportSettingForm = css`
 const exportSettingFormGroup = css`
 	width: 320px;
 	display: flex;
+	gap: 0.5rem;
 `;
 const previewContainer = css`
 	float: left;
