@@ -21,11 +21,11 @@ const notificationAreaStyle = css`
 export const Notification = () => {
 	const [state, dispatch] = useContext(NotificationContext);
 	return (
-		<div className={notificationAreaStyle} role="alert">
+		<div className={notificationAreaStyle} role='alert'>
 			{state.notifications.map((notification: NotificationData) => (
 				<InlineNotification
 					lowContrast
-					aria-live="assertive"
+					aria-live='assertive'
 					kind={notification.kind}
 					title={notification.title}
 					subtitle={notification.message}

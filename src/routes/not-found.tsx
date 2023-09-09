@@ -29,7 +29,7 @@ export const NotFound = () => {
 		<>
 			<Header />
 			<div className={placeholderContainer}>
-				<img alt="Fragment not found" src={placeholder} className={svgStyle} />
+				<img alt='Fragment not found' src={placeholder} className={svgStyle} />
 				<div style={{ textAlign: 'left' }}>
 					<h3>404: Not found</h3>
 					<p style={{ marginTop: '0.5em' }}>

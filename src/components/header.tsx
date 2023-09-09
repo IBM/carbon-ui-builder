@@ -104,13 +104,13 @@ export const Header = ({
 
 	return (
 		<ShellHeader
-		aria-label="IBM Carbon UI Builder"
+		aria-label='IBM Carbon UI Builder'
 		role='banner'
 		tabIndex={0}
 		className={headerStyle}>
 			<SkipToContent />
 			<HeaderName
-				prefix="IBM"
+				prefix='IBM'
 				tabIndex={0}
 				title='Carbon UI Builder home'
 				className={headerName}

@@ -129,7 +129,7 @@ export const StylePane = ({ isActive }: any) => {
 					<Search
 						id='styles-search'
 						light
-						size="lg"
+						size='lg'
 						labelText='Filter classes'
 						placeholder='Filter classes'
 						onChange={(event: any) => setFilterString(event.target.value)} />
@@ -144,9 +144,9 @@ export const StylePane = ({ isActive }: any) => {
 				<div className={leftPaneContent}>
 				<div className={css`position: absolute; right 0; top: 3rem; z-index: 1; padding: 1rem;`}>
 						<Tooltip
-							align="right"
-							label="Create the CSS classes and use them in the &quot;Advanced styling&quot; menu on the right of the editor.">
-								<button className="tooltip-trigger" type="button">
+							align='right'
+							label='Create the CSS classes and use them in the &quot;Advanced styling&quot; menu on the right of the editor.'>
+								<button className='tooltip-trigger' type='button'>
 									<Information />
 								</button>
 						</Tooltip>

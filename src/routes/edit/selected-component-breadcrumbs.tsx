@@ -42,7 +42,7 @@ export const SelectedComponentBreadcrumbs = ({ selectedComponent }: any) => {
 	return selectedComponent && <Breadcrumb className={css`padding: 1rem`} noTrailingSlash>
 		{getAncestors(fragment.data, selectedComponent).map((component) =>
 			<BreadcrumbItem
-			href="#"
+			href='#'
 			key={component.id}
 			onClick={(event: any) => {
 				event.nativeEvent.preventDefault();
@@ -57,7 +57,7 @@ export const SelectedComponentBreadcrumbs = ({ selectedComponent }: any) => {
 				{component.type || 'fragment'}
 			</BreadcrumbItem>
 		)}
-		<BreadcrumbItem href="#" onClick={(event: any) => event.nativeEvent.preventDefault()} isCurrentPage>
+		<BreadcrumbItem href='#' onClick={(event: any) => event.nativeEvent.preventDefault()} isCurrentPage>
 			{selectedComponent.type || 'container'}
 		</BreadcrumbItem>
 	</Breadcrumb>;

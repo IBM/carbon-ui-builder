@@ -132,12 +132,12 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 				<TileGroup
 					className={createFragmentTiles}
 					defaultSelected={CreateOptions.EMPTY_PAGE}
-					name="Fragment creation"
+					name='Fragment creation'
 					onChange={setSelectedCreateOption}>
 					<RadioTile
 						light={true}
 						value={CreateOptions.IMPORT_JSON}
-						id="import-json"
+						id='import-json'
 						className={createFragmentTileStyle}>
 						<div className={tileFooter}>
 							<p>Import JSON</p>
@@ -146,7 +146,7 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 					<RadioTile
 						light={true}
 						value={CreateOptions.CHOOSE_TEMPLATE}
-						id="choose-template"
+						id='choose-template'
 						className={createFragmentTileStyle}>
 						<div className={tileFooter}>
 							<p>Pick a template</p>
@@ -155,7 +155,7 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 					<RadioTile
 						light={true}
 						value={CreateOptions.EMPTY_FRAGMENT}
-						id="empty-fragment"
+						id='empty-fragment'
 						className={createFragmentTileStyle}>
 						<div className={tileFooter}>
 							<p>Empty fragment</p>
@@ -164,7 +164,7 @@ export const CreateFragmentModal = (props: CreateFragmentModalProps) => {
 					<RadioTile
 						light={true}
 						value={CreateOptions.EMPTY_PAGE}
-						id="empty-page"
+						id='empty-page'
 						className={createFragmentTileStyle}>
 						<div className={tileFooter}>
 							<p>Empty page (with grid)</p>

@@ -95,7 +95,7 @@ export const FromJson = () => {
 		<div className={contentContainerStyle}>
 			<p>
 				<Link to='/'>Carbon UI Builder</Link> enables you
-				to <strong>build product pages</strong> with <a href='https://carbondesignsystem.com/' target='_blank' rel="noreferrer">Carbon</a>
+				to <strong>build product pages</strong> with <a href='https://carbondesignsystem.com/' target='_blank' rel='noreferrer'>Carbon</a>
 				<strong> in a fraction of time</strong> it normally takes you - for <strong>FREE</strong>.
 			</p>
 			<p>

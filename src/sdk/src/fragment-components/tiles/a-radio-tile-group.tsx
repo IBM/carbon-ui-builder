@@ -140,7 +140,7 @@ export const ARadioTileGroup = ({
 				)}
 				disabled={componentObj.disabled}>
 					{(componentObj.legend !== undefined && componentObj.legend !== '') &&
-					<legend className="cds--label">
+					<legend className='cds--label'>
 						{componentObj.legend}
 					</legend>}
 					{children}

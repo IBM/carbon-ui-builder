@@ -81,7 +81,7 @@ export const App = () => {
 							<Route path='/help/:id' element={<Help />} />
 							<Route path='/repo' element={<Repo />} />
 							<Route path='/repo/:id/*' element={<Repo />} />
-							<Route path="*" element={<NotFound />} />
+							<Route path='*' element={<NotFound />} />
 						</Route>
 					</Routes>
 				</ContextProviders>

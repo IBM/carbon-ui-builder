@@ -327,7 +327,7 @@ export const Edit = () => {
 			</div>
 			<div className={rightPanel}>
 				<Tabs>
-					<TabList aria-label="List of properties">
+					<TabList aria-label='List of properties'>
 						<Tab id='properties-settings'>
 							<SettingsAdjust size={16} />
 						</Tab>

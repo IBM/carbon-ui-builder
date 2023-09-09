@@ -40,7 +40,7 @@ export const AProgressIndicatorSettingsUI = ({ selectedComponent, setComponent }
 				id={`progress-indicator-label-${index}`}
 				light
 				value={item.label}
-				labelText="Label"
+				labelText='Label'
 				onChange={(event: any) => handleStepUpdate('label', event.currentTarget.value, index)} />
 			<TextInput
 				id={`progress-indicator-secondary-label-${index}`}

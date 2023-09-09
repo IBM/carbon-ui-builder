@@ -51,7 +51,7 @@ export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any)
 
 		<label className='cds--label'>Code</label>
 		<Editor
-			language={codeLanguage} height="10rem"
+			language={codeLanguage} height='10rem'
 			value={selectedComponent.code}
 			options= {{ quickSuggestions: false }}
 			onChange= {(value: any) => {

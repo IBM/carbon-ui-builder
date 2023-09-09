@@ -276,7 +276,7 @@ export const ExportImageComponent = ({ fragment }: any) => {
 				<ExportImageSettings inputs={inputs} handleChange={handleChange} onSave={onSave} />
 				<div className={previewContainer} ref={previewContainerRef}>
 					<img
-						id="previewimg"
+						id='previewimg'
 						className={fragmentImage}
 						src={previewUrl}
 						alt={`fragment preview: ${fragmentState.title}`} />

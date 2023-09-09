@@ -147,9 +147,9 @@ export const DraggableTileList = ({
 					!dragging
 					&& <Button
 						className={addButtonStyle}
-						size="sm"
-						kind="ghost"
-						iconDescription="Add item"
+						size='sm'
+						kind='ghost'
+						iconDescription='Add item'
 						hasIconOnly
 						renderIcon={AddAlt}
 						onClick={(event: any) => {
@@ -173,10 +173,10 @@ export const DraggableTileList = ({
 					className={tileStyle}>
 						<Button
 							className={trashButtonStyle}
-							align="left"
-							size="sm"
-							kind="danger--tertiary"
-							iconDescription="Delete item"
+							align='left'
+							size='sm'
+							kind='danger--tertiary'
+							iconDescription='Delete item'
 							hasIconOnly
 							renderIcon={TrashCan}
 							onClick={(event: any) => {

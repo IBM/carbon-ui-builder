@@ -62,7 +62,7 @@ export const CssClassSelector = ({ selectedClasses, setSelectedClasses, styleCla
 				<div className={css`display: inline; position: relative; top: 3px; margin-left: 0.5rem;`}>
 					<Tooltip
 						label={`Add or modify classes in the ${<ColorPalette />} Style menu on the left of the editor`}>
-							<button className="tooltip-trigger" type="button">
+							<button className='tooltip-trigger' type='button'>
 								<Information />
 							</button>
 					</Tooltip>

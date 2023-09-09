@@ -108,12 +108,12 @@ export const ASelectableTileGroup = ({
 			selected={selected}
 			{...rest}>
 				<div
-				role="group"
+				role='group'
 				className={cx(
 					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
 					css`${styleObjectToString(componentObj.style)}`
 				)}
-				aria-label="Selectable tiles">
+				aria-label='Selectable tiles'>
 					{children}
 				</div>
 		</AComponent>

@@ -348,7 +348,7 @@ export const ExportModal = () => {
 								<Button className={css`margin-right: 1rem;`} onClick={() => copyToClipboard(getSharableLink())}>
 									Copy link
 								</Button>
-								<a className='bx--link--inline bx--btn bx--btn--secondary' href={getSharableLink()} target='_blank' rel="noreferrer">
+								<a className='bx--link--inline bx--btn bx--btn--secondary' href={getSharableLink()} target='_blank' rel='noreferrer'>
 									Open in new tab
 								</a>
 							</div>
