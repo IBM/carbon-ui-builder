@@ -117,8 +117,9 @@ export const FromJson = () => {
 			</p>
 			<Button
 			size='xl'
+			renderIcon={Edit}
 			onClick={openInEditor}>
-				Edit & Export <Edit size={32} />
+				Edit & Export
 			</Button>
 		</div>
 
