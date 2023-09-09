@@ -161,18 +161,6 @@ const rightPanel = css`
 			padding-right: 1rem;
 			margin-left: 0;
 		}
-
-		// .iot--list-item {
-		// 	padding-right: 0;
-		// }
-
-		// .iot--list-item--content--row-actions {
-		// 	margin-right: 0;
-
-		// 	.cds--btn--ghost {
-		// 		padding: 0.5rem;
-		// 	}
-		// }
 	}
 
 	#properties-settings__panel {
