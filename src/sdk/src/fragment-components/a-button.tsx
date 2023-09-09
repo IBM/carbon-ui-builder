@@ -164,7 +164,6 @@ export const componentInfo: ComponentInfo = {
 					return `<Button
 						${json.kind && `kind="${json.kind}"`}
 						${json.size && `size="${json.size}"`}
-
 						${reactClassNamesFromComponentObj(json)}>${json.text}</Button>`;
 				}
 			},
