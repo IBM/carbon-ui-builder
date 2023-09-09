@@ -3,14 +3,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import {
 	Button,
 	Checkbox,
+	Dropdown,
 	Modal,
 	Tab,
 	Tabs,
 	TabList,
 	TabPanel,
 	TabPanels,
-	RadioButtonGroup,
-	RadioButton,
 	InlineNotification
 } from '@carbon/react';
 import { Copy, Document } from '@carbon/react/icons';
@@ -86,6 +85,18 @@ const notificationStyle = css`
 	margin-top: 1rem;
 `;
 
+const tabListStyle = css`
+	.cds--tab--list {
+		overflow: visible;
+	}
+`;
+
+const versionDropdownStyle = css`
+	width: 13rem;
+	position: absolute;
+	right: 1rem;
+`;
+
 const FileNames = ({ code, setSelectedFilename }: any) => <div className={fileNamesContainerStyle}>
 	{
 		Object.keys(code).map((fileName: string) => (
@@ -140,15 +151,20 @@ export const ExportModal = () => {
 	const [selectedReactFilename, setSelectedReactFilename] = useState('src/component.js' as string);
 	const [shouldStripUnnecessaryProps, setShouldStripUnnecessaryProps] = useState(true);
 	const [shouldExportForPreviewOnly, setShouldExportForPreviewOnly] = useState(false);
-	const [version, setVersion] = useState('V11');
+	const [version, setVersion] = useState('v11');
 	const [reactCode, setReactCode] = useState({});
 	const [angularCode, setAngularCode] = useState({});
 
 	const monaco = useMonaco();
 
+	const carbonVersions = [
+		{ id: 'v10' },
+		{ id: 'v11' }
+	];
+
 	useEffect(() => {
 		if (fragmentExportModal?.fragment) {
-			if (version === 'V11') {
+			if (version === 'v11') {
 				setReactCode(createReactApp(fragmentExportModal.fragment, fragments, styleClasses));
 				setAngularCode(createAngularApp(fragmentExportModal.fragment, fragments, styleClasses));
 			} else if (version === 'v10') {
@@ -175,8 +191,8 @@ export const ExportModal = () => {
 
 	const jsonCode: any = getFragmentJsonExportString(fragmentExportModal.fragment, fragments, styleClasses);
 
-	const onVersionChange = (event: string) => {
-		setVersion(event);
+	const onVersionChange = ({ selectedItem }: any) => {
+		setVersion(selectedItem.id);
 	};
 
 	const getSharableLink = () => {
@@ -206,36 +222,37 @@ export const ExportModal = () => {
 			size='lg'
 			modalHeading={`Export "${fragmentExportModal.fragment.title}" code`}
 			className={exportCodeModalStyle}>
-			<RadioButtonGroup
-				legendText="Select carbon version"
-				name="carbon-version-picker"
-				defaultSelected="V11"
-				onChange={onVersionChange}>
-				<RadioButton labelText="v11" value="V11" id="V11" />
-				<RadioButton labelText="v10" value="V10" id="V10" />
-			</RadioButtonGroup>
 			{
 				fragmentExportModal.isVisible &&
 				<Tabs onChange={(tabIndex: number) => {
 					setSettings({ ...settings, selectedExportTabIndex: tabIndex });
 				}}>
-					<TabList aria-label="Export list">
+					<TabList aria-label='Export list' className={tabListStyle}>
 						<Tab>Angular</Tab>
 						<Tab>React</Tab>
 						<Tab>JSON</Tab>
 						<Tab>Image</Tab>
 						<Tab>Link</Tab>
+						<Dropdown
+							id='export-version-selector'
+							titleText='Select carbon version'
+							hideLabel={true}
+							label='Dropdown menu options'
+							className={versionDropdownStyle}
+							items={carbonVersions}
+							initialSelectedItem={carbonVersions[carbonVersions.length-1]}
+							itemToString={(item: any) => item ? item.id : ''}
+							onChange={onVersionChange} />
 					</TabList>
 					{
-						version !== 'V11' &&
+						version !== 'v11' &&
 						<InlineNotification
 							className={notificationStyle}
-							kind="info"
+							kind='info'
 							lowContrast={true}
 							hideCloseButton
-							statusIconDescription="notification"
-							title="Builder uses Carbon 11, hence not all components will translate to v10."
-							/>
+							statusIconDescription='notification'
+							title='Builder uses Carbon 11, hence not all components will translate to v10.' />
 					}
 					<TabPanels>
 						<TabPanel>
