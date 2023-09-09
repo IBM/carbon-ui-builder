@@ -8,7 +8,7 @@ import {
 	jsonToCarbonImports,
 	jsonToTemplate,
 	otherImportsFromComponentObj
-} from './utils-v10';
+} from './utils';
 import { classNameFromFragment, tagNameFromFragment } from '../../../../../../../sdk/src/tools';
 
 const generateTemplate = (json: any, fragments: any[]) => {
@@ -70,7 +70,7 @@ const jsonToSharedComponents = (json: any, fragments: any[], globalStyleClasses:
 	return sharedComponents;
 };
 
-export const createReactApp = (fragment: any, fragments: any[], globalStyleClasses: any) => {
+export const createReactAppv10 = (fragment: any, fragments: any[], globalStyleClasses: any) => {
 	const fragmentTemplate = generateTemplate(fragment.data, fragments);
 
 	const sharedComponents = jsonToSharedComponents(fragment.data, fragments, globalStyleClasses);

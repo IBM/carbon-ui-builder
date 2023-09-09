@@ -17,8 +17,8 @@ import { css } from 'emotion';
 import Editor, { useMonaco } from '@monaco-editor/react';
 
 import { createFragmentSandbox } from './create-fragment-sandbox';
-import { createReactApp as createReactAppv10 } from './frameworks/react/v10/fragment-v10';
-import { createAngularApp as createAngularAppv10 } from './frameworks/angular/v10/fragment-v10';
+import { createReactAppv10 } from './frameworks/react/v10/fragment';
+import { createAngularAppv10 } from './frameworks/angular/v10/fragment';
 import { createReactApp } from './frameworks/react/latest/fragment';
 import { createAngularApp } from './frameworks/angular/latest/fragment';
 

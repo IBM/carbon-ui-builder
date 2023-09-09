@@ -10,7 +10,7 @@ import {
 	getAngularOutputsFromJson,
 	jsonToAngularImports,
 	jsonToTemplate
-} from './utils-v10';
+} from './utils';
 import { classNameFromFragment, tagNameFromFragment } from '../../../../../../../sdk/src/tools';
 
 const getComponentCode = (fragment: any, fragments: any[], globalStyleClasses: any) => {
@@ -103,7 +103,7 @@ const getAllComponentsCode = (json: any, fragments: any[], globalStyleClasses: a
 	return allComponents;
 };
 
-export const createAngularApp = (fragment: any, fragments: any[], globalStyleClasses: any) => {
+export const createAngularAppv10 = (fragment: any, fragments: any[], globalStyleClasses: any) => {
 	const tagName = tagNameFromFragment(fragment);
 	const className = classNameFromFragment(fragment);
 
