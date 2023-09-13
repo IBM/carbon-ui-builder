@@ -102,7 +102,7 @@ export const ASliderSettingsUI = ({ selectedComponent, setComponent }: any) => {
 				setComponent({
 					...selectedComponent,
 					stepMultiplier: +event.imaginaryTarget.value
-				})
+				});
 			}} />
 
 		<TextInput
@@ -145,21 +145,22 @@ export const ASlider = ({
 		<AComponent
 		componentObj={componentObj}
 		rejectDrop={true}
-		className={cx(preventCheckEventStyle, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}
 		{...rest}>
-			<Slider
-			id={componentObj.id}
-			labelText={componentObj.labelText}
-			min={componentObj.min}
-			max={componentObj.max}
-			value={componentObj.value}
-			disabled={componentObj.disabled}
-			step={componentObj.step}
-			hideTextInput={componentObj.textInputIsHidden}
-			stepMultiplier={componentObj.stepMultiplier}
-			minLabel={componentObj.minLabel}
-			maxLabel={componentObj.maxLabel}
-			light={componentObj.light} />
+			<div className={cx(preventCheckEventStyle, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}>
+				<Slider
+				id={componentObj.id}
+				labelText={componentObj.labelText}
+				min={componentObj.min}
+				max={componentObj.max}
+				value={componentObj.value}
+				disabled={componentObj.disabled}
+				step={componentObj.step}
+				hideTextInput={componentObj.textInputIsHidden}
+				stepMultiplier={componentObj.stepMultiplier}
+				minLabel={componentObj.minLabel}
+				maxLabel={componentObj.maxLabel}
+				light={componentObj.light} />
+			</div>
 		</AComponent>
 	);
 };
@@ -186,15 +187,15 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = ${json.value};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled ? json.disabled : false};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = ${json.value ? json.value : json.min};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Min = ${json.min};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Max = ${json.max};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}MinLabel = "${json.minLabel}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}MaxLabel = "${json.maxLabel}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Step = ${json.step};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}StepMultiplier = ${json.stepMultiplier};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Light = "${json.light ? 'light' : 'dark'}" `,
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}MinLabel = "${json.minLabel ? json.minLabel: ''}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}MaxLabel = "${json.maxLabel ? json.maxLabel: ''}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Step = ${json.step ? json.step : 1};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}StepMultiplier = ${json.stepMultiplier ? json.stepMultiplier : 1};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}" `,
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 			imports: ['SliderModule'],
 			otherImports: () => 'import { CommonModule } from "@angular/common"',
@@ -210,7 +211,7 @@ export const componentInfo: ComponentInfo = {
 					(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
 					<span minLabel>{{${nameStringToVariableString(json.codeContext?.name)}MinLabel}}</span>
 					<span maxLabel>{{${nameStringToVariableString(json.codeContext?.name)}MaxLabel}}</span>
-                    <input theme="${nameStringToVariableString(json.codeContext?.name)}Light === 'light' ? 'light' : 'dark'}" 
+                    <input theme="${nameStringToVariableString(json.codeContext?.name)}Theme" 
                     ${angularClassNamesFromComponentObj(json)} />
 				</ibm-slider>`;
 			}
