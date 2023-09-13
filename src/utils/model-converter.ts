@@ -16,8 +16,8 @@ const ModelValueChanges = [
 		changes: [
 			{ type: 'button', key: 'size', valueToChange: 'field', newValue: 'md' },
 			{ type: 'button', key: 'size', valueToChange: 'default', newValue: 'lg' },
-			{ type: 'search', key: 'size', valueToChange: 'lg', newValue: 'md' },
-			{ type: 'search', key: 'size', valueToChange: 'xl', newValue: 'lg' },
+			{ type: 'search', key: 'inputSize', valueToChange: 'lg', newValue: 'md' },
+			{ type: 'search', key: 'inputSize', valueToChange: 'xl', newValue: 'lg' },
 			{ type: 'text-input', key: 'size', valueToChange: 'xl', newValue: 'lg' }
 		]
 	}
@@ -41,8 +41,9 @@ function updateModelValue(node: any, type: string, key: string, valueToChange: s
 }
 
 export function updateModel(fragment: any) {
-	const versionIndex = ModelValueChanges.findIndex(({ version }) => fragment?.version === version);
-	if (versionIndex > -1 && versionIndex !== ModelValueChanges.length) {
+	let versionIndex = ModelValueChanges.findIndex(({ version }) => fragment?.version === version);
+	if (versionIndex !== ModelValueChanges.length) {
+		versionIndex = versionIndex >= 0 ? versionIndex : 0;
 		for (let i = versionIndex; i < ModelValueChanges.length; i++) {
 			ModelValueChanges[i].changes.forEach(({ type, key, valueToChange, newValue }) => {
 				updateModelValue(fragment.data, type, key, valueToChange, newValue);
