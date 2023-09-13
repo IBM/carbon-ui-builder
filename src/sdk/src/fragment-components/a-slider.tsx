@@ -145,6 +145,7 @@ export const ASlider = ({
 		<AComponent
 		componentObj={componentObj}
 		rejectDrop={true}
+		className={cx(preventCheckEventStyle, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}
 		{...rest}>
 			<Slider
 			id={componentObj.id}
@@ -158,8 +159,7 @@ export const ASlider = ({
 			stepMultiplier={componentObj.stepMultiplier}
 			minLabel={componentObj.minLabel}
 			maxLabel={componentObj.maxLabel}
-			light={componentObj.light}
-			className={cx(preventCheckEventStyle, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))} />
+			light={componentObj.light} />
 		</AComponent>
 	);
 };

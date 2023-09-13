@@ -33,6 +33,7 @@ export const UISlider = ({ state }: {
 	}
 
 	return <Slider
+		inert
 		id={state.id}
 		labelText={state.labelText}
 		min={state.min}
