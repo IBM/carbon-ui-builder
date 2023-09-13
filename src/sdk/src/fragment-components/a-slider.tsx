@@ -64,44 +64,46 @@ export const ASliderSettingsUI = ({ selectedComponent, setComponent }: any) => {
 		<NumberInput
 			value={selectedComponent.min}
 			label='Min'
-			onChange={(event: any, data: any, value: any) => {
+			onChange={(event: any) => {
                 setComponent({
                     ...selectedComponent,
-                    min: value ? value : data.value
+                    min: +event.imaginaryTarget.value
                 });
             }} />
 
 		<NumberInput
 			value={selectedComponent.max}
 			label='Max'
-			onChange={(event: any, data: any, value: any) => setComponent({
+			onChange={(event: any) => setComponent({
 				...selectedComponent,
-				max: value ? value : data.value
+				max: +event.imaginaryTarget.value
 			})} />
 
 		<NumberInput
 			value={selectedComponent.value}
 			label='Value'
-			onChange={(event: any, data: any, value: any) => setComponent({
+			onChange={(event: any) => setComponent({
 				...selectedComponent,
-				value: value ? value : data.value
+				value: +event.imaginaryTarget.value
 			})} />
 
 		<NumberInput
 			value={selectedComponent.step}
 			label='Step'
-			onChange={(event: any, data: any, value: any) => setComponent({
+			onChange={(event: any) => setComponent({
 				...selectedComponent,
-				step: value ? value : data.value
+				step: +event.imaginaryTarget.value
 			})} />
 
 		<NumberInput
 			value={selectedComponent.stepMultiplier}
 			label='Step multiplier'
-			onChange={(event: any, data: any, value: any) => setComponent({
-				...selectedComponent,
-				stepMultiplier: value ? value : data.value
-			})} />
+			onChange={(event: any) => {
+				setComponent({
+					...selectedComponent,
+					stepMultiplier: +event.imaginaryTarget.value
+				})
+			}} />
 
 		<TextInput
 			value={selectedComponent.minLabel}
