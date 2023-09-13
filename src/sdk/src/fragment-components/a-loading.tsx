@@ -148,20 +148,20 @@ export const componentInfo: ComponentInfo = {
 				imports: ['Loading'],
 				code: ({ json }) => {
 					return `<Loading
-								active={${json.active}}
-								withOverlay={${json.overlay}}
-								small={${json.size === 'small'}}
-								${reactClassNamesFromComponentObj(json)} />`;
+						active={${json.active}}
+						withOverlay={${json.overlay}}
+						small={${json.size === 'small'}}
+						${reactClassNamesFromComponentObj(json)} />`;
 				}
 			},
 			v10: {
 				imports: ['Loading'],
 				code: ({ json }) => {
 					return `<Loading
-								active={${json.active}}
-								withOverlay={${json.overlay}}
-								small={${json.size === 'small'}}
-								${reactClassNamesFromComponentObj(json)} />`;
+						active={${json.active}}
+						withOverlay={${json.overlay}}
+						small={${json.size === 'small'}}
+						${reactClassNamesFromComponentObj(json)} />`;
 				}
 			}
 		}

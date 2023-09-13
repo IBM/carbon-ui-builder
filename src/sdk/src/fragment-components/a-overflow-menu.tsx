@@ -197,9 +197,9 @@ export const componentInfo: ComponentInfo = {
 		angular: {
 			latest: {
 				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Flipped = ${json.flipped};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Placement = "${json.placement}";`,
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Placement = "${json.placement}";`,
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter();
-						@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
+					@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
 				imports: ['DialogModule'],
 				code: ({ json }) => {
 					return `<cds-overflow-menu
@@ -222,9 +222,9 @@ export const componentInfo: ComponentInfo = {
 			},
 			v10: {
 				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Flipped = ${json.flipped};
-										@Input() ${nameStringToVariableString(json.codeContext?.name)}Placement = "${json.placement}";`,
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Placement = "${json.placement}";`,
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter();
-								@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
+					@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
 				imports: ['DialogModule'],
 				code: ({ json }) => {
 					return `<ibm-overflow-menu

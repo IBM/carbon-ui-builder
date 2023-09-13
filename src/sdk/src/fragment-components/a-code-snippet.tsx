@@ -126,7 +126,7 @@ export const componentInfo: ComponentInfo = {
 		angular: {
 			latest: {
 				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Type = "${json.variant}"
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}"
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}"
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Code = \`${json.code}\``,
 				outputs: () => '',
 				imports: ['CodeSnippetModule'],
@@ -140,7 +140,7 @@ export const componentInfo: ComponentInfo = {
 			},
 			v10: {
 				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Type = "${json.variant}"
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}"
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}"
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Code = \`${json.code}\``,
 				outputs: () => '',
 				imports: ['CodeSnippetModule'],
