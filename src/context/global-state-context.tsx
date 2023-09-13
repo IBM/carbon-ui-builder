@@ -40,18 +40,6 @@ export const useFragment = (id?: string) => {
 
 const GlobalStateContextProvider = ({ children }: any) => {
 	const [fragments, _setFragments] = useState<any[]>(getFragmentsFromLocalStorage());
-
-	// Execute this only once, on initial builder load
-	useEffect(() => {
-		// Check version & migrate if needed!
-		fragments.forEach((frag: any) => {
-			if (frag.version !== CURRENT_MODEL_VERSION) {
-				updateModel(frag);
-			}
-		});
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
 	const [actionHistory, setActionHistory] = useState([] as any[]);
 	const [actionHistoryIndex, setActionHistoryIndex] = useState(-1);
 
@@ -179,6 +167,13 @@ const GlobalStateContextProvider = ({ children }: any) => {
 		const localFragments = JSON.parse(localStorage.getItem('localFragments') as string || '[]');
 		// clean up the hidden fragments (those marked for deletion but failed to be deleted)
 		const filteredFragments = localFragments.filter((fragment: any) => !fragment.hidden);
+		// Check version & migrate if needed!
+		filteredFragments.forEach((frag: any) => {
+			if (frag.version !== CURRENT_MODEL_VERSION) {
+				updateModel(frag);
+			}
+		});
+
 		fragmentHelpers.updateFragments(filteredFragments);
 		localStorage.setItem('localFragments', JSON.stringify(filteredFragments));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
