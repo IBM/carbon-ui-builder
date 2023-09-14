@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Dropdown } from 'carbon-components-react';
+import { ComboBox, Dropdown } from 'carbon-components-react';
 import { DraggableTileList } from '../draggable-list';
 import { Action } from '../../../ui-fragment/src/types';
 import {
@@ -8,6 +8,13 @@ import {
 	signalsFromType,
 	slotsFromFragmentSignalAndDestination
 } from '../tools';
+import { css } from 'emotion';
+
+const noClearSelectedStyle = css`
+	.bx--list-box__selection, .cds--list-box__selection {
+		display: none;
+	}
+`;
 
 const ActionItem = ({ item, index, updateItem, fragment }: any) => {
 	const [selectedSignal, setSelectedSignal] = useState(item.signal);
@@ -58,8 +65,9 @@ const ActionItem = ({ item, index, updateItem, fragment }: any) => {
 				// onChange={(element: any) => handleActionUpdate(element, item, 'actions')}
 				selectedItem={{ text: selectedSignal }}
 			/>
-			<Dropdown
+			<ComboBox
 				id='destinationDropdown'
+				className={noClearSelectedStyle}
 				size='sm'
 				light={true}
 				titleText='Destination'
