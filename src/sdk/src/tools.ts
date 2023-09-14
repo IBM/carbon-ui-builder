@@ -506,7 +506,7 @@ export const actionDestinationsFromFragment = (fragment: any, _action: Action) =
 
 	return allComponentsFromFragment(fragment)
 		.filter((componentObj: any) => componentsWithSlots.find((componentWithSlot: any) => componentWithSlot.type === componentObj.type))
-		.map((componentObj: any) => ({ text: `${componentObj.type}-${componentObj.id}`, id: componentObj.id }));
+		.map((componentObj: any) => ({ text: componentObj.codeContext?.name || `[${componentObj.type}-${componentObj.id}]`, id: componentObj.id }));
 };
 
 export const slotsFromFragmentSignalAndDestination = (fragment: any, sourceId: number, signal: string, destinationId: number) => {
