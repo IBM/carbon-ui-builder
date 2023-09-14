@@ -26,6 +26,7 @@ import { UIRadioTileGroup } from './components/ui-radio-tile-group';
 import { UIRow } from './components/ui-row';
 import { UISelectableTile } from './components/ui-selectable-tile';
 import { UISelectableTileGroup } from './components/ui-selectable-tile-group';
+import { UISlider } from './components/ui-slider';
 import { UISearchInput } from './components/ui-search-input';
 import { UITag } from './components/ui-tag';
 import { UIText } from './components/ui-text';
@@ -269,6 +270,9 @@ export const renderComponents = (
 
 		case 'search':
 			return <UISearchInput key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'slider':
+			return <UISlider key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'tag':
 			return <UITag key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;

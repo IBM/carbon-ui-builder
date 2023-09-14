@@ -18,6 +18,7 @@ import * as progressIndicator from './a-progress-indicator';
 import * as row from './a-row';
 import * as tag from './a-tag';
 import * as searchinput from './a-searchinput';
+import * as slider from './a-slider';
 import * as text from './a-text';
 import * as textarea from './a-text-area';
 import * as textinput from './a-text-input';
@@ -56,8 +57,9 @@ export { ANumberInput, ANumberInputSettingsUI, ANumberInputCodeUI } from './a-nu
 export { AProgressIndicator, AProgressIndicatorSettingsUI, AProgressIndicatorCodeUI } from './a-progress-indicator';
 export { ARow, ARowCodeUI, ARowSettingsUI } from './a-row';
 export { ASearchInput, ASearchInputSettingsUI, ASearchInputCodeUI } from './a-searchinput';
-export { ATag, ATagCodeUI, ATagSettingsUI } from './a-tag';
-export { AText, ATextCodeUI, ATextSettingsUI } from './a-text';
+export { ASlider, ASliderSettingsUI, ASliderCodeUI } from './a-slider';
+export { ATag, ATagSettingsUI } from './a-tag';
+export { AText, ATextSettingsUI } from './a-text';
 export { ATextArea, ATextAreaSettingsUI, ATextAreaCodeUI } from './a-text-area';
 export { ATextInput, ATextInputSettingsUI, ATextInputCodeUI } from './a-text-input';
 export { AOverflowMenu, AOverflowMenuCodeUI, AOverflowMenuSettingsUI } from './a-overflow-menu';
@@ -97,6 +99,7 @@ export const allComponents = {
 	progressIndicator,
 	row,
 	searchinput,
+	slider,
 	tag,
 	text,
 	textarea,
