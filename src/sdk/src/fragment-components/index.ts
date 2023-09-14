@@ -21,6 +21,7 @@ import * as searchinput from './a-searchinput';
 import * as text from './a-text';
 import * as textarea from './a-text-area';
 import * as textinput from './a-text-input';
+import * as tooltip from './a-tooltip';
 import * as link from './a-link';
 import * as loading from './a-loading';
 import * as inlineLoading from './a-inline-loading';
@@ -60,6 +61,7 @@ export { ATag, ATagCodeUI, ATagSettingsUI } from './a-tag';
 export { AText, ATextCodeUI, ATextSettingsUI } from './a-text';
 export { ATextArea, ATextAreaSettingsUI, ATextAreaCodeUI } from './a-text-area';
 export { ATextInput, ATextInputSettingsUI, ATextInputCodeUI } from './a-text-input';
+export { ATooltip, ATooltipCodeUI, ATooltipSettingsUI } from './a-tooltip';
 export { AOverflowMenu, AOverflowMenuCodeUI, AOverflowMenuSettingsUI } from './a-overflow-menu';
 export { ARadio, ARadioSettingsUI, ARadioCodeUI } from './a-radio';
 export { ARadioGroup, ARadioGroupSettingsUI, ARadioGroupCodeUI } from './a-radio-group';
@@ -105,6 +107,7 @@ export const allComponents = {
 	// Tiles
 	tile,
 	toggle,
+	tooltip,
 	clickabletile,
 	expandabletile,
 	tilefold,
