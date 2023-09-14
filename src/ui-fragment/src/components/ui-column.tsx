@@ -6,11 +6,13 @@ import {
 	setItemInState,
 	stringToCssClassName
 } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface ColumnState {
 	type: string;
 	items: any[]; // TODO row type
 	id: string | number;
+	hidden?: boolean;
 	smallSpan?: number;
 	smallOffset?: number;
 	mediumSpan?: number;
@@ -27,6 +29,12 @@ export interface ColumnState {
 	};
 	style?: any;
 }
+
+export const type = 'column';
+
+export const slots = {
+	...commonSlots
+};
 
 export const UIColumn = ({ state, setState, setGlobalState, sendSignal }: {
 	state: ColumnState;

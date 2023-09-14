@@ -2,6 +2,7 @@ import React from 'react';
 import { Checkbox } from 'carbon-components-react';
 import { CssClasses } from '../types';
 import { stringToCssClassName } from '../utils';
+import { commonSlots, slotsDisabled } from '../common-slots';
 
 export interface CheckboxState {
 	type: string;
@@ -9,12 +10,20 @@ export interface CheckboxState {
 	checked: boolean;
 	id: string | number;
 	disabled?: boolean;
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
 	};
 	style?: any;
 }
+
+export const type = 'checkbox';
+
+export const slots = {
+	...commonSlots,
+	...slotsDisabled
+};
 
 export const UICheckbox = ({ state, setState }: {
 	state: CheckboxState;

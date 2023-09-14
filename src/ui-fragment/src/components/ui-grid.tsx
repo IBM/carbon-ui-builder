@@ -12,6 +12,7 @@ export interface GridState {
 	type: string;
 	items: any[]; // TODO row type
 	id: string | number;
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;

@@ -2,15 +2,23 @@ import React from 'react';
 import { TileBelowTheFoldContent } from 'carbon-components-react';
 import { CssClasses } from '../types';
 import { renderComponents, setItemInState } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface TileFoldState {
 	type: string;
 	items?: any[];
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext?: {
 		name: string;
 	};
 }
+
+export const type = 'tile-fold';
+
+export const slots = {
+	...commonSlots
+};
 
 export const UITileFold = ({ state, setState, setGlobalState, sendSignal }: {
 	state: TileFoldState;

@@ -2,6 +2,7 @@ import React from 'react';
 import { ContentSwitcher, Switch } from 'carbon-components-react';
 import { CssClasses } from '../types';
 import { stringToCssClassName } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface ContentSwitcherState {
 	type: string;
@@ -9,12 +10,19 @@ export interface ContentSwitcherState {
 	size: [];
 	selectedIndex: number;
 	disabled?: boolean;
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	style?: any;
 	codeContext: {
 		name: string;
 	};
 }
+
+export const type = 'content-switcher';
+
+export const slots = {
+	...commonSlots
+};
 
 export const UIContentSwitcher = ({ state }: {
 	state: ContentSwitcherState;

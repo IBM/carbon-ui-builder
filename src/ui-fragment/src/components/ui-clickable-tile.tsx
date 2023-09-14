@@ -6,11 +6,13 @@ import {
 	setItemInState,
 	stringToCssClassName
 } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface ClickableTileState {
 	type: string;
 	light?: boolean;
 	disabled?: boolean;
+	hidden?: boolean;
 	items?: any[];
 	cssClasses?: CssClasses[];
 	codeContext: {
@@ -18,6 +20,12 @@ export interface ClickableTileState {
 	};
 	style?: any;
 }
+
+export const type = 'clickable-tile';
+
+export const slots = {
+	...commonSlots
+};
 
 export const UIClickableTile = ({ state, setState, setGlobalState, sendSignal }: {
 	state: ClickableTileState;

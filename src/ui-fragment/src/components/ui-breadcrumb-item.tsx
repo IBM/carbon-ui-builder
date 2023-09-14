@@ -1,5 +1,6 @@
 import React from 'react';
 import { BreadcrumbItem } from 'carbon-components-react';
+import { commonSlots } from '../common-slots';
 import { CssClasses } from '../types';
 
 export interface BreadcrumbItemState {
@@ -8,11 +9,18 @@ export interface BreadcrumbItemState {
 	href?: string;
 	id: string | number;
 	label: string;
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext?: {
 		name: string;
 	};
 }
+
+export const type = 'breadcrumb-item';
+
+export const slots = {
+	...commonSlots
+};
 
 export const UIBreadcrumbItem = ({ state }: {
 	state: BreadcrumbItemState;

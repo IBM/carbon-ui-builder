@@ -5,17 +5,25 @@ import {
 	setItemInState,
 	stringToCssClassName
 } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface SelectableTileGroupState {
 	type: string;
 	id: string | number;
 	items?: any[];
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
 	};
 	style?: any;
 }
+
+export const type = 'selectable-tile-group';
+
+export const slots = {
+	...commonSlots
+};
 
 export const UISelectableTileGroup = ({ state, setState, setGlobalState, sendSignal }: {
 	state: SelectableTileGroupState;

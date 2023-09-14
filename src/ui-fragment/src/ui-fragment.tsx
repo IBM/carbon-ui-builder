@@ -4,11 +4,18 @@ import { getAllFragmentStyleClasses, renderComponents } from './utils';
 import { Action, SendSignal } from './types';
 
 import { allComponents } from './components';
+import { commonSlots } from './common-slots';
 
 export interface UIFragmentProps {
 	state: any;
 	setState: (state: any) => void;
 }
+
+export const type = 'fragment';
+
+export const slots = {
+	...commonSlots
+};
 
 const slotsFromType = (type: string) => {
 	const componentModule = Object.values(allComponents).find(component => 'type' in component && component.type === type);

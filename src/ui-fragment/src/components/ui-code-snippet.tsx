@@ -2,12 +2,14 @@ import React from 'react';
 import { CodeSnippet } from 'carbon-components-react';
 import { CssClasses } from '../types';
 import { stringToCssClassName } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface CodeSnippetState {
 	type: string;
 	variant: string;
 	code: string;
 	id: string | number;
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	light: boolean;
 	codeContext: {
@@ -15,6 +17,12 @@ export interface CodeSnippetState {
 	};
 	style?: any;
 }
+
+export const type = 'code-snippet';
+
+export const slots = {
+	...commonSlots
+};
 
 export const UICodeSnippet = ({ state }: {
 	state: CodeSnippetState;

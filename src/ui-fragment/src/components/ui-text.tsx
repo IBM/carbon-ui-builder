@@ -1,6 +1,7 @@
 import React from 'react';
 import { CssClasses } from '../types';
 import { stringToCssClassName } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface TextState {
 	type: string;
@@ -14,6 +15,12 @@ export interface TextState {
 		name: string;
 	};
 }
+
+export const type = 'text';
+
+export const slots = {
+	...commonSlots
+};
 
 export const UIText = ({ state }: {
 	state: TextState;

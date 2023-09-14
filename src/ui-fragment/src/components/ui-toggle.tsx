@@ -12,6 +12,7 @@ export interface ToggleState {
 	header?: string;
 	checked?: boolean;
 	disabled?: boolean;
+	hidden?: boolean;
 	id: string | number;
 	cssClasses?: CssClasses[];
 	codeContext: {

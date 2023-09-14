@@ -2,6 +2,7 @@ import React from 'react';
 import { Search, ExpandableSearch } from 'carbon-components-react';
 import { CssClasses } from '../types';
 import { stringToCssClassName } from '../utils';
+import { commonSlots, slotsDisabled } from '../common-slots';
 
 export interface SearchState {
 	type: string;
@@ -13,6 +14,7 @@ export interface SearchState {
 	closeButtonLabelText?: string;
 	defaultValue?: string;
 	disabled?: boolean;
+	hidden?: boolean;
 	light?: boolean;
 	role?: string;
 	expandable: boolean;
@@ -24,6 +26,13 @@ export interface SearchState {
 	};
 	style?: any;
 }
+
+export const type = 'search';
+
+export const slots = {
+	...commonSlots,
+	...slotsDisabled
+};
 
 export const UISearchInput = ({ state, setState, name }: {
 	state: SearchState;

@@ -13,6 +13,7 @@ export interface TextInputState {
 	helperText?: string;
 	defaultValue?: string;
 	disabled?: boolean;
+	hidden?: boolean;
 	light?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {

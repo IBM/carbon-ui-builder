@@ -2,6 +2,7 @@ import React from 'react';
 import { TextArea } from 'carbon-components-react';
 import { CssClasses } from '../types';
 import { stringToCssClassName } from '../utils';
+import { commonSlots, slotsDisabled } from '../common-slots';
 
 export interface TextAreaState {
 	type: string;
@@ -12,6 +13,7 @@ export interface TextAreaState {
 	helperText?: string;
 	defaultValue?: string;
 	disabled?: boolean;
+	hidden?: boolean;
 	light?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
@@ -19,6 +21,13 @@ export interface TextAreaState {
 	};
 	style?: any;
 }
+
+export const type = 'accordion';
+
+export const slots = {
+	...commonSlots,
+	...slotsDisabled
+};
 
 export const UITextAreaInput = ({ state, setState, name }: {
 	state: TextAreaState;

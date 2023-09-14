@@ -1,6 +1,7 @@
 import React from 'react';
 import { OverflowMenuItem } from 'carbon-components-react';
 import { CssClasses } from '../types';
+import { commonSlots } from '../common-slots';
 
 export interface OverflowMenuItemState {
 	type: string;
@@ -8,11 +9,18 @@ export interface OverflowMenuItemState {
 	hasDivider?: boolean;
 	link?: string;
 	isDelete?: boolean;
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext?: {
 		name: string;
 	};
 }
+
+export const type = 'overflow-menu-item';
+
+export const slots = {
+	...commonSlots
+};
 
 export const UIOverflowMenuItem = ({ state }: {
 	state: OverflowMenuItemState;
