@@ -4,7 +4,8 @@ import { css, cx } from 'emotion';
 import {
 	AddAlt32,
 	Draggable16,
-	TrashCan32
+	TrashCan32,
+	Code32
 } from '@carbon/icons-react';
 
 const addDragTargetStyle = css`
@@ -31,6 +32,17 @@ const trashButtonStyle = css`
 	top: 0;
 	right: 0;
 	border-color: transparent;
+
+	&.bx--btn.bx--btn--icon-only.bx--tooltip__trigger {
+		position: absolute;
+	}
+`;
+
+const developerIconStyle = css`
+	top: 0;
+	right: 24px;
+	border-color: transparent;
+	color: black;
 
 	&.bx--btn.bx--btn--icon-only.bx--tooltip__trigger {
 		position: absolute;
@@ -136,6 +148,20 @@ export const DraggableTileList = ({
 		]);
 	};
 
+	const addDeveloperOption = (index: number) => {
+		const item = dataList[index];
+
+		item.showDeveloperOption = !item.showDeveloperOption;
+		if (item.items) {
+			item.items.forEach((option: any) => option.showDeveloperOption = !option.showDeveloperOption);
+		}
+
+		// for refreshing
+		setDataList([
+			...dataList
+		]);
+	};
+
 	const AddButton = ({ index = 0 }: any) => {
 		return (
 			<div
@@ -150,6 +176,7 @@ export const DraggableTileList = ({
 						size="sm"
 						kind="ghost"
 						iconDescription="Add item"
+						tooltipPosition="bottom"
 						hasIconOnly
 						renderIcon={AddAlt32}
 						onClick={(event: any) => {
@@ -171,6 +198,19 @@ export const DraggableTileList = ({
 					onDragStart={(event: any) => onDragStart(event, index)}
 					onDragEnd={(event: any) => onDragEnd(event)}
 					className={tileStyle}>
+						{/* add developer option here */}
+						<Button
+							className={developerIconStyle}
+							align="left"
+							size="sm"
+							kind="tertiary"
+							iconDescription="Change option value"
+							hasIconOnly
+							renderIcon={Code32}
+							onClick={(event: any) => {
+								event.stopPropagation();
+								addDeveloperOption(index);
+							}} />
 						<Button
 							className={trashButtonStyle}
 							align="left"

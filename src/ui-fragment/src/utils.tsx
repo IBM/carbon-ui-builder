@@ -34,6 +34,7 @@ import { UITextInput } from './components/ui-text-input';
 import { UITile } from './components/ui-tile';
 import { UITileFold } from './components/ui-tile-fold';
 import { UIToggle } from './components/ui-toggle';
+import { UISelect } from './components/ui-select';
 import { kebabCase } from 'lodash';
 
 export const setItemInState = (item: any, state: any, setState: (state: any) => void) => {
@@ -269,6 +270,9 @@ export const renderComponents = (
 
 		case 'search':
 			return <UISearchInput key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'select':
+			return <UISelect key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'tag':
 			return <UITag key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
