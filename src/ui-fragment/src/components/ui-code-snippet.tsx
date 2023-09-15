@@ -2,7 +2,7 @@ import React from 'react';
 import { CodeSnippet } from 'carbon-components-react';
 import { CssClasses } from '../types';
 import { stringToCssClassName } from '../utils';
-import { commonSlots } from '../common-slots';
+import { commonSlots, slotsDisabled } from '../common-slots';
 
 export interface CodeSnippetState {
 	type: string;
@@ -11,7 +11,7 @@ export interface CodeSnippetState {
 	id: string | number;
 	hidden?: boolean;
 	cssClasses?: CssClasses[];
-	light: boolean;
+	light?: boolean;
 	codeContext: {
 		name: string;
 	};
@@ -20,11 +20,16 @@ export interface CodeSnippetState {
 
 export const type = 'code-snippet';
 
+export const signals = ['click'];
+
 export const slots = {
-	...commonSlots
+	...commonSlots,
+	...slotsDisabled,
+	code: 'string',
+	variant: 'string'
 };
 
-export const UICodeSnippet = ({ state }: {
+export const UICodeSnippet = ({ state, sendSignal }: {
 	state: CodeSnippetState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
@@ -47,6 +52,7 @@ export const UICodeSnippet = ({ state }: {
 	return <CodeSnippet
 	light={state.light}
 	type={state.variant}
+	onClick={() => sendSignal(state.id, 'click')}
 	className={cssClasses}>
 		{state.code}
 	</CodeSnippet>;
