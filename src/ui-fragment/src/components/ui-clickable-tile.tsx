@@ -6,10 +6,11 @@ import {
 	setItemInState,
 	stringToCssClassName
 } from '../utils';
-import { commonSlots } from '../common-slots';
+import { commonSlots, slotsDisabled } from '../common-slots';
 
 export interface ClickableTileState {
 	type: string;
+	id: string | number;
 	light?: boolean;
 	disabled?: boolean;
 	hidden?: boolean;
@@ -23,8 +24,11 @@ export interface ClickableTileState {
 
 export const type = 'clickable-tile';
 
+export const signals = ['click'];
+
 export const slots = {
-	...commonSlots
+	...commonSlots,
+	...slotsDisabled
 };
 
 export const UIClickableTile = ({ state, setState, setGlobalState, sendSignal }: {
@@ -50,6 +54,7 @@ export const UIClickableTile = ({ state, setState, setGlobalState, sendSignal }:
 	return <ClickableTile
 	light={state.light}
 	disabled={state.disabled}
+	onClick={() => sendSignal(state.id, 'click')}
 	className={cssClasses}>
 		{
 			state.items?.map((item: any) => {
