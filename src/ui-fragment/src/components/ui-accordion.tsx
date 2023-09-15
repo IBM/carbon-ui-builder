@@ -26,7 +26,9 @@ export interface AccordionState {
 export const type = 'accordion';
 
 export const slots = {
-	...commonSlots
+	...commonSlots,
+	size: 'string',
+	align: 'string'
 };
 
 export const UIAccordion = ({ state, sendSignal, setState, setGlobalState }: {
