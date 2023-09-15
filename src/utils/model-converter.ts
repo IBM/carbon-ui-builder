@@ -40,7 +40,7 @@ function updateModelValue(node: any, type: string, key: string, valueToChange: s
 	}
 }
 
-export function updateModel(fragment: any) {
+export function updateModelInPlace(fragment: any) {
 	let versionIndex = ModelValueChanges.findIndex(({ version }) => fragment?.version === version);
 	if (versionIndex !== ModelValueChanges.length) {
 		versionIndex = versionIndex >= 0 ? versionIndex : 0;

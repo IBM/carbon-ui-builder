@@ -9,7 +9,7 @@ import { getFragmentHelpers } from './fragments-context-helper';
 import { getFragmentsFromLocalStorage } from '../utils/fragment-tools';
 import { expandJsonToState } from '../ui-fragment/src/utils';
 import { getFragmentJsonExport as getFragmentJsonExport_ } from '../sdk/src/tools';
-import { CURRENT_MODEL_VERSION, updateModel } from '../utils/model-converter';
+import { CURRENT_MODEL_VERSION, updateModelInPlace } from '../utils/model-converter';
 
 const GlobalStateContext: React.Context<any> = createContext(null);
 GlobalStateContext.displayName = 'GlobalStateContext';
@@ -167,10 +167,10 @@ const GlobalStateContextProvider = ({ children }: any) => {
 		const localFragments = JSON.parse(localStorage.getItem('localFragments') as string || '[]');
 		// clean up the hidden fragments (those marked for deletion but failed to be deleted)
 		const filteredFragments = localFragments.filter((fragment: any) => !fragment.hidden);
-		// Check version & migrate if needed!
+		// Check version & migrate if needed! Update in place before it is set in state
 		filteredFragments.forEach((frag: any) => {
 			if (frag.version !== CURRENT_MODEL_VERSION) {
-				updateModel(frag);
+				updateModelInPlace(frag);
 			}
 		});
 
