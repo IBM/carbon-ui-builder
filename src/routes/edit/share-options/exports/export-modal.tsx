@@ -243,7 +243,7 @@ export const ExportModal = () => {
 							label='Dropdown menu options'
 							className={versionDropdownStyle}
 							items={carbonVersions}
-							initialSelectedItem={carbonVersions[carbonVersions.length-1]}
+							selectedItem={{ id: version }}
 							itemToString={(item: any) => item ? item.id : ''}
 							onChange={onVersionChange} />
 					</TabList>
@@ -255,7 +255,7 @@ export const ExportModal = () => {
 							lowContrast={true}
 							hideCloseButton
 							statusIconDescription='notification'
-							title='Builder uses Carbon 11, hence not all components will translate to v10.' />
+							title='Some things may look different or not exist in older versions of Carbon.' />
 					}
 					<TabPanels>
 						<TabPanel>
