@@ -242,30 +242,30 @@ export const componentInfo: ComponentInfo = {
 			imports: ['DatePicker', 'DatePickerInput'],
 			code: ({ json }) => {
 				return `<DatePicker
-					${reactClassNamesFromComponentObj(json)}
-					dateFormat="${json.dateFormat}"
-					datePickerType="${json.datePickerType}"
-					light={${json.light}}>
-						<DatePickerInput
-							placeholder="${json.placeholder}"
-							labelText="${json.rangeStartLabel}"
-							type="text"
-							size="${json.size}"
-							disabled={${json.disabled}}
-							invalid={${json.invalid}}
-							invalidText="${json.invalidText}"
-						/>
-						${json.datePickerType === 'range'
-							? `<DatePickerInput
-							placeholder="${json.placeholder}"
-							labelText="${json.rangeEndLabel}"
-							type="text"
-							size="${json.size}"
-							disabled={${json.disabled}}
-							invalid={${json.invalid}}
-							invalidText="${json.invalidText}" />`
-							: ''
-						}
+							${reactClassNamesFromComponentObj(json)}
+							dateFormat="${json.dateFormat}"
+							datePickerType="${json.datePickerType}"
+							${json.light ? 'light="true"' : ''}>
+							<DatePickerInput
+								placeholder="${json.placeholder}"
+								${json.rangeStartLabel ? `labelText='${json.rangeStartLabel}'` : ''}
+								${json.disabled ? `disabled='${json.disabled}'` : ''}
+								${json.invalid ? `invalid='${json.invalid}'` : ''}
+								${json.invalidText ? `invalidText='${json.invalidText}'` : ''}
+								type="text"
+								size="${json.size}"
+							/>
+							${json.datePickerType === 'range'
+								? `<DatePickerInput
+								${json.rangeEndLabel ? `labelText='${json.rangeEndLabel}'` : ''}
+								${json.disabled ? `disabled='${json.disabled}'` : ''}
+								${json.invalid ? `invalid='${json.invalid}'` : ''}
+								${json.invalidText ? `invalidText='${json.invalidText}'` : ''} 
+								placeholder="${json.placeholder}"
+								type="text"
+								size="${json.size}" />`
+								: ''
+							}
 					</DatePicker>`;
 			}
 		}
