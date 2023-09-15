@@ -51,6 +51,15 @@ const ActionItem = ({ item, index, updateItem, fragment }: any) => {
 	const component = getComponentById(fragment.data, item.source);
 	const signalDropdownItems: any[] = signalsFromType(component.type).map((item: any) => ({ text: item }));
 
+	useEffect(() => {
+		if (signalDropdownItems.length === 1) {
+			setSelectedSignal(signalDropdownItems[0].text);
+		}
+		if (slotDropdownItems.length === 1) {
+			setSelectedSlot(slotDropdownItems[0]);
+		}
+	}, [signalDropdownItems, slotDropdownItems]);
+
 	return (
 		<>
 			<Dropdown
@@ -62,7 +71,6 @@ const ActionItem = ({ item, index, updateItem, fragment }: any) => {
 				items={signalDropdownItems}
 				itemToString={(item: any) => (item ? item.text : '')}
 				onChange={(element: any) => setSelectedSignal(element.selectedItem.text)}
-				// onChange={(element: any) => handleActionUpdate(element, item, 'actions')}
 				selectedItem={{ text: selectedSignal }}
 			/>
 			<ComboBox
