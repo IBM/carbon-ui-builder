@@ -13,6 +13,16 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../tools';
+import { css, cx } from 'emotion';
+
+const preventCheckEventStyle = css`
+	pointer-events: none;
+`;
+
+const pickerInputAlignment = css `
+	display: flex;
+	align-items: flex-end;
+`
 
 export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const size = [
@@ -88,11 +98,11 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 		})} />
 		<TextInput
 			value={selectedComponent.rangeStartLabel}
-			labelText= {selectedComponent.datePickerType === 'range' ? 'Date picker range start' : 'Date picker label'}
+			labelText= {selectedComponent.datePickerType === 'range' ? 'Date picker range start label' : 'Date picker label'}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				rangeStartLabel: event.currentTarget.value
-		})} />
+			})} />
 		<TextInput
 			value={selectedComponent.invalidText}
 			labelText= 'Invalid text'
@@ -104,7 +114,7 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 			selectedComponent.datePickerType === 'range'
 				&& <TextInput
 				value={selectedComponent.rangeEndLabel}
-				labelText='Date picker range end'
+				labelText='Date picker range end label'
 				onChange={(event: any) => setComponent({
 					...selectedComponent,
 					rangeEndLabel: event.currentTarget.value
@@ -136,26 +146,27 @@ export const ADatePicker = ({
 		{...rest}>
 			{
 				<DatePicker
-				dateFormat={componentObj.dateFormat}
-				datePickerType={componentObj.datePickerType}
-				light={componentObj.light}>
-					<DatePickerInput
-						placeholder={componentObj.placeholder}
-						disabled={componentObj.disabled}
-						invalid={componentObj.invalid}
-						invalidText={componentObj.invalidText}
-						labelText={componentObj.rangeStartLabel}
-						size={componentObj.size} />
-					{
-						componentObj.datePickerType === 'range' &&
-							<DatePickerInput
-								placeholder={componentObj.placeholder}
-								labelText={componentObj.rangeEndLabel}
-								size={componentObj.size}
-								disabled={componentObj.disabled}
-								invalid={componentObj.invalid}
-								invalidText={componentObj.invalidText} />
-					}
+					className={cx(preventCheckEventStyle, pickerInputAlignment, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}
+					dateFormat={componentObj.dateFormat}
+					datePickerType={componentObj.datePickerType}
+					light={componentObj.light}>
+						<DatePickerInput
+							placeholder={componentObj.placeholder}
+							disabled={componentObj.disabled}
+							invalid={componentObj.invalid}
+							invalidText={componentObj.invalidText}
+							labelText={componentObj.rangeStartLabel}
+							size={componentObj.size} />
+						{
+							componentObj.datePickerType === 'range' &&
+								<DatePickerInput
+									placeholder={componentObj.placeholder}
+									labelText={componentObj.rangeEndLabel}
+									size={componentObj.size}
+									disabled={componentObj.disabled}
+									invalid={componentObj.invalid}
+									invalidText={componentObj.invalidText} />
+						}
 				</DatePicker>
 			}
 		</AComponent>
