@@ -33,7 +33,17 @@ export interface ColumnState {
 export const type = 'column';
 
 export const slots = {
-	...commonSlots
+	...commonSlots,
+	smallSpan: 'number',
+	smallOffset: 'number',
+	mediumSpan: 'number',
+	mediumOffset: 'number',
+	largeSpan: 'number',
+	largeOffset: 'number',
+	xLargeSpan: 'number',
+	xLargeOffset: 'number',
+	maxSpan: 'number',
+	maxOffset: 'number'
 };
 
 export const UIColumn = ({ state, setState, setGlobalState, sendSignal }: {
