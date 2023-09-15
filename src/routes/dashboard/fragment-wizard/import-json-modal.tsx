@@ -6,13 +6,15 @@ import {
 	FormItem,
 	FileUploaderDropContainer,
 	FileUploaderItem,
-	TextArea
+	TextArea,
+	InlineNotification
 } from '@carbon/react';
 import { FragmentWizardModals } from './fragment-wizard';
 import { generateNewFragment } from './generate-new-fragment';
 
 import { GlobalStateContext, NotificationActionType, NotificationContext } from '../../../context';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { CURRENT_MODEL_VERSION, updateModelInPlace } from '../../../utils/model-converter';
 
 const fragmentOptions = css`
 	margin-left: 30px;
@@ -26,6 +28,10 @@ const fragmentOptions = css`
 	@media screen and (max-width: 45rem) {
 		flex-direction: column;
 	}
+`;
+
+const notificationStyle = css`
+	margin-bottom: 1rem;
 `;
 
 export interface ImportJsonModalProps {
@@ -51,8 +57,9 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 	const [, dispatchNotification] = useContext(NotificationContext);
 	const [files, setFiles] = useState([] as any[]);
 	const [jsonString, _setJsonString] = useState('');
-	const [fragmentJson, setFragmentJson] = useState('');
+	const [fragmentJson, setFragmentJson] = useState<any>({});
 	const [jsonParseError, setJsonParseError] = useState('');
+	const [modelMismatchNotification, setModelMismatchNotification] = useState(false);
 
 	const setJsonString = (js: string) => {
 		_setJsonString(js);
@@ -60,7 +67,15 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 		try {
 			if (js) {
 				setFragmentJson(JSON.parse(js));
+				if (fragmentJson.version !== CURRENT_MODEL_VERSION) {
+					setModelMismatchNotification(true);
+				} else {
+					setModelMismatchNotification(false);
+				}
+			} else {
+				setModelMismatchNotification(false);
 			}
+
 			setJsonParseError('');
 		} catch (e) {
 			setJsonParseError((e as any).toString());
@@ -209,6 +224,12 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 			shouldSubmitOnEnter={false}
 			selectorPrimaryFocus='.cds--tile--selectable'
 			onRequestSubmit={() => {
+				// @TODO Before generating update
+				// on change detect version and dispaly info notification
+
+				updateModelInPlace(fragmentJson);
+				setFragmentJson(fragmentJson);
+
 				generateFragment();
 				props.setLastVisitedModal(FragmentWizardModals.IMPORT_JSON_MODAL);
 				props.setDisplayedModal(FragmentWizardModals.CREATE_FRAGMENT_MODAL);
@@ -228,6 +249,16 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 			primaryButtonDisabled={!jsonString || jsonParseError}
 			secondaryButtonText='Back'>
 			<div className={fragmentOptions}>
+				{
+					modelMismatchNotification &&
+					<InlineNotification
+						className={notificationStyle}
+						kind='warning'
+						lowContrast={true}
+						hideCloseButton
+						statusIconDescription='notification'
+						title='Model version is outdated and will be migrated in the import process.' />
+				}
 				<FormItem>
 					<p className='cds--file--label'>Upload file</p>
 					<p className='cds--label-description'>
