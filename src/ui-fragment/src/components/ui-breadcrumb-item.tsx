@@ -10,6 +10,7 @@ export interface BreadcrumbItemState {
 	id: string | number;
 	label: string;
 	hidden?: boolean;
+	isCurrentPage?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext?: {
 		name: string;
@@ -18,11 +19,26 @@ export interface BreadcrumbItemState {
 
 export const type = 'breadcrumb-item';
 
+export const signals = ['click'];
+
 export const slots = {
-	...commonSlots
+	...commonSlots,
+	setIsCurrentPage: (state: BreadcrumbItemState) => ({
+		...state,
+		isCurrentPage: true
+	}),
+	unsetIsCurrentPage: (state: BreadcrumbItemState) => ({
+		...state,
+		isCurrentPage: false
+	}),
+	toggleIsCurrentPage: (state: BreadcrumbItemState) => ({
+		...state,
+		isCurrentPage: !state.isCurrentPage
+	}),
+	isCurrentPage: 'boolean'
 };
 
-export const UIBreadcrumbItem = ({ state }: {
+export const UIBreadcrumbItem = ({ state, sendSignal }: {
 	state: BreadcrumbItemState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
@@ -35,6 +51,7 @@ export const UIBreadcrumbItem = ({ state }: {
 
 	return <BreadcrumbItem
 	href={state.href}
+	onClick={() => sendSignal(state.id, 'click')}
 	className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 		{ state.label }
 	</BreadcrumbItem>;
