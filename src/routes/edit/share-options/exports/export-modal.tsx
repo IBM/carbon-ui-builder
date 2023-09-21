@@ -258,6 +258,7 @@ export const ExportModal = () => {
 							<div className={titleWrapper}>
 								<h3>Angular Code</h3>
 								{
+									// Need to check for version since sandbox doesn't work with @carbon/styles (Carbon 11 package)
 									version !== 'V11' &&
 									<a
 										href={generateSandboxUrl(createFragmentSandbox(angularCode))}
