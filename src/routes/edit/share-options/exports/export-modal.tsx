@@ -194,10 +194,6 @@ export const ExportModal = () => {
 
 	const jsonCode: any = getFragmentJsonExportString(fragmentExportModal.fragment, fragments, styleClasses);
 
-	const onVersionChange = ({ selectedItem }: any) => {
-		setVersion(selectedItem.id);
-	};
-
 	const getSharableLink = () => {
 		let link = location.protocol + '//' + location.host;
 		const jsonExport = JSON.parse(jsonCode);
@@ -245,7 +241,7 @@ export const ExportModal = () => {
 							items={carbonVersions}
 							selectedItem={{ id: version }}
 							itemToString={(item: any) => item ? item.id : ''}
-							onChange={onVersionChange} />
+							onChange={({ selectedItem }: any) => setVersion(selectedItem.id)} />
 					</TabList>
 					{
 						version !== 'v11' &&
