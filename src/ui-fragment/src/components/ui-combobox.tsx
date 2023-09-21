@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComboBox, FilterableMultiSelect } from '@carbon/react';
-import { CssClasses } from '../types';
+import { CssClasses, SendSignal } from '../types';
 import { stringToCssClassName } from '../utils';
 import { commonSlots, slotsDisabled } from '../common-slots';
 
@@ -35,16 +35,74 @@ export interface ComboBoxState {
 
 export const type = 'combobox';
 
+export const signals = ['select'];
+
 export const slots = {
 	...commonSlots,
-	...slotsDisabled
+	...slotsDisabled,
+	markValid: (state: any) => ({
+		...state,
+		invalid: false
+	}),
+	markInvalid: (state: any) => ({
+		...state,
+		invalid: true
+	}),
+	toggleInvalid: (state: any) => ({
+		...state,
+		invalid: !state.invalid
+	}),
+	enableMulti: (state: any) => ({
+		...state,
+		isMulti: true
+	}),
+	disableMulti: (state: any) => ({
+		...state,
+		isMulti: false
+	}),
+	toggleMulti: (state: any) => ({
+		...state,
+		isMulti: !state.isMulti
+	}),
+	enableInline: (state: any) => ({
+		...state,
+		isInline: true
+	}),
+	disableInline: (state: any) => ({
+		...state,
+		isInline: false
+	}),
+	toggleInline: (state: any) => ({
+		...state,
+		isInline: !state.isInline
+	}),
+	activateWarning: (state: any) => ({
+		...state,
+		warn: true
+	}),
+	deactivateWarning: (state: any) => ({
+		...state,
+		warn: false
+	}),
+	toggleWarning: (state: any) => ({
+		...state,
+		warn: !state.warn
+	}),
+	invalid: 'boolean',
+	isMulti: 'boolean',
+	isInline: 'boolean',
+	warn: 'boolean',
+	warnText: 'string',
+	label: 'string',
+	helperText: 'string',
+	size: 'string'
 };
 
-export const UIComboBox = ({ state, setState }: {
+export const UIComboBox = ({ state, sendSignal }: {
 	state: ComboBoxState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
-	sendSignal: (id: number | string, signal: string) => void;
+	sendSignal: SendSignal;
 }) => {
 	if (state.type !== 'combobox') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -83,9 +141,14 @@ export const UIComboBox = ({ state, setState }: {
 		selectedItem={state.selectedItem}
 		helperText={state.helperText}
 		itemToString={state.itemToString || ((item) => item?.text || '')}
-		onChange={(selectedItem: any) => setState({
-			...state,
-			selectedItem: state.listItems?.find((item) => item.text === selectedItem.text)
-		})}
+		onChange={(selectedItem: any) => sendSignal(
+			state.id,
+			'select',
+			[state.listItems?.find((item) => item.text === selectedItem.text).selectedItem],
+			{
+				...state,
+				selectedItem: state.listItems?.find((item) => item.text === selectedItem.text)
+			})
+		}
 		className={cssClasses} />;
 };
