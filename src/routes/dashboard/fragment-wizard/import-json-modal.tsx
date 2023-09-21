@@ -224,9 +224,7 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 			shouldSubmitOnEnter={false}
 			selectorPrimaryFocus='.cds--tile--selectable'
 			onRequestSubmit={() => {
-				// @TODO Before generating update
-				// on change detect version and dispaly info notification
-
+				// Updates model in place before entering edit mode
 				updateModelInPlace(fragmentJson);
 				setFragmentJson(fragmentJson);
 
