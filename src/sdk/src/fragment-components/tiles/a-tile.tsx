@@ -3,7 +3,7 @@ import {
 	Checkbox,
 	TextInput,
 	Tile
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
 import { css, cx } from 'emotion';
@@ -24,7 +24,7 @@ export const ATileSettingsUI = ({ selectedComponent, setComponent, fragment, set
 			labelText='Light theme'
 			id='theme-select'
 			checked={selectedComponent.light}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					light: checked
@@ -100,25 +100,51 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : ''}';`,
-			outputs: (_) => '',
-			imports: ['TilesModule'],
-			code: ({ json, fragments, jsonToTemplate }) => {
-				return `<ibm-tile
-					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
-					${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-				</ibm-tile>`;
+			latest: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : ''}';`,
+				outputs: (_) => '',
+				imports: ['TilesModule'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<cds-tile
+						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+						${angularClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</cds-tile>`;
+				}
+			},
+			v10: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : ''}';`,
+				outputs: (_) => '',
+				imports: ['TilesModule'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<ibm-tile
+						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+						${angularClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</ibm-tile>`;
+				}
 			}
 		},
 		react: {
-			imports: ['Tile'],
-			code: ({ json, jsonToTemplate, fragments }) => {
-				return `<Tile
-					${json.light !== undefined ? `light={${json.light}}` : ''}
-					${reactClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-				</Tile>`;
+			latest: {
+				imports: ['Tile'],
+				code: ({ json, jsonToTemplate, fragments }) => {
+					return `<Tile
+						${json.light !== undefined ? `light={${json.light}}` : ''}
+						${reactClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</Tile>`;
+				}
+			},
+			v10: {
+				imports: ['Tile'],
+				code: ({ json, jsonToTemplate, fragments }) => {
+					return `<Tile
+						${json.light !== undefined ? `light={${json.light}}` : ''}
+						${reactClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</Tile>`;
+				}
 			}
 		}
 	}

@@ -7,19 +7,19 @@ import {
 	Breadcrumb,
 	BreadcrumbItem,
 	Button,
-	Grid,
+	FlexGrid,
 	Column,
 	Row,
 	ClickableTile
-} from 'carbon-components-react';
+} from '@carbon/react';
 import {
-	CopyLink16,
-	Document32,
-	Folder32,
-	FolderDetails32,
-	NextOutline16,
-	PreviousOutline16
-} from '@carbon/icons-react';
+	CopyLink,
+	Document,
+	Folder,
+	FolderDetails,
+	NextOutline,
+	PreviousOutline
+} from '@carbon/react/icons';
 import { useNavigate } from 'react-router-dom';
 import { css } from 'emotion';
 import { GithubContext } from '../context';
@@ -40,7 +40,7 @@ const FolderItem = ({ repoName, item, basePath }: any) => {
 		className={folderItemStyle}
 		light={true}
 		onClick={() => navigate(`${basePath}/${repoName}`)}>
-			<div><FolderDetails32 /></div>
+			<div><FolderDetails size={32} /></div>
 			{repoName}
 		</ClickableTile>;
 	}
@@ -51,10 +51,10 @@ const FolderItem = ({ repoName, item, basePath }: any) => {
 	onClick={() => navigate(`${basePath}/${repoName}/${item.path}`)}>
 		<div>
 			{
-				item.type === 'dir' && <Folder32 />
+				item.type === 'dir' && <Folder size={32} />
 			}
 			{
-				item.type === 'file' && <Document32 />
+				item.type === 'file' && <Document size={32} />
 			}
 		</div>
 		{item.name}
@@ -204,7 +204,7 @@ export const GithubNavigator = ({ basePath, path, repoName, repoOrg, showToolbar
 						kind='ghost'
 						hasIconOnly
 						iconDescription='Copy sharable link'
-						renderIcon={CopyLink16}
+						renderIcon={CopyLink}
 						tooltipPosition='bottom'
 						tooltipAlignment='end'
 						onClick={() => {
@@ -218,7 +218,7 @@ export const GithubNavigator = ({ basePath, path, repoName, repoOrg, showToolbar
 								hasIconOnly
 								disabled={getFileIndex() <= 0}
 								iconDescription='Previous file'
-								renderIcon={PreviousOutline16}
+								renderIcon={PreviousOutline}
 								tooltipPosition='bottom'
 								tooltipAlignment='start'
 								onClick={() => {
@@ -229,7 +229,7 @@ export const GithubNavigator = ({ basePath, path, repoName, repoOrg, showToolbar
 								hasIconOnly
 								disabled={getFileIndex() >= getFilesList().length - 1}
 								iconDescription='Next file'
-								renderIcon={NextOutline16}
+								renderIcon={NextOutline}
 								tooltipPosition='bottom'
 								tooltipAlignment='start'
 								onClick={() => {
@@ -251,7 +251,7 @@ export const GithubNavigator = ({ basePath, path, repoName, repoOrg, showToolbar
 						path={path} />
 				</div>
 				: <div className={showToolbar ? folderContentStyleWithToolbar : folderContentStyle}>
-					<Grid>
+					<FlexGrid>
 						<Row>
 							{
 								repoName
@@ -266,7 +266,7 @@ export const GithubNavigator = ({ basePath, path, repoName, repoOrg, showToolbar
 								</Column>)
 							}
 						</Row>
-					</Grid>
+					</FlexGrid>
 				</div>
 		}
 	</>;

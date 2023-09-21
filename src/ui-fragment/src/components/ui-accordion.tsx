@@ -1,5 +1,5 @@
 import React from 'react';
-import { Accordion } from 'carbon-components-react';
+import { Accordion } from '@carbon/react';
 import { CssClasses } from '../types';
 import {
 	renderComponents,

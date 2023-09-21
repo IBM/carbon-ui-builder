@@ -1,5 +1,5 @@
 import React from 'react';
-import { BreadcrumbItem } from 'carbon-components-react';
+import { BreadcrumbItem } from '@carbon/react';
 import { commonSlots } from '../common-slots';
 import { CssClasses } from '../types';
 

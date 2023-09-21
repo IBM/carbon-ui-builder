@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { UIFragment } from '../../ui-fragment/src/ui-fragment';
 import { expandJsonToState, getAllFragmentStyleClasses, stringToCssClassName } from '../../ui-fragment/src/utils';
 import { camelCase, kebabCase, uniq, upperFirst } from 'lodash';
+import { CURRENT_MODEL_VERSION } from '../../utils/model-converter';
 import { allComponents as allUIComponents } from '../../ui-fragment/src/components';
 import { Action } from '../../ui-fragment/src/types';
 
@@ -79,7 +80,7 @@ export const drag = (event: any, dragObj: any) => {
 };
 
 const draggableSelectorDirect = ':scope > [draggable]';
-const draggableSelectorColumn = ':scope > .bx--col > [draggable]';
+const draggableSelectorColumn = ':scope > .cds--col > [draggable]';
 const draggableSelector = `${draggableSelectorDirect}, ${draggableSelectorColumn}`;
 
 export const getParentComponent = (state: any, child: any) => {
@@ -282,6 +283,7 @@ export const hasMicroLayouts = (fragment: any): boolean => {
 
 export const getShallowFragmentJsonExport = (fragment: any, fragments: any[], styleClasses: any[]) => {
 	return {
+		version: CURRENT_MODEL_VERSION,
 		id: fragment.id,
 		lastModified: fragment.lastModified,
 		title: fragment.title,

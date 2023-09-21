@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tag } from 'carbon-components-react';
+import { Tag } from '@carbon/react';
 import { CssClasses } from '../types';
 import { stringToCssClassName } from '../utils';
 import { commonSlots, slotsDisabled } from '../common-slots';

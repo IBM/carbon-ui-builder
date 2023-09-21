@@ -7,7 +7,7 @@ export type RowProps = PropsWithChildren<{
 }>;
 
 export const Row = ({ styles, children }: RowProps) => (
-	<div className={cx('bx--row', styles)}>{children}</div>
+	<div className={cx('cds--row', styles)}>{children}</div>
 );
 
 export interface ColDefinition {
@@ -24,10 +24,10 @@ export type ColProps = PropsWithChildren<{
 export const Col = ({ cols, render, children }: ColProps) => {
 	const baseRender = render ?? ((props) => <div {...props} />);
 	const classes = cx({
-		[`bx--col-sm-${cols?.sm}`]: !!cols?.sm ?? false,
-		[`bx--col-md-${cols?.md}`]: !!cols?.md ?? false,
-		[`bx--col-lg-${cols?.lg}`]: !!cols?.lg ?? false,
-		'bx--col': !!cols
+		[`cds--col-sm-${cols?.sm}`]: !!cols?.sm ?? false,
+		[`cds--col-md-${cols?.md}`]: !!cols?.md ?? false,
+		[`cds--col-lg-${cols?.lg}`]: !!cols?.lg ?? false,
+		'cds--col': !!cols
 	});
 	return baseRender({
 		className: classes,

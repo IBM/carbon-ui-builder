@@ -1,5 +1,5 @@
 import React from 'react';
-import { OverflowMenuItem } from 'carbon-components-react';
+import { OverflowMenuItem } from '@carbon/react';
 import { CssClasses } from '../types';
 import { commonSlots } from '../common-slots';
 

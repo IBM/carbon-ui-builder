@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button } from 'carbon-components-react';
+import { Button } from '@carbon/react';
 import {
-	Draggable16,
-	Edit16,
-	TrashCan16,
-	ChevronDown16,
-	ChevronUp16
-} from '@carbon/icons-react';
+	Draggable,
+	Edit,
+	TrashCan,
+	ChevronDown,
+	ChevronUp
+} from '@carbon/react/icons';
 import { css, cx } from 'emotion';
 import { getParentComponent, stateWithoutComponent, updatedState } from '../tools';
 import { actionIconStyle } from '../styles';
@@ -251,7 +251,7 @@ const LayoutWidgetItem = ({
 			className={dragHandlerStyle}
 			onDragStart={onDragStart}
 			onDragEnd={onDragEnd}>
-				<Draggable16 />
+				<Draggable size={16} />
 			</div>
 
 			<div className={css`width: ${depth}rem;`} />
@@ -265,8 +265,8 @@ const LayoutWidgetItem = ({
 					onClick={() => setExpanded(componentObj, !isExpanded(componentObj))}>
 							{
 								isExpanded(componentObj)
-								? <ChevronUp16 className={actionIconStyle} />
-								: <ChevronDown16 className={actionIconStyle} />
+								? <ChevronUp size={16} className={actionIconStyle} />
+								: <ChevronDown size={16} className={actionIconStyle} />
 							}
 					</Button>
 				: <div className={css`min-width: 32px;`} />
@@ -283,7 +283,7 @@ const LayoutWidgetItem = ({
 					...fragment,
 					selectedComponentId: componentObj.id
 				}, false)}>
-				<Edit16 className={actionIconStyle} />
+				<Edit size={16} className={actionIconStyle} />
 			</Button>
 			<Button
 				kind='ghost'
@@ -296,7 +296,7 @@ const LayoutWidgetItem = ({
 					// eslint-disable-next-line react/prop-types
 					data: stateWithoutComponent(fragment.data, componentObj.id)
 				})}>
-				<TrashCan16 className={actionIconStyle} />
+				<TrashCan size={16} className={actionIconStyle} />
 			</Button>
 		</div>
 		{

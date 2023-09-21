@@ -1,6 +1,6 @@
 import React from 'react';
 import { css } from 'emotion';
-import { Button } from 'carbon-components-react';
+import { Button } from '@carbon/react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/header';
 // import the img placeholder svg
@@ -29,7 +29,7 @@ export const NotFound = () => {
 		<>
 			<Header />
 			<div className={placeholderContainer}>
-				<img alt="Fragment not found" src={placeholder} className={svgStyle} />
+				<img alt='Fragment not found' src={placeholder} className={svgStyle} />
 				<div style={{ textAlign: 'left' }}>
 					<h3>404: Not found</h3>
 					<p style={{ marginTop: '0.5em' }}>

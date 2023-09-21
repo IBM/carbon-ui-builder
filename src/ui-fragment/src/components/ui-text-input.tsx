@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput } from 'carbon-components-react';
+import { TextInput } from '@carbon/react';
 import { CssClasses, SendSignal } from '../types';
 import { stringToCssClassName } from '../utils';
 import { commonSlots, slotsDisabled } from '../common-slots';

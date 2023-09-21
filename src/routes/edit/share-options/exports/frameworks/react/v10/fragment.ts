@@ -1,8 +1,6 @@
-import { useContext } from 'react';
-import { GlobalStateContext } from '../../../../../../context';
-import { getAllFragmentStyleClasses } from '../../../../../../ui-fragment/src/utils';
-import { hasFragmentStyleClasses } from '../../../../../../utils/fragment-tools';
-import { format } from '../utils';
+import { getAllFragmentStyleClasses } from '../../../../../../../ui-fragment/src/utils';
+import { hasFragmentStyleClasses } from '../../../../../../../utils/fragment-tools';
+import { format } from '../../utils';
 import {
 	formatOptions,
 	formatOptionsCss,
@@ -11,7 +9,7 @@ import {
 	jsonToTemplate,
 	otherImportsFromComponentObj
 } from './utils';
-import { classNameFromFragment, tagNameFromFragment } from '../../../../../../sdk/src/tools';
+import { classNameFromFragment, tagNameFromFragment } from '../../../../../../../sdk/src/tools';
 
 const generateTemplate = (json: any, fragments: any[]) => {
 	const carbonImports = jsonToCarbonImports(json);
@@ -19,17 +17,15 @@ const generateTemplate = (json: any, fragments: any[]) => {
 		string += `${curr}, `
 	), '');
 	return {
-		imports: `import { ${carbonImportsString} } from 'carbon-components-react';
+		imports: `import { ${carbonImportsString} } from '@carbon/react';
 			${otherImportsFromComponentObj(json, fragments)}`,
 		template: jsonToTemplate(json, fragments),
 		additionalCode: getAdditionalCodeAsString(json, fragments)
 	};
 };
 
-const jsonToSharedComponents = (json: any, fragments: any[]) => {
+const jsonToSharedComponents = (json: any, fragments: any[], globalStyleClasses: any) => {
 	let sharedComponents: any = {};
-	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const { styleClasses: globalStyleClasses } = useContext(GlobalStateContext);
 
 	if (json.type === 'fragment') {
 		const fragment = fragments.find(f => f.id === json.fragmentId);
@@ -60,26 +56,24 @@ const jsonToSharedComponents = (json: any, fragments: any[]) => {
 
 		sharedComponents = {
 			...sharedComponents,
-			...jsonToSharedComponents(fragment.data, fragments)
+			...jsonToSharedComponents(fragment.data, fragments, globalStyleClasses)
 		};
 	}
 
 	json.items?.forEach((item: any) => {
 		sharedComponents = {
 			...sharedComponents,
-			...jsonToSharedComponents(item, fragments)
+			...jsonToSharedComponents(item, fragments, globalStyleClasses)
 		};
 	});
 
 	return sharedComponents;
 };
 
-export const createReactApp = (fragment: any, fragments: any[]) => {
-	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const { styleClasses: globalStyleClasses } = useContext(GlobalStateContext);
+export const createReactApp = (fragment: any, fragments: any[], globalStyleClasses: any) => {
 	const fragmentTemplate = generateTemplate(fragment.data, fragments);
 
-	const sharedComponents = jsonToSharedComponents(fragment.data, fragments);
+	const sharedComponents = jsonToSharedComponents(fragment.data, fragments, globalStyleClasses);
 
 	const indexHtml = `<div id='root'></div>
 `;
@@ -131,8 +125,8 @@ ReactDOM.render(<App />, document.getElementById('root'));
 		dependencies: {
 			'carbon-components': '10.58.0',
 			'carbon-icons': '7.0.7',
-			'@carbon/icons-react': '10.15.0',
-			'carbon-components-react': '7.50.0',
+			'@carbon/react/icons': '10.15.0',
+			'@carbon/react': '7.50.0',
 			react: '16.12.0',
 			'react-dom': '16.12.0',
 			'react-scripts': '3.0.1',

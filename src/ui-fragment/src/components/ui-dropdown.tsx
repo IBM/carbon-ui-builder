@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dropdown, MultiSelect } from 'carbon-components-react';
+import { Dropdown, MultiSelect } from '@carbon/react';
 import { CssClasses } from '../types';
 import { stringToCssClassName } from '../utils';
 import { commonSlots, slotsDisabled } from '../common-slots';

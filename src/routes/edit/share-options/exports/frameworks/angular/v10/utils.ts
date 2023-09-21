@@ -2,9 +2,9 @@ import { Options } from 'prettier';
 import parserBabel from 'prettier/parser-babel';
 import parserHtml from 'prettier/parser-html';
 import parserCss from 'prettier/parser-postcss';
-import { allComponents } from '../../../../../../sdk/src/fragment-components';
-import { addIfNotExist } from '../../../../../../ui-fragment/src/utils';
-import { tagNameFromFragment } from '../../../../../../sdk/src/tools';
+import { allComponents } from '../../../../../../../sdk/src/fragment-components';
+import { addIfNotExist } from '../../../../../../../ui-fragment/src/utils';
+import { tagNameFromFragment } from '../../../../../../../sdk/src/tools';
 
 export const formatOptionsTypescript: Options = {
 	plugins: [parserBabel],
@@ -30,7 +30,7 @@ export const jsonToAngularImports = (json: any) => {
 
 	for (const component of Object.values(allComponents)) {
 		if (json.type === component.componentInfo.type) {
-			addIfNotExist(imports, component.componentInfo.codeExport.angular?.imports);
+			addIfNotExist(imports, component.componentInfo.codeExport.angular?.v10.imports);
 		}
 	}
 
@@ -47,7 +47,7 @@ export const getAngularInputsFromJson = (json: any): string => {
 	const getOne = (json: any) => {
 		for (const component of Object.values(allComponents)) {
 			if (json.type === component.componentInfo.type) {
-				return component.componentInfo.codeExport.angular?.inputs({ json }) || '';
+				return component.componentInfo.codeExport.angular?.v10.inputs({ json }) || '';
 			}
 		}
 		return '';
@@ -61,7 +61,7 @@ export const getAngularOutputsFromJson = (json: any): string => {
 	const getOne = (json: any) => {
 		for (const component of Object.values(allComponents)) {
 			if (json.type === component.componentInfo.type) {
-				return component.componentInfo.codeExport.angular?.outputs({ json }) || '';
+				return component.componentInfo.codeExport.angular?.v10.outputs({ json }) || '';
 			}
 		}
 		return '';
@@ -76,8 +76,8 @@ export const jsonToTemplate = (json: any, fragments: any[]) => {
 	}
 
 	for (const component of Object.values(allComponents)) {
-		if (json.type === component.componentInfo.type && !component.componentInfo.codeExport.angular.isNotDirectExport) {
-			return component.componentInfo.codeExport.angular.code({ json, jsonToTemplate, fragments });
+		if (json.type === component.componentInfo.type && !component.componentInfo.codeExport.angular.v10.isNotDirectExport) {
+			return component.componentInfo.codeExport.angular.v10.code({ json, jsonToTemplate, fragments });
 		}
 	}
 

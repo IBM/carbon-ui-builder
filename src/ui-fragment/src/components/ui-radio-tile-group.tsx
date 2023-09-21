@@ -1,5 +1,5 @@
 import React from 'react';
-import { TileGroup, RadioTile } from 'carbon-components-react';
+import { TileGroup, RadioTile } from '@carbon/react';
 import { CssClasses } from '../types';
 import {
 	renderComponents,

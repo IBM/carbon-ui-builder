@@ -1,5 +1,5 @@
 import React from 'react';
-import { Column } from 'carbon-components-react';
+import { Column } from '@carbon/react';
 import { CssClasses } from '../types';
 import {
 	renderComponents,

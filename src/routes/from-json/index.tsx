@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import Editor from '@monaco-editor/react';
-import { Button } from 'carbon-components-react';
-import { Edit32, Copy16 } from '@carbon/icons-react';
+import { Button } from '@carbon/react';
+import { Edit, Copy } from '@carbon/react/icons';
 import { GlobalStateContext } from '../../context';
 import { UIFragment } from '../../ui-fragment/src/ui-fragment';
 import { generateNewFragment } from '../dashboard/fragment-wizard/generate-new-fragment';
@@ -95,7 +95,7 @@ export const FromJson = () => {
 		<div className={contentContainerStyle}>
 			<p>
 				<Link to='/'>Carbon UI Builder</Link> enables you
-				to <strong>build product pages</strong> with <a href='https://carbondesignsystem.com/' target='_blank' rel="noreferrer">Carbon</a>
+				to <strong>build product pages</strong> with <a href='https://carbondesignsystem.com/' target='_blank' rel='noreferrer'>Carbon</a>
 				<strong> in a fraction of time</strong> it normally takes you - for <strong>FREE</strong>.
 			</p>
 			<p>
@@ -116,8 +116,8 @@ export const FromJson = () => {
 				To add this fragment to your fragments, modify and export it, click the button below.
 			</p>
 			<Button
-			renderIcon={Edit32}
 			size='xl'
+			renderIcon={Edit}
 			onClick={openInEditor}>
 				Edit & Export
 			</Button>
@@ -140,7 +140,7 @@ export const FromJson = () => {
 				tooltipPosition='right'
 				iconDescription='Copy to clipboard'
 				onClick={() => copyToClipboard(state.parseSucceeded ? JSON.stringify(state.fragmentState, null, 2) : params.json)}
-				renderIcon={Copy16} />
+				renderIcon={Copy} />
 		</h2>
 		<Editor
 			className={blockContainerStyle}

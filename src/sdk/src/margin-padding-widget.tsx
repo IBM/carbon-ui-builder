@@ -4,7 +4,7 @@ import {
 	Button,
 	Dropdown,
 	NumberInput
-} from 'carbon-components-react';
+} from '@carbon/react';
 
 const marginDivStyle = css`
 	display: flex;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tile } from 'carbon-components-react';
+import { Tile } from '@carbon/react';
 import { CssClasses } from '../types';
 import {
 	renderComponents,

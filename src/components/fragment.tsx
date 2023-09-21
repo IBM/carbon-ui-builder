@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState } from 'react';
-import { SkeletonPlaceholder } from 'carbon-components-react';
-import { Add32, DropPhoto32 } from '@carbon/icons-react';
+import { SkeletonPlaceholder } from '@carbon/react';
+import { Add, DropPhoto } from '@carbon/react/icons';
 import './fragment-preview.scss';
 import { css, cx } from 'emotion';
 import { allComponents, ComponentInfoRenderProps } from '../sdk/src/fragment-components';
@@ -235,8 +235,8 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 				{
 					!fragment.data?.items?.length && <div className={centerStyle} onClick={addGrid}>
 						<div>
-							<p><Add32 /> Click to add grid <br /></p>
-							<p><DropPhoto32 /> Drag and drop an element from the left pane to get started</p>
+							<p><Add size={32} /> Click to add grid <br /></p>
+							<p><DropPhoto size={32} /> Drag and drop an element from the left pane to get started</p>
 						</div>
 					</div>
 				}

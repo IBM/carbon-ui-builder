@@ -1,5 +1,5 @@
 import React from 'react';
-import { TileBelowTheFoldContent } from 'carbon-components-react';
+import { TileBelowTheFoldContent } from '@carbon/react';
 import { CssClasses } from '../types';
 import { renderComponents, setItemInState } from '../utils';
 import { commonSlots } from '../common-slots';

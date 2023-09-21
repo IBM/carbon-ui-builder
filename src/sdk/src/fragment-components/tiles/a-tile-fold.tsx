@@ -1,7 +1,7 @@
 import React from 'react';
 import {
 	TileBelowTheFoldContent
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent, ComponentInfo } from '../a-component';
 import {
 	angularClassNamesFromComponentObj,
@@ -50,30 +50,61 @@ export const componentInfo: ComponentInfo = {
 	},
 	codeExport: {
 		angular: {
-			inputs: () => '',
-			outputs: () => '',
-			imports: [],
-			code: ({ json, fragments, jsonToTemplate }) => {
-				// Appends below the fold class to class list
-				let classes = angularClassNamesFromComponentObj(json);
-				if (classes) {
-					classes = classes.split('="').join('="bx--tile-content__below-the-fold ');
-				} else {
-					classes = 'class="bx--tile-content__below-the-fold"';
-				}
+			latest: {
+				inputs: () => '',
+				outputs: () => '',
+				imports: [],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					// Appends below the fold class to class list
+					let classes = angularClassNamesFromComponentObj(json);
+					if (classes) {
+						classes = classes.split('="').join('="cds--tile-content__below-the-fold ');
+					} else {
+						classes = 'class="cds--tile-content__below-the-fold"';
+					}
 
-				return `<span ${classes}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-				</span>`;
+					return `<span ${classes}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</span>`;
+				}
+			},
+			v10: {
+				inputs: () => '',
+				outputs: () => '',
+				imports: [],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					// Appends below the fold class to class list
+					let classes = angularClassNamesFromComponentObj(json);
+					if (classes) {
+						classes = classes.split('="').join('="bx--tile-content__below-the-fold ');
+					} else {
+						classes = 'class="bx--tile-content__below-the-fold"';
+					}
+
+					return `<span ${classes}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</span>`;
+				}
 			}
 		},
 		react: {
-			imports: [],
-			code: ({ json, jsonToTemplate, fragments }) => {
-				return `<TileBelowTheFoldContent
-					${reactClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-					</TileBelowTheFoldContent>`;
+			latest: {
+				imports: [],
+				code: ({ json, jsonToTemplate, fragments }) => {
+					return `<TileBelowTheFoldContent
+						${reactClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+						</TileBelowTheFoldContent>`;
+				}
+			},
+			v10: {
+				imports: [],
+				code: ({ json, jsonToTemplate, fragments }) => {
+					return `<TileBelowTheFoldContent
+						${reactClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+						</TileBelowTheFoldContent>`;
+				}
 			}
 		}
 	}

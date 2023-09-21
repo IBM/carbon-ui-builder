@@ -10,8 +10,8 @@ import {
 	TextInput,
 	Tag,
 	Tooltip
-} from 'carbon-components-react';
-import { Add16 } from '@carbon/icons-react';
+} from '@carbon/react';
+import { Add, Information } from '@carbon/react/icons';
 import { leftPane, leftPaneContent } from '.';
 import { GlobalStateContext } from '../../context';
 import { kebabCase } from 'lodash';
@@ -129,21 +129,26 @@ export const StylePane = ({ isActive }: any) => {
 					<Search
 						id='styles-search'
 						light
+						size='lg'
 						labelText='Filter classes'
 						placeholder='Filter classes'
 						onChange={(event: any) => setFilterString(event.target.value)} />
 					<Button
 						kind='ghost'
-						renderIcon={Add16}
+						renderIcon={() => <Add size={16} />}
 						iconDescription='Add new class'
 						hasIconOnly
 						tooltipPosition='left'
 						onClick={addNewStyleClass} />
 				</div>
 				<div className={leftPaneContent}>
-					<div className={css`position: absolute; right 0; top: 3rem; z-index: 1; padding: 1rem;`}>
-						<Tooltip className={css`z-index: 9999;`}>
-							Create the CSS classes and use them in the &quot;Advanced styling&quot; menu on the right of the editor.
+				<div className={css`position: absolute; right 0; top: 3rem; z-index: 1; padding: 1rem;`}>
+						<Tooltip
+							align='right'
+							label='Create the CSS classes and use them in the &quot;Advanced styling&quot; menu on the right of the editor.'>
+								<button className='tooltip-trigger' type='button'>
+									<Information />
+								</button>
 						</Tooltip>
 					</div>
 					{
@@ -176,7 +181,7 @@ export const StylePane = ({ isActive }: any) => {
 						labelText='Add descriptive name'
 						disabled={!getSelectedClass().id}
 						checked={hasDescriptiveName()}
-						onChange={(event: any) => setHasDescriptiveName(event)} />
+						onChange={(_: any, { checked }: any) => setHasDescriptiveName(checked)} />
 					{
 						hasDescriptiveName() && <TextInput
 							id='descriptive-name-text-input'

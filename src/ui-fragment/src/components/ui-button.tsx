@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'carbon-components-react';
+import { Button } from '@carbon/react';
 import { CssClasses, SendSignal } from '../types';
 import { stringToCssClassName } from '../utils';
 import { slotsDisabled, commonSlots } from '../common-slots';

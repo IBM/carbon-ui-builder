@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { Modal } from 'carbon-components-react';
+import { Modal } from '@carbon/react';
 import { ModalContext } from '../../context/modal-context';
 import { GlobalStateContext } from '../../context/global-state-context';
 import { useNavigate } from 'react-router-dom';
