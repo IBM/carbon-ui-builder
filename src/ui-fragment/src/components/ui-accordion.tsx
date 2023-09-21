@@ -7,6 +7,7 @@ import {
 	stringToCssClassName
 } from '../utils';
 import { AccordionItemState } from './ui-accordion-item';
+import { commonSlots } from '../common-slots';
 
 export interface AccordionState {
 	type: string;
@@ -14,12 +15,21 @@ export interface AccordionState {
 	id: string | number;
 	align?: string;
 	size?: string;
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
 	};
 	style?: any;
 }
+
+export const type = 'accordion';
+
+export const slots = {
+	...commonSlots,
+	size: 'string',
+	align: 'string'
+};
 
 export const UIAccordion = ({ state, sendSignal, setState, setGlobalState }: {
 	state: AccordionState;

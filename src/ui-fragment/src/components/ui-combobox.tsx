@@ -2,11 +2,13 @@ import React from 'react';
 import { ComboBox, FilterableMultiSelect } from '@carbon/react';
 import { CssClasses } from '../types';
 import { stringToCssClassName } from '../utils';
+import { commonSlots, slotsDisabled } from '../common-slots';
 
 export interface ComboBoxState {
 	type: string;
 	placeholder: string;
 	id: string | number;
+	hidden?: boolean;
 	selectedItem?: any;
 	listItems?: any[];
 	light?: boolean;
@@ -30,6 +32,13 @@ export interface ComboBoxState {
 	};
 	style?: any;
 }
+
+export const type = 'combobox';
+
+export const slots = {
+	...commonSlots,
+	...slotsDisabled
+};
 
 export const UIComboBox = ({ state, setState }: {
 	state: ComboBoxState;

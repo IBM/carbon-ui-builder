@@ -2,12 +2,14 @@ import React from 'react';
 import { RadioButton } from '@carbon/react';
 import { CssClasses } from '../types';
 import { stringToCssClassName } from '../utils';
+import { commonSlots, slotsDisabled } from '../common-slots';
 
 export interface RadioState {
 	type: string;
 	id: string | number;
 	labelText: string;
 	disabled?: boolean;
+	hidden?: boolean;
 	checked?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
@@ -15,6 +17,13 @@ export interface RadioState {
 	};
 	style?: any;
 }
+
+export const type = 'radio';
+
+export const slots = {
+	...commonSlots,
+	...slotsDisabled
+};
 
 export const UIRadio = ({ state, setState, name }: {
 	state: RadioState;

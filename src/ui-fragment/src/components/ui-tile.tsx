@@ -6,17 +6,25 @@ import {
 	setItemInState,
 	stringToCssClassName
 } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface TileState {
 	type: string;
 	light?: boolean;
 	items?: any[];
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
 	};
 	style?: any;
 }
+
+export const type = 'tile';
+
+export const slots = {
+	...commonSlots
+};
 
 export const UITile = ({ state, setState, setGlobalState, sendSignal }: {
 	state: TileState;

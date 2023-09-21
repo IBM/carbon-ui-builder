@@ -7,11 +7,13 @@ import {
 	setItemInState,
 	stringToCssClassName
 } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface BreadcrumbState {
 	type: string;
 	items: BreadcrumbItemState[];
 	id: string | number;
+	hidden?: boolean;
 	noTrailingSlash?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
@@ -19,6 +21,12 @@ export interface BreadcrumbState {
 	};
 	style?: any;
 }
+
+export const type = 'breadcrumb';
+
+export const slots = {
+	...commonSlots
+};
 
 export const UIBreadcrumb = ({ state, setState, setGlobalState, sendSignal }: {
 	state: BreadcrumbState;

@@ -2,11 +2,13 @@ import React from 'react';
 import { Dropdown, MultiSelect } from '@carbon/react';
 import { CssClasses } from '../types';
 import { stringToCssClassName } from '../utils';
+import { commonSlots, slotsDisabled } from '../common-slots';
 
 export interface DropdownState {
 	type: string;
 	placeholder: string;
 	id: string | number;
+	hidden?: boolean;
 	listItems?: any[];
 	light?: boolean;
 	invalid?: boolean;
@@ -29,6 +31,13 @@ export interface DropdownState {
 	};
 	style?: any;
 }
+
+export const type = 'dropdown';
+
+export const slots = {
+	...commonSlots,
+	...slotsDisabled
+};
 
 export const UIDropdown = ({ state, setState }: {
 	state: DropdownState;

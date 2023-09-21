@@ -6,13 +6,16 @@ import {
 	setItemInState,
 	stringToCssClassName
 } from '../utils';
+import { commonSlots, slotsDisabled } from '../common-slots';
 
 export interface AccordionItemState {
 	type: string;
 	items?: any[]; // TODO type
 	title: string;
 	id: string | number;
+	isOpen?: boolean;
 	disabled?: boolean;
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
@@ -21,6 +24,27 @@ export interface AccordionItemState {
 }
 
 export const type = 'accordion-item';
+
+export const signals = ['click', 'headingClick'];
+
+export const slots = {
+	...commonSlots,
+	...slotsDisabled,
+	open: (state: any) => ({
+		...state,
+		open: true
+	}),
+	close: (state: any) => ({
+		...state,
+		open: false
+	}),
+	toggleOpen: (state: any) => ({
+		...state,
+		open: !state.open
+	}),
+	isOpen: 'boolean',
+	title: 'string'
+};
 
 export const UIAccordionItem = ({ state, setState, setGlobalState, sendSignal }: {
 	state: AccordionItemState;
@@ -45,6 +69,9 @@ export const UIAccordionItem = ({ state, setState, setGlobalState, sendSignal }:
 	return <AccordionItem
 	title={state.title}
 	disabled={state.disabled}
+	open={state.isOpen}
+	onClick={() => sendSignal(state.id, 'click')}
+	onHeadingClick={() => sendSignal(state.id, 'headingClick')}
 	className={cssClasses}>
 		{
 			state.items?.map((item: any) => {

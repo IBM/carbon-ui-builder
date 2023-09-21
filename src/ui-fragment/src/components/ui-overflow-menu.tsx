@@ -7,6 +7,7 @@ import {
 } from '../utils';
 import { CssClasses } from '../types';
 import { OverflowMenuItemState } from './ui-overflow-menu-item';
+import { commonSlots } from '../common-slots';
 
 export interface OverflowMenuState {
 	type: string;
@@ -14,12 +15,19 @@ export interface OverflowMenuState {
 	id: string | number;
 	placement?: string;
 	flipped?: boolean;
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
 	};
 	style?: any;
 }
+
+export const type = 'overflow-menu';
+
+export const slots = {
+	...commonSlots
+};
 
 export const UIOverflowMenu = ({ state, setState, setGlobalState, sendSignal }: {
 	state: OverflowMenuState;

@@ -6,12 +6,14 @@ import {
 	setItemInState,
 	stringToCssClassName
 } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface RadioTileGroupState {
 	type: string;
 	id: string | number;
 	legend?: string;
 	disabled?: boolean;
+	hidden?: boolean;
 	valueSelected?: string | number;
 	items?: any[];
 	cssClasses?: CssClasses[];
@@ -33,6 +35,12 @@ export interface RadioTileState {
 	};
 	style?: any;
 }
+
+export const type = 'radio-tile-group';
+
+export const slots = {
+	...commonSlots
+};
 
 export const UIRadioTileGroup = ({ state, setState, setGlobalState, sendSignal }: {
 	state: RadioTileGroupState;

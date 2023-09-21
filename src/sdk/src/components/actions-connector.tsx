@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Dropdown } from '@carbon/react';
+import { ComboBox, Dropdown } from '@carbon/react';
 import { DraggableTileList } from '../draggable-list';
 import { Action } from '../../../ui-fragment/src/types';
 import {
@@ -8,6 +8,13 @@ import {
 	signalsFromType,
 	slotsFromFragmentSignalAndDestination
 } from '../tools';
+import { css } from 'emotion';
+
+const noClearSelectedStyle = css`
+	.bx--list-box__selection, .cds--list-box__selection {
+		display: none;
+	}
+`;
 
 const ActionItem = ({ item, index, updateItem, fragment }: any) => {
 	const [selectedSignal, setSelectedSignal] = useState(item.signal);
@@ -44,6 +51,15 @@ const ActionItem = ({ item, index, updateItem, fragment }: any) => {
 	const component = getComponentById(fragment.data, item.source);
 	const signalDropdownItems: any[] = signalsFromType(component.type).map((item: any) => ({ text: item }));
 
+	useEffect(() => {
+		if (signalDropdownItems.length === 1) {
+			setSelectedSignal(signalDropdownItems[0].text);
+		}
+		if (slotDropdownItems.length === 1) {
+			setSelectedSlot(slotDropdownItems[0]);
+		}
+	}, [signalDropdownItems, slotDropdownItems]);
+
 	return (
 		<>
 			<Dropdown
@@ -55,11 +71,11 @@ const ActionItem = ({ item, index, updateItem, fragment }: any) => {
 				items={signalDropdownItems}
 				itemToString={(item: any) => (item ? item.text : '')}
 				onChange={(element: any) => setSelectedSignal(element.selectedItem.text)}
-				// onChange={(element: any) => handleActionUpdate(element, item, 'actions')}
 				selectedItem={{ text: selectedSignal }}
 			/>
-			<Dropdown
+			<ComboBox
 				id='destinationDropdown'
+				className={noClearSelectedStyle}
 				size='sm'
 				light={true}
 				titleText='Destination'

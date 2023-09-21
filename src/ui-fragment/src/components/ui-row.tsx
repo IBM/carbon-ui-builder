@@ -6,17 +6,25 @@ import {
 	setItemInState,
 	stringToCssClassName
 } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface RowState {
 	type: string;
 	items: any[]; // TODO row type
 	id: string | number;
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
 	};
 	style?: any;
 }
+
+export const type = 'row';
+
+export const slots = {
+	...commonSlots
+};
 
 export const UIRow = ({ state, setState, setGlobalState, sendSignal }: {
 	state: RowState;
