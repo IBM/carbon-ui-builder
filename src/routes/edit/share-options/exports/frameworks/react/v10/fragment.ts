@@ -70,7 +70,7 @@ const jsonToSharedComponents = (json: any, fragments: any[], globalStyleClasses:
 	return sharedComponents;
 };
 
-export const createReactAppv10 = (fragment: any, fragments: any[], globalStyleClasses: any) => {
+export const createReactApp = (fragment: any, fragments: any[], globalStyleClasses: any) => {
 	const fragmentTemplate = generateTemplate(fragment.data, fragments);
 
 	const sharedComponents = jsonToSharedComponents(fragment.data, fragments, globalStyleClasses);

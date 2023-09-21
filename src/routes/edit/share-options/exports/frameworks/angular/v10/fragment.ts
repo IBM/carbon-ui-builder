@@ -103,7 +103,7 @@ const getAllComponentsCode = (json: any, fragments: any[], globalStyleClasses: a
 	return allComponents;
 };
 
-export const createAngularAppv10 = (fragment: any, fragments: any[], globalStyleClasses: any) => {
+export const createAngularApp = (fragment: any, fragments: any[], globalStyleClasses: any) => {
 	const tagName = tagNameFromFragment(fragment);
 	const className = classNameFromFragment(fragment);
 

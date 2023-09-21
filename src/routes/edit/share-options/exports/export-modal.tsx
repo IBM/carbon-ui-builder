@@ -17,8 +17,8 @@ import { css } from 'emotion';
 import Editor, { useMonaco } from '@monaco-editor/react';
 
 import { createFragmentSandbox } from './create-fragment-sandbox';
-import { createReactAppv10 } from './frameworks/react/v10/fragment';
-import { createAngularAppv10 } from './frameworks/angular/v10/fragment';
+import { createReactApp as createReactAppV10 } from './frameworks/react/v10/fragment';
+import { createAngularApp as createAngularAppV10 } from './frameworks/angular/v10/fragment';
 import { createReactApp } from './frameworks/react/latest/fragment';
 import { createAngularApp } from './frameworks/angular/latest/fragment';
 
@@ -166,8 +166,8 @@ export const ExportModal = () => {
 		if (fragmentExportModal?.fragment) {
 			switch (version) {
 				case 'v10':
-					setReactCode(createReactAppv10(fragmentExportModal.fragment, fragments, styleClasses));
-					setAngularCode(createAngularAppv10(fragmentExportModal.fragment, fragments, styleClasses));
+					setReactCode(createReactAppV10(fragmentExportModal.fragment, fragments, styleClasses));
+					setAngularCode(createAngularAppV10(fragmentExportModal.fragment, fragments, styleClasses));
 					break;
 				default:
 					setReactCode(createReactApp(fragmentExportModal.fragment, fragments, styleClasses));
