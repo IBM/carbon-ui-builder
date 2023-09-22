@@ -203,6 +203,7 @@ export const componentInfo: ComponentInfo = {
 						${json.invalid ? `[invalid]='${json.invalid}'` : ''}
 						${json.invalidText ? `[invalidText]='${json.invalidText}'` : ''}
 						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
+						[value]="'${nameStringToVariableString(json.codeContext?.name)}Value'"
 						[placeholder]="'${json.placeholder}'"
 						[size]="${json.size}">
 					</ibm-date-picker-input>`
@@ -253,15 +254,17 @@ export const componentInfo: ComponentInfo = {
 								${json.invalid ? `invalid='${json.invalid}'` : ''}
 								${json.invalidText ? `invalidText='${json.invalidText}'` : ''}
 								size="${json.size}"
+								type='text'
 							/>
 							${json.datePickerType === 'range'
 								? `<DatePickerInput
-								${json.rangeEndLabel ? `labelText='${json.rangeEndLabel}'` : ''}
-								${json.disabled ? `disabled='${json.disabled}'` : ''}
-								${json.invalid ? `invalid='${json.invalid}'` : ''}
-								${json.invalidText ? `invalidText='${json.invalidText}'` : ''} 
-								placeholder="${json.placeholder}"
-								size="${json.size}" />`
+									${json.rangeEndLabel ? `labelText='${json.rangeEndLabel}'` : ''}
+									${json.disabled ? `disabled='${json.disabled}'` : ''}
+									${json.invalid ? `invalid='${json.invalid}'` : ''}
+									${json.invalidText ? `invalidText='${json.invalidText}'` : ''} 
+									placeholder="${json.placeholder}"
+									size="${json.size}"
+									type='text' />`
 								: ''
 							}
 					</DatePicker>`;
