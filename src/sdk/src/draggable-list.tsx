@@ -171,18 +171,19 @@ export const DraggableTileList = ({
 					onDragStart={(event: any) => onDragStart(event, index)}
 					onDragEnd={(event: any) => onDragEnd(event)}
 					className={tileStyle}>
-						<Button
-							className={trashButtonStyle}
-							align='left'
-							size='sm'
-							kind='danger--tertiary'
-							iconDescription='Delete item'
-							hasIconOnly
-							renderIcon={TrashCan}
-							onClick={(event: any) => {
-									event.stopPropagation();
-									removeItemFromList(index);
-							}} />
+						<div className={trashButtonStyle}>
+							<Button
+								align='left'
+								size='sm'
+								kind='danger--tertiary'
+								iconDescription='Delete item'
+								hasIconOnly
+								renderIcon={TrashCan}
+								onClick={(event: any) => {
+										event.stopPropagation();
+										removeItemFromList(index);
+								}} />
+						</div>
 						<Draggable size={16} className={draggableIconStyle} />
 						{
 							Template
