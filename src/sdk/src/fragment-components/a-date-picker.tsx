@@ -190,7 +190,7 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value}";`,
+			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value ? json.value : ''}";`,
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 			imports: ['DatePickerModule'],
 			code: ({ json }) => {
@@ -202,9 +202,9 @@ export const componentInfo: ComponentInfo = {
 						${json.disabled ? `[disabled]='${json.disabled}'` : ''}
 						${json.invalid ? `[invalid]='${json.invalid}'` : ''}
 						${json.invalidText ? `[invalidText]='${json.invalidText}'` : ''}
-						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
+						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
 						[placeholder]="'${json.placeholder}'"
-						[size]="${json.size}"
+						[size]="${json.size}">
 					</ibm-date-picker-input>`
 					: json.datePickerType === 'single'
 					? `<ibm-date-picker
@@ -252,7 +252,6 @@ export const componentInfo: ComponentInfo = {
 								${json.disabled ? `disabled='${json.disabled}'` : ''}
 								${json.invalid ? `invalid='${json.invalid}'` : ''}
 								${json.invalidText ? `invalidText='${json.invalidText}'` : ''}
-								type="text"
 								size="${json.size}"
 							/>
 							${json.datePickerType === 'range'
@@ -262,7 +261,6 @@ export const componentInfo: ComponentInfo = {
 								${json.invalid ? `invalid='${json.invalid}'` : ''}
 								${json.invalidText ? `invalidText='${json.invalidText}'` : ''} 
 								placeholder="${json.placeholder}"
-								type="text"
 								size="${json.size}" />`
 								: ''
 							}
