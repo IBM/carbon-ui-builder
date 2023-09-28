@@ -25,7 +25,8 @@ export const slots = {
 	...slotsDisabled,
 	...commonSlots,
 	text: 'string',
-	size: 'string'
+	size: 'string',
+	kind: 'string'
 };
 
 export const signals = ['click'];
