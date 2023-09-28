@@ -32,10 +32,10 @@ export const ASliderSettingsUI = ({ selectedComponent, setComponent }: any) => {
 		<Checkbox
 			labelText='Hide text input'
 			id='hide-text-input'
-			checked={selectedComponent.textInputIsHidden}
+			checked={selectedComponent.hideTextInput}
 			onChange={(checked: boolean) => setComponent({
 				...selectedComponent,
-				textInputIsHidden: checked
+				hideTextInput: checked
 			})} />
 
 		<Checkbox
@@ -143,7 +143,7 @@ export const ASlider = ({
 					value={componentObj.value}
 					disabled={componentObj.disabled}
 					step={componentObj.step}
-					hideTextInput={componentObj.textInputIsHidden}
+					hideTextInput={componentObj.hideTextInput}
 					stepMultiplier={componentObj.stepMultiplier}
 					minLabel={componentObj.minLabel}
 					maxLabel={componentObj.maxLabel}
@@ -199,7 +199,7 @@ export const componentInfo: ComponentInfo = {
 					(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
 					<span minLabel>{{${nameStringToVariableString(json.codeContext?.name)}MinLabel}}</span>
 					<span maxLabel>{{${nameStringToVariableString(json.codeContext?.name)}MaxLabel}}</span>
-                    <input theme="${nameStringToVariableString(json.codeContext?.name)}Theme" 
+                    <input [theme]="${nameStringToVariableString(json.codeContext?.name)}Theme" 
                     ${angularClassNamesFromComponentObj(json)} />
 				</ibm-slider>`;
 			}
@@ -215,13 +215,12 @@ export const componentInfo: ComponentInfo = {
 					${json.step ? `step={${json.step}}` : ''}
 					${json.stepMultiplier ? `stepMultiplier={${json.stepMultiplier}}` : ''}
 					${json.disabled ? `disabled={${json.disabled}}` : ''}
-					${json.textInputIsHidden ? `hideTextInput={${json.textInputIsHidden}}` : ''}
+					${json.hideTextInput ? `hideTextInput={${json.hideTextInput}}` : ''}
 					${json.minLabel ? `minLabel="${json.minLabel}"` : ''}
 					${json.maxLabel ? `maxLabel="${json.maxLabel}"` : ''}
 					${json.light ? `light={${json.light}}` : ''}
 					onChange={handleInputChange}
-					${reactClassNamesFromComponentObj(json)}>
-				</Slider>`;
+					${reactClassNamesFromComponentObj(json)} />`;
 			}
 		}
 	}
