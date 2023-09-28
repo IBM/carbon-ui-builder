@@ -84,7 +84,7 @@ export const FragmentTile = ({
 						<span className='fragment-overflow'>
 							<OverflowMenu
 							ariaLabel='Fragment options'
-							iconDescription='fragment menu'
+							iconDescription='Fragment options'
 							onClick={(event: { stopPropagation: () => void }) => event.stopPropagation()}>
 								{
 									!isFeaturedFragment && <OverflowMenuItem
