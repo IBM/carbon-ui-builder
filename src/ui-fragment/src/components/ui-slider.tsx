@@ -1,20 +1,20 @@
 import React from 'react';
 import { Slider } from '@carbon/react';
-import { CssClasses } from '../types';
-import { commonSlots } from '../common-slots';
+import { CssClasses, SendSignal } from '../types';
+import { commonSlots, slotsDisabled } from '../common-slots';
 
 export interface SliderState {
 	type: string;
 	id: string;
-	cssClasses?: CssClasses[];
 	labelText: string;
 	min: number;
 	max: number;
+	value: number;
+	cssClasses?: CssClasses[];
 	disabled?: boolean;
 	step?: number;
-	textInputIsHidden?: boolean;
+	textInputHidden?: boolean;
 	light?: boolean;
-	value: number;
 	stepMultiplier?: number;
 	minLabel?: string;
 	maxLabel?: string;
@@ -26,14 +26,38 @@ export interface SliderState {
 export const type = 'slider';
 
 export const slots = {
-	...commonSlots
+	...slotsDisabled,
+	...commonSlots,
+	textInputHidden: 'boolean',
+	hideTextInput: (state: SliderState) => ({
+		...state,
+		textInputHidden: true
+	}),
+	showTextInput: (state: SliderState) => ({
+		...state,
+		textInputHidden: false
+	}),
+	toggleTextInputVisibility: (state: SliderState) => ({
+		...state,
+		textInputHidden: !state.textInputHidden
+	}),
+	labelText: 'string',
+	min: 'number',
+	max: 'number',
+	value: 'number',
+	step: 'number',
+	stepMultiplier: 'number',
+	minLabel: 'string',
+	maxLabel: 'string'
 };
 
-export const UISlider = ({ state }: {
+export const signals = ['valueChange', 'click'];
+
+export const UISlider = ({ state, sendSignal }: {
 	state: SliderState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
-	sendSignal: (id: number | string, signal: string) => void;
+	sendSignal: SendSignal;
 }) => {
 	if (state.type !== 'slider') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -49,10 +73,14 @@ export const UISlider = ({ state }: {
 	value={state.value}
 	disabled={state.disabled}
 	step={state.step}
-	hideTextInput={state.textInputIsHidden}
+	hideTextInput={state.textInputHidden}
 	stepMultiplier={state.stepMultiplier}
 	minLabel={state.minLabel}
 	maxLabel={state.maxLabel}
 	light={state.light}
+	onClick={() => sendSignal(state.id, 'click')}
+	onChange={(event: any) => {
+		sendSignal(state.id, 'valueChange', [event.value], { ...state, value: event.value });
+	}}
 	className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />;
 };

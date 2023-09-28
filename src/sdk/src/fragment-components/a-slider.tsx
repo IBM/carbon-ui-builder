@@ -32,10 +32,10 @@ export const ASliderSettingsUI = ({ selectedComponent, setComponent }: any) => {
 		<Checkbox
 			labelText='Hide text input'
 			id='hide-text-input'
-			checked={selectedComponent.hideTextInput}
+			checked={selectedComponent.textInputHidden}
 			onChange={(checked: boolean) => setComponent({
 				...selectedComponent,
-				hideTextInput: checked
+				textInputHidden: checked
 			})} />
 
 		<Checkbox
@@ -145,7 +145,7 @@ export const ASlider = ({
 					value={componentObj.value}
 					disabled={componentObj.disabled}
 					step={componentObj.step}
-					hideTextInput={componentObj.hideTextInput}
+					hideTextInput={componentObj.textInputHidden}
 					stepMultiplier={componentObj.stepMultiplier}
 					minLabel={componentObj.minLabel}
 					maxLabel={componentObj.maxLabel}
@@ -164,12 +164,13 @@ export const componentInfo: ComponentInfo = {
 		select={select}
 		remove={remove}
 		selected={selected} />,
-	keywords: ['slider'],
+	keywords: ['slider', 'number', 'range', 'input'],
 	name: 'Slider',
 	type: 'slider',
 	defaultComponentObj: {
 		type: 'slider',
 		labelText: 'Slider label',
+		value: 0,
 		min: 0,
 		max: 100
 	},
@@ -249,7 +250,7 @@ export const componentInfo: ComponentInfo = {
 						${json.step ? `step={${json.step}}` : ''}
 						${json.stepMultiplier ? `stepMultiplier={${json.stepMultiplier}}` : ''}
 						${json.disabled ? `disabled={${json.disabled}}` : ''}
-						${json.hideTextInput ? `hideTextInput={${json.hideTextInput}}` : ''}
+						${json.textInputHidden ? `hideTextInput={${json.textInputHidden}}` : ''}
 						${json.minLabel ? `minLabel="${json.minLabel}"` : ''}
 						${json.maxLabel ? `maxLabel="${json.maxLabel}"` : ''}
 						${json.light ? `light={${json.light}}` : ''}
@@ -268,7 +269,7 @@ export const componentInfo: ComponentInfo = {
 						${json.step ? `step={${json.step}}` : ''}
 						${json.stepMultiplier ? `stepMultiplier={${json.stepMultiplier}}` : ''}
 						${json.disabled ? `disabled={${json.disabled}}` : ''}
-						${json.hideTextInput ? `hideTextInput={${json.hideTextInput}}` : ''}
+						${json.textInputHidden ? `hideTextInput={${json.textInputHidden}}` : ''}
 						${json.minLabel ? `minLabel="${json.minLabel}"` : ''}
 						${json.maxLabel ? `maxLabel="${json.maxLabel}"` : ''}
 						${json.light ? `light={${json.light}}` : ''}
