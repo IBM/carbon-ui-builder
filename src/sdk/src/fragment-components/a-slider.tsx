@@ -24,34 +24,28 @@ export const ASliderSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			labelText='Disabled'
 			id='disable-label'
 			checked={selectedComponent.disabled}
-			onChange={(checked: boolean) => {
-				setComponent({
-					...selectedComponent,
-					disabled: checked
-				});
-			}} />
+			onChange={(checked: boolean) => setComponent({
+				...selectedComponent,
+				disabled: checked
+			})} />
 
 		<Checkbox
 			labelText='Hide text input'
 			id='hide-text-input'
 			checked={selectedComponent.textInputIsHidden}
-			onChange={(checked: boolean) => {
-				setComponent({
-					...selectedComponent,
-					textInputIsHidden: checked
-				});
-			}} />
+			onChange={(checked: boolean) => setComponent({
+				...selectedComponent,
+				textInputIsHidden: checked
+			})} />
 
 		<Checkbox
 			labelText='Light'
 			id='light'
 			checked={selectedComponent.light}
-			onChange={(checked: boolean) => {
-				setComponent({
-					...selectedComponent,
-					light: checked
-				});
-			}} />
+			onChange={(checked: boolean) => setComponent({
+				...selectedComponent,
+				light: checked
+			})} />
 
 		<TextInput
 			value={selectedComponent.labelText}
@@ -64,12 +58,10 @@ export const ASliderSettingsUI = ({ selectedComponent, setComponent }: any) => {
 		<NumberInput
 			value={selectedComponent.min}
 			label='Min'
-			onChange={(event: any) => {
-                setComponent({
-                    ...selectedComponent,
-                    min: +event.imaginaryTarget.value
-                });
-            }} />
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				min: +event.imaginaryTarget.value
+			})} />
 
 		<NumberInput
 			value={selectedComponent.max}
@@ -98,12 +90,10 @@ export const ASliderSettingsUI = ({ selectedComponent, setComponent }: any) => {
 		<NumberInput
 			value={selectedComponent.stepMultiplier}
 			label='Step multiplier'
-			onChange={(event: any) => {
-				setComponent({
-					...selectedComponent,
-					stepMultiplier: +event.imaginaryTarget.value
-				});
-			}} />
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				stepMultiplier: +event.imaginaryTarget.value
+			})} />
 
 		<TextInput
 			value={selectedComponent.minLabel}
@@ -126,15 +116,13 @@ export const ASliderSettingsUI = ({ selectedComponent, setComponent }: any) => {
 export const ASliderCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
 	value={selectedComponent.codeContext?.name}
 	labelText='Input name'
-	onChange={(event: any) => {
-		setComponent({
-			...selectedComponent,
-			codeContext: {
-				...selectedComponent.codeContext,
-				name: event.currentTarget.value
-			}
-		});
-	}}
+	onChange={(event: any) => setComponent({
+		...selectedComponent,
+		codeContext: {
+			...selectedComponent.codeContext,
+			name: event.currentTarget.value
+		}
+	})}
 />;
 
 export const ASlider = ({
@@ -148,18 +136,18 @@ export const ASlider = ({
 		{...rest}>
 			<div className={cx(preventCheckEventStyle, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}>
 				<Slider
-				id={componentObj.id}
-				labelText={componentObj.labelText}
-				min={componentObj.min}
-				max={componentObj.max}
-				value={componentObj.value}
-				disabled={componentObj.disabled}
-				step={componentObj.step}
-				hideTextInput={componentObj.textInputIsHidden}
-				stepMultiplier={componentObj.stepMultiplier}
-				minLabel={componentObj.minLabel}
-				maxLabel={componentObj.maxLabel}
-				light={componentObj.light} />
+					id={componentObj.id}
+					labelText={componentObj.labelText}
+					min={componentObj.min}
+					max={componentObj.max}
+					value={componentObj.value}
+					disabled={componentObj.disabled}
+					step={componentObj.step}
+					hideTextInput={componentObj.textInputIsHidden}
+					stepMultiplier={componentObj.stepMultiplier}
+					minLabel={componentObj.minLabel}
+					maxLabel={componentObj.maxLabel}
+					light={componentObj.light} />
 			</div>
 		</AComponent>
 	);
@@ -223,9 +211,9 @@ export const componentInfo: ComponentInfo = {
 					labelText='${json.labelText}'
 					min={${json.min}}
 					max={${json.max}}
-					value={${json.value}}
-					step={${json.step}}
-					stepMultiplier={${json.stepMultiplier}}
+					${json.value ? `value={${json.value}}` : ''}
+					${json.step ? `step={${json.step}}` : ''}
+					${json.stepMultiplier ? `stepMultiplier={${json.stepMultiplier}}` : ''}
 					${json.disabled ? `disabled={${json.disabled}}` : ''}
 					${json.textInputIsHidden ? `hideTextInput={${json.textInputIsHidden}}` : ''}
 					${json.minLabel ? `minLabel="${json.minLabel}"` : ''}
