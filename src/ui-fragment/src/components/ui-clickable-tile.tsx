@@ -1,16 +1,19 @@
 import React from 'react';
-import { ClickableTile } from 'carbon-components-react';
+import { ClickableTile } from '@carbon/react';
 import { CssClasses } from '../types';
 import {
 	renderComponents,
 	setItemInState,
 	stringToCssClassName
 } from '../utils';
+import { commonSlots, slotsDisabled } from '../common-slots';
 
 export interface ClickableTileState {
 	type: string;
+	id: string | number;
 	light?: boolean;
 	disabled?: boolean;
+	hidden?: boolean;
 	items?: any[];
 	cssClasses?: CssClasses[];
 	codeContext: {
@@ -18,6 +21,15 @@ export interface ClickableTileState {
 	};
 	style?: any;
 }
+
+export const type = 'clickable-tile';
+
+export const signals = ['click'];
+
+export const slots = {
+	...commonSlots,
+	...slotsDisabled
+};
 
 export const UIClickableTile = ({ state, setState, setGlobalState, sendSignal }: {
 	state: ClickableTileState;
@@ -42,6 +54,7 @@ export const UIClickableTile = ({ state, setState, setGlobalState, sendSignal }:
 	return <ClickableTile
 	light={state.light}
 	disabled={state.disabled}
+	onClick={() => sendSignal(state.id, 'click')}
 	className={cssClasses}>
 		{
 			state.items?.map((item: any) => {

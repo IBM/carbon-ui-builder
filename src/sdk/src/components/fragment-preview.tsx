@@ -4,7 +4,7 @@ import React, {
 	useState
 } from 'react';
 
-import { Loading } from 'carbon-components-react';
+import { Loading } from '@carbon/react';
 
 import { css } from 'emotion';
 
@@ -34,7 +34,7 @@ const spinner = css`
 	top: calc(50% - 44px - 32px);
 	width: calc(100% - 16px);
 
-	.bx--loading {
+	.cds--loading {
 		margin: auto;
 	}
 `;

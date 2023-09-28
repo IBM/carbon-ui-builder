@@ -1,11 +1,11 @@
 import React, { useState, useRef } from 'react';
-import { Button, Tile } from 'carbon-components-react';
+import { Button, Tile } from '@carbon/react';
 import { css, cx } from 'emotion';
 import {
-	AddAlt32,
-	Draggable16,
-	TrashCan32
-} from '@carbon/icons-react';
+	AddAlt,
+	Draggable,
+	TrashCan
+} from '@carbon/react/icons';
 
 const addDragTargetStyle = css`
 	height: var(--drag-target-height, 32px);
@@ -30,10 +30,10 @@ const trashButtonStyle = css`
 	margin-left: 12px;
 	top: 0;
 	right: 0;
-	border-color: transparent;
+	position: absolute;
 
-	&.bx--btn.bx--btn--icon-only.bx--tooltip__trigger {
-		position: absolute;
+	button {
+		border-color: transparent;
 	}
 `;
 
@@ -45,14 +45,18 @@ const draggableIconStyle = css`
 
 const tileStyle = css`
 	position: relative;
+	z-index: 1;
 `;
 
 export const DraggableTileList = ({
 	template, // Functional component
+	Template,
 	onDragOver: dragOver = (_: any) => true,	// Override onDragOver event
 	removeItemFromList: removeFromList = (_: any) => true,	// Override removeItemFromList
 	dataList,
 	setDataList,
+	updateItem,
+	extraTemplateProps,
 	defaultObject // Default object created
 }: any) => {
 	const [dragging, setDragging] = useState(false);
@@ -143,11 +147,11 @@ export const DraggableTileList = ({
 					!dragging
 					&& <Button
 						className={addButtonStyle}
-						size="sm"
-						kind="ghost"
-						iconDescription="Add item"
+						size='sm'
+						kind='ghost'
+						iconDescription='Add item'
 						hasIconOnly
-						renderIcon={AddAlt32}
+						renderIcon={AddAlt}
 						onClick={(event: any) => {
 							event.stopPropagation();
 							addToList(index);
@@ -167,20 +171,25 @@ export const DraggableTileList = ({
 					onDragStart={(event: any) => onDragStart(event, index)}
 					onDragEnd={(event: any) => onDragEnd(event)}
 					className={tileStyle}>
-						<Button
-							className={trashButtonStyle}
-							align="left"
-							size="sm"
-							kind="danger--tertiary"
-							iconDescription="Delete item"
-							hasIconOnly
-							renderIcon={TrashCan32}
-							onClick={(event: any) => {
-									event.stopPropagation();
-									removeItemFromList(index);
-							}} />
-						<Draggable16 className={draggableIconStyle} />
-						{template(item, index)}
+						<div className={trashButtonStyle}>
+							<Button
+								align='left'
+								size='sm'
+								kind='danger--tertiary'
+								iconDescription='Delete item'
+								hasIconOnly
+								renderIcon={TrashCan}
+								onClick={(event: any) => {
+										event.stopPropagation();
+										removeItemFromList(index);
+								}} />
+						</div>
+						<Draggable size={16} className={draggableIconStyle} />
+						{
+							Template
+							? <Template item={item} index={index} updateItem={updateItem} {...extraTemplateProps} />
+							: template(item, index)
+						}
 					</Tile>
 					<AddButton index={index + 1} />
 				</React.Fragment>)

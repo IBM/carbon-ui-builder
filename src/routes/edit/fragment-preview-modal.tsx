@@ -3,11 +3,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import {
 	Button,
 	Modal
-} from 'carbon-components-react';
+} from '@carbon/react';
 import {
-	ArrowLeft16,
-	ArrowRight16
-} from '@carbon/icons-react';
+	ArrowLeft,
+	ArrowRight
+} from '@carbon/react/icons';
 import { css } from 'emotion';
 import { ModalContext } from '../../context/modal-context';
 import { UIFragment } from '../../ui-fragment/src/ui-fragment';
@@ -16,7 +16,7 @@ import { GlobalStateContext } from '../../context';
 import { getFragmentDuplicate } from '../../utils/fragment-tools';
 
 const exportCodeModalStyle = css`
-	.bx--tab-content {
+	.cds--tab-content {
 		height: calc(100% - 40px);
 		overflow: hidden;
 	}
@@ -99,7 +99,7 @@ export const FragmentPreviewModal = () => {
 						kind='ghost'
 						className='previous'
 						onClick={() => selectFragmentByIndex(currentFragmentIndex - 1)}>
-							<ArrowLeft16 style={{ marginRight: '0.5rem' }} /> Previous
+							<ArrowLeft size={16} style={{ marginRight: '0.5rem' }} /> Previous
 						</Button>
 					}
 					{
@@ -108,7 +108,7 @@ export const FragmentPreviewModal = () => {
 						kind='ghost'
 						className='next'
 						onClick={() => selectFragmentByIndex(currentFragmentIndex + 1)}>
-							Next <ArrowRight16 style={{ marginLeft: '0.5rem' }} />
+							Next <ArrowRight size={16} style={{ marginLeft: '0.5rem' }} />
 						</Button>
 					}
 				</div>

@@ -3,7 +3,7 @@ import {
 	RadioButton,
 	TextInput,
 	Checkbox
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent, ComponentInfo } from './a-component';
 import { css, cx } from 'emotion';
 import {
@@ -24,7 +24,7 @@ export const ARadioSettingsUI = ({ selectedComponent, setComponent, fragment }: 
 			labelText='Default selected'
 			id='defaultSelected'
 			checked={selectedComponent.defaultChecked}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...parentComponent,
 					defaultSelected: checked ? `${selectedComponent.id}` : '',
@@ -39,7 +39,7 @@ export const ARadioSettingsUI = ({ selectedComponent, setComponent, fragment }: 
 			labelText='Disable button'
 			id='disable'
 			checked={selectedComponent.disabled}
-			onChange={(checked: boolean) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				disabled: checked
 			})}/>
@@ -161,39 +161,79 @@ export const componentInfo: ComponentInfo = {
 	hideFromElementsPane: true,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText}";
+			latest: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Id = "${json.codeContext?.name}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.id}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${json.defaultChecked};`,
-			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
-			imports: [],
-			code: ({ json }) => {
-				return `<ibm-radio
-					[id]="${nameStringToVariableString(json.codeContext?.name)}Id"
-					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
-					[checked]="${nameStringToVariableString(json.codeContext?.name)}Checked"
-					[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
-					(change)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
-					${angularClassNamesFromComponentObj(json)}>
-						{{${nameStringToVariableString(json.codeContext?.name)}Label}}
-				</ibm-radio>`;
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
+				imports: [],
+				code: ({ json }) => {
+					return `<cds-radio
+						[id]="${nameStringToVariableString(json.codeContext?.name)}Id"
+						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
+						[checked]="${nameStringToVariableString(json.codeContext?.name)}Checked"
+						[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
+						(change)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
+						${angularClassNamesFromComponentObj(json)}>
+							{{${nameStringToVariableString(json.codeContext?.name)}Label}}
+					</cds-radio>`;
+				}
+			},
+			v10: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Id = "${json.codeContext?.name}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.id}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${json.defaultChecked};`,
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
+				imports: [],
+				code: ({ json }) => {
+					return `<ibm-radio
+						[id]="${nameStringToVariableString(json.codeContext?.name)}Id"
+						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
+						[checked]="${nameStringToVariableString(json.codeContext?.name)}Checked"
+						[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
+						(change)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
+						${angularClassNamesFromComponentObj(json)}>
+							{{${nameStringToVariableString(json.codeContext?.name)}Label}}
+					</ibm-radio>`;
+				}
 			}
 		},
 		react: {
-			imports: ['RadioButton'],
-			code: ({ json }) => {
-				return `<RadioButton
-					id="${json.codeContext?.name}"
-					value="${json.id}"
-					labelText="${json.labelText}"
-					onChange={(radio) => handleInputChange({
-						target: {
-							name: "${json.codeContext?.name}"
-						}
-					})}
-					${json.disabled ? `disabled={${json.disabled}}` : ''}
-					${reactClassNamesFromComponentObj(json)}/>`;
+			latest: {
+				imports: ['RadioButton'],
+				code: ({ json }) => {
+					return `<RadioButton
+						id="${json.codeContext?.name}"
+						value="${json.id}"
+						labelText="${json.labelText}"
+						onChange={(radio) => handleInputChange({
+							target: {
+								name: "${json.codeContext?.name}"
+							}
+						})}
+						${json.disabled ? `disabled={${json.disabled}}` : ''}
+						${reactClassNamesFromComponentObj(json)}/>`;
+				}
+			},
+			v10: {
+				imports: ['RadioButton'],
+				code: ({ json }) => {
+					return `<RadioButton
+						id="${json.codeContext?.name}"
+						value="${json.id}"
+						labelText="${json.labelText}"
+						onChange={(radio) => handleInputChange({
+							target: {
+								name: "${json.codeContext?.name}"
+							}
+						})}
+						${json.disabled ? `disabled={${json.disabled}}` : ''}
+						${reactClassNamesFromComponentObj(json)}/>`;
+				}
 			}
 		}
 	}

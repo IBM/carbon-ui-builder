@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState } from 'react';
 import { css, cx } from 'emotion';
-import { Button, Search } from 'carbon-components-react';
-import { ChevronUp16, ChevronDown16 } from '@carbon/icons-react';
+import { Button, Search } from '@carbon/react';
+import { ChevronDown, ChevronUp } from '@carbon/react/icons';
 
 import { ElementTile } from '../../sdk/src/element-tile';
 import { FragmentPreview } from '../../sdk/src/components/fragment-preview';
@@ -172,7 +172,7 @@ export const ElementsPane = ({ isActive }: any) => {
 				<Button
 				kind='ghost'
 				className={accordionButtonStyle}
-				renderIcon={isLayoutWidgetOpen ? ChevronDown16 : ChevronUp16}
+				renderIcon={isLayoutWidgetOpen ? ChevronDown : ChevronUp}
 				onClick={() => setIsLayoutWidgetOpen(!isLayoutWidgetOpen)}>
 					Layout tree
 				</Button>

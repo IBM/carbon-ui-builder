@@ -1,8 +1,6 @@
-import { useContext } from 'react';
-import { GlobalStateContext } from '../../../../../../context';
-import { getAllFragmentStyleClasses } from '../../../../../../ui-fragment/src/utils';
-import { hasFragmentStyleClasses } from '../../../../../../utils/fragment-tools';
-import { format } from '../utils';
+import { getAllFragmentStyleClasses } from '../../../../../../../ui-fragment/src/utils';
+import { hasFragmentStyleClasses } from '../../../../../../../utils/fragment-tools';
+import { format } from '../../utils';
 import {
 	formatOptionsCss,
 	formatOptionsHtml,
@@ -13,12 +11,10 @@ import {
 	jsonToAngularImports,
 	jsonToTemplate
 } from './utils';
-import { classNameFromFragment, tagNameFromFragment } from '../../../../../../sdk/src/tools';
+import { classNameFromFragment, tagNameFromFragment } from '../../../../../../../sdk/src/tools';
 
-const getComponentCode = (fragment: any, fragments: any[]) => {
+const getComponentCode = (fragment: any, fragments: any[], globalStyleClasses: any) => {
 	const componentCode: any = {};
-	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const { styleClasses: globalStyleClasses } = useContext(GlobalStateContext);
 	const subFragments = getAllSubfragments(fragment.data, fragments);
 
 	// component.ts
@@ -76,14 +72,14 @@ const getComponentCode = (fragment: any, fragments: any[]) => {
 	return componentCode;
 };
 
-const getAllComponentsCode = (json: any, fragments: any[]) => {
+const getAllComponentsCode = (json: any, fragments: any[], globalStyleClasses: any) => {
 	let allComponents: any = {};
 
 	if (json.data) {
 		allComponents = {
 			...allComponents,
-			...getComponentCode(json, fragments),
-			...getAllComponentsCode(json.data, fragments)
+			...getComponentCode(json, fragments, globalStyleClasses),
+			...getAllComponentsCode(json.data, fragments, globalStyleClasses)
 		};
 	}
 
@@ -92,26 +88,26 @@ const getAllComponentsCode = (json: any, fragments: any[]) => {
 
 		allComponents = {
 			...allComponents,
-			...getComponentCode(fragment, fragments),
-			...getAllComponentsCode(fragment.data, fragments)
+			...getComponentCode(fragment, fragments, globalStyleClasses),
+			...getAllComponentsCode(fragment.data, fragments, globalStyleClasses)
 		};
 	}
 
 	json.items?.forEach((item: any) => {
 		allComponents = {
 			...allComponents,
-			...getAllComponentsCode(item, fragments)
+			...getAllComponentsCode(item, fragments, globalStyleClasses)
 		};
 	});
 
 	return allComponents;
 };
 
-export const createAngularApp = (fragment: any, fragments: any[]) => {
+export const createAngularApp = (fragment: any, fragments: any[], globalStyleClasses: any) => {
 	const tagName = tagNameFromFragment(fragment);
 	const className = classNameFromFragment(fragment);
 
-	const allComponents = getAllComponentsCode(fragment, fragments);
+	const allComponents = getAllComponentsCode(fragment, fragments, globalStyleClasses);
 
 	const appComponentHtml =
 		`<app-${tagName}></app-${tagName}>
@@ -158,7 +154,7 @@ export const createAngularApp = (fragment: any, fragments: any[]) => {
 		`import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 		import { AppModule } from './app/app.module';
 
-		import "carbon-components/css/carbon-components.min.css";
+		import "@carbon/styles/css/styles.css";
 
 		platformBrowserDynamic()
 			.bootstrapModule(AppModule)
@@ -198,12 +194,12 @@ export const createAngularApp = (fragment: any, fragments: any[]) => {
 			'@angular/platform-browser': '12.2.0',
 			'@angular/platform-browser-dynamic': '12.2.0',
 			'@angular/router': '12.2.0',
+			'@carbon/styles': '1.36.0',
 			'rxjs': '6.6.0',
 			'tslib': '2.3.0',
 			'sass': '1.45.0',
 			'zone.js': '0.11.4',
-			'carbon-components-angular': '4.71.0',
-			'carbon-components': '10.58.0'
+			'carbon-components-angular': '5.14.10'
 		}
 	};
 

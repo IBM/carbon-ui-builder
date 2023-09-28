@@ -5,7 +5,7 @@ import {
 	Dropdown,
 	ContentSwitcher,
 	Switch
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent, ComponentInfo } from './a-component';
 import image from './../assets/component-icons/content-switcher.svg';
 import {
@@ -66,7 +66,7 @@ export const AContentSwitcherSettingsUI = ({ selectedComponent, setComponent }: 
 				labelText='Disabled'
 				id={`disabled-${index}`}
 				checked={selectedComponent.disabled}
-				onChange={(checked: boolean) => {
+				onChange={(_: any, { checked }: any) => {
 					updateItem('disabled', checked, index);
 				}} />
 		</>;
@@ -187,44 +187,89 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";`,
-			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter();`,
-			imports: ['ContentSwitcherModule'],
-			code: ({ json }) => {
-				return `<ibm-content-switcher
-					[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
-					${angularClassNamesFromComponentObj(json)}
-					(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit()">
-					${json.items.map((step: any, index: number) => `<button
-							${json.selectedIndex === index ? `active="${json.selectedIndex === index}"` : ''}
-							ibmContentOption
-							name="${step.name}"
-							[disabled]="${step.disabled}">
-							${step.text}
-						</button>`
-					).join('\n')}
-				</ibm-content-switcher>`;
+			latest: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";`,
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter();`,
+				imports: ['ContentSwitcherModule'],
+				code: ({ json }) => {
+					return `<cds-content-switcher
+						[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
+						${angularClassNamesFromComponentObj(json)}
+						(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit()">
+						${json.items.map((step: any, index: number) => `<button
+								${json.selectedIndex === index ? `active="${json.selectedIndex === index}"` : ''}
+								cdsContentOption
+								name="${step.name}"
+								[disabled]="${step.disabled}">
+								${step.text}
+							</button>`
+						).join('\n')}
+					</cds-content-switcher>`;
+				}
+			},
+			v10: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";`,
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter();`,
+				imports: ['ContentSwitcherModule'],
+				code: ({ json }) => {
+					return `<ibm-content-switcher
+						[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
+						${angularClassNamesFromComponentObj(json)}
+						(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit()">
+						${json.items.map((step: any, index: number) => `<button
+								${json.selectedIndex === index ? `active="${json.selectedIndex === index}"` : ''}
+								ibmContentOption
+								name="${step.name}"
+								[disabled]="${step.disabled}">
+								${step.text}
+							</button>`
+						).join('\n')}
+					</ibm-content-switcher>`;
+				}
 			}
 		},
 		react: {
-			imports: ['ContentSwitcher', 'Switch'],
-			code: ({ json }) => {
-				return `<ContentSwitcher
-					size="${json.size}"
-					selectedIndex={state["${nameStringToVariableString(json.codeContext?.name)}"] || ${json.selectedIndex}}
-					${reactClassNamesFromComponentObj(json)}
-					onChange={(selectedItem) => handleInputChange({
-						target: {
-							name: "${nameStringToVariableString(json.codeContext?.name)}",
-							value: selectedItem.index
-						}
-					})}>
-					${json.items.map((step: any) => `<Switch
-						name="${step.name}"
-						text="${step.text}"
-						disabled={${step.disabled}}/>`
-					).join('\n')}
-				</ContentSwitcher>`;
+			latest: {
+				imports: ['ContentSwitcher', 'Switch'],
+				code: ({ json }) => {
+					return `<ContentSwitcher
+						size="${json.size}"
+						selectedIndex={state["${nameStringToVariableString(json.codeContext?.name)}"] || ${json.selectedIndex}}
+						${reactClassNamesFromComponentObj(json)}
+						onChange={(selectedItem) => handleInputChange({
+							target: {
+								name: "${nameStringToVariableString(json.codeContext?.name)}",
+								value: selectedItem.index
+							}
+						})}>
+						${json.items.map((step: any) => `<Switch
+							name="${step.name}"
+							text="${step.text}"
+							disabled={${step.disabled}}/>`
+						).join('\n')}
+					</ContentSwitcher>`;
+				}
+			},
+			v10: {
+				imports: ['ContentSwitcher', 'Switch'],
+				code: ({ json }) => {
+					return `<ContentSwitcher
+						size="${json.size}"
+						selectedIndex={state["${nameStringToVariableString(json.codeContext?.name)}"] || ${json.selectedIndex}}
+						${reactClassNamesFromComponentObj(json)}
+						onChange={(selectedItem) => handleInputChange({
+							target: {
+								name: "${nameStringToVariableString(json.codeContext?.name)}",
+								value: selectedItem.index
+							}
+						})}>
+						${json.items.map((step: any) => `<Switch
+							name="${step.name}"
+							text="${step.text}"
+							disabled={${step.disabled}}/>`
+						).join('\n')}
+					</ContentSwitcher>`;
+				}
 			}
 		}
 	}

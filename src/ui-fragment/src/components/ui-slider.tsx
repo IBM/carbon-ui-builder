@@ -1,6 +1,7 @@
 import React from 'react';
-import { Slider } from 'carbon-components-react';
+import { Slider } from '@carbon/react';
 import { CssClasses } from '../types';
+import { commonSlots } from '../common-slots';
 
 export interface SliderState {
 	type: string;
@@ -22,10 +23,17 @@ export interface SliderState {
 	};
 }
 
+export const type = 'slider';
+
+export const slots = {
+	...commonSlots
+};
+
 export const UISlider = ({ state }: {
 	state: SliderState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'slider') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -33,18 +41,18 @@ export const UISlider = ({ state }: {
 	}
 
 	return <Slider
-		inert
-		id={state.id}
-		labelText={state.labelText}
-		min={state.min}
-		max={state.max}
-		value={state.value}
-		disabled={state.disabled}
-		step={state.step}
-		hideTextInput={state.textInputIsHidden}
-		stepMultiplier={state.stepMultiplier}
-		minLabel={state.minLabel}
-		maxLabel={state.maxLabel}
-		light={state.light}
-		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />;
+	inert
+	id={state.id}
+	labelText={state.labelText}
+	min={state.min}
+	max={state.max}
+	value={state.value}
+	disabled={state.disabled}
+	step={state.step}
+	hideTextInput={state.textInputIsHidden}
+	stepMultiplier={state.stepMultiplier}
+	minLabel={state.minLabel}
+	maxLabel={state.maxLabel}
+	light={state.light}
+	className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />;
 };

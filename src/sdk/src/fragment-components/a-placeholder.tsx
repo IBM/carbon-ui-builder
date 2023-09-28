@@ -51,14 +51,28 @@ export const componentInfo: ComponentInfo = {
 	image: undefined,
 	codeExport: {
 		angular: {
-			inputs: () => '',
-			outputs: () => '',
-			imports: [],
-			code: () => ''
+			latest: {
+				inputs: () => '',
+				outputs: () => '',
+				imports: [],
+				code: () => ''
+			},
+			v10: {
+				inputs: () => '',
+				outputs: () => '',
+				imports: [],
+				code: () => ''
+			}
 		},
 		react: {
-			imports: [],
-			code: () => ''
+			latest: {
+				imports: [],
+				code: () => ''
+			},
+			v10: {
+				imports: [],
+				code: () => ''
+			}
 		}
 	}
 };

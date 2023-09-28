@@ -4,7 +4,7 @@ import {
 	Loading,
 	TextInput,
 	Dropdown
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent } from './a-component';
 import { ComponentInfo } from '.';
 import { css, cx } from 'emotion';
@@ -17,7 +17,7 @@ import {
 import { styleObjectToString } from '../../../ui-fragment/src/utils';
 
 const overlayStyle = css`
-.bx--loading-overlay {
+.cds--loading-overlay {
 	position: absolute;
 };`;
 
@@ -41,7 +41,7 @@ export const ALoadingSettingsUI = ({ selectedComponent, setComponent }: any) => 
 			labelText='With overlay'
 			id='with-overlay'
 			checked={selectedComponent.overlay}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					overlay: checked
@@ -52,7 +52,7 @@ export const ALoadingSettingsUI = ({ selectedComponent, setComponent }: any) => 
 			id='active'
 			disabled
 			checked={selectedComponent.active}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					active: checked
@@ -114,27 +114,55 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Overlay = ${json.overlay};
+			latest: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Overlay = ${json.overlay};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Active = ${json.active};`,
-			outputs: (_) => '',
-			imports: ['LoadingModule'],
-			code: ({ json }) => {
-				return `<ibm-loading
-							size="${json.size === 'small' ? 'sm' : 'normal'}"
-							[isActive]="${nameStringToVariableString(json.codeContext?.name)}Active"
-							[overlay]="${nameStringToVariableString(json.codeContext?.name)}Overlay"
-							${angularClassNamesFromComponentObj(json)}>
-						</ibm-loading>`;
+				outputs: (_) => '',
+				imports: ['LoadingModule'],
+				code: ({ json }) => {
+					return `<cds-loading
+								size="${json.size === 'small' ? 'sm' : 'normal'}"
+								[isActive]="${nameStringToVariableString(json.codeContext?.name)}Active"
+								[overlay]="${nameStringToVariableString(json.codeContext?.name)}Overlay"
+								${angularClassNamesFromComponentObj(json)}>
+							</cds-loading>`;
+				}
+			},
+			v10: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Overlay = ${json.overlay};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Active = ${json.active};`,
+				outputs: (_) => '',
+				imports: ['LoadingModule'],
+				code: ({ json }) => {
+					return `<ibm-loading
+								size="${json.size === 'small' ? 'sm' : 'normal'}"
+								[isActive]="${nameStringToVariableString(json.codeContext?.name)}Active"
+								[overlay]="${nameStringToVariableString(json.codeContext?.name)}Overlay"
+								${angularClassNamesFromComponentObj(json)}>
+							</ibm-loading>`;
+				}
 			}
 		},
 		react: {
-			imports: ['Loading'],
-			code: ({ json }) => {
-				return `<Loading
-							active={${json.active}}
-							withOverlay={${json.overlay}}
-							small={${json.size === 'small'}}
-							${reactClassNamesFromComponentObj(json)} />`;
+			latest: {
+				imports: ['Loading'],
+				code: ({ json }) => {
+					return `<Loading
+						active={${json.active}}
+						withOverlay={${json.overlay}}
+						small={${json.size === 'small'}}
+						${reactClassNamesFromComponentObj(json)} />`;
+				}
+			},
+			v10: {
+				imports: ['Loading'],
+				code: ({ json }) => {
+					return `<Loading
+						active={${json.active}}
+						withOverlay={${json.overlay}}
+						small={${json.size === 'small'}}
+						${reactClassNamesFromComponentObj(json)} />`;
+				}
 			}
 		}
 	}

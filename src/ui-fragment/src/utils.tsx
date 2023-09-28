@@ -203,6 +203,10 @@ export const renderComponents = (
 	setGlobalState: (state: any) => void,
 	sendSignal: (id: number | string, signal: string) => void
 ) => {
+	if (state.hidden) {
+		// eslint-disable-next-line react/jsx-no-useless-fragment
+		return <></>;
+	}
 	switch (state.type) {
 		case 'accordion':
 			return <UIAccordion key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
@@ -268,7 +272,7 @@ export const renderComponents = (
 			return <UISearchInput key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'slider':
-			return <UISlider key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UISlider key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'tag':
 			return <UITag key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;

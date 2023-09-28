@@ -11,21 +11,21 @@ import {
 	SkipToContent,
 	Switcher,
 	SwitcherItem
-} from 'carbon-components-react';
+} from '@carbon/react';
 import {
-	ChatLaunch16,
-	Debug16,
-	DocumentAdd16,
-	Download16,
-	DocumentImport16,
-	DocumentExport16,
-	FolderDetails16,
-	Information16,
-	Keyboard16,
-	LogoGithub16,
-	UserAvatar20,
-	Help16
-} from '@carbon/icons-react';
+	ChatLaunch,
+	Debug,
+	DocumentAdd,
+	Download,
+	DocumentImport,
+	DocumentExport,
+	FolderDetails,
+	Information,
+	Keyboard,
+	LogoGithub,
+	UserAvatar,
+	Help
+} from '@carbon/react/icons';
 import { css } from 'emotion';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { FragmentWizardModals } from '../routes/dashboard/fragment-wizard/fragment-wizard';
@@ -48,7 +48,7 @@ const headerName = css`
 		cursor: pointer;
 	}
 
-	.bx--text-truncate--end {
+	.cds--text-truncate--end {
 		display: inline-flex;
 
 		svg {
@@ -104,13 +104,13 @@ export const Header = ({
 
 	return (
 		<ShellHeader
-		aria-label="IBM Carbon UI Builder"
+		aria-label='IBM Carbon UI Builder'
 		role='banner'
 		tabIndex={0}
 		className={headerStyle}>
 			<SkipToContent />
 			<HeaderName
-				prefix="IBM"
+				prefix='IBM'
 				tabIndex={0}
 				title='Carbon UI Builder home'
 				className={headerName}
@@ -133,7 +133,7 @@ export const Header = ({
 					<HeaderMenuItem
 					className={headerName}
 					onClick={() => setDisplayWizard(!displayWizard)}>
-						<DocumentAdd16 /> New
+						<DocumentAdd size={16} /> New
 					</HeaderMenuItem>
 					{
 						params?.id && fragment?.data &&
@@ -145,7 +145,7 @@ export const Header = ({
 								`${fragment.title}.json`
 							)
 						}>
-							<Download16 /> Save as .json
+							<Download size={16} /> Save as .json
 						</HeaderMenuItem>
 					}
 					{
@@ -153,7 +153,7 @@ export const Header = ({
 						<HeaderMenuItem
 						className={headerName}
 						onClick={() => modalContext && modalContext.showFragmentExportModal(fragment)}>
-							<DocumentExport16 /> Export
+							<DocumentExport size={16} /> Export
 						</HeaderMenuItem>
 					}
 					<HeaderMenuItem
@@ -162,7 +162,7 @@ export const Header = ({
 						setDisplayWizard(!displayWizard);
 						setDisplayedModal(FragmentWizardModals.IMPORT_JSON_MODAL);
 					}}>
-						<DocumentImport16 /> Open .json
+						<DocumentImport size={16} /> Open .json
 					</HeaderMenuItem>
 				</HeaderMenu>
 
@@ -175,7 +175,7 @@ export const Header = ({
 					className={headerName}
 					href='https://github.com/IBM/carbon-ui-builder/issues/new?labels=bug&template=bug_report.yml'
 					target='_blank'>
-						<Debug16 /> I found a bug
+						<Debug size={16} /> I found a bug
 					</HeaderMenuItem>
 				</HeaderMenu>
 
@@ -187,31 +187,31 @@ export const Header = ({
 					<HeaderMenuItem
 					className={headerName}
 					onClick={() => navigate('/help/introduction')}>
-						<Information16 /> Introduction
+						<Information size={16} /> Introduction
 					</HeaderMenuItem>
 					<HeaderMenuItem
 					className={headerName}
 					href='https://github.com/IBM/carbon-ui-builder/discussions/categories/frequently-asked-questions-faq'
 					target='_blank'>
-						<Help16 /> FAQ
+						<Help size={16} /> FAQ
 					</HeaderMenuItem>
 					<HeaderMenuItem
 					className={headerName}
 					onClick={() => navigate('/help/hotkeys')}>
-						<Keyboard16 /> Hotkeys / Shortcuts
+						<Keyboard size={16} /> Hotkeys / Shortcuts
 					</HeaderMenuItem>
 					<HeaderMenuItem
 					className={headerName}
 					href='https://ibm-studios.slack.com/archives/C02LL3SMXFS'
 					target='_blank'>
-						<ChatLaunch16 /> I have a question
+						<ChatLaunch size={16} /> I have a question
 					</HeaderMenuItem>
 					<div className={dividerStyle} />
 					<HeaderMenuItem
 					className={headerName}
 					href='https://github.com/IBM/carbon-ui-builder'
 					target='_blank'>
-						<LogoGithub16 /> Fork on GitHub
+						<LogoGithub size={16} /> Fork on GitHub
 					</HeaderMenuItem>
 				</HeaderMenu>
 			</HeaderNavigation>
@@ -223,7 +223,7 @@ export const Header = ({
 					{
 						user.profileImageUrl
 						? <img className={profileImageStyle} src={user.profileImageUrl} />
-						: <UserAvatar20 />
+						: <UserAvatar size={20} />
 					}
 				</HeaderGlobalAction>
 			</HeaderGlobalBar>
@@ -234,12 +234,12 @@ export const Header = ({
 					{
 						user.isLoggedIn
 						? <>
-							<li className='bx--switcher__item' style={{ paddingLeft: '1rem' }}>Hi {user.name || user.githubLogin}!</li>
+							<li className='cds--switcher__item' style={{ paddingLeft: '1rem' }}>Hi {user.name || user.githubLogin}!</li>
 							<SwitcherItem
 							className={switcherItemWithIconStyle}
 							aria-label='all repositories'
 							onClick={() => navigate('/repo')}>
-								<FolderDetails16 /> All repositories
+								<FolderDetails size={16} /> All repositories
 							</SwitcherItem>
 							<div className={itemSeparatorStyle} />
 							<SwitcherItem

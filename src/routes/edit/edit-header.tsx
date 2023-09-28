@@ -1,20 +1,20 @@
 import React, { useContext, useRef, useState } from 'react';
 import { css } from 'emotion';
-import { Button, TextInput } from 'carbon-components-react';
+import { Button, TextInput } from '@carbon/react';
 import {
-	Checkmark16,
-	ChevronLeft24,
-	Copy16,
-	DocumentExport16,
-	Edit16,
-	IntentRequestInactive20,
-	IntentRequestActive20,
-	IntentRequestUninstall20,
-	Redo16,
-	TrashCan16,
-	Undo16,
-	View16
-} from '@carbon/icons-react';
+	Checkmark,
+	ChevronLeft,
+	Copy,
+	DocumentExport,
+	Edit,
+	IntentRequestInactive,
+	IntentRequestActive,
+	IntentRequestUninstall,
+	Redo,
+	TrashCan,
+	Undo,
+	View
+} from '@carbon/react/icons';
 import { ModalContext } from '../../context/modal-context';
 import { GlobalStateContext } from '../../context';
 import { actionIconStyle } from '../../sdk/src/styles';
@@ -23,7 +23,7 @@ import { openFragmentPreview } from '../../utils/fragment-tools';
 
 const editHeader = css`
 	left: 16rem;
-	background: #fff;
+	background-color: #fff;
 	box-shadow: inset 0px -1px #d8d8d8;
 
 	.edit-wrapper {
@@ -39,7 +39,7 @@ const editHeader = css`
 		}
 		.title-subheading {
 			display: inline-flex;
-			.bx--inline-loading {
+			.cds--inline-loading {
 				width: auto;
 				position: relative;
 				margin-left: 10px;
@@ -72,7 +72,7 @@ const editHeader = css`
 		.edit-wrapper {
 			.title-subheading {
 				flex-flow: column;
-				.bx--inline-loading {
+				.cds--inline-loading {
 					margin-top: 10px;
 				}
 			}
@@ -90,7 +90,7 @@ const editHeader = css`
 			}
 			.title-subheading {
 				flex-direction: row;
-				.bx--inline-loading {
+				.cds--inline-loading {
 					margin-top: 0px;
 				}
 			}
@@ -103,7 +103,7 @@ const editHeader = css`
 		.edit-wrapper {
 			.title-subheading {
 				flex-direction: column;
-				.bx--inline-loading {
+				.cds--inline-loading {
 					margin-top: 10px;
 				}
 			}
@@ -128,7 +128,8 @@ const fragmentEditToolBar = css`
 		height: 3rem;
 	}
 	.toolBarButtons {
-		min-width: 13.75rem
+		min-width: 13.75rem;
+		display: inherit;
 	}
 	// This is the viewport width that causes the store to local
 	// fragments checkbox and last modified label to overlap.
@@ -186,7 +187,7 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 						aria-label='Back to dashboard'
 						title='Back to dashboard'
 						onClick={() => navigate('/')}>
-						<ChevronLeft24 className={actionIconStyle} />
+						<ChevronLeft size={24} className={actionIconStyle} />
 					</Button>
 					<div className='title-wrap'>
 						<div className='fragment-title'>
@@ -213,7 +214,7 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 								kind='ghost'
 								size='sm'
 								hasIconOnly
-								renderIcon={isEditingTitle ? Checkmark16 : Edit16}
+								renderIcon={isEditingTitle ? Checkmark : Edit }
 								iconDescription={isEditingTitle ? 'Mark done' : 'Edit title'}
 								tooltipPosition='bottom'
 								onClick={() => {
@@ -242,14 +243,14 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 							onClick={() => setFragment({ ...fragment, outline: fragment.outline === false ? null : !fragment.outline })}
 							renderIcon={() => {
 								if (fragment.outline === true) {
-									return <IntentRequestActive20 className={actionIconStyle} />;
+									return <IntentRequestActive size={20} className={actionIconStyle} />;
 								}
 
 								if (fragment.outline === false) {
-									return <IntentRequestUninstall20 className={actionIconStyle} />;
+									return <IntentRequestUninstall size={20} className={actionIconStyle} />;
 								}
 
-								return <IntentRequestInactive20 className={actionIconStyle} />;
+								return <IntentRequestInactive size={20} className={actionIconStyle} />;
 							}} />
 						<Button
 							kind='ghost'
@@ -257,7 +258,7 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 							tooltipPosition='bottom'
 							iconDescription='Preview fragment'
 							onClick={() => openFragmentPreview(fragment)}
-							renderIcon={() => <View16 className={actionIconStyle} />} />
+							renderIcon={() => <View size={16} className={actionIconStyle} />} />
 						<div className={toolBarSeparator} />
 						<Button
 							kind='ghost'
@@ -266,7 +267,7 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 							iconDescription='Undo'
 							disabled={!canUndo()}
 							onClick={() => undoAction()}
-							renderIcon={() => <Undo16 className={actionIconStyle} />} />
+							renderIcon={() => <Undo size={16} className={actionIconStyle} />} />
 						<Button
 							kind='ghost'
 							hasIconOnly
@@ -274,7 +275,7 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 							iconDescription='Redo'
 							disabled={!canRedo()}
 							onClick={() => redoAction()}
-							renderIcon={() => <Redo16 className={actionIconStyle} />} />
+							renderIcon={() => <Redo size={16} className={actionIconStyle} />} />
 						<div className={toolBarSeparator} />
 						<Button
 							kind='ghost'
@@ -282,20 +283,20 @@ export const EditHeader = ({ fragment, setFragment }: any) => {
 							tooltipPosition='bottom'
 							iconDescription='Duplicate fragment'
 							onClick={() => showFragmentDuplicateModal(fragment)}
-							renderIcon={() => <Copy16 className={actionIconStyle} />} />
+							renderIcon={() => <Copy size={16} className={actionIconStyle} />} />
 						<Button
 							kind='ghost'
 							hasIconOnly
 							tooltipPosition='bottom'
 							iconDescription='Delete fragment'
 							onClick={() => showFragmentDeleteModal(fragment.id)}
-							renderIcon={() => <TrashCan16 className={actionIconStyle} />} />
+							renderIcon={() => <TrashCan size={16} className={actionIconStyle} />} />
 						<Button
 							kind='primary'
 							iconDescription='Export fragment'
 							aria-label='Export fragment'
 							title='Export fragment'
-							renderIcon={DocumentExport16}
+							renderIcon={DocumentExport}
 							onClick={() => showFragmentExportModal(fragment)}>
 							Export
 						</Button>

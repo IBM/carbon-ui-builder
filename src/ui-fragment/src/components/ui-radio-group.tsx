@@ -1,5 +1,5 @@
 import React from 'react';
-import { RadioButtonGroup } from 'carbon-components-react';
+import { RadioButtonGroup } from '@carbon/react';
 import { CssClasses } from '../types';
 import {
 	renderComponents,
@@ -7,6 +7,7 @@ import {
 	stringToCssClassName
 } from '../utils';
 import { RadioState } from './ui-radio';
+import { commonSlots } from '../common-slots';
 
 export interface RadioGroupState {
 	type: string;
@@ -16,12 +17,19 @@ export interface RadioGroupState {
 	orientation: string;
 	labelPosition: string;
 	defaultSelected: string;
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
 	};
 	style?: any;
 }
+
+export const type = 'radio-group';
+
+export const slots = {
+	...commonSlots
+};
 
 export const UIRadioGroup = ({ state, setState, setGlobalState, sendSignal }: {
 	state: RadioGroupState;

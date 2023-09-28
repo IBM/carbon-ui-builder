@@ -1,7 +1,7 @@
 import React from 'react';
 import { css } from 'emotion';
 
-import { SelectableTile } from 'carbon-components-react';
+import { SelectableTile } from '@carbon/react';
 
 const tileFooter = css`
 	position: absolute;

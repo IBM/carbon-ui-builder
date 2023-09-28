@@ -12,10 +12,10 @@ export const PreviewJson = () => {
 	const params = useParams();
 
 	const setFragmentState = (fragmentState: any) => {
-		setState({
+		setState((state: any) => ({
 			...state,
-			fragmentState
-		});
+			fragmentState: (typeof fragmentState === 'function' ? fragmentState(state.fragmentState) : fragmentState)
+		}));
 	};
 
 	useEffect(() => {

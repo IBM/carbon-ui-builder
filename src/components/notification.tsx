@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { InlineNotification, NotificationActionButton } from 'carbon-components-react';
+import { InlineNotification, NotificationActionButton } from '@carbon/react';
 import {
 	NotificationContext,
 	NotificationActionType,
@@ -15,17 +15,17 @@ const notificationAreaStyle = css`
 	position: absolute;
 	z-index: 4;
 	min-width: 30rem;
-	top: 2rem;
+	top: 3rem;
 `;
 
 export const Notification = () => {
 	const [state, dispatch] = useContext(NotificationContext);
 	return (
-		<div className={notificationAreaStyle} role="alert">
+		<div className={notificationAreaStyle} role='alert'>
 			{state.notifications.map((notification: NotificationData) => (
 				<InlineNotification
 					lowContrast
-					aria-live="assertive"
+					aria-live='assertive'
 					kind={notification.kind}
 					title={notification.title}
 					subtitle={notification.message}

@@ -12,18 +12,21 @@ import {
 	SideNav,
 	SideNavLink,
 	SideNavItems,
+	Tab,
 	Tabs,
-	Tab
-} from 'carbon-components-react';
+	TabList,
+	TabPanels,
+	TabPanel
+} from '@carbon/react';
 import {
-	Code16,
-	ColorPalette16,
-	SettingsAdjust16,
-	Copy32,
-	Development16,
-	Information16,
-	TrashCan32
-} from '@carbon/icons-react';
+	Code,
+	ColorPalette,
+	SettingsAdjust,
+	Copy,
+	Development,
+	Information,
+	TrashCan
+} from '@carbon/react/icons';
 
 import { ElementsPane } from './elements-pane';
 import { StylePane } from './style-pane';
@@ -60,7 +63,7 @@ const editPageContent = css`
 		width: calc(100% - ${rightPaneWidth} - ${railWidth});
 		height: calc(100% - 64px);
 		transition: margin-left ${transitionDetails}, width ${transitionDetails};
-		overflow: auto;
+		overflow: visible;
 
 		&.is-side-panel-active {
 			margin-left: calc(${railWidth} + ${leftPaneWidth});
@@ -72,13 +75,13 @@ const editPageContent = css`
 const sideRail = css`
 	transition: left ${transitionDetails};
 
-	&.bx--side-nav, &.bx--side-nav:hover {
-		.bx--side-nav__item .bx--side-nav__link {
+	&.cds--side-nav, &.cds--side-nav:hover {
+		.cds--side-nav__item .cds--side-nav__link {
 			height: 3rem;
 		}
 	}
 
-	&.bx--side-nav--ux {
+	&.cds--side-nav--ux {
 		top: 7rem;
 		box-shadow: inset -1px 0px #d8d8d8;
 	}
@@ -87,22 +90,21 @@ const sideRail = css`
 		left: ${leftPaneWidth};
 	}
 
-	.bx--side-nav__items {
+	.cds--side-nav__items {
 		padding: 0;
 	}
 `;
 
 export const leftPane = css`
 	position: absolute;
-	background: white;
+	background-color: white;
 	transition: left 0.11s cubic-bezier(0.2, 0, 1, 0.9);
 	width: ${leftPaneWidth};
 	left: -${leftPaneWidth};
 	height: calc(100% - 4rem);
 	box-shadow: inset -1px 0px #d8d8d8;
-	z-index: 999;
-	overflow-y: auto;
-	overflow-x: hidden;
+	z-index: 8001;
+	overflow: visible;
 
 	&.is-active {
 		left: 0;
@@ -112,14 +114,14 @@ export const leftPane = css`
 export const leftPaneHeader = css`
 	position: fixed;
 	width: 300px;
-	background: white;
+	background-color: white;
 	z-index: 1;
 `;
 
 export const leftPaneContent = css`
 	padding: 0 15px;
 
-	.bx--form-item {
+	.cds--form-item {
 		margin-top: 1rem;
 	}
 `;
@@ -129,40 +131,35 @@ const rightPanel = css`
 	position: absolute;
 	right: 0;
 	top: 4rem;
-	background: white;
+	background-color: white;
 	min-height: calc(100vh - 7rem);
 	box-shadow: inset 1px 0px #d8d8d8;
 	z-index: 1;
 
-	.bx--tabs--scrollable__nav-item .bx--tabs--scrollable__nav-link {
-		width: 100px;
+	.cds--tab--list {
+		flex: auto;
+	}
+
+	.cds--tabs .cds--tabs__nav-link {
 		text-align: center;
 	}
 
+	.cds--tab-content {
+		padding: 0;
+	}
+
 	.context-pane-content {
-		overflow: auto;
+		overflow: visible;
 		height: calc(100vh - 15rem);
 
 		div[title='Drag handle'] {
 			width: 15px;
 		}
 
-		.bx--accordion__content {
+		.cds--accordion__content {
 			padding-left: 1rem;
 			padding-right: 1rem;
 			margin-left: 0;
-		}
-
-		.iot--list-item {
-			padding-right: 0;
-		}
-
-		.iot--list-item--content--row-actions {
-			margin-right: 0;
-
-			.bx--btn--ghost {
-				padding: 0.5rem;
-			}
 		}
 	}
 
@@ -288,20 +285,20 @@ export const Edit = () => {
 			isRail>
 				<SideNavItems>
 					<SideNavLink
-					renderIcon={Development16}
+					renderIcon={() => <Development size={16} />}
 					onClick={() => onRailClick(SelectedLeftPane.ELEMENTS)}
 					isActive={selectedLeftPane === SelectedLeftPane.ELEMENTS}>
 						Elements
 					</SideNavLink>
 					<SideNavLink
-					renderIcon={ColorPalette16}
+					renderIcon={() => <ColorPalette size={16} />}
 					onClick={() => onRailClick(SelectedLeftPane.STYLE)}
 					isActive={selectedLeftPane === SelectedLeftPane.STYLE}>
 						Style
 					</SideNavLink>
 					{ /* hide Code pane for now */
 					/* <SideNavLink
-					renderIcon={Code16}
+					renderIcon={<Code size={16} />}
 					onClick={() => onRailClick(SelectedLeftPane.CODE)}
 					isActive={selectedLeftPane === SelectedLeftPane.CODE}>
 						Code
@@ -318,27 +315,34 @@ export const Edit = () => {
 			</div>
 			<div className={rightPanel}>
 				<Tabs>
-					<Tab
-					id='properties-settings'
-					label={<SettingsAdjust16 />}>
-						<SettingsContextPane fragment={fragment} setFragment={updateFragment} />
-					</Tab>
-					<Tab
-					id='properties-code'
-					label={<Code16 />}>
-						<CodeContextPane fragment={fragment} setFragment={updateFragment} />
-					</Tab>
-					<Tab
-					id='properties-info'
-					label={<Information16 />}>
-						info
-					</Tab>
+					<TabList aria-label='List of properties'>
+						<Tab id='properties-settings'>
+							<SettingsAdjust size={16} />
+						</Tab>
+						<Tab id='properties-code'>
+							<Code size={16} />
+						</Tab>
+						<Tab id='properties-info'>
+							<Information size={16} />
+						</Tab>
+					</TabList>
+					<TabPanels>
+						<TabPanel>
+							<SettingsContextPane fragment={fragment} setFragment={updateFragment} />
+						</TabPanel>
+						<TabPanel>
+							<CodeContextPane fragment={fragment} setFragment={updateFragment} />
+						</TabPanel>
+						<TabPanel>
+							info
+						</TabPanel>
+					</TabPanels>
 				</Tabs>
 				<div className={actionsStyle}>
 					<Button
 					kind='secondary'
 					disabled={!fragment.selectedComponentId} // disabled for fragment
-					renderIcon={Copy32}
+					renderIcon={Copy}
 					className={css`margin-right: 8px`}
 					onClick={duplicateSelectedComponent}>
 						Duplicate
@@ -346,7 +350,7 @@ export const Edit = () => {
 					<Button
 					kind='danger'
 					disabled={!fragment.selectedComponentId} // disabled for fragment
-					renderIcon={TrashCan32}
+					renderIcon={TrashCan}
 					onClick={() => deleteSelectedComponent()}>
 						Delete
 					</Button>

@@ -1,7 +1,7 @@
 import { css, cx } from 'emotion';
 import React, { useRef, useState } from 'react';
 
-import { Draggable32, TrashCan32 } from '@carbon/icons-react';
+import { Draggable, TrashCan } from '@carbon/react/icons';
 import { drag, getDropIndex, updatedState } from '../tools';
 
 export const componentHeaderZIndex = 999;
@@ -50,19 +50,36 @@ export interface ComponentInfo {
 	hideFromElementsPane?: boolean;
 	codeExport: {
 		angular: {
-			inputs: (props: { json: any }) => string;
-			outputs: (props: { json: any }) => string;
-			imports: string[];
-			otherImports?: (props: {json: any }) => string;
-			isNotDirectExport?: boolean;
-			code: (props: {json: any; jsonToTemplate: (json: any, fragments: any[]) => string; fragments: any[]}) => string;
+			latest: {
+				inputs: (props: { json: any }) => string;
+				outputs: (props: { json: any }) => string;
+				imports: string[];
+				isNotDirectExport?: boolean;
+				code: (props: {json: any; jsonToTemplate: (json: any, fragments: any[]) => string; fragments: any[]}) => string;
+			};
+			v10: {
+				inputs: (props: { json: any }) => string;
+				outputs: (props: { json: any }) => string;
+				imports: string[];
+				isNotDirectExport?: boolean;
+				code: (props: {json: any; jsonToTemplate: (json: any, fragments: any[]) => string; fragments: any[]}) => string;
+			};
 		};
 		react: {
-			imports: ((props: {json: any}) => string[]) | string[];
-			otherImports?: (props: {json: any; fragments?: any[]}) => string;
-			isNotDirectExport?: boolean;
-			code: (props: {json: any; jsonToTemplate: (json: any, fragments: any[]) => string; fragments: any[]}) => string;
-			additionalCode?: (componentObj: any) => any;
+			latest: {
+				imports: ((props: {json: any}) => string[]) | string[];
+				otherImports?: (props: {json: any; fragments?: any[]}) => string;
+				isNotDirectExport?: boolean;
+				code: (props: {json: any; jsonToTemplate: (json: any, fragments: any[]) => string; fragments: any[]}) => string;
+				additionalCode?: (componentObj: any) => any;
+			};
+			v10: {
+				imports: ((props: {json: any}) => string[]) | string[];
+				otherImports?: (props: {json: any; fragments?: any[]}) => string;
+				isNotDirectExport?: boolean;
+				code: (props: {json: any; jsonToTemplate: (json: any, fragments: any[]) => string; fragments: any[]}) => string;
+				additionalCode?: (componentObj: any) => any;
+			};
 		};
 	};
 }
@@ -187,8 +204,8 @@ export const AComponent = ({
 				<span className={css`margin-right: 1rem`}>
 					{componentObj && componentObj.type ? componentObj.type : 'Header'}
 				</span>
-				<Draggable32 className={iconStyle} />
-				<TrashCan32 onClick={(event: any) => {
+				<Draggable size={32} className={iconStyle} />
+				<TrashCan size={32} onClick={(event: any) => {
 					event.stopPropagation();
 					if (remove) {
 						remove();

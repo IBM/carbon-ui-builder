@@ -4,7 +4,7 @@ import {
 	TextInput,
 	NumberInput,
 	Checkbox
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { css, cx } from 'emotion';
 import { AComponent, ComponentInfo } from './a-component';
 import image from './../assets/component-icons/slider.svg';
@@ -58,57 +58,59 @@ export const ASliderSettingsUI = ({ selectedComponent, setComponent }: any) => {
 		<NumberInput
 			value={selectedComponent.min}
 			label='Min'
-			onChange={(event: any) => setComponent({
-				...selectedComponent,
-				min: +event.imaginaryTarget.value
-			})} />
+			onChange={(_: any, { value }: any) => {
+				setComponent({
+					...selectedComponent,
+					min: value
+				});
+			}} />
 
 		<NumberInput
 			value={selectedComponent.max}
 			label='Max'
-			onChange={(event: any) => setComponent({
+			onChange={(_: any, { value }: any) => setComponent({
 				...selectedComponent,
-				max: +event.imaginaryTarget.value
+				max: value
 			})} />
 
 		<NumberInput
 			value={selectedComponent.value}
 			label='Value'
-			onChange={(event: any) => setComponent({
+			onChange={(_: any, { value }: any) => setComponent({
 				...selectedComponent,
-				value: +event.imaginaryTarget.value
+				value: value
 			})} />
 
 		<NumberInput
 			value={selectedComponent.step}
 			label='Step'
-			onChange={(event: any) => setComponent({
+			onChange={(_: any, { value }: any) => setComponent({
 				...selectedComponent,
-				step: +event.imaginaryTarget.value
+				step: value
 			})} />
 
 		<NumberInput
 			value={selectedComponent.stepMultiplier}
 			label='Step multiplier'
-			onChange={(event: any) => setComponent({
+			onChange={(_: any, { value }: any) => setComponent({
 				...selectedComponent,
-				stepMultiplier: +event.imaginaryTarget.value
+				stepMultiplier: value
 			})} />
 
 		<TextInput
 			value={selectedComponent.minLabel}
 			labelText='Min label'
-			onChange={(event: any) => setComponent({
+			onChange={(_: any, { value }: any) => setComponent({
 				...selectedComponent,
-				minLabel: event.currentTarget.value
+				minLabel: value
 			})} />
 
 		<TextInput
 			value={selectedComponent.maxLabel}
 			labelText='Max label'
-			onChange={(event: any) => setComponent({
+			onChange={(_: any, { value }: any) => setComponent({
 				...selectedComponent,
-				maxLabel: event.currentTarget.value
+				maxLabel: value
 			})} />
 	</>;
 };
@@ -174,53 +176,105 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled ? json.disabled : false};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = ${json.value ? json.value : json.min};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Min = ${json.min};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Max = ${json.max};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}MinLabel = "${json.minLabel ? json.minLabel: ''}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}MaxLabel = "${json.maxLabel ? json.maxLabel: ''}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Step = ${json.step ? json.step : 1};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}StepMultiplier = ${json.stepMultiplier ? json.stepMultiplier : 1};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}" `,
-			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
-			imports: ['SliderModule'],
-			otherImports: () => 'import { CommonModule } from "@angular/common";',
-			code: ({ json }) => {
-				return `<ibm-slider
-					[label]="${nameStringToVariableString(json.codeContext?.name)}Label"
-					[min]="${nameStringToVariableString(json.codeContext?.name)}Min"
-					[max]="${nameStringToVariableString(json.codeContext?.name)}Max"
-					[step]="${nameStringToVariableString(json.codeContext?.name)}Step"
-					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
-					[shiftMultiplier]="${nameStringToVariableString(json.codeContext?.name)}StepMultiplier"
-					[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
-					(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
-					<span minLabel>{{${nameStringToVariableString(json.codeContext?.name)}MinLabel}}</span>
-					<span maxLabel>{{${nameStringToVariableString(json.codeContext?.name)}MaxLabel}}</span>
-                    <input [theme]="${nameStringToVariableString(json.codeContext?.name)}Theme" 
-                    ${angularClassNamesFromComponentObj(json)} />
-				</ibm-slider>`;
+			latest: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled ? json.disabled : false};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = ${json.value ? json.value : json.min};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Min = ${json.min};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Max = ${json.max};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}MinLabel = "${json.minLabel ? json.minLabel: ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}MaxLabel = "${json.maxLabel ? json.maxLabel: ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Step = ${json.step ? json.step : 1};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}StepMultiplier = ${json.stepMultiplier ? json.stepMultiplier : 1};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}" `,
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
+				imports: ['SliderModule'],
+				code: ({ json }) => {
+					return `<ibm-slider
+						[label]="${nameStringToVariableString(json.codeContext?.name)}Label"
+						[min]="${nameStringToVariableString(json.codeContext?.name)}Min"
+						[max]="${nameStringToVariableString(json.codeContext?.name)}Max"
+						[step]="${nameStringToVariableString(json.codeContext?.name)}Step"
+						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
+						[shiftMultiplier]="${nameStringToVariableString(json.codeContext?.name)}StepMultiplier"
+						[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
+						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
+						<span minLabel>{{${nameStringToVariableString(json.codeContext?.name)}MinLabel}}</span>
+						<span maxLabel>{{${nameStringToVariableString(json.codeContext?.name)}MaxLabel}}</span>
+						<input [theme]="${nameStringToVariableString(json.codeContext?.name)}Theme" 
+						${angularClassNamesFromComponentObj(json)} />
+					</ibm-slider>`;
+				}
+			},
+			v10: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled ? json.disabled : false};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = ${json.value ? json.value : json.min};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Min = ${json.min};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Max = ${json.max};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}MinLabel = "${json.minLabel ? json.minLabel: ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}MaxLabel = "${json.maxLabel ? json.maxLabel: ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Step = ${json.step ? json.step : 1};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}StepMultiplier = ${json.stepMultiplier ? json.stepMultiplier : 1};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}" `,
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
+				imports: ['SliderModule'],
+				code: ({ json }) => {
+					return `<ibm-slider
+						[label]="${nameStringToVariableString(json.codeContext?.name)}Label"
+						[min]="${nameStringToVariableString(json.codeContext?.name)}Min"
+						[max]="${nameStringToVariableString(json.codeContext?.name)}Max"
+						[step]="${nameStringToVariableString(json.codeContext?.name)}Step"
+						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
+						[shiftMultiplier]="${nameStringToVariableString(json.codeContext?.name)}StepMultiplier"
+						[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
+						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
+						<span minLabel>{{${nameStringToVariableString(json.codeContext?.name)}MinLabel}}</span>
+						<span maxLabel>{{${nameStringToVariableString(json.codeContext?.name)}MaxLabel}}</span>
+						<input [theme]="${nameStringToVariableString(json.codeContext?.name)}Theme" 
+						${angularClassNamesFromComponentObj(json)} />
+					</ibm-slider>`;
+				}
 			}
 		},
 		react: {
-			imports: ['Slider'],
-			code: ({ json }) => {
-				return `<Slider
-					labelText='${json.labelText}'
-					min={${json.min}}
-					max={${json.max}}
-					${json.value ? `value={${json.value}}` : ''}
-					${json.step ? `step={${json.step}}` : ''}
-					${json.stepMultiplier ? `stepMultiplier={${json.stepMultiplier}}` : ''}
-					${json.disabled ? `disabled={${json.disabled}}` : ''}
-					${json.hideTextInput ? `hideTextInput={${json.hideTextInput}}` : ''}
-					${json.minLabel ? `minLabel="${json.minLabel}"` : ''}
-					${json.maxLabel ? `maxLabel="${json.maxLabel}"` : ''}
-					${json.light ? `light={${json.light}}` : ''}
-					onChange={handleInputChange}
-					${reactClassNamesFromComponentObj(json)} />`;
+			latest: {
+				imports: ['Slider'],
+				code: ({ json }) => {
+					return `<Slider
+						labelText='${json.labelText}'
+						min={${json.min}}
+						max={${json.max}}
+						${json.value ? `value={${json.value}}` : ''}
+						${json.step ? `step={${json.step}}` : ''}
+						${json.stepMultiplier ? `stepMultiplier={${json.stepMultiplier}}` : ''}
+						${json.disabled ? `disabled={${json.disabled}}` : ''}
+						${json.hideTextInput ? `hideTextInput={${json.hideTextInput}}` : ''}
+						${json.minLabel ? `minLabel="${json.minLabel}"` : ''}
+						${json.maxLabel ? `maxLabel="${json.maxLabel}"` : ''}
+						${json.light ? `light={${json.light}}` : ''}
+						onChange={handleInputChange}
+						${reactClassNamesFromComponentObj(json)} />`;
+				}
+			},
+			v10: {
+				imports: ['Slider'],
+				code: ({ json }) => {
+					return `<Slider
+						labelText='${json.labelText}'
+						min={${json.min}}
+						max={${json.max}}
+						${json.value ? `value={${json.value}}` : ''}
+						${json.step ? `step={${json.step}}` : ''}
+						${json.stepMultiplier ? `stepMultiplier={${json.stepMultiplier}}` : ''}
+						${json.disabled ? `disabled={${json.disabled}}` : ''}
+						${json.hideTextInput ? `hideTextInput={${json.hideTextInput}}` : ''}
+						${json.minLabel ? `minLabel="${json.minLabel}"` : ''}
+						${json.maxLabel ? `maxLabel="${json.maxLabel}"` : ''}
+						${json.light ? `light={${json.light}}` : ''}
+						onChange={handleInputChange}
+						${reactClassNamesFromComponentObj(json)} />`;
+				}
 			}
 		}
 	}

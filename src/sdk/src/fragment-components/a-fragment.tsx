@@ -2,8 +2,8 @@ import React from 'react';
 import {
 	Checkbox,
 	TextInput
-} from 'carbon-components-react';
-import { Edit32 } from '@carbon/icons-react';
+} from '@carbon/react';
+import { Edit } from '@carbon/react/icons';
 import { css, cx } from 'emotion';
 import { AComponent, ComponentInfo } from './a-component';
 
@@ -16,7 +16,7 @@ export const AFragmentSettingsUI = ({ selectedComponent, setComponent }: any) =>
 		<LinkButton
 		kind='secondary'
 		size='sm'
-		renderIcon={Edit32}
+		renderIcon={Edit}
 		className={css`margin-bottom: 1rem`}
 		to={`/edit/${selectedComponent.fragmentId}`}>
 			Edit fragment
@@ -25,7 +25,7 @@ export const AFragmentSettingsUI = ({ selectedComponent, setComponent }: any) =>
 			labelText='Show outline'
 			id='fragment-outline'
 			checked={selectedComponent.outline}
-			onChange={(checked: boolean) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				outline: checked
 			})} />
@@ -106,23 +106,47 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: { // TODO exports
 		angular: {
-			inputs: (_) => '',
-			outputs: (_) => '',
-			imports: [],
-			code: ({ json, fragments }) => {
-				const fragment = fragments?.find(f => f.id === json.fragmentId);
-				return `<app-${tagNameFromFragment(fragment)}></app-${tagNameFromFragment(fragment)}>`;
+			latest: {
+				inputs: (_) => '',
+				outputs: (_) => '',
+				imports: [],
+				code: ({ json, fragments }) => {
+					const fragment = fragments?.find(f => f.id === json.fragmentId);
+					return `<app-${tagNameFromFragment(fragment)}></app-${tagNameFromFragment(fragment)}>`;
+				}
+			},
+			v10: {
+				inputs: (_) => '',
+				outputs: (_) => '',
+				imports: [],
+				code: ({ json, fragments }) => {
+					const fragment = fragments?.find(f => f.id === json.fragmentId);
+					return `<app-${tagNameFromFragment(fragment)}></app-${tagNameFromFragment(fragment)}>`;
+				}
 			}
 		},
 		react: {
-			imports: [],
-			otherImports: ({ json, fragments }) => {
-				const fragment = fragments?.find(f => f.id === json.fragmentId);
-				return `import {${classNameFromFragment(fragment)}} from "/src/shared/${tagNameFromFragment(fragment)}.js";`;
+			latest: {
+				imports: [],
+				otherImports: ({ json, fragments }) => {
+					const fragment = fragments?.find(f => f.id === json.fragmentId);
+					return `import {${classNameFromFragment(fragment)}} from "/src/shared/${tagNameFromFragment(fragment)}.js";`;
+				},
+				code: ({ json, fragments }) => {
+					const fragment = fragments?.find(f => f.id === json.fragmentId);
+					return `<${classNameFromFragment(fragment)} state={state} setState={setState} />`;
+				}
 			},
-			code: ({ json, fragments }) => {
-				const fragment = fragments?.find(f => f.id === json.fragmentId);
-				return `<${classNameFromFragment(fragment)} state={state} setState={setState} />`;
+			v10: {
+				imports: [],
+				otherImports: ({ json, fragments }) => {
+					const fragment = fragments?.find(f => f.id === json.fragmentId);
+					return `import {${classNameFromFragment(fragment)}} from "/src/shared/${tagNameFromFragment(fragment)}.js";`;
+				},
+				code: ({ json, fragments }) => {
+					const fragment = fragments?.find(f => f.id === json.fragmentId);
+					return `<${classNameFromFragment(fragment)} state={state} setState={setState} />`;
+				}
 			}
 		}
 	}

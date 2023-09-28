@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Modal } from 'carbon-components-react';
+import { Modal } from '@carbon/react';
 import { ModalContext } from '../../context/modal-context';
 import { FragmentDuplicateModal } from './fragment-duplicate-modal';
 import { FragmentDeleteModal } from './fragment-delete-modal';
