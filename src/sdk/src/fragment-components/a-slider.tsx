@@ -186,7 +186,7 @@ export const componentInfo: ComponentInfo = {
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}" `,
 			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 			imports: ['SliderModule'],
-			otherImports: () => 'import { CommonModule } from "@angular/common"',
+			otherImports: () => 'import { CommonModule } from "@angular/common";',
 			code: ({ json }) => {
 				return `<ibm-slider
 					[label]="${nameStringToVariableString(json.codeContext?.name)}Label"
