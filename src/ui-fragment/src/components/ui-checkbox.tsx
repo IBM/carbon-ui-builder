@@ -70,7 +70,7 @@ export const UICheckbox = ({ state, sendSignal }: {
 		onClick={() => {
 			sendSignal(state.id, 'click');
 		}}
-		onChange={(checked: boolean) => {
+		onChange={(_: any, { checked }: any) => {
 			sendSignal(state.id, 'toggle', [checked], { ...state, checked });
 		}}
 		className={cssClasses} />;

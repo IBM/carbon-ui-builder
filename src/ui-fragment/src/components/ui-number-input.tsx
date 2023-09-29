@@ -79,6 +79,6 @@ export const UINumberInput = ({ state, setState }: {
 		invalidText={state.invalidText}
 		light={state.light}
 		allowEmpty={state.allowEmpty}
-		onChange={(event: any) => setState({ ...state, value: event.imaginaryTarget.value })}
+		onChange={(_: any, { value }: any) => setState({ ...state, value })}
 		className={cssClasses} />;
 };
