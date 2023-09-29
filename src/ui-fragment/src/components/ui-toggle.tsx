@@ -79,8 +79,8 @@ export const UIToggle = ({ state, sendSignal }: {
 		onClick={() => {
 			sendSignal(state.id, 'click');
 		}}
-		onChange={(event: any) => {
-			sendSignal(state.id, 'toggle', [event.target.checked], { ...state, checked: event.target.checked });
+		onToggle={(checked: any) => {
+			sendSignal(state.id, 'toggle', [checked], { ...state, checked });
 		}}
 		className={cssClasses} />;
 };
