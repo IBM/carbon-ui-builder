@@ -88,7 +88,6 @@ export const AButton = ({
 		<AComponent
 		componentObj={componentObj}
 		rejectDrop={true}
-		className={css`position: relative; display: inline-flex`}
 		{...rest}>
 			<Button
 			kind={componentObj.kind}
