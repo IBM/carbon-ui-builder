@@ -18,6 +18,7 @@ import * as progressIndicator from './a-progress-indicator';
 import * as row from './a-row';
 import * as tag from './a-tag';
 import * as searchinput from './a-searchinput';
+import * as select from './a-select';
 import * as text from './a-text';
 import * as textarea from './a-text-area';
 import * as textinput from './a-text-input';
@@ -55,6 +56,7 @@ export { AInlineLoading, AInlineLoadingCodeUI, AInlineLoadingSettingsUI } from '
 export { ANumberInput, ANumberInputSettingsUI, ANumberInputCodeUI } from './a-numberinput';
 export { AProgressIndicator, AProgressIndicatorSettingsUI, AProgressIndicatorCodeUI } from './a-progress-indicator';
 export { ARow, ARowCodeUI, ARowSettingsUI } from './a-row';
+export { ASelect, ASelectCodeUI, ASelectSettingsUI } from './a-select';
 export { ASearchInput, ASearchInputSettingsUI, ASearchInputCodeUI } from './a-searchinput';
 export { ATag, ATagCodeUI, ATagSettingsUI } from './a-tag';
 export { AText, ATextCodeUI, ATextSettingsUI } from './a-text';
@@ -108,6 +110,7 @@ export const allComponents = {
 	clickabletile,
 	expandabletile,
 	tilefold,
+	select,
 	selectabletile,
 	selectableTileGroup,
 	radiotile,
