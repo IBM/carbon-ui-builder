@@ -65,7 +65,6 @@ export const UISlider = ({ state, sendSignal }: {
 	}
 
 	return <Slider
-	inert
 	id={state.id}
 	labelText={state.labelText}
 	min={state.min}

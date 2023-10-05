@@ -100,17 +100,17 @@ export const ASliderSettingsUI = ({ selectedComponent, setComponent }: any) => {
 		<TextInput
 			value={selectedComponent.minLabel}
 			labelText='Min label'
-			onChange={(_: any, { value }: any) => setComponent({
+			onChange={(event: any) => setComponent({
 				...selectedComponent,
-				minLabel: value
+				minLabel: event.currentTarget.value
 			})} />
 
 		<TextInput
 			value={selectedComponent.maxLabel}
 			labelText='Max label'
-			onChange={(_: any, { value }: any) => setComponent({
+			onChange={(event: any) => setComponent({
 				...selectedComponent,
-				maxLabel: value
+				maxLabel: event.currentTarget.value
 			})} />
 	</>;
 };
