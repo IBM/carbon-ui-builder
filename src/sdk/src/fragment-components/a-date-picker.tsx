@@ -5,7 +5,7 @@ import {
 	Dropdown,
 	Checkbox,
 	TextInput
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent, ComponentInfo } from './a-component';
 import image from './../assets/component-icons/date-picker.svg';
 import {
@@ -20,9 +20,11 @@ const preventCheckEventStyle = css`
 `;
 
 const pickerInputAlignment = css `
-	display: flex;
-	align-items: flex-end;
-`
+	.cds--date-picker {
+		display: flex;
+		align-items: flex-end !important;
+	}
+`;
 
 export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const size = [
@@ -66,9 +68,9 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 			labelText='Light'
 			id='light'
 			checked={selectedComponent.light}
-			onChange={(checked: boolean) => setComponent({
+			onChange={(_: any) => setComponent({
 				...selectedComponent,
-				light: checked
+				light: !selectedComponent.light
 		})} />
 		<Dropdown
 			label='Size'
@@ -84,17 +86,17 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 			labelText='Disabled'
 			id='disable'
 			checked={selectedComponent.disabled}
-			onChange={(checked: boolean) => setComponent({
+			onChange={(_: any) => setComponent({
 				...selectedComponent,
-				disabled: checked
+				disabled: !selectedComponent.disabled
 		})} />
 		<Checkbox
 			labelText='Invalid'
 			id='invalid'
 			checked={selectedComponent.invalid}
-			onChange={(checked: boolean) => setComponent({
+			onChange={(_: any) => setComponent({
 				...selectedComponent,
-				invalid: checked
+				invalid: !selectedComponent.invalid
 		})} />
 		<TextInput
 			value={selectedComponent.rangeStartLabel}
@@ -190,84 +192,169 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value ? json.value : ''}";`,
-			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
-			imports: ['DatePickerModule'],
-			code: ({ json }) => {
-				return `${json.datePickerType === 'simple'
-					? `<ibm-date-picker-input
-						${angularClassNamesFromComponentObj(json)}
-						${json.light ? '[light]="true"' : ''}
-						${json.rangeStartLabel ? `[label]='${json.rangeStartLabel}'` : ''}
-						${json.disabled ? `[disabled]='${json.disabled}'` : ''}
-						${json.invalid ? `[invalid]='${json.invalid}'` : ''}
-						${json.invalidText ? `[invalidText]='${json.invalidText}'` : ''}
-						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
-						[value]="'${nameStringToVariableString(json.codeContext?.name)}Value'"
-						[placeholder]="'${json.placeholder}'"
-						[size]="${json.size}">
-					</ibm-date-picker-input>`
-					: json.datePickerType === 'single'
-					? `<ibm-date-picker
-						${angularClassNamesFromComponentObj(json)}
-						${json.rangeStartLabel ? `[label]='${json.rangeStartLabel}'` : ''}
-						${json.light ? '[light]="true"' : ''}
-						${json.disabled ? `[disabled]='${json.disabled}'` : ''}
-						${json.invalid ? `[invalid]='${json.invalid}'` : ''}
-						${json.invalidText ? `[invalidText]='${json.invalidText}'` : ''}
-						[placeholder]="'${json.placeholder}'"
-						[size]="${json.size}"
-						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
-						[dateFormat]="${json.dateFormat}"
-						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
-					</ibm-date-picker>`
-					: `<ibm-date-picker
-						${angularClassNamesFromComponentObj(json)}
-						${json.rangeStartLabel ? `[label]='${json.rangeStartLabel}'` : ''}
-						${json.rangeEndLabel ? `[rangeLabel]='${json.rangeEndLabel}'` : ''}
-						${json.light ? '[light]="true"' : ''}
-						${json.disabled ? `[disabled]='${json.disabled}'` : ''}
-						${json.invalid ? `[invalid]='${json.invalid}'` : ''}
-						${json.invalidText ? `[invalidText]='${json.invalidText}'` : ''}
-						[size]="${json.size}"
-						range="true"
-						[placeholder]="'${json.placeholder}'"
-						[dateFormat]="${json.dateFormat}"
-						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
-						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
-					</ibm-date-picker>`
-				}`;
+			latest: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value ? json.value : ''}";`,
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
+				imports: ['DatePickerModule'],
+				code: ({ json }) => {
+					return `${json.datePickerType === 'simple'
+						? `<ibm-date-picker-input
+							${angularClassNamesFromComponentObj(json)}
+							${json.light ? '[light]="true"' : ''}
+							${json.rangeStartLabel ? `[label]='${json.rangeStartLabel}'` : ''}
+							${json.disabled ? `[disabled]='${json.disabled}'` : ''}
+							${json.invalid ? `[invalid]='${json.invalid}'` : ''}
+							${json.invalidText ? `[invalidText]='${json.invalidText}'` : ''}
+							(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
+							[value]="'${nameStringToVariableString(json.codeContext?.name)}Value'"
+							[placeholder]="'${json.placeholder}'"
+							[size]="${json.size}">
+						</ibm-date-picker-input>`
+						: json.datePickerType === 'single'
+						? `<ibm-date-picker
+							${angularClassNamesFromComponentObj(json)}
+							${json.rangeStartLabel ? `[label]='${json.rangeStartLabel}'` : ''}
+							${json.light ? '[light]="true"' : ''}
+							${json.disabled ? `[disabled]='${json.disabled}'` : ''}
+							${json.invalid ? `[invalid]='${json.invalid}'` : ''}
+							${json.invalidText ? `[invalidText]='${json.invalidText}'` : ''}
+							[placeholder]="'${json.placeholder}'"
+							[size]="${json.size}"
+							[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
+							[dateFormat]="${json.dateFormat}"
+							(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
+						</ibm-date-picker>`
+						: `<ibm-date-picker
+							${angularClassNamesFromComponentObj(json)}
+							${json.rangeStartLabel ? `[label]='${json.rangeStartLabel}'` : ''}
+							${json.rangeEndLabel ? `[rangeLabel]='${json.rangeEndLabel}'` : ''}
+							${json.light ? '[light]="true"' : ''}
+							${json.disabled ? `[disabled]='${json.disabled}'` : ''}
+							${json.invalid ? `[invalid]='${json.invalid}'` : ''}
+							${json.invalidText ? `[invalidText]='${json.invalidText}'` : ''}
+							[size]="${json.size}"
+							range="true"
+							[placeholder]="'${json.placeholder}'"
+							[dateFormat]="${json.dateFormat}"
+							[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
+							(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
+						</ibm-date-picker>`
+					}`;
+				}
+			},
+			v10: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value ? json.value : ''}";`,
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
+				imports: ['DatePickerModule'],
+				code: ({ json }) => {
+					return `${json.datePickerType === 'simple'
+						? `<ibm-date-picker-input
+							${angularClassNamesFromComponentObj(json)}
+							${json.light ? '[light]="true"' : ''}
+							${json.rangeStartLabel ? `[label]='${json.rangeStartLabel}'` : ''}
+							${json.disabled ? `[disabled]='${json.disabled}'` : ''}
+							${json.invalid ? `[invalid]='${json.invalid}'` : ''}
+							${json.invalidText ? `[invalidText]='${json.invalidText}'` : ''}
+							(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
+							[value]="'${nameStringToVariableString(json.codeContext?.name)}Value'"
+							[placeholder]="'${json.placeholder}'"
+							[size]="${json.size}">
+						</ibm-date-picker-input>`
+						: json.datePickerType === 'single'
+						? `<ibm-date-picker
+							${angularClassNamesFromComponentObj(json)}
+							${json.rangeStartLabel ? `[label]='${json.rangeStartLabel}'` : ''}
+							${json.light ? '[light]="true"' : ''}
+							${json.disabled ? `[disabled]='${json.disabled}'` : ''}
+							${json.invalid ? `[invalid]='${json.invalid}'` : ''}
+							${json.invalidText ? `[invalidText]='${json.invalidText}'` : ''}
+							[placeholder]="'${json.placeholder}'"
+							[size]="${json.size}"
+							[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
+							[dateFormat]="${json.dateFormat}"
+							(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
+						</ibm-date-picker>`
+						: `<ibm-date-picker
+							${angularClassNamesFromComponentObj(json)}
+							${json.rangeStartLabel ? `[label]='${json.rangeStartLabel}'` : ''}
+							${json.rangeEndLabel ? `[rangeLabel]='${json.rangeEndLabel}'` : ''}
+							${json.light ? '[light]="true"' : ''}
+							${json.disabled ? `[disabled]='${json.disabled}'` : ''}
+							${json.invalid ? `[invalid]='${json.invalid}'` : ''}
+							${json.invalidText ? `[invalidText]='${json.invalidText}'` : ''}
+							[size]="${json.size}"
+							range="true"
+							[placeholder]="'${json.placeholder}'"
+							[dateFormat]="${json.dateFormat}"
+							[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
+							(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
+						</ibm-date-picker>`
+					}`;
+				}
 			}
 		},
 		react: {
-			imports: ['DatePicker', 'DatePickerInput'],
-			code: ({ json }) => {
-				return `<DatePicker
-							${reactClassNamesFromComponentObj(json)}
-							dateFormat="${json.dateFormat}"
-							datePickerType="${json.datePickerType}"
-							${json.light ? 'light="true"' : ''}>
-							<DatePickerInput
-								placeholder="${json.placeholder}"
-								${json.rangeStartLabel ? `labelText='${json.rangeStartLabel}'` : ''}
-								${json.disabled ? `disabled='${json.disabled}'` : ''}
-								${json.invalid ? `invalid='${json.invalid}'` : ''}
-								${json.invalidText ? `invalidText='${json.invalidText}'` : ''}
-								size="${json.size}"
-								type='text'
-							/>
-							${json.datePickerType === 'range'
-								? `<DatePickerInput
-									${json.rangeEndLabel ? `labelText='${json.rangeEndLabel}'` : ''}
+			latest: {
+				imports: ['DatePicker', 'DatePickerInput'],
+				code: ({ json }) => {
+					return `<DatePicker
+								${reactClassNamesFromComponentObj(json)}
+								dateFormat="${json.dateFormat}"
+								datePickerType="${json.datePickerType}"
+								${json.light ? 'light="true"' : ''}>
+								<DatePickerInput
+									placeholder="${json.placeholder}"
+									${json.rangeStartLabel ? `labelText='${json.rangeStartLabel}'` : ''}
 									${json.disabled ? `disabled='${json.disabled}'` : ''}
 									${json.invalid ? `invalid='${json.invalid}'` : ''}
-									${json.invalidText ? `invalidText='${json.invalidText}'` : ''} 
-									placeholder="${json.placeholder}"
+									${json.invalidText ? `invalidText='${json.invalidText}'` : ''}
 									size="${json.size}"
-									type='text' />`
-								: ''
-							}
-					</DatePicker>`;
+									type='text'
+								/>
+								${json.datePickerType === 'range'
+									? `<DatePickerInput
+										${json.rangeEndLabel ? `labelText='${json.rangeEndLabel}'` : ''}
+										${json.disabled ? `disabled='${json.disabled}'` : ''}
+										${json.invalid ? `invalid='${json.invalid}'` : ''}
+										${json.invalidText ? `invalidText='${json.invalidText}'` : ''} 
+										placeholder="${json.placeholder}"
+										size="${json.size}"
+										type='text' />`
+									: ''
+								}
+						</DatePicker>`;
+				}
+			}, 
+			v10: {
+				imports: ['DatePicker', 'DatePickerInput'],
+				code: ({ json }) => {
+					return `<DatePicker
+								${reactClassNamesFromComponentObj(json)}
+								dateFormat="${json.dateFormat}"
+								datePickerType="${json.datePickerType}"
+								${json.light ? 'light="true"' : ''}>
+								<DatePickerInput
+									placeholder="${json.placeholder}"
+									${json.rangeStartLabel ? `labelText='${json.rangeStartLabel}'` : ''}
+									${json.disabled ? `disabled='${json.disabled}'` : ''}
+									${json.invalid ? `invalid='${json.invalid}'` : ''}
+									${json.invalidText ? `invalidText='${json.invalidText}'` : ''}
+									size="${json.size}"
+									type='text'
+								/>
+								${json.datePickerType === 'range'
+									? `<DatePickerInput
+										${json.rangeEndLabel ? `labelText='${json.rangeEndLabel}'` : ''}
+										${json.disabled ? `disabled='${json.disabled}'` : ''}
+										${json.invalid ? `invalid='${json.invalid}'` : ''}
+										${json.invalidText ? `invalidText='${json.invalidText}'` : ''} 
+										placeholder="${json.placeholder}"
+										size="${json.size}"
+										type='text' />`
+									: ''
+								}
+						</DatePicker>`;
+				}
 			}
 		}
 	}
