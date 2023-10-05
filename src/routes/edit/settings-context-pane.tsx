@@ -2,12 +2,9 @@ import React, { useContext } from 'react';
 import {
 	Button,
 	Checkbox,
-	TooltipDefinition
-} from 'carbon-components-react';
-import {
-	ChevronDown16,
-	ChevronUp16
-} from '@carbon/icons-react';
+	DefinitionTooltip
+} from '@carbon/react';
+import { ChevronDown,ChevronUp } from '@carbon/react/icons';
 import { css, cx } from 'emotion';
 import Editor from '@monaco-editor/react';
 import { throttle } from 'lodash';
@@ -20,7 +17,7 @@ import { LayoutWidget } from '../../sdk/src/layout-widget';
 import { getSelectedComponent, updatedState } from '../../sdk/src/tools';
 
 const styleContextPaneStyle = css`
-.bx--form-item.bx--checkbox-wrapper {
+.cds--form-item.cds--checkbox-wrapper {
 	display: inline-flex;
 }`;
 
@@ -34,7 +31,7 @@ export const accordionButtonStyle = css`
 		color: #161616;
 	}
 
-	&.bx--btn--ghost .bx--btn__icon {
+	&.cds--btn--ghost .cds--btn__icon {
 		margin-left: 0;
 		margin-right: 1rem;
 		float: left;
@@ -52,7 +49,7 @@ const fullWidthWidgetStyle = css`
 `;
 
 const tooltipStyle = css`
-.bx--tooltip__trigger.bx--tooltip__trigger--definition.bx--tooltip--bottom.bx--tooltip--a11y + .bx--assistive-text {
+.cds--tooltip__trigger.cds--tooltip__trigger--definition.cds--tooltip--bottom.cds--tooltip--a11y + .cds--assistive-text {
 	margin-left: -150px;
 }
 `;
@@ -120,7 +117,7 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 			<Button
 			kind='ghost'
 			className={accordionButtonStyle}
-			renderIcon={settings.contextPane?.settings?.generalAccordionOpen ? ChevronUp16 : ChevronDown16}
+			renderIcon={settings.contextPane?.settings?.generalAccordionOpen ? ChevronUp : ChevronDown}
 			onClick={() => updateContextPaneSettings({
 				generalAccordionOpen: !settings.contextPane?.settings?.generalAccordionOpen
 			})}>
@@ -140,7 +137,7 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 							id='setFragmentAsTemplate'
 							checked={fragment.labels && fragment.labels.includes('template')}
 							labelText='Make this fragment a &nbsp;'
-							onChange={(checked: boolean) => {
+							onChange={(_: any, { checked }: any) => {
 								if (checked) {
 									if (!fragment.labels?.includes('template')) {
 										setFragment({
@@ -156,18 +153,18 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 									});
 								}
 							}}/>
-						<TooltipDefinition
-							tooltipText='Setting a fragment as a template makes it an easy starting point
+						<DefinitionTooltip
+							definition='Setting a fragment as a template makes it an easy starting point
 							for future fragments.'
 							direction='bottom'
 							className={tooltipStyle}>
 							template
-						</TooltipDefinition>
+						</DefinitionTooltip>
 						<Checkbox
 							id='setFragmentAsMicroLayout'
 							checked={fragment.labels && fragment.labels.includes('micro-layout')}
 							labelText='Make this fragment a &nbsp;'
-							onChange={(checked: boolean) => {
+							onChange={(_: any, { checked }: any) => {
 								if (checked) {
 									if (!fragment.labels?.includes('micro-layout')) {
 										setFragment({
@@ -183,12 +180,12 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 									});
 								}
 							}}/>
-						<TooltipDefinition
-							tooltipText='Setting a fragment as a micro layout makes it available to drag and drop into fragments'
+						<DefinitionTooltip
+							definition='Setting a fragment as a micro layout makes it available to drag and drop into fragments'
 							direction='bottom'
 							className={tooltipStyle}>
 							micro layout
-						</TooltipDefinition>
+						</DefinitionTooltip>
 					</>
 				}
 				</div>
@@ -198,7 +195,7 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 					<Button
 					kind='ghost'
 					className={accordionButtonStyle}
-					renderIcon={settings.contextPane?.settings?.layoutAccordionOpen ? ChevronUp16 : ChevronDown16}
+					renderIcon={settings.contextPane?.settings?.layoutAccordionOpen ? ChevronUp : ChevronDown}
 					onClick={() => updateContextPaneSettings({
 						layoutAccordionOpen: !settings.contextPane?.settings?.layoutAccordionOpen
 					})}>
@@ -217,7 +214,7 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 			<Button
 			kind='ghost'
 			className={accordionButtonStyle}
-			renderIcon={settings.contextPane?.settings?.advancedStylingAccordionOpen ? ChevronUp16 : ChevronDown16}
+			renderIcon={settings.contextPane?.settings?.advancedStylingAccordionOpen ? ChevronUp : ChevronDown}
 			onClick={() => updateContextPaneSettings({
 				advancedStylingAccordionOpen: !settings.contextPane?.settings?.advancedStylingAccordionOpen
 			})}>
@@ -239,7 +236,7 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 			<Button
 			kind='ghost'
 			className={accordionButtonStyle}
-			renderIcon={settings.contextPane?.settings?.notesAccordionOpen ? ChevronUp16 : ChevronDown16}
+			renderIcon={settings.contextPane?.settings?.notesAccordionOpen ? ChevronUp : ChevronDown}
 			onClick={() => updateContextPaneSettings({
 				notesAccordionOpen: !settings.contextPane?.settings?.notesAccordionOpen
 			})}>

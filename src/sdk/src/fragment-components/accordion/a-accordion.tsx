@@ -1,5 +1,5 @@
 import React from 'react';
-import { Accordion, Dropdown } from 'carbon-components-react';
+import { Accordion, Dropdown } from '@carbon/react';
 import { AComponent, ComponentInfo } from '../a-component';
 
 import image from '../../assets/component-icons/accordion.svg';
@@ -98,28 +98,57 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Align = "${json.align}";
+			latest: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Align = "${json.align}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";`,
-			outputs: () => '',
-			imports: ['AccordionModule'],
-			code: ({ json, fragments, jsonToTemplate }) => {
-				return `<ibm-accordion
-					[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
-					[align]="${nameStringToVariableString(json.codeContext?.name)}Align"
-					${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-				</ibm-accordion>`;
+				outputs: () => '',
+				imports: ['AccordionModule'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<cds-accordion
+						[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
+						[align]="${nameStringToVariableString(json.codeContext?.name)}Align"
+						${angularClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</cds-accordion>`;
+				}
+			},
+			v10: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Align = "${json.align}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";`,
+				outputs: () => '',
+				imports: ['AccordionModule'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<ibm-accordion
+						[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
+						[align]="${nameStringToVariableString(json.codeContext?.name)}Align"
+						${angularClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</ibm-accordion>`;
+				}
 			}
 		},
 		react: {
-			imports: ['Accordion'],
-			code: ({ json, fragments, jsonToTemplate }) => {
-				return `<Accordion
-					${json.align !== undefined ? `align='${json.align}'` : ''}
-					${json.size !== undefined ? `size='${json.size}'` : ''}
-					${reactClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-				</Accordion>`;
+			latest: {
+				imports: ['Accordion'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<Accordion
+						${json.align !== undefined ? `align='${json.align}'` : ''}
+						${json.size !== undefined ? `size='${json.size}'` : ''}
+						${reactClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</Accordion>`;
+				}
+			},
+			v10: {
+				imports: ['Accordion'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<Accordion
+						${json.align !== undefined ? `align='${json.align}'` : ''}
+						${json.size !== undefined ? `size='${json.size}'` : ''}
+						${reactClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</Accordion>`;
+				}
 			}
 		}
 	}

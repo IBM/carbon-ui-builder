@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Checkbox, TextInput } from 'carbon-components-react';
+import { Link, Checkbox, TextInput } from '@carbon/react';
 import { AComponent, ComponentInfo } from './a-component';
 
 import image from './../assets/component-icons/link.svg';
@@ -39,7 +39,7 @@ export const ALinkSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			labelText='Disabled'
 			id='disable-label'
 			checked={selectedComponent.disabled}
-			onChange={(checked: boolean) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					disabled: checked
@@ -50,7 +50,7 @@ export const ALinkSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			labelText='Inline'
 			id='Inline-select'
 			checked={selectedComponent.inline}
-			onChange={(checked: boolean) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					inline: checked
@@ -138,33 +138,67 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `
-			@Input() ${nameStringToVariableString(json.codeContext?.name)}Inline = ${json.inline};
-			@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
-			@Input() ${nameStringToVariableString(json.codeContext?.name)}Href = '${json.codeContext?.href}'`,
-			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
-			imports: ['LinkModule'],
-			code: ({ json }) => {
-				return `<a
-					ibmLink
-					[inline]="${nameStringToVariableString(json.codeContext?.name)}Inline"
-					[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
-					[href]="${nameStringToVariableString(json.codeContext?.name)}Href"
-					${angularClassNamesFromComponentObj(json)}>
-					${json.text}
-				</a>`;
+			latest: {
+				inputs: ({ json }) => `
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Inline = ${json.inline};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Href = '${json.codeContext?.href}'`,
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
+				imports: ['LinkModule'],
+				code: ({ json }) => {
+					return `<a
+						cdsLink
+						[inline]="${nameStringToVariableString(json.codeContext?.name)}Inline"
+						[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
+						[href]="${nameStringToVariableString(json.codeContext?.name)}Href"
+						${angularClassNamesFromComponentObj(json)}>
+						${json.text}
+					</a>`;
+				}
+			},
+			v10: {
+				inputs: ({ json }) => `
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Inline = ${json.inline};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Href = '${json.codeContext?.href}'`,
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
+				imports: ['LinkModule'],
+				code: ({ json }) => {
+					return `<a
+						ibmLink
+						[inline]="${nameStringToVariableString(json.codeContext?.name)}Inline"
+						[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
+						[href]="${nameStringToVariableString(json.codeContext?.name)}Href"
+						${angularClassNamesFromComponentObj(json)}>
+						${json.text}
+					</a>`;
+				}
 			}
 		},
 		react: {
-			imports: ['Link'],
-			code: ({ json }) => {
-				return `<Link
-					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
-					${json.inline !== undefined ? `inline={${json.inline}}` : ''}
-					${json.codeContext?.href !== undefined && json.codeContext?.href !== '' ? `href='${json.codeContext?.href}'` : ''}
-						${reactClassNamesFromComponentObj(json)}>
-					${json.text}
-				</Link>`;
+			latest: {
+				imports: ['Link'],
+				code: ({ json }) => {
+					return `<Link
+						${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
+						${json.inline !== undefined ? `inline={${json.inline}}` : ''}
+						${json.codeContext?.href !== undefined && json.codeContext?.href !== '' ? `href='${json.codeContext?.href}'` : ''}
+							${reactClassNamesFromComponentObj(json)}>
+						${json.text}
+					</Link>`;
+				}
+			},
+			v10: {
+				imports: ['Link'],
+				code: ({ json }) => {
+					return `<Link
+						${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
+						${json.inline !== undefined ? `inline={${json.inline}}` : ''}
+						${json.codeContext?.href !== undefined && json.codeContext?.href !== '' ? `href='${json.codeContext?.href}'` : ''}
+							${reactClassNamesFromComponentObj(json)}>
+						${json.text}
+					</Link>`;
+				}
 			}
 		}
 	}

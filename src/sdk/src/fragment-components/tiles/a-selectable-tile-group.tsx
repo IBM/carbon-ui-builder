@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { TextInput, Checkbox } from 'carbon-components-react';
+import { TextInput, Checkbox } from '@carbon/react';
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
 import { css, cx } from 'emotion';
@@ -22,7 +22,7 @@ export const ASelectableTileGroupSettingsUI = ({ selectedComponent, setComponent
 			labelText='Light theme'
 			id='theme-select'
 			checked={selectedComponent.light}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				/**
 				 * It usually is not common for users to have different theme for each tile,
 				 * this approach will ensure users don't have to go through each child `tile` & update theme
@@ -108,12 +108,12 @@ export const ASelectableTileGroup = ({
 			selected={selected}
 			{...rest}>
 				<div
-				role="group"
+				role='group'
 				className={cx(
 					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
 					css`${styleObjectToString(componentObj.style)}`
 				)}
-				aria-label="Selectable tiles">
+				aria-label='Selectable tiles'>
 					{children}
 				</div>
 		</AComponent>
@@ -177,27 +177,55 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: () => '',
-			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<Event>();`,
-			imports: ['TilesModule'],
-			code: ({ json, fragments, jsonToTemplate }) => {
-				return `<ibm-tile-group
-					(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
-					[multiple]="true"
-					${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-				</ibm-tile-group>`;
+			latest: {
+				inputs: () => '',
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<Event>();`,
+				imports: ['TilesModule'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<cds-tile-group
+						(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
+						[multiple]="true"
+						${angularClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</cds-tile-group>`;
+				}
+			},
+			v10: {
+				inputs: () => '',
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<Event>();`,
+				imports: ['TilesModule'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<ibm-tile-group
+						(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
+						[multiple]="true"
+						${angularClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</ibm-tile-group>`;
+				}
 			}
 		},
 		react: {
-			imports: [],
-			code: ({ json, jsonToTemplate, fragments }) => {
-				return `<div
-					role="group"
-					aria-label="Selectable tiles"
-					${reactClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-				</div>`;
+			latest: {
+				imports: [],
+				code: ({ json, jsonToTemplate, fragments }) => {
+					return `<div
+						role="group"
+						aria-label="Selectable tiles"
+						${reactClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</div>`;
+				}
+			},
+			v10: {
+				imports: [],
+				code: ({ json, jsonToTemplate, fragments }) => {
+					return `<div
+						role="group"
+						aria-label="Selectable tiles"
+						${reactClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</div>`;
+				}
 			}
 		}
 	}

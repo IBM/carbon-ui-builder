@@ -4,7 +4,7 @@ import {
 	ExpandableTile,
 	TileAboveTheFoldContent,
 	TextInput
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
 import { css, cx } from 'emotion';
@@ -17,10 +17,6 @@ import {
 } from '../../tools';
 import { styleObjectToString } from '../../../../ui-fragment/src/utils';
 
-const preventCheckEvent = css`
-	pointer-events: none;
-`;
-
 export const AExpandableSettingsUI = ({ selectedComponent, setComponent, fragment, setFragment }: any) => {
 	return <>
 		<TileMorphism component={selectedComponent} setComponent={setComponent} fragment={fragment} setFragment={setFragment} />
@@ -28,7 +24,7 @@ export const AExpandableSettingsUI = ({ selectedComponent, setComponent, fragmen
 			labelText='Light theme'
 			id='theme-select'
 			checked={selectedComponent.light}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					light: checked
@@ -39,7 +35,7 @@ export const AExpandableSettingsUI = ({ selectedComponent, setComponent, fragmen
 			labelText='Expanded'
 			id='expanded'
 			checked={selectedComponent.expanded}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					expanded: checked
@@ -50,7 +46,7 @@ export const AExpandableSettingsUI = ({ selectedComponent, setComponent, fragmen
 			labelText='Show outline'
 			id='outline'
 			checked={selectedComponent.outline}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					outline: checked
@@ -74,8 +70,8 @@ export const AExpandableTileCodeUI = ({ selectedComponent, setComponent }: any) 
 	}} />;
 
 const outlineStyle = css`
-	span.bx--tile-content__above-the-fold,
-	span.bx--tile-content__below-the-fold {
+	span.cds--tile-content__above-the-fold,
+	span.cds--tile-content__below-the-fold {
 		min-height: 16px;
 		outline: 1px dashed #78a9ff;
 	}
@@ -87,6 +83,8 @@ export const AExpandableTile = ({
 	onDrop,
 	outline,
 	selected,
+	fragment,
+	setFragment,
 	...rest
 }: any) => {
 	return (
@@ -94,17 +92,23 @@ export const AExpandableTile = ({
 		componentObj={componentObj}
 		selected={selected}
 		headingCss={css`display: block;`}
+		fragment={fragment}
+		setFragment={setFragment}
 		{...rest}>
 			<ExpandableTile
 			light={componentObj.light}
-			className={cx(preventCheckEvent,`${
+			className={cx(`${
 					componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')
 				} ${
 					(componentObj.outline || outline === true) && outline !== false ? outlineStyle : ''
 				}`, css`${styleObjectToString(componentObj.style)}`
 			)}
+			onBeforeClick={() => {}}
 			expanded={componentObj.expanded}>
-				<TileAboveTheFoldContent onDrop={onDrop}>
+				<TileAboveTheFoldContent
+				onDrop={onDrop}
+				fragment={fragment}
+				setFragment={setFragment}>
 					{children.filter(({ props }: any) => props && props.componentObj.type !== 'tile-fold')}
 				</TileAboveTheFoldContent>
 				{
@@ -152,49 +156,88 @@ export const componentInfo: ComponentInfo = {
 			}
 		]
 	},
-	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline }) => <AExpandableTile
+	render: ({ componentObj, select, remove, selected, onDragOver, onDrop, renderComponents, outline, fragment, setFragment }) => <AExpandableTile
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
 		selected={selected}
 		onDragOver={onDragOver}
 		outline={outline}
-		onDrop={onDrop}>
+		onDrop={onDrop}
+		fragment={fragment}
+		setFragment={setFragment}>
 		{componentObj.items.map((fold: any) => renderComponents(fold, outline))}
 	</AExpandableTile>,
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Expanded = ${json.expanded};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : 'dark'}';`,
-			outputs: () => '',
-			imports: ['TilesModule'],
-			code: ({ json, fragments, jsonToTemplate }) => {
-				const { aboveFold, belowFold } = getFoldObjects(json);
-				return `<ibm-expandable-tile
-					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
-					${json.expanded !== undefined ? `[expanded]="${nameStringToVariableString(json.codeContext?.name)}Expanded"` : ''}
-					${angularClassNamesFromComponentObj(json)}>
-						<span class="bx--tile-content__above-the-fold">
-							${aboveFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-						</span>
-						${belowFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-				</ibm-expandable-tile>`;
+			latest: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Expanded = ${json.expanded};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : 'dark'}';`,
+				outputs: () => '',
+				imports: ['TilesModule'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					const { aboveFold, belowFold } = getFoldObjects(json);
+					return `<cds-expandable-tile
+						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+						${json.expanded !== undefined ? `[expanded]="${nameStringToVariableString(json.codeContext?.name)}Expanded"` : ''}
+						${angularClassNamesFromComponentObj(json)}>
+							<span class="cds--tile-content__above-the-fold">
+								${aboveFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							</span>
+							${belowFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</cds-expandable-tile>`;
+				}
+			},
+			v10: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Expanded = ${json.expanded};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : 'dark'}';`,
+				outputs: () => '',
+				imports: ['TilesModule'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					const { aboveFold, belowFold } = getFoldObjects(json);
+					return `<ibm-expandable-tile
+						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+						${json.expanded !== undefined ? `[expanded]="${nameStringToVariableString(json.codeContext?.name)}Expanded"` : ''}
+						${angularClassNamesFromComponentObj(json)}>
+							<span class="bx--tile-content__above-the-fold">
+								${aboveFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							</span>
+							${belowFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</ibm-expandable-tile>`;
+				}
 			}
 		},
 		react: {
-			imports: ['ExpandableTile', 'TileAboveTheFoldContent', 'TileBelowTheFoldContent'],
-			code: ({ json, jsonToTemplate, fragments }) => {
-				const { aboveFold, belowFold } = getFoldObjects(json);
-				return `<ExpandableTile
-					${json.light !== undefined && !!json.light ? `light={${json.light}}` : ''}
-					${json.expanded !== undefined && !!json.expanded ? `expanded={${json.expanded}}` : ''}
-					${reactClassNamesFromComponentObj(json)}>
-						<TileAboveTheFoldContent>
-							${aboveFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-						</TileAboveTheFoldContent>
-						${belowFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-				</ExpandableTile>`;
+			latest: {
+				imports: ['ExpandableTile', 'TileAboveTheFoldContent', 'TileBelowTheFoldContent'],
+				code: ({ json, jsonToTemplate, fragments }) => {
+					const { aboveFold, belowFold } = getFoldObjects(json);
+					return `<ExpandableTile
+						${json.light !== undefined && !!json.light ? `light={${json.light}}` : ''}
+						${json.expanded !== undefined && !!json.expanded ? `expanded={${json.expanded}}` : ''}
+						${reactClassNamesFromComponentObj(json)}>
+							<TileAboveTheFoldContent>
+								${aboveFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							</TileAboveTheFoldContent>
+							${belowFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</ExpandableTile>`;
+				}
+			},
+			v10: {
+				imports: ['ExpandableTile', 'TileAboveTheFoldContent', 'TileBelowTheFoldContent'],
+				code: ({ json, jsonToTemplate, fragments }) => {
+					const { aboveFold, belowFold } = getFoldObjects(json);
+					return `<ExpandableTile
+						${json.light !== undefined && !!json.light ? `light={${json.light}}` : ''}
+						${json.expanded !== undefined && !!json.expanded ? `expanded={${json.expanded}}` : ''}
+						${reactClassNamesFromComponentObj(json)}>
+							<TileAboveTheFoldContent>
+								${aboveFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							</TileAboveTheFoldContent>
+							${belowFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</ExpandableTile>`;
+				}
 			}
 		}
 	}

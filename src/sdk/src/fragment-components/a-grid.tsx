@@ -1,5 +1,9 @@
 import React from 'react';
-import { Checkbox, Grid, TextInput } from 'carbon-components-react';
+import {
+	Checkbox,
+	FlexGrid,
+	TextInput
+} from '@carbon/react';
 import { AComponent } from './a-component';
 import { css, cx } from 'emotion';
 import { ComponentInfo } from '.';
@@ -14,7 +18,7 @@ export const AGridSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			labelText='Show outline'
 			id='grid-outline'
 			checked={selectedComponent.outline}
-			onChange={(checked: boolean) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				outline: checked
 			})} />
@@ -22,7 +26,7 @@ export const AGridSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			labelText='Condensed'
 			id='grid-condensed'
 			checked={selectedComponent.condensed}
-			onChange={(checked: boolean) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				condensed: checked
 			})} />
@@ -30,7 +34,7 @@ export const AGridSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			labelText='Full width'
 			id='grid-fullWidth'
 			checked={selectedComponent.fullWidth}
-			onChange={(checked: boolean) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				fullWidth: checked
 			})} />
@@ -38,7 +42,7 @@ export const AGridSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			labelText='Narrow'
 			id='grid-narrow'
 			checked={selectedComponent.narrow}
-			onChange={(checked: boolean) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				narrow: checked
 			})} />
@@ -47,16 +51,16 @@ export const AGridSettingsUI = ({ selectedComponent, setComponent }: any) => {
 
 // there must be a better way to do this...
 const outlineStyle = css`
-	.bx--col,
-	.bx--col-sm-1, .bx--col-sm-2, .bx--col-sm-3, .bx--col-sm-4,
-	.bx--col-md-1, .bx--col-md-2, .bx--col-md-3, .bx--col-md-4, .bx--col-md-5, .bx--col-md-6, .bx--col-md-7, .bx--col-md-8,
-	.bx--col-lg-1, .bx--col-lg-2, .bx--col-lg-3, .bx--col-lg-4, .bx--col-lg-5, .bx--col-lg-6, .bx--col-lg-7, .bx--col-lg-8,
-	.bx--col-lg-9, .bx--col-lg-10, .bx--col-lg-11, .bx--col-lg-12, .bx--col-lg-13, .bx--col-lg-14, .bx--col-lg-15, .bx--col-lg-16,
-	.bx--offset-sm-1, .bx--offset-sm-2, .bx--offset-sm-3,
-	.bx--offset-md-1, .bx--offset-md-2, .bx--offset-md-3, .bx--offset-md-4, .bx--offset-md-5, .bx--offset-md-6, .bx--offset-md-7,
-	.bx--offset-lg-1, .bx--offset-lg-2, .bx--offset-lg-3, .bx--offset-lg-4, .bx--offset-lg-5, .bx--offset-lg-6, .bx--offset-lg-7,
-	.bx--offset-lg-8, .bx--offset-lg-9, .bx--offset-lg-10, .bx--offset-lg-11, .bx--offset-lg-12, .bx--offset-lg-13, .bx--offset-lg-14,
-	.bx--offset-lg-15 {
+	.cds--col,
+	.cds--col-sm-1, .cds--col-sm-2, .cds--col-sm-3, .cds--col-sm-4,
+	.cds--col-md-1, .cds--col-md-2, .cds--col-md-3, .cds--col-md-4, .cds--col-md-5, .cds--col-md-6, .cds--col-md-7, .cds--col-md-8,
+	.cds--col-lg-1, .cds--col-lg-2, .cds--col-lg-3, .cds--col-lg-4, .cds--col-lg-5, .cds--col-lg-6, .cds--col-lg-7, .cds--col-lg-8,
+	.cds--col-lg-9, .cds--col-lg-10, .cds--col-lg-11, .cds--col-lg-12, .cds--col-lg-13, .cds--col-lg-14, .cds--col-lg-15, .cds--col-lg-16,
+	.cds--offset-sm-1, .cds--offset-sm-2, .cds--offset-sm-3,
+	.cds--offset-md-1, .cds--offset-md-2, .cds--offset-md-3, .cds--offset-md-4, .cds--offset-md-5, .cds--offset-md-6, .cds--offset-md-7,
+	.cds--offset-lg-1, .cds--offset-lg-2, .cds--offset-lg-3, .cds--offset-lg-4, .cds--offset-lg-5, .cds--offset-lg-6, .cds--offset-lg-7,
+	.cds--offset-lg-8, .cds--offset-lg-9, .cds--offset-lg-10, .cds--offset-lg-11, .cds--offset-lg-12, .cds--offset-lg-13, .cds--offset-lg-14,
+	.cds--offset-lg-15 {
 		outline: 1px dashed #78a9ff;
 	}
 `;
@@ -82,7 +86,7 @@ export const AGrid = ({
 }: any) => {
 	return (
 		<AComponent componentObj={componentObj} rejectDrop={true} {...rest}>
-			<Grid
+			<FlexGrid
 			className={cx(
 				css`${styleObjectToString(componentObj.style)}`,
 				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
@@ -92,7 +96,7 @@ export const AGrid = ({
 			fullWidth={componentObj.fullWidth}
 			narrow={componentObj.narrow}>
 				{children}
-			</Grid>
+			</FlexGrid>
 		</AComponent>
 	);
 };
@@ -192,30 +196,61 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: (_) => '',
-			outputs: (_) => '',
-			imports: ['GridModule'],
-			code: ({ json, fragments, jsonToTemplate }) => {
-				return `<div ibmGrid ${angularClassNamesFromComponentObj(json)}>
-					${json.items.map((row: any) => `<div ibmRow ${angularClassNamesFromComponentObj(row)}>
-						${row.items.map((cell: any) =>
-							`<div ibmCol ${getColumnNumbersString(cell)} ${getOffsetsString(cell)} ${angularClassNamesFromComponentObj(cell)}>
-								${jsonToTemplate(cell, fragments)}
+			latest: {
+				inputs: (_) => '',
+				outputs: (_) => '',
+				imports: ['GridModule'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<div cdsGrid ${angularClassNamesFromComponentObj(json)}>
+						${json.items.map((row: any) => `<div cdsRow ${angularClassNamesFromComponentObj(row)}>
+							${row.items.map((cell: any) =>
+								`<div cdsCol ${getColumnNumbersString(cell)} ${getOffsetsString(cell)} ${angularClassNamesFromComponentObj(cell)}>
+									${jsonToTemplate(cell, fragments)}
+							</div>`).join('\n')}
 						</div>`).join('\n')}
-					</div>`).join('\n')}
-				</div>`;
+					</div>`;
+				}
+			},
+			v10: {
+				inputs: (_) => '',
+				outputs: (_) => '',
+				imports: ['GridModule'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<div ibmGrid ${angularClassNamesFromComponentObj(json)}>
+						${json.items.map((row: any) => `<div ibmRow ${angularClassNamesFromComponentObj(row)}>
+							${row.items.map((cell: any) =>
+								`<div ibmCol ${getColumnNumbersString(cell)} ${getOffsetsString(cell)} ${angularClassNamesFromComponentObj(cell)}>
+									${jsonToTemplate(cell, fragments)}
+							</div>`).join('\n')}
+						</div>`).join('\n')}
+					</div>`;
+				}
 			}
 		},
 		react: {
-			imports: ['Grid', 'Column', 'Row'],
-			code: ({ json, fragments, jsonToTemplate }) => {
-				return `<Grid ${reactClassNamesFromComponentObj(json)}>
-					${json.items.map((row: any) => `<Row ${reactClassNamesFromComponentObj(row)}>
-						${row.items.map((cell: any) => `<Column ${getCellParamsStringReact(cell)} ${reactClassNamesFromComponentObj(cell)}>
-								${jsonToTemplate(cell, fragments)}
-						</Column>`).join('\n')}
-					</Row>`).join('\n')}
-				</Grid>`;
+			latest: {
+				imports: ['FlexGrid', 'Column', 'Row'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<FlexGrid ${reactClassNamesFromComponentObj(json)}>
+						${json.items.map((row: any) => `<Row ${reactClassNamesFromComponentObj(row)}>
+							${row.items.map((cell: any) => `<Column ${getCellParamsStringReact(cell)} ${reactClassNamesFromComponentObj(cell)}>
+									${jsonToTemplate(cell, fragments)}
+							</Column>`).join('\n')}
+						</Row>`).join('\n')}
+					</FlexGrid>`;
+				}
+			},
+			v10: {
+				imports: ['Grid', 'Column', 'Row'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<Grid ${reactClassNamesFromComponentObj(json)}>
+						${json.items.map((row: any) => `<Row ${reactClassNamesFromComponentObj(row)}>
+							${row.items.map((cell: any) => `<Column ${getCellParamsStringReact(cell)} ${reactClassNamesFromComponentObj(cell)}>
+									${jsonToTemplate(cell, fragments)}
+							</Column>`).join('\n')}
+						</Row>`).join('\n')}
+					</Grid>`;
+				}
 			}
 		}
 	}

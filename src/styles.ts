@@ -1,8 +1,8 @@
 import { css, cx } from 'emotion';
 
 export const main = cx(
-	'bx--content',
-	'bx--grid',
+	'cds--content',
+	'cds--grid',
 	css`
 		padding-top: 0;
 		background: #f4f4f4;

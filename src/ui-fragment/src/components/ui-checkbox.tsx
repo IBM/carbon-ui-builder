@@ -1,7 +1,8 @@
 import React from 'react';
-import { Checkbox } from 'carbon-components-react';
-import { CssClasses } from '../types';
+import { Checkbox } from '@carbon/react';
+import { CssClasses, SendSignal } from '../types';
 import { stringToCssClassName } from '../utils';
+import { commonSlots, slotsDisabled } from '../common-slots';
 
 export interface CheckboxState {
 	type: string;
@@ -9,6 +10,7 @@ export interface CheckboxState {
 	checked: boolean;
 	id: string | number;
 	disabled?: boolean;
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
@@ -16,11 +18,34 @@ export interface CheckboxState {
 	style?: any;
 }
 
-export const UICheckbox = ({ state, setState }: {
+export const type = 'checkbox';
+
+export const signals = ['toggle', 'click'];
+
+export const slots = {
+	...commonSlots,
+	...slotsDisabled,
+	select: (state: CheckboxState) => ({
+		...state,
+		checked: true
+	}),
+	deselect: (state: CheckboxState) => ({
+		...state,
+		checked: false
+	}),
+	toggleSelected: (state: CheckboxState) => ({
+		...state,
+		checked: !state.checked
+	}),
+	checked: 'boolean',
+	label: 'string'
+};
+
+export const UICheckbox = ({ state, sendSignal }: {
 	state: CheckboxState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
-	sendSignal: (id: number | string, signal: string) => void;
+	sendSignal: SendSignal;
 }) => {
 	if (state.type !== 'checkbox') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -42,6 +67,11 @@ export const UICheckbox = ({ state, setState }: {
 		name={state.codeContext?.name}
 		id={state.codeContext?.name}
 		checked={!!state.checked}
-		onChange={(checked: boolean) => setState({ ...state, checked })}
+		onClick={() => {
+			sendSignal(state.id, 'click');
+		}}
+		onChange={(_: any, { checked }: any) => {
+			sendSignal(state.id, 'toggle', [checked], { ...state, checked });
+		}}
 		className={cssClasses} />;
 };

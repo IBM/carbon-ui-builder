@@ -1,7 +1,8 @@
 import React from 'react';
-import { NumberInput } from 'carbon-components-react';
+import { NumberInput } from '@carbon/react';
 import { CssClasses } from '../types';
 import { stringToCssClassName } from '../utils';
+import { commonSlots, slotsDisabled } from '../common-slots';
 
 export interface NumberInputState {
 	type: string;
@@ -18,6 +19,7 @@ export interface NumberInputState {
 	hideLabel?: boolean;
 	hideSteppers?: boolean;
 	disabled?: boolean;
+	hidden?: boolean;
 	readOnly?: boolean;
 	invalid?: boolean;
 	invalidText?: string;
@@ -29,6 +31,13 @@ export interface NumberInputState {
 	};
 	style?: any;
 }
+
+export const type = 'number-input';
+
+export const slots = {
+	...commonSlots,
+	...slotsDisabled
+};
 
 export const UINumberInput = ({ state, setState }: {
 	state: NumberInputState;
@@ -70,6 +79,6 @@ export const UINumberInput = ({ state, setState }: {
 		invalidText={state.invalidText}
 		light={state.light}
 		allowEmpty={state.allowEmpty}
-		onChange={(event: any) => setState({ ...state, value: event.imaginaryTarget.value })}
+		onChange={(_: any, { value }: any) => setState({ ...state, value })}
 		className={cssClasses} />;
 };

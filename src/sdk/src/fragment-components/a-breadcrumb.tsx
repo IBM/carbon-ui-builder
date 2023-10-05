@@ -4,7 +4,7 @@ import {
 	TextInput,
 	BreadcrumbItem,
 	Checkbox
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent, ComponentInfo } from './a-component';
 import image from './../assets/component-icons/breadcrumb.svg';
 import {
@@ -68,7 +68,7 @@ export const ABreadcumbSettingsUI = ({ selectedComponent, setComponent }: any) =
 			labelText='Use trailing slash'
 			id='trailing-slash'
 			checked={!selectedComponent.noTrailingSlash}
-			onChange={(checked: boolean) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					noTrailingSlash: !checked
@@ -151,33 +151,67 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}NoTrailingSlash = ${json.noTrailingSlash};`,
-			outputs: (_) => '',
-			imports: ['BreadcrumbModule'],
-			code: ({ json }) => {
-				return `<ibm-breadcrumb
-					[noTrailingSlash]="${nameStringToVariableString(json.codeContext?.name)}NoTrailingSlash"
-					${angularClassNamesFromComponentObj(json)}>
-					${json.items.map((step: any) => (
-						`<ibm-breadcrumb-item
-							href="${step.href}">
-								${step.label}
-						</ibm-breadcrumb-item>`
-						)).join('\n')}
-				</ibm-breadcrumb>`;
+			latest: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}NoTrailingSlash = ${json.noTrailingSlash};`,
+				outputs: (_) => '',
+				imports: ['BreadcrumbModule'],
+				code: ({ json }) => {
+					return `<cds-breadcrumb
+						[noTrailingSlash]="${nameStringToVariableString(json.codeContext?.name)}NoTrailingSlash"
+						${angularClassNamesFromComponentObj(json)}>
+						${json.items.map((step: any) => (
+							`<cds-breadcrumb-item
+								href="${step.href}">
+									${step.label}
+							</cds-breadcrumb-item>`
+							)).join('\n')}
+					</cds-breadcrumb>`;
+				}
+			},
+			v10: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}NoTrailingSlash = ${json.noTrailingSlash};`,
+				outputs: (_) => '',
+				imports: ['BreadcrumbModule'],
+				code: ({ json }) => {
+					return `<ibm-breadcrumb
+						[noTrailingSlash]="${nameStringToVariableString(json.codeContext?.name)}NoTrailingSlash"
+						${angularClassNamesFromComponentObj(json)}>
+						${json.items.map((step: any) => (
+							`<ibm-breadcrumb-item
+								href="${step.href}">
+									${step.label}
+							</ibm-breadcrumb-item>`
+							)).join('\n')}
+					</ibm-breadcrumb>`;
+				}
 			}
 		},
 		react: {
-			imports: ['Breadcrumb', 'BreadcrumbItem'],
-			code: ({ json }) => {
-				return `<Breadcrumb
-					noTrailingSlash={${json.noTrailingSlash}}
-					${reactClassNamesFromComponentObj(json)}>
-					${json.items.map((step: any) =>
-						`<BreadcrumbItem href="${step.href}">
-							${step.label}
-						</BreadcrumbItem>`).join('\n')}
-					</Breadcrumb>`;
+			latest: {
+				imports: ['Breadcrumb', 'BreadcrumbItem'],
+				code: ({ json }) => {
+					return `<Breadcrumb
+						noTrailingSlash={${json.noTrailingSlash}}
+						${reactClassNamesFromComponentObj(json)}>
+						${json.items.map((step: any) =>
+							`<BreadcrumbItem href="${step.href}">
+								${step.label}
+							</BreadcrumbItem>`).join('\n')}
+						</Breadcrumb>`;
+				}
+			},
+			v10: {
+				imports: ['Breadcrumb', 'BreadcrumbItem'],
+				code: ({ json }) => {
+					return `<Breadcrumb
+						noTrailingSlash={${json.noTrailingSlash}}
+						${reactClassNamesFromComponentObj(json)}>
+						${json.items.map((step: any) =>
+							`<BreadcrumbItem href="${step.href}">
+								${step.label}
+							</BreadcrumbItem>`).join('\n')}
+						</Breadcrumb>`;
+				}
 			}
 		}
 	}

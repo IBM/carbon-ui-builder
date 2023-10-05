@@ -3,7 +3,7 @@ import {
 	TextInput,
 	Checkbox,
 	RadioTile
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent } from '../a-component';
 import { css, cx } from 'emotion';
 import { ComponentInfo } from '..';
@@ -40,11 +40,11 @@ export const ARadioTileSettingsUI = ({ selectedComponent, setComponent, fragment
 			labelText='Default checked'
 			id='default-checked'
 			checked={selectedComponent.defaultChecked}
-			onChange={(defaultChecked: any) => {
-				updateParentDefaultChecked(defaultChecked);
+			onChange={(_: any, { checked }: any) => {
+				updateParentDefaultChecked(checked);
 				setComponent({
 					...selectedComponent,
-					defaultChecked
+					defaultChecked: checked
 				});
 			}}
 		/>
@@ -52,7 +52,7 @@ export const ARadioTileSettingsUI = ({ selectedComponent, setComponent, fragment
 			labelText='Disabled'
 			id='disabled'
 			checked={selectedComponent.disabled}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					disabled: checked
@@ -107,7 +107,7 @@ export const ARadioTile = ({
 	// Removing `for` attribute so users can select text and other non-form elements.
 	useEffect(() => {
 		const tileElement = document.getElementById(componentObj.codeContext?.name);
-		const labelElement = tileElement?.parentElement?.querySelector('label.bx--tile.bx--tile--selectable');
+		const labelElement = tileElement?.parentElement?.querySelector('label.cds--tile.cds--tile--selectable');
 		// Setting to empty instead of removing so users can select non-form elements within tile when a form element is present
 		// Although form elements should never be added within another
 		labelElement?.setAttribute('for', '');
@@ -145,6 +145,8 @@ export const ARadioTile = ({
 			componentObj={componentObj}
 			headingCss={css`display: block;`}
 			selected={selected}
+			fragment={fragment}
+			setFragment={setFragment}
 			{...rest}>
 				<RadioTile
 				id={componentObj.codeContext?.name}
@@ -200,38 +202,77 @@ export const componentInfo: ComponentInfo = {
 	image: undefined,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${json.checked || false};
+			latest: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${json.checked || false};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : 'dark'}';
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled || false};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = '${json.value}';`,
-			outputs: () => '',
-			imports: ['TilesModule'],
-			code: ({ json, fragments, jsonToTemplate }) => {
-				return `<ibm-selection-tile
-					[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
-					[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
-					[disabled]=${nameStringToVariableString(json.codeContext?.name)}Disabled
-					[selected]="${nameStringToVariableString(json.codeContext?.name)}Selected"
-					${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-				</ibm-selection-tile>`;
+				outputs: () => '',
+				imports: ['TilesModule'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<cds-selection-tile
+						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
+						[disabled]=${nameStringToVariableString(json.codeContext?.name)}Disabled
+						[selected]="${nameStringToVariableString(json.codeContext?.name)}Selected"
+						${angularClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</cds-selection-tile>`;
+				}
+			},
+			v10: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Checked = ${json.checked || false};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : 'dark'}';
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled || false};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = '${json.value}';`,
+				outputs: () => '',
+				imports: ['TilesModule'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<ibm-selection-tile
+						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
+						[disabled]=${nameStringToVariableString(json.codeContext?.name)}Disabled
+						[selected]="${nameStringToVariableString(json.codeContext?.name)}Selected"
+						${angularClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</ibm-selection-tile>`;
+				}
 			}
 		},
 		react: {
-			imports: ['RadioTile'],
-			code: ({ json, jsonToTemplate, fragments }) => {
-				return `<RadioTile
-					${
-						(json.codeContext?.formItemName !== undefined && json.codeContext?.formItemName !== '')
-							? `name="${json.codeContext?.formItemName}"` : ''
-					}
-					${(json.codeContext?.value !== undefined && json.codeContext?.value !== '') ? `value="${json.codeContext?.value}"` : ''}
-					${json.light !== undefined ? `light={${json.light}}` : ''}
-					${json.defaultChecked ? `checked={${json.defaultChecked}}` : ''}
-					${json.disabled !== undefined && !!json.disabled ? `disabled={${json.disabled}}` : ''}
-					${reactClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-				</RadioTile>`;
+			latest: {
+				imports: ['RadioTile'],
+				code: ({ json, jsonToTemplate, fragments }) => {
+					return `<RadioTile
+						${
+							(json.codeContext?.formItemName !== undefined && json.codeContext?.formItemName !== '')
+								? `name="${json.codeContext?.formItemName}"` : ''
+						}
+						${(json.codeContext?.value !== undefined && json.codeContext?.value !== '') ? `value="${json.codeContext?.value}"` : ''}
+						${json.light !== undefined ? `light={${json.light}}` : ''}
+						${json.defaultChecked ? `checked={${json.defaultChecked}}` : ''}
+						${json.disabled !== undefined && !!json.disabled ? `disabled={${json.disabled}}` : ''}
+						${reactClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</RadioTile>`;
+				}
+			},
+			v10: {
+				imports: ['RadioTile'],
+				code: ({ json, jsonToTemplate, fragments }) => {
+					return `<RadioTile
+						${
+							(json.codeContext?.formItemName !== undefined && json.codeContext?.formItemName !== '')
+								? `name="${json.codeContext?.formItemName}"` : ''
+						}
+						${(json.codeContext?.value !== undefined && json.codeContext?.value !== '') ? `value="${json.codeContext?.value}"` : ''}
+						${json.light !== undefined ? `light={${json.light}}` : ''}
+						${json.defaultChecked ? `checked={${json.defaultChecked}}` : ''}
+						${json.disabled !== undefined && !!json.disabled ? `disabled={${json.disabled}}` : ''}
+						${reactClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</RadioTile>`;
+				}
 			}
 		}
 	}

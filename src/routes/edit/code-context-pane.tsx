@@ -6,6 +6,7 @@ import {
 } from '../../sdk/src/fragment-components';
 
 import { getSelectedComponent, updatedState } from '../../sdk/src/tools';
+import { ActionsConnector } from '../../sdk/src/components/actions-connector';
 
 const showComponentCodeOptions = (selectedComponent: any, setComponent: any) => {
 	for (const component of Object.values(allComponents)) {
@@ -34,7 +35,15 @@ export const CodeContextPane = ({ fragment, setFragment }: any) => {
 
 	return (
 		<div className='context-pane-content'>
-			{selectedComponent && showComponentCodeOptions(selectedComponent, setComponent)}
+			{
+				selectedComponent
+				&& <>
+					{showComponentCodeOptions(selectedComponent, setComponent)}
+					<h4>Actions</h4>
+					<em>(experimental)</em>
+					<ActionsConnector fragment={fragment} setFragment={setFragment} sourceComponent={selectedComponent} />
+				</>
+			}
 		</div>
 	);
 };

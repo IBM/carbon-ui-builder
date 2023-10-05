@@ -1,22 +1,30 @@
 import React from 'react';
-import { Grid } from 'carbon-components-react';
+import { Grid } from '@carbon/react';
 import { CssClasses } from '../types';
 import {
 	renderComponents,
 	setItemInState,
 	stringToCssClassName
 } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface GridState {
 	type: string;
 	items: any[]; // TODO row type
 	id: string | number;
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
 	};
 	style?: any;
 }
+
+export const type = 'grid';
+
+export const slots = {
+	...commonSlots
+};
 
 export const UIGrid = ({ state, setState, setGlobalState, sendSignal }: {
 	state: GridState;

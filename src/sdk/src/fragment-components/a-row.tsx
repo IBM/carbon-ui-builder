@@ -3,8 +3,8 @@ import {
 	Row,
 	Checkbox,
 	TextInput
-} from 'carbon-components-react';
-import { Add32 } from '@carbon/icons-react';
+} from '@carbon/react';
+import { Add } from '@carbon/react/icons';
 import { AComponent } from './a-component';
 import { css, cx } from 'emotion';
 import { ComponentInfo } from '.';
@@ -17,7 +17,7 @@ export const ARowSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			labelText='Condensed'
 			id='grid-condensed'
 			checked={selectedComponent.condensed}
-			onChange={(checked: boolean) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				condensed: checked
 			})} />
@@ -25,7 +25,7 @@ export const ARowSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			labelText='Narrow'
 			id='grid-narrow'
 			checked={selectedComponent.narrow}
-			onChange={(checked: boolean) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				narrow: checked
 			})} />
@@ -182,28 +182,40 @@ export const ARow = ({
 			condensed={componentObj.condensed}
 			narrow={componentObj.narrow}>
 				<span className={cx(addStyleTop, selected ? css`` : css`display: none`)}>
-					<Add32 onClick={(event: any) => {
+					<Add
+					size={32}
+					onClick={(event: any) => {
 						event.stopPropagation();
 						addRow();
-					}} className={iconStyle}/>
+					}}
+					className={iconStyle}/>
 				</span>
 				<span className={cx(addStyleLeft, selected ? css`` : css`display: none`)}>
-					<Add32 onClick={(event: any) => {
+					<Add
+					size={32}
+					onClick={(event: any) => {
 						event.stopPropagation();
 						addCell();
-					}} className={iconStyle}/>
+					}}
+					className={iconStyle}/>
 				</span>
 				<span className={cx(addStyleRight, selected ? css`` : css`display: none`)}>
-					<Add32 onClick={(event: any) => {
+					<Add
+					size={32}
+					onClick={(event: any) => {
 						event.stopPropagation();
 						addCell(componentObj.items.length);
-					}} className={iconStyle}/>
+					}}
+					className={iconStyle}/>
 				</span>
 				<span className={cx(addStyleBottom, selected ? css`` : css`display: none`)}>
-					<Add32 onClick={(event: any) => {
+					<Add
+					size={32}
+					onClick={(event: any) => {
 						event.stopPropagation();
 						addRow(1);
-					}} className={iconStyle}/>
+					}}
+					className={iconStyle}/>
 				</span>
 				<section ref={holderRef} className={css`display: contents`}>
 					{children}
@@ -225,16 +237,32 @@ export const componentInfo: ComponentInfo = {
 	image: undefined,
 	codeExport: {
 		angular: {
-			inputs: (_) => '',
-			outputs: (_) => '',
-			imports: ['GridModule'],
-			isNotDirectExport: true,
-			code: (_) => ''
+			latest: {
+				inputs: (_) => '',
+				outputs: (_) => '',
+				imports: ['GridModule'],
+				isNotDirectExport: true,
+				code: (_) => ''
+			},
+			v10: {
+				inputs: (_) => '',
+				outputs: (_) => '',
+				imports: ['GridModule'],
+				isNotDirectExport: true,
+				code: (_) => ''
+			}
 		},
 		react: {
-			imports: ['Row'],
-			isNotDirectExport: true,
-			code: (_) => ''
+			latest: {
+				imports: ['Row'],
+				isNotDirectExport: true,
+				code: (_) => ''
+			},
+			v10: {
+				imports: ['Row'],
+				isNotDirectExport: true,
+				code: (_) => ''
+			}
 		}
 	}
 };

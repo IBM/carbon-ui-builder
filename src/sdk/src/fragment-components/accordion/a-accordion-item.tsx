@@ -3,7 +3,7 @@ import {
 	AccordionItem,
 	Checkbox,
 	TextInput
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent, ComponentInfo } from '../a-component';
 import { css, cx } from 'emotion';
 import image from '../../assets/component-icons/accordion-item.svg';
@@ -34,7 +34,7 @@ export const AAccordionItemSettingsUI = ({ selectedComponent, setComponent }: an
 			labelText='Disabled'
 			id='disabled'
 			checked={selectedComponent.disabled}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					disabled: checked
@@ -90,6 +90,8 @@ export const AAccordionItem = ({
 		topAction={() => addAccordionItem()}
 		bottomAction={() => addAccordionItem(1)}>
 			<AComponent
+			fragment={fragment}
+			setFragment={setFragment}
 			{...rest}
 			componentObj={componentObj}
 			selected={selected}>
@@ -138,29 +140,59 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Title = "${json.title}";
+			latest: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Title = "${json.title}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${!!json.disabled}`,
-			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter();`,
-			imports: ['AccordionModule'],
-			code: ({ json, fragments, jsonToTemplate }) => {
-				return `<ibm-accordion-item
-					[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
-					[title]="${nameStringToVariableString(json.codeContext?.name)}Title"
-					(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
-					${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-				</ibm-accordion-item>`;
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter();`,
+				imports: ['AccordionModule'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<cds-accordion-item
+						[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
+						[title]="${nameStringToVariableString(json.codeContext?.name)}Title"
+						(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
+						${angularClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</cds-accordion-item>`;
+				}
+			},
+			v10: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Title = "${json.title}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${!!json.disabled}`,
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter();`,
+				imports: ['AccordionModule'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<ibm-accordion-item
+						[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
+						[title]="${nameStringToVariableString(json.codeContext?.name)}Title"
+						(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
+						${angularClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</ibm-accordion-item>`;
+				}
 			}
 		},
 		react: {
-			imports: ['AccordionItem'],
-			code: ({ json, fragments, jsonToTemplate }) => {
-				return `<AccordionItem
-					title="${json.title || ''}"
-					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
-					${reactClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-				</AccordionItem>`;
+			latest: {
+				imports: ['AccordionItem'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<AccordionItem
+						title="${json.title || ''}"
+						${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
+						${reactClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</AccordionItem>`;
+				}
+			},
+			v10: {
+				imports: ['AccordionItem'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<AccordionItem
+						title="${json.title || ''}"
+						${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
+						${reactClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</AccordionItem>`;
+				}
 			}
 		}
 	}

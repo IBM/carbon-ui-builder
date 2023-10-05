@@ -1,17 +1,19 @@
 import React from 'react';
-import { SelectableTile } from 'carbon-components-react';
+import { SelectableTile } from '@carbon/react';
 import { CssClasses } from '../types';
 import {
 	renderComponents,
 	setItemInState,
 	stringToCssClassName
 } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface SelectableTileState {
 	type: string;
 	light?: boolean;
 	items?: any[];
 	standalone?: boolean;
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
@@ -21,6 +23,12 @@ export interface SelectableTileState {
 	};
 	style?: any;
 }
+
+export const type = 'selectable-tile';
+
+export const slots = {
+	...commonSlots
+};
 
 export const UISelectableTile = ({ state, setState, setGlobalState, sendSignal }: {
 	state: SelectableTileState;

@@ -1,23 +1,31 @@
 import React from 'react';
-import { ExpandableTile, TileAboveTheFoldContent } from 'carbon-components-react';
+import { ExpandableTile, TileAboveTheFoldContent } from '@carbon/react';
 import { CssClasses } from '../types';
 import {
 	renderComponents,
 	setItemInState,
 	stringToCssClassName
 } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface ExpandableTileState {
 	type: string;
 	light?: boolean;
 	expanded?: boolean;
 	items?: any[];
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
 	};
 	style?: any;
 }
+
+export const type = 'expandable-tile';
+
+export const slots = {
+	...commonSlots
+};
 
 // Splits data into folds - all exports will have a common approach
 export const getFoldObjects = (state: any) => {

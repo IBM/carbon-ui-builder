@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { TextInput, Checkbox } from 'carbon-components-react';
+import { TextInput, Checkbox } from '@carbon/react';
 import { AComponent } from '../a-component';
 import { TileMorphism } from './tile-morphism';
 import { css, cx } from 'emotion';
@@ -34,7 +34,7 @@ export const ARadioTileGroupSettingsUI = ({ selectedComponent, setComponent, fra
 			labelText='Light theme'
 			id='theme-select'
 			checked={selectedComponent.light}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				/**
 				 * It usually is not common for users to have different theme for each tile,
 				 * this approach will ensure users don't have to go through each child `tile` & update theme
@@ -53,7 +53,7 @@ export const ARadioTileGroupSettingsUI = ({ selectedComponent, setComponent, fra
 			labelText='Disabled'
 			id='disabled'
 			checked={selectedComponent.disabled}
-			onChange={(checked: any) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					disabled: checked
@@ -134,13 +134,13 @@ export const ARadioTileGroup = ({
 			{...rest}>
 				<fieldset
 				className={cx(
-					'bx--tile-group',
+					'cds--tile-group',
 					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
 					css`${styleObjectToString(componentObj.style)}`
 				)}
 				disabled={componentObj.disabled}>
 					{(componentObj.legend !== undefined && componentObj.legend !== '') &&
-					<legend className="bx--label">
+					<legend className='cds--label'>
 						{componentObj.legend}
 					</legend>}
 					{children}
@@ -202,34 +202,69 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: () => '',
-			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<Event>();`,
-			imports: ['TilesModule'],
-			code: ({ json, fragments, jsonToTemplate }) => {
-				return `<ibm-tile-group
-					(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
-					[multiple]="false"
-					${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-				</ibm-tile-group>`;
+			latest: {
+				inputs: () => '',
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<Event>();`,
+				imports: ['TilesModule'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<cds-tile-group
+						(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
+						[multiple]="false"
+						${angularClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</cds-tile-group>`;
+				}
+			},
+			v10: {
+				inputs: () => '',
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<Event>();`,
+				imports: ['TilesModule'],
+				code: ({ json, fragments, jsonToTemplate }) => {
+					return `<ibm-tile-group
+						(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
+						[multiple]="false"
+						${angularClassNamesFromComponentObj(json)}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</ibm-tile-group>`;
+				}
 			}
 		},
 		react: {
-			imports: ['TileGroup'],
-			code: ({ json, jsonToTemplate, fragments }) => {
-				return `<TileGroup
-					${json.legend !== undefined && json.legend !== '' ? `legend="${json.legend}"` : ''}
-					name="${json.codeContext?.name}"
-					${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
-					${reactClassNamesFromComponentObj(json)}
-					onChange={(radio) => handleInputChange({
-						target: {
-							name: "${json.codeContext?.name}",
-							value: radio
-						}
-					})}>
-						${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-				</TileGroup>`;
+			latest: {
+				imports: ['TileGroup'],
+				code: ({ json, jsonToTemplate, fragments }) => {
+					return `<TileGroup
+						${json.legend !== undefined && json.legend !== '' ? `legend="${json.legend}"` : ''}
+						name="${json.codeContext?.name}"
+						${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
+						${reactClassNamesFromComponentObj(json)}
+						onChange={(radio) => handleInputChange({
+							target: {
+								name: "${json.codeContext?.name}",
+								value: radio
+							}
+						})}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</TileGroup>`;
+				}
+			},
+			v10: {
+				imports: ['TileGroup'],
+				code: ({ json, jsonToTemplate, fragments }) => {
+					return `<TileGroup
+						${json.legend !== undefined && json.legend !== '' ? `legend="${json.legend}"` : ''}
+						name="${json.codeContext?.name}"
+						${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
+						${reactClassNamesFromComponentObj(json)}
+						onChange={(radio) => handleInputChange({
+							target: {
+								name: "${json.codeContext?.name}",
+								value: radio
+							}
+						})}>
+							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+					</TileGroup>`;
+				}
 			}
 		}
 	}

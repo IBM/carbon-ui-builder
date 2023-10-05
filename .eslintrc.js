@@ -202,6 +202,8 @@ module.exports = {
 				'allowExpressions': true
 			}
 		],
+		// Use single quotes in props when possible
+		'jsx-quotes': ['error', 'prefer-single'],
 		// Ensures JSX components are using PascalCase
 		'react/jsx-pascal-case': 'error',
 		// React should be imported when using JSX

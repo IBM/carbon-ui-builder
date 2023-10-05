@@ -2,15 +2,16 @@ import React, { useContext } from 'react';
 import {
 	ClickableTile,
 	Column,
-	Grid,
+	FlexGrid,
+	Layer,
 	Row
-} from 'carbon-components-react';
+} from '@carbon/react';
 import {
-	Grid32,
-	ArrowRight16,
-	Code32,
-	Development32
-} from '@carbon/icons-react';
+	Grid as GridIcon,
+	ArrowRight,
+	Code,
+	Development
+} from '@carbon/react/icons';
 import { css } from 'emotion';
 import { componentInfo as gridComponentInfo } from '../../sdk/src/fragment-components/a-grid';
 
@@ -86,51 +87,53 @@ export const FragmentTileList = ({
 			return (
 				<div className={placeholderContainer}>
 					<div style={{ textAlign: 'left' }}>
-						<Grid>
-							<Row>
-								<Column>
-									<h3>Carbon UI Builder</h3>
-									<p style={{ marginTop: '0.5em' }}>
-										Build product pages in a fraction of time that it normally takes you.
-									</p>
-								</Column>
-							</Row>
-							<Row className={css`margin-top: 3rem;`}>
-								<Column>
-									<ClickableTile
-									className={tileStyle}
-									light={true}
-									onClick={() => generateFragment([initializeIds(gridComponentInfo.defaultComponentObj)])}>
-										<Grid32 />
-										<p>Empty page (with grid)</p>
-										<div className={actionStyle}>Start building <ArrowRight16 /></div>
-									</ClickableTile>
-								</Column>
-								<Column>
-									<ClickableTile
-									className={tileStyle}
-									light={true}
-									onClick={() => generateFragment()}>
-										<Development32 />
-										<p>Empty fragment</p>
-										<div className={actionStyle}>Start building <ArrowRight16 /></div>
-									</ClickableTile>
-								</Column>
-								<Column>
-									<ClickableTile
-									className={tileStyle}
-									light={true}
-									onClick={() => {
-										setDisplayWizard(true);
-										setDisplayedModal(FragmentWizardModals.IMPORT_JSON_MODAL);
-									}}>
-										<Code32 />
-										<p>Import JSON</p>
-										<div className={actionStyle}>Continue building <ArrowRight16 /></div>
-									</ClickableTile>
-								</Column>
-							</Row>
-						</Grid>
+						<Layer>
+							<FlexGrid>
+								<Row>
+									<Column>
+										<h3>Carbon UI Builder</h3>
+										<p style={{ marginTop: '0.5em' }}>
+											Build product pages in a fraction of time that it normally takes you.
+										</p>
+									</Column>
+								</Row>
+								<Row className={css`margin-top: 3rem;`}>
+									<Column>
+										<ClickableTile
+										className={tileStyle}
+										light={true}
+										onClick={() => generateFragment([initializeIds(gridComponentInfo.defaultComponentObj)])}>
+											<GridIcon size={32} />
+											<p>Empty page (with grid)</p>
+											<div className={actionStyle}>Start building <ArrowRight size={16} /></div>
+										</ClickableTile>
+									</Column>
+									<Column>
+										<ClickableTile
+										className={tileStyle}
+										light={true}
+										onClick={() => generateFragment()}>
+											<Development size={32} />
+											<p>Empty fragment</p>
+											<div className={actionStyle}>Start building <ArrowRight size={16} /></div>
+										</ClickableTile>
+									</Column>
+									<Column>
+										<ClickableTile
+										className={tileStyle}
+										light={true}
+										onClick={() => {
+											setDisplayWizard(true);
+											setDisplayedModal(FragmentWizardModals.IMPORT_JSON_MODAL);
+										}}>
+											<Code size={32} />
+											<p>Import JSON</p>
+											<div className={actionStyle}>Continue building <ArrowRight size={16} /></div>
+										</ClickableTile>
+									</Column>
+								</Row>
+							</FlexGrid>
+						</Layer>
 					</div>
 				</div>
 			);
