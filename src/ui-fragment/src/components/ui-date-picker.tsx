@@ -91,7 +91,7 @@ export const UIDatePicker = ({ state, sendSignal }: {
 		light={state.light}
 		onClick={() => sendSignal(state.id, 'click')}
 		onChange={(event: any) => {
-			sendSignal(state.id, 'valueChange', [event.value], { ...state, value: event.value });
+			sendSignal(state.id, 'valueChange', [event[0]], { ...state, value: event[0] });
 		}}>
 			<DatePickerInput
 				placeholder={state.placeholder}
