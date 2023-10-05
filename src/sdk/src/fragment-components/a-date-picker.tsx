@@ -323,7 +323,7 @@ export const componentInfo: ComponentInfo = {
 								}
 						</DatePicker>`;
 				}
-			}, 
+			},
 			v10: {
 				imports: ['DatePicker', 'DatePickerInput'],
 				code: ({ json }) => {

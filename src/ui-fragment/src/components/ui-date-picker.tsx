@@ -5,7 +5,7 @@ import {
 } from '@carbon/react';
 import { commonSlots, slotsDisabled } from '../common-slots';
 import { SendSignal } from '../types';
-import { css, cx } from 'emotion';
+import { css } from 'emotion';
 
 const pickerInputAlignment = css `
 	.cds--date-picker {
@@ -68,7 +68,7 @@ export const slots = {
 	toggleLight: (state: DatePickerState) => ({
 		...state,
 		light: !state.light
-	}),
+	})
 };
 
 export const signals = ['valueChange', 'click'];
