@@ -102,6 +102,9 @@ export const ATextInput = ({
 	componentObj,
 	...rest
 }: any) => {
+	const preventClickStyle = css`
+		pointer-events: none;
+	`;
 	return (
 		<AComponent
 		componentObj={componentObj}
@@ -115,7 +118,8 @@ export const ATextInput = ({
 				labelText={componentObj.label}
 				className={cx(
 					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-					css`${styleObjectToString(componentObj.style)}`
+					css`${styleObjectToString(componentObj.style)}`,
+					preventClickStyle
 				)}
 				defaultValue={componentObj.defaultValue}
 				disabled={componentObj.disabled}

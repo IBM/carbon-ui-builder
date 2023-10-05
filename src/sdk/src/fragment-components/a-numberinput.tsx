@@ -147,6 +147,9 @@ export const ANumberInput = ({
 	componentObj,
 	...rest
 }: any) => {
+	const preventClickStyle = css`
+		pointer-events: none;
+	`;
 	return (
 		<AComponent
 		componentObj={componentObj}
@@ -173,7 +176,8 @@ export const ANumberInput = ({
 				allowEmpty={componentObj.allowEmpty}
 				className={cx(
 					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-					css`${styleObjectToString(componentObj.style)}`
+					css`${styleObjectToString(componentObj.style)}`,
+					preventClickStyle
 				)}
 				type='number' />
 		</AComponent>

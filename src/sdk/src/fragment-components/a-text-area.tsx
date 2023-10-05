@@ -58,6 +58,9 @@ export const ATextArea = ({
 	componentObj,
 	...rest
 }: any) => {
+	const preventClickStyle = css`
+		pointer-events: none;
+	`;
 	return (
 		<AComponent componentObj={componentObj} rejectDrop={true} {...rest}>
 			<TextArea
@@ -68,7 +71,8 @@ export const ATextArea = ({
 				helperText={componentObj.helperText}
 				className={cx(
 					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-					css`${styleObjectToString(componentObj.style)}`
+					css`${styleObjectToString(componentObj.style)}`,
+					preventClickStyle
 				)} />
 		</AComponent>
 	);

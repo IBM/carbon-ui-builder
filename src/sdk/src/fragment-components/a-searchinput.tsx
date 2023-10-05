@@ -142,6 +142,9 @@ export const ASearchInput = ({
 	componentObj,
 	...rest
 }: any) => {
+	const preventClickStyle = css`
+		pointer-events: none;
+	`;
 	return (
 		<AComponent
 		componentObj={componentObj}
@@ -154,7 +157,8 @@ export const ASearchInput = ({
 				? <ExpandableSearch
 					className={cx(
 						componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-						css`${styleObjectToString(componentObj.style)}`
+						css`${styleObjectToString(componentObj.style)}`,
+						preventClickStyle
 					)}
 					size={componentObj.inputSize}
 					disabled={componentObj.disabled}
@@ -171,7 +175,11 @@ export const ASearchInput = ({
 					size={componentObj.inputSize}
 					labelText={componentObj.label}
 					placeholder={componentObj.placeholder}
-					className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)}
+					className={cx(
+						componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+						css`${styleObjectToString(componentObj.style)}`,
+						preventClickStyle
+					)}
 					id={componentObj.id}
 					autoComplete={componentObj.autocomplete}
 					closeButtonLabelText={componentObj.closeButtonLabelText}
