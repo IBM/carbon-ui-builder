@@ -29,8 +29,7 @@ const pickerInputAlignment = css `
 export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const size = [
 		{ id: 'sm', text: 'Small' },
-		{ id: 'md', text: 'Medium' },
-		{ id: 'xl', text: 'Extra large' }
+		{ id: 'md', text: 'Medium' }
 	];
 
 	const datePickerType = [
@@ -81,7 +80,7 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				size: event.selectedItem.id
-		})} />
+			})} />
 		<Checkbox
 			labelText='Disabled'
 			id='disable'

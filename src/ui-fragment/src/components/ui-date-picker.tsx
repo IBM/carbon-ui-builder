@@ -5,6 +5,14 @@ import {
 } from '@carbon/react';
 import { commonSlots, slotsDisabled } from '../common-slots';
 import { SendSignal } from '../types';
+import { css, cx } from 'emotion';
+
+const pickerInputAlignment = css `
+	.cds--date-picker {
+		display: flex;
+		align-items: flex-end !important;
+	}
+`;
 
 export interface DatePickerState {
 	type: string;
@@ -22,7 +30,7 @@ export interface DatePickerState {
 	rangeEndLabel?: string;
 }
 
-export const type = 'datepicker';
+export const type = 'date-picker';
 
 export const slots = {
 	...commonSlots,
@@ -30,9 +38,11 @@ export const slots = {
 	dateFormat: 'string',
 	datePickerType: 'string',
 	placeholder: 'string',
-	labelText: 'string',
 	size: 'string',
 	invalidText: 'string',
+	rangeStartLabel: 'string',
+	rangeEndLabel: 'string',
+	value: 'string',
 	invalid: 'boolean',
 	setInvalid: (state: DatePickerState) => ({
 		...state,
@@ -45,7 +55,20 @@ export const slots = {
 	toggleValid: (state: DatePickerState) => ({
 		...state,
 		invalid: !state.invalid
-	})
+	}),
+	light: 'boolean',
+	setLight: (state: DatePickerState) => ({
+		...state,
+		light: true
+	}),
+	setDark: (state: DatePickerState) => ({
+		...state,
+		light: false
+	}),
+	toggleLight: (state: DatePickerState) => ({
+		...state,
+		light: !state.light
+	}),
 };
 
 export const signals = ['valueChange', 'click'];
@@ -61,13 +84,13 @@ export const UIDatePicker = ({ state, sendSignal }: {
 		return <></>;
 	}
 	return <DatePicker
+		className={pickerInputAlignment}
 		id={state.id}
 		dateFormat={state.dateFormat}
 		datePickerType={state.datePickerType}
 		light={state.light}
 		onClick={() => sendSignal(state.id, 'click')}
 		onChange={(event: any) => {
-			debugger
 			sendSignal(state.id, 'valueChange', [event.value], { ...state, value: event.value });
 		}}>
 			<DatePickerInput
