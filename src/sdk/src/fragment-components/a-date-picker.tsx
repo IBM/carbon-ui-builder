@@ -147,11 +147,13 @@ export const ADatePicker = ({
 		{...rest}>
 			{
 				<DatePicker
+					id={componentObj.id}
 					className={cx(preventCheckEventStyle, pickerInputAlignment, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}
 					dateFormat={componentObj.dateFormat}
 					datePickerType={componentObj.datePickerType}
 					light={componentObj.light}>
 						<DatePickerInput
+							id={`${componentObj.id} + '-start'`}
 							placeholder={componentObj.placeholder}
 							disabled={componentObj.disabled}
 							invalid={componentObj.invalid}
@@ -161,6 +163,7 @@ export const ADatePicker = ({
 						{
 							componentObj.datePickerType === 'range' &&
 								<DatePickerInput
+									id={`${componentObj.id} + '-end'`}
 									placeholder={componentObj.placeholder}
 									labelText={componentObj.rangeEndLabel}
 									size={componentObj.size}
@@ -186,7 +189,8 @@ export const componentInfo: ComponentInfo = {
 		placeholder: 'mm/dd/yyyy',
 		size: 'md',
 		datePickerType: 'simple',
-		dateFormat: 'm/d/Y'
+		dateFormat: 'm/d/Y',
+		rangeStartLabel: 'Start Label'
 	},
 	image,
 	codeExport: {
