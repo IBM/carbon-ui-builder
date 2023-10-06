@@ -25,6 +25,12 @@ const searchContainerStyle = css`
 	}
 `;
 
+const tooltipOverflowStyle = css`
+	.cds--popover-content {
+		width: 15rem;
+	}
+`;
+
 export const StylePane = ({ isActive }: any) => {
 	const [selectedStyleClassId, setSelectedStyleClassId] = useState('' as string);
 	const { styleClasses, setStyleClasses } = useContext(GlobalStateContext);
@@ -144,7 +150,8 @@ export const StylePane = ({ isActive }: any) => {
 				<div className={leftPaneContent}>
 				<div className={css`position: absolute; right 0; top: 3rem; z-index: 1; padding: 1rem;`}>
 						<Tooltip
-							align='right'
+							align='left'
+							className={tooltipOverflowStyle}
 							label='Create the CSS classes and use them in the &quot;Advanced styling&quot; menu on the right of the editor.'>
 								<button className='tooltip-trigger' type='button'>
 									<Information />

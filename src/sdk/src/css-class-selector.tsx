@@ -7,6 +7,12 @@ import {
 import { ColorPalette, Information } from '@carbon/react/icons';
 import { css } from 'emotion';
 
+const tooltipOverflowStyle = css`
+	.cds--popover-content {
+		width: 15rem;
+	}
+`;
+
 const compareClasses = (sc1: any, sc2: any) => sc1.name < sc2.name ? -1 : 1;
 
 export const CssClassSelector = ({ selectedClasses, setSelectedClasses, styleClasses }: any) => {
@@ -61,7 +67,8 @@ export const CssClassSelector = ({ selectedClasses, setSelectedClasses, styleCla
 				Available classes
 				<div className={css`display: inline; position: relative; top: 3px; margin-left: 0.5rem;`}>
 					<Tooltip
-						label={`Add or modify classes in the ${<ColorPalette />} Style menu on the left of the editor`}>
+						className={tooltipOverflowStyle}
+						label={<>Add or modify classes in the <ColorPalette /> Style menu on the left of the editor</>}>
 							<button className='tooltip-trigger' type='button'>
 								<Information />
 							</button>
@@ -72,6 +79,7 @@ export const CssClassSelector = ({ selectedClasses, setSelectedClasses, styleCla
 			{
 				availableClasses.map((styleClass: any) => (
 					<Tag
+					className={css`border-width: 0;`}
 					key={styleClass.name}
 					onClick={() => selectStyleClass(styleClass)}>
 						{styleClass.name}
