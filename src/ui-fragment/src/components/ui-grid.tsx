@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '@carbon/react';
+import { FlexGrid } from '@carbon/react';
 import { CssClasses } from '../types';
 import {
 	renderComponents,
@@ -46,12 +46,12 @@ export const UIGrid = ({ state, setState, setGlobalState, sendSignal }: {
 		cssClasses += stringToCssClassName(state.codeContext.name);
 	}
 
-	return <Grid className={cssClasses}>
+	return <FlexGrid className={cssClasses}>
 		{
 			state.items?.map((item: any) => {
 				const setItem = (i: any) => setItemInState(i, state, setState);
 				return renderComponents(item, setItem, setGlobalState, sendSignal);
 			})
 		}
-	</Grid>;
+	</FlexGrid>;
 };
