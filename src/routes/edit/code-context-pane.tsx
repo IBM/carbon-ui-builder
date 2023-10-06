@@ -4,9 +4,14 @@ import {
 	AComponentCodeUI,
 	allComponents
 } from '../../sdk/src/fragment-components';
+import { css, cx } from 'emotion';
 
 import { getSelectedComponent, updatedState } from '../../sdk/src/tools';
 import { ActionsConnector } from '../../sdk/src/components/actions-connector';
+
+const contentStyle = css`
+	padding: 1rem;
+`;
 
 const showComponentCodeOptions = (selectedComponent: any, setComponent: any) => {
 	for (const component of Object.values(allComponents)) {
@@ -34,7 +39,7 @@ export const CodeContextPane = ({ fragment, setFragment }: any) => {
 	};
 
 	return (
-		<div className='context-pane-content'>
+		<div className={cx(contentStyle, 'context-pane-content')}>
 			{
 				selectedComponent
 				&& <>
