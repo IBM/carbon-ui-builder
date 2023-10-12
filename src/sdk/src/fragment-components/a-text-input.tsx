@@ -7,6 +7,7 @@ import { ComponentInfo } from '.';
 import image from './../assets/component-icons/text-input.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../tools';
 import { styleObjectToString } from '../../../ui-fragment/src/utils';
+import { preventClickStyle } from '../styles';
 
 export const ATextInputSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const typeItems = [
@@ -102,9 +103,6 @@ export const ATextInput = ({
 	componentObj,
 	...rest
 }: any) => {
-	const preventClickStyle = css`
-		pointer-events: none;
-	`;
 	return (
 		<AComponent
 		componentObj={componentObj}

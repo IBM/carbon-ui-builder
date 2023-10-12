@@ -16,6 +16,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../tools';
 import { styleObjectToString } from '../../../ui-fragment/src/utils';
+import { preventClickStyle } from '../styles';
 
 export const ANumberInputSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
@@ -147,9 +148,6 @@ export const ANumberInput = ({
 	componentObj,
 	...rest
 }: any) => {
-	const preventClickStyle = css`
-		pointer-events: none;
-	`;
 	return (
 		<AComponent
 		componentObj={componentObj}

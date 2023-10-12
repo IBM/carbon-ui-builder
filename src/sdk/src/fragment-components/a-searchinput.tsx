@@ -17,6 +17,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../tools';
 import { styleObjectToString } from '../../../ui-fragment/src/utils';
+import { preventClickStyle } from '../styles';
 
 export const ASearchInputSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
@@ -142,9 +143,6 @@ export const ASearchInput = ({
 	componentObj,
 	...rest
 }: any) => {
-	const preventClickStyle = css`
-		pointer-events: none;
-	`;
 	return (
 		<AComponent
 		componentObj={componentObj}

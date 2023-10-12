@@ -6,6 +6,7 @@ import { css, cx } from 'emotion';
 import image from './../assets/component-icons/text-area.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../tools';
 import { styleObjectToString } from '../../../ui-fragment/src/utils';
+import { preventClickStyle } from '../styles';
 
 export const ATextAreaSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>
@@ -58,9 +59,6 @@ export const ATextArea = ({
 	componentObj,
 	...rest
 }: any) => {
-	const preventClickStyle = css`
-		pointer-events: none;
-	`;
 	return (
 		<AComponent componentObj={componentObj} rejectDrop={true} {...rest}>
 			<TextArea

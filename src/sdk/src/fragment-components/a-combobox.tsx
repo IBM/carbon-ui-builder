@@ -18,6 +18,7 @@ import {
 } from '../tools';
 import { styleObjectToString } from '../../../ui-fragment/src/utils';
 import { DraggableTileList } from '../draggable-list';
+import { preventClickStyle } from '../styles';
 
 export const AComboBoxSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
@@ -218,10 +219,6 @@ export const AComboBoxCodeUI = ({ selectedComponent, setComponent }: any) => <Te
 			}
 		});
 	}} />;
-
-const preventClickStyle = css`
-	pointer-events: none;
-`;
 
 export const AComboBox = ({
 	componentObj,
