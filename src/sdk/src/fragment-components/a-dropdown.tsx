@@ -17,6 +17,7 @@ import {
 } from '../tools';
 import { styleObjectToString } from '../../../ui-fragment/src/utils';
 import { DraggableTileList } from '../draggable-list';
+import { preventClickStyle } from '../styles';
 
 export const ADropdownSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
@@ -214,10 +215,6 @@ export const ADropdownCodeUI = ({ selectedComponent, setComponent }: any) => <Te
 			}
 		});
 	}} />;
-
-const preventClickStyle = css`
-	pointer-events: none;
-`;
 
 export const ADropdown = ({
 	componentObj,

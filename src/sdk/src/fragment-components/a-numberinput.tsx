@@ -16,6 +16,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../tools';
 import { styleObjectToString } from '../../../ui-fragment/src/utils';
+import { preventClickStyle } from '../styles';
 
 export const ANumberInputSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
@@ -173,7 +174,8 @@ export const ANumberInput = ({
 				allowEmpty={componentObj.allowEmpty}
 				className={cx(
 					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-					css`${styleObjectToString(componentObj.style)}`
+					css`${styleObjectToString(componentObj.style)}`,
+					preventClickStyle
 				)}
 				type='number' />
 		</AComponent>

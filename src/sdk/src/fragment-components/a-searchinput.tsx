@@ -17,6 +17,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../tools';
 import { styleObjectToString } from '../../../ui-fragment/src/utils';
+import { preventClickStyle } from '../styles';
 
 export const ASearchInputSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const sizeItems = [
@@ -154,7 +155,8 @@ export const ASearchInput = ({
 				? <ExpandableSearch
 					className={cx(
 						componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-						css`${styleObjectToString(componentObj.style)}`
+						css`${styleObjectToString(componentObj.style)}`,
+						preventClickStyle
 					)}
 					size={componentObj.inputSize}
 					disabled={componentObj.disabled}
@@ -171,7 +173,11 @@ export const ASearchInput = ({
 					size={componentObj.inputSize}
 					labelText={componentObj.label}
 					placeholder={componentObj.placeholder}
-					className={cx(componentObj.cssClasses?.map((cc: any) => cc.id).join(' '), css`${styleObjectToString(componentObj.style)}`)}
+					className={cx(
+						componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+						css`${styleObjectToString(componentObj.style)}`,
+						preventClickStyle
+					)}
 					id={componentObj.id}
 					autoComplete={componentObj.autocomplete}
 					closeButtonLabelText={componentObj.closeButtonLabelText}
