@@ -5,8 +5,8 @@ import {
 	Column,
 	NumberInput,
 	TextInput
-} from 'carbon-components-react';
-import { Add32, Help32 } from '@carbon/icons-react';
+} from '@carbon/react';
+import { Add, Help } from '@carbon/react/icons';
 import { css, cx } from 'emotion';
 import { AComponent } from './a-component';
 import { getParentComponent, updatedState } from '../tools';
@@ -28,10 +28,10 @@ const helpIconStyle = css`
 `;
 
 export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
-	const onNumInputchange = (event: any) => {
+	const onNumInputchange = (name: string, value: number) => {
 		setComponent({
 			...selectedComponent,
-			[event.imaginaryTarget.name]: Number(event.imaginaryTarget.value)
+			[name]: value
 		});
 	};
 
@@ -53,7 +53,7 @@ export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
 		target='_blank'
 		rel='noopener noreferrer'
 		className={helpIconStyle}>
-			<Help32 />
+			<Help size={32} />
 		</a>
 		<Accordion align='start'>
 			<AccordionItem title='Small' open={isAccordionOpen.small}>
@@ -64,7 +64,7 @@ export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
 					label='Span'
 					name='smallSpan'
 					value={selectedComponent.smallSpan}
-					onChange={onNumInputchange} />
+					onChange={((_: any, { value }: any) => onNumInputchange('smallSpan', value))} />
 				<NumberInput
 					id='column-small-offset-number-input'
 					min={0}
@@ -72,7 +72,7 @@ export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
 					label='Offset'
 					name='smallOffset'
 					value={selectedComponent.smallOffset}
-					onChange={onNumInputchange} />
+					onChange={((_: any, { value }: any) => onNumInputchange('smallOffset', value))} />
 			</AccordionItem>
 
 			<AccordionItem title='Medium' open={isAccordionOpen.medium}>
@@ -83,7 +83,7 @@ export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
 					label='Span'
 					name='mediumSpan'
 					value={selectedComponent.mediumSpan}
-					onChange={onNumInputchange} />
+					onChange={((_: any, { value }: any) => onNumInputchange('mediumSpan', value))} />
 				<NumberInput
 					id='column-medium-offset-number-input'
 					min={0}
@@ -91,7 +91,7 @@ export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
 					label='Offset'
 					name='mediumOffset'
 					value={selectedComponent.mediumOffset}
-					onChange={onNumInputchange} />
+					onChange={((_: any, { value }: any) => onNumInputchange('mediumOffset', value))} />
 			</AccordionItem>
 
 			<AccordionItem title='Large' open={isAccordionOpen.large}>
@@ -102,7 +102,7 @@ export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
 					label='Span'
 					name='largeSpan'
 					value={selectedComponent.largeSpan}
-					onChange={onNumInputchange} />
+					onChange={((_: any, { value }: any) => onNumInputchange('largeSpan', value))} />
 				<NumberInput
 					id='column-large-offset-number-input'
 					min={0}
@@ -110,7 +110,7 @@ export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
 					label='Offset'
 					name='largeOffset'
 					value={selectedComponent.largeOffset}
-					onChange={onNumInputchange} />
+					onChange={((_: any, { value }: any) => onNumInputchange('largeOffset', value))} />
 			</AccordionItem>
 
 			<AccordionItem title='Extra large' open={isAccordionOpen.xLarge}>
@@ -121,7 +121,7 @@ export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
 					label='Span'
 					name='xLargeSpan'
 					value={selectedComponent.xLargeSpan}
-					onChange={onNumInputchange} />
+					onChange={((_: any, { value }: any) => onNumInputchange('xLargeSpan', value))} />
 				<NumberInput
 					id='column-x-large-offset-number-input'
 					min={0}
@@ -129,7 +129,7 @@ export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
 					label='Offset'
 					name='xLargeOffset'
 					value={selectedComponent.xLargeOffset}
-					onChange={onNumInputchange} />
+					onChange={((_: any, { value }: any) => onNumInputchange('xLargeOffset', value))} />
 			</AccordionItem>
 
 			<AccordionItem title='Max' open={isAccordionOpen.max}>
@@ -140,7 +140,7 @@ export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
 					label='Span'
 					name='maxSpan'
 					value={selectedComponent.maxSpan}
-					onChange={onNumInputchange} />
+					onChange={((_: any, { value }: any) => onNumInputchange('maxSpan', value))} />
 				<NumberInput
 					id='column-max-offset-number-input'
 					min={0}
@@ -148,7 +148,7 @@ export const AColumnSettingsUI = ({ selectedComponent, setComponent }: any) => {
 					label='Offset'
 					name='maxOffset'
 					value={selectedComponent.maxOffset}
-					onChange={onNumInputchange} />
+					onChange={((_: any, { value }: any) => onNumInputchange('maxOffset', value))} />
 			</AccordionItem>
 		</Accordion>
 	</>;
@@ -291,25 +291,34 @@ export const AColumn = ({
 			offset: componentObj.maxOffset || undefined
 		}}>
 			<span className={cx(addStyleTop, selected ? css`` : css`display: none`)}>
-				<Add32 onClick={(event: any) => {
+				<Add
+				size={32}
+				onClick={(event: any) => {
 					event.stopPropagation();
 					addRow();
-				}} className={iconStyle}/>
+				}}
+				className={iconStyle}/>
 			</span>
 			<span className={cx(addStyleLeft, selected ? css`` : css`display: none`)}>
-				<Add32 onClick={(event: any) => {
+				<Add
+				size={32}
+				onClick={(event: any) => {
 					event.stopPropagation();
 					addCell();
 				}} className={iconStyle}/>
 			</span>
 			<span className={cx(addStyleRight, selected ? css`` : css`display: none`)}>
-				<Add32 onClick={(event: any) => {
+				<Add
+				size={32}
+				onClick={(event: any) => {
 					event.stopPropagation();
 					addCell(1);
 				}} className={iconStyle}/>
 			</span>
 			<span className={cx(addStyleBottom, selected ? css`` : css`display: none`)}>
-				<Add32 onClick={(event: any) => {
+				<Add
+				size={32}
+				onClick={(event: any) => {
 					event.stopPropagation();
 					addRow(1);
 				}} className={iconStyle}/>
@@ -318,6 +327,8 @@ export const AColumn = ({
 			componentObj={componentObj}
 			className={css`display: block; height: 100%;`}
 			selected={selected}
+			fragment={fragment}
+			setFragment={setFragment}
 			rejectDrop={(dragObj: any) => {
 				// don't allow dropping columns directly into other columns
 				// row drop handler will take over
@@ -362,16 +373,32 @@ export const componentInfo: ComponentInfo = {
 	image: undefined,
 	codeExport: {
 		angular: {
-			inputs: (_) => '',
-			outputs: (_) => '',
-			imports: ['GridModule'],
-			isNotDirectExport: true,
-			code: (_) => ''
+			latest: {
+				inputs: (_) => '',
+				outputs: (_) => '',
+				imports: ['GridModule'],
+				isNotDirectExport: true,
+				code: (_) => ''
+			},
+			v10: {
+				inputs: (_) => '',
+				outputs: (_) => '',
+				imports: ['GridModule'],
+				isNotDirectExport: true,
+				code: (_) => ''
+			}
 		},
 		react: {
-			imports: ['Column'],
-			isNotDirectExport: true,
-			code: (_) => ''
+			latest: {
+				imports: ['Column'],
+				isNotDirectExport: true,
+				code: (_) => ''
+			},
+			v10: {
+				imports: ['Column'],
+				isNotDirectExport: true,
+				code: (_) => ''
+			}
 		}
 	}
 };

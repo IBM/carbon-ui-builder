@@ -1,7 +1,8 @@
 import React from 'react';
-import { Tag } from 'carbon-components-react';
+import { Tag } from '@carbon/react';
 import { CssClasses } from '../types';
 import { stringToCssClassName } from '../utils';
+import { commonSlots, slotsDisabled } from '../common-slots';
 
 export interface TagState {
 	type: string;
@@ -12,6 +13,7 @@ export interface TagState {
 	closeLabel?: string;
 	filter?: boolean;
 	disabled?: boolean;
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
@@ -19,10 +21,18 @@ export interface TagState {
 	style?: any;
 }
 
+export const type = 'tag';
+
+export const slots = {
+	...commonSlots,
+	...slotsDisabled
+};
+
 export const UITag = ({ state }: {
 	state: TagState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'tag') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment

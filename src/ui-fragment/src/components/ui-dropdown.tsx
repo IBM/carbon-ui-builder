@@ -1,12 +1,14 @@
 import React from 'react';
-import { Dropdown, MultiSelect } from 'carbon-components-react';
+import { Dropdown, MultiSelect } from '@carbon/react';
 import { CssClasses } from '../types';
 import { stringToCssClassName } from '../utils';
+import { commonSlots, slotsDisabled } from '../common-slots';
 
 export interface DropdownState {
 	type: string;
 	placeholder: string;
 	id: string | number;
+	hidden?: boolean;
 	listItems?: any[];
 	light?: boolean;
 	invalid?: boolean;
@@ -30,10 +32,18 @@ export interface DropdownState {
 	style?: any;
 }
 
+export const type = 'dropdown';
+
+export const slots = {
+	...commonSlots,
+	...slotsDisabled
+};
+
 export const UIDropdown = ({ state, setState }: {
 	state: DropdownState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'dropdown') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment

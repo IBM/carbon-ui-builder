@@ -1,5 +1,5 @@
 import React from 'react';
-import { RadioButtonGroup } from 'carbon-components-react';
+import { RadioButtonGroup } from '@carbon/react';
 import { CssClasses } from '../types';
 import {
 	renderComponents,
@@ -7,6 +7,7 @@ import {
 	stringToCssClassName
 } from '../utils';
 import { RadioState } from './ui-radio';
+import { commonSlots } from '../common-slots';
 
 export interface RadioGroupState {
 	type: string;
@@ -16,6 +17,7 @@ export interface RadioGroupState {
 	orientation: string;
 	labelPosition: string;
 	defaultSelected: string;
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
@@ -23,10 +25,17 @@ export interface RadioGroupState {
 	style?: any;
 }
 
-export const UIRadioGroup = ({ state, setState, setGlobalState }: {
+export const type = 'radio-group';
+
+export const slots = {
+	...commonSlots
+};
+
+export const UIRadioGroup = ({ state, setState, setGlobalState, sendSignal }: {
 	state: RadioGroupState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'radio-group') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -53,7 +62,7 @@ export const UIRadioGroup = ({ state, setState, setGlobalState }: {
 		{
 			state.items?.map((item: any) => {
 				const setItem = (i: any) => setItemInState(i, state, setState);
-				return renderComponents(item, setItem, setGlobalState);
+				return renderComponents(item, setItem, setGlobalState, sendSignal);
 			})
 		}
 	</RadioButtonGroup>;

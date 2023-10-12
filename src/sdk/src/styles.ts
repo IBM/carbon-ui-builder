@@ -8,3 +8,7 @@ export const actionIconStyle = css`
 		color: #8d8d8d;
 	}
 `;
+
+export const preventClickStyle = css`
+	pointer-events: none;
+`;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Breadcrumb } from 'carbon-components-react';
+import { Breadcrumb } from '@carbon/react';
 import { CssClasses } from '../types';
 import { BreadcrumbItemState } from './ui-breadcrumb-item';
 import {
@@ -7,11 +7,13 @@ import {
 	setItemInState,
 	stringToCssClassName
 } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface BreadcrumbState {
 	type: string;
 	items: BreadcrumbItemState[];
 	id: string | number;
+	hidden?: boolean;
 	noTrailingSlash?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
@@ -20,10 +22,17 @@ export interface BreadcrumbState {
 	style?: any;
 }
 
-export const UIBreadcrumb = ({ state, setState, setGlobalState }: {
+export const type = 'breadcrumb';
+
+export const slots = {
+	...commonSlots
+};
+
+export const UIBreadcrumb = ({ state, setState, setGlobalState, sendSignal }: {
 	state: BreadcrumbState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'breadcrumb') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -45,7 +54,7 @@ export const UIBreadcrumb = ({ state, setState, setGlobalState }: {
 		{
 			state.items?.map((item: any) => {
 				const setItem = (i: any) => setItemInState(i, state, setState);
-				return renderComponents(item, setItem, setGlobalState);
+				return renderComponents(item, setItem, setGlobalState, sendSignal);
 			})
 		}
 	</Breadcrumb>;

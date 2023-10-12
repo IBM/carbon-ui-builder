@@ -1,7 +1,8 @@
 import React from 'react';
-import { InlineLoading } from 'carbon-components-react';
+import { InlineLoading } from '@carbon/react';
 import { CssClasses } from '../types';
 import { stringToCssClassName } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface InlineLoadingState {
 	type: string;
@@ -15,6 +16,7 @@ export interface InlineLoadingState {
 	finishedIconDescription: string;
 	successText: string;
 	successDelay: number;
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
@@ -22,10 +24,17 @@ export interface InlineLoadingState {
 	style?: any;
 }
 
+export const type = 'inline-loading';
+
+export const slots = {
+	...commonSlots
+};
+
 export const UIInlineLoading = ({ state }: {
 	state: InlineLoadingState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'inline-loading') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment

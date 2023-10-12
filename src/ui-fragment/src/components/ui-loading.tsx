@@ -1,7 +1,8 @@
 import React from 'react';
-import { Loading } from 'carbon-components-react';
+import { Loading } from '@carbon/react';
 import { CssClasses } from '../types';
 import { stringToCssClassName } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface LoadingState {
 	type: string;
@@ -9,6 +10,7 @@ export interface LoadingState {
 	size?: string;
 	active?: boolean;
 	overlay?: boolean;
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
@@ -16,10 +18,17 @@ export interface LoadingState {
 	style?: any;
 }
 
+export const type = 'loading';
+
+export const slots = {
+	...commonSlots
+};
+
 export const UILoading = ({ state }: {
 	state: LoadingState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'loading') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment

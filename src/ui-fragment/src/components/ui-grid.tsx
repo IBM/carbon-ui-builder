@@ -1,16 +1,18 @@
 import React from 'react';
-import { Grid } from 'carbon-components-react';
+import { FlexGrid } from '@carbon/react';
 import { CssClasses } from '../types';
 import {
 	renderComponents,
 	setItemInState,
 	stringToCssClassName
 } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface GridState {
 	type: string;
 	items: any[]; // TODO row type
 	id: string | number;
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
@@ -18,10 +20,17 @@ export interface GridState {
 	style?: any;
 }
 
-export const UIGrid = ({ state, setState, setGlobalState }: {
+export const type = 'grid';
+
+export const slots = {
+	...commonSlots
+};
+
+export const UIGrid = ({ state, setState, setGlobalState, sendSignal }: {
 	state: GridState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'grid') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -37,12 +46,12 @@ export const UIGrid = ({ state, setState, setGlobalState }: {
 		cssClasses += stringToCssClassName(state.codeContext.name);
 	}
 
-	return <Grid className={cssClasses}>
+	return <FlexGrid className={cssClasses}>
 		{
 			state.items?.map((item: any) => {
 				const setItem = (i: any) => setItemInState(i, state, setState);
-				return renderComponents(item, setItem, setGlobalState);
+				return renderComponents(item, setItem, setGlobalState, sendSignal);
 			})
 		}
-	</Grid>;
+	</FlexGrid>;
 };

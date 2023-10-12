@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dropdown } from 'carbon-components-react';
+import { Dropdown } from '@carbon/react';
 import { getParentComponent, updatedState } from '../../tools';
 
 // Combine all items from 'top' & 'bottom' folds into a single array
@@ -203,9 +203,9 @@ export const TileMorphism = ({ component, setComponent, fragment, setFragment }:
 	};
 
 	return <Dropdown
-		id="tile-morpher"
-		label="Convert to another tile type"
-		titleText="Tile type"
+		id='tile-morpher'
+		label='Convert to another tile type'
+		titleText='Tile type'
 		selectedItem={tileTypes.find(item => item.id === component.type)}
 		items={tileTypes}
 		itemToString={(item: any) => (item ? item.text : '')}

@@ -4,7 +4,7 @@ import {
 	Button,
 	Dropdown,
 	NumberInput
-} from 'carbon-components-react';
+} from '@carbon/react';
 
 const marginDivStyle = css`
 	display: flex;
@@ -225,13 +225,13 @@ export const MarginPaddingWidget = ({ component, setComponent }: any) => {
 				step={1}
 				hideLabel={true}
 				value={dimension && component.style ? (component.style[dimension || '']?.value || 0) : 0}
-				onChange={(event: any) => setComponent({
+				onChange={(_: any, { value }: any) => setComponent({
 					...component,
 					style: {
 						...(component.style || {}),
 						[dimension || '']: {
 							...(component.style?.[dimension || ''] || {}),
-							value: Number(event.imaginaryTarget.value)
+							value: Number(value)
 						}
 					}
 				})} />

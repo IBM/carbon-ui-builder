@@ -1,17 +1,19 @@
 import React from 'react';
-import { SelectableTile } from 'carbon-components-react';
+import { SelectableTile } from '@carbon/react';
 import { CssClasses } from '../types';
 import {
 	renderComponents,
 	setItemInState,
 	stringToCssClassName
 } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface SelectableTileState {
 	type: string;
 	light?: boolean;
 	items?: any[];
 	standalone?: boolean;
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
@@ -22,10 +24,17 @@ export interface SelectableTileState {
 	style?: any;
 }
 
-export const UISelectableTile = ({ state, setState, setGlobalState }: {
+export const type = 'selectable-tile';
+
+export const slots = {
+	...commonSlots
+};
+
+export const UISelectableTile = ({ state, setState, setGlobalState, sendSignal }: {
 	state: SelectableTileState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'selectable-tile') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -51,7 +60,7 @@ export const UISelectableTile = ({ state, setState, setGlobalState }: {
 		{
 			state.items?.map((item: any) => {
 				const setItem = (i: any) => setItemInState(i, state, setState);
-				return renderComponents(item, setItem, setGlobalState);
+				return renderComponents(item, setItem, setGlobalState, sendSignal);
 			})
 		}
 	</SelectableTile>;

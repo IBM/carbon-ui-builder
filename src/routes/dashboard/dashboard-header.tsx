@@ -1,6 +1,6 @@
 import React from 'react';
 import { css } from 'emotion';
-import { ContentSwitcher, Switch } from 'carbon-components-react';
+import { ContentSwitcher, Switch } from '@carbon/react';
 
 // keep the enum order same as the switch order so context switcher
 // knows to select the correct one. Shout if you have a cleaner alternative.

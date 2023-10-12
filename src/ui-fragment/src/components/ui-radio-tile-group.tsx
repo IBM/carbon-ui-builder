@@ -1,17 +1,19 @@
 import React from 'react';
-import { TileGroup, RadioTile } from 'carbon-components-react';
+import { TileGroup, RadioTile } from '@carbon/react';
 import { CssClasses } from '../types';
 import {
 	renderComponents,
 	setItemInState,
 	stringToCssClassName
 } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface RadioTileGroupState {
 	type: string;
 	id: string | number;
 	legend?: string;
 	disabled?: boolean;
+	hidden?: boolean;
 	valueSelected?: string | number;
 	items?: any[];
 	cssClasses?: CssClasses[];
@@ -34,10 +36,17 @@ export interface RadioTileState {
 	style?: any;
 }
 
-export const UIRadioTileGroup = ({ state, setState, setGlobalState }: {
+export const type = 'radio-tile-group';
+
+export const slots = {
+	...commonSlots
+};
+
+export const UIRadioTileGroup = ({ state, setState, setGlobalState, sendSignal }: {
 	state: RadioTileGroupState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'radio-tile-group') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -84,7 +93,7 @@ export const UIRadioTileGroup = ({ state, setState, setGlobalState }: {
 						{
 							radioTile.items?.map((item: any) => {
 								const setItem = (i: any) => setItemInState(i, item, setRadioTile);
-								return renderComponents(item, setItem, setGlobalState);
+								return renderComponents(item, setItem, setGlobalState, sendSignal);
 							})
 						}
 				</RadioTile>;

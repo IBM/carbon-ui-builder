@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'carbon-components-react';
+import { Link } from '@carbon/react';
 import { CssClasses } from '../types';
 import { stringToCssClassName } from '../utils';
+import { commonSlots, slotsDisabled } from '../common-slots';
 
 export interface LinkState {
 	type: string;
@@ -9,6 +10,7 @@ export interface LinkState {
 	id: string | number;
 	disabled?: boolean;
 	inline?: boolean;
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
@@ -17,10 +19,18 @@ export interface LinkState {
 	style?: any;
 }
 
+export const type = 'link';
+
+export const slots = {
+	...commonSlots,
+	...slotsDisabled
+};
+
 export const UILink = ({ state }: {
 	state: LinkState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'link') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment

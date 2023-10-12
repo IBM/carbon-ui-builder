@@ -1,7 +1,8 @@
 import React from 'react';
-import { ProgressIndicator, ProgressStep } from 'carbon-components-react';
+import { ProgressIndicator, ProgressStep } from '@carbon/react';
 import { CssClasses } from '../types';
 import { stringToCssClassName } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface ProgressIndicatorState {
 	type: string;
@@ -15,6 +16,7 @@ export interface ProgressIndicatorState {
 	}[];
 	currentIndex?: number;
 	isVertical?: boolean;
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
@@ -22,10 +24,17 @@ export interface ProgressIndicatorState {
 	style?: any;
 }
 
+export const type = 'progress-indicator';
+
+export const slots = {
+	...commonSlots
+};
+
 export const UIProgressIndicator = ({ state, setState }: {
 	state: ProgressIndicatorState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'progress-indicator') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment

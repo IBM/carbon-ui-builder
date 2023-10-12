@@ -1,16 +1,18 @@
 import React from 'react';
-import { Tile } from 'carbon-components-react';
+import { Tile } from '@carbon/react';
 import { CssClasses } from '../types';
 import {
 	renderComponents,
 	setItemInState,
 	stringToCssClassName
 } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface TileState {
 	type: string;
 	light?: boolean;
 	items?: any[];
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
@@ -18,10 +20,17 @@ export interface TileState {
 	style?: any;
 }
 
-export const UITile = ({ state, setState, setGlobalState }: {
+export const type = 'tile';
+
+export const slots = {
+	...commonSlots
+};
+
+export const UITile = ({ state, setState, setGlobalState, sendSignal }: {
 	state: TileState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'tile') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -43,7 +52,7 @@ export const UITile = ({ state, setState, setGlobalState }: {
 		{
 			state.items?.map((item: any) => {
 				const setItem = (i: any) => setItemInState(i, state, setState);
-				return renderComponents(item, setItem, setGlobalState);
+				return renderComponents(item, setItem, setGlobalState, sendSignal);
 			})
 		}
 	</Tile>;

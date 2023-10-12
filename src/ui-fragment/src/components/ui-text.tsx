@@ -1,12 +1,14 @@
 import React from 'react';
 import { CssClasses } from '../types';
 import { stringToCssClassName } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface TextState {
 	type: string;
 	text?: string;
 	richText?: string;
 	isSection?: boolean;
+	hidden?: boolean | string;
 	style?: any;
 	cssClasses?: CssClasses[];
 	codeContext: {
@@ -14,12 +16,19 @@ export interface TextState {
 	};
 }
 
+export const type = 'text';
+
+export const slots = {
+	...commonSlots
+};
+
 export const UIText = ({ state }: {
 	state: TextState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
-	if (state.type !== 'text') {
+	if (state.type !== 'text' || state.hidden) {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;
 	}

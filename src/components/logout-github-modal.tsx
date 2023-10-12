@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Modal } from 'carbon-components-react';
+import { Modal } from '@carbon/react';
 import { GithubContext, ModalContext } from '../context';
 
 export const LogoutGithubModal = () => {

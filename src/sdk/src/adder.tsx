@@ -1,5 +1,5 @@
 import React from 'react';
-import { Add16 } from '@carbon/icons-react';
+import { Add } from '@carbon/react/icons';
 import { css, cx } from 'emotion';
 
 const addStyle = css`
@@ -43,7 +43,8 @@ export const Adder = ({
 }: any) => <>
 	{
 		active && topAction && <span className={cx(addStyleTop, addButtonsCss)}>
-			<Add16
+			<Add
+				size={16}
 				onClick={(event: any) => {
 					event.stopPropagation();
 					topAction();
@@ -53,7 +54,8 @@ export const Adder = ({
 	}
 	{
 		active && leftAction && <span className={cx(addStyleLeft, addButtonsCss)}>
-			<Add16
+			<Add
+				size={16}
 				onClick={(event: any) => {
 					event.stopPropagation();
 					leftAction();
@@ -63,7 +65,8 @@ export const Adder = ({
 	}
 	{
 		active && rightAction && <span className={cx(addStyleRight, addButtonsCss)}>
-			<Add16
+			<Add
+				size={16}
 				onClick={(event: any) => {
 					event.stopPropagation();
 					rightAction();
@@ -74,7 +77,8 @@ export const Adder = ({
 	{children}
 	{
 		active && bottomAction && <span className={cx(addStyle, addButtonsCss)}>
-			<Add16
+			<Add
+				size={16}
 				onClick={(event: any) => {
 					event.stopPropagation();
 					bottomAction();

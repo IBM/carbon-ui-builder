@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput, Dropdown } from 'carbon-components-react';
+import { TextInput, Dropdown } from '@carbon/react';
 import { AComponent } from './a-component';
 import { css, cx } from 'emotion';
 import { ComponentInfo } from '.';
@@ -7,6 +7,7 @@ import { ComponentInfo } from '.';
 import image from './../assets/component-icons/text-input.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../tools';
 import { styleObjectToString } from '../../../ui-fragment/src/utils';
+import { preventClickStyle } from '../styles';
 
 export const ATextInputSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const typeItems = [
@@ -115,7 +116,8 @@ export const ATextInput = ({
 				labelText={componentObj.label}
 				className={cx(
 					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
-					css`${styleObjectToString(componentObj.style)}`
+					css`${styleObjectToString(componentObj.style)}`,
+					preventClickStyle
 				)}
 				defaultValue={componentObj.defaultValue}
 				disabled={componentObj.disabled}
@@ -151,34 +153,69 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: (_) => '',
-			outputs: (_) => '',
-			imports: ['InputModule'],
-			code: ({ json }) => {
-				return `<ibm-label
-					helperText="${json.helperText}">
-						${json.label}
-						<input
-							ibmText
-							${angularClassNamesFromComponentObj(json)}
-							name="${json.codeContext?.name}"
-							${json.size ? `size="${json.size}"` : ''}
-							placeholder="${json.placeholder}">
-				</ibm-label>`;
+			latest: {
+				inputs: (_) => '',
+				outputs: (_) => '',
+				imports: ['InputModule'],
+				code: ({ json }) => {
+					return `<cds-text-label
+						helperText="${json.helperText}">
+							${json.label}
+							<input
+								ibmText
+								${angularClassNamesFromComponentObj(json)}
+								name="${json.codeContext?.name}"
+								${json.size ? `size="${json.size}"` : ''}
+								placeholder="${json.placeholder}">
+					</cds-text-label>`;
+				}
+			},
+			v10: {
+				inputs: (_) => '',
+				outputs: (_) => '',
+				imports: ['InputModule'],
+				code: ({ json }) => {
+					return `<ibm-text-label
+						helperText="${json.helperText}">
+							${json.label}
+							<input
+								ibmText
+								${angularClassNamesFromComponentObj(json)}
+								name="${json.codeContext?.name}"
+								${json.size ? `size="${json.size}"` : ''}
+								placeholder="${json.placeholder}">
+					</ibm-text-label>`;
+				}
 			}
 		},
 		react: {
-			imports: ['TextInput'],
-			code: ({ json }) => {
-				return `<TextInput
-					labelText="${json.label}"
-					name="${json.codeContext?.name}"
-					helperText="${json.helperText}"
-					placeholder="${json.placeholder}"
-					${json.size ? `size="${json.size}"` : ''}
-					value={state["${json.codeContext?.name}"]}
-					${reactClassNamesFromComponentObj(json)}
-					onChange={handleInputChange} />`;
+			latest: {
+				imports: ['TextInput'],
+				code: ({ json }) => {
+					return `<TextInput
+						labelText="${json.label}"
+						name="${json.codeContext?.name}"
+						helperText="${json.helperText}"
+						placeholder="${json.placeholder}"
+						${json.size ? `size="${json.size}"` : ''}
+						value={state["${json.codeContext?.name}"]}
+						${reactClassNamesFromComponentObj(json)}
+						onChange={handleInputChange} />`;
+				}
+			},
+			v10: {
+				imports: ['TextInput'],
+				code: ({ json }) => {
+					return `<TextInput
+						labelText="${json.label}"
+						name="${json.codeContext?.name}"
+						helperText="${json.helperText}"
+						placeholder="${json.placeholder}"
+						${json.size ? `size="${json.size}"` : ''}
+						value={state["${json.codeContext?.name}"]}
+						${reactClassNamesFromComponentObj(json)}
+						onChange={handleInputChange} />`;
+				}
 			}
 		}
 	}

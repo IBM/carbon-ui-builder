@@ -1,5 +1,5 @@
 import React from 'react';
-import { OverflowMenu } from 'carbon-components-react';
+import { OverflowMenu } from '@carbon/react';
 import {
 	renderComponents,
 	setItemInState,
@@ -7,6 +7,7 @@ import {
 } from '../utils';
 import { CssClasses } from '../types';
 import { OverflowMenuItemState } from './ui-overflow-menu-item';
+import { commonSlots } from '../common-slots';
 
 export interface OverflowMenuState {
 	type: string;
@@ -14,6 +15,7 @@ export interface OverflowMenuState {
 	id: string | number;
 	placement?: string;
 	flipped?: boolean;
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
@@ -21,10 +23,17 @@ export interface OverflowMenuState {
 	style?: any;
 }
 
-export const UIOverflowMenu = ({ state, setState, setGlobalState }: {
+export const type = 'overflow-menu';
+
+export const slots = {
+	...commonSlots
+};
+
+export const UIOverflowMenu = ({ state, setState, setGlobalState, sendSignal }: {
 	state: OverflowMenuState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'overflow-menu') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -47,7 +56,7 @@ export const UIOverflowMenu = ({ state, setState, setGlobalState }: {
 		{
 			state.items?.map((item: any) => {
 				const setItem = (i: any) => setItemInState(i, state, setState);
-				return renderComponents(item, setItem, setGlobalState);
+				return renderComponents(item, setItem, setGlobalState, sendSignal);
 			})
 		}
 	</OverflowMenu>;

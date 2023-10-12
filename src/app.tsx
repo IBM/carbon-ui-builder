@@ -16,6 +16,7 @@ import { UIShell } from './components/ui-shell';
 import { css } from 'emotion';
 import { Help } from './routes/help';
 import { View } from './routes/view';
+import { PreviewJson } from './routes/preview-json';
 import { FromJson } from './routes/from-json';
 import { FragmentWizard, FragmentWizardModals } from './routes/dashboard/fragment-wizard/fragment-wizard';
 import { AllModals } from './routes/edit/all-modals';
@@ -24,12 +25,12 @@ import { ContextProviders } from './context/context-providers';
 import { Repo } from './routes/repo';
 
 const app = css`
-	nav.bx--side-nav--expanded + div#edit-content {
+	nav.cds--side-nav--expanded + div#edit-content {
 		padding-left: calc(2.25rem + 16rem);
 	}
 	// This is the viewport width that causes the edit header items to overlap
 	@media screen and (max-width: 38.75rem) {
-		nav.bx--side-nav--expanded + div#edit-content {
+		nav.cds--side-nav--expanded + div#edit-content {
 			padding-left: 36px;
 		}
 	}
@@ -63,6 +64,7 @@ export const App = () => {
 					<Routes>
 						<Route element={<Outlet />}>
 							<Route path='/view/:id' element={<View />} />
+							<Route path='/preview-json/:json' element={<PreviewJson />} />
 							<Route path='/launch' element={<Launch />} />
 							<Route path='/launch/:owner' element={<Launch />} />
 							<Route path='/launch/:owner/:repo/*' element={<Launch />} />
@@ -79,7 +81,7 @@ export const App = () => {
 							<Route path='/help/:id' element={<Help />} />
 							<Route path='/repo' element={<Repo />} />
 							<Route path='/repo/:id/*' element={<Repo />} />
-							<Route path="*" element={<NotFound />} />
+							<Route path='*' element={<NotFound />} />
 						</Route>
 					</Routes>
 				</ContextProviders>

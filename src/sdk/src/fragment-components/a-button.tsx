@@ -3,7 +3,7 @@ import {
 	Button,
 	Dropdown,
 	TextInput
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { css, cx } from 'emotion';
 import { AComponent, ComponentInfo } from './a-component';
 
@@ -28,10 +28,9 @@ export const AButtonSettingsUI = ({ selectedComponent, setComponent }: any) => {
 
 	const sizeItems = [
 		{ id: 'sm', text: 'Small' },
-		{ id: 'field', text: 'Medium' },
+		{ id: 'md', text: 'Medium' },
 		{ id: 'lg', text: 'Large' },
-		{ id: 'xl', text: 'Extra large' },
-		{ id: 'default', text: 'Default' }
+		{ id: 'xl', text: 'Extra large' }
 	];
 
 	return <>
@@ -89,7 +88,6 @@ export const AButton = ({
 		<AComponent
 		componentObj={componentObj}
 		rejectDrop={true}
-		className={css`position: relative; display: inline-flex`}
 		{...rest}>
 			<Button
 			kind={componentObj.kind}
@@ -123,31 +121,59 @@ export const componentInfo: ComponentInfo = {
 		type: 'button',
 		kind: 'primary',
 		text: 'Button',
-		size: ''
+		size: 'lg'
 	},
 	image,
 	codeExport: {
 		angular: {
-			inputs: (_) => '',
-			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
-			imports: ['ButtonModule'],
-			code: ({ json }) => {
-				return `<button
-					${json.kind ? `ibmButton='${json.kind}'` : 'ibmButton'}
-					${json.size ? `size='${json.size === 'default' ? 'normal' : json.size}'` : ''}
-					(click)='${nameStringToVariableString(json.codeContext?.name)}Clicked.emit()'
-					${angularClassNamesFromComponentObj(json)}>
-						${json.text}
-				</button>`;
+			latest: {
+				inputs: (_) => '',
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
+				imports: ['ButtonModule'],
+				code: ({ json }) => {
+					return `<button
+						${json.kind ? `cdsButton='${json.kind}'` : 'ibmButton'}
+						${json.size ? `size='${json.size === 'default' ? 'normal' : json.size}'` : ''}
+						(click)='${nameStringToVariableString(json.codeContext?.name)}Clicked.emit()'
+						${angularClassNamesFromComponentObj(json)}>
+							${json.text}
+					</button>`;
+				}
+			},
+			v10: {
+				inputs: (_) => '',
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
+				imports: ['ButtonModule'],
+				code: ({ json }) => {
+					const size = json.size === 'default' ? 'normal' : json.size === 'md' ? 'field' : json.size;
+					return `<button
+						${json.kind ? `ibmButton='${json.kind}'` : 'ibmButton'}
+						${json.size ? `size='${size}'` : ''}
+						(click)='${nameStringToVariableString(json.codeContext?.name)}Clicked.emit()'
+						${angularClassNamesFromComponentObj(json)}>
+							${json.text}
+					</button>`;
+				}
 			}
 		},
 		react: {
-			imports: ['Button'],
-			code: ({ json }) => {
-				return `<Button
-					${json.kind && `kind="${json.kind}"`}
-					${json.size && `size="${json.size}"`}
-					${reactClassNamesFromComponentObj(json)}>${json.text}</Button>`;
+			latest: {
+				imports: ['Button'],
+				code: ({ json }) => {
+					return `<Button
+						${json.kind && `kind="${json.kind}"`}
+						${json.size && `size="${json.size}"`}
+						${reactClassNamesFromComponentObj(json)}>${json.text}</Button>`;
+				}
+			},
+			v10: {
+				imports: ['Button'],
+				code: ({ json }) => {
+					return `<Button
+						${json.kind && `kind="${json.kind}"`}
+						${json.size && `size="${json.size}"`}
+						${reactClassNamesFromComponentObj(json)}>${json.text}</Button>`;
+				}
 			}
 		}
 	}

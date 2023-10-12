@@ -1,23 +1,31 @@
 import React from 'react';
-import { ExpandableTile, TileAboveTheFoldContent } from 'carbon-components-react';
+import { ExpandableTile, TileAboveTheFoldContent } from '@carbon/react';
 import { CssClasses } from '../types';
 import {
 	renderComponents,
 	setItemInState,
 	stringToCssClassName
 } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface ExpandableTileState {
 	type: string;
 	light?: boolean;
 	expanded?: boolean;
 	items?: any[];
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
 	};
 	style?: any;
 }
+
+export const type = 'expandable-tile';
+
+export const slots = {
+	...commonSlots
+};
 
 // Splits data into folds - all exports will have a common approach
 export const getFoldObjects = (state: any) => {
@@ -27,10 +35,11 @@ export const getFoldObjects = (state: any) => {
 	};
 };
 
-export const UIExpandableTile = ({ state, setState, setGlobalState }: {
+export const UIExpandableTile = ({ state, setState, setGlobalState, sendSignal }: {
 	state: ExpandableTileState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'expandable-tile') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -56,14 +65,14 @@ export const UIExpandableTile = ({ state, setState, setGlobalState }: {
 			{
 				aboveFold?.map((item: any) => {
 					const setItem = (i: any) => setItemInState(i, state, setState);
-					return renderComponents(item, setItem, setGlobalState);
+					return renderComponents(item, setItem, setGlobalState, sendSignal);
 				})
 			}
 		</TileAboveTheFoldContent>
 		{
 			belowFold?.map((item: any) => {
 				const setItem = (i: any) => setItemInState(i, state, setState);
-				return renderComponents(item, setItem, setGlobalState);
+				return renderComponents(item, setItem, setGlobalState, sendSignal);
 			})
 		}
 	</ExpandableTile>;

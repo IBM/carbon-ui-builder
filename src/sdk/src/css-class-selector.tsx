@@ -3,9 +3,15 @@ import {
 	FormLabel,
 	Tag,
 	Tooltip
-} from 'carbon-components-react';
-import { ColorPalette16 } from '@carbon/icons-react';
+} from '@carbon/react';
+import { ColorPalette, Information } from '@carbon/react/icons';
 import { css } from 'emotion';
+
+const tooltipOverflowStyle = css`
+	.cds--popover-content {
+		width: 15rem;
+	}
+`;
 
 const compareClasses = (sc1: any, sc2: any) => sc1.name < sc2.name ? -1 : 1;
 
@@ -59,9 +65,13 @@ export const CssClassSelector = ({ selectedClasses, setSelectedClasses, styleCla
 			<br />
 			<FormLabel>
 				Available classes
-				<div className={css`display: inline; position: relative; top: 3px;`}>
-					<Tooltip className={css`z-index: 9999;`}>
-						Add or modify classes in the <ColorPalette16 /> Style menu on the left of the editor
+				<div className={css`display: inline; position: relative; top: 3px; margin-left: 0.5rem;`}>
+					<Tooltip
+						className={tooltipOverflowStyle}
+						label={<>Add or modify classes in the <ColorPalette /> Style menu on the left of the editor</>}>
+							<button className='tooltip-trigger' type='button'>
+								<Information />
+							</button>
 					</Tooltip>
 				</div>
 			</FormLabel>
@@ -69,6 +79,7 @@ export const CssClassSelector = ({ selectedClasses, setSelectedClasses, styleCla
 			{
 				availableClasses.map((styleClass: any) => (
 					<Tag
+					className={css`border-width: 0;`}
 					key={styleClass.name}
 					onClick={() => selectStyleClass(styleClass)}>
 						{styleClass.name}

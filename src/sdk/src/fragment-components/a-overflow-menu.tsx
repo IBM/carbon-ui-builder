@@ -5,7 +5,7 @@ import {
 	OverflowMenu,
 	TextInput,
 	OverflowMenuItem
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { AComponent, ComponentInfo } from './a-component';
 import image from './../assets/component-icons/overflowMenu.svg';
 import {
@@ -66,17 +66,17 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 					labelText='Disabled'
 					id={`disabled-${index}`}
 					checked={item.disabled}
-					onChange={(checked: boolean) => updateListItems('disabled', checked, index)}/>
+					onChange={(_: any, { checked }: any) => updateListItems('disabled', checked, index)}/>
 				<Checkbox
 					labelText='Is delete'
 					id={`isDelete-${index}`}
 					checked={item.isDelete}
-					onChange={(checked: boolean) => updateListItems('isDelete', checked, index)} />
+					onChange={(_: any, { checked }: any) => updateListItems('isDelete', checked, index)} />
 				<Checkbox
 					labelText='Has divider'
 					id={`hasDivider-${index}`}
 					checked={item.hasDivider}
-					onChange={(checked: boolean) => updateListItems('hasDivider', checked, index)} />
+					onChange={(_: any, { checked }: any) => updateListItems('hasDivider', checked, index)} />
 			</div>
 		</>;
 	};
@@ -91,7 +91,7 @@ export const AOverflowMenuSettingsUI = ({ selectedComponent, setComponent }: any
 			labelText='Flip left'
 			id='flipped'
 			checked={selectedComponent.flipped}
-			onChange={(checked: boolean) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				flipped: checked
 			})} />
@@ -195,18 +195,19 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Flipped = ${json.flipped};
-									@Input() ${nameStringToVariableString(json.codeContext?.name)}Placement = "${json.placement}";`,
-			outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter();
-							@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
-			imports: ['DialogModule'],
-			code: ({ json }) => {
-				return `<ibm-overflow-menu
+			latest: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Flipped = ${json.flipped};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Placement = "${json.placement}";`,
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter();
+					@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
+				imports: ['DialogModule'],
+				code: ({ json }) => {
+					return `<cds-overflow-menu
 					[placement]="${nameStringToVariableString(json.codeContext?.name)}Placement"
 					[flip]="${nameStringToVariableString(json.codeContext?.name)}Flipped"
 					${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((step: any) => (
-						`<ibm-overflow-menu-option
+						`<cds-overflow-menu-option
 							${step.isDelete ? "type='danger'" : ''}
 							${step.hasDivider ? `[divider]="${step.hasDivider}"` : ''}
 							${step.link !== undefined ? `href="${step.link}"` : ''}
@@ -214,27 +215,73 @@ export const componentInfo: ComponentInfo = {
 							(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
 							(click)="${nameStringToVariableString(json.codeContext?.name)}Clicked.emit($event)">
 								${step.itemText}
-						</ibm-overflow-menu-option>`
+						</cds-overflow-menu-option>`
 					)).join('\n')}
-				</ibm-overflow-menu>`;
+					</cds-overflow-menu>`;
+				}
+			},
+			v10: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Flipped = ${json.flipped};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Placement = "${json.placement}";`,
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter();
+					@Output() ${nameStringToVariableString(json.codeContext?.name)}Clicked = new EventEmitter();`,
+				imports: ['DialogModule'],
+				code: ({ json }) => {
+					return `<ibm-overflow-menu
+						[placement]="${nameStringToVariableString(json.codeContext?.name)}Placement"
+						[flip]="${nameStringToVariableString(json.codeContext?.name)}Flipped"
+						${angularClassNamesFromComponentObj(json)}>
+							${json.items.map((step: any) => (
+							`<ibm-overflow-menu-option
+								${step.isDelete ? "type='danger'" : ''}
+								${step.hasDivider ? `[divider]="${step.hasDivider}"` : ''}
+								${step.link !== undefined ? `href="${step.link}"` : ''}
+								${step.disabled ? `disabled="${step.disabled}"` : '' }
+								(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
+								(click)="${nameStringToVariableString(json.codeContext?.name)}Clicked.emit($event)">
+									${step.itemText}
+							</ibm-overflow-menu-option>`
+						)).join('\n')}
+					</ibm-overflow-menu>`;
+				}
 			}
 		},
 		react: {
-			imports: ['OverflowMenu', 'OverflowMenuItem'],
-			code: ({ json }) => {
-				return `<OverflowMenu
-					direction="${json.placement}"
-					flipped={${json.flipped}}
-					${reactClassNamesFromComponentObj(json)}>
-					${json.items.map((step: any) => (
-						`<OverflowMenuItem
-							${step.link !== undefined ? `href="${step.link}"` : ''}
-							${step.isDelete !== undefined ? `isDelete={${step.isDelete}}` : ''}
-							${step.hasDivider !== false ? 'hasDivider': ''}
-							disabled={${step.disabled}}
-							itemText="${step.itemText}"/>`
-					)).join('\n')}
-				</OverflowMenu>`;
+			latest: {
+				imports: ['OverflowMenu', 'OverflowMenuItem'],
+				code: ({ json }) => {
+					return `<OverflowMenu
+						direction="${json.placement}"
+						flipped={${json.flipped}}
+						${reactClassNamesFromComponentObj(json)}>
+						${json.items.map((step: any) => (
+							`<OverflowMenuItem
+								${step.link !== undefined ? `href="${step.link}"` : ''}
+								${step.isDelete !== undefined ? `isDelete={${step.isDelete}}` : ''}
+								${step.hasDivider !== false ? 'hasDivider': ''}
+								disabled={${step.disabled}}
+								itemText="${step.itemText}"/>`
+						)).join('\n')}
+					</OverflowMenu>`;
+				}
+			},
+			v10: {
+				imports: ['OverflowMenu', 'OverflowMenuItem'],
+				code: ({ json }) => {
+					return `<OverflowMenu
+						direction="${json.placement}"
+						flipped={${json.flipped}}
+						${reactClassNamesFromComponentObj(json)}>
+						${json.items.map((step: any) => (
+							`<OverflowMenuItem
+								${step.link !== undefined ? `href="${step.link}"` : ''}
+								${step.isDelete !== undefined ? `isDelete={${step.isDelete}}` : ''}
+								${step.hasDivider !== false ? 'hasDivider': ''}
+								disabled={${step.disabled}}
+								itemText="${step.itemText}"/>`
+						)).join('\n')}
+					</OverflowMenu>`;
+				}
 			}
 		}
 	}

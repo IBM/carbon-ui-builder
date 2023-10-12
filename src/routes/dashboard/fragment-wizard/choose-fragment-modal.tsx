@@ -4,7 +4,7 @@ import {
 	Modal,
 	InlineNotification,
 	NotificationActionButton
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { FragmentWizardModals } from './fragment-wizard';
 
 import { GlobalStateContext, NotificationActionType, NotificationContext } from '../../../context';
@@ -60,7 +60,7 @@ export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 			open={props.shouldDisplay}
 			size='lg'
 			shouldSubmitOnEnter={false}
-			selectorPrimaryFocus='.bx--tile--selectable'
+			selectorPrimaryFocus='.cds--tile--selectable'
 			onRequestSubmit={() => {
 				generateFragment();
 				props.setLastVisitedModal(FragmentWizardModals.CHOOSE_FRAGMENT_MODAL);
@@ -71,7 +71,6 @@ export const ChooseFragmentModal = (props: ChooseFragmentModalProps) => {
 				props.setDisplayedModal(props.lastVisitedModal);
 				props.setLastVisitedModal(FragmentWizardModals.CHOOSE_FRAGMENT_MODAL);
 			}}
-			hasForm
 			modalHeading='Create new fragment'
 			primaryButtonText='Done'
 			primaryButtonDisabled={!selectedFragment}

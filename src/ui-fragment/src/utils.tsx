@@ -26,7 +26,7 @@ import { UIRadioTileGroup } from './components/ui-radio-tile-group';
 import { UIRow } from './components/ui-row';
 import { UISelectableTile } from './components/ui-selectable-tile';
 import { UISelectableTileGroup } from './components/ui-selectable-tile-group';
-import { UISearchInput } from './components/ui-serach-input';
+import { UISearchInput } from './components/ui-search-input';
 import { UITag } from './components/ui-tag';
 import { UIText } from './components/ui-text';
 import { UITextAreaInput } from './components/ui-text-area';
@@ -197,115 +197,124 @@ export const isFragment = (json: any) => {
 		&& Array.isArray(json.items);
 };
 
-export const renderComponents = (state: any, setState: (state: any) => void, setGlobalState: (state: any) => void) => {
+export const renderComponents = (
+	state: any,
+	setState: (state: any) => void,
+	setGlobalState: (state: any) => void,
+	sendSignal: (id: number | string, signal: string) => void
+) => {
+	if (state.hidden) {
+		// eslint-disable-next-line react/jsx-no-useless-fragment
+		return <></>;
+	}
 	switch (state.type) {
 		case 'accordion':
-			return <UIAccordion key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UIAccordion key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'tooltip':
 			return <UITooltip key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'accordion-item':
-			return <UIAccordionItem key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UIAccordionItem key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'button':
-			return <UIButton key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UIButton key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'breadcrumb':
-			return <UIBreadcrumb key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UIBreadcrumb key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'breadcrumb-item':
-			return <UIBreadcrumbItem key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UIBreadcrumbItem key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'checkbox':
-			return <UICheckbox key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UICheckbox key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'code-snippet':
-			return <UICodeSnippet key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UICodeSnippet key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'column':
-			return <UIColumn key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UIColumn key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'combobox':
-			return <UIComboBox key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UIComboBox key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'content-switcher':
-			return <UIContentSwitcher key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UIContentSwitcher key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'dropdown':
-			return <UIDropdown key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UIDropdown key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'grid':
-			return <UIGrid key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UIGrid key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'loading':
-			return <UILoading key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UILoading key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'inline-loading':
-			return <UIInlineLoading key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UIInlineLoading key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'radio-group':
-			return <UIRadioGroup key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UIRadioGroup key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'radio':
-			return <UIRadio key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UIRadio key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'row':
-			return <UIRow key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UIRow key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'link':
-			return <UILink key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UILink key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'number-input':
-			return <UINumberInput key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UINumberInput key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'progress-indicator':
-			return <UIProgressIndicator key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UIProgressIndicator key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'search':
-			return <UISearchInput key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UISearchInput key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'tag':
-			return <UITag key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UITag key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'text':
-			return <UIText key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UIText key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'text-area':
-			return <UITextAreaInput key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UITextAreaInput key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'text-input':
-			return <UITextInput key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UITextInput key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'overflow-menu':
-			return <UIOverflowMenu key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UIOverflowMenu key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'overflow-menu-item':
-			return <UIOverflowMenuItem key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UIOverflowMenuItem key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'tile':
-			return <UITile key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UITile key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'tile-fold':
-			return <UITileFold key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UITileFold key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'clickable-tile':
-			return <UIClickableTile key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UIClickableTile key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'toggle':
-			return <UIToggle key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UIToggle key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'expandable-tile':
-			return <UIExpandableTile key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UIExpandableTile key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'selectable-tile':
-			return <UISelectableTile key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UISelectableTile key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'selectable-tile-group':
-			return <UISelectableTileGroup key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UISelectableTileGroup key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'radio-tile-group':
-			return <UIRadioTileGroup key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UIRadioTileGroup key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		default:
 			break;
@@ -315,6 +324,6 @@ export const renderComponents = (state: any, setState: (state: any) => void, set
 		// setItem is a setState for that particular item
 		const setItem = (item: any) => setItemInState(item, state, setState);
 
-		return state.items.map((item: any) => renderComponents(item, setItem, setState));
+		return state.items.map((item: any) => renderComponents(item, setItem, setState, sendSignal));
 	}
 };

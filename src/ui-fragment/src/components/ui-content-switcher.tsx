@@ -1,13 +1,16 @@
 import React from 'react';
-import { ContentSwitcher, Switch } from 'carbon-components-react';
+import { ContentSwitcher, Switch } from '@carbon/react';
 import { CssClasses } from '../types';
 import { stringToCssClassName } from '../utils';
+import { commonSlots } from '../common-slots';
 
 export interface ContentSwitcherState {
 	type: string;
 	items: [];
 	size: [];
 	selectedIndex: number;
+	disabled?: boolean;
+	hidden?: boolean;
 	cssClasses?: CssClasses[];
 	style?: any;
 	codeContext: {
@@ -15,10 +18,17 @@ export interface ContentSwitcherState {
 	};
 }
 
+export const type = 'content-switcher';
+
+export const slots = {
+	...commonSlots
+};
+
 export const UIContentSwitcher = ({ state }: {
 	state: ContentSwitcherState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'content-switcher') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
