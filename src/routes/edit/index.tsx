@@ -63,7 +63,7 @@ const editPageContent = css`
 		width: calc(100% - ${rightPaneWidth} - ${railWidth});
 		height: calc(100% - 64px);
 		transition: margin-left ${transitionDetails}, width ${transitionDetails};
-		overflow: visible;
+		overflow: auto;
 
 		&.is-side-panel-active {
 			margin-left: calc(${railWidth} + ${leftPaneWidth});
@@ -104,7 +104,7 @@ export const leftPane = css`
 	height: calc(100% - 4rem);
 	box-shadow: inset -1px 0px #d8d8d8;
 	z-index: 8001;
-	overflow: visible;
+	overflow: auto;
 
 	&.is-active {
 		left: 0;
@@ -149,7 +149,7 @@ const rightPanel = css`
 	}
 
 	.context-pane-content {
-		overflow: visible;
+		overflow: auto;
 		height: calc(100vh - 15rem);
 
 		div[title='Drag handle'] {
@@ -334,7 +334,9 @@ export const Edit = () => {
 							<CodeContextPane fragment={fragment} setFragment={updateFragment} />
 						</TabPanel>
 						<TabPanel>
-							info
+							<div className={css`padding: 1rem;`}>
+								info
+							</div>
 						</TabPanel>
 					</TabPanels>
 				</Tabs>
