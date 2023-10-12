@@ -66,8 +66,13 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 
 		try {
 			if (js) {
-				setFragmentJson(JSON.parse(js));
-				if (fragmentJson.version !== CURRENT_MODEL_VERSION) {
+				const parsedJSON = JSON.parse(js);
+				setFragmentJson(parsedJSON);
+
+				// Check if fragment with microlayout is imported
+				if (Array.isArray(parsedJSON) && parsedJSON.some((fragment: any) => fragment.version !== CURRENT_MODEL_VERSION)) {
+					setModelMismatchNotification(true);
+				} else if (!Array.isArray(parsedJSON) && parsedJSON.version !== CURRENT_MODEL_VERSION) {
 					setModelMismatchNotification(true);
 				} else {
 					setModelMismatchNotification(false);
