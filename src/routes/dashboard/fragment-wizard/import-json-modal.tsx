@@ -230,7 +230,6 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 				// Updates models in place before entering edit mode
 				fragmentList.forEach(fragment => updateModelInPlace(fragment));
 				setFragmentJson(fragmentList);
-				console.log(fragmentList);
 
 				generateFragment(fragmentList);
 				props.setLastVisitedModal(FragmentWizardModals.IMPORT_JSON_MODAL);
