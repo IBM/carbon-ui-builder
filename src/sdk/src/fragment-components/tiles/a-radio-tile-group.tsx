@@ -114,10 +114,11 @@ export const ARadioTileGroup = ({
 		];
 
 		/**
-		 * If there are multiple radio-tile-groups rendering at once, they will attempt to overwrite the state together causing the edit mode to break
+		 * If there are multiple radio-tile-groups rendering at once,
+		 * they will attempt to overwrite the state together causing the edit mode to break
 		 *
-		 * Ideally, we should be using an arrow function with previousState to resolve this scenario, but due to complexity of context with multiple
-		 * fragments states, it would require some refactoring. Hence, this workaround.
+		 * Ideally, we should be using an arrow function with previousState to resolve this scenario.
+		 * However, we don’t know which fragment we’re updating until we read the id from the model.
 		 */
 		setTimeout(() => {
 			setFragment({
