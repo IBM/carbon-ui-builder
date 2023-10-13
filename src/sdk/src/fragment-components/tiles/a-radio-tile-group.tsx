@@ -112,16 +112,25 @@ export const ARadioTileGroup = ({
 			},
 			...parentComponent.items.slice(componentIndex + 1)
 		];
-		setFragment({
-			...fragment,
-			data: updatedState(fragment.data, {
-				type: 'update',
-				component: {
-					...parentComponent,
-					items
-				}
-			})
-		}, false);
+
+		/**
+		 * If there are multiple radio-tile-groups rendering at once, they will attempt to overwrite the state together causing the edit mode to break
+		 *
+		 * Ideally, we should be using an arrow function with previousState to resolve this scenario, but due to complexity of context with multiple
+		 * fragments states, it would require some refactoring. Hence, this workaround.
+		 */
+		setTimeout(() => {
+			setFragment({
+				...fragment,
+				data: updatedState(fragment.data, {
+					type: 'update',
+					component: {
+						...parentComponent,
+						items
+					}
+				})
+			}, false);
+		});
 		// Disabling since we want to call this only once to initialize children `formItemName` attribute in code context
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
