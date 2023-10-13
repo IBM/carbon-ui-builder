@@ -112,6 +112,16 @@ const showComponentSettingsUI = (selectedComponent: any, setComponent: any, frag
 											...selectedComponent,
 											[input]: event.currentTarget.value
 										})} />;
+
+								case 'boolean':
+									return <Checkbox
+										labelText={capitalize(input)}
+										id={`${input}-checked`}
+										checked={selectedComponent[input]}
+										onChange={(_: any, { checked }: any) => setComponent({
+											...selectedComponent,
+											[input]: checked
+										})} />;
 							}
 						})
 					}
