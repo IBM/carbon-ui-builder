@@ -1,9 +1,11 @@
 import React from 'react';
-import { Tooltip } from 'carbon-components-react';
-import { CssClasses } from '../types';
+import { Tooltip } from '@carbon/react';
+import { CssClasses, SendSignal } from '../types';
 import { stringToCssClassName } from '../utils';
+import { commonSlots, slotsDisabled } from '../common-slots';
 
 export interface TooltipState {
+	id: string;
 	type: string;
 	direction?: string;
 	alignment?: string;
@@ -16,10 +18,23 @@ export interface TooltipState {
 	style?: any;
 }
 
-export const UITooltip = ({ state }: {
+export const type = 'tooltip';
+export const slots = {
+	...commonSlots,
+	...slotsDisabled,
+	alignment: 'string',
+	description: 'string',
+	direction: 'string',
+	triggerText: 'string'
+};
+
+export const signals = ['click'];
+
+export const UITooltip = ({ state, sendSignal }: {
 	state: TooltipState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: SendSignal;
 }) => {
 	if (state.type !== 'tooltip') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -34,7 +49,10 @@ export const UITooltip = ({ state }: {
 		}
 		cssClasses += stringToCssClassName(state.codeContext.name);
 	}
+
 	return <Tooltip
+		id={state.id}
+		onClick={() => sendSignal(state.id, 'click')}
 		description={state.description}
 		direction={state.direction ? state.direction : 'top'}
 		align={state.alignment ? state.alignment : 'center'}

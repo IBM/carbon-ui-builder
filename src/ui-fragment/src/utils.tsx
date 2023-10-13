@@ -212,7 +212,7 @@ export const renderComponents = (
 			return <UIAccordion key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'tooltip':
-			return <UITooltip key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UITooltip key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'accordion-item':
 			return <UIAccordionItem key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;

@@ -3,7 +3,7 @@ import {
 	Dropdown,
 	Tooltip,
 	TextInput
-} from 'carbon-components-react';
+} from '@carbon/react';
 import { css } from 'emotion';
 import { AComponent, ComponentInfo } from './a-component';
 
@@ -124,35 +124,70 @@ export const componentInfo: ComponentInfo = {
 	image,
 	codeExport: {
 		angular: {
-			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Description = "${json.description}";
+			latest: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Description = "${json.description}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}TriggerText = "${json.triggerText}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Direction = "${json.direction}";`,
-			outputs: () => '',
-			imports: ['TooltipModule'],
-			code: ({ json }) => `<div class="bx--tooltip__label">
-				{{${nameStringToVariableString(json.codeContext?.name)}TriggerText}}
-				<span
-					${angularClassNamesFromComponentObj(json)}
-					[ibmTooltip]="${nameStringToVariableString(json.codeContext?.name)}Description"
-					trigger="click"
-					${json.direction ? `[direction]='${nameStringToVariableString(json.codeContext?.name)}Direction` : ''}>
-					<div role="button">
-						<svg ibmIcon="information--filled" size="16"></svg>
-					</div>
-				</span>
-			</div>`
+				outputs: () => '',
+				imports: ['TooltipModule'],
+				code: ({ json }) => `<div class="bx--tooltip__label">
+					{{${nameStringToVariableString(json.codeContext?.name)}TriggerText}}
+					<span
+						${angularClassNamesFromComponentObj(json)}
+						[ibmTooltip]="${nameStringToVariableString(json.codeContext?.name)}Description"
+						trigger="click"
+						${json.direction ? `[direction]='${nameStringToVariableString(json.codeContext?.name)}Direction` : ''}>
+						<div role="button">
+							<svg ibmIcon="information--filled" size="16"></svg>
+						</div>
+					</span>
+				</div>`
+			},
+			v10: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Description = "${json.description}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}TriggerText = "${json.triggerText}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Direction = "${json.direction}";`,
+				outputs: () => '',
+				imports: ['TooltipModule'],
+				code: ({ json }) => `<div class="bx--tooltip__label">
+					{{${nameStringToVariableString(json.codeContext?.name)}TriggerText}}
+					<span
+						${angularClassNamesFromComponentObj(json)}
+						[ibmTooltip]="${nameStringToVariableString(json.codeContext?.name)}Description"
+						trigger="click"
+						${json.direction ? `[direction]='${nameStringToVariableString(json.codeContext?.name)}Direction` : ''}>
+						<div role="button">
+							<svg ibmIcon="information--filled" size="16"></svg>
+						</div>
+					</span>
+				</div>`
+			}
 		},
 		react: {
-			imports: ['Tooltip'],
-			code: ({ json }) => `<Tooltip
-					${reactClassNamesFromComponentObj(json)}
-					description="${json.description}"
-					className="tooltip-trigger"
-					triggerText="${json.triggerText}"
-					${json.alignment ? `align="${json.alignment}"` : ''}
-					${json.direction ? `direction="${json.direction}"` : ''}>
-						${json.description}
-				</Tooltip>`
+			latest: {
+				imports: ['Tooltip'],
+				code: ({ json }) => `<Tooltip
+						${reactClassNamesFromComponentObj(json)}
+						description="${json.description}"
+						className="tooltip-trigger"
+						triggerText="${json.triggerText}"
+						${json.alignment ? `align="${json.alignment}"` : ''}
+						${json.direction ? `direction="${json.direction}"` : ''}>
+							${json.description}
+					</Tooltip>`
+			},
+			v10: {
+				imports: ['Tooltip'],
+				code: ({ json }) => `<Tooltip
+						${reactClassNamesFromComponentObj(json)}
+						description="${json.description}"
+						className="tooltip-trigger"
+						triggerText="${json.triggerText}"
+						${json.alignment ? `align="${json.alignment}"` : ''}
+						${json.direction ? `direction="${json.direction}"` : ''}>
+							${json.description}
+					</Tooltip>`
+			}
 		}
 	}
 };
