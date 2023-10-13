@@ -1,14 +1,21 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, {
+	useContext,
+	useEffect,
+	useRef,
+	useState
+} from 'react';
 import { SkeletonPlaceholder } from '@carbon/react';
 import { Add, DropPhoto } from '@carbon/react/icons';
 import './fragment-preview.scss';
 import { css, cx } from 'emotion';
-import { allComponents, ComponentInfoRenderProps } from '../sdk/src/fragment-components';
+import parse, { attributesToProps, domToReact } from 'html-react-parser';
+import { AComponent, allComponents, ComponentInfoRenderProps } from '../sdk/src/fragment-components';
 import { getFragmentsFromLocalStorage } from '../utils/fragment-tools';
 import { GlobalStateContext } from '../context';
-import { getAllFragmentStyleClasses } from '../ui-fragment/src/utils';
-import { getDropIndex, stateWithoutComponent, updateComponentCounter, updatedState } from '../sdk/src/tools';
+import { getAllFragmentStyleClasses, styleObjectToString } from '../ui-fragment/src/utils';
+import { getDropIndex, getUsedCollectionsStyleUrls, stateWithoutComponent, updateComponentCounter, updatedState } from '../sdk/src/tools';
 import { throttle } from 'lodash';
+import axios from 'axios';
 
 const canvas = css`
 	border: 2px solid #d8d8d8;
@@ -68,11 +75,54 @@ const allowDrop = (event: any) => {
 	event.preventDefault();
 };
 
+const fetchCSS = async (urls: string[]) => {
+	try {
+		const responses = await Promise.all(
+			urls.map((url) => axios.get(url, { responseType: 'text' }))
+		);
+
+		const cssContent = responses.map((response) => response.data + '\n').join();
+
+		return css`
+			${cssContent}
+		`;
+	} catch (error) {
+		console.error(error);
+	}
+};
+
 export const Fragment = ({ fragment, setFragment, outline }: any) => {
 	const globalState = useContext(GlobalStateContext);
 	const [showDragOverIndicator, setShowDragOverIndicator] = useState(false);
+	const [customComponentsStyles, setCustomComponentsStyles] = useState(css``);
+	const [customComponentsStylesUrls, _setCustomComponentsStylesUrls] = useState<string[]>([]);
 	const containerRef = useRef(null as any);
 	const holderRef = useRef(null as any);
+
+	const setCustomComponentsStylesUrls = (ccsUrls: string[]) => {
+		// comparing by reference first avoids stringifying in most situations when update isn't needed
+		if (
+			ccsUrls !== customComponentsStylesUrls
+			&& JSON.stringify(ccsUrls) !== JSON.stringify(customComponentsStylesUrls)
+		) {
+			_setCustomComponentsStylesUrls(ccsUrls);
+		}
+	};
+
+	// fetch the css from requested urls
+	useEffect(() => {
+		if (!customComponentsStylesUrls?.length) {
+			return;
+		}
+		fetchCSS(customComponentsStylesUrls).then((value) => setCustomComponentsStyles(css`${value || ''}`));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [customComponentsStylesUrls]);
+
+	// update requested urls
+	useEffect(() => {
+		setCustomComponentsStylesUrls(getUsedCollectionsStyleUrls(globalState.customComponentsCollections, fragment.data));
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [fragment.data, globalState.customComponentsCollections]);
 
 	const resize = throttle((e: any) => {
 		const rect = containerRef.current.getBoundingClientRect();
@@ -196,6 +246,63 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 			}
 		}
 
+		// by the time we're here it wasn't any of the built-in components
+		// ///////////////////////////////////////////////
+		//        RENDERING CUSTOM COMPONENTS           //
+		// ///////////////////////////////////////////////
+		if (componentObj.componentsCollection) {
+			// our component belongs to one of the custom components collections
+			const customComponentsCollection =
+				globalState.customComponentsCollections?.find((ccc: any) => ccc.name === componentObj.componentsCollection);
+			if (customComponentsCollection) {
+				const customComponent = customComponentsCollection.components.find((cc: any) => cc.type === componentObj.type);
+
+				if (customComponent?.htmlPreview) {
+					// replace the inputs placeholders with values before rendering
+					let htmlPreview = customComponent.htmlPreview;
+					Object.keys(customComponent.inputs).forEach((input: string) => {
+						htmlPreview = htmlPreview.split(`{{${input}}}`).join(componentObj[input]);
+					});
+
+					const options = {
+						replace: (domNode: any) => {
+							// check if the domNode is the root element
+							if (domNode.parent === null) {
+								const props = attributesToProps(domNode.attribs);
+
+								// add layout and user styles classes
+								props.className = `${props.className || ''} ${cx(
+									componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+									// getting very div div specific to override artificial specificity
+									// brought by importing external css into an emotion style.
+									// One div matches specificity and is ok for new edits, but onload
+									// external css takes precedence, hence 2
+									css`div div & { ${styleObjectToString(componentObj.style)} }`
+								)}`;
+
+								return React.createElement(domNode.name, props, domToReact(domNode.children));
+							}
+
+							return domNode;
+						}
+					};
+
+					const html = parse(htmlPreview, options);
+
+					return <AComponent
+						componentObj={componentObj}
+						select={() => select(componentObj)}
+						remove={() => remove(componentObj)}
+						selected={fragment.selectedComponentId === componentObj.id}
+						outline={outline}
+						fragment={fragment}
+						setFragment={setFragment}>
+						{html}
+					</AComponent>;
+				}
+			}
+		}
+
 		if (componentObj.items) {
 			return componentObj.items.map((item: any) => renderComponents(item, outline));
 		}
@@ -213,7 +320,7 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 			ref={containerRef}
 			className={cx(
 				canvas,
-				styles,
+				customComponentsStyles,
 				css`width: ${fragment.width || '800'}px; height: ${fragment.height || '600'}px`
 			)}
 			style={{
@@ -231,7 +338,7 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 			}}
 			onDragOver={allowDrop}
 			onDrop={drop}>
-			<div ref={holderRef} className={`${fragment.cssClasses ? fragment.cssClasses.map((cc: any) => cc.id).join(' ') : ''}`}>
+			<div ref={holderRef} className={cx(styles, `${fragment.cssClasses ? fragment.cssClasses.map((cc: any) => cc.id).join(' ') : ''}`)}>
 				{
 					!fragment.data?.items?.length && <div className={centerStyle} onClick={addGrid}>
 						<div>
