@@ -13,7 +13,13 @@ import { AComponent, allComponents, ComponentInfoRenderProps } from '../sdk/src/
 import { getFragmentsFromLocalStorage } from '../utils/fragment-tools';
 import { GlobalStateContext } from '../context';
 import { getAllFragmentStyleClasses, styleObjectToString } from '../ui-fragment/src/utils';
-import { getDropIndex, getUsedCollectionsStyleUrls, stateWithoutComponent, updateComponentCounter, updatedState } from '../sdk/src/tools';
+import {
+	getDropIndex,
+	getUsedCollectionsStyleUrls,
+	stateWithoutComponent,
+	updateComponentCounter,
+	updatedState
+} from '../sdk/src/tools';
 import { throttle } from 'lodash';
 import axios from 'axios';
 
