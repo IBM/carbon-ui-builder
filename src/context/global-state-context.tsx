@@ -6,7 +6,10 @@ import React, {
 } from 'react';
 import assign from 'lodash/assign';
 import { getFragmentHelpers } from './fragments-context-helper';
-import { getFragmentsFromLocalStorage } from '../utils/fragment-tools';
+import {
+	getCustomComponentsCollectionsFromLocalStorage,
+	getFragmentsFromLocalStorage
+} from '../utils/fragment-tools';
 import { expandJsonToState } from '../ui-fragment/src/utils';
 import { getFragmentJsonExport as getFragmentJsonExport_ } from '../sdk/src/tools';
 import { CURRENT_MODEL_VERSION, updateModelInPlace } from '../utils/model-converter';
@@ -44,6 +47,7 @@ const GlobalStateContextProvider = ({ children }: any) => {
 	const [actionHistoryIndex, setActionHistoryIndex] = useState(-1);
 
 	const [styleClasses, _setStyleClasses] = useState(JSON.parse(localStorage.getItem('globalStyleClasses') as string || '[]') as any[]);
+	const [customComponentsCollections, _setCustomComponentsCollections] = useState<any[]>(getCustomComponentsCollectionsFromLocalStorage());
 	const [settings, _setSettings] = useState(JSON.parse(localStorage.getItem('globalSettings') as string || '{}') as any);
 
 	const [githubToken, _setGithubToken] = useState(localStorage.getItem('githubToken') as string || '');
@@ -71,6 +75,12 @@ const GlobalStateContextProvider = ({ children }: any) => {
 				styleClasses: JSON.parse(csString)
 			});
 		}
+	};
+
+	const setCustomComponentsCollections = (ccc: any) => {
+		const cccString = JSON.stringify(ccc);
+		localStorage.setItem('customComponentsCollections', cccString);
+		_setCustomComponentsCollections(ccc);
 	};
 
 	const setGithubToken = (token: string) => {
@@ -192,6 +202,10 @@ const GlobalStateContextProvider = ({ children }: any) => {
 			// STYLE CLASSES
 			styleClasses,
 			setStyleClasses,
+
+			// CUSTOM COMPONENTS COLLECTIONS
+			customComponentsCollections,
+			setCustomComponentsCollections,
 
 			// SETTINGS
 			settings,

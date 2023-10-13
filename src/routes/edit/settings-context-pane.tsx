@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import {
 	Button,
 	Checkbox,
-	DefinitionTooltip
+	DefinitionTooltip,
+	TextInput
 } from '@carbon/react';
 import { ChevronDown,ChevronUp } from '@carbon/react/icons';
 import { css, cx } from 'emotion';
@@ -54,7 +55,7 @@ const tooltipStyle = css`
 }
 `;
 
-const showComponentSettingsUI = (selectedComponent: any, setComponent: any, fragment: any, setFragment: any) => {
+const showComponentSettingsUI = (selectedComponent: any, setComponent: any, fragment: any, setFragment: any, customComponentsCollections: any[]) => {
 	for (const component of Object.values(allComponents)) {
 		// Find the UI for editing style for our component
 		if (selectedComponent.type === component.componentInfo.type) {
@@ -63,6 +64,32 @@ const showComponentSettingsUI = (selectedComponent: any, setComponent: any, frag
 				setComponent={setComponent}
 				fragment={fragment}
 				setFragment={setFragment} />;
+		}
+		// Render the UI based on input types
+		if (selectedComponent.componentsCollection) {
+			// it's a custom component from a collection
+			const customComponentsCollection = customComponentsCollections?.find((ccc: any) => ccc.name === selectedComponent.componentsCollection);
+			if (customComponentsCollection) {
+				const customComponent = customComponentsCollection.components.find((cc: any) => cc.type === selectedComponent.type);
+
+				return <>
+					{
+						Object.entries(customComponent.inputs).map(([input, type]) => {
+							switch (type) {
+								default:
+								case 'string':
+									return <TextInput
+										value={selectedComponent[input]}
+										labelText={input}
+										onChange={(event: any) => setComponent({
+											...selectedComponent,
+											[input]: event.currentTarget.value
+										})} />;
+							}
+						})
+					}
+				</>;
+			}
 		}
 	}
 };
@@ -75,7 +102,12 @@ const throttledSetFragment = throttle((fragment: any) => proxySetFragment(fragme
 
 export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 	const selectedComponent = getSelectedComponent(fragment);
-	const { settings, setSettings, styleClasses } = useContext(GlobalStateContext);
+	const {
+		settings,
+		setSettings,
+		styleClasses,
+		customComponentsCollections
+	} = useContext(GlobalStateContext);
 
 	const updateContextPaneSettings = (s: any) => {
 		setSettings({
@@ -128,7 +160,7 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 				<div className={accordionContentStyle}>
 				{
 					selectedComponent && <>
-						{showComponentSettingsUI(selectedComponent, setComponent, fragment, setFragment)}
+						{showComponentSettingsUI(selectedComponent, setComponent, fragment, setFragment, customComponentsCollections)}
 					</>
 				}
 				{

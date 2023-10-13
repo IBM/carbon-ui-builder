@@ -10,7 +10,8 @@ import {
 	Header as ShellHeader,
 	SkipToContent,
 	Switcher,
-	SwitcherItem
+	SwitcherItem,
+	Tooltip
 } from '@carbon/react';
 import {
 	ChatLaunch,
@@ -24,7 +25,8 @@ import {
 	Keyboard,
 	LogoGithub,
 	UserAvatar,
-	Help
+	Help,
+	Warning
 } from '@carbon/react/icons';
 import { css } from 'emotion';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
@@ -254,6 +256,16 @@ export const Header = ({
 							Log in with GitHub
 						</SwitcherItem>
 					}
+					<SwitcherItem
+					aria-label='custom components'
+					onClick={() => modalContext.showCustomComponentsModal()}>
+						Custom components
+						<Tooltip align='bottom' label='Experimental functionality.'>
+							<button type='button' className={css`border: none; background: inherit;`}>
+								<Warning />
+							</button>
+						</Tooltip>
+					</SwitcherItem>
 				</Switcher>
 			</HeaderPanel>
 		</ShellHeader>

@@ -40,7 +40,13 @@ export const ElementsPane = ({ isActive }: any) => {
 	const mouseYStart = useRef(0);
 	const heightStart = useRef(0);
 	const [fragment, setFragment] = useFragment();
-	const { fragments, settings, setSettings, styleClasses } = useContext(GlobalStateContext);
+	const {
+		fragments,
+		settings,
+		setSettings,
+		styleClasses,
+		customComponentsCollections
+	} = useContext(GlobalStateContext);
 
 	const isLayoutWidgetOpen = settings.layoutWidget?.isAccordionOpen === undefined
 		? true // open by default
@@ -133,6 +139,27 @@ export const ElementsPane = ({ isActive }: any) => {
 									</ElementTile>)
 						}
 					</div>
+					{
+						customComponentsCollections && customComponentsCollections.length > 0
+						&& customComponentsCollections.map((customComponentsCollection: any) => <>
+							<h4>{customComponentsCollection.name}</h4>
+							<div className={elementTileListStyleMicroLayouts}>
+								{
+									customComponentsCollection.components?.map((component: any) =>
+										<ElementTile
+										componentObj={{
+											...component.defaultInputs,
+											type: component.type,
+											componentsCollection: customComponentsCollection.name
+										}}
+										key={component.type}>
+											Preview
+											<span className='title'>{component.type}</span>
+										</ElementTile>)
+								}
+							</div>
+						</>)
+					}
 					{
 						visibleMicroLayouts && visibleMicroLayouts.length > 0 && <>
 							<h4>Micro layouts</h4>

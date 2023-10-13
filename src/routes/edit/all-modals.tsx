@@ -7,6 +7,7 @@ import { ExportModal } from './share-options/exports/export-modal';
 import { FragmentPreviewModal } from './fragment-preview-modal';
 import { LoginGithubModal } from '../../components/login-github-modal';
 import { LogoutGithubModal } from '../../components/logout-github-modal';
+import { CustomComponentsModal } from '../../components/custom-components-modal';
 
 // eslint-disable-next-line react/prop-types
 export const AllModals = () => {
@@ -37,5 +38,6 @@ export const AllModals = () => {
 		}
 		<LoginGithubModal />
 		<LogoutGithubModal />
+		<CustomComponentsModal />
 	</>;
 };

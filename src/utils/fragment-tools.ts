@@ -18,6 +18,15 @@ export const getFragmentsFromLocalStorage = () => {
 	}
 };
 
+export const getCustomComponentsCollectionsFromLocalStorage = () => {
+	try {
+		return JSON.parse(localStorage.getItem('customComponentsCollections') as string);
+	} catch (error) {
+		console.warn('Error loading custom components collections:', error);
+		return [];
+	}
+};
+
 export const getGlobalStyleClassesFromLocalStorage = () => JSON.parse(localStorage.getItem('globalStyleClasses') as string || '[]');
 
 export const getFragmentTemplates = (fragments: any[]) => (

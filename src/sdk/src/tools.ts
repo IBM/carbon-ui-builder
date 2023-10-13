@@ -100,6 +100,32 @@ export const getParentComponent = (state: any, child: any) => {
 	return null;
 };
 
+const getUsedCollectionsNamesHelper = (componentObj: any, names: string[] = []) => {
+	if (componentObj.componentsCollection) {
+		names.push(componentObj.componentsCollection);
+	}
+
+	if (componentObj.items) {
+		for (const co of componentObj.items) {
+			names.concat(getUsedCollectionsNamesHelper(co, names));
+		}
+	}
+
+	return names;
+};
+
+export const getUsedCollectionsNames = (componentObj: any) => {
+	return [...new Set(getUsedCollectionsNamesHelper(componentObj))];
+};
+
+export const getUsedCollectionsStyleUrls = (collections: any[], componentObj: any) => {
+	const usedCollectionsNames = getUsedCollectionsNames(componentObj);
+
+	return collections
+		?.filter((collection: any) => usedCollectionsNames.includes(collection.name))
+		.flatMap((collection: any) => collection.styleUrls);
+};
+
 const updatedList = (list: any[], item: any, dropInIndex?: number) => {
 	if (dropInIndex === undefined) {
 		return [...list, item];
