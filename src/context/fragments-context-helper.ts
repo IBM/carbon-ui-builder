@@ -2,6 +2,10 @@ import assign from 'lodash/assign';
 
 export const getFragmentHelpers = ({ fragments, setFragments }: any) => {
 	const addFragment = (fragment: any) => {
+		if (Array.isArray(fragment)) {
+			setFragments([...fragments, ...fragment ]);
+			return;
+		}
 		setFragments([...fragments, { ...fragment }]);
 	};
 
