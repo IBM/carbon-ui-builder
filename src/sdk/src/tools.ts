@@ -122,7 +122,7 @@ export const getUsedCollectionsStyleUrls = (collections: any[], componentObj: an
 	const usedCollectionsNames = getUsedCollectionsNames(componentObj);
 
 	return collections
-		.filter((collection: any) => usedCollectionsNames.includes(collection.name))
+		?.filter((collection: any) => usedCollectionsNames.includes(collection.name))
 		.flatMap((collection: any) => collection.styleUrls);
 };
 
