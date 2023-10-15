@@ -38,7 +38,9 @@ const editHeader = css`
 			flex-flow: column;
 		}
 		.title-subheading {
-			display: inline-flex;
+			display: flex;
+			align-items: center;
+            
 			.cds--inline-loading {
 				width: auto;
 				position: relative;
@@ -59,11 +61,20 @@ const editHeader = css`
 			line-height: 2rem;
 
 			float: left;
+			display: flex;
+    		align-items: center; 
+			transition: max-height 0.3s ease; 
 		}
+		.fragment-title input {
+			max-height: 30px; /* Set the initial max-height of the input */
+			transition: max-height 0.3s ease;
+		}
+		
 		.fragment-edit {
 			margin-top: 6px;
 			cursor: pointer;
 		}
+
 	}
 
 	// This is the viewport width that causes the loading and
