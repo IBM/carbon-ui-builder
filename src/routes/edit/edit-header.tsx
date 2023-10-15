@@ -66,7 +66,7 @@ const editHeader = css`
 			transition: max-height 0.3s ease; 
 		}
 		.fragment-title input {
-			max-height: 30px; /* Set the initial max-height of the input */
+			max-height: 30px; 
 			transition: max-height 0.3s ease;
 		}
 		
