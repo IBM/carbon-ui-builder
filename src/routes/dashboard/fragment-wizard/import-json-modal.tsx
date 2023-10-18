@@ -66,8 +66,13 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 
 		try {
 			if (js) {
-				setFragmentJson(JSON.parse(js));
-				if (fragmentJson.version !== CURRENT_MODEL_VERSION) {
+				const parsedJSON = JSON.parse(js);
+				setFragmentJson(parsedJSON);
+
+				// Check if fragment with microlayout is imported
+				if (Array.isArray(parsedJSON) && parsedJSON.some((fragment: any) => fragment.version !== CURRENT_MODEL_VERSION)) {
+					setModelMismatchNotification(true);
+				} else if (!Array.isArray(parsedJSON) && parsedJSON.version !== CURRENT_MODEL_VERSION) {
 					setModelMismatchNotification(true);
 				} else {
 					setModelMismatchNotification(false);
@@ -204,18 +209,18 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 		[files]
 	);
 
-	const generateFragment = () => {
-		const generatedFragment = generateNewFragment(fragmentJson, styleClasses, setStyleClasses);
+	const generateFragment = (fragmentList: any[]) => {
+		const generatedFragmentList = fragmentList.map((fragment) => generateNewFragment(fragment, styleClasses, setStyleClasses));
 
 		// close all notifications
 		dispatchNotification({
 			type: NotificationActionType.CLOSE_ALL_NOTIFICATIONS
 		});
 
-		addFragment(generatedFragment);
+		addFragment(generatedFragmentList);
 
-		// go to new fragment
-		navigate(`/edit/${generatedFragment.id}`);
+		// go to new fragment, fragment[0] consumes preceding fragments in list (microlayout)
+		navigate(`/edit/${generatedFragmentList[0].id}`);
 	};
 
 	return (
@@ -224,11 +229,14 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 			shouldSubmitOnEnter={false}
 			selectorPrimaryFocus='.cds--tile--selectable'
 			onRequestSubmit={() => {
-				// Updates model in place before entering edit mode
-				updateModelInPlace(fragmentJson);
-				setFragmentJson(fragmentJson);
+				// Check if input is an array to see if JSON consists of a micro layout
+				const fragmentList = Array.isArray(fragmentJson) ? fragmentJson : [fragmentJson];
 
-				generateFragment();
+				// Updates models in place before entering edit mode
+				fragmentList.forEach(fragment => updateModelInPlace(fragment));
+				setFragmentJson(fragmentList);
+
+				generateFragment(fragmentList);
 				props.setLastVisitedModal(FragmentWizardModals.IMPORT_JSON_MODAL);
 				props.setDisplayedModal(FragmentWizardModals.CREATE_FRAGMENT_MODAL);
 				props.setShouldDisplay(false);

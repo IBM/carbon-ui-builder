@@ -3,12 +3,13 @@ import {
 	Button,
 	Checkbox,
 	DefinitionTooltip,
+	Dropdown,
 	TextInput
 } from '@carbon/react';
 import { ChevronDown,ChevronUp } from '@carbon/react/icons';
 import { css, cx } from 'emotion';
 import Editor from '@monaco-editor/react';
-import { throttle } from 'lodash';
+import { capitalize, throttle } from 'lodash';
 
 import { ComponentCssClassSelector } from '../../sdk/src/css-class-selector';
 import { allComponents } from '../../sdk/src/fragment-components';
@@ -75,12 +76,38 @@ const showComponentSettingsUI = (selectedComponent: any, setComponent: any, frag
 				return <>
 					{
 						Object.entries(customComponent.inputs).map(([input, type]) => {
+							// complex types
+							if (typeof type === 'object') {
+								const t: any = type; // helps avoid casting type to `any` every time
+
+								switch (t.type) {
+									default:
+										return <>Unsupported type</>;
+
+									case 'multi-select':
+										return <Dropdown
+											id={input}
+											label={capitalize(input)}
+											titleText={capitalize(input)}
+											items={t.items || []}
+											selectedItem={t.items?.find((item: any) => item.id === selectedComponent[input])}
+											itemToString={(item: any) => (item ? item.text : '')}
+											onChange={(event: any) => setComponent({
+												...selectedComponent,
+												[input]: event.selectedItem.id
+											})} />;
+								}
+							}
+
+							// simple types
 							switch (type) {
 								default:
+									return <>Unsupported type</>;
+
 								case 'string':
 									return <TextInput
 										value={selectedComponent[input]}
-										labelText={input}
+										labelText={capitalize(input)}
 										onChange={(event: any) => setComponent({
 											...selectedComponent,
 											[input]: event.currentTarget.value

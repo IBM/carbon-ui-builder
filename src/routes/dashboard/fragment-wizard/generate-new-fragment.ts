@@ -21,7 +21,9 @@ export const generateNewFragment = (fragment: any, styleClasses: any[], setStyle
 	const fragmentName = 'New fragment';
 
 	if (fragment.data) {
-		addOrReplaceClasses(fragment.allCssClasses);
+		if (fragment.allCssClasses) {
+			addOrReplaceClasses(fragment.allCssClasses);
+		}
 
 		return {
 			...fragment,
