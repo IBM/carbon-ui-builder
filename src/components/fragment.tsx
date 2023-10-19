@@ -267,7 +267,11 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 				if (customComponent?.htmlPreview) {
 					// replace the inputs placeholders with values before rendering
 					let htmlPreview = customComponent.htmlPreview;
-					htmlPreview = (Handlebars.compile(customComponent.htmlPreview))(componentObj);
+					try {
+						htmlPreview = (Handlebars.compile(customComponent.htmlPreview))(componentObj);
+					} catch (_error) {
+						console.error(_error);
+					}
 
 					const options = {
 						replace: (domNode: any) => {
