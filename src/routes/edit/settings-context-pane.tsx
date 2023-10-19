@@ -4,6 +4,7 @@ import {
 	Checkbox,
 	DefinitionTooltip,
 	Dropdown,
+	NumberInput,
 	TextInput
 } from '@carbon/react';
 import { ChevronDown,ChevronUp } from '@carbon/react/icons';
@@ -112,6 +113,22 @@ const showComponentSettingsUI = (selectedComponent: any, setComponent: any, frag
 											...selectedComponent,
 											[input]: event.currentTarget.value
 										})} />;
+
+								case 'number':
+									return <NumberInput
+										id={input}
+										value={selectedComponent[input] || 0}
+										label={capitalize(input)}
+										step={1}
+										min={-99999}
+										max={99999}
+										onChange={(_: any, value: any) => {
+											setComponent({
+												...selectedComponent,
+												[input]: value.value
+											});
+										}}
+									/>;
 
 								case 'boolean':
 									return <Checkbox
