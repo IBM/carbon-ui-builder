@@ -6,9 +6,11 @@ import React, {
 } from 'react';
 import { SkeletonPlaceholder } from '@carbon/react';
 import { Add, DropPhoto } from '@carbon/react/icons';
-import './fragment-preview.scss';
 import { css, cx } from 'emotion';
 import parse, { attributesToProps, domToReact } from 'html-react-parser';
+import { throttle } from 'lodash';
+import axios from 'axios';
+import Handlebars from 'handlebars';
 import { AComponent, allComponents, ComponentInfoRenderProps } from '../sdk/src/fragment-components';
 import { getFragmentsFromLocalStorage } from '../utils/fragment-tools';
 import { GlobalStateContext } from '../context';
@@ -20,8 +22,7 @@ import {
 	updateComponentCounter,
 	updatedState
 } from '../sdk/src/tools';
-import { throttle } from 'lodash';
-import axios from 'axios';
+import './fragment-preview.scss';
 
 const canvas = css`
 	border: 2px solid #d8d8d8;
@@ -266,9 +267,7 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 				if (customComponent?.htmlPreview) {
 					// replace the inputs placeholders with values before rendering
 					let htmlPreview = customComponent.htmlPreview;
-					Object.keys(customComponent.inputs).forEach((input: string) => {
-						htmlPreview = htmlPreview.split(`{{${input}}}`).join(componentObj[input]);
-					});
+					htmlPreview = (Handlebars.compile(customComponent.htmlPreview))(componentObj);
 
 					const options = {
 						replace: (domNode: any) => {
