@@ -10,9 +10,11 @@ import {
 	TabList,
 	TabPanel,
 	TabPanels,
+	TreeNode,
+	TreeView,
 	InlineNotification
 } from '@carbon/react';
-import { Copy, Document } from '@carbon/react/icons';
+import { Copy } from '@carbon/react/icons';
 import { css } from 'emotion';
 import Editor, { useMonaco } from '@monaco-editor/react';
 
@@ -33,6 +35,10 @@ const exportCodeModalStyle = css`
 	.cds--tab-content {
 		height: calc(100% - 40px);
 		overflow: hidden;
+	}
+
+	.cds--tree {
+		overflow-x: auto;
 	}
 `;
 
@@ -66,21 +72,6 @@ const fileNamesContainerStyle = css`
 	height: ${contentHeight};
 `;
 
-const fileNameStyle = css`
-	display: block;
-	width: 100%;
-
-	&.cds--btn--ghost.cds--btn--sm {
-		padding-left: 2rem;
-	}
-
-	svg.cds--btn__icon {
-		position: absolute;
-		top: 7px;
-		left: 0;
-	}
-`;
-
 const notificationStyle = css`
 	margin-top: 1rem;
 `;
@@ -97,34 +88,56 @@ const versionDropdownStyle = css`
 	right: 1rem;
 `;
 
-const FileNames = ({ code, setSelectedFilename }: any) => <div className={fileNamesContainerStyle}>
-	{
-		Object.keys(code).map((fileName: string) => (
-			<Button
-				key={fileName}
-				className={fileNameStyle}
-				kind='ghost'
-				renderIcon={() => <Document size={16} />}
-				size='sm'
-				onClick={() => setSelectedFilename(fileName)}>
-				{fileName}
-			</Button>
-		))
+const renderCodeTree = (nodes: any, path = '') => {
+	if (!nodes) {
+		return;
 	}
+
+	return nodes.map(({
+		items,
+		icon,
+		isExpanded,
+		name,
+		code,
+		...nodeProps
+	}: any) => {
+		const fullPath = `${path}${path ? '/' : ''}${name}`;
+
+		return <TreeNode
+			key={fullPath}
+			id={fullPath}
+			renderIcon={icon}
+			isExpanded={isExpanded}
+			value={code}
+			label={name}
+			{...nodeProps}>
+			{renderCodeTree(items, fullPath)}
+		</TreeNode>;
+	});
+};
+
+const FileNames = ({ code, setSelectedFileItem }: any) => <div className={fileNamesContainerStyle}>
+	<TreeView label='Code' onSelect={(_event: any, selectedItem: any) => {
+		if (selectedItem.value !== undefined && selectedItem.value !== null) {
+			setSelectedFileItem(selectedItem);
+		}
+	}}>
+		{renderCodeTree(code)}
+	</TreeView>
 </div>;
 
 const copyToClipboard = (codeString: string) => {
 	navigator.clipboard.writeText(codeString);
 };
 
-const CodeView = ({ code, selectedFilename }: any) => {
-	const codeString = selectedFilename !== 'package.json'
-		? code[selectedFilename]
-		: JSON.stringify(code[selectedFilename], null, '\t');
+const CodeView = ({ selectedFileItem }: any) => {
+	const codeString = selectedFileItem.id !== 'package.json' && selectedFileItem.name !== 'package.json'
+		? selectedFileItem.value || selectedFileItem.code
+		: JSON.stringify(selectedFileItem.value || selectedFileItem.code, null, '\t');
 
 	return <div className={codeSnippetWrapperStyle}>
 		<p>
-			{selectedFilename}
+			{selectedFileItem.id || selectedFileItem.name}
 			<Button
 				kind='ghost'
 				size='sm'
@@ -135,8 +148,8 @@ const CodeView = ({ code, selectedFilename }: any) => {
 		</p>
 		<Editor
 			height='calc(100% - 32px)'
-			language={filenameToLanguage(selectedFilename)}
-			value={codeString}
+			language={filenameToLanguage(selectedFileItem.id || selectedFileItem.name)}
+			value={codeString || ''}
 			options={{ readOnly: true }}
 		/>
 	</div>;
@@ -144,16 +157,51 @@ const CodeView = ({ code, selectedFilename }: any) => {
 
 const generateSandboxUrl = (parameters: any) => (`https://codesandbox.io/api/v1/sandboxes/define?parameters=${parameters}`);
 
+const findTreeItemByPath = (node: any, path: string, currentPath = ''): any => {
+	if (Array.isArray(node)) {
+		for (const item of node) {
+			// Recursively call the function on each item
+			const result = findTreeItemByPath(item, path);
+			// If the result is not null, return it
+			if (result) {
+				return result;
+			}
+		}
+		return null;
+	}
+
+	const fullPath = `${currentPath}${currentPath ? '/' : ''}${node.name}`;
+
+	if (fullPath === path) {
+		return node;
+	}
+
+	if (node.items) {
+		for (const item of node.items) {
+			const result = findTreeItemByPath(item, path, fullPath);
+			if (result) {
+				return result;
+			}
+		}
+	}
+
+	return null;
+};
+
 export const ExportModal = () => {
 	const { fragments, settings, setSettings, styleClasses } = useContext(GlobalStateContext);
 	const { fragmentExportModal, hideFragmentExportModal } = useContext(ModalContext);
-	const [selectedAngularFilename, setSelectedAngularFilename] = useState('src/app/app.component.ts' as string);
-	const [selectedReactFilename, setSelectedReactFilename] = useState('src/component.js' as string);
+	const [selectedAngularFileItem, setSelectedAngularFileItem] = useState({
+		id: 'src/app/app.component.ts'
+	} as any);
+	const [selectedReactFileItem, setSelectedReactFileItem] = useState({
+		id: 'src/component.js'
+	} as any);
 	const [shouldStripUnnecessaryProps, setShouldStripUnnecessaryProps] = useState(true);
 	const [shouldExportForPreviewOnly, setShouldExportForPreviewOnly] = useState(false);
 	const [version, setVersion] = useState('v11');
-	const [reactCode, setReactCode] = useState({});
-	const [angularCode, setAngularCode] = useState({});
+	const [reactCode, setReactCode] = useState([] as any[]);
+	const [angularCode, setAngularCode] = useState([] as any[]);
 
 	const monaco = useMonaco();
 
@@ -163,6 +211,24 @@ export const ExportModal = () => {
 	];
 
 	useEffect(() => {
+		if (!fragmentExportModal.isVisible) {
+			return;
+		}
+		let fileItem = findTreeItemByPath(angularCode, selectedAngularFileItem?.id || 'src/app/app.component.ts');
+		if (!fileItem) {
+			// this happens in case the previously selected file doesn't exist in new code so we select default
+			fileItem = findTreeItemByPath(angularCode, 'src/app/app.component.ts');
+		}
+
+		setSelectedAngularFileItem(fileItem || selectedAngularFileItem);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [angularCode, fragmentExportModal.isVisible]);
+
+	useEffect(() => {
+		if (!fragmentExportModal.isVisible) {
+			return;
+		}
+
 		if (fragmentExportModal?.fragment) {
 			switch (version) {
 				case 'v10':
@@ -177,9 +243,9 @@ export const ExportModal = () => {
 			return;
 		}
 
-		setReactCode({});
-		setAngularCode({});
-	}, [fragmentExportModal.fragment, fragments, styleClasses, version]);
+		setReactCode([]);
+		setAngularCode([]);
+	}, [fragmentExportModal.fragment, fragmentExportModal.isVisible, fragments, styleClasses, version]);
 
 	useEffect(() => {
 		monaco?.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
@@ -269,8 +335,8 @@ export const ExportModal = () => {
 								}
 							</div>
 							<div className={tabContentStyle}>
-								<FileNames code={angularCode} setSelectedFilename={setSelectedAngularFilename} />
-								<CodeView code={angularCode} selectedFilename={selectedAngularFilename} />
+								<FileNames code={angularCode} setSelectedFileItem={setSelectedAngularFileItem} />
+								<CodeView selectedFileItem={selectedAngularFileItem} />
 							</div>
 						</TabPanel>
 						<TabPanel>
@@ -284,8 +350,8 @@ export const ExportModal = () => {
 								</a>
 							</div>
 							<div className={tabContentStyle}>
-								<FileNames code={reactCode} setSelectedFilename={setSelectedReactFilename} />
-								<CodeView code={reactCode} selectedFilename={selectedReactFilename} />
+								<FileNames code={reactCode} setSelectedFileItem={setSelectedReactFileItem} />
+								<CodeView selectedFileItem={selectedReactFileItem} />
 							</div>
 						</TabPanel>
 						<TabPanel>
@@ -349,10 +415,10 @@ export const ExportModal = () => {
 									Copy link
 								</Button>
 								<a
-								className='cds--link--inline cds--btn cds--btn--secondary'
-								href={getSharableLink()}
-								target='_blank'
-								rel='noreferrer'>
+									className='cds--link--inline cds--btn cds--btn--secondary'
+									href={getSharableLink()}
+									target='_blank'
+									rel='noreferrer'>
 									Open in new tab
 								</a>
 							</div>
