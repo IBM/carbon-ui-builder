@@ -18,7 +18,6 @@ import { Copy } from '@carbon/react/icons';
 import { css } from 'emotion';
 import Editor, { useMonaco } from '@monaco-editor/react';
 
-import { createFragmentSandbox } from './create-fragment-sandbox';
 import { createReactApp as createReactAppV10 } from './frameworks/react/v10/fragment';
 import { createAngularApp as createAngularAppV10 } from './frameworks/angular/v10/fragment';
 import { createReactApp } from './frameworks/react/latest/fragment';
@@ -154,8 +153,6 @@ const CodeView = ({ selectedFileItem }: any) => {
 		/>
 	</div>;
 };
-
-const generateSandboxUrl = (parameters: any) => (`https://codesandbox.io/api/v1/sandboxes/define?parameters=${parameters}`);
 
 const findTreeItemByPath = (node: any, path: string, currentPath = ''): any => {
 	if (Array.isArray(node)) {
@@ -323,16 +320,6 @@ export const ExportModal = () => {
 						<TabPanel>
 							<div className={titleWrapper}>
 								<h3>Angular Code</h3>
-								{
-									// Need to check for version since sandbox doesn't work with @carbon/styles (Carbon 11 package)
-									version !== 'V11' &&
-									<a
-										href={generateSandboxUrl(createFragmentSandbox(angularCode))}
-										target='_blank'
-										rel='noopener noreferrer'>
-										Edit on CodeSandbox
-									</a>
-								}
 							</div>
 							<div className={tabContentStyle}>
 								<FileNames code={angularCode} setSelectedFileItem={setSelectedAngularFileItem} />
@@ -342,12 +329,6 @@ export const ExportModal = () => {
 						<TabPanel>
 							<div className={titleWrapper}>
 								<h3>React Code</h3>
-								<a
-									href={generateSandboxUrl(createFragmentSandbox(reactCode))}
-									target='_blank'
-									rel='noopener noreferrer'>
-									Edit on CodeSandbox
-								</a>
 							</div>
 							<div className={tabContentStyle}>
 								<FileNames code={reactCode} setSelectedFileItem={setSelectedReactFileItem} />
