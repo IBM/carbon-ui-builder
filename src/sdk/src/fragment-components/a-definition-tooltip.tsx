@@ -2,7 +2,8 @@ import React from 'react';
 import {
 	Dropdown,
 	DefinitionTooltip,
-	TextInput
+	TextInput,
+	Checkbox
 } from '@carbon/react';
 import { css } from 'emotion';
 import { AComponent, ComponentInfo } from './a-component';
@@ -10,7 +11,6 @@ import { AComponent, ComponentInfo } from './a-component';
 import image from './../assets/component-icons/tooltip.svg';
 import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../tools';
 import { styleObjectToString } from '../../../ui-fragment/src/utils';
-import { Checkbox } from '@carbon/react';
 
 const preventCheckEvent = css`
 	.bx--tooltip__label {
@@ -26,7 +26,7 @@ export const ADefinitionTooltipSettingsUI = ({ selectedComponent, setComponent }
 		{ id: 'bottom', text: 'Bottom' },
 		{ id: 'bottom-left', text: 'Bottom left' },
 		{ id: 'bottom-right', text: 'Bottom right' },
-		{ id: 'left', text: 'Left'},
+		{ id: 'left', text: 'Left' },
 		{ id: 'left-bottom', text: 'Left bottom' },
 		{ id: 'left-top', text: 'Left top' },
 		{ id: 'right', text: 'Right' },
@@ -55,7 +55,7 @@ export const ADefinitionTooltipSettingsUI = ({ selectedComponent, setComponent }
 				description: event.currentTarget.value
 			})} />
 		<TextInput
-			id="definition"
+			id='definition'
 			value={selectedComponent.definition}
 			labelText='Tooltip Message'
 			onChange={(event: any) => setComponent({
@@ -139,7 +139,7 @@ export const componentInfo: ComponentInfo = {
 			latest: {
 				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Description = "${json.description}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}IsOpen = "${json.isDefaultOpened}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}IsAlign = "${json.alignment}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Align = "${json.alignment}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}definition = "${json.definition}";`,
 				outputs: ({ json }) => {
 					const name = nameStringToVariableString(json.codeContext?.name);
@@ -148,11 +148,11 @@ export const componentInfo: ComponentInfo = {
 					@Output() ${name}onOpen = new EventEmitter<string>();`;
 				},
 				imports: ['DefinitionTooltipModule'], // TODO: do we need this?
-				code: ({ json}) => {
+				code: ({ json }) => {
 					const name = nameStringToVariableString(json.codeContext?.name);
 					return `<cds-tooltip-definition
 						"${json.isDefaultOpened ? `[isOpen]='${name}IsOpen` : ''}"
-						"${json.alignment ? `[isOpen]='${name}IsAlign` : ''}"
+						"${json.alignment ? `[align]='${name}Align` : 'bottom'}"
 						(onOpen)="${name}onOpen.emit(event)"
 						(onClose)="${name}onClose.emit(event)"
 						(isOpenChange)="${name}isOpenChange.emit(event)"
@@ -184,14 +184,13 @@ export const componentInfo: ComponentInfo = {
 			latest: {
 				imports: ['DefinitionTooltip'],
 				code: ({ json }) => `<DefinitionTooltip
-						${reactClassNamesFromComponentObj(json)}
-						align="${json.alignment}"
-						${json.isDefaultOpened ? `defaultOpen=${json.isDefaultOpened}` : ''}
-						definition="${json.definition}
-						${json.isOpenOnHover ? `openOnHover` : ''}
-						>
-							${json.description}
-					</DefinitionTooltip>`
+					${reactClassNamesFromComponentObj(json)}
+					align="${json.alignment}"
+					${json.isDefaultOpened ? `defaultOpen=${json.isDefaultOpened}` : ''}
+					definition="${json.definition}
+					${json.isOpenOnHover ? 'openOnHover' : ''}>
+						${json.description}
+				</DefinitionTooltip>`
 			},
 			v10: {
 				imports: ['DefinitionTooltip'],
