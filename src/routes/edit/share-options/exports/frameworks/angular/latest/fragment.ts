@@ -19,7 +19,7 @@ import {
 	jsonToAngularImports,
 	jsonToTemplate
 } from './utils';
-import { classNameFromFragment, tagNameFromFragment } from '../../../../../../../sdk/src/tools';
+import { classNameFromFragment, tagNameFromFragment, getUsedCollectionsAngularDependencies } from '../../../../../../../sdk/src/tools';
 
 const getComponentCode = (fragment: any, fragments: any[], globalStyleClasses: any) => {
 	const componentCode: any = { // this is the folder for the component
@@ -130,7 +130,7 @@ const getAllComponentsCode = (json: any, fragments: any[], globalStyleClasses: a
 	return allComponents;
 };
 
-export const createAngularApp = (fragment: any, fragments: any[], globalStyleClasses: any) => {
+export const createAngularApp = (fragment: any, fragments: any[], globalStyleClasses: any, collections: any[]) => {
 	const tagName = tagNameFromFragment(fragment);
 	const className = classNameFromFragment(fragment);
 
@@ -226,7 +226,8 @@ export const createAngularApp = (fragment: any, fragments: any[], globalStyleCla
 			'tslib': '2.3.0',
 			'sass': '1.45.0',
 			'zone.js': '0.11.4',
-			'carbon-components-angular': '5.14.10'
+			'carbon-components-angular': '5.14.10',
+			...getUsedCollectionsAngularDependencies(collections, fragment.data)
 		}
 	};
 

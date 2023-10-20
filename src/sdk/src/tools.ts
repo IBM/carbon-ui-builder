@@ -126,6 +126,24 @@ export const getUsedCollectionsStyleUrls = (collections: any[], componentObj: an
 		.flatMap((collection: any) => collection.styleUrls);
 };
 
+export const getUsedCollectionsValuesByProp = (collections: any[], componentObj: any, propName: string) => {
+	const usedCollectionsNames = getUsedCollectionsNames(componentObj);
+
+	const keys = propName.split('.'); // used to get the value from the collection
+
+	return collections
+		?.filter((collection: any) => usedCollectionsNames.includes(collection.name))
+		.reduce((result, collection) => ({
+			...result,
+			// i.e. for propName `"angular.dependencies"` gets the `collection.angular.dependencies`
+			...keys.reduce((value, key) => value ? value[key] : undefined, collection)
+		}), {});
+};
+
+export const getUsedCollectionsAngularDependencies = (collections: any[], componentObj: any) => {
+	return getUsedCollectionsValuesByProp(collections, componentObj, 'angular.dependencies');
+};
+
 const updatedList = (list: any[], item: any, dropInIndex?: number) => {
 	if (dropInIndex === undefined) {
 		return [...list, item];

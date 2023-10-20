@@ -186,7 +186,7 @@ const findTreeItemByPath = (node: any, path: string, currentPath = ''): any => {
 };
 
 export const ExportModal = () => {
-	const { fragments, settings, setSettings, styleClasses } = useContext(GlobalStateContext);
+	const { fragments, settings, setSettings, styleClasses, customComponentsCollections } = useContext(GlobalStateContext);
 	const { fragmentExportModal, hideFragmentExportModal } = useContext(ModalContext);
 	const [selectedAngularFileItem, setSelectedAngularFileItem] = useState({
 		id: 'src/app/app.component.ts'
@@ -234,7 +234,7 @@ export const ExportModal = () => {
 					break;
 				default:
 					setReactCode(createReactApp(fragmentExportModal.fragment, fragments, styleClasses));
-					setAngularCode(createAngularApp(fragmentExportModal.fragment, fragments, styleClasses));
+					setAngularCode(createAngularApp(fragmentExportModal.fragment, fragments, styleClasses, customComponentsCollections));
 					break;
 			}
 			return;
@@ -242,7 +242,7 @@ export const ExportModal = () => {
 
 		setReactCode([]);
 		setAngularCode([]);
-	}, [fragmentExportModal.fragment, fragmentExportModal.isVisible, fragments, styleClasses, version]);
+	}, [customComponentsCollections, fragmentExportModal.fragment, fragmentExportModal.isVisible, fragments, styleClasses, version]);
 
 	useEffect(() => {
 		monaco?.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
