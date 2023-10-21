@@ -66,7 +66,7 @@ export const AFragment = ({
 		rejectDrop={true}
 		{...rest}>
 			<section
-			style={{ pointerEvents: 'none' }}
+			style={{ pointerEvents: 'none', display: 'inline' }}
 			className={cx(
 				componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
 				(componentObj.outline || outline === true) && outline !== false ? outlineStyle : ''

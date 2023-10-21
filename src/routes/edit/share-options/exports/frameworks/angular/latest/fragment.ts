@@ -1,3 +1,11 @@
+import {
+	Document,
+	DocumentPreliminary,
+	DocumentView,
+	Folder,
+	Html,
+	Json
+} from '@carbon/react/icons';
 import { getAllFragmentStyleClasses } from '../../../../../../../ui-fragment/src/utils';
 import { hasFragmentStyleClasses } from '../../../../../../../utils/fragment-tools';
 import { format } from '../../utils';
@@ -11,99 +19,118 @@ import {
 	jsonToAngularImports,
 	jsonToTemplate
 } from './utils';
-import { classNameFromFragment, tagNameFromFragment } from '../../../../../../../sdk/src/tools';
+import { classNameFromFragment, tagNameFromFragment, getUsedCollectionsAngularDependencies } from '../../../../../../../sdk/src/tools';
 
 const getComponentCode = (fragment: any, fragments: any[], globalStyleClasses: any) => {
-	const componentCode: any = {};
+	const componentCode: any = { // this is the folder for the component
+		name: tagNameFromFragment(fragment),
+		icon: Folder,
+		items: []
+	};
 	const subFragments = getAllSubfragments(fragment.data, fragments);
 
 	// component.ts
-	componentCode[`src/app/components/${tagNameFromFragment(fragment)}/${tagNameFromFragment(fragment)}.component.ts`] = format(
-		`import { Component, Input, Output, EventEmitter } from '@angular/core';
-		@Component({
-			selector: 'app-${tagNameFromFragment(fragment)}',
-			templateUrl: './${tagNameFromFragment(fragment)}.component.html'${hasFragmentStyleClasses(fragment) ? `,
-			styleUrls: ['./${tagNameFromFragment(fragment)}.component.scss']` : ''}
-		})
-		export class ${classNameFromFragment(fragment)} {
-			${getAngularInputsFromJson(fragment.data)}
-			${getAngularOutputsFromJson(fragment.data)}
-		}
-	`, formatOptionsTypescript);
+	componentCode.items.push({
+		name: `${tagNameFromFragment(fragment)}.component.ts`,
+		code: format(
+			`import { Component, Input, Output, EventEmitter } from '@angular/core';
+			@Component({
+				selector: 'app-${tagNameFromFragment(fragment)}',
+				templateUrl: './${tagNameFromFragment(fragment)}.component.html'${hasFragmentStyleClasses(fragment) ? `,
+				styleUrls: ['./${tagNameFromFragment(fragment)}.component.scss']` : ''}
+			})
+			export class ${classNameFromFragment(fragment)} {
+				${getAngularInputsFromJson(fragment.data)}
+				${getAngularOutputsFromJson(fragment.data)}
+			}
+		`, formatOptionsTypescript),
+		icon: Document
+	});
 
 	// component.html
-	componentCode[`src/app/components/${tagNameFromFragment(fragment)}/${tagNameFromFragment(fragment)}.component.html`] =
-		format(jsonToTemplate(fragment.data, fragments), formatOptionsHtml);
+	componentCode.items.push({
+		name: `${tagNameFromFragment(fragment)}.component.html`,
+		code: format(jsonToTemplate(fragment.data, fragments), formatOptionsHtml),
+		icon: Html
+	});
 
 	// module.ts
-	componentCode[`src/app/components/${tagNameFromFragment(fragment)}/${tagNameFromFragment(fragment)}.module.ts`] = format(
-		`import { NgModule } from "@angular/core";
-		import { ${jsonToAngularImports(fragment.data).join(', ')} } from 'carbon-components-angular';
-		import { ${classNameFromFragment(fragment)} } from "./${tagNameFromFragment(fragment)}.component";
-		${
-			Object.values(subFragments).map((f) =>
+	componentCode.items.push({
+		name: `${tagNameFromFragment(fragment)}.module.ts`,
+		code: format(
+			`import { NgModule } from "@angular/core";
+			import { ${jsonToAngularImports(fragment.data).join(', ')} } from 'carbon-components-angular';
+			import { ${classNameFromFragment(fragment)} } from "./${tagNameFromFragment(fragment)}.component";
+			${Object.values(subFragments).map((f) =>
 				`import { ${classNameFromFragment(f)}Module} from "../${tagNameFromFragment(f)}/${tagNameFromFragment(f)}.module";`).join('\n')
-		}
+			}
 
-		@NgModule({
-			imports: [${[
+			@NgModule({
+				imports: [${[
 				...jsonToAngularImports(fragment.data),
 				...Object.values(subFragments).map((fragment) => `${classNameFromFragment(fragment)}Module`)
 			].join(', ')}],
-			declarations: [${classNameFromFragment(fragment)}],
-			exports: [${classNameFromFragment(fragment)}]
-		})
-		export class ${classNameFromFragment(fragment)}Module {}
-	`, formatOptionsTypescript);
+				declarations: [${classNameFromFragment(fragment)}],
+				exports: [${classNameFromFragment(fragment)}]
+			})
+			export class ${classNameFromFragment(fragment)}Module {}
+		`, formatOptionsTypescript),
+		icon: DocumentPreliminary
+	});
 
 	// component.scss
-	componentCode[`src/app/components/${tagNameFromFragment(fragment)}/${tagNameFromFragment(fragment)}.component.scss`] = format(
-		`${getAllFragmentStyleClasses(fragment, [], globalStyleClasses).map((styleClass: any) => {
-			if (!styleClass.content || !styleClass.content.trim()) {
-				return null;
-			}
+	componentCode.items.push({
+		name: `${tagNameFromFragment(fragment)}.component.scss`,
+		code: format(
+			`${getAllFragmentStyleClasses(fragment, [], globalStyleClasses).map((styleClass: any) => {
+				if (!styleClass.content || !styleClass.content.trim()) {
+					return null;
+				}
 
-			return `.${styleClass.id} {
-				${styleClass.content}
-			}`;
-		}).join('\n')}`,
-		formatOptionsCss
-	);
+				return `.${styleClass.id} {
+					${styleClass.content}
+				}`;
+			}).join('\n')}`,
+			formatOptionsCss
+		),
+		icon: DocumentView
+	});
+
 	return componentCode;
 };
 
 const getAllComponentsCode = (json: any, fragments: any[], globalStyleClasses: any) => {
-	let allComponents: any = {};
+	let allComponents: any[] = [];
 
 	if (json.data) {
-		allComponents = {
+		allComponents = [
 			...allComponents,
-			...getComponentCode(json, fragments, globalStyleClasses),
+			getComponentCode(json, fragments, globalStyleClasses),
 			...getAllComponentsCode(json.data, fragments, globalStyleClasses)
-		};
+		];
 	}
 
 	if (json.type === 'fragment') {
 		const fragment = fragments.find(f => f.id === json.fragmentId);
 
-		allComponents = {
+		allComponents = [
 			...allComponents,
-			...getComponentCode(fragment, fragments, globalStyleClasses),
+			getComponentCode(fragment, fragments, globalStyleClasses),
 			...getAllComponentsCode(fragment.data, fragments, globalStyleClasses)
-		};
+		];
 	}
 
 	json.items?.forEach((item: any) => {
-		allComponents = {
+		allComponents = [
 			...allComponents,
 			...getAllComponentsCode(item, fragments, globalStyleClasses)
-		};
+		];
 	});
 
 	return allComponents;
 };
 
-export const createAngularApp = (fragment: any, fragments: any[], globalStyleClasses: any) => {
+export const createAngularApp = (fragment: any, fragments: any[], globalStyleClasses: any, collections: any[]) => {
 	const tagName = tagNameFromFragment(fragment);
 	const className = classNameFromFragment(fragment);
 
@@ -199,20 +226,71 @@ export const createAngularApp = (fragment: any, fragments: any[], globalStyleCla
 			'tslib': '2.3.0',
 			'sass': '1.45.0',
 			'zone.js': '0.11.4',
-			'carbon-components-angular': '5.14.10'
+			'carbon-components-angular': '5.14.10',
+			...getUsedCollectionsAngularDependencies(collections, fragment.data)
 		}
 	};
 
-	return {
-		'src/index.html': format(indexHtml, formatOptionsHtml),
-		'src/main.ts': format(mainTs, formatOptionsTypescript),
-		'src/polyfills.ts': format("import 'zone.js/dist/zone';", formatOptionsTypescript),
-		'src/styles.scss': format('', formatOptionsCss),
-		'src/app/app.component.html': format(appComponentHtml, formatOptionsHtml),
-		'src/app/app.component.ts': format(appComponentTs, formatOptionsTypescript),
-		'src/app/app.module.ts': format(appModule, formatOptionsTypescript),
-		...allComponents,
-		'.angular-cli.json': angularCliJson,
-		'package.json': packageJson
-	};
+	return [
+		{
+			name: 'package.json',
+			code: packageJson,
+			icon: Json
+		},
+		{
+			name: '.angular-cli.json',
+			code: angularCliJson,
+			icon: Json
+		},
+		{
+			name: 'src',
+			icon: Folder,
+			isExpanded: true,
+			items: [
+				{
+					name: 'index.html',
+					code: format(indexHtml, formatOptionsHtml),
+					icon: Html
+				},
+				{
+					name: 'main.ts',
+					code: format(mainTs, formatOptionsTypescript),
+					icon: Document
+				},
+				{
+					name: 'polyfills.ts',
+					code: format("import 'zone.js/dist/zone';", formatOptionsTypescript),
+					icon: Document
+				},
+				{
+					name: 'styles.scss',
+					code: format('', formatOptionsCss),
+					icon: DocumentView
+				},
+				{
+					name: 'app',
+					icon: Folder,
+					isExpanded: true,
+					items: [
+						{
+							name: 'app.component.html',
+							code: format(appComponentHtml, formatOptionsHtml),
+							icon: Html
+						},
+						{
+							name: 'app.component.ts',
+							code: format(appComponentTs, formatOptionsTypescript),
+							icon: Document
+						},
+						{
+							name: 'app.module.ts',
+							code: format(appModule, formatOptionsTypescript),
+							icon: DocumentPreliminary
+						},
+						...allComponents
+					]
+				}
+			]
+		}
+	];
 };

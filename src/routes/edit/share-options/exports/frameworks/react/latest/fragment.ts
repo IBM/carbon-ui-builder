@@ -1,3 +1,10 @@
+import {
+	Document,
+	DocumentView,
+	Folder,
+	Html,
+	Json
+} from '@carbon/react/icons';
 import { getAllFragmentStyleClasses } from '../../../../../../../ui-fragment/src/utils';
 import { hasFragmentStyleClasses } from '../../../../../../../utils/fragment-tools';
 import { format } from '../../utils';
@@ -25,46 +32,54 @@ const generateTemplate = (json: any, fragments: any[]) => {
 };
 
 const jsonToSharedComponents = (json: any, fragments: any[], globalStyleClasses: any) => {
-	let sharedComponents: any = {};
+	let sharedComponents: any[] = [];
 
 	if (json.type === 'fragment') {
 		const fragment = fragments.find(f => f.id === json.fragmentId);
 		const fragmentTemplate = generateTemplate(fragment.data, fragments);
 
-		sharedComponents[`src/shared/${tagNameFromFragment(fragment)}.js`] = format(`import React from 'react';
-			${fragmentTemplate.imports};
-			${hasFragmentStyleClasses(fragment) ? `
-				import './${tagNameFromFragment(fragment)}.scss';
-			` : ''}
-			export const ${classNameFromFragment(fragment)} = ({state, setState}) => {
-				const handleInputChange = (event) => {
-					setState({...state, [event.target.name]: event.target.value});
+		sharedComponents.push({
+			name: `${tagNameFromFragment(fragment)}.js`,
+			code: format(`import React from 'react';
+				${fragmentTemplate.imports};
+				${hasFragmentStyleClasses(fragment) ? `
+					import './${tagNameFromFragment(fragment)}.scss';
+				` : ''}
+				export const ${classNameFromFragment(fragment)} = ({state, setState}) => {
+					const handleInputChange = (event) => {
+						setState({...state, [event.target.name]: event.target.value});
+					};
+
+					${fragmentTemplate.additionalCode}
+
+					return <>${fragmentTemplate.template}</>;
 				};
+			`, formatOptions),
+			icon: Document
+		});
 
-				${fragmentTemplate.additionalCode}
+		sharedComponents.push({
+			name: `${tagNameFromFragment(fragment)}.scss`,
+			code: format(
+				`${getAllFragmentStyleClasses(fragment, [], globalStyleClasses).map((styleClass: any) => `.${styleClass.id} {
+					${styleClass.content}
+				}`).join('\n')}`,
+				formatOptionsCss
+			),
+			icon: DocumentView
+		});
 
-				return <>${fragmentTemplate.template}</>;
-			};
-		`, formatOptions);
-
-		sharedComponents[`src/shared/${tagNameFromFragment(fragment)}.scss`] = format(
-			`${getAllFragmentStyleClasses(fragment, [], globalStyleClasses).map((styleClass: any) => `.${styleClass.id} {
-				${styleClass.content}
-			}`).join('\n')}`,
-			formatOptionsCss
-		);
-
-		sharedComponents = {
+		sharedComponents = [
 			...sharedComponents,
 			...jsonToSharedComponents(fragment.data, fragments, globalStyleClasses)
-		};
+		];
 	}
 
 	json.items?.forEach((item: any) => {
-		sharedComponents = {
+		sharedComponents = [
 			...sharedComponents,
 			...jsonToSharedComponents(item, fragments, globalStyleClasses)
-		};
+		];
 	});
 
 	return sharedComponents;
@@ -134,12 +149,44 @@ ReactDOM.render(<App />, document.getElementById('root'));
 		}
 	};
 
-	return {
-		'src/index.html': indexHtml,
-		'src/index.js': format(indexJs, formatOptions),
-		'src/component.js': format(componentJs, formatOptions),
-		'src/component.scss': format(componentScss, formatOptionsCss),
-		'package.json': packageJson,
-		...sharedComponents
-	};
+	return [
+		{
+			name: 'package.json',
+			code: packageJson,
+			icon: Json
+		},
+		{
+			name: 'src',
+			icon: Folder,
+			isExpanded: true,
+			items: [
+				{
+					name: 'index.html',
+					code: indexHtml,
+					icon: Html
+				},
+				{
+					name: 'index.js',
+					code: format(indexJs, formatOptions),
+					icon: Document
+				},
+				{
+					name: 'component.js',
+					code: format(componentJs, formatOptions),
+					icon: Document
+				},
+				{
+					name: 'component.scss',
+					code: format(componentScss, formatOptionsCss),
+					icon: DocumentView
+				},
+				...(sharedComponents && sharedComponents.length > 0 ? [{
+					name: 'shared',
+					icon: Folder,
+					isExpanded: true,
+					items: sharedComponents
+				}] : [])
+			]
+		}
+	];
 };

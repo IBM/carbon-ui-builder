@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Modal } from '@carbon/react';
 import Editor from '@monaco-editor/react';
+import Handlebars from 'handlebars';
 import { GlobalStateContext, ModalContext } from '../context';
 
 export const CustomComponentsModal = () => {
@@ -14,7 +15,16 @@ export const CustomComponentsModal = () => {
 		try {
 			if (modelString) {
 				// TODO set exact modelCollection based on name instead
-				setCustomComponentsCollections([JSON.parse(modelString)]);
+				const parsedModel = JSON.parse(modelString);
+				parsedModel.components.forEach((component: any, index: number) => {
+					// try parsing template to check for compile errors
+					try {
+						(Handlebars.compile(component.htmlPreview))((component.defaultInputs));
+					} catch (e) {
+						throw new Error(`Component ${index} [${component?.type}] htmlPreview` + e);
+					}
+				});
+				setCustomComponentsCollections([parsedModel]);
 			}
 
 			setJsonParseError('');
