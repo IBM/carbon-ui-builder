@@ -141,13 +141,13 @@ export const componentInfo: ComponentInfo = {
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : 'dark'}';`,
 				outputs: (_) => '',
 				imports: ['TilesModule'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<cds-clickable-tile
 						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 						[href]=${nameStringToVariableString(json.codeContext?.name)}Href
 						[disabled]=${nameStringToVariableString(json.codeContext?.name)}Disabled
 						${angularClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</cds-clickable-tile>`;
 				}
 			},
@@ -157,13 +157,13 @@ export const componentInfo: ComponentInfo = {
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : 'dark'}';`,
 				outputs: (_) => '',
 				imports: ['TilesModule'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<ibm-clickable-tile
 						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 						[href]=${nameStringToVariableString(json.codeContext?.name)}Href
 						[disabled]=${nameStringToVariableString(json.codeContext?.name)}Disabled
 						${angularClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</ibm-clickable-tile>`;
 				}
 			}
@@ -171,25 +171,25 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			latest: {
 				imports: ['ClickableTile'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<ClickableTile
 						${json.codeContext?.href !== undefined && json.codeContext?.href !== '' ? `href='${json.codeContext?.href}'` : ''}
 						${json.light !== undefined ? `light={${json.light}}` : ''}
 						${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
 						${reactClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</ClickableTile>`;
 				}
 			},
 			v10: {
 				imports: ['ClickableTile'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<ClickableTile
 						${json.codeContext?.href !== undefined && json.codeContext?.href !== '' ? `href='${json.codeContext?.href}'` : ''}
 						${json.light !== undefined ? `light={${json.light}}` : ''}
 						${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
 						${reactClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</ClickableTile>`;
 				}
 			}

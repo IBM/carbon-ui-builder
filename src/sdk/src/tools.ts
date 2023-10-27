@@ -126,6 +126,22 @@ export const getUsedCollectionsStyleUrls = (collections: any[], componentObj: an
 		.flatMap((collection: any) => collection.styleUrls);
 };
 
+export const getUsedCollectionsAngularStylePaths = (collections: any[], componentObj: any) => {
+	const usedCollectionsNames = getUsedCollectionsNames(componentObj);
+
+	return collections
+		?.filter((collection: any) => usedCollectionsNames.includes(collection.name))
+		.flatMap((collection: any) => collection.angular?.stylePaths);
+};
+
+export const getUsedCollectionsAngularStyleImportPaths = (collections: any[], componentObj: any) => {
+	const usedCollectionsNames = getUsedCollectionsNames(componentObj);
+
+	return collections
+		?.filter((collection: any) => usedCollectionsNames.includes(collection.name))
+		.flatMap((collection: any) => collection.angular?.styleImportPaths);
+};
+
 export const getUsedCollectionsValuesByProp = (collections: any[], componentObj: any, propName: string) => {
 	const usedCollectionsNames = getUsedCollectionsNames(componentObj);
 

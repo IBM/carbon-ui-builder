@@ -18,7 +18,7 @@ import {
 } from './utils';
 import { classNameFromFragment, tagNameFromFragment } from '../../../../../../../sdk/src/tools';
 
-const generateTemplate = (json: any, fragments: any[]) => {
+const generateTemplate = (json: any, fragments: any[], customComponentsCollections: any[]) => {
 	const carbonImports = jsonToCarbonImports(json);
 	const carbonImportsString = carbonImports.reduce((string: string, curr: string) => (
 		string += `${curr}, `
@@ -26,17 +26,17 @@ const generateTemplate = (json: any, fragments: any[]) => {
 	return {
 		imports: `import { ${carbonImportsString} } from '@carbon/react';
 			${otherImportsFromComponentObj(json, fragments)}`,
-		template: jsonToTemplate(json, fragments),
+		template: jsonToTemplate(json, fragments, customComponentsCollections),
 		additionalCode: getAdditionalCodeAsString(json, fragments)
 	};
 };
 
-const jsonToSharedComponents = (json: any, fragments: any[], globalStyleClasses: any) => {
+const jsonToSharedComponents = (json: any, fragments: any[], globalStyleClasses: any, customComponentsCollections: any[]) => {
 	let sharedComponents: any[] = [];
 
 	if (json.type === 'fragment') {
 		const fragment = fragments.find(f => f.id === json.fragmentId);
-		const fragmentTemplate = generateTemplate(fragment.data, fragments);
+		const fragmentTemplate = generateTemplate(fragment.data, fragments, customComponentsCollections);
 
 		sharedComponents.push({
 			name: `${tagNameFromFragment(fragment)}.js`,
@@ -71,24 +71,24 @@ const jsonToSharedComponents = (json: any, fragments: any[], globalStyleClasses:
 
 		sharedComponents = [
 			...sharedComponents,
-			...jsonToSharedComponents(fragment.data, fragments, globalStyleClasses)
+			...jsonToSharedComponents(fragment.data, fragments, globalStyleClasses, customComponentsCollections)
 		];
 	}
 
 	json.items?.forEach((item: any) => {
 		sharedComponents = [
 			...sharedComponents,
-			...jsonToSharedComponents(item, fragments, globalStyleClasses)
+			...jsonToSharedComponents(item, fragments, globalStyleClasses, customComponentsCollections)
 		];
 	});
 
 	return sharedComponents;
 };
 
-export const createReactApp = (fragment: any, fragments: any[], globalStyleClasses: any) => {
-	const fragmentTemplate = generateTemplate(fragment.data, fragments);
+export const createReactApp = (fragment: any, fragments: any[], globalStyleClasses: any, customComponentsCollections: any[]) => {
+	const fragmentTemplate = generateTemplate(fragment.data, fragments, customComponentsCollections);
 
-	const sharedComponents = jsonToSharedComponents(fragment.data, fragments, globalStyleClasses);
+	const sharedComponents = jsonToSharedComponents(fragment.data, fragments, globalStyleClasses, customComponentsCollections);
 
 	const indexHtml = `<div id='root'></div>
 `;

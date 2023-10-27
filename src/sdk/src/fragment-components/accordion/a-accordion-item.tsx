@@ -145,13 +145,13 @@ export const componentInfo: ComponentInfo = {
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${!!json.disabled}`,
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter();`,
 				imports: ['AccordionModule'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<cds-accordion-item
 						[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
 						[title]="${nameStringToVariableString(json.codeContext?.name)}Title"
 						(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
 						${angularClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</cds-accordion-item>`;
 				}
 			},
@@ -160,13 +160,13 @@ export const componentInfo: ComponentInfo = {
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${!!json.disabled}`,
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter();`,
 				imports: ['AccordionModule'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<ibm-accordion-item
 						[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
 						[title]="${nameStringToVariableString(json.codeContext?.name)}Title"
 						(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
 						${angularClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</ibm-accordion-item>`;
 				}
 			}
@@ -174,23 +174,23 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			latest: {
 				imports: ['AccordionItem'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<AccordionItem
 						title="${json.title || ''}"
 						${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
 						${reactClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</AccordionItem>`;
 				}
 			},
 			v10: {
 				imports: ['AccordionItem'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<AccordionItem
 						title="${json.title || ''}"
 						${json.disabled !== undefined ? `disabled={${json.disabled}}` : ''}
 						${reactClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</AccordionItem>`;
 				}
 			}

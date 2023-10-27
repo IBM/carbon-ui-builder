@@ -54,7 +54,7 @@ export const componentInfo: ComponentInfo = {
 				inputs: () => '',
 				outputs: () => '',
 				imports: [],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					// Appends below the fold class to class list
 					let classes = angularClassNamesFromComponentObj(json);
 					if (classes) {
@@ -64,7 +64,7 @@ export const componentInfo: ComponentInfo = {
 					}
 
 					return `<span ${classes}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</span>`;
 				}
 			},
@@ -72,7 +72,7 @@ export const componentInfo: ComponentInfo = {
 				inputs: () => '',
 				outputs: () => '',
 				imports: [],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					// Appends below the fold class to class list
 					let classes = angularClassNamesFromComponentObj(json);
 					if (classes) {
@@ -82,7 +82,7 @@ export const componentInfo: ComponentInfo = {
 					}
 
 					return `<span ${classes}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</span>`;
 				}
 			}
@@ -90,19 +90,19 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			latest: {
 				imports: [],
-				code: ({ json, jsonToTemplate, fragments }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<TileBelowTheFoldContent
 						${reactClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 						</TileBelowTheFoldContent>`;
 				}
 			},
 			v10: {
 				imports: [],
-				code: ({ json, jsonToTemplate, fragments }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<TileBelowTheFoldContent
 						${reactClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 						</TileBelowTheFoldContent>`;
 				}
 			}

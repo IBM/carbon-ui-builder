@@ -229,11 +229,11 @@ export const ExportModal = () => {
 		if (fragmentExportModal?.fragment) {
 			switch (version) {
 				case 'v10':
-					setReactCode(createReactAppV10(fragmentExportModal.fragment, fragments, styleClasses));
-					setAngularCode(createAngularAppV10(fragmentExportModal.fragment, fragments, styleClasses));
+					setReactCode(createReactAppV10(fragmentExportModal.fragment, fragments, styleClasses, customComponentsCollections));
+					setAngularCode(createAngularAppV10(fragmentExportModal.fragment, fragments, styleClasses, customComponentsCollections));
 					break;
 				default:
-					setReactCode(createReactApp(fragmentExportModal.fragment, fragments, styleClasses));
+					setReactCode(createReactApp(fragmentExportModal.fragment, fragments, styleClasses, customComponentsCollections));
 					setAngularCode(createAngularApp(fragmentExportModal.fragment, fragments, styleClasses, customComponentsCollections));
 					break;
 			}

@@ -70,19 +70,19 @@ export const getAngularOutputsFromJson = (json: any): string => {
 	return `${getOne(json)} ${json.items ? json.items.map((item: any) => getAngularOutputsFromJson(item)).join('\n') : ''}
 	`;
 };
-export const jsonToTemplate = (json: any, fragments: any[]) => {
+export const jsonToTemplate = (json: any, fragments: any[], customComponentsCollections: any[]) => {
 	if (typeof json === 'string' || !json) {
 		return json;
 	}
 
 	for (const component of Object.values(allComponents)) {
 		if (json.type === component.componentInfo.type && !component.componentInfo.codeExport.angular.v10.isNotDirectExport) {
-			return component.componentInfo.codeExport.angular.v10.code({ json, jsonToTemplate, fragments });
+			return component.componentInfo.codeExport.angular.v10.code({ json, jsonToTemplate, fragments, customComponentsCollections });
 		}
 	}
 
 	if (json.items) {
-		return json.items.map((item: any) => jsonToTemplate(item, fragments)).join('\n');
+		return json.items.map((item: any) => jsonToTemplate(item, fragments, customComponentsCollections)).join('\n');
 	}
 };
 

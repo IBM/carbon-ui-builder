@@ -181,12 +181,12 @@ export const componentInfo: ComponentInfo = {
 				inputs: () => '',
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<Event>();`,
 				imports: ['TilesModule'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<cds-tile-group
 						(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
 						[multiple]="true"
 						${angularClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</cds-tile-group>`;
 				}
 			},
@@ -194,12 +194,12 @@ export const componentInfo: ComponentInfo = {
 				inputs: () => '',
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Selected = new EventEmitter<Event>();`,
 				imports: ['TilesModule'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<ibm-tile-group
 						(selected)="${nameStringToVariableString(json.codeContext?.name)}Selected.emit($event)"
 						[multiple]="true"
 						${angularClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</ibm-tile-group>`;
 				}
 			}
@@ -207,23 +207,23 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			latest: {
 				imports: [],
-				code: ({ json, jsonToTemplate, fragments }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<div
 						role="group"
 						aria-label="Selectable tiles"
 						${reactClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</div>`;
 				}
 			},
 			v10: {
 				imports: [],
-				code: ({ json, jsonToTemplate, fragments }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<div
 						role="group"
 						aria-label="Selectable tiles"
 						${reactClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</div>`;
 				}
 			}

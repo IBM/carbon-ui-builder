@@ -174,7 +174,7 @@ export const componentInfo: ComponentInfo = {
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Name = "${json.codeContext?.name}";`,
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 				imports: ['RadioModule'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<cds-radio-group
 						[legend]="${nameStringToVariableString(json.codeContext?.name)}LegendText"
 						[name]="${nameStringToVariableString(json.codeContext?.name)}Name"
@@ -182,7 +182,7 @@ export const componentInfo: ComponentInfo = {
 						[labelPlacement]="${nameStringToVariableString(json.codeContext?.name)}LabelPosition"
 						(change)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
 						${angularClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</cds-radio-group>`;
 				}
 			},
@@ -193,7 +193,7 @@ export const componentInfo: ComponentInfo = {
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Name = "${json.codeContext?.name}";`,
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 				imports: ['RadioModule'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<legend class="bx--label">{{${nameStringToVariableString(json.codeContext?.name)}LegendText}}</legend>
 					<ibm-radio-group
 						[name]="${nameStringToVariableString(json.codeContext?.name)}Name"
@@ -201,7 +201,7 @@ export const componentInfo: ComponentInfo = {
 						[labelPlacement]="${nameStringToVariableString(json.codeContext?.name)}LabelPosition"
 						(change)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
 						${angularClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</ibm-radio-group>`;
 				}
 			}
@@ -209,7 +209,7 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			latest: {
 				imports: ['RadioButtonGroup'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<RadioButtonGroup
 						name="${json.codeContext?.name}"
 						legendText="${json.legend}"
@@ -223,13 +223,13 @@ export const componentInfo: ComponentInfo = {
 								name: "${json.codeContext?.name}"
 							}
 						})}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</RadioButtonGroup>`;
 				}
 			},
 			v10: {
 				imports: ['RadioButtonGroup'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<RadioButtonGroup
 						name="${json.codeContext?.name}"
 						legendText="${json.legend}"
@@ -243,7 +243,7 @@ export const componentInfo: ComponentInfo = {
 								name: "${json.codeContext?.name}"
 							}
 						})}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</RadioButtonGroup>`;
 				}
 			}

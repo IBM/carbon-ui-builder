@@ -21,7 +21,7 @@ import {
 } from './utils';
 import { classNameFromFragment, tagNameFromFragment } from '../../../../../../../sdk/src/tools';
 
-const getComponentCode = (fragment: any, fragments: any[], globalStyleClasses: any) => {
+const getComponentCode = (fragment: any, fragments: any[], globalStyleClasses: any, customComponentsCollections: any[]) => {
 	const componentCode: any = { // this is the folder for the component
 		name: tagNameFromFragment(fragment),
 		icon: Folder,
@@ -50,7 +50,7 @@ const getComponentCode = (fragment: any, fragments: any[], globalStyleClasses: a
 	// component.html
 	componentCode.items.push({
 		name: `${tagNameFromFragment(fragment)}.component.html`,
-		code: format(jsonToTemplate(fragment.data, fragments), formatOptionsHtml),
+		code: format(jsonToTemplate(fragment.data, fragments, customComponentsCollections), formatOptionsHtml),
 		icon: Html
 	});
 
@@ -99,14 +99,14 @@ const getComponentCode = (fragment: any, fragments: any[], globalStyleClasses: a
 	return componentCode;
 };
 
-const getAllComponentsCode = (json: any, fragments: any[], globalStyleClasses: any) => {
+const getAllComponentsCode = (json: any, fragments: any[], globalStyleClasses: any, customComponentsCollections: any[]) => {
 	let allComponents: any[] = [];
 
 	if (json.data) {
 		allComponents = [
 			...allComponents,
-			getComponentCode(json, fragments, globalStyleClasses),
-			...getAllComponentsCode(json.data, fragments, globalStyleClasses)
+			getComponentCode(json, fragments, globalStyleClasses, customComponentsCollections),
+			...getAllComponentsCode(json.data, fragments, globalStyleClasses, customComponentsCollections)
 		];
 	}
 
@@ -115,26 +115,26 @@ const getAllComponentsCode = (json: any, fragments: any[], globalStyleClasses: a
 
 		allComponents = [
 			...allComponents,
-			getComponentCode(fragment, fragments, globalStyleClasses),
-			...getAllComponentsCode(fragment.data, fragments, globalStyleClasses)
+			getComponentCode(fragment, fragments, globalStyleClasses, customComponentsCollections),
+			...getAllComponentsCode(fragment.data, fragments, globalStyleClasses, customComponentsCollections)
 		];
 	}
 
 	json.items?.forEach((item: any) => {
 		allComponents = [
 			...allComponents,
-			...getAllComponentsCode(item, fragments, globalStyleClasses)
+			...getAllComponentsCode(item, fragments, globalStyleClasses, customComponentsCollections)
 		];
 	});
 
 	return allComponents;
 };
 
-export const createAngularApp = (fragment: any, fragments: any[], globalStyleClasses: any) => {
+export const createAngularApp = (fragment: any, fragments: any[], globalStyleClasses: any, customComponentsCollections: any[]) => {
 	const tagName = tagNameFromFragment(fragment);
 	const className = classNameFromFragment(fragment);
 
-	const allComponents = getAllComponentsCode(fragment, fragments, globalStyleClasses);
+	const allComponents = getAllComponentsCode(fragment, fragments, globalStyleClasses, customComponentsCollections);
 
 	const appComponentHtml =
 		`<app-${tagName}></app-${tagName}>

@@ -200,12 +200,12 @@ export const componentInfo: ComponentInfo = {
 				inputs: (_) => '',
 				outputs: (_) => '',
 				imports: ['GridModule'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<div cdsGrid ${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((row: any) => `<div cdsRow ${angularClassNamesFromComponentObj(row)}>
 							${row.items.map((cell: any) =>
 								`<div cdsCol ${getColumnNumbersString(cell)} ${getOffsetsString(cell)} ${angularClassNamesFromComponentObj(cell)}>
-									${jsonToTemplate(cell, fragments)}
+									${jsonToTemplate(cell, fragments, customComponentsCollections)}
 							</div>`).join('\n')}
 						</div>`).join('\n')}
 					</div>`;
@@ -215,12 +215,12 @@ export const componentInfo: ComponentInfo = {
 				inputs: (_) => '',
 				outputs: (_) => '',
 				imports: ['GridModule'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<div ibmGrid ${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((row: any) => `<div ibmRow ${angularClassNamesFromComponentObj(row)}>
 							${row.items.map((cell: any) =>
 								`<div ibmCol ${getColumnNumbersString(cell)} ${getOffsetsString(cell)} ${angularClassNamesFromComponentObj(cell)}>
-									${jsonToTemplate(cell, fragments)}
+									${jsonToTemplate(cell, fragments, customComponentsCollections)}
 							</div>`).join('\n')}
 						</div>`).join('\n')}
 					</div>`;
@@ -230,11 +230,11 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			latest: {
 				imports: ['FlexGrid', 'Column', 'Row'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<FlexGrid ${reactClassNamesFromComponentObj(json)}>
 						${json.items.map((row: any) => `<Row ${reactClassNamesFromComponentObj(row)}>
 							${row.items.map((cell: any) => `<Column ${getCellParamsStringReact(cell)} ${reactClassNamesFromComponentObj(cell)}>
-									${jsonToTemplate(cell, fragments)}
+									${jsonToTemplate(cell, fragments, customComponentsCollections)}
 							</Column>`).join('\n')}
 						</Row>`).join('\n')}
 					</FlexGrid>`;
@@ -242,11 +242,11 @@ export const componentInfo: ComponentInfo = {
 			},
 			v10: {
 				imports: ['Grid', 'Column', 'Row'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<Grid ${reactClassNamesFromComponentObj(json)}>
 						${json.items.map((row: any) => `<Row ${reactClassNamesFromComponentObj(row)}>
 							${row.items.map((cell: any) => `<Column ${getCellParamsStringReact(cell)} ${reactClassNamesFromComponentObj(cell)}>
-									${jsonToTemplate(cell, fragments)}
+									${jsonToTemplate(cell, fragments, customComponentsCollections)}
 							</Column>`).join('\n')}
 						</Row>`).join('\n')}
 					</Grid>`;

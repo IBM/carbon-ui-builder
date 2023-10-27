@@ -230,7 +230,7 @@ export const componentInfo: ComponentInfo = {
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : 'dark'}';`,
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Change = new EventEmitter<Event>();`,
 				imports: ['TilesModule'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<cds-selection-tile
 						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
@@ -238,7 +238,7 @@ export const componentInfo: ComponentInfo = {
 						[selected]="${nameStringToVariableString(json.codeContext?.name)}Selected"
 						${json.standalone ? `(change)="${nameStringToVariableString(json.codeContext?.name)}Change.emit($event)"` : ''}
 						${angularClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 						</cds-selection-tile>`;
 				}
 			},
@@ -249,7 +249,7 @@ export const componentInfo: ComponentInfo = {
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : 'dark'}';`,
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}Change = new EventEmitter<Event>();`,
 				imports: ['TilesModule'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<ibm-selection-tile
 						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
@@ -257,7 +257,7 @@ export const componentInfo: ComponentInfo = {
 						[selected]="${nameStringToVariableString(json.codeContext?.name)}Selected"
 						${json.standalone ? `(change)="${nameStringToVariableString(json.codeContext?.name)}Change.emit($event)"` : ''}
 						${angularClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 						</ibm-selection-tile>`;
 				}
 			}
@@ -265,7 +265,7 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			latest: {
 				imports: ['SelectableTile'],
-				code: ({ json, jsonToTemplate, fragments }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					const stateFunction = json.standalone ?
 						`() => {
 							handleInputChange({
@@ -294,7 +294,7 @@ export const componentInfo: ComponentInfo = {
 						${json.disabled !== undefined && !!json.disabled ? `disabled={${json.disabled}}` : ''}
 						${reactClassNamesFromComponentObj(json)}
 						onClick={${stateFunction}}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</SelectableTile>`;
 				},
 				additionalCode: (json) => {
@@ -318,7 +318,7 @@ export const componentInfo: ComponentInfo = {
 			},
 			v10: {
 				imports: ['SelectableTile'],
-				code: ({ json, jsonToTemplate, fragments }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					const stateFunction = json.standalone ?
 						`() => {
 							handleInputChange({
@@ -347,7 +347,7 @@ export const componentInfo: ComponentInfo = {
 						${json.disabled !== undefined && !!json.disabled ? `disabled={${json.disabled}}` : ''}
 						${reactClassNamesFromComponentObj(json)}
 						onClick={${stateFunction}}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</SelectableTile>`;
 				},
 				additionalCode: (json) => {

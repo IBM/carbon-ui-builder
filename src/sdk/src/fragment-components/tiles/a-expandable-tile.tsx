@@ -176,16 +176,16 @@ export const componentInfo: ComponentInfo = {
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : 'dark'}';`,
 				outputs: () => '',
 				imports: ['TilesModule'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					const { aboveFold, belowFold } = getFoldObjects(json);
 					return `<cds-expandable-tile
 						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 						${json.expanded !== undefined ? `[expanded]="${nameStringToVariableString(json.codeContext?.name)}Expanded"` : ''}
 						${angularClassNamesFromComponentObj(json)}>
 							<span class="cds--tile-content__above-the-fold">
-								${aboveFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+								${aboveFold.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 							</span>
-							${belowFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${belowFold.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</cds-expandable-tile>`;
 				}
 			},
@@ -194,16 +194,16 @@ export const componentInfo: ComponentInfo = {
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : 'dark'}';`,
 				outputs: () => '',
 				imports: ['TilesModule'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					const { aboveFold, belowFold } = getFoldObjects(json);
 					return `<ibm-expandable-tile
 						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 						${json.expanded !== undefined ? `[expanded]="${nameStringToVariableString(json.codeContext?.name)}Expanded"` : ''}
 						${angularClassNamesFromComponentObj(json)}>
 							<span class="bx--tile-content__above-the-fold">
-								${aboveFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+								${aboveFold.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 							</span>
-							${belowFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${belowFold.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</ibm-expandable-tile>`;
 				}
 			}
@@ -211,31 +211,31 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			latest: {
 				imports: ['ExpandableTile', 'TileAboveTheFoldContent', 'TileBelowTheFoldContent'],
-				code: ({ json, jsonToTemplate, fragments }) => {
+				code: ({ json, jsonToTemplate, fragments, customComponentsCollections }) => {
 					const { aboveFold, belowFold } = getFoldObjects(json);
 					return `<ExpandableTile
 						${json.light !== undefined && !!json.light ? `light={${json.light}}` : ''}
 						${json.expanded !== undefined && !!json.expanded ? `expanded={${json.expanded}}` : ''}
 						${reactClassNamesFromComponentObj(json)}>
 							<TileAboveTheFoldContent>
-								${aboveFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+								${aboveFold.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 							</TileAboveTheFoldContent>
-							${belowFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${belowFold.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</ExpandableTile>`;
 				}
 			},
 			v10: {
 				imports: ['ExpandableTile', 'TileAboveTheFoldContent', 'TileBelowTheFoldContent'],
-				code: ({ json, jsonToTemplate, fragments }) => {
+				code: ({ json, jsonToTemplate, fragments, customComponentsCollections }) => {
 					const { aboveFold, belowFold } = getFoldObjects(json);
 					return `<ExpandableTile
 						${json.light !== undefined && !!json.light ? `light={${json.light}}` : ''}
 						${json.expanded !== undefined && !!json.expanded ? `expanded={${json.expanded}}` : ''}
 						${reactClassNamesFromComponentObj(json)}>
 							<TileAboveTheFoldContent>
-								${aboveFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+								${aboveFold.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 							</TileAboveTheFoldContent>
-							${belowFold.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${belowFold.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</ExpandableTile>`;
 				}
 			}

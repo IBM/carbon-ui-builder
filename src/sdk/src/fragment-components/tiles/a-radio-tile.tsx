@@ -209,14 +209,14 @@ export const componentInfo: ComponentInfo = {
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = '${json.value}';`,
 				outputs: () => '',
 				imports: ['TilesModule'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<cds-selection-tile
 						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 						[disabled]=${nameStringToVariableString(json.codeContext?.name)}Disabled
 						[selected]="${nameStringToVariableString(json.codeContext?.name)}Selected"
 						${angularClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</cds-selection-tile>`;
 				}
 			},
@@ -227,14 +227,14 @@ export const componentInfo: ComponentInfo = {
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = '${json.value}';`,
 				outputs: () => '',
 				imports: ['TilesModule'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<ibm-selection-tile
 						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 						[disabled]=${nameStringToVariableString(json.codeContext?.name)}Disabled
 						[selected]="${nameStringToVariableString(json.codeContext?.name)}Selected"
 						${angularClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</ibm-selection-tile>`;
 				}
 			}
@@ -242,7 +242,7 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			latest: {
 				imports: ['RadioTile'],
-				code: ({ json, jsonToTemplate, fragments }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<RadioTile
 						${
 							(json.codeContext?.formItemName !== undefined && json.codeContext?.formItemName !== '')
@@ -253,13 +253,13 @@ export const componentInfo: ComponentInfo = {
 						${json.defaultChecked ? `checked={${json.defaultChecked}}` : ''}
 						${json.disabled !== undefined && !!json.disabled ? `disabled={${json.disabled}}` : ''}
 						${reactClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</RadioTile>`;
 				}
 			},
 			v10: {
 				imports: ['RadioTile'],
-				code: ({ json, jsonToTemplate, fragments }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<RadioTile
 						${
 							(json.codeContext?.formItemName !== undefined && json.codeContext?.formItemName !== '')
@@ -270,7 +270,7 @@ export const componentInfo: ComponentInfo = {
 						${json.defaultChecked ? `checked={${json.defaultChecked}}` : ''}
 						${json.disabled !== undefined && !!json.disabled ? `disabled={${json.disabled}}` : ''}
 						${reactClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</RadioTile>`;
 				}
 			}

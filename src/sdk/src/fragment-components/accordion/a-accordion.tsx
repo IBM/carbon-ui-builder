@@ -103,12 +103,12 @@ export const componentInfo: ComponentInfo = {
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";`,
 				outputs: () => '',
 				imports: ['AccordionModule'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<cds-accordion
 						[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
 						[align]="${nameStringToVariableString(json.codeContext?.name)}Align"
 						${angularClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</cds-accordion>`;
 				}
 			},
@@ -117,12 +117,12 @@ export const componentInfo: ComponentInfo = {
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";`,
 				outputs: () => '',
 				imports: ['AccordionModule'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<ibm-accordion
 						[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
 						[align]="${nameStringToVariableString(json.codeContext?.name)}Align"
 						${angularClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</ibm-accordion>`;
 				}
 			}
@@ -130,23 +130,23 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			latest: {
 				imports: ['Accordion'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<Accordion
 						${json.align !== undefined ? `align='${json.align}'` : ''}
 						${json.size !== undefined ? `size='${json.size}'` : ''}
 						${reactClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</Accordion>`;
 				}
 			},
 			v10: {
 				imports: ['Accordion'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<Accordion
 						${json.align !== undefined ? `align='${json.align}'` : ''}
 						${json.size !== undefined ? `size='${json.size}'` : ''}
 						${reactClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</Accordion>`;
 				}
 			}

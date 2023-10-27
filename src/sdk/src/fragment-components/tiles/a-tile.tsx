@@ -104,11 +104,11 @@ export const componentInfo: ComponentInfo = {
 				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : ''}';`,
 				outputs: (_) => '',
 				imports: ['TilesModule'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<cds-tile
 						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 						${angularClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</cds-tile>`;
 				}
 			},
@@ -116,11 +116,11 @@ export const componentInfo: ComponentInfo = {
 				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = '${json.light ? 'light' : ''}';`,
 				outputs: (_) => '',
 				imports: ['TilesModule'],
-				code: ({ json, fragments, jsonToTemplate }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<ibm-tile
 						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 						${angularClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</ibm-tile>`;
 				}
 			}
@@ -128,21 +128,21 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			latest: {
 				imports: ['Tile'],
-				code: ({ json, jsonToTemplate, fragments }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<Tile
 						${json.light !== undefined ? `light={${json.light}}` : ''}
 						${reactClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</Tile>`;
 				}
 			},
 			v10: {
 				imports: ['Tile'],
-				code: ({ json, jsonToTemplate, fragments }) => {
+				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<Tile
 						${json.light !== undefined ? `light={${json.light}}` : ''}
 						${reactClassNamesFromComponentObj(json)}>
-							${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
+							${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 					</Tile>`;
 				}
 			}

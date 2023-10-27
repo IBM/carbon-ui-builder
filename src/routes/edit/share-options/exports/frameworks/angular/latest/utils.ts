@@ -2,6 +2,7 @@ import { Options } from 'prettier';
 import parserBabel from 'prettier/parser-babel';
 import parserHtml from 'prettier/parser-html';
 import parserCss from 'prettier/parser-postcss';
+import Handlebars from 'handlebars';
 import { allComponents } from '../../../../../../../sdk/src/fragment-components';
 import { addIfNotExist } from '../../../../../../../ui-fragment/src/utils';
 import { tagNameFromFragment } from '../../../../../../../sdk/src/tools';
@@ -70,20 +71,34 @@ export const getAngularOutputsFromJson = (json: any): string => {
 	return `${getOne(json)} ${json.items ? json.items.map((item: any) => getAngularOutputsFromJson(item)).join('\n') : ''}
 	`;
 };
-export const jsonToTemplate = (json: any, fragments: any[]) => {
+export const jsonToTemplate = (json: any, fragments: any[], customComponentsCollections: any[]) => {
 	if (typeof json === 'string' || !json) {
 		return json;
 	}
 
 	for (const component of Object.values(allComponents)) {
 		if (json.type === component.componentInfo.type && !component.componentInfo.codeExport.angular.latest.isNotDirectExport) {
-			return component.componentInfo.codeExport.angular.latest.code({ json, jsonToTemplate, fragments });
+			return component.componentInfo.codeExport.angular.latest.code({ json, jsonToTemplate, fragments, customComponentsCollections });
 		}
 	}
 
 	if (json.items) {
-		return json.items.map((item: any) => jsonToTemplate(item, fragments)).join('\n');
+		return json.items.map((item: any) => jsonToTemplate(item, fragments, customComponentsCollections)).join('\n');
 	}
+
+	const activeCollection = customComponentsCollections.find((collection) => collection.name === json.componentsCollection);
+	if (!activeCollection) {
+		return;
+	}
+
+	// find the angular.template from the collection, parse it and return it as a string
+	const activeComponent = activeCollection.components?.find((component: any) => component.type === json.type);
+	if (!activeComponent?.angular?.template) {
+		return;
+	}
+
+	const htmlPreview = (Handlebars.compile(activeComponent.angular.template))(json);
+	return htmlPreview;
 };
 
 export const getAllSubfragments = (json: any, fragments: any[]) => {
