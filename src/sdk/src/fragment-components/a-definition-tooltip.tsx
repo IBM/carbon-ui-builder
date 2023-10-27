@@ -9,7 +9,7 @@ import { css } from 'emotion';
 import { AComponent, ComponentInfo } from './a-component';
 
 import image from './../assets/component-icons/tooltip.svg';
-import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../tools';
+import { nameStringToVariableString, reactClassNamesFromComponentObj } from '../tools';
 import { styleObjectToString } from '../../../ui-fragment/src/utils';
 
 const preventCheckEvent = css`
@@ -60,7 +60,7 @@ export const ADefinitionTooltipSettingsUI = ({ selectedComponent, setComponent }
 			labelText='Tooltip Message'
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
-				definition: event.currentTarget.definition
+				definition: event.currentTarget.value
 			})} />
 		<Checkbox
 			id='defaultOpen'
@@ -147,7 +147,7 @@ export const componentInfo: ComponentInfo = {
 					@Output() ${name}onClose = new EventEmitter<any>();
 					@Output() ${name}onOpen = new EventEmitter<string>();`;
 				},
-				imports: ['DefinitionTooltipModule'], // TODO: do we need this?
+				imports: ['DefinitionTooltipModule'],
 				code: ({ json }) => {
 					const name = nameStringToVariableString(json.codeContext?.name);
 					return `<cds-tooltip-definition
@@ -162,22 +162,10 @@ export const componentInfo: ComponentInfo = {
 				}
 			},
 			v10: {
-				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Description = "${json.description}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}TriggerText = "${json.triggerText}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Direction = "${json.align}";`,
+				inputs: () => '',
 				outputs: () => '',
-				imports: ['TooltipModule'],
-				code: ({ json }) => `<div class="bx--tooltip__label">
-					{{${nameStringToVariableString(json.codeContext?.name)}TriggerText}}
-					<span
-						${angularClassNamesFromComponentObj(json)}
-						[ibmTooltip]="${nameStringToVariableString(json.codeContext?.name)}Description"
-						${json.align ? `[align]='${nameStringToVariableString(json.codeContext?.name)}Direction` : ''}>
-						<div role="button">
-							<svg ibmIcon="information--filled" size="16"></svg>
-						</div>
-					</span>
-				</div>`
+				imports: [],
+				code: () => ''
 			}
 		},
 		react: {
@@ -193,16 +181,8 @@ export const componentInfo: ComponentInfo = {
 				</DefinitionTooltip>`
 			},
 			v10: {
-				imports: ['DefinitionTooltip'],
-				code: ({ json }) => `<Tooltip
-						${reactClassNamesFromComponentObj(json)}
-						description="${json.description}"
-						className="tooltip-trigger"
-						triggerText="${json.triggerText}"
-						${json.alignment ? `align="${json.alignment}"` : ''}
-						${json.align ? `align="${json.align}"` : ''}>
-							${json.description}
-					</Tooltip>`
+				imports: [],
+				code: () => ''
 			}
 		}
 	}

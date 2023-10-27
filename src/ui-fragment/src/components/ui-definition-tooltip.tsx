@@ -12,7 +12,7 @@ export interface DefinitionTooltipState {
 		name: string;
 	};
 	description: string;
-	defaultOpen?: boolean;
+	isDefaultOpened?: boolean;
 	definition?: string;
 	isOpenOnHover?: boolean;
 	cssClasses?: CssClasses[];
@@ -37,18 +37,18 @@ export const slots = {
 	}),
 	enableOpenOnDefault: (state: any) => ({
 		...state,
-		defaultOpen: true
+		isDefaultOpened: true
 	}),
 	disableOpenOnDefault: (state: any) => ({
 		...state,
-		defaultOpen: false
+		isDefaultOpened: false
 	}),
 	toggleOpenOnDefault: (state: any) => ({
 		...state,
-		defaultOpen: !state.defaultOpen
+		isDefaultOpened: !state.isDefaultOpened
 	}),
 	isOpenOnHover: 'boolean',
-	defaultOpen: 'boolean',
+	isDefaultOpened: 'boolean',
 	alignment: 'string',
 	definition: 'string',
 	description: 'string'
@@ -83,7 +83,7 @@ export const UIDefinitionTooltip = ({ state, sendSignal }: {
 		definition={state.definition}
 		name={state.codeContext?.name}
 		openOnHover={state.isOpenOnHover ? state.isOpenOnHover : false}
-		defaultOpen={state.defaultOpen ? state.defaultOpen : false}
+		defaultOpen={state.isDefaultOpened ? state.isDefaultOpened : false}
 		className={cssClasses}>
 			{state.description}
 		</DefinitionTooltip>;
