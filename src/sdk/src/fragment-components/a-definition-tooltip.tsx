@@ -13,9 +13,8 @@ import { nameStringToVariableString, reactClassNamesFromComponentObj } from '../
 import { styleObjectToString } from '../../../ui-fragment/src/utils';
 
 const preventCheckEvent = css`
-	.bx--tooltip__label {
-		pointer-events: none;
-	}`;
+	pointer-events: none;
+`;
 
 export const ADefinitionTooltipSettingsUI = ({ selectedComponent, setComponent }: any) => {
 
@@ -103,15 +102,16 @@ export const ADefinitionTooltip = ({
 		<AComponent
 		componentObj={componentObj}
 		rejectDrop={true}
-		// make the icon hover only and whatever other customer css classes to be augmented
-		className={`${preventCheckEvent} ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} `}
+
 		{...rest}>
-			<DefinitionTooltip
-				className={css`${styleObjectToString(componentObj.style)}`}
-				definition={componentObj.definition}
-				align={componentObj.alignment}>
-					{componentObj.description}
-			</DefinitionTooltip>
+			<div className={`${preventCheckEvent} ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} `}>
+				<DefinitionTooltip
+					className={css`${styleObjectToString(componentObj.style)}`}
+					definition={componentObj.definition}
+					align={componentObj.alignment}>
+						{componentObj.description}
+				</DefinitionTooltip>
+			</div>
 		</AComponent>
 	);
 };
