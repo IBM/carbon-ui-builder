@@ -130,17 +130,17 @@ export const componentInfo: ComponentInfo = {
 	type: 'definition-tooltip',
 	defaultComponentObj: {
 		type: 'definition-tooltip',
-		description: 'default text',
+		description: 'description',
 		alignment: 'bottom-left'
 	},
 	image,
 	codeExport: {
 		angular: {
 			latest: {
-				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Description = "${json.description}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}IsOpen = "${json.isDefaultOpened}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Align = "${json.alignment}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}definition = "${json.definition}";`,
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Description = "${json.description ? json.description : 'description'}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}IsOpen = "${json.isDefaultOpened ? json.isDefaultOpened : false}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Align = "${json.alignment ? json.alignment : 'bottom-left' }";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}definition = "${json.definition ? json.definition : 'default tooltip message' }";`,
 				outputs: ({ json }) => {
 					const name = nameStringToVariableString(json.codeContext?.name);
 					return `@Output() ${name}isOpenChange = new EventEmitter<any>();
@@ -175,9 +175,9 @@ export const componentInfo: ComponentInfo = {
 					${reactClassNamesFromComponentObj(json)}
 					align="${json.alignment}"
 					${json.isDefaultOpened ? `defaultOpen=${json.isDefaultOpened}` : ''}
-					definition="${json.definition}
+					definition="${json.definition ?  json.definition : 'default tooltip message'}
 					${json.isOpenOnHover ? 'openOnHover' : ''}>
-						${json.description}
+						${json.description ? json.description : 'description'}
 				</DefinitionTooltip>`
 			},
 			v10: {
