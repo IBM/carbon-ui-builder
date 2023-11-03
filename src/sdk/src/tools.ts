@@ -161,7 +161,7 @@ export const getUsedCollectionsAngularDependencies = (collections: any[], compon
 };
 
 export const getCustomComponentByType = (componentType: string, collections: any[]) => {
-	const allComponents = collections.flatMap((collection: any) => collection.components || []);
+	const allComponents = collections?.flatMap((collection: any) => collection.components || []) || [];
 
 	return allComponents.find((component: any) => component.type === componentType);
 };
