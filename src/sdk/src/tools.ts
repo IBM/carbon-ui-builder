@@ -131,7 +131,7 @@ export const getUsedCollectionsAngularStylePaths = (collections: any[], componen
 
 	return collections
 		?.filter((collection: any) => usedCollectionsNames.includes(collection.name))
-		.flatMap((collection: any) => collection.angular?.stylePaths);
+		.flatMap((collection: any) => collection.angular?.stylePaths) || [];
 };
 
 export const getUsedCollectionsAngularStyleImportPaths = (collections: any[], componentObj: any) => {
@@ -139,7 +139,7 @@ export const getUsedCollectionsAngularStyleImportPaths = (collections: any[], co
 
 	return collections
 		?.filter((collection: any) => usedCollectionsNames.includes(collection.name))
-		.flatMap((collection: any) => collection.angular?.styleImportPaths);
+		.flatMap((collection: any) => collection.angular?.styleImportPaths) || [];
 };
 
 export const getUsedCollectionsValuesByProp = (collections: any[], componentObj: any, propName: string) => {
