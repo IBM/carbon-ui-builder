@@ -160,6 +160,12 @@ export const getUsedCollectionsAngularDependencies = (collections: any[], compon
 	return getUsedCollectionsValuesByProp(collections, componentObj, 'angular.dependencies');
 };
 
+export const getCustomComponentByType = (componentType: string, collections: any[]) => {
+	const allComponents = collections.flatMap((collection: any) => collection.components || []);
+
+	return allComponents.find((component: any) => component.type === componentType);
+};
+
 const updatedList = (list: any[], item: any, dropInIndex?: number) => {
 	if (dropInIndex === undefined) {
 		return [...list, item];
