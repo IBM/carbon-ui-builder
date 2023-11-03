@@ -46,8 +46,8 @@ const getComponentCode = (fragment: any, fragments: any[], globalStyleClasses: a
 				styleUrls: ['./${tagNameFromFragment(fragment)}.component.scss']` : ''}
 			})
 			export class ${classNameFromFragment(fragment)} {
-				${getAngularInputsFromJson(fragment.data)}
-				${getAngularOutputsFromJson(fragment.data)}
+				${getAngularInputsFromJson(fragment.data, customComponentsCollections)}
+				${getAngularOutputsFromJson(fragment.data, customComponentsCollections)}
 			}
 		`, formatOptionsTypescript),
 		icon: Document

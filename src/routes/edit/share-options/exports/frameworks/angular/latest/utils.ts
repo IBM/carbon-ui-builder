@@ -5,7 +5,8 @@ import parserCss from 'prettier/parser-postcss';
 import Handlebars from 'handlebars';
 import { allComponents } from '../../../../../../../sdk/src/fragment-components';
 import { addIfNotExist } from '../../../../../../../ui-fragment/src/utils';
-import { tagNameFromFragment } from '../../../../../../../sdk/src/tools';
+import { getCustomComponentByType, tagNameFromFragment } from '../../../../../../../sdk/src/tools';
+import { camelCase } from 'lodash';
 
 export const formatOptionsTypescript: Options = {
 	plugins: [parserBabel],
@@ -26,6 +27,14 @@ export const formatOptionsCss: Options = {
 	plugins: [parserCss]
 };
 
+const getTemplateModel = (json: any) => ({
+	variableName: camelCase(json.codeContext?.name || ''),
+	model: json
+});
+
+const parseTemplate = (template: string, json: any) =>
+	(Handlebars.compile(template || ''))(getTemplateModel(json));
+
 export const jsonToAngularImports = (json: any) => {
 	const imports: any[] = [];
 
@@ -44,33 +53,41 @@ export const jsonToAngularImports = (json: any) => {
 	return imports;
 };
 
-export const getAngularInputsFromJson = (json: any): string => {
+export const getAngularInputsFromJson = (json: any, customComponentsCollections: any[]): string => {
 	const getOne = (json: any) => {
 		for (const component of Object.values(allComponents)) {
 			if (json.type === component.componentInfo.type) {
 				return component.componentInfo.codeExport.angular?.latest.inputs({ json }) || '';
 			}
 		}
-		return '';
+		const component = getCustomComponentByType(json.type, customComponentsCollections);
+
+		return parseTemplate(component?.angular?.inputs, json);
 	};
 
-	return `${getOne(json)} ${json.items ? json.items.map((item: any) => getAngularInputsFromJson(item)).join('\n') : ''}
+	return `${getOne(json)} ${json.items ? json.items.map((item: any) => getAngularInputsFromJson(item, customComponentsCollections)).join('\n') : ''}
 	`;
 };
 
-export const getAngularOutputsFromJson = (json: any): string => {
+export const getAngularOutputsFromJson = (json: any, customComponentsCollections: any[]): string => {
 	const getOne = (json: any) => {
 		for (const component of Object.values(allComponents)) {
 			if (json.type === component.componentInfo.type) {
 				return component.componentInfo.codeExport.angular?.latest.outputs({ json }) || '';
 			}
 		}
-		return '';
+		const component = getCustomComponentByType(json.type, customComponentsCollections);
+
+		return parseTemplate(component?.angular?.outputs, json);
 	};
 
-	return `${getOne(json)} ${json.items ? json.items.map((item: any) => getAngularOutputsFromJson(item)).join('\n') : ''}
+	return `${getOne(json)} ${
+		json.items
+			? json.items.map((item: any) => getAngularOutputsFromJson(item, customComponentsCollections)).join('\n')
+			: ''}
 	`;
 };
+
 export const jsonToTemplate = (json: any, fragments: any[], customComponentsCollections: any[]) => {
 	if (typeof json === 'string' || !json) {
 		return json;
@@ -97,7 +114,7 @@ export const jsonToTemplate = (json: any, fragments: any[], customComponentsColl
 		return;
 	}
 
-	const htmlPreview = (Handlebars.compile(activeComponent.angular.template))(json);
+	const htmlPreview = parseTemplate(activeComponent.angular.template, json);
 	return htmlPreview;
 };
 
