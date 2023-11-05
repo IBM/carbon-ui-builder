@@ -1,11 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import './index.scss';
 import { App } from './app';
 import * as serviceWorker from './serviceWorker';
 
-// eslint-disable-next-line
-const render = (Component: any) => ReactDOM.render(<Component/>, document.getElementById('root'));
+const render = (Component: any) => {
+	const container = document.getElementById('root') as HTMLElement;
+	const root = createRoot(container);
+	root.render(
+		<Component />
+	);
+};
 
 render(App);
 

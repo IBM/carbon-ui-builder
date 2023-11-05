@@ -179,7 +179,7 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 	};
 
 	const onAddFiles = useCallback(
-		(evt, { addedFiles }) => {
+		(evt: any, { addedFiles }: any) => {
 			evt.stopPropagation();
 			const newFiles = addedFiles.map((file: any) => ({
 				uuid: uid(),
@@ -204,7 +204,7 @@ export const ImportJsonModal = (props: ImportJsonModalProps) => {
 	);
 
 	const handleFileUploaderItemClick = useCallback(
-		(_, { uuid: clickedUuid }) =>
+		(_: any, { uuid: clickedUuid }: any) =>
 			setFiles(files.filter(({ uuid }) => clickedUuid !== uuid)),
 		[files]
 	);
