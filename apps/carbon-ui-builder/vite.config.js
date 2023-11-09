@@ -3,18 +3,16 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  build: {
-    outDir: '../../dist/apps/carbon-ui-builder'
-  },
-  server: {
-    port: 4200,
-    open: true,
-  },
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: 'src/setupTests.ts',
-    css: true,
-  },
-  plugins: [react()],
+	build: {
+		outDir: '../../dist/apps/carbon-ui-builder'
+	},
+	server: {
+		port: 3000,
+		open: true,
+	},
+	plugins: [react()],
+	define: {
+		// Node.js global workaround
+		global: {}
+	}
 });
