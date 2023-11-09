@@ -1,0 +1,7 @@
+{
+  "name": "carbon-ui-builder",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/carbon-ui-builder/src",
+  "projectType": "application",
+  "tags": []
+}
