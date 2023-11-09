@@ -1,7 +1,45 @@
 {
-  "name": "carbon-ui-builder",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/carbon-ui-builder/src",
-  "projectType": "application",
-  "tags": []
+	"name": "carbon-ui-builder",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "apps/carbon-ui-builder/src",
+	"projectType": "application",
+	"tags": [],
+	"targets": {
+		"build": {
+			"executor": "@nx/vite:build",
+			"outputs": [
+				"{options.outputPath}"
+			],
+			"defaultConfiguration": "production",
+			"options": {
+				"outputPath": "dist/apps/carbon-ui-builder"
+			},
+			"configurations": {
+				"development": {
+					"mode": "development"
+				},
+				"production": {
+					"mode": "production"
+				}
+			}
+		},
+		"serve": {
+			"executor": "@nx/vite:dev-server",
+			"defaultConfiguration": "development",
+			"options": {
+				"buildTarget": "carbon-ui-builder:build",
+				"port": 3000
+			},
+			"configurations": {
+				"development": {
+					"buildTarget": "carbon-ui-builder:build:development",
+					"hmr": true
+				},
+				"production": {
+					"buildTarget": "carbon-ui-builder:build:production",
+					"hmr": false
+				}
+			}
+		}
+	}
 }
