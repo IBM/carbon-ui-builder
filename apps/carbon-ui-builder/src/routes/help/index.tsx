@@ -5,6 +5,9 @@ import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import { useParams } from 'react-router-dom';
 
+import introduction from './introduction.md';
+import hotkeys from './hotkeys.md';
+
 const helpContainerStyle = css`
 	position: absolute;
 	width: calc(100vw - 6rem);
@@ -15,8 +18,8 @@ const helpContainerStyle = css`
 `;
 
 const helpIndex: any = {
-	introduction: require('./introduction.md'),
-	hotkeys: require('./hotkeys.md')
+	introduction,
+	hotkeys
 };
 
 export const Help = () => {
