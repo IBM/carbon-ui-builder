@@ -1,5 +1,7 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
+	Button,
 	Checkbox,
 	TextInput
 } from '@carbon/react';
@@ -9,21 +11,18 @@ import { AComponent, ComponentInfo } from './a-component';
 
 import image from './../assets/component-icons/button.svg';
 import { classNameFromFragment, tagNameFromFragment } from '../helpers/tools';
-// import { LinkButton } from '../../../components';
+
 
 export const AFragmentSettingsUI = ({ selectedComponent, setComponent }: any) => {
+	const navigate = useNavigate();
 	return <>
-		{/**
-		 * @todo - LinkButton is component in `App`
-		 */}
-		{/* <LinkButton
+		<Button onClick={() => navigate(`/edit/${selectedComponent.fragmentId}`)}
 		kind='secondary'
 		size='sm'
 		renderIcon={Edit}
-		className={css`margin-bottom: 1rem`}
-		to={`/edit/${selectedComponent.fragmentId}`}>
+		className={css`margin-bottom: 1rem`}>
 			Edit fragment
-		</LinkButton> */}
+		</Button>
 		<Checkbox
 			labelText='Show outline'
 			id='fragment-outline'
