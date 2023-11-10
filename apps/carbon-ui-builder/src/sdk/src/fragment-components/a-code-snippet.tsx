@@ -11,7 +11,7 @@ import { ComponentInfo } from '.';
 import Editor from '@monaco-editor/react';
 import image from './../assets/component-icons/code-snippet.svg';
 import { nameStringToVariableString } from '../tools';
-import { styleObjectToString } from '../../../ui-fragment/src/utils';
+import { styleObjectToString } from '@carbon-builder/ui-fragment';
 
 export const ACodeSnippetSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const variantItems = [

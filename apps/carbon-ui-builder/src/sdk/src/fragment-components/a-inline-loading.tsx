@@ -16,7 +16,7 @@ import {
 	reactClassNamesFromComponentObj,
 	angularClassNamesFromComponentObj
 } from '../tools';
-import { styleObjectToString } from '../../../ui-fragment/src/utils';
+import { styleObjectToString } from '@carbon-builder/ui-fragment';
 
 export const AInlineLoadingSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const statusItems = [

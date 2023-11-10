@@ -15,7 +15,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../tools';
 import { APlaceholder } from '../a-placeholder';
-import { styleObjectToString } from '../../../../ui-fragment/src/utils';
+import { styleObjectToString } from '@carbon-builder/ui-fragment';
 
 export const ATileSettingsUI = ({ selectedComponent, setComponent, fragment, setFragment }: any) => {
 	return <>

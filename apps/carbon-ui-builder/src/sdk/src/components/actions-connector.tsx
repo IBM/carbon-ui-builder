@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ComboBox, Dropdown } from '@carbon/react';
 import { DraggableTileList } from '../draggable-list';
-import { Action } from '../../../ui-fragment/src/types';
+import { Action } from '@carbon-builder/ui-fragment';
 import {
 	actionDestinationsFromFragment,
 	getComponentById,

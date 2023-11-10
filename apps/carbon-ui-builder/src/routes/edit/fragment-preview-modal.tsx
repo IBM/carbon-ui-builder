@@ -10,7 +10,7 @@ import {
 } from '@carbon/react/icons';
 import { css } from 'emotion';
 import { ModalContext } from '../../context/modal-context';
-import { UIFragment } from '../../ui-fragment/src/ui-fragment';
+import { UIFragment } from '@carbon-builder/ui-fragment';
 import { useNavigate } from 'react-router-dom';
 import { GlobalStateContext } from '../../context';
 import { getFragmentDuplicate } from '../../utils/fragment-tools';

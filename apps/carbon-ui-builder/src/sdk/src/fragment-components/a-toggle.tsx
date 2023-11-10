@@ -8,7 +8,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../tools';
 import { css, cx } from 'emotion';
-import { styleObjectToString } from '../../../ui-fragment/src/utils';
+import { styleObjectToString } from '@carbon-builder/ui-fragment';
 
 const preventCheckEvent = css`
 	pointer-events: none;

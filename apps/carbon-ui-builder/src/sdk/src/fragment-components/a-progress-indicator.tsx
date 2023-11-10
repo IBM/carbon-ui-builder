@@ -14,7 +14,7 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../tools';
-import { styleObjectToString } from '../../../ui-fragment/src/utils';
+import { styleObjectToString } from '@carbon-builder/ui-fragment';
 import { DraggableTileList } from '../draggable-list';
 
 export const AProgressIndicatorSettingsUI = ({ selectedComponent, setComponent }: any) => {

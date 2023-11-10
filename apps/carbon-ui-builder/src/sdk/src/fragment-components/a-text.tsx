@@ -7,7 +7,7 @@ import 'react-quill/dist/quill.snow.css';
 import image from './../assets/component-icons/text.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../tools';
 import { css } from 'emotion';
-import { styleObjectToString } from '../../../ui-fragment/src/utils';
+import { styleObjectToString } from '@carbon-builder/ui-fragment';
 
 export const ATextSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const [isRichText, _setIsRichText] = useState(!!selectedComponent.richText);

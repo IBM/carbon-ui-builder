@@ -12,7 +12,7 @@ import { AComponent } from './a-component';
 import { getParentComponent, updatedState } from '../tools';
 import { ComponentInfo } from '.';
 import { APlaceholder } from './a-placeholder';
-import { styleObjectToString } from '../../../ui-fragment/src/utils';
+import { styleObjectToString } from '@carbon-builder/ui-fragment';
 
 const helpIconStyle = css`
 	color: #525252;

@@ -15,7 +15,7 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../tools';
-import { styleObjectToString } from '../../../ui-fragment/src/utils';
+import { styleObjectToString } from '@carbon-builder/ui-fragment';
 import { preventClickStyle } from '../styles';
 
 export const ANumberInputSettingsUI = ({ selectedComponent, setComponent }: any) => {

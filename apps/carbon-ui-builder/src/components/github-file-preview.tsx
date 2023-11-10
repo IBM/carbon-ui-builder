@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Editor from '@monaco-editor/react';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
-import { UIFragment } from '../ui-fragment/src/ui-fragment';
+import { UIFragment } from '@carbon-builder/ui-fragment';
 import { css, cx } from 'emotion';
 import { filenameToLanguage } from '../sdk/src/tools';
 

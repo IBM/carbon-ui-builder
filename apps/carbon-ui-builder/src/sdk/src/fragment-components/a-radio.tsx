@@ -14,7 +14,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../tools';
 import image from './../assets/component-icons/radio.svg';
-import { styleObjectToString } from '../../../ui-fragment/src/utils';
+import { styleObjectToString } from '@carbon-builder/ui-fragment';
 import { Adder } from '../adder';
 
 export const ARadioSettingsUI = ({ selectedComponent, setComponent, fragment }: any) => {
