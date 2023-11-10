@@ -13,7 +13,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../helpers/tools';
 import { css, cx } from 'emotion';
-import { styleObjectToString } from '@carbon-builder/ui-fragment';
+import { styleObjectToString } from '@carbon-builder/player';
 import { DraggableTileList } from '../helpers/draggable-list';
 
 const preventCheckEventStyle = css`

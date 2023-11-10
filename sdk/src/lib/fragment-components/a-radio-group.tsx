@@ -12,7 +12,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../helpers/tools';
 import { css, cx } from 'emotion';
-import { styleObjectToString } from '@carbon-builder/ui-fragment';
+import { styleObjectToString } from '@carbon-builder/player';
 
 export const ARadioGroupSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const orientationItems = [

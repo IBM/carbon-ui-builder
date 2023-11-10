@@ -15,7 +15,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../helpers/tools';
 import { APlaceholder } from '../a-placeholder';
-import { styleObjectToString } from '@carbon-builder/ui-fragment';
+import { styleObjectToString } from '@carbon-builder/player';
 import { Adder } from '../../helpers/adder';
 
 export const AAccordionItemSettingsUI = ({ selectedComponent, setComponent }: any) => {

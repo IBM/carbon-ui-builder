@@ -10,7 +10,7 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../helpers/tools';
-import { styleObjectToString } from '@carbon-builder/ui-fragment';
+import { styleObjectToString } from '@carbon-builder/player';
 
 export const ACheckboxSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>

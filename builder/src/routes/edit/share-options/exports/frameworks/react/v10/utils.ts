@@ -4,7 +4,7 @@ import parserCss from 'prettier/parser-postcss';
 import { sortedUniq } from 'lodash';
 
 import { allComponents } from '@carbon-builder/sdk';
-import { addIfNotExist } from '@carbon-builder/ui-fragment';
+import { addIfNotExist } from '@carbon-builder/player';
 
 export const formatOptions: Options = {
 	plugins: [parserBabel],

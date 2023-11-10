@@ -16,7 +16,7 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../helpers/tools';
-import { styleObjectToString } from '@carbon-builder/ui-fragment';
+import { styleObjectToString } from '@carbon-builder/player';
 import { preventClickStyle } from '../helpers/styles';
 
 export const ASearchInputSettingsUI = ({ selectedComponent, setComponent }: any) => {

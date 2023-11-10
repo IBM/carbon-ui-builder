@@ -7,7 +7,7 @@ import React, {
 import { Octokit } from 'octokit';
 import { Buffer } from 'buffer';
 import { GlobalStateContext } from './global-state-context';
-import { isFragment } from '@carbon-builder/ui-fragment';
+import { isFragment } from '@carbon-builder/player';
 
 const GithubContext: React.Context<any> = createContext({});
 

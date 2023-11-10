@@ -1,7 +1,7 @@
 {
-	"name": "ui-fragment",
+	"name": "player",
 	"$schema": "../node_modules/nx/schemas/project-schema.json",
-	"sourceRoot": "ui-fragment/src",
+	"sourceRoot": "player/src",
 	"projectType": "library",
 	"tags": [],
 	"targets": {
@@ -9,7 +9,7 @@
 			"executor": "@nx/eslint:lint",
 			"outputs": ["{options.outputFile}"],
 			"options": {
-				"lintFilePatterns": ["ui-fragment/**/*.{ts,tsx,js,jsx}"]
+				"lintFilePatterns": ["player/**/*.{ts,tsx,js,jsx}"]
 			}
 		},
 		"build": {
@@ -17,7 +17,7 @@
 			"outputs": ["{options.outputPath}"],
 			"defaultConfiguration": "production",
 			"options": {
-				"outputPath": "dist/ui-fragment"
+				"outputPath": "dist/player"
 			},
 			"configurations": {
 				"development": {

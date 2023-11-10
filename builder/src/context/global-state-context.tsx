@@ -10,7 +10,7 @@ import {
 	getCustomComponentsCollectionsFromLocalStorage,
 	getFragmentsFromLocalStorage
 } from '../utils/fragment-tools';
-import { expandJsonToState } from '@carbon-builder/ui-fragment';
+import { expandJsonToState } from '@carbon-builder/player';
 import { getFragmentJsonExport as getFragmentJsonExport_, CURRENT_MODEL_VERSION, updateModelInPlace } from '@carbon-builder/sdk';
 
 const GlobalStateContext: React.Context<any> = createContext(null);

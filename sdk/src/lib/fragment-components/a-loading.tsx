@@ -14,7 +14,7 @@ import {
 	reactClassNamesFromComponentObj,
 	angularClassNamesFromComponentObj
 } from '../helpers/tools';
-import { styleObjectToString } from '@carbon-builder/ui-fragment';
+import { styleObjectToString } from '@carbon-builder/player';
 
 const overlayStyle = css`
 .cds--loading-overlay {

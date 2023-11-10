@@ -4,7 +4,7 @@ import parserHtml from 'prettier/parser-html';
 import parserCss from 'prettier/parser-postcss';
 import Handlebars from 'handlebars';
 import { allComponents } from '@carbon-builder/sdk';
-import { addIfNotExist } from '@carbon-builder/ui-fragment';
+import { addIfNotExist } from '@carbon-builder/player';
 import { getCustomComponentByType, tagNameFromFragment } from '@carbon-builder/sdk';
 import { camelCase } from 'lodash';
 

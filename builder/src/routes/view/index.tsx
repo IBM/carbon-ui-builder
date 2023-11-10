@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { GlobalStateContext } from '../../context';
-import { UIFragment } from '@carbon-builder/ui-fragment';
+import { UIFragment } from '@carbon-builder/player';
 
 export const View = () => {
 	const { fragments, getExpandedFragmentState } = useContext(GlobalStateContext);

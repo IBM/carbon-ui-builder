@@ -6,7 +6,7 @@ import {
 	Html,
 	Json
 } from '@carbon/react/icons';
-import { getAllFragmentStyleClasses } from '@carbon-builder/ui-fragment';
+import { getAllFragmentStyleClasses } from '@carbon-builder/player';
 import { hasFragmentStyleClasses } from '../../../../../../../utils/fragment-tools';
 import { format } from '../../utils';
 import {

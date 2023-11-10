@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { UIFragment } from '@carbon-builder/ui-fragment';
+import { UIFragment } from '@carbon-builder/player';
 import JSONCrush from 'jsoncrush';
 
 export const PreviewJson = () => {

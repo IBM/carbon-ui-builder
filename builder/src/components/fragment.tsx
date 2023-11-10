@@ -14,7 +14,7 @@ import Handlebars from 'handlebars';
 import { AComponent, allComponents, ComponentInfoRenderProps } from '@carbon-builder/sdk';
 import { getFragmentsFromLocalStorage } from '../utils/fragment-tools';
 import { GlobalStateContext } from '../context';
-import { getAllFragmentStyleClasses, styleObjectToString } from '@carbon-builder/ui-fragment';
+import { getAllFragmentStyleClasses, styleObjectToString } from '@carbon-builder/player';
 import {
 	getDropIndex,
 	getUsedCollectionsStyleUrls,
