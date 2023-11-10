@@ -40,16 +40,16 @@
 	"generators": {
 		"@nx/react": {
 			"application": {
-				"style": "css",
+				"style": "scss",
 				"linter": "eslint",
 				"bundler": "vite",
 				"babel": true
 			},
 			"component": {
-				"style": "css"
+				"style": "scss"
 			},
 			"library": {
-				"style": "css",
+				"style": "scss",
 				"linter": "eslint",
 				"unitTestRunner": "none"
 			}
