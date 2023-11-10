@@ -58,7 +58,7 @@ export const ATextSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			size='sm'
 			labelText='Use rich text'
 			className={css`margin-bottom: 1rem;`}
-			onClick={(event: any) => setIsRichText(event.currentTarget.checked)} />
+			onClick={() => setIsRichText(!isRichText)} />
 		{
 			isRichText
 				? <>
