@@ -13,14 +13,14 @@ import {
 	Development
 } from '@carbon/react/icons';
 import { css } from 'emotion';
-import { componentInfo as gridComponentInfo } from '../../sdk/src/fragment-components/a-grid';
+import { componentInfo as gridComponentInfo } from '@carbon-builder/sdk/a-grid';
+import { initializeIds } from '@carbon-builder/sdk';
 
 import { FragmentTile } from './fragment-tile';
 
 import { generateNewFragment } from './fragment-wizard/generate-new-fragment';
 import { GlobalStateContext } from '../../context';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
-import { initializeIds } from '../../sdk/src/tools';
 import { FragmentWizardModals } from './fragment-wizard/fragment-wizard';
 
 const tileStyle = css`

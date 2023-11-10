@@ -16,7 +16,7 @@ import {
 	jsonToTemplate,
 	otherImportsFromComponentObj
 } from './utils';
-import { classNameFromFragment, tagNameFromFragment } from '../../../../../../../sdk/src/tools';
+import { classNameFromFragment, tagNameFromFragment } from '@carbon-builder/sdk';
 
 const generateTemplate = (json: any, fragments: any[], customComponentsCollections: any[]) => {
 	const carbonImports = jsonToCarbonImports(json);

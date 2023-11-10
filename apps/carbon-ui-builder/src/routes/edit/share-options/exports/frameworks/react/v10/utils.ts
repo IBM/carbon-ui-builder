@@ -3,7 +3,7 @@ import parserBabel from 'prettier/parser-babel';
 import parserCss from 'prettier/parser-postcss';
 import { sortedUniq } from 'lodash';
 
-import { allComponents } from '../../../../../../../sdk/src/fragment-components';
+import { allComponents } from '@carbon-builder/sdk';
 import { addIfNotExist } from '@carbon-builder/ui-fragment';
 
 export const formatOptions: Options = {

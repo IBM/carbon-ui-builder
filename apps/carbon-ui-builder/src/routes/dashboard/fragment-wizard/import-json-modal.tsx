@@ -14,7 +14,7 @@ import { generateNewFragment } from './generate-new-fragment';
 
 import { GlobalStateContext, NotificationActionType, NotificationContext } from '../../../context';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
-import { CURRENT_MODEL_VERSION, updateModelInPlace } from '../../../utils/model-converter';
+import { CURRENT_MODEL_VERSION, updateModelInPlace } from '@carbon-builder/sdk';
 
 const fragmentOptions = css`
 	margin-left: 30px;

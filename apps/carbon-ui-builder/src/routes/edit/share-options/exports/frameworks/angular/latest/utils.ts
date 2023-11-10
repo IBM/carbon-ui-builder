@@ -3,9 +3,9 @@ import parserBabel from 'prettier/parser-babel';
 import parserHtml from 'prettier/parser-html';
 import parserCss from 'prettier/parser-postcss';
 import Handlebars from 'handlebars';
-import { allComponents } from '../../../../../../../sdk/src/fragment-components';
+import { allComponents } from '@carbon-builder/sdk';
 import { addIfNotExist } from '@carbon-builder/ui-fragment';
-import { getCustomComponentByType, tagNameFromFragment } from '../../../../../../../sdk/src/tools';
+import { getCustomComponentByType, tagNameFromFragment } from '@carbon-builder/sdk';
 import { camelCase } from 'lodash';
 
 export const formatOptionsTypescript: Options = {

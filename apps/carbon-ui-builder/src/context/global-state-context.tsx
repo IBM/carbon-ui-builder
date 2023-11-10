@@ -11,8 +11,7 @@ import {
 	getFragmentsFromLocalStorage
 } from '../utils/fragment-tools';
 import { expandJsonToState } from '@carbon-builder/ui-fragment';
-import { getFragmentJsonExport as getFragmentJsonExport_ } from '../sdk/src/tools';
-import { CURRENT_MODEL_VERSION, updateModelInPlace } from '../utils/model-converter';
+import { getFragmentJsonExport as getFragmentJsonExport_, CURRENT_MODEL_VERSION, updateModelInPlace } from '@carbon-builder/sdk';
 
 const GlobalStateContext: React.Context<any> = createContext(null);
 GlobalStateContext.displayName = 'GlobalStateContext';

@@ -19,7 +19,7 @@ import {
 	jsonToAngularImports,
 	jsonToTemplate
 } from './utils';
-import { classNameFromFragment, tagNameFromFragment } from '../../../../../../../sdk/src/tools';
+import { classNameFromFragment, tagNameFromFragment } from '@carbon-builder/sdk';
 
 const getComponentCode = (fragment: any, fragments: any[], globalStyleClasses: any, customComponentsCollections: any[]) => {
 	const componentCode: any = { // this is the folder for the component

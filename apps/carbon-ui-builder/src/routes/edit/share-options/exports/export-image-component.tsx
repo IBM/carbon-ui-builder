@@ -18,7 +18,7 @@ import { Save } from '@carbon/react/icons';
 import { css } from 'emotion';
 import debounce from 'lodash/debounce';
 import { saveBlob, getFullFileName } from '../../../../utils/file-tools';
-import { RenderProps, getFragmentPreview } from '../../../../sdk/src/tools';
+import { RenderProps, getFragmentPreview } from '@carbon-builder/sdk';
 import { GlobalStateContext } from '../../../../context';
 
 const exportSettingForm = css`

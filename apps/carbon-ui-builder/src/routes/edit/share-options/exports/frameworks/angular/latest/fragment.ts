@@ -25,7 +25,7 @@ import {
 	getUsedCollectionsAngularDependencies,
 	getUsedCollectionsAngularStylePaths,
 	getUsedCollectionsAngularStyleImportPaths
-} from '../../../../../../../sdk/src/tools';
+} from '@carbon-builder/sdk';
 
 const getComponentCode = (fragment: any, fragments: any[], globalStyleClasses: any, customComponentsCollections: any) => {
 	const componentCode: any = { // this is the folder for the component

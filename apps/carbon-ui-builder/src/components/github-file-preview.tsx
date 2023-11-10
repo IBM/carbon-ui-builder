@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import { UIFragment } from '@carbon-builder/ui-fragment';
 import { css, cx } from 'emotion';
-import { filenameToLanguage } from '../sdk/src/tools';
+import { filenameToLanguage } from '@carbon-builder/sdk';
 
 const markdownContainerStyle = css`
 	margin: 1rem 3rem;

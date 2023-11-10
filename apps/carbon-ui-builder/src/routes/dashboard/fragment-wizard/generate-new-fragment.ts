@@ -1,5 +1,4 @@
-import { getRandomId } from '../../../sdk/src/tools';
-import { CURRENT_MODEL_VERSION } from '../../../utils/model-converter';
+import { getRandomId, CURRENT_MODEL_VERSION } from '@carbon-builder/sdk';
 
 export const generateNewFragment = (fragment: any, styleClasses: any[], setStyleClasses: (styleClasses: any[]) => void) => {
 	const addOrReplaceClasses = (newClasses: any[]) => {

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 
 import { SelectableTile } from '@carbon/react';
 
-import { FragmentPreview } from '../../../sdk/src/components/fragment-preview';
+import { FragmentPreview } from '@carbon-builder/sdk';
 import './choose-fragment-modal.scss';
 import { GlobalStateContext } from '../../../context';
 
