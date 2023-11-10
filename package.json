@@ -86,10 +86,10 @@
 		"web-vitals": "^3.5.0"
 	},
 	"scripts": {
-		"start": "nx serve carbon-ui-builder",
-		"build": "nx build carbon-ui-builder",
-		"lint": "nx lint carbon-ui-builder",
-		"lint:fix": "nx lint:fix carbon-ui-builder"
+		"start": "nx serve builder",
+		"build": "nx build builder",
+		"lint": "nx lint builder",
+		"lint:fix": "nx lint:fix builder"
 	},
 	"browserslist": [
 		">0.2%",

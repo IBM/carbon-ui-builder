@@ -22,7 +22,6 @@ serviceWorker.unregister();
 if (import.meta.hot) {
 	import.meta.hot.accept('./app', () => {
 		console.info('App updated');
-		const Next = require('./app').App;
-		render(Next);
+		render(App);
 	});
 }

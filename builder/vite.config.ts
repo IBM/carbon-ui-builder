@@ -7,7 +7,7 @@ import path from 'path';
 export default defineConfig({
 	assetsInclude: ['**/*.md'],
 	build: {
-		outDir: '../../dist/apps/carbon-ui-builder'
+		outDir: '../dist/builder'
 	},
 	plugins: [react(), nxViteTsPaths()],
 	server: {
