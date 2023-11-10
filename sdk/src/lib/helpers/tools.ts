@@ -1,6 +1,6 @@
 import React from 'react';
 import domtoimage from 'dom-to-image';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { UIFragment } from '@carbon-builder/ui-fragment';
 import { expandJsonToState, getAllFragmentStyleClasses, stringToCssClassName } from '@carbon-builder/ui-fragment';
 import { camelCase, kebabCase, uniq, upperFirst } from 'lodash';
@@ -36,18 +36,21 @@ export const getUrlFromBlob = async (blob: any) => {
 };
 
 export const getFragmentPreview = async (fragment: any, props: RenderProps) => {
-	const element = document.createElement('div');
+	const element = document.createElement('div') as HTMLElement;
 	element.className = 'render-preview';
 
-	(element as HTMLElement).style.position = 'absolute';
-	(element as HTMLElement).style.top = '0';
-	(element as HTMLElement).style.left = '0';
-	(element as HTMLElement).style.zIndex = '-1';
-	(element as HTMLElement).style.backgroundColor = 'white';
-	(element as HTMLElement).style.width = `${props.width || 800}px`;
-	(element as HTMLElement).style.height = `${props.height || 400}px`;
-	(element as HTMLElement).style.minHeight = `${props.height || 400}px`;
-	ReactDOM.render(React.createElement(UIFragment, { state: fragment, setState: (_state: any) => {} }), element);
+	element.style.position = 'absolute';
+	element.style.top = '0';
+	element.style.left = '0';
+	element.style.zIndex = '-1';
+	element.style.backgroundColor = 'white';
+	element.style.width = `${props.width || 800}px`;
+	element.style.height = `${props.height || 400}px`;
+	element.style.minHeight = `${props.height || 400}px`;
+	const root = createRoot(element);
+	root.render(
+		React.createElement(UIFragment, { state: fragment, setState: (_state: any) => {} })
+	);
 	document.body.appendChild(element);
 
 	await sleep(100); // wait for render to finish
