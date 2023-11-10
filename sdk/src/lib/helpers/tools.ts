@@ -432,12 +432,13 @@ export const getDropIndex = (event: any, containerElement: HTMLElement) => {
 
 	// find the index of the element user was hovering when dropping
 	const iterate = (selector: string, useParentRect = false) => {
-		for (const element of containerElement.querySelectorAll(selector)) {
+		const elements = containerElement.querySelectorAll(selector);
+		for (let i = 0; i < elements.length; i++) {
 			let rect: any;
 			if (useParentRect) {
-				rect = element.parentElement?.getBoundingClientRect();
+				rect = elements[i].parentElement?.getBoundingClientRect();
 			} else {
-				rect = element.getBoundingClientRect();
+				rect = elements[i].getBoundingClientRect();
 			}
 
 			if (
