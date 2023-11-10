@@ -9,10 +9,6 @@ export default defineConfig({
 	build: {
 		outDir: '../../dist/apps/carbon-ui-builder'
 	},
-	define: {
-		// Node.js global workaround
-		global: {}
-	},
 	plugins: [react(), nxViteTsPaths()],
 	server: {
 		port: 3000,
