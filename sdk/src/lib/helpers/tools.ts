@@ -1,12 +1,17 @@
 import React from 'react';
 import domtoimage from 'dom-to-image';
 import { createRoot } from 'react-dom/client';
-import { UIFragment } from '@carbon-builder/ui-fragment';
-import { expandJsonToState, getAllFragmentStyleClasses, stringToCssClassName } from '@carbon-builder/ui-fragment';
+import {
+	UIFragment,
+	Action,
+	expandJsonToState,
+	getAllFragmentStyleClasses,
+	stringToCssClassName,
+	allComponents as allUIComponents
+} from '@carbon-builder/ui-fragment';
 import { camelCase, kebabCase, uniq, upperFirst } from 'lodash';
 import { CURRENT_MODEL_VERSION } from './model-converter';
-import { allComponents as allUIComponents } from '@carbon-builder/ui-fragment';
-import { Action } from '@carbon-builder/ui-fragment';
+
 
 export let componentCounter = 2; // actually initialized (again) in Fragment TODO refactor this
 
