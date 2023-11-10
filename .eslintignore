@@ -4,3 +4,4 @@ node_modules
 *.svg
 *.json
 *.md
+vite.config.ts
