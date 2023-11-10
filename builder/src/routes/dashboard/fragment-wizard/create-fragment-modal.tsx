@@ -23,16 +23,16 @@ const createFragmentTiles = css`
 		flex-wrap: wrap;
 		justify-content: space-between;
 	}
+	div > div {
+		width: 45%;
+		height: 200px;
+		margin-top: 25px;
+	}
 `;
 
 const createFragmentTileStyle = css`
-	width: 48%;
-	height: 200px;
-	margin-top: 25px;
-
-	.cds--tile {
-		height: 100%;
-	}
+	width: 100%;
+	height: 100%;
 `;
 
 const tileFooter = css`
