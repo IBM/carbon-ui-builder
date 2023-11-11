@@ -8,7 +8,7 @@ import path from 'path';
 export default defineConfig({
 	assetsInclude: ['**/*.md'],
 	build: {
-		outDir: '../dist/builder'
+		outDir: '../dist/app'
 	},
 	plugins: [react(), nxViteTsPaths(), pluginRewriteAll()],
 	server: {
