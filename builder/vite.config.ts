@@ -1,6 +1,7 @@
 import { defineConfig, searchForWorkspaceRoot } from 'vite';
 import react from '@vitejs/plugin-react';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
+import pluginRewriteAll from 'vite-plugin-rewrite-all';
 import path from 'path';
 
 // https://vitejs.dev/config/
@@ -9,7 +10,7 @@ export default defineConfig({
 	build: {
 		outDir: '../dist/builder'
 	},
-	plugins: [react(), nxViteTsPaths()],
+	plugins: [react(), nxViteTsPaths(), pluginRewriteAll()],
 	server: {
 		port: 3000,
 		open: true,
