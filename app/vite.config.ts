@@ -20,14 +20,5 @@ export default defineConfig({
 				searchForWorkspaceRoot(process.cwd())
 			]
 		}
-	},
-	resolve: {
-		alias: {
-			/**
-			 * Vite does not support tilde imports,
-			 * hence we need create an alias to the @ibm/plex package in node_modules
-			 */
-			'~@ibm': path.resolve(process.cwd(), 'node_modules/@ibm')
-		}
 	}
 });

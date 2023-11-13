@@ -1,7 +1,9 @@
-@use '@carbon/react';
-@use '@carbon/react/scss/grid';
+@use '@carbon/styles/scss/config' with (
+	$use-flexbox-grid: true,
+	$font-path: '@ibm/plex'
+);
 
-@include grid.flex-grid();
+@use '@carbon/styles';
 
 // chrome bug
 // https://bugs.chromium.org/p/chromium/issues/detail?id=1370030&sort=-modified%20-opened%20target&q=drag&can=1
