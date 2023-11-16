@@ -45,14 +45,14 @@
 			"executor": "@nx/eslint:lint",
 			"outputs": ["{options.outputFile}"],
 			"options": {
-				"lintFilePatterns": ["sdk/**/*.{ts,tsx,js,jsx}"]
+				"lintFilePatterns": ["app/**/*.{ts,tsx,js,jsx}"]
 			}
 		},
 		"lint:fix": {
 			"executor": "@nx/eslint:lint",
 			"outputs": ["{options.outputFile}"],
 			"options": {
-				"lintFilePatterns": ["sdk/**/*.{ts,tsx,js,jsx}"],
+				"lintFilePatterns": ["app/**/*.{ts,tsx,js,jsx}"],
 				"fix": true
 			}
 		}
