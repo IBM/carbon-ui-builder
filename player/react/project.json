@@ -1,6 +1,6 @@
 {
 	"name": "player",
-	"$schema": "../node_modules/nx/schemas/project-schema.json",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "player/src",
 	"projectType": "library",
 	"tags": [],

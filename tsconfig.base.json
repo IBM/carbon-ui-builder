@@ -17,7 +17,7 @@
 		"paths": {
 			"@carbon-builder/sdk": ["sdk/react/src/index.ts"],
 			"@carbon-builder/sdk/*": ["sdk/react/src/lib/fragment-components/*"],
-			"@carbon-builder/player": ["player/src/index.ts"]
+			"@carbon-builder/player": ["player/react/src/index.ts"]
 		}
 	},
 	"exclude": ["node_modules", "tmp"]
