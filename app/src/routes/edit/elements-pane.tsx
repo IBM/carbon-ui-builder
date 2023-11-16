@@ -2,6 +2,8 @@ import React, { useContext, useRef, useState } from 'react';
 import { css, cx } from 'emotion';
 import { Button, Search } from '@carbon/react';
 import { ChevronDown, ChevronUp } from '@carbon/react/icons';
+import Handlebars from 'handlebars';
+import parse from 'html-react-parser';
 
 import { ElementTile, FragmentPreview, allComponents, FragmentLayoutWidget } from '@carbon-builder/sdk-react';
 import { leftPane, leftPaneContent, leftPaneHeader } from '.';
@@ -29,6 +31,12 @@ const elementTileListStyleMicroLayouts = cx(elementTileListStyleBase, css`
 		max-width: 123px;
 	}
 `);
+
+const renderHandlebars = (component: any) => {
+	const thumbnailString = component.htmlThumbnail || component.htmlPreview || `<span>${component.type}</span>`;
+
+	return parse((Handlebars.compile(thumbnailString))(component.defaultInputs));
+};
 
 export const ElementsPane = ({ isActive }: any) => {
 	const [filterString, setFilterString] = useState('');
@@ -149,7 +157,9 @@ export const ElementsPane = ({ isActive }: any) => {
 											componentsCollection: customComponentsCollection.name
 										}}
 										key={component.type}>
-											Preview
+											<span className={css`padding: 1rem; pointer-events: none; height: 100px; overflow: hidden;`}>
+												{renderHandlebars(component)}
+											</span>
 											<span className='title'>{component.type}</span>
 										</ElementTile>)
 								}
