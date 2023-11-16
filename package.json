@@ -6,7 +6,7 @@
 	"dependencies": {
 		"@carbon/react": "1.41.2",
 		"@monaco-editor/react": "4.6.0",
-		"@swc/helpers": "~0.5.2",
+		"@swc/helpers": "0.5.2",
 		"axios": "0.27.2",
 		"buffer": "6.0.3",
 		"dom-to-image": "2.6.0",
