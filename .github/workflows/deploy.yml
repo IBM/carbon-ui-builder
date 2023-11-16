@@ -38,7 +38,7 @@ jobs:
       - name: Upload artifact 📦
         uses: actions/upload-pages-artifact@v1
         with:
-          path: build
+          path: dist/app
 
   deploy:
     environment:
