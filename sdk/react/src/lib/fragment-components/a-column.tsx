@@ -12,7 +12,7 @@ import { AComponent } from './a-component';
 import { getParentComponent, updatedState } from '../helpers/tools';
 import { ComponentInfo } from '.';
 import { APlaceholder } from './a-placeholder';
-import { styleObjectToString } from '@carbon-builder/player';
+import { styleObjectToString } from '@carbon-builder/player-react';
 
 const helpIconStyle = css`
 	color: #525252;

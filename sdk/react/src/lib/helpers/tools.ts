@@ -8,7 +8,7 @@ import {
 	getAllFragmentStyleClasses,
 	stringToCssClassName,
 	allComponents as allUIComponents
-} from '@carbon-builder/player';
+} from '@carbon-builder/player-react';
 import { camelCase, kebabCase, uniq, upperFirst } from 'lodash';
 import { CURRENT_MODEL_VERSION } from './model-converter';
 

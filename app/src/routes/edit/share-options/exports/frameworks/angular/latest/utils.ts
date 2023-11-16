@@ -3,8 +3,8 @@ import parserBabel from 'prettier/parser-babel';
 import parserHtml from 'prettier/parser-html';
 import parserCss from 'prettier/parser-postcss';
 import Handlebars from 'handlebars';
-import { allComponents, getCustomComponentByType, tagNameFromFragment } from '@carbon-builder/sdk';
-import { addIfNotExist } from '@carbon-builder/player';
+import { allComponents, getCustomComponentByType, tagNameFromFragment } from '@carbon-builder/sdk-react';
+import { addIfNotExist } from '@carbon-builder/player-react';
 import { camelCase } from 'lodash';
 
 export const formatOptionsTypescript: Options = {

@@ -4,7 +4,7 @@ import { Breadcrumb, BreadcrumbItem } from '@carbon/react';
 
 import { useFragment } from '../../context';
 import { css } from 'emotion';
-import { getParentComponent, getSelectedComponent } from '@carbon-builder/sdk';
+import { getParentComponent, getSelectedComponent } from '@carbon-builder/sdk-react';
 
 const getAncestors = (state: any, component: any) => {
 	const ancestors: any[] = [];

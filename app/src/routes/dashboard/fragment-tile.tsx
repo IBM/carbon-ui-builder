@@ -15,7 +15,7 @@ import {
 } from '@carbon/react/icons';
 import { css } from 'emotion';
 import { ModalContext } from '../../context/modal-context';
-import { FragmentPreview } from '@carbon-builder/sdk';
+import { FragmentPreview } from '@carbon-builder/sdk-react';
 import './fragment-tile.scss';
 import { GlobalStateContext } from '../../context';
 

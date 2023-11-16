@@ -5,7 +5,7 @@ import {
 	Html,
 	Json
 } from '@carbon/react/icons';
-import { getAllFragmentStyleClasses } from '@carbon-builder/player';
+import { getAllFragmentStyleClasses } from '@carbon-builder/player-react';
 import { hasFragmentStyleClasses } from '../../../../../../../utils/fragment-tools';
 import { format } from '../../utils';
 import {
@@ -16,7 +16,7 @@ import {
 	jsonToTemplate,
 	otherImportsFromComponentObj
 } from './utils';
-import { classNameFromFragment, tagNameFromFragment } from '@carbon-builder/sdk';
+import { classNameFromFragment, tagNameFromFragment } from '@carbon-builder/sdk-react';
 
 const generateTemplate = (json: any, fragments: any[], customComponentsCollections: any[]) => {
 	const carbonImports = jsonToCarbonImports(json);

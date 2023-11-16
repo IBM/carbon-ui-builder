@@ -4,7 +4,7 @@ import Editor from '@monaco-editor/react';
 import { Button } from '@carbon/react';
 import { Edit, Copy } from '@carbon/react/icons';
 import { GlobalStateContext } from '../../context';
-import { UIFragment } from '@carbon-builder/player';
+import { UIFragment } from '@carbon-builder/player-react';
 import { generateNewFragment } from '../dashboard/fragment-wizard/generate-new-fragment';
 import { css } from 'emotion';
 import JSONCrush from 'jsoncrush';

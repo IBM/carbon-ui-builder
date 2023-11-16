@@ -13,7 +13,7 @@ import axios from 'axios';
 import Handlebars from 'handlebars';
 import { getFragmentsFromLocalStorage } from '../utils/fragment-tools';
 import { GlobalStateContext } from '../context';
-import { getAllFragmentStyleClasses, styleObjectToString } from '@carbon-builder/player';
+import { getAllFragmentStyleClasses, styleObjectToString } from '@carbon-builder/player-react';
 import {
 	AComponent,
 	allComponents,
@@ -23,7 +23,7 @@ import {
 	stateWithoutComponent,
 	updateComponentCounter,
 	updatedState
-} from '@carbon-builder/sdk';
+} from '@carbon-builder/sdk-react';
 import './fragment-preview.scss';
 
 const canvas = css`

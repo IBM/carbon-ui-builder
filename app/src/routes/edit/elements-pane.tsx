@@ -3,7 +3,7 @@ import { css, cx } from 'emotion';
 import { Button, Search } from '@carbon/react';
 import { ChevronDown, ChevronUp } from '@carbon/react/icons';
 
-import { ElementTile, FragmentPreview, allComponents, FragmentLayoutWidget } from '@carbon-builder/sdk';
+import { ElementTile, FragmentPreview, allComponents, FragmentLayoutWidget } from '@carbon-builder/sdk-react';
 import { leftPane, leftPaneContent, leftPaneHeader } from '.';
 import { GlobalStateContext, useFragment } from '../../context';
 import { getEditScreenParams } from '../../utils/fragment-tools';

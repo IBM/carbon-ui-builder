@@ -36,7 +36,7 @@ import { GlobalStateContext } from '../context';
 import { ModalContext } from '../context/modal-context';
 import { getEditScreenParams } from '../utils/fragment-tools';
 import { UserContext } from '../context/user-context';
-import { getFragmentJsonExportString } from '@carbon-builder/sdk';
+import { getFragmentJsonExportString } from '@carbon-builder/sdk-react';
 
 const dividerStyle = css`
 	margin: 2px 1rem;

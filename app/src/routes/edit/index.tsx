@@ -42,7 +42,7 @@ import {
 	initializeIds,
 	stateWithoutComponent,
 	updatedState
-} from '@carbon-builder/sdk';
+} from '@carbon-builder/sdk-react';
 
 const leftPaneWidth = '300px';
 const rightPaneWidth = '302px';

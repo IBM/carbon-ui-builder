@@ -18,7 +18,7 @@ import {
 	LayoutWidget,
 	getSelectedComponent,
 	updatedState
-} from '@carbon-builder/sdk';
+} from '@carbon-builder/sdk-react';
 import { SelectedComponentBreadcrumbs } from './selected-component-breadcrumbs';
 import { GlobalStateContext } from '../../context';
 

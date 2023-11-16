@@ -8,7 +8,7 @@ import { Add } from '@carbon/react/icons';
 import { AComponent } from './a-component';
 import { css, cx } from 'emotion';
 import { ComponentInfo } from '.';
-import { styleObjectToString } from '@carbon-builder/player';
+import { styleObjectToString } from '@carbon-builder/player-react';
 import { getDropIndex, getParentComponent, updatedState } from '../helpers/tools';
 
 export const ARowSettingsUI = ({ selectedComponent, setComponent }: any) => {

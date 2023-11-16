@@ -5,7 +5,7 @@ import { ComponentInfo } from '.';
 import { css, cx } from 'emotion';
 import image from './../assets/component-icons/text-area.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../helpers/tools';
-import { styleObjectToString } from '@carbon-builder/player';
+import { styleObjectToString } from '@carbon-builder/player-react';
 import { preventClickStyle } from '../helpers/styles';
 
 export const ATextAreaSettingsUI = ({ selectedComponent, setComponent }: any) => {

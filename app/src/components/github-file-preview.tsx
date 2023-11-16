@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Editor from '@monaco-editor/react';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
-import { UIFragment } from '@carbon-builder/player';
+import { UIFragment } from '@carbon-builder/player-react';
 import { css, cx } from 'emotion';
-import { filenameToLanguage } from '@carbon-builder/sdk';
+import { filenameToLanguage } from '@carbon-builder/sdk-react';
 
 const markdownContainerStyle = css`
 	margin: 1rem 3rem;

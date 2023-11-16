@@ -3,8 +3,8 @@ import parserBabel from 'prettier/parser-babel';
 import parserCss from 'prettier/parser-postcss';
 import { sortedUniq } from 'lodash';
 
-import { allComponents } from '@carbon-builder/sdk';
-import { addIfNotExist } from '@carbon-builder/player';
+import { allComponents } from '@carbon-builder/sdk-react';
+import { addIfNotExist } from '@carbon-builder/player-react';
 
 export const formatOptions: Options = {
 	plugins: [parserBabel],

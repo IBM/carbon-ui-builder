@@ -1,4 +1,4 @@
-import { getRandomId, CURRENT_MODEL_VERSION } from '@carbon-builder/sdk';
+import { getRandomId, CURRENT_MODEL_VERSION } from '@carbon-builder/sdk-react';
 
 export const generateNewFragment = (fragment: any, styleClasses: any[], setStyleClasses: (styleClasses: any[]) => void) => {
 	const addOrReplaceClasses = (newClasses: any[]) => {

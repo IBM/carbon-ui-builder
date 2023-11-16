@@ -15,7 +15,7 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../../helpers/tools';
-import { styleObjectToString } from '@carbon-builder/player';
+import { styleObjectToString } from '@carbon-builder/player-react';
 
 export const AExpandableSettingsUI = ({ selectedComponent, setComponent, fragment, setFragment }: any) => {
 	return <>

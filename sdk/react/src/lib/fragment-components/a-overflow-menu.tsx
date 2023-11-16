@@ -14,7 +14,7 @@ import {
 	nameStringToVariableString
 } from '../helpers/tools';
 import { css, cx } from 'emotion';
-import { styleObjectToString } from '@carbon-builder/player';
+import { styleObjectToString } from '@carbon-builder/player-react';
 import { DraggableTileList } from '../helpers/draggable-list';
 
 const preventCheckEvent = css`

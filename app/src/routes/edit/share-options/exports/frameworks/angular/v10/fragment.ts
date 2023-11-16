@@ -6,7 +6,7 @@ import {
 	Html,
 	Json
 } from '@carbon/react/icons';
-import { getAllFragmentStyleClasses } from '@carbon-builder/player';
+import { getAllFragmentStyleClasses } from '@carbon-builder/player-react';
 import { hasFragmentStyleClasses } from '../../../../../../../utils/fragment-tools';
 import { format } from '../../utils';
 import {
@@ -19,7 +19,7 @@ import {
 	jsonToAngularImports,
 	jsonToTemplate
 } from './utils';
-import { classNameFromFragment, tagNameFromFragment } from '@carbon-builder/sdk';
+import { classNameFromFragment, tagNameFromFragment } from '@carbon-builder/sdk-react';
 
 const getComponentCode = (fragment: any, fragments: any[], globalStyleClasses: any, customComponentsCollections: any[]) => {
 	const componentCode: any = { // this is the folder for the component

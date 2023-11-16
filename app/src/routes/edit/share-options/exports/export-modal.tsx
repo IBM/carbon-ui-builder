@@ -27,7 +27,7 @@ import { ModalContext } from '../../../../context/modal-context';
 import { saveBlob } from '../../../../utils/file-tools';
 import { GlobalStateContext } from '../../../../context';
 import { ExportImageComponent } from './export-image-component';
-import { filenameToLanguage, getFragmentJsonExportString } from '@carbon-builder/sdk';
+import { filenameToLanguage, getFragmentJsonExportString } from '@carbon-builder/sdk-react';
 import JSONCrush from 'jsoncrush';
 
 const exportCodeModalStyle = css`

@@ -6,7 +6,7 @@ import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/text-input.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../helpers/tools';
-import { styleObjectToString } from '@carbon-builder/player';
+import { styleObjectToString } from '@carbon-builder/player-react';
 import { preventClickStyle } from '../helpers/styles';
 
 export const ATextInputSettingsUI = ({ selectedComponent, setComponent }: any) => {

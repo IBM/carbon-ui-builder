@@ -1,5 +1,5 @@
 import { matchPath } from 'react-router-dom';
-import { getRandomId } from '@carbon-builder/sdk';
+import { getRandomId } from '@carbon-builder/sdk-react';
 
 export const validInitialFragments = (localFragments: any[] | undefined) => {
 	if (!localFragments || !Array.isArray(localFragments)) {

@@ -11,8 +11,8 @@ import { css } from 'emotion';
 import { FragmentWizardModals } from './fragment-wizard';
 import { generateNewFragment } from './generate-new-fragment';
 import { GlobalStateContext, NotificationActionType, NotificationContext } from '../../../context';
-import { componentInfo as gridComponentInfo } from '@carbon-builder/sdk/a-grid';
-import { initializeIds } from '@carbon-builder/sdk';
+import { componentInfo as gridComponentInfo } from '@carbon-builder/sdk-react/a-grid';
+import { initializeIds } from '@carbon-builder/sdk-react';
 
 const createFragmentTiles = css`
 	div {

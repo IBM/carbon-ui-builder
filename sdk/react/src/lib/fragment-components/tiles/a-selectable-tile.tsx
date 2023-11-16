@@ -17,7 +17,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../../helpers/tools';
 import { APlaceholder } from '../a-placeholder';
-import { styleObjectToString } from '@carbon-builder/player';
+import { styleObjectToString } from '@carbon-builder/player-react';
 import { Adder } from '../../helpers/adder';
 
 export const ASelectableTileSettingsUI = ({ selectedComponent, setComponent, fragment, setFragment }: any) => {

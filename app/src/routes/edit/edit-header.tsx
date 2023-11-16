@@ -17,7 +17,7 @@ import {
 } from '@carbon/react/icons';
 import { ModalContext } from '../../context/modal-context';
 import { GlobalStateContext } from '../../context';
-import { actionIconStyle } from '@carbon-builder/sdk';
+import { actionIconStyle } from '@carbon-builder/sdk-react';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { openFragmentPreview } from '../../utils/fragment-tools';
 

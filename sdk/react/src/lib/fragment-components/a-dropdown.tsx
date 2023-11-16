@@ -15,7 +15,7 @@ import {
 	nameStringToVariableString,
 	reactClassNamesFromComponentObj
 } from '../helpers/tools';
-import { styleObjectToString } from '@carbon-builder/player';
+import { styleObjectToString } from '@carbon-builder/player-react';
 import { DraggableTileList } from '../helpers/draggable-list';
 import { preventClickStyle } from '../helpers/styles';
 

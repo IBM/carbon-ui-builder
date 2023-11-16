@@ -8,7 +8,7 @@ import {
 	reactClassNamesFromComponentObj
 } from '../helpers/tools';
 import { css, cx } from 'emotion';
-import { styleObjectToString } from '@carbon-builder/player';
+import { styleObjectToString } from '@carbon-builder/player-react';
 
 const preventCheckEvent = css`
 	pointer-events: none;

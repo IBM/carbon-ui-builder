@@ -6,7 +6,7 @@ import {
 	ActionsConnector,
 	getSelectedComponent,
 	updatedState
-} from '@carbon-builder/sdk';
+} from '@carbon-builder/sdk-react';
 import { css, cx } from 'emotion';
 
 const contentStyle = css`

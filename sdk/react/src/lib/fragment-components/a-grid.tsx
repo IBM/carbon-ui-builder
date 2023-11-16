@@ -10,7 +10,7 @@ import { ComponentInfo } from '.';
 
 import image from './../assets/component-icons/grid.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../helpers/tools';
-import { styleObjectToString } from '@carbon-builder/player';
+import { styleObjectToString } from '@carbon-builder/player-react';
 
 export const AGridSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	return <>

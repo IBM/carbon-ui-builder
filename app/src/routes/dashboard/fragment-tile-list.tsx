@@ -13,8 +13,8 @@ import {
 	Development
 } from '@carbon/react/icons';
 import { css } from 'emotion';
-import { componentInfo as gridComponentInfo } from '@carbon-builder/sdk/a-grid';
-import { initializeIds } from '@carbon-builder/sdk';
+import { componentInfo as gridComponentInfo } from '@carbon-builder/sdk-react/a-grid';
+import { initializeIds } from '@carbon-builder/sdk-react';
 
 import { FragmentTile } from './fragment-tile';
 
