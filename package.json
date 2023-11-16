@@ -81,7 +81,7 @@
 		"vite": "~4.3.9",
 		"vite-plugin-dts": "~2.3.0",
 		"vite-plugin-rewrite-all": "1.0.1",
-		"vitest": "^0.32.4",
+		"vitest": "~0.34.6",
 		"web-vitals": "^3.5.0"
 	},
 	"scripts": {
