@@ -77,6 +77,9 @@ const showComponentSettingsUI = (selectedComponent: any, setComponent: any, frag
 			if (customComponentsCollection) {
 				const customComponent = customComponentsCollection.components.find((cc: any) => cc.type === selectedComponent.type);
 
+				if (!customComponent?.inputs) {
+					return <p>No inputs available.</p>;
+				}
 				return <>
 					{
 						Object.entries(customComponent.inputs).map(([input, type]) => {
