@@ -12,12 +12,15 @@ import { css, cx } from 'emotion';
 import Editor from '@monaco-editor/react';
 import { capitalize, throttle } from 'lodash';
 
-import { ComponentCssClassSelector } from '@carbon-builder/sdk';
-import { allComponents } from '@carbon-builder/sdk';
+import {
+	ComponentCssClassSelector,
+	allComponents,
+	LayoutWidget,
+	getSelectedComponent,
+	updatedState
+} from '@carbon-builder/sdk';
 import { SelectedComponentBreadcrumbs } from './selected-component-breadcrumbs';
 import { GlobalStateContext } from '../../context';
-import { LayoutWidget } from '@carbon-builder/sdk';
-import { getSelectedComponent, updatedState } from '@carbon-builder/sdk';
 
 const styleContextPaneStyle = css`
 .cds--form-item.cds--checkbox-wrapper {

@@ -11,11 +11,13 @@ import parse, { attributesToProps, domToReact } from 'html-react-parser';
 import { throttle } from 'lodash';
 import axios from 'axios';
 import Handlebars from 'handlebars';
-import { AComponent, allComponents, ComponentInfoRenderProps } from '@carbon-builder/sdk';
 import { getFragmentsFromLocalStorage } from '../utils/fragment-tools';
 import { GlobalStateContext } from '../context';
 import { getAllFragmentStyleClasses, styleObjectToString } from '@carbon-builder/player';
 import {
+	AComponent,
+	allComponents,
+	ComponentInfoRenderProps,
 	getDropIndex,
 	getUsedCollectionsStyleUrls,
 	stateWithoutComponent,

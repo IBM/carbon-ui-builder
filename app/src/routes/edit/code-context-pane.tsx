@@ -2,12 +2,12 @@ import React from 'react';
 
 import {
 	AComponentCodeUI,
-	allComponents
+	allComponents,
+	ActionsConnector,
+	getSelectedComponent,
+	updatedState
 } from '@carbon-builder/sdk';
 import { css, cx } from 'emotion';
-
-import { getSelectedComponent, updatedState } from '@carbon-builder/sdk';
-import { ActionsConnector } from '@carbon-builder/sdk';
 
 const contentStyle = css`
 	padding: 1rem;

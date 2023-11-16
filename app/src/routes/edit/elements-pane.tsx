@@ -3,14 +3,10 @@ import { css, cx } from 'emotion';
 import { Button, Search } from '@carbon/react';
 import { ChevronDown, ChevronUp } from '@carbon/react/icons';
 
-import { ElementTile } from '@carbon-builder/sdk';
-import { FragmentPreview } from '@carbon-builder/sdk';
-
+import { ElementTile, FragmentPreview, allComponents, FragmentLayoutWidget } from '@carbon-builder/sdk';
 import { leftPane, leftPaneContent, leftPaneHeader } from '.';
-import { allComponents } from '@carbon-builder/sdk';
 import { GlobalStateContext, useFragment } from '../../context';
 import { getEditScreenParams } from '../../utils/fragment-tools';
-import { FragmentLayoutWidget } from '@carbon-builder/sdk';
 import { accordionButtonStyle } from './settings-context-pane';
 
 const elementTileListStyleBase = css`

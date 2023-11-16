@@ -23,6 +23,7 @@ export const useFragment = (id?: string) => {
 		// this happens when rendering, which is fine because it's used
 		// in AComponent to update the state of the whole fragment due to
 		// user interaction - functionality not needed for render only
+		// eslint-disable-next-line @typescript-eslint/no-empty-function
 		return [{}, (_: any) => { }];
 	}
 

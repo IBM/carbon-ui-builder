@@ -2,9 +2,8 @@ import { Options } from 'prettier';
 import parserBabel from 'prettier/parser-babel';
 import parserHtml from 'prettier/parser-html';
 import parserCss from 'prettier/parser-postcss';
-import { allComponents } from '@carbon-builder/sdk';
+import { allComponents, tagNameFromFragment } from '@carbon-builder/sdk';
 import { addIfNotExist } from '@carbon-builder/player';
-import { tagNameFromFragment } from '@carbon-builder/sdk';
 
 export const formatOptionsTypescript: Options = {
 	plugins: [parserBabel],
