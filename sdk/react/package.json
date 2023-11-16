@@ -1,5 +1,5 @@
 {
-	"name": "@carbon-builder/sdk",
+	"name": "@carbon-builder/sdk-react",
 	"version": "0.0.1",
 	"main": "./index.js",
 	"types": "./index.d.ts",

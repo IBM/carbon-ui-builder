@@ -15,8 +15,8 @@
 		"skipDefaultLibCheck": true,
 		"baseUrl": ".",
 		"paths": {
-			"@carbon-builder/sdk": ["sdk/src/index.ts"],
-			"@carbon-builder/sdk/*": ["sdk/src/lib/fragment-components/*"],
+			"@carbon-builder/sdk": ["sdk/react/src/index.ts"],
+			"@carbon-builder/sdk/*": ["sdk/react/src/lib/fragment-components/*"],
 			"@carbon-builder/player": ["player/src/index.ts"]
 		}
 	},

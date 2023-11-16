@@ -1,7 +1,7 @@
 {
-	"name": "sdk",
+	"name": "sdk-react",
 	"$schema": "../node_modules/nx/schemas/project-schema.json",
-	"sourceRoot": "sdk/src",
+	"sourceRoot": "sdk/react/src",
 	"projectType": "library",
 	"tags": [],
 	"targets": {
@@ -9,7 +9,7 @@
 			"executor": "@nx/eslint:lint",
 			"outputs": ["{options.outputFile}"],
 			"options": {
-				"lintFilePatterns": ["sdk/**/*.{ts,tsx,js,jsx}"]
+				"lintFilePatterns": ["sdk/react/**/*.{ts,tsx,js,jsx}"]
 			}
 		},
 		"build": {
