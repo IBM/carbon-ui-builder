@@ -87,7 +87,7 @@
 		"start": "nx serve app",
 		"build": "nx build app",
 		"lint": "nx lint app",
-		"lint:fix": "nx lint:fix app"
+		"lint:fix": "nx lint app --fix"
 	},
 	"browserslist": [
 		">0.2%",
