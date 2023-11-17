@@ -1,5 +1,5 @@
 {
-	"name": "player",
+	"name": "player-react",
 	"$schema": "../../node_modules/nx/schemas/project-schema.json",
 	"sourceRoot": "player/src",
 	"projectType": "library",
@@ -9,7 +9,7 @@
 			"executor": "@nx/eslint:lint",
 			"outputs": ["{options.outputFile}"],
 			"options": {
-				"lintFilePatterns": ["player/**/*.{ts,tsx,js,jsx}"]
+				"lintFilePatterns": ["player/react/**/*.{ts,tsx,js,jsx}"]
 			}
 		},
 		"build": {
