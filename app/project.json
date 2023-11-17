@@ -45,15 +45,8 @@
 			"executor": "@nx/eslint:lint",
 			"outputs": ["{options.outputFile}"],
 			"options": {
-				"lintFilePatterns": ["app/**/*.{ts,tsx,js,jsx}"]
-			}
-		},
-		"lint:fix": {
-			"executor": "@nx/eslint:lint",
-			"outputs": ["{options.outputFile}"],
-			"options": {
 				"lintFilePatterns": ["app/**/*.{ts,tsx,js,jsx}"],
-				"fix": true
+				"cache": false
 			}
 		}
 	}

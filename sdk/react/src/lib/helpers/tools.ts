@@ -12,7 +12,6 @@ import {
 import { camelCase, kebabCase, uniq, upperFirst } from 'lodash';
 import { CURRENT_MODEL_VERSION } from './model-converter';
 
-
 export let componentCounter = 2; // actually initialized (again) in Fragment TODO refactor this
 
 export interface RenderProps {
