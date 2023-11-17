@@ -9,7 +9,8 @@
 			"executor": "@nx/eslint:lint",
 			"outputs": ["{options.outputFile}"],
 			"options": {
-				"lintFilePatterns": ["player/react/**/*.{ts,tsx,js,jsx}"]
+				"lintFilePatterns": ["player/react/**/*.{ts,tsx,js,jsx}"],
+				"cache": false
 			}
 		},
 		"build": {
