@@ -12,7 +12,6 @@ import { AComponent, ComponentInfo } from './a-component';
 import image from './../assets/component-icons/button.svg';
 import { classNameFromFragment, tagNameFromFragment } from '../helpers/tools';
 
-
 export const AFragmentSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const navigate = useNavigate();
 	return <>
