@@ -15,20 +15,20 @@
 		]
 	},
 	"components": [
-        {
-            "type": "bs-progressbar",
-            "htmlPreview": "<ngbd-progressbar-basic><ngb-progressbar role='progressbar' aria-valuemin='0' type='success' class='progress' aria-valuenow='25' aria-valuemax='100' aria-label='progress bar'><div class='progress-bar text-bg-success' style='width: 25%;'></div></ngb-progressbar></ngbd-progressbar-basic>",
-            "inputs": {
-                "animated": "boolean",
-                "ariaLabel": "string",
-                "height": "string",
-                "max": "number",
-                "showValue": "boolean",
-                "striped": "boolean",
-                "value": "number",
-                "textType": {
+		{
+			"type": "bs-progressbar",
+			"htmlPreview": "<ngbd-progressbar-basic><ngb-progressbar role='progressbar' aria-valuemin='0' type='success' class='progress' aria-valuenow='25' aria-valuemax='100' aria-label='progress bar'><div class='progress-bar text-bg-success' style='width: 25%;'></div></ngb-progressbar></ngbd-progressbar-basic>",
+			"inputs": {
+				"animated": "boolean",
+				"ariaLabel": "string",
+				"height": "string",
+				"max": "number",
+				"showValue": "boolean",
+				"striped": "boolean",
+				"value": "number",
+				"textType": {
 					"type": "multi-select",
-					"items":[
+					"items": [
 						{
 							"id": "success",
 							"text": "Success"
@@ -36,7 +36,7 @@
 						{
 							"id": "info",
 							"text": "Info"
-						},		
+						},
 						{
 							"id": "warning",
 							"text": "Warning"
@@ -44,28 +44,28 @@
 						{
 							"id": "danger",
 							"text": "Danger"
-						},	
+						},
 						{
 							"id": "primary",
 							"text": "Primary"
-						},		
+						},
 						{
 							"id": "secondary",
 							"text": "Secondary"
-						},	
+						},
 						{
 							"id": "light",
 							"text": "Light"
-						},	
+						},
 						{
 							"id": "dark",
 							"text": "Dark"
 						}
 					]
 				},
-                "category": {
+				"category": {
 					"type": "multi-select",
-					"items":[
+					"items": [
 						{
 							"id": "success",
 							"text": "Success"
@@ -73,7 +73,7 @@
 						{
 							"id": "info",
 							"text": "Info"
-						},		
+						},
 						{
 							"id": "warning",
 							"text": "Warning"
@@ -81,37 +81,38 @@
 						{
 							"id": "danger",
 							"text": "Danger"
-						},	
+						},
 						{
 							"id": "primary",
 							"text": "Primary"
-						},		
+						},
 						{
 							"id": "secondary",
 							"text": "Secondary"
-						},	
+						},
 						{
 							"id": "light",
 							"text": "Light"
-						},	
+						},
 						{
 							"id": "dark",
 							"text": "Dark"
 						}
 					]
 				}
-            },
+			},
 			"defaultInputs": {
-                "category": "success",
-                "value": 0,
-                "max": 100
+				"category": "success",
+				"value": 0,
+				"max": 100
 			},
 			"angular": {
-                "inputs": "@Input() {{variableName}}Type = '{{model.category}}'; @Input() {{variableName}}TextType = '{{model.textType}}'; @Input() {{variableName}}Value = '{{model.value}}'; @Input() {{variableName}}Striped = '{{model.striped}}'; @Input() {{variableName}}Animated = '{{model.animated}}'; @Input() {{variableName}}AriaLabel = '{{model.ariaLabel}}'; @Input() {{variableName}}Height = '{{model.height}}'; @Input() {{variableName}}Max = '{{model.max}}'; @Input() {{variableName}}ShowValue = '{{model.showValue}}';",
-                "outputs": "",
-                "template": "<ngb-progressbar max='{{model.max}}' height='{{model.height}}' ariaLabel='{{model.ariaLabel}}' type='{{model.category}}' textType='{{model.textType}}' value='{{model.value}}' {{#if model.striped}}striped={{model.striped}}{{/if}} {{#if model.animated}}animated={{model.animated}}{{/if}} {{#if model.showValue}}showValue={{model.showValue}}{{/if}}></ngb-progressbar>"
-			}
-        },
+				"inputs": "@Input() {{variableName}}Type = '{{model.category}}'; @Input() {{variableName}}TextType = '{{model.textType}}'; @Input() {{variableName}}Value = '{{model.value}}'; @Input() {{variableName}}Striped = '{{model.striped}}'; @Input() {{variableName}}Animated = '{{model.animated}}'; @Input() {{variableName}}AriaLabel = '{{model.ariaLabel}}'; @Input() {{variableName}}Height = '{{model.height}}'; @Input() {{variableName}}Max = '{{model.max}}'; @Input() {{variableName}}ShowValue = '{{model.showValue}}';",
+				"outputs": "",
+				"template": "<ngb-progressbar max='{{model.max}}' height='{{model.height}}' ariaLabel='{{model.ariaLabel}}' type='{{model.category}}' textType='{{model.textType}}' value='{{model.value}}' {{#if model.striped}}striped={{model.striped}}{{/if}} {{#if model.animated}}animated={{model.animated}}{{/if}} {{#if model.showValue}}showValue={{model.showValue}}{{/if}}></ngb-progressbar>"
+			},
+			"htmlThumbnail": "<div  style='margin-top: 1rem; background-color: #f1f1f1'><div style=' color: #000 ; background-color: #0dcaf0  ; height:24px;width:60%'></div></div>"
+		},
 		{
 			"type": "bs-alert",
 			"htmlPreview": "<ngbd-alert-basic><ngb-alert class='alert alert-warning show fade' role='alert'> {{message}} </ngb-alert></ngbd-alert-basic>",
@@ -121,7 +122,7 @@
 				"message": "string",
 				"category": {
 					"type": "multi-select",
-					"items":[
+					"items": [
 						{
 							"id": "success",
 							"text": "Success"
@@ -129,7 +130,7 @@
 						{
 							"id": "info",
 							"text": "Info"
-						},		
+						},
 						{
 							"id": "warning",
 							"text": "Warning"
@@ -137,19 +138,19 @@
 						{
 							"id": "danger",
 							"text": "Danger"
-						},	
+						},
 						{
 							"id": "primary",
 							"text": "Primary"
-						},		
+						},
 						{
 							"id": "secondary",
 							"text": "Secondary"
-						},	
+						},
 						{
 							"id": "light",
 							"text": "Light"
-						},	
+						},
 						{
 							"id": "dark",
 							"text": "Dark"
@@ -159,13 +160,14 @@
 			},
 			"defaultInputs": {
 				"category": "warning",
-				"message": "sample alert"
+				"message": "alert"
 			},
 			"angular": {
-                "inputs": "@Input() {{variableName}}Animation = '{{model.animation}}'; @Input() {{variableName}}Dismissible = '{{model.dismissible}}'; @Input() {{variableName}}Message = '{{model.message}}'; @Input() {{variableName}}Type = '{{model.category}}';",
+				"inputs": "@Input() {{variableName}}Animation = '{{model.animation}}'; @Input() {{variableName}}Dismissible = '{{model.dismissible}}'; @Input() {{variableName}}Message = '{{model.message}}'; @Input() {{variableName}}Type = '{{model.category}}';",
 				"outputs": "@Output() {{variableName}}isClosed = new EventEmitter<any>();",
 				"template": "<ngb-alert {{#if model.animation}}animation={{model.animation}}{{/if}} {{#if model.dismissible}}dismissible={{model.dismissible}}{{/if}}  type='{{model.category}}' class='alert alert-warning show fade' role='alert'> {{model.message}} </ngb-alert>"
-			}
+			},
+			"htmlThumbnail": "<button style='background: #ffe69c; padding: .375rem .75rem; font-size: 1rem; text-align: center; vertical-align: middle; line-height: 1.5rem; border: 1px solid #ffc107; border-radius: .375rem; margin-left: 15px; margin-top: 1rem;' {{#if disabled}}disabled{{/if}}>{{message}}</button>"
 		},
 		{
 			"type": "bs-popover",
@@ -272,13 +274,14 @@
 			},
 			"defaultInputs": {
 				"placement": "bottom",
-				"title": "Popover title"
+				"title": "Popover"
 			},
 			"angular": {
-                "inputs": "@Input() {{variableName}}CloseDelay = '{{model.closeDelay}}'; @Input() {{variableName}}Triggers = '{{model.triggers}}'; @Input() {{variableName}}Placement = '{{model.placement}}'; @Input() {{variableName}}OpenDelay = '{{model.openDelay}}'; @Input() {{variableName}}Title = '{{model.title}}'; @Input() {{variableName}}Description = '{{model.description}}'; ",
+				"inputs": "@Input() {{variableName}}CloseDelay = '{{model.closeDelay}}'; @Input() {{variableName}}Triggers = '{{model.triggers}}'; @Input() {{variableName}}Placement = '{{model.placement}}'; @Input() {{variableName}}OpenDelay = '{{model.openDelay}}'; @Input() {{variableName}}Title = '{{model.title}}'; @Input() {{variableName}}Description = '{{model.description}}'; ",
 				"outputs": "@Output() {{variableName}}hidden = new EventEmitter<any>(); @Output() {{variableName}}shown = new EventEmitter<any>();",
 				"template": "<button ngbPopover='{{model.description}}' class='btn btn-outline-secondary' {{#if model.openDelay}}openDelay={{model.openDelay}}{{/if}} {{#if model.closeDelay}}closeDelay={{model.closeDelay}}{{/if}} {{#if model.triggers}}triggers='{{model.triggers}}'{{/if}} placement='{{model.placement}}' {{#if model.disabled}}disablePopover{{/if}}>{{model.title}}</button>"
-			}
+			},
+			"htmlThumbnail": "<button style='background: #0d6efd; padding: .375rem .75rem; font-size: 1rem; color: #fff; text-align: center; vertical-align: middle; line-height: 1.5rem; border: 1px solid #0d6efd; border-radius: .375rem; margin-left: 10px; margin-top: 1rem;' {{#if disabled}}disabled{{/if}}>{{title}}</button>"
 		},
 		{
 			"type": "bs-tooltip",
@@ -391,10 +394,11 @@
 				"text": "Tooltip"
 			},
 			"angular": {
-                "inputs": "@Input() {{variableName}}Text = '{{model.text}}'; @Input() {{variableName}}Triggers = '{{model.triggers}}'; @Input() {{variableName}}Tooltip = '{{model.tooltip}}'; @Input() {{variableName}}Disabled = '{{model.disabled}}'; @Input() {{variableName}}Placement = '{{model.placement}}'; @Input() {{variableName}}Animation = '{{model.animation}}'; @Input() {{variableName}}AutoClose = '{{model.autoClose}}'; @Input() {{variableName}}CloseDelay = '{{model.closeDelay}}'; @Input() {{variableName}}OpenDelay = '{{model.openDelay}}';",
+				"inputs": "@Input() {{variableName}}Text = '{{model.text}}'; @Input() {{variableName}}Triggers = '{{model.triggers}}'; @Input() {{variableName}}Tooltip = '{{model.tooltip}}'; @Input() {{variableName}}Disabled = '{{model.disabled}}'; @Input() {{variableName}}Placement = '{{model.placement}}'; @Input() {{variableName}}Animation = '{{model.animation}}'; @Input() {{variableName}}AutoClose = '{{model.autoClose}}'; @Input() {{variableName}}CloseDelay = '{{model.closeDelay}}'; @Input() {{variableName}}OpenDelay = '{{model.openDelay}}';",
 				"outputs": "@Output() {{variableName}}hidden = new EventEmitter<any>(); @Output() {{variableName}}shown = new EventEmitter<any>();",
 				"template": "<button ngbtooltip='{{model.tooltipMessage}}' class='btn btn-outline-secondary' {{#if model.openDelay}}openDelay={{model.openDelay}}{{/if}} {{#if model.closeDelay}}closeDelay={{model.closeDelay}}{{/if}} {{#if model.triggers}}triggers='{{model.triggers}}'{{/if}} placement='{{model.placement}}' {{#if model.disabled}}disableTooltip{{/if}} >{{model.text}}</button>"
-			}
+			},
+			"htmlThumbnail": "<button style='background: #0d6efd; padding: .375rem .75rem; font-size: 1rem; color: #fff; text-align: center; vertical-align: middle; line-height: 1.5rem; border: 1px solid #0d6efd; border-radius: .375rem; margin-left: 10px; margin-top: 1rem;' {{#if disabled}}disabled{{/if}}>{{text}}</button>"
 		},
 		{
 			"type": "bs-button",
@@ -453,7 +457,8 @@
 				"inputs": "@Input() {{variableName}}Label = \"{{model.label}}\";",
 				"outputs": "@Output() {{variableName}}Change = new EventEmitter<any>();",
 				"template": "<button class='btn btn-{{model.kind}}' [label]=\"{{variableName}}Label\" {{#if model.disabled}}disabled{{/if}}>{{model.text}} - {{model.size}}</button>"
-			}
+			},
+			"htmlThumbnail": "<button style='background: #0d6efd; padding: .375rem .75rem; font-size: 1rem; color: #fff; text-align: center; vertical-align: middle; line-height: 1.5rem; border: 1px solid #0d6efd; border-radius: .375rem; margin-left: 10px; margin-top: 1rem;' {{#if disabled}}disabled{{/if}}>{{text}}</button>"
 		}
 	]
 }
