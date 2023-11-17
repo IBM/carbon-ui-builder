@@ -111,7 +111,7 @@
 				"outputs": "",
 				"template": "<ngb-progressbar max='{{model.max}}' height='{{model.height}}' ariaLabel='{{model.ariaLabel}}' type='{{model.category}}' textType='{{model.textType}}' value='{{model.value}}' {{#if model.striped}}striped={{model.striped}}{{/if}} {{#if model.animated}}animated={{model.animated}}{{/if}} {{#if model.showValue}}showValue={{model.showValue}}{{/if}}></ngb-progressbar>"
 			},
-			"htmlThumbnail": "<div  style='margin-top: 1rem; background-color: #f1f1f1'><div style=' color: #000 ; background-color: #0dcaf0  ; height:24px;width:60%'></div></div>"
+			"htmlThumbnail": "<div  style='margin-top: 1.5rem; background-color: #f1f1f1'><div style=' color: #000 ; background-color: #0dcaf0  ; height:24px;width:60%'></div></div>"
 		},
 		{
 			"type": "bs-alert",
@@ -160,14 +160,14 @@
 			},
 			"defaultInputs": {
 				"category": "warning",
-				"message": "alert"
+				"message": "Alert"
 			},
 			"angular": {
 				"inputs": "@Input() {{variableName}}Animation = '{{model.animation}}'; @Input() {{variableName}}Dismissible = '{{model.dismissible}}'; @Input() {{variableName}}Message = '{{model.message}}'; @Input() {{variableName}}Type = '{{model.category}}';",
 				"outputs": "@Output() {{variableName}}isClosed = new EventEmitter<any>();",
 				"template": "<ngb-alert {{#if model.animation}}animation={{model.animation}}{{/if}} {{#if model.dismissible}}dismissible={{model.dismissible}}{{/if}}  type='{{model.category}}' class='alert alert-warning show fade' role='alert'> {{model.message}} </ngb-alert>"
 			},
-			"htmlThumbnail": "<button style='background: #ffe69c; padding: .375rem .75rem; font-size: 1rem; text-align: center; vertical-align: middle; line-height: 1.5rem; border: 1px solid #ffc107; border-radius: .375rem; margin-left: 15px; margin-top: 1rem;' {{#if disabled}}disabled{{/if}}>{{message}}</button>"
+			"htmlThumbnail": "<button style='background: #fff3cd; padding: .375rem .75rem; font-size: 1rem; text-align: center; vertical-align: middle; line-height: 1.5rem; border: 1px solid #ffc107; border-radius: .375rem;  margin-top: .5rem;' {{#if disabled}}disabled{{/if}}>{{message}}: Message</button>"
 		},
 		{
 			"type": "bs-popover",
@@ -281,7 +281,7 @@
 				"outputs": "@Output() {{variableName}}hidden = new EventEmitter<any>(); @Output() {{variableName}}shown = new EventEmitter<any>();",
 				"template": "<button ngbPopover='{{model.description}}' class='btn btn-outline-secondary' {{#if model.openDelay}}openDelay={{model.openDelay}}{{/if}} {{#if model.closeDelay}}closeDelay={{model.closeDelay}}{{/if}} {{#if model.triggers}}triggers='{{model.triggers}}'{{/if}} placement='{{model.placement}}' {{#if model.disabled}}disablePopover{{/if}}>{{model.title}}</button>"
 			},
-			"htmlThumbnail": "<button style='background: #0d6efd; padding: .375rem .75rem; font-size: 1rem; color: #fff; text-align: center; vertical-align: middle; line-height: 1.5rem; border: 1px solid #0d6efd; border-radius: .375rem; margin-left: 10px; margin-top: 1rem;' {{#if disabled}}disabled{{/if}}>{{title}}</button>"
+			"htmlThumbnail": "<button style='background: white; padding: .375rem .75rem; font-size: 1rem; color: #6c757d; text-align: center; vertical-align: middle; line-height: 1.5rem; border: 1px solid #6c757d; border-radius: .375rem; margin-left: 10px; margin-top: 1rem;' {{#if disabled}}disabled{{/if}}>{{title}}</button>"
 		},
 		{
 			"type": "bs-tooltip",
@@ -398,7 +398,7 @@
 				"outputs": "@Output() {{variableName}}hidden = new EventEmitter<any>(); @Output() {{variableName}}shown = new EventEmitter<any>();",
 				"template": "<button ngbtooltip='{{model.tooltipMessage}}' class='btn btn-outline-secondary' {{#if model.openDelay}}openDelay={{model.openDelay}}{{/if}} {{#if model.closeDelay}}closeDelay={{model.closeDelay}}{{/if}} {{#if model.triggers}}triggers='{{model.triggers}}'{{/if}} placement='{{model.placement}}' {{#if model.disabled}}disableTooltip{{/if}} >{{model.text}}</button>"
 			},
-			"htmlThumbnail": "<button style='background: #0d6efd; padding: .375rem .75rem; font-size: 1rem; color: #fff; text-align: center; vertical-align: middle; line-height: 1.5rem; border: 1px solid #0d6efd; border-radius: .375rem; margin-left: 10px; margin-top: 1rem;' {{#if disabled}}disabled{{/if}}>{{text}}</button>"
+			"htmlThumbnail": "<button style='background: white; padding: .375rem .75rem; font-size: 1rem; color: #6c757d; text-align: center; vertical-align: middle; line-height: 1.5rem; border: 1px solid #6c757d; border-radius: .375rem; margin-left: 10px; margin-top: 1rem;' {{#if disabled}}disabled{{/if}}>{{text}}</button>"
 		},
 		{
 			"type": "bs-button",
