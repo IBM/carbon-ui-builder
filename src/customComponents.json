@@ -16,6 +16,27 @@
 	},
 	"components": [
 		{
+			"type": "bs-collapse",
+			"htmlPreview": "<ngbd-collapse-basic><p><button type='button' aria-controls='collapseExample' class='btn btn-outline-primary' aria-expanded='true'> {{title}} </button></p><div class='collapse show' style><div style='position:relative; display:flex; flex-direction:column; min-width:0; color:#212529; word-wrap:break-word; background-clip:border-box; border:1px solid rgba(0, 0, 0, .175); border-radius: 0.375rem;'><div style='flex:1 1 auto; padding: 1rem 1rem;'>{{content}} {{children}}</div></div></div></ngbd-collapse-basic>",
+			"inputs": {
+				"animation": "boolean",
+				"horizontal": "boolean",
+				"isCollapsed": "boolean",
+				"title": "string",
+				"content": "string"
+			},
+			"defaultInputs": {
+				"title": "Collapse",
+				"content": "placeholder text or child components"
+			},
+			"angular": {
+				"inputs": "@Input() {{variableName}}Content = '{{model.content}}'; @Input() {{variableName}}Title = '{{model.title}}'; @Input() {{variableName}}IsCollapsed = '{{model.isCollapsed}}'; @Input() {{variableName}}Animation = '{{model.animation}}'; @Input() {{variableName}}Horizontal = '{{model.horizontal}}';",
+				"outputs": "@Output() {{variableName}}isHidden = new EventEmitter<any>(); @Output() {{variableName}}isShown = new EventEmitter<any>();",
+				"template": "<p><button type='button' class='btn btn-outline-primary' (click)='{{variableName}}isCollapsed = !{{variableName}}isCollapsed' [attr.aria-expanded]='!{{variableName}}isCollapsed' aria-controls='collapseExample'> {{model.title}} </button> </p> <div #collapse='ngbCollapse' [(ngbCollapse)]='{{variableName}}IsCollapsed'> <div class='card'> <div class='card-body'>{{model.content}} {{children}}</div> </div> </div>"
+			},
+			"htmlThumbnail": "hello"
+		},
+		{
 			"type": "bs-dropdown",
 			"htmlPreview": "<div ngbdropdown class='d-inline-block dropdown'><button type='button'  ngbdropdowntoggle class='dropdown-toggle btn btn-outline-primary' aria-expanded='false'> {{ title }} </button><div ngbdropdownmenu aria-labelledby='dropdownBasic1' class='dropdown-menu' style='position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 40px);'>{{ children }}</div></div>",
 			"inputs": {
@@ -156,7 +177,7 @@
 			"angular": {
 				"inputs": "@Input() {{variableName}}Title = '{{model.title}}'; @Input() {{variableName}}Placement = '{{model.placement}}'; @Input() {{variableName}}IsOpen = '{{model.open}}'; @Input() {{variableName}}Display = '{{model.display}}'; @Input() {{variableName}}AutoClose = '{{model.autoClose}}';",
 				"outputs": "@Output() {{variableName}}OpenChange = new EventEmitter<any>();",
-				"template": "<div ngbDropdown autoClose='{{model.autoClose}}' display='{{model.display}}' open='{{model.open}}' placement='{{model.placement}}' class='d-inline-block'> <button type='button' class='btn btn-outline-primary' id='dropdownBasic1' ngbDropdownToggle> {{model.title}} </button> <div ngbDropdownMenu aria-labelledby='dropdownBasic1'> {{children}} </div>"
+				"template": "<div ngbDropdown [autoClose]='{{variableName}}AutoClose' [display]='{{variableName}}Display' [open]='{{variableName}}IsOpen' [placement]='{{variableName}}Placement' class='d-inline-block'> <button type='button' class='btn btn-outline-primary' id='dropdownBasic1' ngbDropdownToggle> {{model.title}} </button> <div ngbDropdownMenu aria-labelledby='dropdownBasic1'> {{children}} </div>"
 			},
 			"htmlThumbnail": "<button style='margin-left:-8px; background: transparent; padding: .375rem .75rem; font-size: 1rem; text-align: center; vertical-align: middle; line-height: 1.5rem; border: 1px solid #0d6efd; border-radius: .375rem;  margin-top: 1rem; display: flex; align-items: center; justify-content: center;'><span style='color:#0d6efd'>Dropdown</span><span style='width: 0; height: 0; border: solid 5px; border-color: #0d6efd transparent transparent transparent; margin-left: 5px'></span></button>"
 		},
@@ -254,7 +275,7 @@
 			"angular": {
 				"inputs": "@Input() {{variableName}}Type = '{{model.category}}'; @Input() {{variableName}}TextType = '{{model.textType}}'; @Input() {{variableName}}Value = '{{model.value}}'; @Input() {{variableName}}Striped = '{{model.striped}}'; @Input() {{variableName}}Animated = '{{model.animated}}'; @Input() {{variableName}}AriaLabel = '{{model.ariaLabel}}'; @Input() {{variableName}}Height = '{{model.height}}'; @Input() {{variableName}}Max = '{{model.max}}'; @Input() {{variableName}}ShowValue = '{{model.showValue}}';",
 				"outputs": "",
-				"template": "<ngb-progressbar max='{{model.max}}' height='{{model.height}}' ariaLabel='{{model.ariaLabel}}' type='{{model.category}}' textType='{{model.textType}}' value='{{model.value}}' {{#if model.striped}}striped={{model.striped}}{{/if}} {{#if model.animated}}animated={{model.animated}}{{/if}} {{#if model.showValue}}showValue={{model.showValue}}{{/if}}></ngb-progressbar>"
+				"template": "<ngb-progressbar [max]='{{variableName}}Max' [height]='{{variableName}}Height' [ariaLabel]='{{variableName}}AriaLabel' [type]='{{variableName}}Category' [textType]='{{variableName}}TextType' [value]='{{variableName}}Value' {{#if model.striped}}[striped]='{{variableName}}Striped'{{/if}} {{#if model.animated}}[animated]='{{variableName}}Animated'{{/if}} {{#if model.showValue}}[showValue]='{{variable}}ShowValue'{{/if}}></ngb-progressbar>"
 			},
 			"htmlThumbnail": "<div style='margin-top: 1.5rem; background-color: #f1f1f1'><div style=' color: #000 ; background-color: #0dcaf0  ; height:24px;width:60%'></div></div>"
 		},
