@@ -27,7 +27,8 @@
 			},
 			"defaultInputs": {
 				"title": "Collapse",
-				"content": "placeholder text or child components"
+				"content": "placeholder text or child components",
+				"items": []
 			},
 			"angular": {
 				"inputs": "@Input() {{variableName}}Content = '{{model.content}}'; @Input() {{variableName}}Title = '{{model.title}}'; @Input() {{variableName}}IsCollapsed = '{{model.isCollapsed}}'; @Input() {{variableName}}Animation = '{{model.animation}}'; @Input() {{variableName}}Horizontal = '{{model.horizontal}}';",
