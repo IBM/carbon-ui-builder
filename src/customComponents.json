@@ -157,7 +157,8 @@
 				"inputs": "@Input() {{variableName}}Title = '{{model.title}}'; @Input() {{variableName}}Placement = '{{model.placement}}'; @Input() {{variableName}}IsOpen = '{{model.open}}'; @Input() {{variableName}}Display = '{{model.display}}'; @Input() {{variableName}}AutoClose = '{{model.autoClose}}';",
 				"outputs": "@Output() {{variableName}}OpenChange = new EventEmitter<any>();",
 				"template": "<div ngbDropdown class='d-inline-block'> <button type='button' class='btn btn-outline-primary' id='dropdownBasic1' ngbDropdownToggle> {{model.title}} </button> <div ngbDropdownMenu aria-labelledby='dropdownBasic1'> {{children}} </div>"
-			}
+			},
+			"htmlThumbnail": "<button style='margin-left:-8px; background: transparent; padding: .375rem .75rem; font-size: 1rem; text-align: center; vertical-align: middle; line-height: 1.5rem; border: 1px solid #0d6efd; border-radius: .375rem;  margin-top: 1rem; display: flex; align-items: center; justify-content: center;'><span style='color:#0d6efd'>Dropdown</span><span style='width: 0; height: 0; border: solid 5px; border-color: #0d6efd transparent transparent transparent; margin-left: 5px'></span></button>"
 		},
 		{
 			"type": "bs-progressbar",
