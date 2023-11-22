@@ -331,7 +331,7 @@
 			"angular": {
 				"inputs": "@Input() {{variableName}}Animation = '{{model.animation}}'; @Input() {{variableName}}Dismissible = '{{model.dismissible}}'; @Input() {{variableName}}Message = '{{model.message}}'; @Input() {{variableName}}Type = '{{model.category}}';",
 				"outputs": "@Output() {{variableName}}isClosed = new EventEmitter<any>();",
-				"template": "<ngb-alert {{#if model.animation}}animation={{model.animation}}{{/if}} {{#if model.dismissible}}dismissible={{model.dismissible}}{{/if}}  type='{{model.category}}' class='alert alert-warning show fade' role='alert'> {{model.message}} </ngb-alert>"
+				"template": "<ngb-alert {{#if model.animation}}[animation]='{{variableName}}Animation'{{/if}} {{#if model.dismissible}}[dismissible]='{{variableName}}Dismissible'{{/if}}  [type]='{{variableName}}Type' class='alert alert-warning show fade' role='alert'> {{model.message}} </ngb-alert>"
 			},
 			"htmlThumbnail": "<button style='background: #fff3cd; padding: .375rem .75rem; font-size: 1rem; text-align: center; vertical-align: middle; line-height: 1.5rem; border: 1px solid #ffc107; border-radius: .375rem;  margin-top: .5rem;' {{#if disabled}}disabled{{/if}}>{{message}}: Message</button>"
 		},
