@@ -445,7 +445,7 @@
 			"angular": {
 				"inputs": "@Input() {{variableName}}CloseDelay = '{{model.closeDelay}}'; @Input() {{variableName}}Triggers = '{{model.triggers}}'; @Input() {{variableName}}Placement = '{{model.placement}}'; @Input() {{variableName}}OpenDelay = '{{model.openDelay}}'; @Input() {{variableName}}Title = '{{model.title}}'; @Input() {{variableName}}Description = '{{model.description}}'; ",
 				"outputs": "@Output() {{variableName}}hidden = new EventEmitter<any>(); @Output() {{variableName}}shown = new EventEmitter<any>();",
-				"template": "<button ngbPopover='{{model.description}}' class='btn btn-outline-secondary' {{#if model.openDelay}}openDelay={{model.openDelay}}{{/if}} {{#if model.closeDelay}}closeDelay={{model.closeDelay}}{{/if}} {{#if model.triggers}}triggers='{{model.triggers}}'{{/if}} placement='{{model.placement}}' {{#if model.disabled}}disablePopover{{/if}}>{{model.title}}</button>"
+				"template": "<button [ngbPopover]='{{variableName}}Description' class='btn btn-outline-secondary' {{#if model.openDelay}}[openDelay]='{{variableName}}OpenDelay'{{/if}} {{#if model.closeDelay}}[closeDelay]={{variableName}}CloseDelay{{/if}} {{#if model.triggers}}[triggers]='{{variableName}}Triggers'{{/if}} [placement]='{{variableName}}Placement' {{#if model.disabled}}disablePopover{{/if}}>{{model.title}}</button>"
 			},
 			"htmlThumbnail": "<button style='background: white; padding: .375rem .75rem; font-size: 1rem; color: #6c757d; text-align: center; vertical-align: middle; line-height: 1.5rem; border: 1px solid #6c757d; border-radius: .375rem; margin-left: 5px; margin-top: 1rem;' {{#if disabled}}disabled{{/if}}>{{title}}</button>"
 		},
