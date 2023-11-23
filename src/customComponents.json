@@ -16,6 +16,30 @@
 	},
 	"components": [
 		{
+			"type": "bs-nav",
+			"htmlPreview": "<ngbd-nav-basic><ul ngbnav style='border-bottom:1px solid #dee2e6; display: flex; flex-wrap: wrap; padding-left: 0; color:#000; background-color: #fff; border-color: #dee2e6 #dee2e6 #fff; margin-bottom: calc(-1*1px); border-top-left-radius: .375rem; border-top-right-radius: .375rem;' role='tablist'><li style='color:#000; background-color: #fff; border-color: #dee2e6 #dee2e6 #fff;' role='presentation'><button type='button' ngbnavlink id='ngb-nav-207' role='tab' aria-controls='gb-nav-207-panel' aria-selected='true' aria-disabled='false' class='nav-link active' style='margin-bottom: calc(-1*1px); border-top-left-radius: .375rem; border-top-right-radius: .375rem;'>One</button></li>{{children}}</ul><div style='margin-top: 0.5rem !important;''><div ngbnavpane style='display: block;' id='ngb-nav-207-panel' role='tabpanel' aria-labelledby='ngb-nav-207'><p>sample paragraph 1</p></div></div></ngbd-nav-basic>",
+			"inputs": {},
+			"defaultInputs": {},
+			"angular": {
+				"inputs": "",
+				"outputs": "",
+				"template": ""
+			},
+			"htmlThumbnail": {}
+		},
+		{
+			"type": "bs-nav-items",
+			"htmlPreview": "",
+			"inputs": {},
+			"defaultInputs": {},
+			"angular": {
+				"inputs": "",
+				"outputs": "",
+				"template": ""
+			},
+			"htmlThumbnail": {}
+		},
+		{
 			"type": "bs-collapse",
 			"htmlPreview": "<ngbd-collapse-basic><p><button type='button' aria-controls='collapseExample' class='btn btn-outline-primary' aria-expanded='true'> {{title}} </button></p><div class='collapse show' style><div style='position:relative; display:flex; flex-direction:column; min-width:0; color:#212529; word-wrap:break-word; background-clip:border-box; border:1px solid rgba(0, 0, 0, .175); border-radius: 0.375rem;'><div style='flex:1 1 auto; padding: 1rem 1rem;'>{{content}} {{children}}</div></div></div></ngbd-collapse-basic>",
 			"inputs": {
