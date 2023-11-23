@@ -15,6 +15,7 @@ const headerStyle = css`
 	line-height: 21px;
 	z-index: ${componentHeaderZIndex};
 	cursor: grab;
+	color: black;
 `;
 
 const iconStyle = css`
@@ -136,11 +137,7 @@ export const AComponent = ({
 	const holderRef = useRef(null as any);
 
 	const shouldRejectDrop = (event: any) => {
-		if (!rejectDrop) {
-			return false;
-		}
-
-		if (typeof rejectDrop === 'boolean' && rejectDrop) {
+		if (typeof rejectDrop === 'boolean' && rejectDrop || !componentObj.items) {
 			return true;
 		}
 
