@@ -53,6 +53,7 @@ export const getFragmentPreview = async (fragment: any, props: RenderProps) => {
 	element.style.minHeight = `${props.height || 400}px`;
 	const root = createRoot(element);
 	root.render(
+		// eslint-disable-next-line @typescript-eslint/no-empty-function
 		React.createElement(UIFragment, { state: fragment, setState: (_state: any) => {} })
 	);
 	document.body.appendChild(element);
@@ -129,24 +130,24 @@ export const getUsedCollectionsStyleUrls = (collections: any[], componentObj: an
 	const usedCollectionsNames = getUsedCollectionsNames(componentObj);
 
 	return collections
-		?.filter((collection: any) => usedCollectionsNames.includes(collection.name))
-		.flatMap((collection: any) => collection.styleUrls);
+		?.filter((collection) => usedCollectionsNames.includes(collection.name))
+		.flatMap((collection) => collection.styleUrls);
 };
 
 export const getUsedCollectionsAngularStylePaths = (collections: any[], componentObj: any) => {
 	const usedCollectionsNames = getUsedCollectionsNames(componentObj);
 
 	return collections
-		?.filter((collection: any) => usedCollectionsNames.includes(collection.name))
-		.flatMap((collection: any) => collection.angular?.stylePaths) || [];
+		?.filter((collection) => usedCollectionsNames.includes(collection.name))
+		.flatMap((collection) => collection.angular?.stylePaths) || [];
 };
 
 export const getUsedCollectionsAngularStyleImportPaths = (collections: any[], componentObj: any) => {
 	const usedCollectionsNames = getUsedCollectionsNames(componentObj);
 
 	return collections
-		?.filter((collection: any) => usedCollectionsNames.includes(collection.name))
-		.flatMap((collection: any) => collection.angular?.styleImportPaths) || [];
+		?.filter((collection) => usedCollectionsNames.includes(collection.name))
+		.flatMap((collection) => collection.angular?.styleImportPaths) || [];
 };
 
 export const getUsedCollectionsValuesByProp = (collections: any[], componentObj: any, propName: string) => {
@@ -155,7 +156,7 @@ export const getUsedCollectionsValuesByProp = (collections: any[], componentObj:
 	const keys = propName.split('.'); // used to get the value from the collection
 
 	return collections
-		?.filter((collection: any) => usedCollectionsNames.includes(collection.name))
+		?.filter((collection) => usedCollectionsNames.includes(collection.name))
 		.reduce((result, collection) => ({
 			...result,
 			// i.e. for propName `"angular.dependencies"` gets the `collection.angular.dependencies`
@@ -168,9 +169,9 @@ export const getUsedCollectionsAngularDependencies = (collections: any[], compon
 };
 
 export const getCustomComponentByType = (componentType: string, collections: any[]) => {
-	const allComponents = collections?.flatMap((collection: any) => collection.components || []) || [];
+	const allComponents = collections?.flatMap((collection) => collection.components || []) || [];
 
-	return allComponents.find((component: any) => component.type === componentType);
+	return allComponents.find((component) => component.type === componentType);
 };
 
 const updatedList = (list: any[], item: any, dropInIndex?: number) => {
