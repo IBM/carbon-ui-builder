@@ -268,12 +268,37 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 
 				if (customComponent?.htmlPreview) {
 					// replace the inputs placeholders with values before rendering
-					let htmlPreview = customComponent.htmlPreview;
+					const childrenContainerId = 'children-id-pretty-unique';
+					let htmlPreview = customComponent.htmlPreview.split('{{children}}').join(`<div id="${childrenContainerId}"></div>`);
+
 					try {
-						htmlPreview = (Handlebars.compile(customComponent.htmlPreview))(componentObj);
+						htmlPreview = (Handlebars.compile(htmlPreview))(componentObj);
 					} catch (_error) {
 						console.error(_error);
 					}
+
+					const replaceChildren = (
+						element: React.DetailedReactHTMLElement<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
+						replacement: React.DetailedReactHTMLElement<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>):
+					React.DetailedReactHTMLElement<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> => {
+						if (element.props?.id === childrenContainerId) {
+							return replacement;
+						}
+
+						if (typeof(element) !== 'object') {
+							return element;
+						}
+
+						return {
+							...element,
+							props: {
+								...element.props,
+								children: Array.isArray(element.props?.children)
+									? element.props.children.map((child) => replaceChildren(child, replacement))
+									: element.props?.children
+							}
+						};
+					};
 
 					const options = {
 						replace: (domNode: any) => {
@@ -291,7 +316,15 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 									css`div div & { ${styleObjectToString(componentObj.style)} }`
 								)}`;
 
-								return React.createElement(domNode.name, props, domToReact(domNode.children));
+								const element = React.createElement(domNode.name, props, domToReact(domNode.children));
+
+								const Children = () => <>
+									{
+										componentObj.items?.map((item: any) => renderComponents(item, outline))
+									}
+								</>;
+
+								return replaceChildren(element, React.createElement(Children) as any);
 							}
 
 							return domNode;
@@ -337,12 +370,12 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 			style={{
 				background: showDragOverIndicator ? '#0001' : ''
 			}}
-			onDragEnter={(event: any) => {
+			onDragEnter={(event) => {
 				event.stopPropagation();
 				event.preventDefault();
 				setShowDragOverIndicator(true);
 			}}
-			onDragLeave={(event: any) => {
+			onDragLeave={(event) => {
 				event.stopPropagation();
 				event.preventDefault();
 				setShowDragOverIndicator(false);
