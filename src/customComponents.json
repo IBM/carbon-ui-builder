@@ -17,7 +17,7 @@
 	"components": [
 		{
 			"type": "bs-nav",
-			"htmlPreview": "<ngbd-nav-basic><ul ngbnav style='margin: .5rem .5rem 0 .5rem; border-bottom: 1px solid #dee2e6; border-color: #dee2e6; display: flex; flex-wrap: wrap; padding-left: 0; margin-bottom: 0; list-style: none;' role='tablist'><li style='display: list-item; text-align: -webkit-match-parent;' role='presentation'><button type='button' ngbnavlink id='ngb-nav-207' role='tab' aria-controls='gb-nav-207-panel' aria-selected='true' aria-disabled='false' style='padding: .5rem; color:#0d6efd; background-color: white; border-color: #dee2e6 #dee2e6 #fff; margin-bottom: calc(-1 * 1px); border: 1px solid transparent; border-top-left-radius: 0.375rem; border-top-right-radius: 0.375rem; border-bottom: 1px'>One</button></li><li style='display: list-item; text-align: -webkit-match-parent;' role='presentation'><button type='button' ngbnavlink id='ngb-nav-207' role='tab' aria-controls='gb-nav-207-panel' aria-selected='true' aria-disabled='false' style='padding: .5rem; color: black; background-color: white; border-color: #dee2e6 #dee2e6 #fff; margin-bottom: calc(-1 * 1px); border: 1px solid transparent; border-left: 1px solid #dee2e6; border-top: 1px solid #dee2e6; border-right: 1px solid #dee2e6; border-top-left-radius: 0.375rem; border-top-right-radius: 0.375rem;'>Two</button></li>{{children}}</ul><div style='margin-top: 0.5rem !important;'><div ngbnavpane style='display: block; padding-left: .5rem;' id='ngb-nav-207-panel' role='tabpanel' aria-labelledby='ngb-nav-207'><p>sample paragraph 1</p></div></div></ngbd-nav-basic>",
+			"htmlPreview": "<ngbd-nav-basic><ul ngbnav style='margin: .5rem .5rem 0 .5rem; border-bottom: 1px solid #dee2e6; border-color: #dee2e6; display: flex; flex-wrap: wrap; padding-left: 0; margin-bottom: 0; list-style: none;' role='tablist'><li style='display: list-item; text-align: -webkit-match-parent;' role='presentation'><button type='button' ngbnavlink id='ngb-nav-207' role='tab' aria-controls='gb-nav-207-panel' aria-selected='true' aria-disabled='false' style='padding: .5rem; color:#0d6efd; background-color: white; border-color: #dee2e6 #dee2e6 #fff; margin-bottom: calc(-1 * 1px); border: 1px solid transparent; border-top-left-radius: 0.375rem; border-top-right-radius: 0.375rem; border-bottom: 1px'>One</button></li><li style='display: list-item; text-align: -webkit-match-parent;' role='presentation'><button type='button' ngbnavlink id='ngb-nav-207' role='tab' aria-controls='gb-nav-207-panel' aria-selected='true' aria-disabled='false' style='padding: .5rem; color: black; background-color: white; border-color: #dee2e6 #dee2e6 #fff; margin-bottom: calc(-1 * 1px); border: 1px solid transparent; border-left: 1px solid #dee2e6; border-top: 1px solid #dee2e6; border-right: 1px solid #dee2e6; border-top-left-radius: 0.375rem; border-top-right-radius: 0.375rem;'>Two</button></li>{{children}}</ul><div style='margin-top: 0.5rem !important;'><div ngbnavpane style='display: block; padding-left: .5rem;' id='ngb-nav-207-panel' role='tabpanel' aria-labelledby='ngb-nav-207'><p>{{description}}</p></div></div></ngbd-nav-basic>",
 			"inputs": {
 				"activeId": "string",
 				"animation": "boolean",
@@ -51,17 +51,19 @@
 							"text": "Vertical"
 						}
 					]	
-				}
+				},
+				"description": "string"
 			},
 			"defaultInputs": {
 				"keyboard": "true",
 				"destroyOnHide": "true",
+				"description": "sample description 2",
 				"items": []
 			},
 			"angular": {
 				"inputs": "@Input() {{variableName}}Orientation = '{{model.orientation}}'; @Input() {{variableName}}Keyboard = '{{model.keyboard}}'; @Input() {{variableName}}ActiveId = '{{model.activeId}}'; @Input() {{variableName}}IsAnimation = '{{model.animation}}'; @Input() {{variableName}}isDestroyOnHide = '{{model.destroyOnHide}}';",
 				"outputs": "@Output() {{variableName}}IsShown = new EventEmitter<any>(); @Output() {{variableName}}NavChange = new EventEmitter<any>(); @Output() {{variableName}}ActiveIdChange = new EventEmitter<any>(); @Output() {{variableName}}IsHidden = new EventEmitter<any>();",
-				"template": "<ul ngbNav #nav='ngbNav' {{#if model.destroyOnHide}}[destroyOnHide]='{{variableName}}isDestroyOnHide'{{/if}} {{#if model.animation}}[animation]='{{variableName}}IsAnimation'{{/if}} [Orientation]='{{variableName}}Orientation' [keyboard]='{{variableName}}Keyboard' [(activeId)]='{{variableName}}ActiveId' class='nav-tabs'>{{children}}</ul>"
+				"template": "<ul ngbNav #nav='ngbNav' {{#if model.destroyOnHide}}[destroyOnHide]='{{variableName}}isDestroyOnHide'{{/if}} {{#if model.animation}}[animation]='{{variableName}}IsAnimation'{{/if}} [Orientation]='{{variableName}}Orientation' [keyboard]='{{variableName}}Keyboard' [(activeId)]='{{variableName}}ActiveId' class='nav-tabs'><li [ngbNavItem]='1'><button ngbNavLink>One</button><ng-template ngbNavContent><p>sample description 1</p></ng-template></li><li [ngbNavItem]='2'><button ngbNavLink>One</button><ng-template ngbNavContent><p>{{model.description}}</p></ng-template></li>{{children}}</ul>"
 			},
 			"htmlThumbnail": "hello"
 		},
