@@ -57,8 +57,7 @@
 			"defaultInputs": {
 				"keyboard": "true",
 				"destroyOnHide": "true",
-				"description": "sample description 2",
-				"items": []
+				"description": "sample description 2"
 			},
 			"angular": {
 				"inputs": "@Input() {{variableName}}Orientation = '{{model.orientation}}'; @Input() {{variableName}}Keyboard = '{{model.keyboard}}'; @Input() {{variableName}}ActiveId = '{{model.activeId}}'; @Input() {{variableName}}IsAnimation = '{{model.animation}}'; @Input() {{variableName}}isDestroyOnHide = '{{model.destroyOnHide}}';",
