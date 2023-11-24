@@ -53,11 +53,15 @@
 					]	
 				}
 			},
-			"defaultInputs": {},
+			"defaultInputs": {
+				"keyboard": "true",
+				"destroyOnHide": "true",
+				"items": []
+			},
 			"angular": {
 				"inputs": "@Input() {{variableName}}Orientation = '{{model.orientation}}'; @Input() {{variableName}}Keyboard = '{{model.keyboard}}'; @Input() {{variableName}}ActiveId = '{{model.activeId}}'; @Input() {{variableName}}IsAnimation = '{{model.animation}}'; @Input() {{variableName}}isDestroyOnHide = '{{model.destroyOnHide}}';",
 				"outputs": "@Output() {{variableName}}IsShown = new EventEmitter<any>(); @Output() {{variableName}}NavChange = new EventEmitter<any>(); @Output() {{variableName}}ActiveIdChange = new EventEmitter<any>(); @Output() {{variableName}}IsHidden = new EventEmitter<any>();",
-				"template": ""
+				"template": "<ul ngbNav #nav='ngbNav' {{#if model.destroyOnHide}}[destroyOnHide]='{{variableName}}isDestroyOnHide'{{/if}} {{#if model.animation}}[animation]='{{variableName}}IsAnimation'{{/if}} [Orientation]='{{variableName}}Orientation' [keyboard]='{{variableName}}Keyboard' [(activeId)]='{{variableName}}ActiveId' class='nav-tabs'>{{children}}</ul>"
 			},
 			"htmlThumbnail": "hello"
 		},
