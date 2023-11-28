@@ -16,6 +16,29 @@
 	},
 	"components": [
 		{
+			"type": "bs-pagination",
+			"htmlPreview": "<ngb-pagination role='navigation'><ul style='display: flex; padding-left: 0; list-style: none; color: #0d6efd; padding-left: .75rem; padding-right: .75rem; padding-top: .375rem; padding-bottom: .375rem;'><li class='page-item'><a href='' style='background-color: #fff; color: #0d6efd; position: relative; display: block; padding: .375rem .75rem; font-size: 1rem; text-decoration: none; border: 1px solid #dee2e6;'>1</a></li><li class='page-item'><a href='' style='background-color: #fff; color: #0d6efd; position: relative; display: block; padding: .375rem .75rem; font-size: 1rem; text-decoration: none; border: 1px solid #dee2e6;'>2</a></li><li class='page-item'><a href='' style='background-color: #fff; color: #0d6efd; position: relative; display: block; padding: .375rem .75rem; font-size: 1rem; text-decoration: none; border: 1px solid #dee2e6;'>3</a></li><li class='page-item' style='background-color: #0d6efd; color: white;' aria-current='page'><a href='' style='background-color: #fff; color: #0d6efd; position: relative; display: block; padding: .375rem .75rem; font-size: 1rem; text-decoration: none; border: 1px solid #dee2e6;'>4</a></li><li class='page-item'><a href='' style='background-color: #fff; color: #0d6efd; position: relative; display: block; padding: .375rem .75rem; font-size: 1rem; text-decoration: none; border: 1px solid #dee2e6;'>5</a></li></ul></ngb-pagination>",
+			"inputs": {
+				"boundaryLinks": "boolean",
+				"collectionSize": "number",
+				"directionLinks": "boolean",
+				"disabled": "boolean",
+				"ellipses": "boolean",
+				"maxSize": "number",
+				"page": "number",
+				"pageSize": "number",
+				"rotate": "boolean",
+				"size": "string"
+			},
+			"defaultInputs": {},
+			"angular": {
+				"inputs": "@Input() {{variableName}}Size = '{{model.size}}'; @Input() {{variableName}}IsRotate = '{{model.rotate}}'; @Input() {{variableName}}PageSize = '{{model.pageSize}}'; @Input() {{variableName}}Page = '{{model.page}}'; @Input() {{variableName}}MaxSize = '{{model.maxSize}}'; @Input() {{variableName}}IsEllipses = '{{model.ellipses}}'; @Input() {{variableName}}IsDisabled = '{{model.disabled}}'; @Input() {{variableName}}IsDirectionLinks = '{{model.directionLinks}}'; @Input() {{variableName}}CollectionSize = '{{model.collectionSize}}'; @Input() {{variableName}}IsBoundaryLinks = '{{model.boundaryLinks}}';",
+				"outputs": "@Output() {{variableName}}PageChange = new EventEmitter<any>();",
+				"template": "<ngb-pagination [size]='{{variableName}}Size' {{#if model.rotate}}[rotate]='{{variableName}}IsRotate'{{/if}} [pageSize]='{{variableName}}PageSize' [maxSize]='{{variableName}}MaxSize' {{#unless model.ellipses}}[ellipses]='{{variableName}}IsEllipses'{{/unless}} {{#if model.disabled}}[disabled]='{{variableName}}IsDisabled'{{/if}}  {{#unless model.directionLinks}}[directionLinks]='{{variableName}}IsDirectionLinks'{{/unless}} {{#if model.boundaryLinks}}[boundaryLinks]='{{variableName}}IsBoundaryLinks'{{/if}} [collectionSize]='{{variableName}}CollectionSize'  [(page)]='{{variableName}}Page' />"
+			},
+			"htmlThumbnail": "<ngb-pagination role='navigation'><ul style='display: flex; list-style: none; color: #0d6efd; margin-top: 15px; margin-left: -6px;'><li class='page-item'><a href='' style='background-color: #fff; color: #0d6efd; position: relative; display: block; padding: .375rem .75rem; font-size: 1rem; text-decoration: none; border: 1px solid #dee2e6;'>1</a></li><li class='page-item'><a href='' style='background-color: #fff; color: #0d6efd; position: relative; display: block; padding: .375rem .75rem; font-size: 1rem; text-decoration: none; border: 1px solid #dee2e6;'>2</a></li><li class='page-item'><a href='' style='background-color: #fff; color: #0d6efd; position: relative; display: block; padding: .375rem .75rem; font-size: 1rem; text-decoration: none; border: 1px solid #dee2e6;'>3</a></li></ul></ngb-pagination>"
+		},
+		{
 			"type": "bs-timepicker",
 			"htmlPreview": "<div style='display: flex; align-items: center;''><div style='width: 4em; display: flex; flex-direction: column; align-items: center; justify-content: space-around;'><button tabindex='-1' type='button' class='btn btn-link'><span class='chevron ngb-tp-chevron'></span></button><input type='text' maxlength='2' inputmode='numeric' placeholder='HH' aria-label='Hours' style='text-align: center; display: block; width: 100%; padding: 0.375rem 0.75rem; font-size: 1rem; font-weight: 400; line-height: 1.5; color: #212529; appearance: none; background-color: white; background-clip: padding-box; border: 1px solid #dee2e6; border-radius: .375rem;'><button tabindex='-1' type='button' class='btn btn-link'><span class='chevron ngb-tp-chevron bottom'></span></button></div><div style='width: 1em; text-align: center;'>:</div><div style='width: 4em; display: flex; flex-direction: column; align-items: center; justify-content: space-around;'><button tabindex='-1' type='button' class='btn btn-link'><span class='chevron ngb-tp-chevron'></span></button><input type='text' maxlength='2' inputmode='numeric' placeholder='MM' aria-label='Minutes' style='text-align: center; display: block; width: 100%; padding: 0.375rem 0.75rem; font-size: 1rem; font-weight: 400; line-height: 1.5; color: #212529; appearance: none; background-color: white; background-clip: padding-box; border: 1px solid #dee2e6; border-radius: .375rem;'><button tabindex='-1' type='button' class='btn btn-link'><span class='chevron ngb-tp-chevron bottom'></span></button></div></div>",
 			"inputs": {
