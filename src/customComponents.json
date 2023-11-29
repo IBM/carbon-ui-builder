@@ -16,6 +16,26 @@
 	},
 	"components": [
 		{
+			"type": "bs-toast",
+			"htmlPreview": "",
+			"inputs": {
+				"animation": "boolean",
+				"autohide": "boolean",
+				"delay": "number",
+				"header": "string",
+				"description": "string"
+			},
+			"defaultInputs": {
+				"delay": "5000"
+			},
+			"angular": {
+				"inputs": "@Input() {{variableName}}Header = '{{model.header}}'; @Input() {{variableName}}Delay = '{{model.delay}}'; @Input() {{variableName}}IsAutohide = '{{model.autohide}}'; @Input() {{variableName}}IsAnimation = '{{model.animation}}';",
+				"outputs": "@Output() {{variableName}}Hidden = new EventEmitter<any>(); @Output() {{variableName}}Shown = new EventEmitter<any>();",
+				"template": "<ngb-toast [delay]='{{variableName}}Delay' {{#if model.animation}}[animation]='{{variableName}}Animation'{{/if}} {{#unless model.autohide}}[autohide]='{{variableName}}IsAutohide'{{/unless}} {{#if model.header}}[header]='{{variableName}}Header'{{/if}}  >{{model.description}} {{children}}</ngb-toast>"
+			},
+			"htmlThumbnail": ""
+		},
+		{
 			"type": "bs-pagination",
 			"htmlPreview": "<ngb-pagination role='navigation'><ul style='display: flex; padding-left: 0; list-style: none; color: #0d6efd; padding-left: .75rem; padding-right: .75rem; padding-top: .375rem; padding-bottom: .375rem;'><li class='page-item'><a href='' style='background-color: #fff; color: #0d6efd; position: relative; display: block; padding: .375rem .75rem; font-size: 1rem; text-decoration: none; border: 1px solid #dee2e6;'>1</a></li><li class='page-item'><a href='' style='background-color: #fff; color: #0d6efd; position: relative; display: block; padding: .375rem .75rem; font-size: 1rem; text-decoration: none; border: 1px solid #dee2e6;'>2</a></li><li class='page-item'><a href='' style='background-color: #fff; color: #0d6efd; position: relative; display: block; padding: .375rem .75rem; font-size: 1rem; text-decoration: none; border: 1px solid #dee2e6;'>3</a></li><li class='page-item' style='background-color: #0d6efd; color: white;' aria-current='page'><a href='' style='background-color: #fff; color: #0d6efd; position: relative; display: block; padding: .375rem .75rem; font-size: 1rem; text-decoration: none; border: 1px solid #dee2e6;'>4</a></li><li class='page-item'><a href='' style='background-color: #fff; color: #0d6efd; position: relative; display: block; padding: .375rem .75rem; font-size: 1rem; text-decoration: none; border: 1px solid #dee2e6;'>5</a></li></ul></ngb-pagination>",
 			"inputs": {
