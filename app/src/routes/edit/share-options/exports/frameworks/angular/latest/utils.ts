@@ -96,6 +96,8 @@ export const jsonToTemplate = (json: any, fragments: any[], customComponentsColl
 		return json;
 	}
 
+	let itemsTemplate;
+
 	for (const component of Object.values(allComponents)) {
 		if (json.type === component.componentInfo.type && !component.componentInfo.codeExport.angular.latest.isNotDirectExport) {
 			return component.componentInfo.codeExport.angular.latest.code({ json, jsonToTemplate, fragments, customComponentsCollections });
@@ -103,21 +105,27 @@ export const jsonToTemplate = (json: any, fragments: any[], customComponentsColl
 	}
 
 	if (json.items) {
-		return json.items.map((item: any) => jsonToTemplate(item, fragments, customComponentsCollections)).join('\n');
+		itemsTemplate = json.items.map((item: any) => jsonToTemplate(item, fragments, customComponentsCollections)).join('\n');
 	}
 
 	const activeCollection = customComponentsCollections.find((collection) => collection.name === json.componentsCollection);
 	if (!activeCollection) {
-		return;
+		return itemsTemplate;
 	}
 
 	// find the angular.template from the collection, parse it and return it as a string
 	const activeComponent = activeCollection.components?.find((component: any) => component.type === json.type);
 	if (!activeComponent?.angular?.template) {
-		return;
+		return itemsTemplate;
 	}
 
-	const htmlPreview = parseTemplate(activeComponent.angular.template, json, fragments, customComponentsCollections);
+	let fullTemplate = activeComponent.angular.template;
+
+	if (itemsTemplate) {
+		fullTemplate = fullTemplate.split('{{children}}').join(itemsTemplate);
+	}
+
+	const htmlPreview = parseTemplate(fullTemplate, json, fragments, customComponentsCollections);
 	return htmlPreview;
 };
 
