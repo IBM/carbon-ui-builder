@@ -17,7 +17,7 @@
 	"components": [
 		{
 			"type": "bs-toast",
-			"htmlPreview": "",
+			"htmlPreview": "<ngb-toast role='alert' aria-atomic='true' style='display: block; width: 350px; max-width: 100%; font-size: .875rem; background-color: rgba( 255, 255, 255 , .85); background-clip: padding-box; border: 1px solid rgba(0, 0, 0, .175); box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15); border-radius: .375rem;' aria-live='polite'><div style='padding: 5rem; word-wrap: break-word;'>{{description}}</div></ngb-toast>",
 			"inputs": {
 				"animation": "boolean",
 				"autohide": "boolean",
@@ -33,7 +33,7 @@
 				"outputs": "@Output() {{variableName}}Hidden = new EventEmitter<any>(); @Output() {{variableName}}Shown = new EventEmitter<any>();",
 				"template": "<ngb-toast [delay]='{{variableName}}Delay' {{#if model.animation}}[animation]='{{variableName}}Animation'{{/if}} {{#unless model.autohide}}[autohide]='{{variableName}}IsAutohide'{{/unless}} {{#if model.header}}[header]='{{variableName}}Header'{{/if}}  >{{model.description}} {{children}}</ngb-toast>"
 			},
-			"htmlThumbnail": ""
+			"htmlThumbnail": "<ngb-toast role='alert' aria-atomic='true' style='display: block; margin-top:10px; height:60px width: 350px; max-width: 100%; font-size: .875rem; background-color: rgba( 255, 255, 255 , .85); background-clip: padding-box; border: 1px solid rgba(0, 0, 0, .175); box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15); border-radius: .375rem;' aria-live='polite'><div style='padding: .5rem; word-wrap: break-word;'>Toast Content</div></ngb-toast>"
 		},
 		{
 			"type": "bs-pagination",
