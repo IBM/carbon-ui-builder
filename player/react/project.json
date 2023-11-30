@@ -18,7 +18,7 @@
 			"outputs": ["{options.outputPath}"],
 			"defaultConfiguration": "production",
 			"options": {
-				"outputPath": "dist/player-react"
+				"outputPath": "dist/libs/player-react"
 			},
 			"configurations": {
 				"development": {

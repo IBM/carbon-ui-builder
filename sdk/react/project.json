@@ -18,7 +18,7 @@
 			"outputs": ["{options.outputPath}"],
 			"defaultConfiguration": "production",
 			"options": {
-				"outputPath": "dist/sdk-react"
+				"outputPath": "dist/libs/sdk-react"
 			},
 			"configurations": {
 				"development": {
