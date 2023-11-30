@@ -1,7 +1,7 @@
 {
 	"name": "player-react",
 	"$schema": "../../node_modules/nx/schemas/project-schema.json",
-	"sourceRoot": "player/src",
+	"sourceRoot": "player/react/src",
 	"projectType": "library",
 	"tags": [],
 	"targets": {
