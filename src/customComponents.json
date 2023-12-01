@@ -16,6 +16,68 @@
 	},
 	"components": [
 		{
+			"type": "bs-datepicker",
+			"htmlPreview": "",
+			"inputs": {
+				"displayMonths": "number",
+				"firstDayOfWeek": "number",
+				"day": "number",
+				"month": "number",
+				"year": "number",
+				"navigation": {
+					"type": "multi-select",
+					"items": [
+						{
+							"id": "select",
+							"text": "Select"
+						},
+						{
+							"id": "arrows",
+							"text": "Arrows"
+						},
+						{
+							"id": "none",
+							"text": "None"
+						}
+					]
+				},
+				"outsideDays": {
+					"type": "multi-select",
+					"items": [
+						{
+							"id": "visible",
+							"text": "Visible"
+						},
+						{
+							"id": "hidden",
+							"text": "Hidden"
+						},
+						{
+							"id": "collapsed",
+							"text": "Collapsed"
+						}
+					]
+				},
+				"showWeekNumbers": "boolean",
+				"weekdays": "boolean"
+			},
+			"defaultInputs": {
+				"displayMonths": "1",
+				"firstDayOfWeek": "1",
+				"navigation": "select",
+				"outsideDays": "visible",
+				"day": "",
+				"month": "",
+				"year": ""
+			},
+			"angular": {
+				"inputs": "@Input() {{variableName}}IsWeekdays = '{{model.weekdays}}'; @Input() {{variableName}}IsShowWeekNumbers = '{{model.showWeekNumbers}}'; @Input() {{variableName}}OutsideDays = '{{model.outsideDays}}'; @Input() {{variableName}}Navigation = '{{model.navigation}}'; @Input() {{variableName}}Year = '{{model.year}}'; @Input() {{variableName}}Month = '{{model.month}}'; @Input() {{variableName}}Day = '{{model.day}}'; @Input() {{variableName}}FirstDayOfWeek = '{{model.firstDayOfWeek}}'; @Input() {{variableName}}DisplayMonths = '{{model.displayMonths}}';",
+				"outputs": "@Output() {{variableName}}DateSelect = new EventEmitter<any>(); @Output() {{variableName}}Navigate = new EventEmitter<any>();",
+				"template": "<ngb-datepicker #dp {{#if model.weekdays}}[weekdays]='{{variableName}}IsWeekdays'{{/if}} {{#unless model.showWeekNumbers}}[showWeekNumbers]='{{variableName}}IsShowWeekNumbers'{{/unless}} [outsideDays]='{{variableName}}OutsideDays' [navigation]='{{variableName}}Navigation' [firstDayOfWeek]='{{variableName}}FirstDayOfWeek' [displayMonths]='{{variableName}}DisplayMonths' [(ngModel)]='{\"day\": {{model.day}}, \"month\": {{model.month}}, \"year\": {{model.year}} }' (navigate)='date = $event.next' />"
+			},
+			"htmlThumbnail": ""
+		},
+		{
 			"type": "bs-toast",
 			"htmlPreview": "<ngb-toast role='alert' aria-atomic='true' style='display: block; width: 350px; max-width: 100%; font-size: .875rem; background-color: rgba( 255, 255, 255 , .85); background-clip: padding-box; border: 1px solid rgba(0, 0, 0, .175); box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15); border-radius: .375rem;' aria-live='polite'><div style='padding: 5rem; word-wrap: break-word;'>{{description}}</div></ngb-toast>",
 			"inputs": {
