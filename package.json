@@ -84,6 +84,7 @@
 	},
 	"scripts": {
 		"nx": "nx",
+		"version": "nx release version",
 		"start": "nx serve app",
 		"build": "nx build app",
 		"lint": "nx lint app",
