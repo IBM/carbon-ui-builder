@@ -33,21 +33,21 @@ jobs:
           git config user.name "carbon-bot"
           git config user.email "carbon@us.ibm.com"
 
-      - name: Derive appropriate SHAs for base and head for `nx affected` commands
-        uses: nrwl/nx-set-shas@v4
+    #   - name: Derive appropriate SHAs for base and head for `nx affected` commands
+    #     uses: nrwl/nx-set-shas@v4
 
-      - name: nx affected list
-        run: |
-          echo "BASE: ${{ env.NX_BASE }}"
-          echo "HEAD: ${{ env.NX_HEAD }}"
-          AFFECTED_LIBS=$(npm run nx show projects -- --type lib --affected --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }})
-          echo "$AFFECTED_LIBS"
+    #   - name: nx affected list
+    #     run: |
+    #       echo "BASE: ${{ env.NX_BASE }}"
+    #       echo "HEAD: ${{ env.NX_HEAD }}"
+    #       AFFECTED_LIBS=$(npm run nx show projects -- --type lib --affected --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }})
+    #       echo "$AFFECTED_LIBS"
 
-          # If empty, exit the job
-          if [ -z "$AFFECTED_LIBS" ]; then
-            echo "No libs affected, exiting job successfully"
-            exit 0
-          fi
+    #       # If empty, exit the job
+    #       if [ -z "$AFFECTED_LIBS" ]; then
+    #         echo "No libs affected, exiting job successfully"
+    #         exit 0
+    #       fi
 
       # 1. Based on conventional commits, determine new version
       # 2. Create a tag
@@ -69,7 +69,7 @@ jobs:
           cd dist/libs
           for package in */; do
             echo "Publishing $package to npm!"
-            (cd "$package" && npm publish --provenance --access public --dry-run)
+            (cd "$package" && npm publish --provenance --access public)
             echo "Inside directory $package!"
           done
         env:
