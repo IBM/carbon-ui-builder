@@ -34,8 +34,7 @@
 				"animation": "false",
 				"interval": "5000",
 				"slideHeader": "First slide label",
-				"slideContent": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
-				"items": []
+				"slideContent": "Nulla vitae elit libero, a pharetra augue mollis interdum."
 			},
 			"angular": {
 				"inputs": "@Input() {{variableName}}IsWrap = '{{model.wrap}}'; @Input() {{variableName}}IsShowNavigationIndicators = '{{model.showNavigationIndicators}}'; @Input() {{variableName}}IsShowNavigationArrows = '{{model.showNavigationArrows}}'; @Input() {{variableName}}IsPauseOnHover = '{{model.pauseOnHover}}'; @Input() {{variableName}}IsPauseOnFocus = '{{model.pauseOnFocus}}'; @Input() {{variableName}}IsKeyboard = '{{model.keyboard}}'; @Input() {{variableName}}IsAnimation = '{{model.animation}}'; @Input() {{variableName}}Interval = '{{model.interval}}';",
