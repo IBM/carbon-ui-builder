@@ -33,6 +33,7 @@
 		"unique-names-generator": "4.7.1"
 	},
 	"devDependencies": {
+		"@jscutlery/semver": "4.1.0",
 		"@nx/eslint": "17.1.2",
 		"@nx/eslint-plugin": "17.1.2",
 		"@nx/js": "17.1.2",
