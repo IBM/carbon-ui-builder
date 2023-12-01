@@ -62,20 +62,17 @@
 				"weekdays": "boolean"
 			},
 			"defaultInputs": {
-				"displayMonths": "1",
+				"displayMonths": "11",
 				"firstDayOfWeek": "1",
 				"navigation": "select",
-				"outsideDays": "visible",
-				"day": "",
-				"month": "",
-				"year": ""
+				"outsideDays": "visible"
 			},
 			"angular": {
 				"inputs": "@Input() {{variableName}}IsWeekdays = '{{model.weekdays}}'; @Input() {{variableName}}IsShowWeekNumbers = '{{model.showWeekNumbers}}'; @Input() {{variableName}}OutsideDays = '{{model.outsideDays}}'; @Input() {{variableName}}Navigation = '{{model.navigation}}'; @Input() {{variableName}}Year = '{{model.year}}'; @Input() {{variableName}}Month = '{{model.month}}'; @Input() {{variableName}}Day = '{{model.day}}'; @Input() {{variableName}}FirstDayOfWeek = '{{model.firstDayOfWeek}}'; @Input() {{variableName}}DisplayMonths = '{{model.displayMonths}}';",
 				"outputs": "@Output() {{variableName}}DateSelect = new EventEmitter<any>(); @Output() {{variableName}}Navigate = new EventEmitter<any>();",
 				"template": "<ngb-datepicker #dp {{#if model.weekdays}}[weekdays]='{{variableName}}IsWeekdays'{{/if}} {{#unless model.showWeekNumbers}}[showWeekNumbers]='{{variableName}}IsShowWeekNumbers'{{/unless}} [outsideDays]='{{variableName}}OutsideDays' [navigation]='{{variableName}}Navigation' [firstDayOfWeek]='{{variableName}}FirstDayOfWeek' [displayMonths]='{{variableName}}DisplayMonths' [(ngModel)]='{\"day\": {{model.day}}, \"month\": {{model.month}}, \"year\": {{model.year}} }' (navigate)='date = $event.next' />"
 			},
-			"htmlThumbnail": ""
+			"htmlThumbnail": "<ngbd-datepicker-basic ><ngb-datepicker style='margin-left: -.3rem; margin-top:1rem; border: 1px solid #dee2e6; border-radius: .25rem; display: inline-block;'><div style='display: flex;'><div style='pointer-events: none;'><ngb-datepicker-month role='grid' style='width: 100px; pointer-events: none; display: block;'><div role='row' style='padding-left: .25rem; display: flex; border-bottom: 1px solid #dee2e6; border-radius: 0; background-color: #f8f9fa;'><div role='columnheader' style='width: 2rem; height: 2rem; color: #0dcaf0; line-height: 2rem; text-align: center; font-style: italic; font-size: .575rem;' >Mo</div><div role='columnheader' style='width: 2rem; height: 2rem; color: #0dcaf0; line-height: 2rem; text-align: center; font-style: italic; font-size: .575rem;'>Tu</div><div role='columnheader' style='width: 2rem; height: 2rem; color: #0dcaf0; line-height: 2rem; text-align: center; font-style: italic; font-size: .575rem;'>We</div><div role='columnheader' style='width: 2rem; height: 2rem; color: #0dcaf0; line-height: 2rem; text-align: center; font-style: italic; font-size: .575rem;'>Th</div><div role='columnheader' style='width: 2rem; height: 2rem; color: #0dcaf0; line-height: 2rem; text-align: center; font-style: italic; font-size: .575rem;'>Fr</div><div role='columnheader' style='width: 2rem; height: 2rem; color: #0dcaf0; line-height: 2rem; text-align: center; font-style: italic; font-size: .575rem;'>Sa</div><div role='columnheader' style='width: 2rem; height: 2rem; color: #0dcaf0; line-height: 2rem; text-align: center; font-style: italic; font-size: .575rem;'>Su</div></div></ngb-datepicker-month></div></div></ngb-datepicker></ngbd-datepicker-basic>"
 		},
 		{
 			"type": "bs-toast",
