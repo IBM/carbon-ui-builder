@@ -1,0 +1,76 @@
+name: Publish packages
+
+on:
+  push:
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  release:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      # Use Node 20
+      - name: Use Node 20
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup Git
+        run: |
+          git config user.name "carbon-bot"
+          git config user.email "carbon@us.ibm.com"
+
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v4
+
+      - name: nx affected list
+        run: |
+          echo "BASE: ${{ env.NX_BASE }}"
+          echo "HEAD: ${{ env.NX_HEAD }}"
+          AFFECTED_LIBS=$(npm run nx show projects -- --type lib --affected --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }})
+          echo "$AFFECTED_LIBS"
+
+          # If empty, exit the job
+          if [ -z "$AFFECTED_LIBS" ]; then
+            echo "No libs affected, exiting job successfully"
+            exit 0
+          fi
+
+      # 1. Based on conventional commits, determine new version
+      # 2. Create a tag
+      # 3. Release to github
+      - name: Version
+        run: |
+          npm run nx run workspace:version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build & version the project
+        run: npm run build && npm run version
+
+      # 1. Itereates through the list of libs in dist directory
+      # 2. Packs the build
+      # 3. Publishes the build - npm publish --provenance --access public
+      - name: Publish to NPM
+        run: |
+          cd dist/libs
+          for package in */; do
+            echo "Publishing $package to npm!"
+            (cd "$package" && npm publish --provenance --access public --dry-run)
+            echo "Inside directory $package!"
+          done
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
