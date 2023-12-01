@@ -54,5 +54,35 @@
 				"unitTestRunner": "none"
 			}
 		}
+	},
+	"release": {
+		"changelog": {
+			"projectChangelogs": {
+				"file": false,
+				"createRelease": false
+			},
+			"workspaceChangelog": {
+				"file": false,
+				"createRelease": false
+			}
+		},
+		"groups": {
+			"npm": {
+				"releaseTagPattern": "v{version}",
+				"projects": [
+					"player-react",
+					"sdk-react"
+				],
+				"version": {
+					"generatorOptions": {
+						"packageRoot": "dist/libs/{projectName}",
+						"currentVersionResolver": "git-tag",
+						"git": {
+							"tag": false
+						}
+					}
+				}
+			}
+		}
 	}
 }
