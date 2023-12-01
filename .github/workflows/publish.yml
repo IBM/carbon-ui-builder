@@ -41,6 +41,6 @@ jobs:
           NX_BASE: ${{ env.NX_BASE }}
           NX_HEAD: ${{ env.NX_HEAD }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: ./scripts/publish.sh
         shell: bash
