@@ -18,12 +18,11 @@ if [ -n "$AFFECTED_LIBS" ]; then
 	npm run build && npm run version
 
 	# 1. Itereates through the list of libs in dist directory
-	# 2. Packs the build
-	# 3. Publishes the build - npm publish --provenance --access public
+	# 2. Publishes the build - npm publish --provenance --access public
 	cd dist/libs
 	for package in */; do
 		echo "Publishing $package to npm!"
-		(cd "$package" && npm pack && npm publish --provenance --access public --dry-run)
+		(cd "$package" && npm publish --provenance --access public --dry-run)
 		echo "Inside directory $package!"
 	done
 
