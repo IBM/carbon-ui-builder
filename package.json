@@ -33,6 +33,8 @@
 		"unique-names-generator": "4.7.1"
 	},
 	"devDependencies": {
+		"@commitlint/cli": "18.4.3",
+		"@commitlint/config-conventional": "18.4.3",
 		"@jscutlery/semver": "4.1.0",
 		"@nx/eslint": "17.1.2",
 		"@nx/eslint-plugin": "17.1.2",
@@ -70,6 +72,7 @@
 		"eslint-plugin-jsx-a11y": "6.7.1",
 		"eslint-plugin-react": "7.32.2",
 		"eslint-plugin-react-hooks": "4.6.0",
+		"husky": "^8.0.0",
 		"jest": "28.1.0",
 		"jest-watch-typeahead": "2.2.2",
 		"jsdom": "22.1.0",
@@ -89,7 +92,8 @@
 		"start": "nx serve app",
 		"build": "nx build app",
 		"lint": "nx lint app",
-		"lint:fix": "nx lint app --fix"
+		"lint:fix": "nx lint app --fix",
+		"prepare": "husky install"
 	},
 	"browserslist": [
 		">0.2%",
