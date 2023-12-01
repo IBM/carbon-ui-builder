@@ -1,0 +1,46 @@
+name: Publish packages
+
+on:
+  push:
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  release:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      # Use Node 20
+      - name: Use Node 20
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup Git
+        run: |
+          git config user.name "Akshat55"
+          git config user.email "38994122+Akshat55@users.noreply.github.com"
+
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v4
+
+      - name: Run script
+        env:
+          NX_BASE: ${{ env.NX_BASE }}
+          NX_HEAD: ${{ env.NX_HEAD }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+        run: ./scripts/publish.sh
+        shell: bash
