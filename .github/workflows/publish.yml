@@ -12,6 +12,11 @@ jobs:
   release:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    # Give permission to mint ID token for provenance
+    permissions:
+      id-token: write
+      contents: write
+      actions: read
 
     steps:
       - uses: actions/checkout@v3
@@ -63,7 +68,7 @@ jobs:
 
       # 1. Itereates through the list of libs in dist directory
       # 2. Packs the build
-      # 3. Publishes the build - npm publish --provenance --access public
+      # 3. Publishes the build
       - name: Publish to NPM
         run: |
           cd dist/libs
