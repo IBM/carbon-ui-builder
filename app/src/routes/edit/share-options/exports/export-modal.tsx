@@ -288,7 +288,7 @@ export const ExportModal = () => {
 				fragmentExportModal.isVisible &&
 				<Tabs
 				selectedIndex={+settings?.selectedExportTabIndex || 0}
-				onChange={({selectedIndex}: {selectedIndex: number}) => {
+				onChange={({ selectedIndex }: {selectedIndex: number}) => {
 					setSettings({ ...settings, selectedExportTabIndex: selectedIndex });
 				}}>
 					<TabList aria-label='Export list' className={tabListStyle}>
