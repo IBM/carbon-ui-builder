@@ -188,19 +188,19 @@
 		},
 		{
 			"type": "bs-nav-item",
-			"htmlPreview": "<li style='display: list-item; text-align: -webkit-match-parent;' role='presentation'><button type='button' ngbnavlink id='ngb-nav-207' role='tab' aria-controls='gb-nav-207-panel' aria-selected='true' aria-disabled='false' style='padding: .5rem; color: black; background-color: white; border-color: #dee2e6 #dee2e6 #fff; margin-bottom: calc(-1 * 1px); border: 1px solid transparent; border-left: 1px solid #dee2e6; border-top: 1px solid #dee2e6; border-right: 1px solid #dee2e6; border-top-left-radius: 0.375rem; border-top-right-radius: 0.375rem;'>{{title}}</button></li><div ngbnavpane style='display: block; padding-left: .5rem;' id='ngb-nav-207-panel' role='tabpanel' aria-labelledby='ngb-nav-207'><p>{{description}}</p></div></div></ngbd-nav-basic>",
+			"htmlPreview": "<li style='display: list-item; text-align: -webkit-match-parent;' role='presentation'><button type='button' ngbnavlink id='ngb-nav-207' role='tab' aria-controls='gb-nav-207-panel' aria-selected='true' aria-disabled='false' style='padding: .5rem; color: black; background-color: white; border-color: #dee2e6 #dee2e6 #fff; margin-bottom: calc(-1 * 1px); border: 1px solid transparent; border-left: 1px solid #dee2e6; border-top: 1px solid #dee2e6; border-right: 1px solid #dee2e6; border-top-left-radius: 0.375rem; border-top-right-radius: 0.375rem;'>{{title}}</button></li><div ngbnavpane style='display: block; padding-left: .5rem;' id='ngb-nav-207-panel' role='tabpanel' aria-labelledby='ngb-nav-207'></div></div></ngbd-nav-basic>",
 			"inputs": {
 				"title": "string",
 				"description": "string",
-				"id": "string"
+				"customId": "string"
 			},
 			"defaultInputs": {
 				"title": "title",
 				"description": "description",
-				"id": "sample id"
+				"customId": "sample id"
 			},
 			"angular": {
-				"template": "<li [ngbNavItem]=''><button ngbNavLink>One</button><ng-template ngbNavContent><p>{{model.description}}</p></ng-template></li>"
+				"template": "<li [ngbNavItem]='{{model.customId}}'><button ngbNavLink>{{model.title}}</button><ng-template ngbNavContent><p>{{model.description}}</p></ng-template></li>"
 			},
 			"htmlThumbnail": "<p>bs-nav item</p>"
 		},
