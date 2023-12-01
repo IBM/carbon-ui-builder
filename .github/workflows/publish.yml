@@ -36,11 +36,41 @@ jobs:
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v4
 
-      - name: Run script
+      - name: nx affected list
+        run: |
+          echo "BASE: ${{ env.NX_BASE }}"
+          echo "HEAD: ${{ env.NX_HEAD }}"
+          AFFECTED_LIBS=$(npm run nx show projects -- --type lib --affected --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }})
+          echo "$AFFECTED_LIBS"
+
+          # If empty, exit the job
+          if [ -z "$AFFECTED_LIBS" ]; then
+            echo "No libs affected, exiting job successfully"
+            exit 0
+          fi
+
+      # 1. Based on conventional commits, determine new version
+      # 2. Create a tag
+      # 3. Release to github
+      - name: Version
+        run: |
+          npm run nx run workspace:version
         env:
-          NX_BASE: ${{ env.NX_BASE }}
-          NX_HEAD: ${{ env.NX_HEAD }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build & version the project
+        run: npm run build && npm run version
+
+      # 1. Itereates through the list of libs in dist directory
+      # 2. Packs the build
+      # 3. Publishes the build - npm publish --provenance --access public
+      - name: Publish to NPM
+        run: |
+          cd dist/libs
+          for package in */; do
+            echo "Publishing $package to npm!"
+            (cd "$package" && npm publish --provenance --access public --dry-run)
+            echo "Inside directory $package!"
+          done
+        env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: ./scripts/publish.sh
-        shell: bash
