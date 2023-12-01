@@ -8,5 +8,9 @@
 			"import": "./index.mjs",
 			"require": "./index.js"
 		}
+	},
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:IBM/carbon-ui-builder.git"
 	}
 }
