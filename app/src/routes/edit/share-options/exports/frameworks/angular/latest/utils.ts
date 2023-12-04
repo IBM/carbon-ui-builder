@@ -108,7 +108,7 @@ export const jsonToTemplate = (json: any, fragments: any[], customComponentsColl
 		itemsTemplate = json.items.map((item: any) => jsonToTemplate(item, fragments, customComponentsCollections)).join('\n');
 	}
 
-	const activeCollection = customComponentsCollections?.find((collection) => collection.name === json.componentsCollection);
+	const activeCollection = customComponentsCollections.find((collection) => collection.name === json.componentsCollection);
 	if (!activeCollection) {
 		return itemsTemplate;
 	}
