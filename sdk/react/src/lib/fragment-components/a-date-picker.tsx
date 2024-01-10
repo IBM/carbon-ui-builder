@@ -22,7 +22,7 @@ const preventCheckEventStyle = css`
 const pickerInputAlignment = css `
 	.cds--date-picker {
 		display: flex;
-		align-items: flex-end !important;
+		align-items: flex-end;
 	}
 `;
 
@@ -48,21 +48,21 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				datePickerType: event.selectedItem.id
-		})} />
+			})} />
 		<TextInput
 			value={selectedComponent.dateFormat}
 			labelText='Date format'
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				dateFormat: event.currentTarget.value
-		})} />
+			})} />
 		<TextInput
 			value={selectedComponent.placeholder}
 			labelText='Placeholder'
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				placeholder: event.currentTarget.value
-		})} />
+			})} />
 		<Checkbox
 			labelText='Light'
 			id='light'
@@ -70,7 +70,7 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 			onChange={(_: any) => setComponent({
 				...selectedComponent,
 				light: !selectedComponent.light
-		})} />
+			})} />
 		<Dropdown
 			label='Size'
 			titleText='Size'
@@ -88,7 +88,7 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 			onChange={(_: any) => setComponent({
 				...selectedComponent,
 				disabled: !selectedComponent.disabled
-		})} />
+			})} />
 		<Checkbox
 			labelText='Invalid'
 			id='invalid'
@@ -96,7 +96,7 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 			onChange={(_: any) => setComponent({
 				...selectedComponent,
 				invalid: !selectedComponent.invalid
-		})} />
+			})} />
 		<TextInput
 			value={selectedComponent.rangeStartLabel}
 			labelText= {selectedComponent.datePickerType === 'range' ? 'Date picker range start label' : 'Date picker label'}
@@ -110,7 +110,7 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				invalidText: event.currentTarget.value
-		})} />
+			})} />
 		{
 			selectedComponent.datePickerType === 'range'
 				&& <TextInput
