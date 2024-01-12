@@ -1,65 +1,85 @@
-import React, { useContext, useState } from 'react';
-import { Modal } from '@carbon/react';
-import Editor from '@monaco-editor/react';
-import Handlebars from 'handlebars';
+import React, { useContext, useEffect, useState } from 'react';
+import {
+	Accordion,
+	AccordionItem,
+	Button,
+	InlineLoading,
+	Modal
+} from '@carbon/react';
+import { TrashCan, DataEnrichmentAdd } from '@carbon/icons-react';
+import { CustomComponentsCollectionEditor, getNewCustomComponentsCollection } from '@carbon-builder/sdk-react';
 import { GlobalStateContext, ModalContext } from '../context';
+import { css } from 'emotion';
 
 export const CustomComponentsModal = () => {
 	const { customComponentsModal, hideCustomComponentsModal } = useContext(ModalContext);
 	const { customComponentsCollections, setCustomComponentsCollections } = useContext(GlobalStateContext);
-	const [jsonParseError, setJsonParseError] = useState('');
-	const [model, _setModel] = useState(JSON.stringify(customComponentsCollections ? customComponentsCollections[0] : {}, null, '\t'));
 
-	const setModel = (modelString: string) => {
-		_setModel(modelString);
-		try {
-			if (modelString) {
-				// TODO set exact modelCollection based on name instead
-				const parsedModel = JSON.parse(modelString);
-				parsedModel.components.forEach((component: any, index: number) => {
-					// try parsing template to check for compile errors
-					try {
-						(Handlebars.compile(component.htmlPreview))((component.defaultInputs));
-					} catch (e) {
-						throw new Error(`Component ${index} [${component?.type}] htmlPreview` + e);
-					}
-				});
-				setCustomComponentsCollections([parsedModel]);
-			}
+	const [isDeleteOpen, setIsDeleteOpen] = useState({} as any);
 
-			setJsonParseError('');
-		} catch (e) {
-			setJsonParseError((e as any).toString());
+	useEffect(() => {
+		if (!customComponentsCollections || !Array.isArray(customComponentsCollections) || customComponentsCollections.length === 0) {
+			setCustomComponentsCollections([getNewCustomComponentsCollection()]);
 		}
-	};
-
-	const handleEditorChange = (value: any, _event: any) => {
-		setModel(value);
-	};
+	}, [customComponentsCollections, setCustomComponentsCollections]);
 
 	return <Modal
-	size='lg'
-	open={customComponentsModal.isVisible}
-	onRequestClose={hideCustomComponentsModal}
-	modalHeading='Custom components (Experimental)'
-	primaryButtonText='Done'
-	onRequestSubmit={() => {
-		hideCustomComponentsModal();
-	}}>
+		size='lg'
+		open={customComponentsModal.isVisible}
+		onRequestClose={hideCustomComponentsModal}
+		modalHeading='Custom components (Experimental)'
+		primaryButtonText='Done'
+		onRequestSubmit={() => hideCustomComponentsModal()}>
 		{
-			jsonParseError
-			&& <>
-				Not saved until the error is corrected:
-				<code style={{ color: '#a00', marginBottom: '10pt', width: '100%' }}>
-					<pre>{jsonParseError}</pre>
-				</code>
-			</>
+			(!customComponentsCollections || !Array.isArray(customComponentsCollections) || customComponentsCollections.length === 0)
+				? <InlineLoading />
+				: <>
+					<Accordion className={css`.cds--accordion__content { position: relative; }`}>
+						{
+							customComponentsCollections.map((collection: any, index: number) =>
+								<AccordionItem title={collection.name} key={collection.name}>
+									<Button
+									kind='danger'
+									className={css`position: absolute; right: 0;`}
+									onClick={() => setIsDeleteOpen({ ...isDeleteOpen, [collection.name]: true })}
+									renderIcon={TrashCan}>
+										Delete
+									</Button>
+									<CustomComponentsCollectionEditor
+										key={collection.name}
+										collection={collection}
+										setCollection={(c: any) => {
+											setCustomComponentsCollections([
+												...(index > 0 ? [customComponentsCollections.slice(0, index - 1)] : []),
+												c,
+												...[customComponentsCollections.slice(index + 1)]
+											]);
+									}} />
+									<Modal
+									modalHeading='Are you sure you want to delete this?'
+									modalLabel='Confirm delete'
+									primaryButtonText='Delete'
+									secondaryButtonText='Cancel'
+									open={!!isDeleteOpen[collection.name]}
+									onRequestClose={() => setIsDeleteOpen({ ...isDeleteOpen, [collection.name]: false })}
+									onRequestSubmit={() => setCustomComponentsCollections([
+										...customComponentsCollections.slice(0, index),
+										...customComponentsCollections.slice(index + 1)
+									])}>
+										{`"${collection.name}" custom components collection`}
+									</Modal>
+								</AccordionItem>
+							)
+						}
+					</Accordion>
+					<Button
+					renderIcon={DataEnrichmentAdd}
+					onClick={() => {
+						setCustomComponentsCollections([...customComponentsCollections, getNewCustomComponentsCollection()]);
+					}}>
+						Add a collection
+					</Button>
+				</>
 		}
-		<Editor
-			height='calc(100vh - 32px)'
-			language='json'
-			value={model}
-			onChange={handleEditorChange}
-		/>
 	</Modal>;
 };
