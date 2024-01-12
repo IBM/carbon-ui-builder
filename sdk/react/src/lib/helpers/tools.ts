@@ -123,6 +123,17 @@ const getUsedCollectionsNamesHelper = (componentObj: any, names: string[] = []) 
 	return names;
 };
 
+export const getNewCustomComponentsCollection = () => {
+	return {
+		name:  uniqueNamesGenerator({
+			dictionaries: [adjectives, colors, animals],
+			separator: '-',
+			length: 3
+		}),
+		components: []
+	};
+};
+
 export const getUsedCollectionsNames = (componentObj: any) => {
 	return [...new Set(getUsedCollectionsNamesHelper(componentObj))];
 };
