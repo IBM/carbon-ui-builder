@@ -261,8 +261,8 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 		// ///////////////////////////////////////////////
 		if (componentObj.componentsCollection) {
 			// our component belongs to one of the custom components collections
-			const customComponentsCollection =
-				globalState.customComponentsCollections?.find((ccc: any) => ccc.name === componentObj.componentsCollection);
+			const customComponentsCollection = Array.isArray(globalState.customComponentsCollections)
+				&& globalState.customComponentsCollections?.find((ccc: any) => ccc.name === componentObj.componentsCollection);
 			if (customComponentsCollection) {
 				const customComponent = customComponentsCollection.components.find((cc: any) => cc.type === componentObj.type);
 
