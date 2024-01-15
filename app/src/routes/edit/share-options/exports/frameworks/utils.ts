@@ -57,10 +57,7 @@ export const getReactActionsMap = (json: any) => {
 			slots[idContextNameMap[action.destination]].add(action.slot);
 		});
 	}
-
-	console.log(signals);
-	console.log(slots);
-
+	
 	return { 
 		signals: signals,
 		slots: slots 
