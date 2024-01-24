@@ -25,6 +25,7 @@ import {
 	updatedState
 } from '@carbon-builder/sdk-react';
 import './fragment-preview.scss';
+import { useRemoteCustomComponentsCollections } from '../utils/misc-tools';
 
 const canvas = css`
 	border: 2px solid #d8d8d8;
@@ -105,6 +106,8 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 	const [showDragOverIndicator, setShowDragOverIndicator] = useState(false);
 	const [customComponentsStyles, setCustomComponentsStyles] = useState(css``);
 	const [customComponentsStylesUrls, _setCustomComponentsStylesUrls] = useState<string[]>([]);
+	const [remoteCustomComponentsCollections] = useRemoteCustomComponentsCollections();
+	const [allCustomComponentsCollections, setAllCustomComponentsCollections] = useState([] as any[]);
 	const containerRef = useRef(null as any);
 	const holderRef = useRef(null as any);
 
@@ -129,9 +132,16 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 
 	// update requested urls
 	useEffect(() => {
-		setCustomComponentsStylesUrls(getUsedCollectionsStyleUrls(globalState.customComponentsCollections, fragment.data));
+		setCustomComponentsStylesUrls(getUsedCollectionsStyleUrls(allCustomComponentsCollections, fragment.data) || []);
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [fragment.data, globalState.customComponentsCollections]);
+	}, [fragment.data, allCustomComponentsCollections]);
+
+	useEffect(() => {
+		setAllCustomComponentsCollections([
+			...(remoteCustomComponentsCollections as any[] || []).flat(),
+			...globalState.customComponentsCollections
+		]);
+	}, [remoteCustomComponentsCollections, globalState.customComponentsCollections]);
 
 	const resize = throttle((e: any) => {
 		const rect = containerRef.current.getBoundingClientRect();
@@ -261,8 +271,9 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 		// ///////////////////////////////////////////////
 		if (componentObj.componentsCollection) {
 			// our component belongs to one of the custom components collections
-			const customComponentsCollection = Array.isArray(globalState.customComponentsCollections)
-				&& globalState.customComponentsCollections?.find((ccc: any) => ccc.name === componentObj.componentsCollection);
+			const customComponentsCollection = Array.isArray(allCustomComponentsCollections)
+				&& allCustomComponentsCollections?.find((ccc: any) => ccc.name === componentObj.componentsCollection);
+
 			if (customComponentsCollection) {
 				const customComponent = customComponentsCollection.components.find((cc: any) => cc.type === componentObj.type);
 

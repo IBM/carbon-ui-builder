@@ -54,7 +54,7 @@ const GithubContextProvider = ({ children }: any) => {
 		_setGithubToken(t);
 	};
 
-	const getContent = async (owner: string, repo: string, contentPath: string, format: 'raw' | 'object' = 'object') => {
+	const getGithubContent = async (owner: string, repo: string, contentPath: string, format: 'raw' | 'object' = 'object') => {
 		let path = contentPath;
 		if (path.endsWith('/')) {
 			// github doesn't like when we're fetching with a slash, so we remove it
@@ -123,13 +123,13 @@ const GithubContextProvider = ({ children }: any) => {
 	};
 
 	const getContentWithFolder = async (owner: string, repo: string, contentPath: string, format: 'raw' | 'object' = 'object') => {
-		const contentState: any = await getContent(owner, repo, contentPath, format);
+		const contentState: any = await getGithubContent(owner, repo, contentPath, format);
 
 		const pathParts = contentPath.split('/');
 
 		if (contentState.fileContent || contentState.fileContentBase64 || contentState.fragmentState) {
 			return {
-				...(await getContent(owner, repo, pathParts.slice(0, pathParts.length - 1).join('/'), format)),
+				...(await getGithubContent(owner, repo, pathParts.slice(0, pathParts.length - 1).join('/'), format)),
 				fileContent: contentState.fileContent,
 				fileContentBase64: contentState.fileContentBase64,
 				fragmentState: contentState.fragmentState
@@ -151,10 +151,10 @@ const GithubContextProvider = ({ children }: any) => {
 	};
 
 	const getFeaturedFragments = async () => {
-		const featuredFragmentsResponse = await getContent('IBM', 'carbon-ui-builder-featured-fragments', 'featured-fragments', 'raw');
+		const featuredFragmentsResponse = await getGithubContent('IBM', 'carbon-ui-builder-featured-fragments', 'featured-fragments', 'raw');
 
 		const allFeaturedFragments = await Promise.all(((featuredFragmentsResponse as any).data as any[]).map(async (item) => {
-			const fragmentFileResponse = await getContent('IBM', 'carbon-ui-builder-featured-fragments', item.path, 'raw');
+			const fragmentFileResponse = await getGithubContent('IBM', 'carbon-ui-builder-featured-fragments', item.path, 'raw');
 			try {
 				const data = JSON.parse((fragmentFileResponse as any).data.toString());
 
@@ -177,11 +177,38 @@ const GithubContextProvider = ({ children }: any) => {
 		return allFeaturedFragments.filter(fragment => fragment !== null);
 	};
 
-	const getBuiltInTemplates = async () => {
-		const featuredFragmentsResponse = await getContent('IBM', 'carbon-ui-builder-featured-fragments', 'built-in-templates', 'raw');
+	const getFeaturedCustomComponentsCollections = async () => {
+		const featuredFragmentsResponse = await getGithubContent('IBM', 'carbon-ui-builder-featured-fragments', 'custom-components', 'raw');
 
 		const allFeaturedFragments = await Promise.all(((featuredFragmentsResponse as any).data as any[]).map(async (item) => {
-			const fragmentFileResponse = await getContent('IBM', 'carbon-ui-builder-featured-fragments', item.path, 'raw');
+			const customCollectionsResponse = await getGithubContent('IBM', 'carbon-ui-builder-featured-fragments', item.path, 'raw');
+			try {
+				const data = JSON.parse((customCollectionsResponse as any).data.toString());
+				return data;
+			} catch (error) {
+				return null;
+			}
+		}));
+
+		return allFeaturedFragments.filter(fragment => fragment !== null);
+	};
+
+	const getFeaturedCustomComponentsCollection = async (name: string) => {
+		const customCollectionResponse =
+			await getGithubContent('IBM', 'carbon-ui-builder-featured-fragments', `custom-components/${name}.json`, 'raw');
+		try {
+			const data = JSON.parse((customCollectionResponse as any).data.toString());
+			return data;
+		} catch (error) {
+			return null;
+		}
+	};
+
+	const getBuiltInTemplates = async () => {
+		const featuredFragmentsResponse = await getGithubContent('IBM', 'carbon-ui-builder-featured-fragments', 'built-in-templates', 'raw');
+
+		const allFeaturedFragments = await Promise.all(((featuredFragmentsResponse as any).data as any[]).map(async (item) => {
+			const fragmentFileResponse = await getGithubContent('IBM', 'carbon-ui-builder-featured-fragments', item.path, 'raw');
 			try {
 				const data = JSON.parse((fragmentFileResponse as any).data.toString());
 
@@ -209,8 +236,10 @@ const GithubContextProvider = ({ children }: any) => {
 			token: githubToken,
 			setToken: setGithubToken,
 			getFeaturedFragments,
+			getFeaturedCustomComponentsCollections,
+			getFeaturedCustomComponentsCollection,
 			getBuiltInTemplates,
-			getContent,
+			getGithubContent,
 			getContentWithFolder,
 			getUser,
 			getRepos
