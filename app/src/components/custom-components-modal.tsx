@@ -8,14 +8,27 @@ import {
 } from '@carbon/react';
 import { TrashCan, DataEnrichmentAdd } from '@carbon/icons-react';
 import { CustomComponentsCollectionEditor, getNewCustomComponentsCollection } from '@carbon-builder/sdk-react';
-import { GlobalStateContext, ModalContext } from '../context';
+import { GithubContext, GlobalStateContext, ModalContext } from '../context';
 import { css } from 'emotion';
+import { capitalize } from 'lodash';
 
 export const CustomComponentsModal = () => {
 	const { customComponentsModal, hideCustomComponentsModal } = useContext(ModalContext);
 	const { customComponentsCollections, setCustomComponentsCollections } = useContext(GlobalStateContext);
+	const { getFeaturedCustomComponentsCollections } = useContext(GithubContext);
 
 	const [isDeleteOpen, setIsDeleteOpen] = useState({} as any);
+	const [featuredCollectionsItems, setFeaturedCollectionsItems] = useState([] as any[]);
+
+	useEffect(() => {
+		getFeaturedCustomComponentsCollections().then((value: any) => {
+			setFeaturedCollectionsItems(value.map((v: any) => ({
+				id: v.name,
+				text: capitalize(v.name)
+			})));
+		});
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	useEffect(() => {
 		if (!customComponentsCollections || !Array.isArray(customComponentsCollections) || customComponentsCollections.length === 0) {
@@ -37,7 +50,7 @@ export const CustomComponentsModal = () => {
 					<Accordion className={css`.cds--accordion__content { position: relative; }`}>
 						{
 							customComponentsCollections.map((collection: any, index: number) =>
-								<AccordionItem title={collection.name} key={collection.name}>
+								<AccordionItem title={collection.name} key={index}>
 									<Button
 									kind='danger'
 									className={css`position: absolute; right: 0;`}
@@ -48,11 +61,12 @@ export const CustomComponentsModal = () => {
 									<CustomComponentsCollectionEditor
 										key={collection.name}
 										collection={collection}
+										featuredCollectionsItems={featuredCollectionsItems}
 										setCollection={(c: any) => {
 											setCustomComponentsCollections([
-												...(index > 0 ? [customComponentsCollections.slice(0, index - 1)] : []),
+												...customComponentsCollections.slice(0, index),
 												c,
-												...[customComponentsCollections.slice(index + 1)]
+												...customComponentsCollections.slice(index + 1)
 											]);
 									}} />
 									<Modal
