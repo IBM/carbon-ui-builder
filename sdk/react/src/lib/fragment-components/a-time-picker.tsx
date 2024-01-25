@@ -1,14 +1,5 @@
 import React from 'react';
-// import {
-// 	TimePicker,
-// 	TimePickerSelect,
-// 	SelectItem,
-// 	Dropdown,
-// 	Checkbox,
-// 	TextInput
-// } from 'carbon-components-react';
 import { AComponent, ComponentInfo } from './a-component';
-// import { DraggableTileList } from '../components';
 import image from './../assets/component-icons/time-picker.svg';
 import { TextInput } from '@carbon/react';
 import { Checkbox } from '@carbon/react';
