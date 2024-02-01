@@ -1,5 +1,6 @@
 import React from 'react';
 import domtoimage from 'dom-to-image';
+import { adjectives, animals, colors, uniqueNamesGenerator } from 'unique-names-generator';
 import { createRoot } from 'react-dom/client';
 import {
 	UIFragment,
@@ -122,12 +123,27 @@ const getUsedCollectionsNamesHelper = (componentObj: any, names: string[] = []) 
 	return names;
 };
 
+export const getNewCustomComponentsCollection = () => {
+	return {
+		name:  uniqueNamesGenerator({
+			dictionaries: [adjectives, colors, animals],
+			separator: '-',
+			length: 3
+		}),
+		components: []
+	};
+};
+
 export const getUsedCollectionsNames = (componentObj: any) => {
 	return [...new Set(getUsedCollectionsNamesHelper(componentObj))];
 };
 
 export const getUsedCollectionsStyleUrls = (collections: any[], componentObj: any) => {
 	const usedCollectionsNames = getUsedCollectionsNames(componentObj);
+
+	if (!Array.isArray(collections)) {
+		return;
+	}
 
 	return collections
 		?.filter((collection) => usedCollectionsNames.includes(collection.name))

@@ -1,4 +1,9 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, {
+	useContext,
+	useEffect,
+	useRef,
+	useState
+} from 'react';
 import { css, cx } from 'emotion';
 import { Button, Search } from '@carbon/react';
 import { ChevronDown, ChevronUp } from '@carbon/react/icons';
@@ -10,6 +15,7 @@ import { leftPane, leftPaneContent, leftPaneHeader } from '.';
 import { GlobalStateContext, useFragment } from '../../context';
 import { getEditScreenParams } from '../../utils/fragment-tools';
 import { accordionButtonStyle } from './settings-context-pane';
+import { useRemoteCustomComponentsCollections } from '../../utils/misc-tools';
 
 const elementTileListStyleBase = css`
 	display: flex;
@@ -51,6 +57,16 @@ export const ElementsPane = ({ isActive }: any) => {
 		styleClasses,
 		customComponentsCollections
 	} = useContext(GlobalStateContext);
+
+	const [remoteCustomComponentsCollections] = useRemoteCustomComponentsCollections();
+	const [allCustomComponentsCollections, setAllCustomComponentsCollections] = useState([] as any[]);
+
+	useEffect(() => {
+		setAllCustomComponentsCollections([
+			...(remoteCustomComponentsCollections as any[] || []).flat(),
+			...customComponentsCollections
+		]);
+	}, [remoteCustomComponentsCollections, customComponentsCollections]);
 
 	const isLayoutWidgetOpen = settings.layoutWidget?.isAccordionOpen === undefined
 		? true // open by default
@@ -144,19 +160,22 @@ export const ElementsPane = ({ isActive }: any) => {
 						}
 					</div>
 					{
-						customComponentsCollections && customComponentsCollections.length > 0
-						&& customComponentsCollections.map((customComponentsCollection: any) => <>
+						allCustomComponentsCollections && allCustomComponentsCollections.length > 0
+						&& allCustomComponentsCollections
+						.filter((customComponentsCollection: any) => !!customComponentsCollection.components)
+						.map((customComponentsCollection: any) => <>
 							<h4>{customComponentsCollection.name}</h4>
 							<div className={elementTileListStyleMicroLayouts}>
 								{
+									// components from JSON
 									customComponentsCollection.components?.map((component: any) =>
 										<ElementTile
-										componentObj={{
-											...component.defaultInputs,
-											type: component.type,
-											componentsCollection: customComponentsCollection.name
-										}}
-										key={component.type}>
+											componentObj={{
+												...component.defaultInputs,
+												type: component.type,
+												componentsCollection: customComponentsCollection.name
+											}}
+											key={component.type}>
 											<span className={css`padding: 1rem; pointer-events: none; height: 100px; overflow: hidden;`}>
 												{renderHandlebars(component)}
 											</span>
@@ -203,10 +222,10 @@ export const ElementsPane = ({ isActive }: any) => {
 						window.addEventListener('mouseup', stopResize);
 					}} />
 				<Button
-				kind='ghost'
-				className={accordionButtonStyle}
-				renderIcon={isLayoutWidgetOpen ? ChevronDown : ChevronUp}
-				onClick={() => setIsLayoutWidgetOpen(!isLayoutWidgetOpen)}>
+					kind='ghost'
+					className={accordionButtonStyle}
+					renderIcon={isLayoutWidgetOpen ? ChevronDown : ChevronUp}
+					onClick={() => setIsLayoutWidgetOpen(!isLayoutWidgetOpen)}>
 					Layout tree
 				</Button>
 				{

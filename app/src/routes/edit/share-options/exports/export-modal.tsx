@@ -25,6 +25,7 @@ import { createAngularApp } from './frameworks/angular/latest/fragment';
 
 import { ModalContext } from '../../../../context/modal-context';
 import { saveBlob } from '../../../../utils/file-tools';
+import { useRemoteCustomComponentsCollections } from '../../../../utils/misc-tools';
 import { GlobalStateContext } from '../../../../context';
 import { ExportImageComponent } from './export-image-component';
 import { filenameToLanguage, getFragmentJsonExportString } from '@carbon-builder/sdk-react';
@@ -188,6 +189,8 @@ const findTreeItemByPath = (node: any, path: string, currentPath = ''): any => {
 export const ExportModal = () => {
 	const { fragments, settings, setSettings, styleClasses, customComponentsCollections } = useContext(GlobalStateContext);
 	const { fragmentExportModal, hideFragmentExportModal } = useContext(ModalContext);
+	const [remoteCustomComponentsCollections] = useRemoteCustomComponentsCollections();
+	const [allCustomComponentsCollections, setAllCustomComponentsCollections] = useState([] as any[]);
 	const [selectedAngularFileItem, setSelectedAngularFileItem] = useState({
 		id: 'src/app/app.component.ts'
 	} as any);
@@ -201,6 +204,13 @@ export const ExportModal = () => {
 	const [angularCode, setAngularCode] = useState([] as any[]);
 
 	const monaco = useMonaco();
+
+	useEffect(() => {
+		setAllCustomComponentsCollections([
+			...(remoteCustomComponentsCollections as any[] || []).flat(),
+			...customComponentsCollections
+		]);
+	}, [remoteCustomComponentsCollections, customComponentsCollections]);
 
 	const carbonVersions = [
 		{ id: 'v10' },
@@ -229,12 +239,12 @@ export const ExportModal = () => {
 		if (fragmentExportModal?.fragment) {
 			switch (version) {
 				case 'v10':
-					setReactCode(createReactAppV10(fragmentExportModal.fragment, fragments, styleClasses, customComponentsCollections));
-					setAngularCode(createAngularAppV10(fragmentExportModal.fragment, fragments, styleClasses, customComponentsCollections));
+					setReactCode(createReactAppV10(fragmentExportModal.fragment, fragments, styleClasses, allCustomComponentsCollections));
+					setAngularCode(createAngularAppV10(fragmentExportModal.fragment, fragments, styleClasses, allCustomComponentsCollections));
 					break;
 				default:
-					setReactCode(createReactApp(fragmentExportModal.fragment, fragments, styleClasses, customComponentsCollections));
-					setAngularCode(createAngularApp(fragmentExportModal.fragment, fragments, styleClasses, customComponentsCollections));
+					setReactCode(createReactApp(fragmentExportModal.fragment, fragments, styleClasses, allCustomComponentsCollections));
+					setAngularCode(createAngularApp(fragmentExportModal.fragment, fragments, styleClasses, allCustomComponentsCollections));
 					break;
 			}
 			return;
@@ -242,7 +252,7 @@ export const ExportModal = () => {
 
 		setReactCode([]);
 		setAngularCode([]);
-	}, [customComponentsCollections, fragmentExportModal.fragment, fragmentExportModal.isVisible, fragments, styleClasses, version]);
+	}, [allCustomComponentsCollections, fragmentExportModal.fragment, fragmentExportModal.isVisible, fragments, styleClasses, version]);
 
 	useEffect(() => {
 		monaco?.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
