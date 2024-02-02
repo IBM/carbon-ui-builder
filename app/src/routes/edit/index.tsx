@@ -4,7 +4,6 @@ import React, {
 	useState
 } from 'react';
 import { css, cx } from 'emotion';
-import { Fragment } from '../../components';
 import { EditHeader } from './edit-header';
 import { GlobalStateContext } from '../../context/global-state-context';
 import {
@@ -37,12 +36,14 @@ import { CodeContextPane } from './code-context-pane';
 import { useParams } from 'react-router-dom';
 import { useHotkeys } from 'react-hotkeys-hook';
 import {
+	Fragment,
 	getParentComponent,
 	getSelectedComponent,
 	initializeIds,
 	stateWithoutComponent,
 	updatedState
 } from '@carbon-builder/sdk-react';
+import { useRemoteCustomComponentsCollections } from '../../utils/misc-tools';
 
 const leftPaneWidth = '300px';
 const rightPaneWidth = '302px';
@@ -189,8 +190,10 @@ export const Edit = () => {
 		addAction,
 		undoAction,
 		redoAction,
+		customComponentsCollections,
 		styleClasses
 	} = useContext(GlobalStateContext);
+	const [remoteCustomComponentsCollections] = useRemoteCustomComponentsCollections();
 
 	const params = useParams();
 
@@ -309,8 +312,16 @@ export const Edit = () => {
 			className={cx('edit-content', selectedLeftPane !== SelectedLeftPane.NONE ? 'is-side-panel-active' : '')}
 			onClick={() => updateFragment({ ...fragment, selectedComponentId: null }, false)}>
 				{
-					// eslint-disable-next-line
-					fragment && <Fragment fragment={fragment} setFragment={updateFragment} outline={fragment.outline} />
+					fragment
+					// eslint-disable-next-line react/jsx-no-useless-fragment
+					&& <Fragment
+						fragment={fragment}
+						setFragment={updateFragment}
+						outline={fragment.outline}
+						fragments={fragments}
+						customComponentsCollections={customComponentsCollections}
+						styleClasses={styleClasses}
+						remoteCustomComponentsCollections={remoteCustomComponentsCollections} />
 				}
 			</div>
 			<div className={rightPanel}>

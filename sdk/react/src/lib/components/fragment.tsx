@@ -1,5 +1,4 @@
 import React, {
-	useContext,
 	useEffect,
 	useRef,
 	useState
@@ -11,8 +10,6 @@ import parse, { attributesToProps, domToReact } from 'html-react-parser';
 import { throttle } from 'lodash';
 import axios from 'axios';
 import Handlebars from 'handlebars';
-import { getFragmentsFromLocalStorage } from '../utils/fragment-tools';
-import { GlobalStateContext } from '../context';
 import { getAllFragmentStyleClasses, styleObjectToString } from '@carbon-builder/player-react';
 import {
 	AComponent,
@@ -23,9 +20,8 @@ import {
 	stateWithoutComponent,
 	updateComponentCounter,
 	updatedState
-} from '@carbon-builder/sdk-react';
+} from '../../index';
 import './fragment-preview.scss';
-import { useRemoteCustomComponentsCollections } from '../utils/misc-tools';
 
 const canvas = css`
 	border: 2px solid #d8d8d8;
@@ -101,12 +97,18 @@ const fetchCSS = async (urls: string[]) => {
 	}
 };
 
-export const Fragment = ({ fragment, setFragment, outline }: any) => {
-	const globalState = useContext(GlobalStateContext);
+export const Fragment = ({
+	fragment,
+	setFragment,
+	fragments,
+	outline,
+	remoteCustomComponentsCollections,
+	customComponentsCollections,
+	styleClasses
+}: any) => {
 	const [showDragOverIndicator, setShowDragOverIndicator] = useState(false);
 	const [customComponentsStyles, setCustomComponentsStyles] = useState(css``);
 	const [customComponentsStylesUrls, _setCustomComponentsStylesUrls] = useState<string[]>([]);
-	const [remoteCustomComponentsCollections] = useRemoteCustomComponentsCollections();
 	const [allCustomComponentsCollections, setAllCustomComponentsCollections] = useState([] as any[]);
 	const containerRef = useRef(null as any);
 	const holderRef = useRef(null as any);
@@ -139,9 +141,9 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 	useEffect(() => {
 		setAllCustomComponentsCollections([
 			...(remoteCustomComponentsCollections as any[] || []).flat(),
-			...globalState.customComponentsCollections
+			...customComponentsCollections
 		]);
-	}, [remoteCustomComponentsCollections, globalState.customComponentsCollections]);
+	}, [remoteCustomComponentsCollections, customComponentsCollections]);
 
 	const resize = throttle((e: any) => {
 		const rect = containerRef.current.getBoundingClientRect();
@@ -166,10 +168,6 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 	if (!fragment || !fragment.data) {
 		return <SkeletonPlaceholder />;
 	}
-
-	// try to use the state but get the fragments from local storage if state is not available
-	// localStorage info is used when rendering and can't be used for interaction
-	const { fragments } = globalState || { fragments: getFragmentsFromLocalStorage() };
 
 	// initialize component counter
 	updateComponentCounter(fragment.data);
@@ -365,7 +363,7 @@ export const Fragment = ({ fragment, setFragment, outline }: any) => {
 		return null;
 	};
 
-	const styles = css`${getAllFragmentStyleClasses(fragment, fragments, globalState?.styleClasses).map((styleClass: any) => `.${styleClass.id} {
+	const styles = css`${getAllFragmentStyleClasses(fragment, fragments, styleClasses).map((styleClass: any) => `.${styleClass.id} {
 			${styleClass.content}
 		}`)
 	}`;
