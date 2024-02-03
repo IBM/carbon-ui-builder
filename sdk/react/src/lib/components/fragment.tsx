@@ -141,7 +141,7 @@ export const Fragment = ({
 	useEffect(() => {
 		setAllCustomComponentsCollections([
 			...(remoteCustomComponentsCollections as any[] || []).flat(),
-			...customComponentsCollections
+			...(customComponentsCollections || [])
 		]);
 	}, [remoteCustomComponentsCollections, customComponentsCollections]);
 
