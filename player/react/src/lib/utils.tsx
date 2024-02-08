@@ -16,6 +16,7 @@ import { UIGrid } from './components/ui-grid';
 import { UILink } from './components/ui-link';
 import { UIInlineLoading } from './components/ui-inline-loading';
 import { UILoading } from './components/ui-loading';
+import { UINotification } from './components/ui-notification';
 import { UINumberInput } from './components/ui-number-input';
 import { UIOverflowMenu } from './components/ui-overflow-menu';
 import { UIOverflowMenuItem } from './components/ui-overflow-menu-item';
@@ -262,6 +263,9 @@ export const renderComponents = (
 		case 'link':
 			return <UILink key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
+		case 'notification':
+			return <UINotification key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+	
 		case 'number-input':
 			return <UINumberInput key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
