@@ -199,7 +199,9 @@ export const SettingsContextPane = ({
 	proxySetFragment = setFragment;
 
 	useEffect(() => {
-		setSettings(externalSettings);
+		if (externalSettings) {
+			setSettings(externalSettings);
+		}
 	}, [externalSettings]);
 
 	useEffect(() => {
