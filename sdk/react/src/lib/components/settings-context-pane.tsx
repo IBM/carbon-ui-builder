@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	Button,
 	Checkbox,
@@ -162,12 +162,14 @@ const throttledSetFragment = throttle((fragment: any) => proxySetFragment(fragme
 export const SettingsContextPane = ({
 	fragment,
 	setFragment,
-	settings,
-	setSettings,
+	settings: externalSettings,
+	setSettings: setExternalSettings,
 	styleClasses,
 	customComponentsCollections
 }: any) => {
 	const selectedComponent = getSelectedComponent(fragment);
+	const [settings, setSettings] = useState(externalSettings || {} as any);
+
 	const updateContextPaneSettings = (s: any) => {
 		setSettings({
 			...settings,
@@ -195,6 +197,16 @@ export const SettingsContextPane = ({
 	};
 
 	proxySetFragment = setFragment;
+
+	useEffect(() => {
+		setSettings(externalSettings);
+	}, [externalSettings]);
+
+	useEffect(() => {
+		if (setExternalSettings) {
+			setExternalSettings(settings);
+		}
+	}, [settings]);
 
 	return (
 		<div className={cx(styleContextPaneStyle, 'context-pane-content')}>
