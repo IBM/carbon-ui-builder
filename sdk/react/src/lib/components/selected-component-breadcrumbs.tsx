@@ -2,9 +2,8 @@ import React from 'react';
 
 import { Breadcrumb, BreadcrumbItem } from '@carbon/react';
 
-import { useFragment } from '../../context';
 import { css } from 'emotion';
-import { getParentComponent, getSelectedComponent } from '@carbon-builder/sdk-react';
+import { getParentComponent, getSelectedComponent } from '../..';
 
 const getAncestors = (state: any, component: any) => {
 	const ancestors: any[] = [];
@@ -25,9 +24,7 @@ const getAncestors = (state: any, component: any) => {
 	return ancestors;
 };
 
-export const SelectedComponentBreadcrumbs = ({ selectedComponent }: any) => {
-	const [fragment, setFragment] = useFragment();
-
+export const SelectedComponentBreadcrumbs = ({ selectedComponent, fragment, setFragment }: any) => {
 	if (!selectedComponent) {
 		selectedComponent = getSelectedComponent(fragment);
 	}

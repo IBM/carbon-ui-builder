@@ -31,12 +31,12 @@ import { ElementsPane } from './elements-pane';
 import { StylePane } from './style-pane';
 import { CodePane } from './code-pane';
 
-import { SettingsContextPane } from './settings-context-pane';
 import { CodeContextPane } from './code-context-pane';
 import { useParams } from 'react-router-dom';
 import { useHotkeys } from 'react-hotkeys-hook';
 import {
 	Fragment,
+	SettingsContextPane,
 	getParentComponent,
 	getSelectedComponent,
 	initializeIds,
@@ -191,7 +191,9 @@ export const Edit = () => {
 		undoAction,
 		redoAction,
 		customComponentsCollections,
-		styleClasses
+		styleClasses,
+		settings,
+		setSettings
 	} = useContext(GlobalStateContext);
 	const [remoteCustomComponentsCollections] = useRemoteCustomComponentsCollections();
 
@@ -339,7 +341,13 @@ export const Edit = () => {
 					</TabList>
 					<TabPanels>
 						<TabPanel>
-							<SettingsContextPane fragment={fragment} setFragment={updateFragment} />
+							<SettingsContextPane
+								fragment={fragment}
+								setFragment={updateFragment}
+								settings={settings}
+								setSettings={setSettings}
+								styleClasses={styleClasses}
+								customComponentsCollections={customComponentsCollections} />
 						</TabPanel>
 						<TabPanel>
 							<CodeContextPane fragment={fragment} setFragment={updateFragment} />

@@ -3,3 +3,4 @@ export * from './fragment-layout-widget';
 export * from './fragment-preview';
 export * from './custom-components-collection-editor';
 export * from './fragment';
+export * from './settings-context-pane';

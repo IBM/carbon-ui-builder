@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
 	Button,
 	Checkbox,
@@ -18,9 +18,8 @@ import {
 	LayoutWidget,
 	getSelectedComponent,
 	updatedState
-} from '@carbon-builder/sdk-react';
+} from '../..';
 import { SelectedComponentBreadcrumbs } from './selected-component-breadcrumbs';
-import { GlobalStateContext } from '../../context';
 
 const styleContextPaneStyle = css`
 .cds--form-item.cds--checkbox-wrapper {
@@ -160,15 +159,15 @@ const throttledSetComponent = throttle((component: any) => setComponent(componen
 let proxySetFragment = (_fragment: any) => console.log('proxySetFragment not inizialized yet');
 const throttledSetFragment = throttle((fragment: any) => proxySetFragment(fragment), 150);
 
-export const SettingsContextPane = ({ fragment, setFragment }: any) => {
+export const SettingsContextPane = ({
+	fragment,
+	setFragment,
+	settings,
+	setSettings,
+	styleClasses,
+	customComponentsCollections
+}: any) => {
 	const selectedComponent = getSelectedComponent(fragment);
-	const {
-		settings,
-		setSettings,
-		styleClasses,
-		customComponentsCollections
-	} = useContext(GlobalStateContext);
-
 	const updateContextPaneSettings = (s: any) => {
 		setSettings({
 			...settings,
