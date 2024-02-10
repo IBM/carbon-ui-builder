@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="89" height="39" viewBox="0 0 89 39">
+    <g id="Group_1" data-name="Group 1" transform="translate(-539 -508)">
+        <g id="label_text" data-name="label text" transform="translate(539 508)">
+        <rect id="skeleton" width="40" height="8" fill="#e8e8e8"/>
+        </g>
+        <g id="input_background" data-name="input background" transform="translate(539 523)">
+        <rect id="input" width="89" height="24" fill="#e8e8e8"/>
+        <rect id="border-bottom" width="89" height="1" transform="translate(0 23)" fill="#8d8d8d" opacity="0"/>
+        </g>
+        <g id="Planning_Time_calendar" data-name="Planning / Time / calendar" transform="translate(596 527)">
+        <rect id="base" width="16" height="16" fill="#fff" opacity="0"/>
+        <path id="Path_10134" data-name="Path 10134" d="M130-1941h-2v-1h-1v1h-4v-1h-1v1h-2a.945.945,0,0,0-1,1v10a.945.945,0,0,0,1,1h10a.945.945,0,0,0,1-1v-10A.945.945,0,0,0,130-1941Zm0,11H120v-7h10Zm0-8H120v-2h2v1h1v-1h4v1h1v-1h2Z" transform="translate(-109 1943)" fill="#161616" fill-rule="evenodd"/>
+        </g>
+    </g>
+</svg>
