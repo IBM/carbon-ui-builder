@@ -30,7 +30,7 @@ export const UITimePicker = ({ state }: {
 		return <></>;
 	}
 	return <TimePicker
-		id="time-picker"
+		id='time-picker'
 		light={state.light}
 		disabled={state.disabled}
 		invalid={state.invalid}
@@ -38,11 +38,11 @@ export const UITimePicker = ({ state }: {
 		placeholder={state.placeholder}
 		size={state.size}
 		labelText={state.label}>
-		<TimePickerSelect labelText="time-picker-1" id="time-picker-select-1">
-			<SelectItem value="AM" text="AM" />
-			<SelectItem value="PM" text="PM" />
+		<TimePickerSelect labelText='time-picker-1' id='time-picker-select-1'>
+			<SelectItem value='AM' text='AM' />
+			<SelectItem value='PM' text='PM' />
 		</TimePickerSelect>
-		<TimePickerSelect labelText="time-picker-2" id="time-picker-select-2" >
+		<TimePickerSelect labelText='time-picker-2' id='time-picker-select-2' >
 			{
 				state.items.map((step: any, index: number) => <SelectItem
 					value={step.value}
