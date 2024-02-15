@@ -175,11 +175,11 @@ export const ATimePicker = ({
 				labelText={componentObj.label}
 				light={componentObj.light}
 				size={componentObj.size}>
-					<TimePickerSelect disabled={componentObj.disabled} labelText="time-picker-1">
-						<SelectItem value="AM" text="AM" />
-						<SelectItem value="PM" text="PM" />
+					<TimePickerSelect disabled={componentObj.disabled} labelText='time-picker-1'>
+						<SelectItem value='AM' text='AM' />
+						<SelectItem value='PM' text='PM' />
 					</TimePickerSelect>
-					<TimePickerSelect disabled={componentObj.disabled} labelText="time-picker-2">
+					<TimePickerSelect disabled={componentObj.disabled} labelText='time-picker-2'>
 						{
 							componentObj.items.map((step: any, index: number) => <SelectItem
 								value={step.value}
@@ -254,14 +254,14 @@ export const componentInfo: ComponentInfo = {
                             <ibm-timepicker-select
 							[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
                             [disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
-                            display="inline">
-                                <option selected value="AM">AM</option>
-                                <option value="PM">PM</option>
+                            display='inline'>
+                                <option selected value='AM'>AM</option>
+                                <option value='PM'>PM</option>
                             </ibm-timepicker-select>
                             <ibm-timepicker-select 
 							[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
                             [disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
-                            display="inline">
+                            display='inline'>
                                 ${json.items.map((step: any) => (`<option
                                     value="${step.value}"
                                     text="${step.text}">
@@ -300,14 +300,14 @@ export const componentInfo: ComponentInfo = {
                             <ibm-timepicker-select
 							[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
                             [disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
-                            display="inline">
-                                <option selected value="AM">AM</option>
-                                <option value="PM">PM</option>
+                            display='inline'>
+                                <option selected value='AM'>AM</option>
+                                <option value='PM'>PM</option>
                             </ibm-timepicker-select>
                             <ibm-timepicker-select 
 							[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
                             [disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
-                            display="inline">
+                            display='inline'>
                                 ${json.items.map((step: any) => (`<option
                                     value="${step.value}"
                                     text="${step.text}">
@@ -334,11 +334,11 @@ export const componentInfo: ComponentInfo = {
                         placeholder="${json.placeholder}"
                         hideLabel={${json.hideLabel}}
                         light={${json.light}}>
-                            <TimePickerSelect labelText="time-picker-1" id="time-picker-select-1">
-                                <SelectItem value="AM" text="AM" />
-                                <SelectItem value="PM" text="PM" />
+                            <TimePickerSelect labelText='time-picker-1' id='time-picker-select-1'>
+                                <SelectItem value='AM' text='AM' />
+                                <SelectItem value='PM' text='PM' />
                             </TimePickerSelect>
-                            <TimePickerSelect labelText="time-picker-2" id="time-picker-select-2">
+                            <TimePickerSelect labelText='time-picker-2' id='time-picker-select-2'>
                                 ${json.items.map((step: any) => (`<SelectItem
                                     value="${step.value}"
                                     text="${step.text}" />`
@@ -361,11 +361,11 @@ export const componentInfo: ComponentInfo = {
                         placeholder="${json.placeholder}"
                         hideLabel={${json.hideLabel}}
                         light={${json.light}}>
-                            <TimePickerSelect labelText="time-picker-1" id="time-picker-select-1">
-                                <SelectItem value="AM" text="AM" />
-                                <SelectItem value="PM" text="PM" />
+                            <TimePickerSelect labelText='time-picker-1' id='time-picker-select-1'>
+                                <SelectItem value='AM' text='AM' />
+                                <SelectItem value='PM' text='PM' />
                             </TimePickerSelect>
-                            <TimePickerSelect labelText="time-picker-2" id="time-picker-select-2">
+                            <TimePickerSelect labelText='time-picker-2' id='time-picker-select-2'>
                                 ${json.items.map((step: any) => (`<SelectItem
                                     value="${step.value}"
                                     text="${step.text}" />`
