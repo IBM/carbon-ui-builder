@@ -8,6 +8,12 @@ import { DraggableTileList, angularClassNamesFromComponentObj, nameStringToVaria
 import { TimePicker } from '@carbon/react';
 import { TimePickerSelect } from '@carbon/react';
 import { SelectItem } from '@carbon/react';
+import { css, cx } from 'emotion';
+import { styleObjectToString } from '@carbon-builder/player-react';
+
+const preventCheckEventStyle = css`
+	pointer-events: none;
+`;
 
 export const ATimePickerSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const size = [
@@ -61,7 +67,7 @@ export const ATimePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 			labelText='Light'
 			id='light'
 			checked={selectedComponent.light}
-			onChange={(checked: boolean) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				light: checked
 		})} />
@@ -69,7 +75,7 @@ export const ATimePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 			labelText='Disabled'
 			id='disable'
 			checked={selectedComponent.disabled}
-			onChange={(checked: boolean) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				disabled: checked
 		})} />
@@ -77,7 +83,7 @@ export const ATimePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 			labelText='Hide label'
 			id='hide-label'
 			checked={selectedComponent.hideLabel}
-			onChange={(checked: boolean) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				hideLabel: checked
 		})} />
@@ -85,7 +91,7 @@ export const ATimePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 			labelText='Invalid'
 			id='invalid'
 			checked={selectedComponent.invalid}
-			onChange={(checked: boolean) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				invalid: checked
 		})} />
@@ -156,6 +162,11 @@ export const ATimePicker = ({
 		{...rest}>
 			{
 				<TimePicker
+				className={cx(
+					preventCheckEventStyle,
+					componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
+					css`${styleObjectToString(componentObj.style)}`
+				)}
 				disabled={componentObj.disabled}
 				invalid={componentObj.invalid}
 				invalidText={componentObj.invalidText}
@@ -216,36 +227,40 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			latest: {
-                inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value}";`,
+                inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = "${json.invalid}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsHideLabel = "${json.hideLabel}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = "${json.disabled}";
+					`,
                 outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
                 imports: ['TimePickerModule', 'TimePickerSelectModule'],
                 code: ({ json }) => {
                     return `<ibm-timepicker
                         ${angularClassNamesFromComponentObj(json)}
                         label="${json.label}"
-                        ${json.light ? '[theme]="light"' : '[theme]="dark"'}
-                        [invalid]="${json.invalid}"
-                        [placeholder]="'${json.placeholder}'"
-                        [size]="'${json.size}'"
-                        [hideLabel]="${json.hideLabel}"
-                        [invalidText]="'${json.invalidText}'"
+						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+                        [invalid]="${nameStringToVariableString(json.codeContext?.name)}IsInvalid"
+                        [placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
+                        [size]="${nameStringToVariableString(json.codeContext?.name)}Size"
+                        [hideLabel]="${nameStringToVariableString(json.codeContext?.name)}IsHideLabel"
+                        [invalidText]="${nameStringToVariableString(json.codeContext?.name)}InvalidText"
                         (valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
                         [value]="${nameStringToVariableString(json.codeContext?.name)}Value"
                         [disabled]="${json.disabled}">
-                            <ibm-timepicker-select ${json.light
-                                ? '[theme]="light"'
-                                : '[theme]="dark"'
-                            }
-                            [disabled]="${json.disabled}"
+                            <ibm-timepicker-select
+							[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+                            [disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
                             display="inline">
                                 <option selected value="AM">AM</option>
                                 <option value="PM">PM</option>
                             </ibm-timepicker-select>
-                            <ibm-timepicker-select ${json.light
-                                ? '[theme]="light"'
-                                : '[theme]="dark"'
-                            }
-                            [disabled]="${json.disabled}"
+                            <ibm-timepicker-select 
+							[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+                            [disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
                             display="inline">
                                 ${json.items.map((step: any) => (`<option
                                     value="${step.value}"
@@ -258,36 +273,40 @@ export const componentInfo: ComponentInfo = {
                 }
             },
             v10: {
-                inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value}";`,
+                inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = "${json.invalid}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsHideLabel = "${json.hideLabel}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = "${json.disabled}";
+					`,
                 outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
                 imports: ['TimePickerModule', 'TimePickerSelectModule'],
                 code: ({ json }) => {
                     return `<ibm-timepicker
                         ${angularClassNamesFromComponentObj(json)}
                         label="${json.label}"
-                        ${json.light ? '[theme]="light"' : '[theme]="dark"'}
-                        [invalid]="${json.invalid}"
-                        [placeholder]="'${json.placeholder}'"
-                        [size]="'${json.size}'"
-                        [hideLabel]="${json.hideLabel}"
-                        [invalidText]="'${json.invalidText}'"
+						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+                        [invalid]="${nameStringToVariableString(json.codeContext?.name)}IsInvalid"
+                        [placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
+                        [size]="${nameStringToVariableString(json.codeContext?.name)}Size"
+                        [hideLabel]="${nameStringToVariableString(json.codeContext?.name)}IsHideLabel"
+                        [invalidText]="${nameStringToVariableString(json.codeContext?.name)}InvalidText"
                         (valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
                         [value]="${nameStringToVariableString(json.codeContext?.name)}Value"
                         [disabled]="${json.disabled}">
-                            <ibm-timepicker-select ${json.light
-                                ? '[theme]="light"'
-                                : '[theme]="dark"'
-                            }
-                            [disabled]="${json.disabled}"
+                            <ibm-timepicker-select
+							[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+                            [disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
                             display="inline">
                                 <option selected value="AM">AM</option>
                                 <option value="PM">PM</option>
                             </ibm-timepicker-select>
-                            <ibm-timepicker-select ${json.light
-                                ? '[theme]="light"'
-                                : '[theme]="dark"'
-                            }
-                            [disabled]="${json.disabled}"
+                            <ibm-timepicker-select 
+							[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+                            [disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
                             display="inline">
                                 ${json.items.map((step: any) => (`<option
                                     value="${step.value}"
@@ -297,7 +316,7 @@ export const componentInfo: ComponentInfo = {
                                 )).join('\n')}
                             </ibm-timepicker-select>
                         </ibm-timepicker>`;
-                }                                
+                }                             
             }
 		},
 		react: {
