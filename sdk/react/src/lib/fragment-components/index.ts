@@ -25,6 +25,7 @@ import * as link from './a-link';
 import * as loading from './a-loading';
 import * as inlineLoading from './a-inline-loading';
 import * as overflowMenu from './a-overflow-menu';
+import * as slider from './a-slider';
 // Tiles
 import * as tile from './tiles/a-tile';
 import * as toggle from './a-toggle';
@@ -55,10 +56,11 @@ export { AInlineLoading, AInlineLoadingCodeUI, AInlineLoadingSettingsUI } from '
 export { ANumberInput, ANumberInputSettingsUI, ANumberInputCodeUI } from './a-numberinput';
 export { AProgressIndicator, AProgressIndicatorSettingsUI, AProgressIndicatorCodeUI } from './a-progress-indicator';
 export { ARow, ARowCodeUI, ARowSettingsUI } from './a-row';
-export { ASearchInput, ASearchInputSettingsUI, ASearchInputCodeUI } from './a-searchinput';
-export { ATag, ATagCodeUI, ATagSettingsUI } from './a-tag';
-export { AText, ATextCodeUI, ATextSettingsUI } from './a-text';
+export { ATag, ATagSettingsUI } from './a-tag';
+export { AText, ATextSettingsUI } from './a-text';
 export { ATextArea, ATextAreaSettingsUI, ATextAreaCodeUI } from './a-text-area';
+export { ASearchInput, ASearchInputSettingsUI, ASearchInputCodeUI } from './a-searchinput';
+export { ASlider, ASliderSettingsUI, ASliderCodeUI } from './a-slider';
 export { ATextInput, ATextInputSettingsUI, ATextInputCodeUI } from './a-text-input';
 export { AOverflowMenu, AOverflowMenuCodeUI, AOverflowMenuSettingsUI } from './a-overflow-menu';
 export { ARadio, ARadioSettingsUI, ARadioCodeUI } from './a-radio';
@@ -97,6 +99,7 @@ export const allComponents = {
 	progressIndicator,
 	row,
 	searchinput,
+	slider,
 	tag,
 	text,
 	textarea,
