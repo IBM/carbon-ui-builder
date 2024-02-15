@@ -284,7 +284,7 @@ export const renderComponents = (
 			return <UITextInput key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'time-picker':
-			return <UITimePicker key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UITimePicker key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'overflow-menu':
 			return <UIOverflowMenu key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
