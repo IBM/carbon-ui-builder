@@ -234,7 +234,7 @@ export const componentInfo: ComponentInfo = {
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsHideLabel = "${json.hideLabel}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = "${json.disabled}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = ${json.disabled};
 					`,
                 outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
                 imports: ['TimePickerModule', 'TimePickerSelectModule'],
