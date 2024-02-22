@@ -253,14 +253,14 @@ export const componentInfo: ComponentInfo = {
                         [value]="${nameStringToVariableString(json.codeContext?.name)}Value"
                         [disabled]="${json.disabled}">
                             <ibm-timepicker-select
-							[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+                            [theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
                             [disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
                             display='inline'>
                                 <option selected value='AM'>AM</option>
                                 <option value='PM'>PM</option>
                             </ibm-timepicker-select>
                             <ibm-timepicker-select 
-							[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+                            [theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
                             [disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
                             display='inline'>
                                 ${json.items.map((step: any) => (`<option
@@ -289,7 +289,7 @@ export const componentInfo: ComponentInfo = {
                     return `<ibm-timepicker
                         ${angularClassNamesFromComponentObj(json)}
                         label="${nameStringToVariableString(json.codeContext?.name)}Label}"
-						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+                        [theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
                         [invalid]="${nameStringToVariableString(json.codeContext?.name)}IsInvalid"
                         [placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
                         [size]="${nameStringToVariableString(json.codeContext?.name)}Size"
@@ -299,13 +299,13 @@ export const componentInfo: ComponentInfo = {
                         [value]="${nameStringToVariableString(json.codeContext?.name)}Value"
                         [disabled]="${json.disabled}">
                             <ibm-timepicker-select
-							[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+                            [theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
                             [disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled">
                                 <option selected value='AM'>AM</option>
                                 <option value='PM'>PM</option>
                             </ibm-timepicker-select>
                             <ibm-timepicker-select 
-							[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+                            [theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
                             [disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled">
                                 ${json.items.map((step: any) => (`<option
                                     value="${step.value}"
