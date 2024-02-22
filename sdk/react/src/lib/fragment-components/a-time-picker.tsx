@@ -229,7 +229,7 @@ export const componentInfo: ComponentInfo = {
 			latest: {
                 inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = "${json.invalid}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = ${json.invalid};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsHideLabel = "${json.hideLabel}";
