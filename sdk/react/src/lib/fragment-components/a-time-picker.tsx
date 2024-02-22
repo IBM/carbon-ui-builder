@@ -235,13 +235,14 @@ export const componentInfo: ComponentInfo = {
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsHideLabel = ${json.hideLabel};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = ${json.disabled};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = ${json.label};
 					`,
                 outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
                 imports: ['TimePickerModule', 'TimePickerSelectModule'],
                 code: ({ json }) => {
                     return `<ibm-timepicker
                         ${angularClassNamesFromComponentObj(json)}
-                        label="${json.label}"
+                        label="${nameStringToVariableString(json.codeContext?.name)}Label}"
                         [theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
                         [invalid]="${nameStringToVariableString(json.codeContext?.name)}IsInvalid"
                         [placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
@@ -287,7 +288,7 @@ export const componentInfo: ComponentInfo = {
                 code: ({ json }) => {
                     return `<ibm-timepicker
                         ${angularClassNamesFromComponentObj(json)}
-                        label="${json.label}"
+                        label="${nameStringToVariableString(json.codeContext?.name)}Label}"
 						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
                         [invalid]="${nameStringToVariableString(json.codeContext?.name)}IsInvalid"
                         [placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
