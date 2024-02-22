@@ -323,7 +323,6 @@ export const componentInfo: ComponentInfo = {
                 code: ({ json }) => {
                     return `<TimePicker
                         ${reactClassNamesFromComponentObj(json)}
-                        id="time-picker"
                         disabled={${json.disabled}}
                         labelText="${json.label}"
                         size="${json.size}"
@@ -332,11 +331,11 @@ export const componentInfo: ComponentInfo = {
                         placeholder="${json.placeholder}"
                         hideLabel={${json.hideLabel}}
                         light={${json.light}}>
-                            <TimePickerSelect labelText='time-picker-1' id='time-picker-select-1'>
+                            <TimePickerSelect labelText='time-picker-1'>
                                 <SelectItem value='AM' text='AM' />
                                 <SelectItem value='PM' text='PM' />
                             </TimePickerSelect>
-                            <TimePickerSelect labelText='time-picker-2' id='time-picker-select-2'>
+                            <TimePickerSelect labelText='time-picker-2'>
                                 ${json.items.map((step: any) => (`<SelectItem
                                     value="${step.value}"
                                     text="${step.text}" />`
@@ -350,7 +349,6 @@ export const componentInfo: ComponentInfo = {
                 code: ({ json }) => {
                     return `<TimePicker
                         ${reactClassNamesFromComponentObj(json)}
-                        id="time-picker"
                         disabled={${json.disabled}}
                         labelText="${json.label}"
                         size="${json.size}"
@@ -359,11 +357,11 @@ export const componentInfo: ComponentInfo = {
                         placeholder="${json.placeholder}"
                         hideLabel={${json.hideLabel}}
                         light={${json.light}}>
-                            <TimePickerSelect labelText='time-picker-1' id='time-picker-select-1'>
+                            <TimePickerSelect labelText='time-picker-1'>
                                 <SelectItem value='AM' text='AM' />
                                 <SelectItem value='PM' text='PM' />
                             </TimePickerSelect>
-                            <TimePickerSelect labelText='time-picker-2' id='time-picker-select-2'>
+                            <TimePickerSelect labelText='time-picker-2'>
                                 ${json.items.map((step: any) => (`<SelectItem
                                     value="${step.value}"
                                     text="${step.text}" />`
