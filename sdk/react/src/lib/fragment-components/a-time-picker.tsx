@@ -242,7 +242,7 @@ export const componentInfo: ComponentInfo = {
                     return `<ibm-timepicker
                         ${angularClassNamesFromComponentObj(json)}
                         label="${json.label}"
-						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+                        [theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
                         [invalid]="${nameStringToVariableString(json.codeContext?.name)}IsInvalid"
                         [placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
                         [size]="${nameStringToVariableString(json.codeContext?.name)}Size"
@@ -299,15 +299,13 @@ export const componentInfo: ComponentInfo = {
                         [disabled]="${json.disabled}">
                             <ibm-timepicker-select
 							[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
-                            [disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
-                            display='inline'>
+                            [disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled">
                                 <option selected value='AM'>AM</option>
                                 <option value='PM'>PM</option>
                             </ibm-timepicker-select>
                             <ibm-timepicker-select 
 							[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
-                            [disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
-                            display='inline'>
+                            [disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled">
                                 ${json.items.map((step: any) => (`<option
                                     value="${step.value}"
                                     text="${step.text}">
