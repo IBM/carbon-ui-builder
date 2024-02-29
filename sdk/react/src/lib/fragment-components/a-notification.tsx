@@ -163,13 +163,7 @@ export const ANotification = ({
 				hideCloseButton={componentObj.hideCloseButton}
 				lowContrast={componentObj.lowContrast}
 				kind={componentObj.kind}
-				subtitle=
-				{
-					<span>
-						{componentObj.subtitleText}
-						{componentObj.link !== undefined ? <a href={componentObj.link}>{componentObj.linkText}</a> : ''}
-					</span>
-				}
+				subtitle={componentObj.subtitleText}
 				timeout={0}
 				title={componentObj.title} />
 					: <InlineNotification
@@ -182,13 +176,7 @@ export const ANotification = ({
 						{componentObj.actionButtonText}
 					</NotificationActionButton>
 				}
-				subtitle=
-				{
-					<span>
-						{componentObj.subtitleText}
-						{componentObj.link !== undefined ? <a href={componentObj.link}>{componentObj.linkText}</a> : ''}
-					</span>
-				}
+				subtitle={componentObj.subtitleText}
 				title={componentObj.title} />
 			}
 		</AComponent>
