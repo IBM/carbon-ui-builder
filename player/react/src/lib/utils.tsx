@@ -245,16 +245,11 @@ export const renderComponents = (
 		case 'grid':
 			return <UIGrid key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
-<<<<<<< Updated upstream:player/react/src/lib/utils.tsx
+		case 'notification':
+			return <UINotification key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
+
 		case 'loading':
 			return <UILoading key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
-=======
-		case 'notification':
-			return <UINotification key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
-
-			case 'loading':
-			return <UILoading key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
->>>>>>> Stashed changes:src/ui-fragment/src/utils.tsx
 
 		case 'inline-loading':
 			return <UIInlineLoading key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
