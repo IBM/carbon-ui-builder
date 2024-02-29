@@ -10,11 +10,16 @@ import { ChevronDown, ChevronUp } from '@carbon/react/icons';
 import Handlebars from 'handlebars';
 import parse from 'html-react-parser';
 
-import { ElementTile, FragmentPreview, allComponents, FragmentLayoutWidget } from '@carbon-builder/sdk-react';
+import {
+	ElementTile,
+	FragmentPreview,
+	allComponents,
+	FragmentLayoutWidget,
+	accordionButtonStyle
+} from '@carbon-builder/sdk-react';
 import { leftPane, leftPaneContent, leftPaneHeader } from '.';
 import { GlobalStateContext, useFragment } from '../../context';
 import { getEditScreenParams } from '../../utils/fragment-tools';
-import { accordionButtonStyle } from './settings-context-pane';
 import { useRemoteCustomComponentsCollections } from '../../utils/misc-tools';
 
 const elementTileListStyleBase = css`

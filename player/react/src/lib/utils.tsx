@@ -36,6 +36,7 @@ import { UITileFold } from './components/ui-tile-fold';
 import { UITimePicker } from './components/ui-time-picker';
 import { UIToggle } from './components/ui-toggle';
 import { kebabCase } from 'lodash';
+import { SendSignal } from './types';
 
 export const setItemInState = (item: any, state: any, setState: (state: any) => void) => {
 	const itemIndex = state.items.findIndex((i: any) => i.id === item.id);
@@ -201,7 +202,7 @@ export const renderComponents = (
 	state: any,
 	setState: (state: any) => void,
 	setGlobalState: (state: any) => void,
-	sendSignal: (id: number | string, signal: string) => void
+	sendSignal: SendSignal
 ) => {
 	if (state.hidden) {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
