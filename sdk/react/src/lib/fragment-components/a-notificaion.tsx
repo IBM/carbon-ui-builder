@@ -91,27 +91,11 @@ export const ANotificationSettingsUI = ({ selectedComponent, setComponent }: any
 			})} />
 		<TextInput
 			light
-			value={selectedComponent.link}
-			labelText='Link'
-			onChange={(event: any) => setComponent({
-				...selectedComponent,
-				link: event.currentTarget.value
-			})} />
-		<TextInput
-			light
 			value={selectedComponent.subtitleText}
 			labelText='Subtitle text'
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				subtitleText: event.currentTarget.value
-			})} />
-		<TextInput
-			light
-			value={selectedComponent.linkText}
-			labelText='Link text'
-			onChange={(event: any) => setComponent({
-				...selectedComponent,
-				linkText: event.currentTarget.value
 			})} />
 		{
 			selectedComponent.variantSelector === 'toastNotification'
@@ -221,7 +205,6 @@ export const componentInfo: ComponentInfo = {
 					${json.variantSelector === 'toastNotification' ? `caption: "${json.captionText}",` : `message: "${json.captionText}",`}
 					lowContrast:${json.lowContrast},
 					showClose: ${!json.hideCloseButton},
-					${json.link ? `links: [{ href: "${json.link}", text: "${json.linkText}" }]` : ''}
 					${json.actionButtonText
 						? `actions: [
 							{
@@ -255,7 +238,6 @@ export const componentInfo: ComponentInfo = {
 					${json.variantSelector === 'toastNotification' ? `caption: "${json.captionText}",` : `message: "${json.captionText}",`}
 					lowContrast:${json.lowContrast},
 					showClose: ${!json.hideCloseButton},
-					${json.link ? `links: [{ href: "${json.link}", text: "${json.linkText}" }]` : ''}
 					${json.actionButtonText
 						? `actions: [
 							{
@@ -291,16 +273,7 @@ export const componentInfo: ComponentInfo = {
                         hideCloseButton={${json.hideCloseButton}}
                         lowContrast={${json.lowContrast}}
                         kind="${json.kind}"
-                        ${json.subtitleText || json.link
-                            ? `subtitle=
-                            {
-                                <span>
-                                    ${json.subtitleText}
-                                    ${json.link ? `<a href="${json.link}">${json.linkText}</a>` : ''}
-                                </span>
-                            }
-                            `: ''
-                        }
+                        ${json.subtitleText ? `subtitle= { <span> ${json.subtitleText} </span> }`: ''}
                         timeout={${0}}
                         title="${json.title}"
                         onClose={(selectedItem) => handleInputChange({
@@ -325,16 +298,7 @@ export const componentInfo: ComponentInfo = {
                                 ${json.actionButtonText}
                             </NotificationActionButton>
                         }
-                        ${json.subtitleText || json.link
-                            ? `subtitle=
-                            {
-                                <span>
-                                    ${json.subtitleText}
-                                    ${json.link ? `<a href="${json.link}">${json.linkText}</a>` : ''}
-                                </span>
-                            }
-                            `: ''
-                        }
+                        ${json.subtitleText ? `subtitle= { <span> ${json.subtitleText} </span> }`: ''}
                         title="${json.title}"
                         onClose={(selectedItem) => handleInputChange({
                             target: {
@@ -355,16 +319,7 @@ export const componentInfo: ComponentInfo = {
                         hideCloseButton={${json.hideCloseButton}}
                         lowContrast={${json.lowContrast}}
                         kind="${json.kind}"
-                        ${json.subtitleText || json.link
-                            ? `subtitle=
-                            {
-                                <span>
-                                    ${json.subtitleText}
-                                    ${json.link ? `<a href="${json.link}">${json.linkText}</a>` : ''}
-                                </span>
-                            }
-                            `: ''
-                        }
+						${json.subtitleText ? `subtitle= { <span> ${json.subtitleText} </span> }`: ''}
                         timeout={${0}}
                         title="${json.title}"
                         onClose={(selectedItem) => handleInputChange({
@@ -389,16 +344,7 @@ export const componentInfo: ComponentInfo = {
                                 ${json.actionButtonText}
                             </NotificationActionButton>
                         }
-                        ${json.subtitleText || json.link
-                            ? `subtitle=
-                            {
-                                <span>
-                                    ${json.subtitleText}
-                                    ${json.link ? `<a href="${json.link}">${json.linkText}</a>` : ''}
-                                </span>
-                            }
-                            `: ''
-                        }
+						${json.subtitleText ? `subtitle= { <span> ${json.subtitleText} </span> }`: ''}
                         title="${json.title}"
                         onClose={(selectedItem) => handleInputChange({
                             target: {
