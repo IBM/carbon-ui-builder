@@ -227,7 +227,7 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			latest: {
-                inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value};
+                inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = ${json.invalid};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder}";
@@ -235,21 +235,21 @@ export const componentInfo: ComponentInfo = {
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsHideLabel = ${json.hideLabel};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = ${json.disabled};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = ${json.label};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.label}";
 					`,
                 outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
                 imports: ['TimePickerModule', 'TimePickerSelectModule'],
                 code: ({ json }) => {
                     return `<ibm-timepicker
                         ${angularClassNamesFromComponentObj(json)}
-                        label="${nameStringToVariableString(json.codeContext?.name)}Label}"
+                        [label]="${nameStringToVariableString(json.codeContext?.name)}Label"
                         [theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
                         [invalid]="${nameStringToVariableString(json.codeContext?.name)}IsInvalid"
                         [placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
                         [size]="${nameStringToVariableString(json.codeContext?.name)}Size"
                         [hideLabel]="${nameStringToVariableString(json.codeContext?.name)}IsHideLabel"
                         [invalidText]="${nameStringToVariableString(json.codeContext?.name)}InvalidText"
-                        (valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
+                        (valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event)"
                         [value]="${nameStringToVariableString(json.codeContext?.name)}Value"
                         [disabled]="${json.disabled}">
                             <ibm-timepicker-select
