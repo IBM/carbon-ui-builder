@@ -259,9 +259,9 @@ export const componentInfo: ComponentInfo = {
                                 <option value='PM'>PM</option>
                             </ibm-timepicker-select>
                             <ibm-timepicker-select 
-                            [theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
-                            [disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
-                            display='inline'>
+                           	 [theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+                           	 [disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
+                           	 display='inline'>
                                 ${json.items.map((step: any) => (`<option
                                     value="${step.value}"
                                     text="${step.text}">
