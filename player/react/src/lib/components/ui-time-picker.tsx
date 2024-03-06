@@ -76,7 +76,7 @@ export const UITimePicker = ({ state, sendSignal }: {
 	}
 
 	return <TimePicker
-		id='time-picker'
+		id={state.codeContext?.name}
 		light={state.light}
 		disabled={state.disabled}
 		invalid={state.invalid}
@@ -90,11 +90,11 @@ export const UITimePicker = ({ state, sendSignal }: {
 		onChange={(event: any) => {
 			sendSignal(state.id, 'valueChange', [event.value], { ...state, value: event.value });
 		}}>
-		<TimePickerSelect labelText='time-picker-1' id='time-picker-select-1'>
+		<TimePickerSelect id={state.codeContext?.name + '-select-1'}>
 			<SelectItem value='AM' text='AM' />
 			<SelectItem value='PM' text='PM' />
 		</TimePickerSelect>
-		<TimePickerSelect labelText='time-picker-2' id='time-picker-select-2' >
+		<TimePickerSelect id={state.codeContext?.name + '-select-2'}>
 			{
 				state.items.map((step: any, index: number) => <SelectItem
 					value={step.value}

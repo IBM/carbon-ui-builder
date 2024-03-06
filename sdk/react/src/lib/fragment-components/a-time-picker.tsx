@@ -175,11 +175,11 @@ export const ATimePicker = ({
 				labelText={componentObj.label}
 				light={componentObj.light}
 				size={componentObj.size}>
-					<TimePickerSelect disabled={componentObj.disabled} labelText='time-picker-1'>
+					<TimePickerSelect disabled={componentObj.disabled}>
 						<SelectItem value='AM' text='AM' />
 						<SelectItem value='PM' text='PM' />
 					</TimePickerSelect>
-					<TimePickerSelect disabled={componentObj.disabled} labelText='time-picker-2'>
+					<TimePickerSelect disabled={componentObj.disabled}>
 						{
 							componentObj.items.map((step: any, index: number) => <SelectItem
 								value={step.value}
@@ -330,11 +330,11 @@ export const componentInfo: ComponentInfo = {
                         placeholder="${json.placeholder}"
                         hideLabel={${json.hideLabel}}
                         light={${json.light}}>
-                            <TimePickerSelect labelText='time-picker-1'>
+                            <TimePickerSelect id="${json.codeContext?.name + '-select-1'}">
                                 <SelectItem value='AM' text='AM' />
                                 <SelectItem value='PM' text='PM' />
                             </TimePickerSelect>
-                            <TimePickerSelect labelText='time-picker-2'>
+                            <TimePickerSelect id="${json.codeContext?.name + '-select-2'}">
                                 ${json.items.map((step: any) => (`<SelectItem
                                     value="${step.value}"
                                     text="${step.text}" />`
@@ -356,11 +356,11 @@ export const componentInfo: ComponentInfo = {
                         placeholder="${json.placeholder}"
                         hideLabel={${json.hideLabel}}
                         light={${json.light}}>
-                            <TimePickerSelect labelText='time-picker-1'>
+                            <TimePickerSelect id="${json.codeContext?.name + '-select-1'}">
                                 <SelectItem value='AM' text='AM' />
                                 <SelectItem value='PM' text='PM' />
                             </TimePickerSelect>
-                            <TimePickerSelect labelText='time-picker-2'>
+                            <TimePickerSelect id="${json.codeContext?.name + '-select-2'}">
                                 ${json.items.map((step: any) => (`<SelectItem
                                     value="${step.value}"
                                     text="${step.text}" />`
