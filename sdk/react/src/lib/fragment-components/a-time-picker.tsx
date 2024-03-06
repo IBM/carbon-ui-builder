@@ -252,9 +252,9 @@ export const componentInfo: ComponentInfo = {
                         [value]="${nameStringToVariableString(json.codeContext?.name)}Value"
                         [disabled]="${json.disabled}">
                             <ibm-timepicker-select
-                            [theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
-                            [disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
-                            display='inline'>
+                           	 [theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
+                           	 [disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
+                            	display='inline'>
                                 <option selected value='AM'>AM</option>
                                 <option value='PM'>PM</option>
                             </ibm-timepicker-select>
