@@ -274,14 +274,13 @@ export const componentInfo: ComponentInfo = {
             },
             v10: {
                 inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = "${json.invalid}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsHideLabel = "${json.hideLabel}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = "${json.disabled}";
-					`,
+                	@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}";
+			@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = "${json.invalid}";
+			@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder}";
+			@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";
+			@Input() ${nameStringToVariableString(json.codeContext?.name)}IsHideLabel = "${json.hideLabel}";
+			@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText}";
+			@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = "${json.disabled}";`,
                 outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
                 imports: ['TimePickerModule', 'TimePickerSelectModule'],
                 code: ({ json }) => {
