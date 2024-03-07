@@ -3,6 +3,8 @@ import { css } from 'emotion';
 import { CssClasses } from '../types';
 import { FileUploaderDropContainer } from '@carbon/react';
 import { FileUploader } from '@carbon/react';
+import { commonSlots, slotsDisabled } from '../common-slots';
+import { SendSignal } from '../types';
 
 const labelDescriptionStyle = css`
     color: #525252;
@@ -23,6 +25,7 @@ const labelTitleStyle = css`
 `;
 
 export interface FileUploaderState {
+	id: string,
 	type: string;
 	cssClasses?: CssClasses[];
 	buttonKind: string;
@@ -41,10 +44,55 @@ export interface FileUploaderState {
 	};
 }
 
-export const UIFileUploader = ({ state }: {
+export const type = 'file-uploader';
+
+export const signals = ['valueChange', 'click'];
+
+export const slots = {
+	...commonSlots,
+	...slotsDisabled,
+	multiple: 'boolean',
+	isMultiple: (state: FileUploaderState) => ({
+		...state,
+		multiple: true
+	}),
+	isNotMultiple: (state: FileUploaderState) => ({
+		...state,
+		multiple: false
+	}),
+	toggleIsMultiple: (state: FileUploaderState) => ({
+		...state,
+		multiple: !state.multiple
+	}),
+	dragAndDrop: 'boolean',
+	isDragAndDrop: (state: FileUploaderState) => ({
+		...state,
+		dragAndDrop: true
+	}),
+	isNotDragAndDrop: (state: FileUploaderState) => ({
+		...state,
+		dragAndDrop: false
+	}),
+	toggleIsDragAndDrop: (state: FileUploaderState) => ({
+		...state,
+		dragAndDrop: !state.dragAndDrop
+	}),
+	type: 'string',
+	buttonLabel: 'string',
+	labelTitle: 'string',
+	filenameStatus: 'string',
+	dragAndDroplabelText: 'string',
+	labelDescription: 'string',
+	iconDescription: 'string',
+	size: 'string',
+	id: 'string'
+};
+
+export const UIFileUploader = ({ state, sendSignal }: {
 	state: FileUploaderState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
+	sendSignal: SendSignal;
 }) => {
 	if (state.type !== 'file-uploader') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -53,13 +101,18 @@ export const UIFileUploader = ({ state }: {
 
 	return <>
 		{
-			state.dragAndDrop
-				? <>
+			state.dragAndDrop ? <>
 		<strong className={labelTitleStyle}>{state.labelTitle}</strong>
 		<p className={labelDescriptionStyle}>
 			{state.labelDescription}
 		</p>
 		<FileUploaderDropContainer
+			onClick={() => {
+				sendSignal(state.id, 'click');
+			}}
+			onChange={(event: any) => {
+				sendSignal(state.id, 'valueChange', [event.value], { ...state, value: event.value });
+			}}
             accept={[
             'image/jpeg',
             'image/png'

@@ -102,8 +102,7 @@ export const AFileUploaderSettingsUI = ({ selectedComponent, setComponent }: any
 			})} />
 
 		{
-			selectedComponent.dragAndDrop
-				?
+			selectedComponent.dragAndDrop ?
 			<TextInput
 				value={selectedComponent.dragAndDroplabelText}
 				labelText='Drag and drop label text'
@@ -196,8 +195,7 @@ export const AFileUploader = ({
 		rejectDrop={true}
 		{...rest}>
 			{
-				componentObj.dragAndDrop
-					? <>
+				componentObj.dragAndDrop ? <>
 				<strong className={labelTitleStyle}>{componentObj.labelTitle}</strong>
 				<p className={labelDescriptionStyle}>
 					{componentObj.labelDescription}
