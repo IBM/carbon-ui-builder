@@ -268,24 +268,49 @@ export const componentInfo: ComponentInfo = {
 	hideFromElementsPane: false,
 	codeExport: {
 		angular: {
-			inputs: (_) => '',
-			outputs: (_) => '',
-			imports: ['ListModule'],
-			code: ({ json, fragments, jsonToTemplate }) => {
-				return `<ol ibmList
-					${angularClassNamesFromComponentObj(json)}>
-					${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-				</ol>`;
-			}
+            latest: {
+                inputs: (_) => '',
+                outputs: (_) => '',
+                imports: ['ListModule'],
+                code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
+                    return `<ol ibmList
+                        ${angularClassNamesFromComponentObj(json)}>
+                        ${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
+                    </ol>`;
+                }
+            },
+            v10: {
+                inputs: (_) => '',
+                outputs: (_) => '',
+                imports: ['ListModule'],
+                code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
+                    return `<ol ibmList
+                        ${angularClassNamesFromComponentObj(json)}>
+                        ${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
+                    </ol>`;
+                }
+            }
+
 		},
 		react: {
-			imports: ['OrderedList'],
-			code: ({ json, fragments, jsonToTemplate }) => {
-				return `<OrderedList
-					${reactClassNamesFromComponentObj(json)}>
-					${json.items.map((element: any) => jsonToTemplate(element, fragments)).join('\n')}
-				</OrderedList>`;
-			}
+            latest: {
+                imports: ['OrderedList'],
+                code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
+                    return `<OrderedList
+                        ${reactClassNamesFromComponentObj(json)}>
+                        ${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
+                    </OrderedList>`;
+                }
+            },
+            v10: {
+                imports: ['OrderedList'],
+                code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
+                    return `<OrderedList
+                        ${reactClassNamesFromComponentObj(json)}>
+                        ${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
+                    </OrderedList>`;
+                }
+            }
 		}
 	}
 };

@@ -123,30 +123,60 @@ export const componentInfo: ComponentInfo = {
 	hideFromElementsPane: true,
 	codeExport: {
 		angular: {
-			inputs: (_) => '',
-			outputs: (_) => '',
-			imports: ['ListModule'],
-			code: ({ json }) => {
-				return `<li ibmListItem>
-					${json.value}
-					${angularClassNamesFromComponentObj(json)}
-					${json.items.length > 0 ? `<ol ibmList>
-						${json.items.map((step: any) => getChildrenExportAngular(step)).join('\n')}
-					</ol>` : '' }
-				</li>`;
-			}
+            latest: {
+                inputs: (_) => '',
+                outputs: (_) => '',
+                imports: ['ListModule'],
+                code: ({ json }) => {
+                    return `<li ibmListItem>
+                        ${json.value}
+                        ${angularClassNamesFromComponentObj(json)}
+                        ${json.items.length > 0 ? `<ol ibmList>
+                            ${json.items.map((step: any) => getChildrenExportAngular(step)).join('\n')}
+                        </ol>` : '' }
+                    </li>`;
+                }
+            },
+            v10: {
+                inputs: (_) => '',
+                outputs: (_) => '',
+                imports: ['ListModule'],
+                code: ({ json }) => {
+                    return `<li ibmListItem>
+                        ${json.value}
+                        ${angularClassNamesFromComponentObj(json)}
+                        ${json.items.length > 0 ? `<ol ibmList>
+                            ${json.items.map((step: any) => getChildrenExportAngular(step)).join('\n')}
+                        </ol>` : '' }
+                    </li>`;
+                }
+            }
 		},
 		react: {
-			imports: ['ListItem'],
-			code: ({ json }) => {
-				return `<ListItem>
-					${json.value}
-					${reactClassNamesFromComponentObj(json)}
-					${json.items.length > 0 ? `<OrderedList nested={true}>
-						${json.items.map((step: any) => getChildrenExportReact(step, true)).join('\n')}
-					</OrderedList>` : '' }
-				</ListItem>`;
-			}
+            latest: {
+                imports: ['ListItem'],
+                code: ({ json }) => {
+                    return `<ListItem>
+                        ${json.value}
+                        ${reactClassNamesFromComponentObj(json)}
+                        ${json.items.length > 0 ? `<OrderedList nested={true}>
+                            ${json.items.map((step: any) => getChildrenExportReact(step, true)).join('\n')}
+                        </OrderedList>` : '' }
+                    </ListItem>`;
+                }
+            },
+            v10: {
+                imports: ['ListItem'],
+                code: ({ json }) => {
+                    return `<ListItem>
+                        ${json.value}
+                        ${reactClassNamesFromComponentObj(json)}
+                        ${json.items.length > 0 ? `<OrderedList nested={true}>
+                            ${json.items.map((step: any) => getChildrenExportReact(step, true)).join('\n')}
+                        </OrderedList>` : '' }
+                    </ListItem>`;
+                }
+            }
 		}
 	}
 };
