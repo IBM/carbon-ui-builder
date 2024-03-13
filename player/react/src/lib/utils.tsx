@@ -243,7 +243,7 @@ export const renderComponents = (
 			return <UIDropdown key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'file-uploader':
-			return <UIFileUploader key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
+			return <UIFileUploader key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 			case 'grid':
 			return <UIGrid key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
