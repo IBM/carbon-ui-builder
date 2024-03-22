@@ -65,7 +65,7 @@ export const ATimePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 	return <>
 		<Checkbox
 			labelText='Timezone'
-			id='light'
+			id='timezone'
 			checked={selectedComponent.timezone}
 			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
@@ -73,7 +73,7 @@ export const ATimePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 		})} />
 		<Checkbox
 			labelText='AM/PM'
-			id='light'
+			id='apPm'
 			checked={selectedComponent.amPm}
 			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
