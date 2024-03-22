@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
 import { AComponent, ComponentInfo } from './a-component';
-// import { useFragment } from '../context';
-// import { useFragment } from '../../../';
 
 import { css, cx } from 'emotion';
 import {
@@ -13,7 +11,7 @@ import {
 
 import image from './../assets/component-icons/list.svg';
 import { angularClassNamesFromComponentObj, getParentComponent, reactClassNamesFromComponentObj } from '../helpers/tools';
-import { Button, HierarchyList } from '@carbon/react';
+import { Button } from '@carbon/react';
 import { actionIconStyle } from '../helpers/styles';
 import { TextInput } from '@carbon/react';
 import { Accordion } from '@carbon/react';
@@ -50,9 +48,7 @@ const getComponentObjById = (id: string, componentObj: any) => {
 };
 
 const ListItemsWidget = ({ selectedComponent, setComponent, title }: any) => {
-	// const [fragment, setFragment] = useFragment();
 	const addToList = (id: any) => {
-		// const component = getComponentObjById(id, fragment.data);
 		const component = getComponentObjById(id, selectedComponent.data);
 
 		const dataList = [...component.items];
@@ -72,7 +68,6 @@ const ListItemsWidget = ({ selectedComponent, setComponent, title }: any) => {
 	};
 
 	const deleteFromList = (componentObj: any) => {
-		// const parentComponent = getParentComponent(fragment.data, componentObj);
 		const parentComponent = getParentComponent(selectedComponent.data, componentObj);
 
 		const dataList = [...parentComponent.items];
@@ -143,14 +138,10 @@ const ListItemsWidget = ({ selectedComponent, setComponent, title }: any) => {
 					</Button>
 				</>
 			},
-			// setFragment({
-			// 	...fragment,
-			// 	selectedComponentId: componentObj.id
-			// }, false)
 			children: componentObj.items?.map((item: any) => getHierarchyListItemsFromComponentObj(item))
 		};
 	};
-	debugger
+
 	const itemsList = {
 		data: {
 			id: selectedComponent.data.id,
@@ -163,7 +154,7 @@ const ListItemsWidget = ({ selectedComponent, setComponent, title }: any) => {
 			]
 		}
 	};
-	return <HierarchyList
+	return <OrderedList
 		title={title}
 		hasSearch={true}
 		className={layoutStyle}
