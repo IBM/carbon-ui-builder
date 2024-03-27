@@ -64,14 +64,6 @@ export const ATimePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 	};
 	return <>
 		<Checkbox
-			labelText='Timezone'
-			id='timezone'
-			checked={selectedComponent.timezone}
-			onChange={(_: any, { checked }: any) => setComponent({
-				...selectedComponent,
-				timezone: checked
-		})} />
-		<Checkbox
 			labelText='AM/PM'
 			id='apPm'
 			checked={selectedComponent.amPm}
@@ -197,7 +189,7 @@ export const ATimePicker = ({
 							<SelectItem value='PM' text='PM' />
 						</TimePickerSelect>
 					}
-					{componentObj.timezone &&
+					{componentObj.items.length > 0 &&
 						<TimePickerSelect disabled={componentObj.disabled}>
 							{
 								componentObj.items.map((step: any, index: number) => <SelectItem
@@ -231,7 +223,6 @@ export const componentInfo: ComponentInfo = {
 		hideLabel: false,
 		light: false,
 		amPm: false,
-		timezone: false,
 		size: 'md',
 		value: '',
 		items: []
@@ -273,7 +264,7 @@ export const componentInfo: ComponentInfo = {
 									<option value='PM'>PM</option>
 								</ibm-timepicker-select>` : ``
 							}
-							${json.timezone ?
+							${json.items.length > 0 ?
 								`<ibm-timepicker-select 
 									[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 									[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
@@ -322,7 +313,7 @@ export const componentInfo: ComponentInfo = {
 									<option value='PM'>PM</option>
 								</ibm-timepicker-select>` : ``
 							}
-							${json.timezone ?
+							${json.items.length > 0 ?
 								`<ibm-timepicker-select 
 									[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 									[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
