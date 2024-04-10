@@ -127,9 +127,10 @@ export const APopOver = ({
                     componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
                     css`${styleObjectToString(componentObj.style)}`
                 )}>
-                <button type="button">
-                    Toggle
-                </button>
+                    <svg _ngcontent-pla-c12="" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32">
+                        <path _ngcontent-pla-c12="" d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z">
+                        </path>
+                    </svg>
                     <PopoverContent>
                         {componentObj.text}
                         {children}
@@ -206,8 +207,8 @@ export const componentInfo: ComponentInfo = {
                     @Input() ${nameStringToVariableString(json.codeContext?.name)}IsShowCaret = ${json.isShowCaret};
                     @Input() ${nameStringToVariableString(json.codeContext?.name)}IsDropShadow = ${json.isDropShadow};
                     @Input() ${nameStringToVariableString(json.codeContext?.name)}IsHighContrast = ${json.isHighContrast};
-                    @Input() ${nameStringToVariableString(json.codeContext?.name)}Align = ${json.align};
-                    @Input() ${nameStringToVariableString(json.codeContext?.name)}Text = ${json.text};
+                    @Input() ${nameStringToVariableString(json.codeContext?.name)}Align = '${json.align}';
+                    @Input() ${nameStringToVariableString(json.codeContext?.name)}Text = '${json.text}';
                 `,
 				outputs: ({ json }) => `
                     @Output() ${nameStringToVariableString(json.codeContext?.name)}OnOpen = new EventEmitter();
