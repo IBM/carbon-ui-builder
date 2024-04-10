@@ -2,7 +2,6 @@ import React from 'react';
 import {
 	Popover,
     PopoverContent,
-    Button,
 	Dropdown,
 	TextInput,
     Checkbox
@@ -176,9 +175,9 @@ export const componentInfo: ComponentInfo = {
                     @Output() ${nameStringToVariableString(json.codeContext?.name)}IsOpenChange = new EventEmitter();`,
 				imports: ['PopoverModule'],
 				code: ({ json }) => {
-					return `
-                    <div
+					return `<div
                         cdsPopover
+                        ${angularClassNamesFromComponentObj(json)}
                         [isOpen]="${nameStringToVariableString(json.codeContext?.name)}IsOpen"
                         [dropShadow]="${nameStringToVariableString(json.codeContext?.name)}IsDropShadow"
                         [align]="${nameStringToVariableString(json.codeContext?.name)}Align"
@@ -187,17 +186,17 @@ export const componentInfo: ComponentInfo = {
                         (onOpen)="${nameStringToVariableString(json.codeContext?.name)}OnOpen.emit($event)"
                         (onClose)="${nameStringToVariableString(json.codeContext?.name)}onClose.emit($event)"
                         (isOpenChange)="${nameStringToVariableString(json.codeContext?.name)}IsOpenChange.emit($event)">
-                        <div class="popover-trigger">
-                            <svg preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32">
-                                <path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"></path>
-                            </svg>
-                        </div>
-                        <cds-popover-content>
-                            <div style="padding: 1rem">
-                                ${ json.text }
+                            <div class="popover-trigger">
+                                <svg preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32">
+                                    <path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"></path>
+                                </svg>
                             </div>
-                        </cds-popover-content>
-                    </div>
+                            <cds-popover-content>
+                                <div style="padding: 1rem">
+                                    ${ json.text }
+                                </div>
+                            </cds-popover-content>
+                        </div>
                     `;
 				}
             },
@@ -216,9 +215,9 @@ export const componentInfo: ComponentInfo = {
                     @Output() ${nameStringToVariableString(json.codeContext?.name)}IsOpenChange = new EventEmitter();`,
 				imports: ['PopoverModule'],
 				code: ({ json }) => {
-					return `
-                    <div
+					return `<div
                         cdsPopover
+                        ${angularClassNamesFromComponentObj(json)}
                         [isOpen]="${nameStringToVariableString(json.codeContext?.name)}IsOpen"
                         [dropShadow]="${nameStringToVariableString(json.codeContext?.name)}IsDropShadow"
                         [align]="${nameStringToVariableString(json.codeContext?.name)}Align"
@@ -227,17 +226,17 @@ export const componentInfo: ComponentInfo = {
                         (onOpen)="${nameStringToVariableString(json.codeContext?.name)}OnOpen.emit($event)"
                         (onClose)="${nameStringToVariableString(json.codeContext?.name)}onClose.emit($event)"
                         (isOpenChange)="${nameStringToVariableString(json.codeContext?.name)}IsOpenChange.emit($event)">
-                        <div class="popover-trigger">
-                            <svg preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32">
-                                <path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"></path>
-                            </svg>
-                        </div>
-                        <cds-popover-content>
-                            <div style="padding: 1rem">
-                                ${ json.text }
+                            <div class="popover-trigger">
+                                <svg preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32">
+                                    <path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"></path>
+                                </svg>
                             </div>
-                        </cds-popover-content>
-                    </div>
+                            <cds-popover-content>
+                                <div style="padding: 1rem">
+                                    ${ json.text }
+                                </div>
+                            </cds-popover-content>
+                        </div>
                     `;
 				}
             }
@@ -252,12 +251,12 @@ export const componentInfo: ComponentInfo = {
                         caret={${json.isShowCaret ? json.isShowCaret : (json.isTabTip ? false : true)}}
                         dropShadow={${json.isDropShadow ? json.isDropShadow : true}}
                         highContrast={${json.isHighContrast ? json.isHighContrast : true}}
-                        ${json.isTabTip ? 'isTabTip' : ''}>
-                                <PopoverContent>
-                                    ${ json.text }
-                                </PopoverContent>
-                        </Popover>
-                        `;
+                        ${json.isTabTip ? 'isTabTip' : ''}
+                        ${reactClassNamesFromComponentObj(json)}>
+                            <PopoverContent>
+                                ${ json.text }
+                            </PopoverContent>
+                        </Popover>`;
 				}
             },
             v10: {
@@ -269,12 +268,12 @@ export const componentInfo: ComponentInfo = {
                         caret={${json.isShowCaret ? json.isShowCaret : (json.isTabTip ? false : true)}}
                         dropShadow={${json.isDropShadow ? json.isDropShadow : true}}
                         highContrast={${json.isHighContrast ? json.isHighContrast : true}}
-                        ${json.isTabTip ? 'isTabTip' : ''}>
-                                <PopoverContent>
-                                    ${ json.text }
-                                </PopoverContent>
-                        </Popover>
-                        `;
+                        ${json.isTabTip ? 'isTabTip' : ''}
+                        ${reactClassNamesFromComponentObj(json)}>
+                            <PopoverContent>
+                                ${ json.text }
+                            </PopoverContent>
+                        </Popover>`;
 				}
             }
         }

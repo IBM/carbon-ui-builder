@@ -12,6 +12,7 @@ import * as dropdown from './a-dropdown';
 import * as fragment from './a-fragment';
 import * as grid from './a-grid';
 import * as numberinput from './a-numberinput';
+import * as popover from './a-popover';
 import * as radio from './a-radio';
 import * as radioGroup from './a-radio-group';
 import * as progressIndicator from './a-progress-indicator';
@@ -54,6 +55,7 @@ export { ALink, ALinkSettingsUI, ALinkCodeUI } from './a-link';
 export { AInlineLoading, AInlineLoadingCodeUI, AInlineLoadingSettingsUI } from './a-inline-loading';
 export { ANumberInput, ANumberInputSettingsUI, ANumberInputCodeUI } from './a-numberinput';
 export { AProgressIndicator, AProgressIndicatorSettingsUI, AProgressIndicatorCodeUI } from './a-progress-indicator';
+export { APopOver, APopOverSettingsUI, APopOverCodeUI } from './a-popover';
 export { ARow, ARowCodeUI, ARowSettingsUI } from './a-row';
 export { ASearchInput, ASearchInputSettingsUI, ASearchInputCodeUI } from './a-searchinput';
 export { ATag, ATagCodeUI, ATagSettingsUI } from './a-tag';
@@ -95,6 +97,7 @@ export const allComponents = {
 	link,
 	numberinput,
 	progressIndicator,
+	popover,
 	row,
 	searchinput,
 	tag,
