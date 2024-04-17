@@ -39,7 +39,7 @@ export const ANotificationSettingsUI = ({ selectedComponent, setComponent }: any
 			labelText='Hide close button'
 			id='hide-close-button'
 			checked={selectedComponent.hideCloseButton}
-			onChange={(checked: boolean) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					hideCloseButton: checked
@@ -49,7 +49,7 @@ export const ANotificationSettingsUI = ({ selectedComponent, setComponent }: any
 			labelText='Low contrast'
 			id='low-contrast'
 			checked={selectedComponent.lowContrast}
-			onChange={(checked: boolean) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					lowContrast: checked
@@ -198,7 +198,7 @@ export const componentInfo: ComponentInfo = {
 		angular: {
             latest: {
                 inputs: ({ json }) => `
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}notificationObj = {
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}notificationObj: any = {
 					type: "${json.kind}",
 					title: "${json.title}",
 					${json.variantSelector === 'toastNotification' ? `subtitle: "${json.subtitleText}",` : ''}
@@ -210,7 +210,7 @@ export const componentInfo: ComponentInfo = {
 							{
 								text: "${json.actionButtonText}",
 								click: "${nameStringToVariableString(json.codeContext?.name)}ActionClick.emit()"
-							}];`
+							}]`
 						: ''
 					}
 				};`,
