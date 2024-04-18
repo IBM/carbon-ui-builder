@@ -1,0 +1,26 @@
+{
+	"compileOnSave": false,
+	"compilerOptions": {
+		"rootDir": ".",
+		"sourceMap": true,
+		"declaration": false,
+		"moduleResolution": "node",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"importHelpers": true,
+		"target": "es2015",
+		"module": "esnext",
+		"lib": ["es2020", "dom"],
+		"skipLibCheck": true,
+		"skipDefaultLibCheck": true,
+		"baseUrl": ".",
+		"paths": {
+			"@carbon-builder/player-react": ["player/react/src/index.ts"],
+			"@carbon-builder/sdk-react": ["sdk/react/src/index.ts"],
+			"@carbon-builder/sdk-react/*": [
+				"sdk/react/src/lib/fragment-components/*"
+			]
+		}
+	},
+	"exclude": ["node_modules", "tmp"]
+}

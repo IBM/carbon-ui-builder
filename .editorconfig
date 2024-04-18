@@ -1,5 +1,4 @@
-# http://editorconfig.org
-
+# Editor configuration, see http://editorconfig.org
 root = true
 
 [*]
@@ -7,5 +6,9 @@ charset = utf-8
 end_of_file = lf
 indent_style = tab
 indent_size = 4
-trim_trailing_whitespace = true
 insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.md]
+max_line_length = off
+trim_trailing_whitespace = false
