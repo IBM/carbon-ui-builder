@@ -60,7 +60,7 @@ export const AFileUploaderSettingsUI = ({ selectedComponent, setComponent }: any
 			labelText='Multiple'
 			id='multiple'
 			checked={selectedComponent.multiple}
-			onChange={(checked: boolean) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					multiple: checked
@@ -71,7 +71,7 @@ export const AFileUploaderSettingsUI = ({ selectedComponent, setComponent }: any
 			labelText='Disabled'
 			id='disabled'
 			checked={selectedComponent.disabled}
-			onChange={(checked: boolean) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					disabled: checked
@@ -82,7 +82,7 @@ export const AFileUploaderSettingsUI = ({ selectedComponent, setComponent }: any
 			labelText='Drag and drop'
 			id='DragAndDrop'
 			checked={selectedComponent.dragAndDrop}
-			onChange={(checked: boolean) => {
+			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
 					dragAndDrop: checked
@@ -291,7 +291,7 @@ export const componentInfo: ComponentInfo = {
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Multiple = ${json.multiple};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}DropText = "${json.dragAndDroplabelText}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: any = "${json.size}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}ButtonText = "${json.buttonLabel}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}ButtonType = "${json.buttonKind}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Drop = ${json.dragAndDrop};`,
@@ -325,7 +325,7 @@ export const componentInfo: ComponentInfo = {
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Multiple = ${json.multiple};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}DropText = "${json.dragAndDroplabelText}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: any = "${json.size}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}ButtonText = "${json.buttonLabel}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}ButtonType = "${json.buttonKind}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Drop = ${json.dragAndDrop};`,
