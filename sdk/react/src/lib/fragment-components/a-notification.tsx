@@ -231,7 +231,7 @@ export const componentInfo: ComponentInfo = {
             },
             v10: {
                 inputs: ({ json }) => `
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}notificationObj = {
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}notificationObj: any = {
 					type: "${json.kind}",
 					title: "${json.title}",
 					${json.variantSelector === 'toastNotification' ? `subtitle: "${json.subtitleText}",` : ''}
