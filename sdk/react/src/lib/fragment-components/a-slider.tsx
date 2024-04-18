@@ -24,7 +24,7 @@ export const ASliderSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			labelText='Disabled'
 			id='disable-label'
 			checked={selectedComponent.disabled}
-			onChange={(checked: boolean) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				disabled: checked
 			})} />
@@ -33,7 +33,7 @@ export const ASliderSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			labelText='Hide text input'
 			id='hide-text-input'
 			checked={selectedComponent.textInputHidden}
-			onChange={(checked: boolean) => setComponent({
+			onChange={(_: any, { checked }: any)=> setComponent({
 				...selectedComponent,
 				textInputHidden: checked
 			})} />
@@ -42,7 +42,7 @@ export const ASliderSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			labelText='Light'
 			id='light'
 			checked={selectedComponent.light}
-			onChange={(checked: boolean) => setComponent({
+			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				light: checked
 			})} />
@@ -202,7 +202,7 @@ export const componentInfo: ComponentInfo = {
 						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
 						<span minLabel>{{${nameStringToVariableString(json.codeContext?.name)}MinLabel}}</span>
 						<span maxLabel>{{${nameStringToVariableString(json.codeContext?.name)}MaxLabel}}</span>
-						<input [theme]="${nameStringToVariableString(json.codeContext?.name)}Theme" 
+						<input [ngClass]="{'cds--text-input--light': ${nameStringToVariableString(json.codeContext?.name)}Theme === 'light'}" 
 						${angularClassNamesFromComponentObj(json)} />
 					</ibm-slider>`;
 				}
@@ -232,7 +232,7 @@ export const componentInfo: ComponentInfo = {
 						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
 						<span minLabel>{{${nameStringToVariableString(json.codeContext?.name)}MinLabel}}</span>
 						<span maxLabel>{{${nameStringToVariableString(json.codeContext?.name)}MaxLabel}}</span>
-						<input [theme]="${nameStringToVariableString(json.codeContext?.name)}Theme" 
+						<input [ngClass]="{'cds--text-input--light': ${nameStringToVariableString(json.codeContext?.name)}Theme === 'light'}" 
 						${angularClassNamesFromComponentObj(json)} />
 					</ibm-slider>`;
 				}
