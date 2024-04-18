@@ -212,7 +212,7 @@ export const componentInfo: ComponentInfo = {
 					return `${json.datePickerType === 'simple'
 						? `<ibm-date-picker-input
 							${angularClassNamesFromComponentObj(json)}
-							${json.light ? '[light]="true"' : ''}
+							${json.light ? '[theme]="light"' : ''}
 							[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
 							[invalid]="${nameStringToVariableString(json.codeContext?.name)}IsInvalid"
 							[label]="${nameStringToVariableString(json.codeContext?.name)}RangeStartLabel"
@@ -225,7 +225,7 @@ export const componentInfo: ComponentInfo = {
 						: json.datePickerType === 'single'
 						? `<ibm-date-picker
 							${angularClassNamesFromComponentObj(json)}
-							${json.light ? '[light]="true"' : ''}
+							${json.light ? '[theme]="light"' : ''}
 							[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
 							[invalid]="${nameStringToVariableString(json.codeContext?.name)}IsInvalid"
 							[label]="${nameStringToVariableString(json.codeContext?.name)}RangeStartLabel"
@@ -238,7 +238,7 @@ export const componentInfo: ComponentInfo = {
 						</ibm-date-picker>`
 						: `<ibm-date-picker
 							${angularClassNamesFromComponentObj(json)}
-							${json.light ? '[light]="true"' : ''}
+							${json.light ? '[theme]="light"' : ''}
 							[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
 							[invalid]="${nameStringToVariableString(json.codeContext?.name)}IsInvalid"
 							range="true"
@@ -271,7 +271,7 @@ export const componentInfo: ComponentInfo = {
 					return `${json.datePickerType === 'simple'
 						? `<ibm-date-picker-input
 							${angularClassNamesFromComponentObj(json)}
-							${json.light ? '[light]="true"' : ''}
+							${json.light ? '[theme]="light"' : ''}
 							[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
 							[invalid]="${nameStringToVariableString(json.codeContext?.name)}IsInvalid"
 							[label]="${nameStringToVariableString(json.codeContext?.name)}RangeStartLabel"
@@ -284,7 +284,7 @@ export const componentInfo: ComponentInfo = {
 						: json.datePickerType === 'single'
 						? `<ibm-date-picker
 							${angularClassNamesFromComponentObj(json)}
-							${json.light ? '[light]="true"' : ''}
+							${json.light ? '[theme]="light"' : ''}
 							[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
 							[invalid]="${nameStringToVariableString(json.codeContext?.name)}IsInvalid"
 							[label]="${nameStringToVariableString(json.codeContext?.name)}RangeStartLabel"
@@ -297,7 +297,7 @@ export const componentInfo: ComponentInfo = {
 						</ibm-date-picker>`
 						: `<ibm-date-picker
 							${angularClassNamesFromComponentObj(json)}
-							${json.light ? '[light]="true"' : ''}
+							${json.light ? '[theme]="light"' : ''}
 							[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
 							[invalid]="${nameStringToVariableString(json.codeContext?.name)}IsInvalid"
 							range="true"
