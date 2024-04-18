@@ -196,7 +196,16 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			latest: {
-				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value ? json.value : ''}";`,
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value: any = "${json.value ? json.value : ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsLight = "${json.light ? json.light : false}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangeStartLabel = "${json.rangeStartLabel ? json.rangeStartLabel : ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangeEndLabel = "${json.rangeEndLabel ? json.rangeEndLabel : ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = "${json.disabled ? json.disabled : ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = "${json.invalid ? json.invalid : ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText ? json.invalidText : ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder ? json.placeholder : ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: any = "${json.size ? json.size : ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}DateFormat = "${json.dateFormat ? json.dateFormat : ''}";`,
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 				imports: ['DatePickerModule'],
 				code: ({ json }) => {
@@ -204,41 +213,41 @@ export const componentInfo: ComponentInfo = {
 						? `<ibm-date-picker-input
 							${angularClassNamesFromComponentObj(json)}
 							${json.light ? '[light]="true"' : ''}
-							${json.rangeStartLabel ? `[label]='${json.rangeStartLabel}'` : ''}
-							${json.disabled ? `[disabled]='${json.disabled}'` : ''}
-							${json.invalid ? `[invalid]='${json.invalid}'` : ''}
-							${json.invalidText ? `[invalidText]='${json.invalidText}'` : ''}
+							[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
+							[invalid]="${nameStringToVariableString(json.codeContext?.name)}IsInvalid"
+							[label]="${nameStringToVariableString(json.codeContext?.name)}RangeStartLabel"
+							[invalidText]="${nameStringToVariableString(json.codeContext?.name)}InvalidText"
 							(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
 							[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
-							[placeholder]="${json.placeholder}"
-							[size]="${json.size}">
+							[placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
+							[size]="${nameStringToVariableString(json.codeContext?.name)}Size">
 						</ibm-date-picker-input>`
 						: json.datePickerType === 'single'
 						? `<ibm-date-picker
 							${angularClassNamesFromComponentObj(json)}
-							${json.rangeStartLabel ? `[label]='${json.rangeStartLabel}'` : ''}
 							${json.light ? '[light]="true"' : ''}
-							${json.disabled ? `[disabled]='${json.disabled}'` : ''}
-							${json.invalid ? `[invalid]='${json.invalid}'` : ''}
-							${json.invalidText ? `[invalidText]='${json.invalidText}'` : ''}
-							[placeholder]="${json.placeholder}"
-							[size]="${json.size}"
+							[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
+							[invalid]="${nameStringToVariableString(json.codeContext?.name)}IsInvalid"
+							[label]="${nameStringToVariableString(json.codeContext?.name)}RangeStartLabel"
+							[invalidText]="${nameStringToVariableString(json.codeContext?.name)}InvalidText"
+							[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
 							[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
-							[dateFormat]="${json.dateFormat}"
+							[placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
+							[dateFormat]="${nameStringToVariableString(json.codeContext?.name)}DateFormat"
 							(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
 						</ibm-date-picker>`
 						: `<ibm-date-picker
 							${angularClassNamesFromComponentObj(json)}
-							${json.rangeStartLabel ? `[label]='${json.rangeStartLabel}'` : ''}
-							${json.rangeEndLabel ? `[rangeLabel]='${json.rangeEndLabel}'` : ''}
 							${json.light ? '[light]="true"' : ''}
-							${json.disabled ? `[disabled]='${json.disabled}'` : ''}
-							${json.invalid ? `[invalid]='${json.invalid}'` : ''}
-							${json.invalidText ? `[invalidText]='${json.invalidText}'` : ''}
-							[size]="${json.size}"
+							[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
+							[invalid]="${nameStringToVariableString(json.codeContext?.name)}IsInvalid"
 							range="true"
-							[placeholder]="${json.placeholder}"
-							[dateFormat]="${json.dateFormat}"
+							[label]="${nameStringToVariableString(json.codeContext?.name)}RangeStartLabel"
+							[rangeLabel]="${nameStringToVariableString(json.codeContext?.name)}RangeEndLabel"
+							[invalidText]="${nameStringToVariableString(json.codeContext?.name)}InvalidText"
+							[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
+							[placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
+							[dateFormat]="${nameStringToVariableString(json.codeContext?.name)}DateFormat"
 							[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 							(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
 						</ibm-date-picker>`
@@ -246,7 +255,16 @@ export const componentInfo: ComponentInfo = {
 				}
 			},
 			v10: {
-				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value ? json.value : ''}";`,
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value: any = "${json.value ? json.value : ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsLight = "${json.light ? json.light : false}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangeStartLabel = "${json.rangeStartLabel ? json.rangeStartLabel : ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangeEndLabel = "${json.rangeEndLabel ? json.rangeEndLabel : ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = "${json.disabled ? json.disabled : false}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = "${json.invalid ? json.invalid : false}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText ? json.invalidText : ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder ? json.placeholder : ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: any = "${json.size ? json.size : ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}DateFormat = "${json.dateFormat ? json.dateFormat : ''}";`,
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 				imports: ['DatePickerModule'],
 				code: ({ json }) => {
@@ -254,41 +272,41 @@ export const componentInfo: ComponentInfo = {
 						? `<ibm-date-picker-input
 							${angularClassNamesFromComponentObj(json)}
 							${json.light ? '[light]="true"' : ''}
-							${json.rangeStartLabel ? `[label]='${json.rangeStartLabel}'` : ''}
-							${json.disabled ? `[disabled]='${json.disabled}'` : ''}
-							${json.invalid ? `[invalid]='${json.invalid}'` : ''}
-							${json.invalidText ? `[invalidText]='${json.invalidText}'` : ''}
+							[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
+							[invalid]="${nameStringToVariableString(json.codeContext?.name)}IsInvalid"
+							[label]="${nameStringToVariableString(json.codeContext?.name)}RangeStartLabel"
+							[invalidText]="${nameStringToVariableString(json.codeContext?.name)}InvalidText"
 							(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
 							[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
-							[placeholder]="${json.placeholder}"
-							[size]="${json.size}">
+							[placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
+							[size]="${nameStringToVariableString(json.codeContext?.name)}Size">
 						</ibm-date-picker-input>`
 						: json.datePickerType === 'single'
 						? `<ibm-date-picker
 							${angularClassNamesFromComponentObj(json)}
-							${json.rangeStartLabel ? `[label]='${json.rangeStartLabel}'` : ''}
 							${json.light ? '[light]="true"' : ''}
-							${json.disabled ? `[disabled]='${json.disabled}'` : ''}
-							${json.invalid ? `[invalid]='${json.invalid}'` : ''}
-							${json.invalidText ? `[invalidText]='${json.invalidText}'` : ''}
-							[placeholder]="${json.placeholder}"
-							[size]="${json.size}"
+							[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
+							[invalid]="${nameStringToVariableString(json.codeContext?.name)}IsInvalid"
+							[label]="${nameStringToVariableString(json.codeContext?.name)}RangeStartLabel"
+							[invalidText]="${nameStringToVariableString(json.codeContext?.name)}InvalidText"
+							[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
 							[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
-							[dateFormat]="${json.dateFormat}"
+							[placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
+							[dateFormat]="${nameStringToVariableString(json.codeContext?.name)}DateFormat"
 							(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
 						</ibm-date-picker>`
 						: `<ibm-date-picker
 							${angularClassNamesFromComponentObj(json)}
-							${json.rangeStartLabel ? `[label]='${json.rangeStartLabel}'` : ''}
-							${json.rangeEndLabel ? `[rangeLabel]='${json.rangeEndLabel}'` : ''}
 							${json.light ? '[light]="true"' : ''}
-							${json.disabled ? `[disabled]='${json.disabled}'` : ''}
-							${json.invalid ? `[invalid]='${json.invalid}'` : ''}
-							${json.invalidText ? `[invalidText]='${json.invalidText}'` : ''}
-							[size]="${json.size}"
+							[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
+							[invalid]="${nameStringToVariableString(json.codeContext?.name)}IsInvalid"
 							range="true"
-							[placeholder]="${json.placeholder}"
-							[dateFormat]="${json.dateFormat}"
+							[label]="${nameStringToVariableString(json.codeContext?.name)}RangeStartLabel"
+							[rangeLabel]="${nameStringToVariableString(json.codeContext?.name)}RangeEndLabel"
+							[invalidText]="${nameStringToVariableString(json.codeContext?.name)}InvalidText"
+							[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
+							[placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
+							[dateFormat]="${nameStringToVariableString(json.codeContext?.name)}DateFormat"
 							[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 							(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
 						</ibm-date-picker>`
