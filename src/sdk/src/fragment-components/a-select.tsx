@@ -377,7 +377,7 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: any = "${json.size}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Invalid = ${json.invalid};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText}";
@@ -396,7 +396,7 @@ export const componentInfo: ComponentInfo = {
 					[invalidText]="${nameStringToVariableString(json.codeContext?.name)}InvalidText"
 					[label]="${nameStringToVariableString(json.codeContext?.name)}Label"
 					[helperText]="${nameStringToVariableString(json.codeContext?.name)}HelperText"
-					${json.inline ? '[display]="inline"' : '[display]="default"'}
+					${json.inline ? 'display="inline"' : 'display="default"'}
 					${angularClassNamesFromComponentObj(json)}>
 					${json.items.map((step: any) =>
 						step.items && step.items.length > 0 ? `<optgroup
