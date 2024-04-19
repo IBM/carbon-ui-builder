@@ -3,6 +3,7 @@ import {
 	Tabs,
 	Tab,
 	Checkbox,
+	Dropdown,
 	TextInput
 } from '@carbon/react';
 import { AComponent, ComponentInfo } from './a-component';
@@ -19,6 +20,10 @@ import { DraggableTileList } from '../helpers/draggable-list';
 
 export const ATabsSettingsUI = ({ selectedComponent, setComponent }: any) => {
 
+	const typeItems = [
+		{ id: 'inline', text: 'Inline' },
+		{ id: 'contained', text: 'Contained' }
+	];
 	const updateListItems = (key: string, value: any, index: number) => {
 		const step = {
 			...selectedComponent.items[index],
@@ -50,7 +55,7 @@ export const ATabsSettingsUI = ({ selectedComponent, setComponent }: any) => {
 					labelText='Disabled'
 					id={`disabled-${index}`}
 					checked={item.disabled}
-					onChange={(checked: boolean) => updateListItems('disabled', checked, index)} />
+					onChange={(_: any, { checked }: any) => updateListItems('disabled', checked, index)} />
 			</div>
 		</>;
 	};
@@ -62,17 +67,54 @@ export const ATabsSettingsUI = ({ selectedComponent, setComponent }: any) => {
 		});
 	};
 
-	return <DraggableTileList
-		dataList={[...selectedComponent.items]}
-		setDataList={updateStepList}
-		updateItem={updateListItems}
-		defaultObject={{
-			type: 'tab',
-			labelText: 'New tab',
-			disabled: false,
-			items: []
-		}}
-		template={template} />;
+	return <>
+		<Checkbox
+			labelText='Follow focus'
+			id='follow-focus'
+			checked={selectedComponent.isFollowFocused}
+			onChange={(_: any, { checked }: any) => setComponent({
+				...selectedComponent,
+				isFollowFocused: checked
+			})} />
+		<Checkbox
+			labelText='Cache active'
+			id='cache-active'
+			checked={selectedComponent.isCacheActive}
+			onChange={(_: any, { checked }: any) => setComponent({
+				...selectedComponent,
+				isCacheActive: checked
+			})} />
+		<Checkbox
+			labelText='Navigation'
+			id='navigation'
+			checked={selectedComponent.isNavigation}
+			onChange={(_: any, { checked }: any) => setComponent({
+				...selectedComponent,
+				isNavigation: checked
+			})} />
+		<Dropdown
+			id='type-dropdown'
+			label='Type'
+			titleText='Type'
+			items={typeItems}
+			selectedItem={typeItems.find(item => item.id === selectedComponent.type)}
+			itemToString={(item: any) => (item ? item.text : '')}
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				type: event.selectedItem.id
+			})} />
+		<DraggableTileList
+			dataList={[...selectedComponent.items]}
+			setDataList={updateStepList}
+			updateItem={updateListItems}
+			defaultObject={{
+				type: 'tab',
+				labelText: 'New tab',
+				disabled: false,
+				items: []
+			}}
+			template={template} />
+	</>;
 };
 
 export const ATabsCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
@@ -204,9 +246,9 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			latest: {
-				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}FollowFocus = true;
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}CacheActive = false;
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}isNavigation = true;`,
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}FollowFocus = ${json.isFollowFocused ? json.isFollowFocused : false};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}CacheActive = ${json.isCacheActive ? json.isCacheActive : false};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}isNavigation = ${json.isNavigation ? json.isNavigation : true};`,
 				outputs: () => '',
 				imports: ['TabsModule'],
 				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
@@ -229,9 +271,9 @@ export const componentInfo: ComponentInfo = {
 				}
 			},
 			v10: {
-				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}FollowFocus = true;
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}CacheActive = false;
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}isNavigation = true;`,
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}FollowFocus = ${json.isFollowFocused ? json.isFollowFocused : false};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}CacheActive = ${json.isCacheActive ? json.isCacheActive : false};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}isNavigation = ${json.isNavigation ? json.isNavigation : true};`,
 				outputs: () => '',
 				imports: ['TabsModule'],
 				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {

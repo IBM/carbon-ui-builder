@@ -35,20 +35,8 @@ export const signals = ['click'];
 export const slots = {
 	...commonSlots,
 	...slotsDisabled,
-	open: (state: any) => ({
-		...state,
-		open: true
-	}),
-	close: (state: any) => ({
-		...state,
-		open: false
-	}),
-	toggleOpen: (state: any) => ({
-		...state,
-		open: !state.open
-	}),
-	isOpen: 'boolean',
-	title: 'string'
+	label: 'string',
+	type: 'string'
 };
 
 
