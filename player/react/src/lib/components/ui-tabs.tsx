@@ -8,6 +8,9 @@ import { commonSlots, slotsDisabled } from '../common-slots';
 export interface TabsState {
 	type: string;
 	id: string | number;
+	isFollowFocused: boolean;
+	isCacheActive: boolean;
+	isNavigation: boolean;
 	items?: [];
 	selectedTab: number;
 	cssClasses?: CssClasses[];
@@ -35,8 +38,46 @@ export const signals = ['click'];
 export const slots = {
 	...commonSlots,
 	...slotsDisabled,
-	label: 'string',
-	type: 'string'
+	type: 'string',
+	isFollowFocused: 'boolean',
+	followFocus: (state: TabsState) => ({
+		...state,
+		isFollowFocused: true
+	}),
+	deFollowFocus: (state: TabsState) => ({
+		...state,
+		isFollowFocused: false
+	}),
+	toggleFollowFocus: (state: TabsState) => ({
+		...state,
+		isFollowFocused: !state.isFollowFocused
+	}),
+	isCacheActive: 'boolean',
+	cacheActive: (state: TabsState) => ({
+		...state,
+		isCacheActive: true
+	}),
+	deCacheActive: (state: TabsState) => ({
+		...state,
+		isCacheActive: false
+	}),
+	toggleCacheActive: (state: TabsState) => ({
+		...state,
+		isCacheActive: !state.isCacheActive
+	}),
+	isNavigation: 'boolean',
+	navigation: (state: TabsState) => ({
+		...state,
+		isNavigation: true
+	}),
+	deNavigation: (state: TabsState) => ({
+		...state,
+		isNavigation: false
+	}),
+	toggleNavigation: (state: TabsState) => ({
+		...state,
+		isNavigation: !state.isNavigation
+	}),
 };
 
 
