@@ -355,49 +355,97 @@ export const componentInfo: ComponentInfo = {
 			latest: {
 				imports: ['Tabs', 'Tab'],
 				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
-					return `<Tabs
-					${reactClassNamesFromComponentObj(json)}>
-					${json.items.map((step: any, index: any) => `<Tab
-						onClick={(index) => handleInputChange({
-							target: {
-								selectedTab: ${index}
-							}
-						})}
-						key= {${index}}
-						disabled={${step.disabled}}
-						label="${step.labelText}">
-							${step.items && step.items.length > 0
-								? `<section>
-									${step.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
-								</section>`
-							: ''}
-						</Tab>`
-					).join('\n')}
-				</Tabs>`;
+					return `${json.tabType === 'line' ?
+						`<Tabs
+						${reactClassNamesFromComponentObj(json)}>
+						<TabList aria-label="List of tabs">
+							${json.items.map((step: any, index: any) => `<Tab
+								onClick={(index) => handleInputChange({
+									target: {
+										selectedTab: ${index}
+									}
+								})}
+								key= {${index}}
+								disabled={${step.disabled}}>
+								${step.labelText}
+									${step.items && step.items.length > 0
+										? `<section>
+											${step.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
+										</section>`
+									: ''}
+								</Tab>`
+							).join('\n')}
+						</TabList>
+					</Tabs>`: `<Tabs
+						${reactClassNamesFromComponentObj(json)}>
+						<TabList aria-label="List of tabs" contained>
+							${json.items.map((step: any, index: any) => `<Tab
+								onClick={(index) => handleInputChange({
+									target: {
+										selectedTab: ${index}
+									}
+								})}
+								key= {${index}}
+								disabled={${step.disabled}}>
+								${step.labelText}
+									${step.items && step.items.length > 0
+										? `<section>
+											${step.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
+										</section>`
+									: ''}
+								</Tab>`
+							).join('\n')}
+						</TabList>
+					</Tabs>`
+					}`;
 				}
 			},
 			v10: {
 				imports: ['Tabs', 'Tab'],
 				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
-					return `<Tabs
-					${reactClassNamesFromComponentObj(json)}>
-					${json.items.map((step: any, index: any) => `<Tab
-						onClick={(index) => handleInputChange({
-							target: {
-								selectedTab: ${index}
-							}
-						})}
-						key= {${index}}
-						disabled={${step.disabled}}
-						label="${step.labelText}">
-							${step.items && step.items.length > 0
-								? `<section>
-									${step.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
-								</section>`
-							: ''}
-						</Tab>`
-					).join('\n')}
-				</Tabs>`;
+					return `${json.tabType === 'line' ?
+						`<Tabs
+						${reactClassNamesFromComponentObj(json)}>
+						<TabList aria-label="List of tabs">
+							${json.items.map((step: any, index: any) => `<Tab
+								onClick={(index) => handleInputChange({
+									target: {
+										selectedTab: ${index}
+									}
+								})}
+								key= {${index}}
+								disabled={${step.disabled}}>
+								${step.labelText}
+									${step.items && step.items.length > 0
+										? `<section>
+											${step.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
+										</section>`
+									: ''}
+								</Tab>`
+							).join('\n')}
+						</TabList>
+					</Tabs>`: `<Tabs
+						${reactClassNamesFromComponentObj(json)}>
+						<TabList aria-label="List of tabs" contained>
+							${json.items.map((step: any, index: any) => `<Tab
+								onClick={(index) => handleInputChange({
+									target: {
+										selectedTab: ${index}
+									}
+								})}
+								key= {${index}}
+								disabled={${step.disabled}}>
+								${step.labelText}
+									${step.items && step.items.length > 0
+										? `<section>
+											${step.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
+										</section>`
+									: ''}
+								</Tab>`
+							).join('\n')}
+						</TabList>
+					</Tabs>`
+					}`;
 				}
 			}
 		}
