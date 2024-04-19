@@ -31,7 +31,7 @@ export interface TabState {
 	};
 }
 
-export const type = 'tab';
+export const type = 'tabs';
 
 export const signals = ['click'];
 
