@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import {
 	Tabs,
 	Tab,
+	TabList,
 	Checkbox,
 	Dropdown,
 	TextInput
@@ -140,56 +141,106 @@ export const ATabs = ({
 	...rest
 }: any) => {
 	const holderRef = useRef(null as any);
-
 	return (
 		<AComponent
 		rejectDrop={true}
 		componentObj={componentObj}
 		{...rest}>
-			<Tabs className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+			<Tabs  className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 				{
-					componentObj.items.map((step: any, index: number) => <Tab
-						onClick= {() => componentObj.selectedTab = index}
-						className={cx(step.className, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}
-						label={step.labelText}
-						disabled={step.disabled}
-						key={index}>
+					componentObj.tabType === 'line' ?
+					<TabList aria-label="List of tabs">
 						{
-							<section ref={holderRef} onDrop={(event) => {
-								event.stopPropagation();
-								event.preventDefault();
-								const dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
-								const items = componentObj.items.map((item: any, index: any) => {
-									if (index === componentObj.selectedTab) {
-										return {
-											...step,
-											items: [
-												...step.items,
-												dragObj.component
-											]
-										};
-									}
-									return item;
-								});
-								setFragment({
-									...fragment,
-									data: updatedState(fragment.data, {
-										type: 'update',
-										component: {
-											...componentObj,
-											items
-										}
-									})
-								}, false);
-							}}>
+							componentObj.items.map((step: any, index: number) => <Tab
+								onClick= {() => componentObj.selectedTab = index}
+								className={cx(step.className, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}
+								label={step.labelText}
+								disabled={step.disabled}
+								key={index}>
 								{
-									step.items && step.items.length > 0
-									? children.filter((child: any, index: any) => index === componentObj.selectedTab)
-									: <APlaceholder componentObj={step} select={rest.select} />
+									<section ref={holderRef} onDrop={(event) => {
+										event.stopPropagation();
+										event.preventDefault();
+										const dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
+										const items = componentObj.items.map((item: any, index: any) => {
+											if (index === componentObj.selectedTab) {
+												return {
+													...step,
+													items: [
+														...step.items,
+														dragObj.component
+													]
+												};
+											}
+											return item;
+										});
+										setFragment({
+											...fragment,
+											data: updatedState(fragment.data, {
+												type: 'update',
+												component: {
+													...componentObj,
+													items
+												}
+											})
+										}, false);
+									}}>
+										{
+											step.items && step.items.length > 0
+											? children.filter((child: any, index: any) => index === componentObj.selectedTab)
+											: <APlaceholder componentObj={step} select={rest.select} />
+										}
+									</section>
 								}
-							</section>
+							</Tab>)
 						}
-					</Tab>)
+					</TabList> : 
+					<TabList aria-label="List of tabs" contained>
+						{
+							componentObj.items.map((step: any, index: number) => <Tab
+								onClick= {() => componentObj.selectedTab = index}
+								className={cx(step.className, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}
+								label={step.labelText}
+								disabled={step.disabled}
+								key={index}>
+								{
+									<section ref={holderRef} onDrop={(event) => {
+										event.stopPropagation();
+										event.preventDefault();
+										const dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
+										const items = componentObj.items.map((item: any, index: any) => {
+											if (index === componentObj.selectedTab) {
+												return {
+													...step,
+													items: [
+														...step.items,
+														dragObj.component
+													]
+												};
+											}
+											return item;
+										});
+										setFragment({
+											...fragment,
+											data: updatedState(fragment.data, {
+												type: 'update',
+												component: {
+													...componentObj,
+													items
+												}
+											})
+										}, false);
+									}}>
+										{
+											step.items && step.items.length > 0
+											? children.filter((child: any, index: any) => index === componentObj.selectedTab)
+											: <APlaceholder componentObj={step} select={rest.select} />
+										}
+									</section>
+								}
+							</Tab>)
+						}
+					</TabList>
 				}
 			</Tabs>
 		</AComponent>
