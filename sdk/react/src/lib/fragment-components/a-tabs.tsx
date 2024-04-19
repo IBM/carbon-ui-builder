@@ -21,7 +21,7 @@ import { DraggableTileList } from '../helpers/draggable-list';
 export const ATabsSettingsUI = ({ selectedComponent, setComponent }: any) => {
 
 	const typeItems = [
-		{ id: 'inline', text: 'Inline' },
+		{ id: 'line', text: 'Inline' },
 		{ id: 'contained', text: 'Contained' }
 	];
 	const updateListItems = (key: string, value: any, index: number) => {
@@ -94,14 +94,14 @@ export const ATabsSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			})} />
 		<Dropdown
 			id='type-dropdown'
-			label='Type'
-			titleText='Type'
+			label=''
+			titleText='Tab type'
 			items={typeItems}
-			selectedItem={typeItems.find(item => item.id === selectedComponent.type)}
+			selectedItem={typeItems.find(item => item.id === selectedComponent.tabType)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
-				type: event.selectedItem.id
+				tabType: event.selectedItem.id
 			})} />
 		<DraggableTileList
 			dataList={[...selectedComponent.items]}
@@ -248,11 +248,13 @@ export const componentInfo: ComponentInfo = {
 			latest: {
 				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}FollowFocus = ${json.isFollowFocused ? json.isFollowFocused : false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}CacheActive = ${json.isCacheActive ? json.isCacheActive : false};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}isNavigation = ${json.isNavigation ? json.isNavigation : true};`,
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}isNavigation = ${json.isNavigation ? json.isNavigation : true};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}TabType: any = "${json.tabType ? json.tabType : 'contained'}";`,
 				outputs: () => '',
 				imports: ['TabsModule'],
 				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<ibm-tabs
+						[type]="${nameStringToVariableString(json.codeContext?.name)}TabType"
 						[cacheActive]="${nameStringToVariableString(json.codeContext?.name)}CacheActive"
 						[followFocus]="${nameStringToVariableString(json.codeContext?.name)}FollowFocus"
 						[isNavigation]="${nameStringToVariableString(json.codeContext?.name)}isNavigation"
@@ -273,11 +275,13 @@ export const componentInfo: ComponentInfo = {
 			v10: {
 				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}FollowFocus = ${json.isFollowFocused ? json.isFollowFocused : false};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}CacheActive = ${json.isCacheActive ? json.isCacheActive : false};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}isNavigation = ${json.isNavigation ? json.isNavigation : true};`,
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}isNavigation = ${json.isNavigation ? json.isNavigation : true};
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}TabType: any = "${json.tabType ? json.tabType : 'contained'}";`,
 				outputs: () => '',
 				imports: ['TabsModule'],
 				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<ibm-tabs
+						[type]="${nameStringToVariableString(json.codeContext?.name)}TabType"
 						[cacheActive]="${nameStringToVariableString(json.codeContext?.name)}CacheActive"
 						[followFocus]="${nameStringToVariableString(json.codeContext?.name)}FollowFocus"
 						[isNavigation]="${nameStringToVariableString(json.codeContext?.name)}isNavigation"
