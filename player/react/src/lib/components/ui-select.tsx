@@ -30,6 +30,8 @@ export interface SelectState {
 
 export const type = 'select';
 
+export const signals = ['click'];
+
 export const slots = {
 	...commonSlots,
 	...slotsDisabled,
