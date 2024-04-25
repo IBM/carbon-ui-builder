@@ -202,7 +202,7 @@ export const componentInfo: ComponentInfo = {
 					align="${json.alignment}"
 					${json.isDefaultOpened ? `defaultOpen={${json.isDefaultOpened}}` : ''}
 					definition="${json.definition ? json.definition : 'default tooltip message'}"
-					${json.isOpenOnHover ? 'openOnHover' : ''}>
+					${json.isOpenOnHover ? `openOnHover={${json.isOpenOnHover}}` : ''}>
 						${json.description ? json.description : 'description'}
 				</DefinitionTooltip>`
 			},
@@ -213,7 +213,7 @@ export const componentInfo: ComponentInfo = {
 					align="${json.alignment}"
 					${json.isDefaultOpened ? `defaultOpen={${json.isDefaultOpened}}` : ''}
 					definition="${json.definition ? json.definition : 'default tooltip message'}"
-					${json.isOpenOnHover ? 'openOnHover' : ''}>
+					${json.isOpenOnHover ? `openOnHover={${json.isOpenOnHover}}` : ''}>
 						${json.description ? json.description : 'description'}
 				</DefinitionTooltip>`
 			}
