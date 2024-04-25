@@ -232,10 +232,10 @@ export const componentInfo: ComponentInfo = {
 		angular: {
 			latest: {
                 inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value}";
-                	@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}";
+                	@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme: any = "${json.light ? 'light' : 'dark'}";
 			@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = ${json.invalid};
 			@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder}";
-			@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";
+			@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: any = "${json.size}";
 			@Input() ${nameStringToVariableString(json.codeContext?.name)}IsHideLabel = ${json.hideLabel};
 			@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText}";
 			@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = ${json.disabled};
@@ -254,7 +254,7 @@ export const componentInfo: ComponentInfo = {
                         [invalidText]="${nameStringToVariableString(json.codeContext?.name)}InvalidText"
                         (valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event)"
                         [value]="${nameStringToVariableString(json.codeContext?.name)}Value"
-                        [disabled]="${json.disabled}">
+                        [disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled">
 							${json.amPm ?
 								`<ibm-timepicker-select
 									[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
@@ -282,10 +282,10 @@ export const componentInfo: ComponentInfo = {
             },
             v10: {
                 inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value};
-                	@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}";
+                	@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme: any = "${json.light ? 'light' : 'dark'}";
 			@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = "${json.invalid}";
 			@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder}";
-			@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";
+			@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: any = "${json.size}";
 			@Input() ${nameStringToVariableString(json.codeContext?.name)}IsHideLabel = "${json.hideLabel}";
 			@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText}";
 			@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = "${json.disabled}";`,
