@@ -1,0 +1,16 @@
+{
+	"name": "@carbon-builder/sdk-react",
+	"version": "0.0.1",
+	"main": "./index.js",
+	"types": "./index.d.ts",
+	"exports": {
+		".": {
+			"import": "./index.mjs",
+			"require": "./index.js"
+		}
+	},
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:IBM/carbon-ui-builder.git"
+	}
+}

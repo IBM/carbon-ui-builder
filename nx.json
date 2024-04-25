@@ -1,0 +1,88 @@
+{
+	"$schema": "./node_modules/nx/schemas/nx-schema.json",
+	"affected": {
+		"defaultBase": "main"
+	},
+	"targetDefaults": {
+		"build": {
+			"cache": true,
+			"dependsOn": ["^build"],
+			"inputs": ["production", "^production"]
+		},
+		"lint": {
+			"cache": true,
+			"inputs": [
+				"default",
+				"{workspaceRoot}/.eslintrc.json",
+				"{workspaceRoot}/.eslintignore",
+				"{workspaceRoot}/eslint.config.js"
+			]
+		},
+		"test": {
+			"cache": true,
+			"inputs": ["default", "^production"]
+		},
+		"e2e": {
+			"cache": true
+		}
+	},
+	"namedInputs": {
+		"default": ["{projectRoot}/**/*", "sharedGlobals"],
+		"production": [
+			"default",
+			"!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+			"!{projectRoot}/tsconfig.spec.json",
+			"!{projectRoot}/.eslintrc.json",
+			"!{projectRoot}/eslint.config.js"
+		],
+		"sharedGlobals": []
+	},
+	"generators": {
+		"@nx/react": {
+			"application": {
+				"style": "scss",
+				"linter": "eslint",
+				"bundler": "vite",
+				"babel": true
+			},
+			"component": {
+				"style": "scss"
+			},
+			"library": {
+				"style": "scss",
+				"linter": "eslint",
+				"unitTestRunner": "none"
+			}
+		}
+	},
+	"release": {
+		"changelog": {
+			"projectChangelogs": {
+				"file": false,
+				"createRelease": false
+			},
+			"workspaceChangelog": {
+				"file": false,
+				"createRelease": false
+			}
+		},
+		"groups": {
+			"npm": {
+				"releaseTagPattern": "v{version}",
+				"projects": [
+					"player-react",
+					"sdk-react"
+				],
+				"version": {
+					"generatorOptions": {
+						"packageRoot": "dist/libs/{projectName}",
+						"currentVersionResolver": "git-tag",
+						"git": {
+							"tag": false
+						}
+					}
+				}
+			}
+		}
+	}
+}
