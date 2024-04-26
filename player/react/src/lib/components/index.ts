@@ -14,6 +14,7 @@ import * as numberinput from './ui-number-input';
 import * as radio from './ui-radio';
 import * as radioGroup from './ui-radio-group';
 import * as progressIndicator from './ui-progress-indicator';
+import * as popover from './ui-popover';
 import * as row from './ui-row';
 import * as tag from './ui-tag';
 import * as searchinput from './ui-search-input';
@@ -53,6 +54,7 @@ export const allComponents = {
 	link,
 	numberinput,
 	progressIndicator,
+	popover,
 	row,
 	searchinput,
 	tag,

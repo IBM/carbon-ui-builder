@@ -167,8 +167,8 @@ export const componentInfo: ComponentInfo = {
                     @Input() ${nameStringToVariableString(json.codeContext?.name)}IsShowCaret = ${json.isShowCaret};
                     @Input() ${nameStringToVariableString(json.codeContext?.name)}IsDropShadow = ${json.isDropShadow};
                     @Input() ${nameStringToVariableString(json.codeContext?.name)}IsHighContrast = ${json.isHighContrast};
-                    @Input() ${nameStringToVariableString(json.codeContext?.name)}Align = ${json.align};
-                    @Input() ${nameStringToVariableString(json.codeContext?.name)}Text = ${json.text};
+                    @Input() ${nameStringToVariableString(json.codeContext?.name)}Align: any = '${json.align ? json.align : 'bottom'}';
+                    @Input() ${nameStringToVariableString(json.codeContext?.name)}Text = '${json.text}';
                 `,
 				outputs: ({ json }) => `
                     @Output() ${nameStringToVariableString(json.codeContext?.name)}OnOpen = new EventEmitter();
@@ -207,7 +207,7 @@ export const componentInfo: ComponentInfo = {
                     @Input() ${nameStringToVariableString(json.codeContext?.name)}IsShowCaret = ${json.isShowCaret};
                     @Input() ${nameStringToVariableString(json.codeContext?.name)}IsDropShadow = ${json.isDropShadow};
                     @Input() ${nameStringToVariableString(json.codeContext?.name)}IsHighContrast = ${json.isHighContrast};
-                    @Input() ${nameStringToVariableString(json.codeContext?.name)}Align = '${json.align}';
+                    @Input() ${nameStringToVariableString(json.codeContext?.name)}Align: any = '${json.align ? json.align : 'bottom'}';
                     @Input() ${nameStringToVariableString(json.codeContext?.name)}Text = '${json.text}';
                 `,
 				outputs: ({ json }) => `
