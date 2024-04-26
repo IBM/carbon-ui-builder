@@ -248,7 +248,7 @@ export const componentInfo: ComponentInfo = {
 				code: ({ json }) => {
 					return `<Popover 
                         open={${json.isOpen ? json.isOpen : false}}
-                        align={${json.align ? json.align : (json.isTabTip ? 'bottom-start' : 'bottom')}}
+                        align={"${json.align ? json.align : (json.isTabTip ? 'bottom-start' : 'bottom')}"}
                         caret={${json.isShowCaret ? json.isShowCaret : (json.isTabTip ? false : true)}}
                         dropShadow={${json.isDropShadow ? json.isDropShadow : true}}
                         highContrast={${json.isHighContrast ? json.isHighContrast : true}}
