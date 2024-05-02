@@ -202,44 +202,10 @@ export const componentInfo: ComponentInfo = {
 				}
             },
             v10: {
-                inputs: ({ json }) => `
-                    @Input() ${nameStringToVariableString(json.codeContext?.name)}IsOpen = ${json.isOpen};
-                    @Input() ${nameStringToVariableString(json.codeContext?.name)}IsShowCaret = ${json.isShowCaret};
-                    @Input() ${nameStringToVariableString(json.codeContext?.name)}IsDropShadow = ${json.isDropShadow};
-                    @Input() ${nameStringToVariableString(json.codeContext?.name)}IsHighContrast = ${json.isHighContrast};
-                    @Input() ${nameStringToVariableString(json.codeContext?.name)}Align: any = '${json.align ? json.align : 'bottom'}';
-                    @Input() ${nameStringToVariableString(json.codeContext?.name)}Text = '${json.text}';
-                `,
-				outputs: ({ json }) => `
-                    @Output() ${nameStringToVariableString(json.codeContext?.name)}OnOpen = new EventEmitter();
-                    @Output() ${nameStringToVariableString(json.codeContext?.name)}OnClose = new EventEmitter();
-                    @Output() ${nameStringToVariableString(json.codeContext?.name)}IsOpenChange = new EventEmitter();`,
-				imports: ['PopoverModule'],
-				code: ({ json }) => {
-					return `<div
-                        cdsPopover
-                        ${angularClassNamesFromComponentObj(json)}
-                        [isOpen]="${nameStringToVariableString(json.codeContext?.name)}IsOpen"
-                        [dropShadow]="${nameStringToVariableString(json.codeContext?.name)}IsDropShadow"
-                        [align]="${nameStringToVariableString(json.codeContext?.name)}Align"
-                        [caret]="${nameStringToVariableString(json.codeContext?.name)}IsShowCaret"
-                        [highContrast]="${nameStringToVariableString(json.codeContext?.name)}IsHighContrast"
-                        (onOpen)="${nameStringToVariableString(json.codeContext?.name)}OnOpen.emit($event)"
-                        (onClose)="${nameStringToVariableString(json.codeContext?.name)}onClose.emit($event)"
-                        (isOpenChange)="${nameStringToVariableString(json.codeContext?.name)}IsOpenChange.emit($event)">
-                            <div class="popover-trigger">
-                                <svg preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32">
-                                    <path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"></path>
-                                </svg>
-                            </div>
-                            <cds-popover-content>
-                                <div style="padding: 1rem">
-                                    ${ json.text }
-                                </div>
-                            </cds-popover-content>
-                        </div>
-                    `;
-				}
+                inputs: () => '',
+				outputs: () => '',
+				imports: [],
+				code: () => ''
             }
         },
         react: {
@@ -261,21 +227,8 @@ export const componentInfo: ComponentInfo = {
 				}
             },
             v10: {
-                imports: ['Popover', 'PopoverContent'],
-				code: ({ json }) => {
-					return `<Popover 
-                        open={${json.isOpen ? json.isOpen : false}}
-                        align={${json.align ? json.align : (json.isTabTip ? 'bottom-start' : 'bottom')}}
-                        caret={${json.isShowCaret ? json.isShowCaret : (json.isTabTip ? false : true)}}
-                        dropShadow={${json.isDropShadow ? json.isDropShadow : true}}
-                        highContrast={${json.isHighContrast ? json.isHighContrast : true}}
-                        ${json.isTabTip ? 'isTabTip' : ''}
-                        ${reactClassNamesFromComponentObj(json)}>
-                            <PopoverContent>
-                                ${ json.text }
-                            </PopoverContent>
-                        </Popover>`;
-				}
+                imports: [],
+				code: () => ''
             }
         }
     }
