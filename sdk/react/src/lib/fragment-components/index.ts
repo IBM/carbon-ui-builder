@@ -55,7 +55,7 @@ export { ALink, ALinkSettingsUI, ALinkCodeUI } from './a-link';
 export { AInlineLoading, AInlineLoadingCodeUI, AInlineLoadingSettingsUI } from './a-inline-loading';
 export { ANumberInput, ANumberInputSettingsUI, ANumberInputCodeUI } from './a-numberinput';
 export { AProgressIndicator, AProgressIndicatorSettingsUI, AProgressIndicatorCodeUI } from './a-progress-indicator';
-export { APopOver, APopOverSettingsUI, APopOverCodeUI } from './a-popover';
+export { APopover, APopoverSettingsUI, APopoverCodeUI } from './a-popover';
 export { ARow, ARowCodeUI, ARowSettingsUI } from './a-row';
 export { ASearchInput, ASearchInputSettingsUI, ASearchInputCodeUI } from './a-searchinput';
 export { ATag, ATagCodeUI, ATagSettingsUI } from './a-tag';
