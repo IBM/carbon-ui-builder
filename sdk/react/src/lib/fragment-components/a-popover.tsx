@@ -17,7 +17,7 @@ import {
 } from '../helpers/tools';
 import { styleObjectToString } from '@carbon-builder/player-react';
 
-export const APopOverSettingsUI = ({ selectedComponent, setComponent }: any) => {
+export const APopoverSettingsUI = ({ selectedComponent, setComponent }: any) => {
 
     const alignItems = [
         {id: 'top', text: 'Top'},
@@ -94,7 +94,7 @@ export const APopOverSettingsUI = ({ selectedComponent, setComponent }: any) => 
     </>
 }
 
-export const APopOverCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
+export const APopoverCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
     value={selectedComponent.codeContext?.name}
     labelText='Input name'
     onChange={(event: any) => {
@@ -107,7 +107,7 @@ export const APopOverCodeUI = ({ selectedComponent, setComponent }: any) => <Tex
         });
     }} />;
 
-export const APopOver = ({
+export const APopover = ({
 	children,
 	componentObj,
 	...rest
@@ -141,16 +141,16 @@ export const APopOver = ({
 }
 
 export const componentInfo: ComponentInfo = {
-	component: APopOver,
-	settingsUI: APopOverSettingsUI,
-	codeUI: APopOverCodeUI,
-	render: ({ componentObj, select, remove, selected }) => <APopOver
+	component: APopover,
+	settingsUI: APopoverSettingsUI,
+	codeUI: APopoverCodeUI,
+	render: ({ componentObj, select, remove, selected }) => <APopover
 		componentObj={componentObj}
 		select={select}
 		remove={remove}
 		selected={selected}>
 			{componentObj.text}
-	</APopOver>,
+	</APopover>,
 	keywords: ['popover'],
 	name: 'Popover',
 	type: 'popover',
