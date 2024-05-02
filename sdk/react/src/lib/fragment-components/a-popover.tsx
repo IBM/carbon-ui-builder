@@ -1,10 +1,10 @@
 import React from 'react';
 import {
 	Popover,
-    PopoverContent,
+	PopoverContent,
 	Dropdown,
 	TextInput,
-    Checkbox
+	Checkbox
 } from '@carbon/react';
 import { css, cx } from 'emotion';
 import { AComponent, ComponentInfo } from './a-component';
@@ -19,14 +19,30 @@ import { styleObjectToString } from '@carbon-builder/player-react';
 
 export const APopoverSettingsUI = ({ selectedComponent, setComponent }: any) => {
 
-    const alignItems = [
-        {id: 'top', text: 'Top'},
-        {id: 'right', text: 'Right'},
-        {id: 'bottom', text: 'Bottom'},
-        {id: 'left', text: 'Left'}
-    ];
+	const alignItems = [
+		{ id: 'top', text: 'Top' },
+		{ id: 'top-start', text: 'Top start' },
+		{ id: 'top-end', text: 'Top end' },
+		{ id: 'top-left', text: 'Top left' },
+		{ id: 'top-right', text: 'Top right' },
+		{ id: 'bottom', text: 'Bottom' },
+		{ id: 'bottom-left', text: 'Bottom left' },
+		{ id: 'bottom-right', text: 'Bottom right' },
+		{ id: 'bottom-start', text: 'Bottom start' },
+		{ id: 'bottom-end', text: 'Bottom end' },
+		{ id: 'left', text: 'Left' },
+		{ id: 'left-bottom', text: 'Left bottom' },
+		{ id: 'left-top', text: 'Left top' },
+		{ id: 'left-end', text: 'Left end' },
+		{ id: 'left-start', text: 'Left start' },
+		{ id: 'right', text: 'Right' },
+		{ id: 'right-top', text: 'Right top' },
+		{ id: 'right-bottom', text: 'Right bottom' },
+		{ id: 'right-end', text: 'Right end' },
+		{ id: 'right-start', text: 'Right start' }
+	];
 
-    return <>
+	return <>
 		<Checkbox
 			labelText='Open'
 			id='is-open'
@@ -37,8 +53,8 @@ export const APopoverSettingsUI = ({ selectedComponent, setComponent }: any) => 
 		})} />
 
         <Checkbox
-			labelText='Tab tip'
-			id='is-tab-tip'
+            labelText='Tab tip'
+            id='is-tab-tip'
 			checked={selectedComponent.isTabTip}
 			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
@@ -91,7 +107,7 @@ export const APopoverSettingsUI = ({ selectedComponent, setComponent }: any) => 
 				...selectedComponent,
 				text: event.currentTarget.value
 			})} />
-    </>
+	</>
 }
 
 export const APopoverCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
@@ -112,12 +128,12 @@ export const APopover = ({
 	componentObj,
 	...rest
 }: any) => {
-    return (
+	return (
 		<AComponent
 		componentObj={componentObj}
 		rejectDrop={true}
 		{...rest}>
-            <Popover 
+            <Popover
                 align={componentObj.align}
                 caret={componentObj.isShowCaret}
                 dropShadow={componentObj.isDropShadow}
@@ -137,7 +153,7 @@ export const APopover = ({
                     </PopoverContent>
                 </Popover>
 		</AComponent>
-    );
+	);
 }
 
 export const componentInfo: ComponentInfo = {
@@ -155,13 +171,13 @@ export const componentInfo: ComponentInfo = {
 	name: 'Popover',
 	type: 'popover',
 	defaultComponentObj: {
-        type: 'popover',
-        isOpen: true
+		type: 'popover',
+		isOpen: true
 	},
 	image,
 	codeExport: {
-        angular: {
-            latest: {
+		angular: {
+			latest: {
 				inputs: ({ json }) => `
                     @Input() ${nameStringToVariableString(json.codeContext?.name)}IsOpen = ${json.isOpen};
                     @Input() ${nameStringToVariableString(json.codeContext?.name)}IsShowCaret = ${json.isShowCaret};
@@ -200,19 +216,19 @@ export const componentInfo: ComponentInfo = {
                         </div>
                     `;
 				}
-            },
-            v10: {
-                inputs: () => '',
+			},
+			v10: {
+				inputs: () => '',
 				outputs: () => '',
 				imports: [],
 				code: () => ''
-            }
-        },
-        react: {
-            latest: {
-                imports: ['Popover', 'PopoverContent'],
+			}
+		},
+		react: {
+			latest: {
+				imports: ['Popover', 'PopoverContent'],
 				code: ({ json }) => {
-					return `<Popover 
+					return `<Popover
                         open={${json.isOpen ? json.isOpen : false}}
                         align={"${json.align ? json.align : (json.isTabTip ? 'bottom-start' : 'bottom')}"}
                         caret={${json.isShowCaret ? json.isShowCaret : (json.isTabTip ? false : true)}}
@@ -225,11 +241,11 @@ export const componentInfo: ComponentInfo = {
                             </PopoverContent>
                         </Popover>`;
 				}
-            },
-            v10: {
-                imports: [],
+			},
+			v10: {
+				imports: [],
 				code: () => ''
-            }
-        }
-    }
+			}
+		}
+	}
 };
