@@ -17,6 +17,7 @@ export interface PopoverState {
     isHighContrast: boolean;
     align: string;
     text: string;
+	label: string;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
@@ -32,6 +33,7 @@ export const slots = {
     type: 'string',
 	text: 'string',
 	align: 'string',
+	label: 'string',
     open: 'boolean',
     isOpen: (state : PopoverState) => ({
         ...state,
@@ -120,7 +122,7 @@ export const UIPopover = ({ state, setState }: {
 		cssClasses += stringToCssClassName(state.codeContext.name);
 	}
 
-	return <Popover 
+	return <Popover
         open={state.isOpen ? state.isOpen : false}
         align={state.align ? state.align : (state.isTabTip ? 'bottom-start' : 'bottom')}
         caret={state.isShowCaret ? state.isShowCaret : (state.isTabTip ? false : true)}
