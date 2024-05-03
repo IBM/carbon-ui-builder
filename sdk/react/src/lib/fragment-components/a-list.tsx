@@ -11,12 +11,8 @@ import {
 
 import image from './../assets/component-icons/list.svg';
 import { angularClassNamesFromComponentObj, getParentComponent, reactClassNamesFromComponentObj } from '../helpers/tools';
-import { Button } from '@carbon/react';
+import { Button, TextInput, Accordion, AccordionItem, OrderedList } from '@carbon/react';
 import { actionIconStyle } from '../helpers/styles';
-import { TextInput } from '@carbon/react';
-import { Accordion } from '@carbon/react';
-import { AccordionItem } from '@carbon/react';
-import { OrderedList } from '@carbon/react';
 
 const layoutStyle = css`
 	.iot--list--page {
@@ -141,10 +137,9 @@ const ListItemsWidget = ({ selectedComponent, setComponent, title }: any) => {
 			children: componentObj.items?.map((item: any) => getHierarchyListItemsFromComponentObj(item))
 		};
 	};
-
 	const itemsList = {
 		data: {
-			id: selectedComponent.data.id,
+			id: selectedComponent.id, // selectedComponent.data.id,
 			items: [
 				{
 					type: selectedComponent.type,
