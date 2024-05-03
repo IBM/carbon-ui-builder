@@ -1,13 +1,8 @@
 import React from 'react';
 import { AComponent, ComponentInfo } from './a-component';
 import image from './../assets/component-icons/time-picker.svg';
-import { TextInput } from '@carbon/react';
-import { Checkbox } from '@carbon/react';
-import { Dropdown } from '@carbon/react';
+import { TextInput, Checkbox, Dropdown, TimePicker, TimePickerSelect, SelectItem } from '@carbon/react';
 import { DraggableTileList, angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../helpers';
-import { TimePicker } from '@carbon/react';
-import { TimePickerSelect } from '@carbon/react';
-import { SelectItem } from '@carbon/react';
 import { css, cx } from 'emotion';
 import { styleObjectToString } from '@carbon-builder/player-react';
 
@@ -104,7 +99,7 @@ export const ATimePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 				invalid: checked
 		})} />
 		<Dropdown
-			id="size"
+			id='size'
 			label='Size'
 			titleText='Size'
 			items={size}
@@ -231,7 +226,7 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			latest: {
-                inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value}";
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value}";
                 	@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme: any = "${json.light ? 'light' : 'dark'}";
 			@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = ${json.invalid};
 			@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder}";
@@ -240,10 +235,10 @@ export const componentInfo: ComponentInfo = {
 			@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText}";
 			@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = ${json.disabled};
 			@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.label}";`,
-                outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
-                imports: ['TimePickerModule', 'TimePickerSelectModule'],
-                code: ({ json }) => {
-                    return `<ibm-timepicker
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
+				imports: ['TimePickerModule', 'TimePickerSelectModule'],
+				code: ({ json }) => {
+					return `<ibm-timepicker
                         ${angularClassNamesFromComponentObj(json)}
                         [label]="${nameStringToVariableString(json.codeContext?.name)}Label"
                         [theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
@@ -262,10 +257,10 @@ export const componentInfo: ComponentInfo = {
 									display='inline'>
 									<option selected value='AM'>AM</option>
 									<option value='PM'>PM</option>
-								</ibm-timepicker-select>` : ``
+								</ibm-timepicker-select>` : ''
 							}
 							${json.items.length > 0 ?
-								`<ibm-timepicker-select 
+								`<ibm-timepicker-select
 									[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 									[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
 									display='inline'>
@@ -275,13 +270,13 @@ export const componentInfo: ComponentInfo = {
 											${step.text}
 										</option>`
 									)).join('\n')}
-								</ibm-timepicker-select>`: ``
+								</ibm-timepicker-select>`: ''
 							}
                         </ibm-timepicker>`;
-                }
-            },
-            v10: {
-                inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value};
+				}
+			},
+			v10: {
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value};
                 	@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme: any = "${json.light ? 'light' : 'dark'}";
 			@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = "${json.invalid}";
 			@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder}";
@@ -289,10 +284,10 @@ export const componentInfo: ComponentInfo = {
 			@Input() ${nameStringToVariableString(json.codeContext?.name)}IsHideLabel = "${json.hideLabel}";
 			@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText}";
 			@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = "${json.disabled}";`,
-                outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
-                imports: ['TimePickerModule', 'TimePickerSelectModule'],
-                code: ({ json }) => {
-                    return `<ibm-timepicker
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
+				imports: ['TimePickerModule', 'TimePickerSelectModule'],
+				code: ({ json }) => {
+					return `<ibm-timepicker
                         ${angularClassNamesFromComponentObj(json)}
                         label="${nameStringToVariableString(json.codeContext?.name)}Label}"
                         [theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
@@ -311,10 +306,10 @@ export const componentInfo: ComponentInfo = {
 									display='inline'>
 									<option selected value='AM'>AM</option>
 									<option value='PM'>PM</option>
-								</ibm-timepicker-select>` : ``
+								</ibm-timepicker-select>` : ''
 							}
 							${json.items.length > 0 ?
-								`<ibm-timepicker-select 
+								`<ibm-timepicker-select
 									[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 									[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
 									display='inline'>
@@ -324,17 +319,17 @@ export const componentInfo: ComponentInfo = {
 											${step.text}
 										</option>`
 									)).join('\n')}
-								</ibm-timepicker-select>`: ``
+								</ibm-timepicker-select>`: ''
 							}
                         </ibm-timepicker>`;
-                }                             
-            }
+				}
+			}
 		},
 		react: {
-            latest: {
-                imports: ['TimePicker','TimePickerSelect','SelectItem'],
-                code: ({ json }) => {
-                    return `<TimePicker
+			latest: {
+				imports: ['TimePicker','TimePickerSelect','SelectItem'],
+				code: ({ json }) => {
+					return `<TimePicker
                         ${reactClassNamesFromComponentObj(json)}
                         disabled={${json.disabled}}
                         labelText="${json.label}"
@@ -344,27 +339,27 @@ export const componentInfo: ComponentInfo = {
                         placeholder="${json.placeholder}"
                         hideLabel={${json.hideLabel}}
                         light={${json.light}}>
-							${json.amPm ? 
+							${json.amPm ?
 								`<TimePickerSelect id="${json.codeContext?.name + '-select-1'}">
 									<SelectItem value='AM' text='AM' />
 									<SelectItem value='PM' text='PM' />
-								</TimePickerSelect>` : ``
+								</TimePickerSelect>` : ''
 							}
-							${json.timezone ? 
+							${json.timezone ?
 								`<TimePickerSelect id="${json.codeContext?.name + '-select-2'}">
 									${json.items.map((step: any) => (`<SelectItem
 										value="${step.value}"
 										text="${step.text}" />`
 									)).join('\n')}
-								</TimePickerSelect>` : ``
+								</TimePickerSelect>` : ''
 							}
                         </TimePicker>`;
-                }
-            },
-            v10: {
-                imports: ['TimePicker','TimePickerSelect','SelectItem'],
-                code: ({ json }) => {
-                    return `<TimePicker
+				}
+			},
+			v10: {
+				imports: ['TimePicker','TimePickerSelect','SelectItem'],
+				code: ({ json }) => {
+					return `<TimePicker
                         ${reactClassNamesFromComponentObj(json)}
                         disabled={${json.disabled}}
                         labelText="${json.label}"
@@ -374,23 +369,23 @@ export const componentInfo: ComponentInfo = {
                         placeholder="${json.placeholder}"
                         hideLabel={${json.hideLabel}}
                         light={${json.light}}>
-							${json.amPm ? 
+							${json.amPm ?
 								`<TimePickerSelect id="${json.codeContext?.name + '-select-1'}">
 									<SelectItem value='AM' text='AM' />
 									<SelectItem value='PM' text='PM' />
-								</TimePickerSelect>` : ``
+								</TimePickerSelect>` : ''
 							}
-							${json.timezone ? 
+							${json.timezone ?
 								`<TimePickerSelect id="${json.codeContext?.name + '-select-2'}">
 									${json.items.map((step: any) => (`<SelectItem
 										value="${step.value}"
 										text="${step.text}" />`
 									)).join('\n')}
-								</TimePickerSelect>` : ``
+								</TimePickerSelect>` : ''
 							}
                         </TimePicker>`;
-                }
-            }
+				}
+			}
 		}
 	}
 };

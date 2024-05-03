@@ -1,6 +1,4 @@
-import { TimePickerSelect } from '@carbon/react';
-import { SelectItem } from '@carbon/react';
-import { TimePicker } from '@carbon/react';
+import { TimePickerSelect, TimePicker, SelectItem } from '@carbon/react';
 import React from 'react';
 import { commonSlots, slotsDisabled } from '../common-slots';
 import { SendSignal } from '../types';
@@ -60,9 +58,8 @@ export const slots = {
 	invalidText: 'string',
 	label: 'string',
 	size: 'string',
-	value: 'string',
+	value: 'string'
 };
-
 
 export const UITimePicker = ({ state, sendSignal }: {
 	state: TimePickerState;
