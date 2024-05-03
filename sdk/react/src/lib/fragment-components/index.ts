@@ -22,7 +22,6 @@ import * as text from './a-text';
 import * as textarea from './a-text-area';
 import * as textinput from './a-text-input';
 import * as link from './a-link';
-import * as listItem from './a-list-item';
 import * as list from './a-list';
 import * as loading from './a-loading';
 import * as inlineLoading from './a-inline-loading';
@@ -54,7 +53,6 @@ export { AGrid, AGridCodeUI, AGridSettingsUI } from './a-grid';
 export { ALoading, ALoadingCodeUI, ALoadingSettingsUI } from './a-loading';
 export { ALink, ALinkSettingsUI, ALinkCodeUI } from './a-link';
 export { AList, AListSettingsUI, AListCodeUI } from './a-list';
-export { AListItem, AListItemSettingsUI, AListItemCodeUI } from './a-list-item';
 export { AInlineLoading, AInlineLoadingCodeUI, AInlineLoadingSettingsUI } from './a-inline-loading';
 export { ANumberInput, ANumberInputSettingsUI, ANumberInputCodeUI } from './a-numberinput';
 export { AProgressIndicator, AProgressIndicatorSettingsUI, AProgressIndicatorCodeUI } from './a-progress-indicator';
@@ -97,7 +95,6 @@ export const allComponents = {
 	radio,
 	radioGroup,
 	link,
-	listItem,
 	list,
 	numberinput,
 	progressIndicator,

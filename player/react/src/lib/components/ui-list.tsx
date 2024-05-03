@@ -1,13 +1,12 @@
 import React from 'react';
 import { CssClasses } from '../types';
 import { renderComponents, setItemInState } from '../utils';
-import { ListItemState } from './ui-list-item';
 import { css, cx } from 'emotion';
 import { OrderedList } from '@carbon/react';
 
 export interface ListState {
 	type: string;
-	items: ListItemState[];
+	items: [];
 	legendName: string;
 	id: string | number;
 	cssClasses?: CssClasses[];

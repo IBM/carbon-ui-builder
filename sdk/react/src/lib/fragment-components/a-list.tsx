@@ -131,9 +131,9 @@ export const componentInfo: ComponentInfo = {
                 outputs: (_) => '',
                 imports: ['ListModule'],
                 code: ({ json }) => {
-                    return `<ol ibmList
+                    return `<ol cdsList
                         ${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any, index: any) => `<ListItem key=${index}>${element.value}</ListItem>`).join('\n')}
+						${json.items.map((element: any, index: any) => `<li cdsListItem key=${index}>${element.value}</li>`).join('\n')}
                     </ol>`;
                 }
             },
@@ -141,10 +141,10 @@ export const componentInfo: ComponentInfo = {
                 inputs: (_) => '',
                 outputs: (_) => '',
                 imports: ['ListModule'],
-                code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
-                    return `<ol ibmList
+                code: ({ json }) => {
+                    return `<ol cdsList
                         ${angularClassNamesFromComponentObj(json)}>
-                        ${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
+						${json.items.map((element: any, index: any) => `<li cdsListItem key=${index}>${element.value}</li>`).join('\n')}
                     </ol>`;
                 }
             }
@@ -153,24 +153,22 @@ export const componentInfo: ComponentInfo = {
 		react: {
             latest: {
                 imports: ['OrderedList'],
-                code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
+                code: ({ json }) => {
                     return `<OrderedList
                         ${reactClassNamesFromComponentObj(json)}>
+						${json.items.map((element: any, index: any) => `<ListItem key=${index}>${element.value}</ListItem>`).join('\n')}
                     </OrderedList>`;
                 }
             },
             v10: {
                 imports: ['OrderedList'],
-                code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
+                code: ({ json }) => {
                     return `<OrderedList
                         ${reactClassNamesFromComponentObj(json)}>
-                        ${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
+						${json.items.map((element: any, index: any) => `<ListItem key=${index}>${element.value}</ListItem>`).join('\n')}
                     </OrderedList>`;
                 }
             }
 		}
 	}
 };
-//${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
-// ${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
-
