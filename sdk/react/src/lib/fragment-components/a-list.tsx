@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { AComponent, ComponentInfo } from './a-component';
 
@@ -11,7 +11,9 @@ import {
 
 import image from './../assets/component-icons/list.svg';
 import { angularClassNamesFromComponentObj, getParentComponent, reactClassNamesFromComponentObj } from '../helpers/tools';
-import { Button, TextInput, Accordion, AccordionItem, OrderedList } from '@carbon/react';
+import { Button, TextInput, OrderedList } from '@carbon/react';
+import { DraggableTileList } from '../helpers/draggable-list';
+
 import { actionIconStyle } from '../helpers/styles';
 
 const layoutStyle = css`
@@ -149,6 +151,7 @@ const ListItemsWidget = ({ selectedComponent, setComponent, title }: any) => {
 			]
 		}
 	};
+
 	return <OrderedList
 		title={title}
 		hasSearch={true}
@@ -166,12 +169,39 @@ const ListItemsWidget = ({ selectedComponent, setComponent, title }: any) => {
 };
 
 export const AListSettingsUI = ({ selectedComponent, setComponent }: any) => {
-	const [isAccordionOpen, setIsAccordionOpen] = useState({} as any);
-	useEffect(() => {
-		setIsAccordionOpen({
-			small: selectedComponent.smallSpan || selectedComponent.smallOffset
+
+	const handleItemUpdate = (key: string, value: any, index: number) => {
+		const item = {
+			...selectedComponent.items[index],
+			[key]: value
+		};
+		setComponent({
+			...selectedComponent,
+			items: [
+				...selectedComponent.items.slice(0, index),
+				item,
+				...selectedComponent.items.slice(index + 1)
+			]
 		});
-	}, [selectedComponent]);
+	};
+
+	const updateStepList = (newList: any[]) => {
+		setComponent({
+			...selectedComponent,
+			items: newList
+		});
+	};
+
+	const template = (item: any, index: number) => {
+		return <TextInput
+			id={`list-display-item-${index}-text-input`}
+			light
+			value={item.value}
+			labelText='Display text'
+			onChange={(event: any) => handleItemUpdate('value', event.currentTarget.value, index)}
+		/>;
+	};
+
 	return <>
 		<TextInput
 		value={selectedComponent.legendName}
@@ -183,15 +213,17 @@ export const AListSettingsUI = ({ selectedComponent, setComponent }: any) => {
 				legendName: event.currentTarget.value
 			});
 		}} />
-		<Accordion align='start'>
-			<AccordionItem
-			id={selectedComponent.id}
-			title={selectedComponent.legendName}
-			className='layout-widget'
-			open={isAccordionOpen.small}>
-				<ListItemsWidget selectedComponent={selectedComponent} setComponent={setComponent}/>
-			</AccordionItem>
-		</Accordion>
+		<hr />
+		<h4>Items</h4>
+		<DraggableTileList
+			dataList={[...selectedComponent.items]}
+			setDataList={updateStepList}
+			updateItem={handleItemUpdate}
+			defaultObject={{
+				value: 'Text'
+			}}
+			template={template} />
+		<hr />
 	</>;
 };
 
@@ -243,14 +275,14 @@ export const componentInfo: ComponentInfo = {
 		legendName: 'Ordered list',
 		items: [
 			{
-				type: 'list-item',
+				// type: 'list-item',
 				value: 'Item',
-				items: []
+				// items: []
 			},
 			{
-				type: 'list-item',
+				// type: 'list-item',
 				value:  'Item',
-				items: []
+				// items: []
 			}
 		],
 		cssClasses: [{ id: 'margin-left', content: 'margin-left: 30px;' }]

@@ -26,7 +26,6 @@ export const UIList = ({ state, setState, setGlobalState, sendSignal }: {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;
 	}
-
 	return <>
 			<legend className={cx(css`margin-left: 3px;`, 'bx--label')}>
 				{state.legendName}

@@ -1,8 +1,7 @@
 import React from 'react';
 import { CssClasses } from '../types';
 import { css } from 'emotion';
-import { ListItem } from '@carbon/react';
-import { OrderedList } from '@carbon/react';
+import { ListItem, OrderedList } from '@carbon/react';
 
 export interface ListItemState {
 	type: string;

@@ -1,6 +1,4 @@
-import { ListItem } from '@carbon/react';
-import { OrderedList } from '@carbon/react';
-import { TextInput } from '@carbon/react';
+import { OrderedList, TextInput, ListItem } from '@carbon/react';
 import { css } from 'emotion';
 import { AComponent, ComponentInfo } from './a-component';
 import {
