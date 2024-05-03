@@ -126,49 +126,49 @@ export const componentInfo: ComponentInfo = {
 	hideFromElementsPane: false,
 	codeExport: {
 		angular: {
-            latest: {
-                inputs: (_) => '',
-                outputs: (_) => '',
-                imports: ['ListModule'],
-                code: ({ json }) => {
-                    return `<ol cdsList
+			latest: {
+				inputs: (_) => '',
+				outputs: (_) => '',
+				imports: ['ListModule'],
+				code: ({ json }) => {
+					return `<ol cdsList
                         ${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any, index: any) => `<li cdsListItem key=${index}>${element.value}</li>`).join('\n')}
                     </ol>`;
-                }
-            },
-            v10: {
-                inputs: (_) => '',
-                outputs: (_) => '',
-                imports: ['ListModule'],
-                code: ({ json }) => {
-                    return `<ol cdsList
+				}
+			},
+			v10: {
+				inputs: (_) => '',
+				outputs: (_) => '',
+				imports: ['ListModule'],
+				code: ({ json }) => {
+					return `<ol cdsList
                         ${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any, index: any) => `<li cdsListItem key=${index}>${element.value}</li>`).join('\n')}
                     </ol>`;
-                }
-            }
+				}
+			}
 
 		},
 		react: {
-            latest: {
-                imports: ['OrderedList'],
-                code: ({ json }) => {
-                    return `<OrderedList
+			latest: {
+				imports: ['OrderedList'],
+				code: ({ json }) => {
+					return `<OrderedList
                         ${reactClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any, index: any) => `<ListItem key=${index}>${element.value}</ListItem>`).join('\n')}
                     </OrderedList>`;
-                }
-            },
-            v10: {
-                imports: ['OrderedList'],
-                code: ({ json }) => {
-                    return `<OrderedList
+				}
+			},
+			v10: {
+				imports: ['OrderedList'],
+				code: ({ json }) => {
+					return `<OrderedList
                         ${reactClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any, index: any) => `<ListItem key=${index}>${element.value}</ListItem>`).join('\n')}
                     </OrderedList>`;
-                }
-            }
+				}
+			}
 		}
 	}
 };
