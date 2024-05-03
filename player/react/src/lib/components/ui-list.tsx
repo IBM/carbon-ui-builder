@@ -30,7 +30,7 @@ export const UIList = ({ state, setState, setGlobalState, sendSignal }: {
 			<legend className={cx(css`margin-left: 3px;`, 'bx--label')}>
 				{state.legendName}
 			</legend>
-			<OrderedList className={cx(css`margin-left: 25px;`)}>
+			<OrderedList className={cx(css`margin-left: 30px;`)}>
 				{	state.items?.map((item: any) => {
 						const setItem = (i: any) => setItemInState(i, state, setState);
 						return renderComponents(item, setItem, setGlobalState, sendSignal);

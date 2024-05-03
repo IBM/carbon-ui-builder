@@ -1,172 +1,15 @@
 import React from 'react';
 
 import { AComponent, ComponentInfo } from './a-component';
-
 import { css, cx } from 'emotion';
-import {
-	Add,
-	TrashCan,
-	Edit
-} from '@carbon/icons-react';
-
 import image from './../assets/component-icons/list.svg';
-import { angularClassNamesFromComponentObj, getParentComponent, reactClassNamesFromComponentObj } from '../helpers/tools';
-import { Button, TextInput, OrderedList } from '@carbon/react';
+import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../helpers/tools';
+import { TextInput, OrderedList, ListItem } from '@carbon/react';
 import { DraggableTileList } from '../helpers/draggable-list';
 
-import { actionIconStyle } from '../helpers/styles';
-
-const layoutStyle = css`
-	.iot--list--page {
-		display: none;
-	}
-`;
-
 const orderedListStyle = css`
-	margin-left: 20px;
-	list-style: auto;
+	margin-left: 30px;
 `;
-
-const getComponentObjById = (id: string, componentObj: any) => {
-	if (componentObj.id === id) {
-		return componentObj;
-	}
-
-	if (!componentObj.items) {
-		return undefined;
-	}
-
-	for (const item of componentObj.items) {
-		const foundComponentObj: any = getComponentObjById(id, item);
-		if (foundComponentObj) {
-			return foundComponentObj;
-		}
-	}
-	return undefined;
-};
-
-const ListItemsWidget = ({ selectedComponent, setComponent, title }: any) => {
-	const addToList = (id: any) => {
-		const component = getComponentObjById(id, selectedComponent.data);
-
-		const dataList = [...component.items];
-		const newChildObject = {
-			type: 'list-item',
-			value: 'Item',
-			items: []
-		};
-		const updateList = (newList: any[]) => {
-			setComponent({
-				...component,
-				items: newList
-			});
-		};
-		dataList.push(newChildObject);
-		updateList(dataList);
-	};
-
-	const deleteFromList = (componentObj: any) => {
-		const parentComponent = getParentComponent(selectedComponent.data, componentObj);
-
-		const dataList = [...parentComponent.items];
-		const updateList = (newList: any[]) => {
-			setComponent({
-				...parentComponent,
-				items: newList
-			});
-		};
-		const index = dataList.findIndex((o) => o.id === componentObj.id);
-		if (index !== -1) {
-			dataList.splice(index, 1);
-		}
-		updateList(dataList);
-	};
-
-	const getReorderedComponentObjFromHierarchyListItem = (hierchyListItem: any, componentObj: any) => {
-		if (!hierchyListItem) {
-			return undefined;
-		}
-		const component = getComponentObjById(hierchyListItem.id, componentObj);
-
-		if (!component) {
-			return undefined;
-		}
-		return {
-			...component,
-			items: hierchyListItem.children?.map((child: any) => getReorderedComponentObjFromHierarchyListItem(child, componentObj))
-		};
-	};
-	const getHierarchyListItemsFromComponentObj = (componentObj: any) => {
-		if (!componentObj) {
-			return null;
-		}
-		return {
-			id: componentObj.id,
-			content: {
-				value: componentObj.value ? componentObj.value : componentObj.type,
-				rowActions: () => <>
-					<Button
-						id={componentObj.id}
-						kind='ghost'
-						aria-label='Add Children'
-						title='Add Children'
-						onClick={(event: any) => {
-							event.stopPropagation();
-							addToList(event.currentTarget.id);
-						}}>
-						<Add className={actionIconStyle} />
-					</Button>
-					<Button
-						id={componentObj.id}
-						kind='ghost'
-						aria-label='Delete'
-						title='Delete'
-						onClick={(event: any) => {
-							event.stopPropagation();
-							deleteFromList(componentObj);
-						}}>
-						<TrashCan className={actionIconStyle} />
-					</Button>
-					<Button
-						kind='ghost'
-						aria-label='Edit'
-						title='Edit'
-						onClick={() => {}}>
-						<Edit className={actionIconStyle} />
-					</Button>
-				</>
-			},
-			children: componentObj.items?.map((item: any) => getHierarchyListItemsFromComponentObj(item))
-		};
-	};
-	const itemsList = {
-		data: {
-			id: selectedComponent.id, // selectedComponent.data.id,
-			items: [
-				{
-					type: selectedComponent.type,
-					id: selectedComponent.id,
-					items: selectedComponent.items
-				}
-			]
-		}
-	};
-
-	return <OrderedList
-		title={title}
-		hasSearch={true}
-		className={layoutStyle}
-		items={getHierarchyListItemsFromComponentObj(itemsList.data)?.children}
-		onListUpdated={(updatedItems: any[]) => {
-			itemsList.data = getReorderedComponentObjFromHierarchyListItem({ id: 1, children: updatedItems }, itemsList.data);
-			setComponent({
-				...selectedComponent,
-				items: itemsList.data.items[0].items
-			});
-		}}
-		editingStyle='single'
-	/>;
-};
 
 export const AListSettingsUI = ({ selectedComponent, setComponent }: any) => {
 
@@ -242,7 +85,6 @@ export const AListCodeUI = ({ selectedComponent, setComponent }: any) => <TextIn
 />;
 
 export const AList = ({
-	children,
 	componentObj,
 	selected,
 	...rest
@@ -257,7 +99,9 @@ export const AList = ({
 				{componentObj.legendName}
 			</legend>
 			<OrderedList className={orderedListStyle}>
-				{children}
+				{
+					componentObj.items?.map((item: any, index: any) => <ListItem key={index}>{item.value}</ListItem>)
+				}
 			</OrderedList>
 		</AComponent>
 	);
@@ -274,16 +118,7 @@ export const componentInfo: ComponentInfo = {
 		type: 'list',
 		legendName: 'Ordered list',
 		items: [
-			{
-				// type: 'list-item',
-				value: 'Item',
-				// items: []
-			},
-			{
-				// type: 'list-item',
-				value:  'Item',
-				// items: []
-			}
+			{ value: 'Item' }
 		],
 		cssClasses: [{ id: 'margin-left', content: 'margin-left: 30px;' }]
 	},
@@ -295,10 +130,10 @@ export const componentInfo: ComponentInfo = {
                 inputs: (_) => '',
                 outputs: (_) => '',
                 imports: ['ListModule'],
-                code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
+                code: ({ json }) => {
                     return `<ol ibmList
                         ${angularClassNamesFromComponentObj(json)}>
-                        ${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
+						${json.items.map((element: any, index: any) => `<ListItem key=${index}>${element.value}</ListItem>`).join('\n')}
                     </ol>`;
                 }
             },
@@ -321,7 +156,6 @@ export const componentInfo: ComponentInfo = {
                 code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
                     return `<OrderedList
                         ${reactClassNamesFromComponentObj(json)}>
-                        ${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
                     </OrderedList>`;
                 }
             },
@@ -337,3 +171,6 @@ export const componentInfo: ComponentInfo = {
 		}
 	}
 };
+//${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
+// ${json.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
+
