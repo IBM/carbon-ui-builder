@@ -3,6 +3,7 @@ import { CssClasses } from '../types';
 import { renderComponents, setItemInState } from '../utils';
 import { css, cx } from 'emotion';
 import { OrderedList } from '@carbon/react';
+import { commonSlots } from '../common-slots';
 
 export interface ListState {
 	type: string;
@@ -15,11 +16,15 @@ export interface ListState {
 	};
 }
 
+export const slots = {
+	...commonSlots
+};
+
 export const UIList = ({ state, setState, setGlobalState, sendSignal }: {
 	state: ListState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
-    sendSignal: (id: number | string, signal: string) => void;
+	sendSignal: (id: number | string, signal: string) => void;
 }) => {
 	if (state.type !== 'list') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
