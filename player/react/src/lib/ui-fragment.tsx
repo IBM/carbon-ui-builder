@@ -67,11 +67,7 @@ export const UIFragment = ({ state, setState }: UIFragmentProps) => {
 	};
 
 	const sendSignal: SendSignal = (id: number | string, signal: string, value?: any[], newComponentState?: any) => {
-		if (!state.data.actions) {
-			return;
-		}
-
-		const subscriptions = state.data.actions.filter((action: Action) => action.source === id && action.signal === signal);
+		const subscriptions = state.data.actions?.filter((action: Action) => action.source === id && action.signal === signal) || [];
 
 		setStateData((stateData: any) => updatedStateData(stateData, subscriptions, value, newComponentState));
 	};

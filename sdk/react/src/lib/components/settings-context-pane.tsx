@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	Button,
 	Checkbox,
@@ -18,9 +18,8 @@ import {
 	LayoutWidget,
 	getSelectedComponent,
 	updatedState
-} from '@carbon-builder/sdk-react';
+} from '../..';
 import { SelectedComponentBreadcrumbs } from './selected-component-breadcrumbs';
-import { GlobalStateContext } from '../../context';
 
 const styleContextPaneStyle = css`
 .cds--form-item.cds--checkbox-wrapper {
@@ -160,14 +159,16 @@ const throttledSetComponent = throttle((component: any) => setComponent(componen
 let proxySetFragment = (_fragment: any) => console.log('proxySetFragment not inizialized yet');
 const throttledSetFragment = throttle((fragment: any) => proxySetFragment(fragment), 150);
 
-export const SettingsContextPane = ({ fragment, setFragment }: any) => {
+export const SettingsContextPane = ({
+	fragment,
+	setFragment,
+	settings: externalSettings,
+	setSettings: setExternalSettings,
+	styleClasses,
+	customComponentsCollections
+}: any) => {
 	const selectedComponent = getSelectedComponent(fragment);
-	const {
-		settings,
-		setSettings,
-		styleClasses,
-		customComponentsCollections
-	} = useContext(GlobalStateContext);
+	const [settings, setSettings] = useState(externalSettings || {} as any);
 
 	const updateContextPaneSettings = (s: any) => {
 		setSettings({
@@ -196,6 +197,18 @@ export const SettingsContextPane = ({ fragment, setFragment }: any) => {
 	};
 
 	proxySetFragment = setFragment;
+
+	useEffect(() => {
+		if (externalSettings) {
+			setSettings(externalSettings);
+		}
+	}, [externalSettings]);
+
+	useEffect(() => {
+		if (setExternalSettings) {
+			setExternalSettings(settings);
+		}
+	}, [settings]);
 
 	return (
 		<div className={cx(styleContextPaneStyle, 'context-pane-content')}>
