@@ -1,5 +1,5 @@
 import React from 'react';
-import { CssClasses } from '../types';
+import { CssClasses, SendSignal } from '../types';
 import {
 	ToastNotification,
 	InlineNotification,
@@ -7,10 +7,9 @@ import {
 } from '@carbon/react';
 
 import { commonSlots, slotsDisabled } from '../common-slots';
-import { SendSignal } from '../types';
 
 export interface NotificationState {
-	id: string,
+	id: string;
 	type: string;
 	lowContrast?: boolean;
 	hideCloseButton?: boolean;
