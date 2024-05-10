@@ -21,7 +21,9 @@ export interface LoadingState {
 export const type = 'loading';
 
 export const slots = {
-	...commonSlots
+	...commonSlots,
+	active: 'boolean',
+	overlay: 'boolean'
 };
 
 export const UILoading = ({ state }: {

@@ -27,7 +27,17 @@ export interface InlineLoadingState {
 export const type = 'inline-loading';
 
 export const slots = {
-	...commonSlots
+	...commonSlots,
+	status: 'string',
+	activeIconDescription: 'string',
+	activeText: 'string',
+	errorIconDescription: 'string',
+	errorText: 'string',
+	inactiveIconDescription: 'string',
+	inactiveText: 'string',
+	finishedIconDescription: 'string',
+	successText: 'string',
+	successDelay: 'number'
 };
 
 export const UIInlineLoading = ({ state }: {

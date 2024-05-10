@@ -1,6 +1,6 @@
 import React from 'react';
 import { NumberInput } from '@carbon/react';
-import { CssClasses } from '../types';
+import { CssClasses, SendSignal } from '../types';
 import { stringToCssClassName } from '../utils';
 import { commonSlots, slotsDisabled } from '../common-slots';
 
@@ -34,16 +34,31 @@ export interface NumberInputState {
 
 export const type = 'number-input';
 
+export const signals = ['change'];
+
 export const slots = {
 	...commonSlots,
-	...slotsDisabled
+	...slotsDisabled,
+	value: 'number',
+	min: 'number',
+	max: 'number',
+	step: 'number',
+	label: 'string',
+	warnText: 'string',
+	warn: 'boolean',
+	hideLavel: 'boolean',
+	hideSteppers: 'boolean',
+	readOnly: 'boolean',
+	invalid: 'boolean',
+	invalidText: 'string',
+	allowEmpty: 'boolean'
 };
 
-export const UINumberInput = ({ state, setState }: {
+export const UINumberInput = ({ state, sendSignal }: {
 	state: NumberInputState;
 	setState: (state: any) => void;
 	setGlobalState: (state: any) => void;
-	sendSignal: (id: number | string, signal: string) => void;
+	sendSignal: SendSignal;
 }) => {
 	if (state.type !== 'number-input') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
@@ -79,6 +94,6 @@ export const UINumberInput = ({ state, setState }: {
 		invalidText={state.invalidText}
 		light={state.light}
 		allowEmpty={state.allowEmpty}
-		onChange={(_: any, { value }: any) => setState({ ...state, value })}
+		onChange={(_: any, { value }: any) => sendSignal(state.id, 'change', [value], { ...state, value })}
 		className={cssClasses} />;
 };
