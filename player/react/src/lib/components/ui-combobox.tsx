@@ -141,10 +141,10 @@ export const UIComboBox = ({ state, sendSignal }: {
 		selectedItem={state.selectedItem}
 		helperText={state.helperText}
 		itemToString={state.itemToString || ((item) => item?.text || '')}
-		onChange={(selectedItem: any) => sendSignal(
+		onChange={({ selectedItem }: any) => sendSignal(
 			state.id,
 			'select',
-			[state.listItems?.find((item) => item.text === selectedItem.text).selectedItem],
+			[state.listItems?.find((item) => item.text === selectedItem.text)?.selectedItem],
 			{
 				...state,
 				selectedItem: state.listItems?.find((item) => item.text === selectedItem.text)
