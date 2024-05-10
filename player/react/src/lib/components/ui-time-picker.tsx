@@ -20,7 +20,6 @@ export interface TimePickerState {
 	timezones?: [];
 	showTimePeriod?: boolean;
 	timePeriod?: [];
-	timezone?: string;
 }
 
 export const type = 'time-picker';
