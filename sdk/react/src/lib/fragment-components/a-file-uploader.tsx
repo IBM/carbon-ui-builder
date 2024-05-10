@@ -3,13 +3,8 @@ import React from 'react';
 import { css, cx } from 'emotion';
 import { AComponent, ComponentInfo } from './a-component';
 import image from './../assets/component-icons/file-uploader.svg';
-import { Checkbox } from '@carbon/react';
-import { Dropdown } from '@carbon/react';
-import { TextInput } from '@carbon/react';
-import { FileUploaderDropContainer } from '@carbon/react';
-import { FileUploader } from '@carbon/react';
+import { Checkbox, Dropdown, TextInput, FileUploaderDropContainer, FileUploader } from '@carbon/react';
 import { angularClassNamesFromComponentObj, nameStringToVariableString, reactClassNamesFromComponentObj } from '../helpers/tools';
-
 
 const preventCheckEventStyle = css`
 	pointer-events: none;
@@ -298,7 +293,7 @@ export const componentInfo: ComponentInfo = {
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}onDropped = new EventEmitter();`,
 				imports: ['FileUploaderModule', 'ButtonModule', 'NotificationModule'],
 				code: ({ json }) => {
-				return `<ibm-file-uploader
+					return `<ibm-file-uploader
 				${angularClassNamesFromComponentObj(json)}
 				[title]="${nameStringToVariableString(json.codeContext?.name)}Title"
 				[description]="${nameStringToVariableString(json.codeContext?.name)}Description"
@@ -332,7 +327,7 @@ export const componentInfo: ComponentInfo = {
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}onDropped = new EventEmitter();`,
 				imports: ['FileUploaderModule', 'ButtonModule', 'NotificationModule'],
 				code: ({ json }) => {
-				return `<ibm-file-uploader
+					return `<ibm-file-uploader
 				${angularClassNamesFromComponentObj(json)}
 				[title]="${nameStringToVariableString(json.codeContext?.name)}Title"
 				[description]="${nameStringToVariableString(json.codeContext?.name)}Description"

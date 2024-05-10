@@ -1,10 +1,8 @@
 import React from 'react';
 import { css } from 'emotion';
-import { CssClasses } from '../types';
-import { FileUploaderDropContainer } from '@carbon/react';
-import { FileUploader } from '@carbon/react';
+import { CssClasses, SendSignal } from '../types';
+import { FileUploaderDropContainer, FileUploader } from '@carbon/react';
 import { commonSlots, slotsDisabled } from '../common-slots';
-import { SendSignal } from '../types';
 
 const labelDescriptionStyle = css`
     color: #525252;
@@ -25,7 +23,7 @@ const labelTitleStyle = css`
 `;
 
 export interface FileUploaderState {
-	id: string,
+	id: string;
 	type: string;
 	cssClasses?: CssClasses[];
 	buttonKind: string;
@@ -113,29 +111,29 @@ export const UIFileUploader = ({ state, sendSignal }: {
 			onChange={(event: any) => {
 				sendSignal(state.id, 'valueChange', [event.value], { ...state, value: event.value });
 			}}
-            accept={[
+accept={[
             'image/jpeg',
             'image/png'
             ]}
-            multiple={state.multiple}
-            disabled={state.disabled}
-            labelText={state.dragAndDroplabelText}
-            tabIndex={0} />
-				</> :
+multiple={state.multiple}
+disabled={state.disabled}
+labelText={state.dragAndDroplabelText}
+tabIndex={0} />
+			</> :
 		<FileUploader
-            accept={[
+accept={[
                 '.jpg',
                 '.png'
             ]}
-            buttonKind={state.buttonKind}
-            buttonLabel={state.buttonLabel}
-            filenameStatus={state.filenameStatus}
-            iconDescription={state.iconDescription}
-            labelDescription={state.labelDescription}
-            labelTitle={state.labelTitle}
-            multiple={state.multiple}
-            disabled={state.disabled}
-            size={state.size} />
+buttonKind={state.buttonKind}
+buttonLabel={state.buttonLabel}
+filenameStatus={state.filenameStatus}
+iconDescription={state.iconDescription}
+labelDescription={state.labelDescription}
+labelTitle={state.labelTitle}
+multiple={state.multiple}
+disabled={state.disabled}
+size={state.size} />
 		};
 	</>;
 };

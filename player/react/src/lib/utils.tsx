@@ -245,7 +245,7 @@ export const renderComponents = (
 		case 'file-uploader':
 			return <UIFileUploader key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
-			case 'grid':
+		case 'grid':
 			return <UIGrid key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'loading':
