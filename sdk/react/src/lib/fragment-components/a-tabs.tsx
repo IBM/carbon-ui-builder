@@ -119,7 +119,7 @@ export const ATabsSettingsUI = ({ selectedComponent, setComponent }: any) => {
 };
 
 export const ATabsCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
-	id="input-name"
+	id='input-name'
 	value={selectedComponent.codeContext?.name}
 	labelText='Input name'
 	onChange={(event: any) => {
@@ -146,10 +146,10 @@ export const ATabs = ({
 		rejectDrop={true}
 		componentObj={componentObj}
 		{...rest}>
-			<Tabs  className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
+			<Tabs className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
 				{
 					componentObj.tabType === 'line' ?
-					<TabList aria-label="List of tabs">
+					<TabList aria-label='List of tabs'>
 						{
 							componentObj.items.map((step: any, index: number) => <Tab
 								onClick= {() => componentObj.selectedTab = index}
@@ -194,8 +194,8 @@ export const ATabs = ({
 								}
 							</Tab>)
 						}
-					</TabList> : 
-					<TabList aria-label="List of tabs" contained>
+					</TabList> :
+					<TabList aria-label='List of tabs' contained>
 						{
 							componentObj.items.map((step: any, index: number) => <Tab
 								onClick= {() => componentObj.selectedTab = index}
@@ -297,7 +297,9 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			latest: {
-				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}FollowFocus = ${json.isFollowFocused ? json.isFollowFocused : false};
+				inputs: ({ json }) => `
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}FollowFocus = ${
+						json.isFollowFocused ? json.isFollowFocused : false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}CacheActive = ${json.isCacheActive ? json.isCacheActive : false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}isNavigation = ${json.isNavigation ? json.isNavigation : true};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}TabType: any = "${json.tabType ? json.tabType : 'contained'}";`,
@@ -315,7 +317,8 @@ export const componentInfo: ComponentInfo = {
 							[disabled]=${step.disabled}>
 								${step.items && step.items.length > 0
 									? `<section>
-										${step.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
+										${step.items.map((element: any) =>
+											jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 									</section>`
 								: ''}
 							</ibm-tab>`
@@ -324,7 +327,8 @@ export const componentInfo: ComponentInfo = {
 				}
 			},
 			v10: {
-				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}FollowFocus = ${json.isFollowFocused ? json.isFollowFocused : false};
+				inputs: ({ json }) => `
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}FollowFocus = ${json.isFollowFocused ? json.isFollowFocused : false};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}CacheActive = ${json.isCacheActive ? json.isCacheActive : false};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}isNavigation = ${json.isNavigation ? json.isNavigation : true};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}TabType: any = "${json.tabType ? json.tabType : 'contained'}";`,
@@ -342,7 +346,8 @@ export const componentInfo: ComponentInfo = {
 							[disabled]=${step.disabled}>
 								${step.items && step.items.length > 0
 									? `<section>
-										${step.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
+										${step.items.map((element: any) =>
+											jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 									</section>`
 								: ''}
 							</ibm-tab>`
@@ -370,7 +375,8 @@ export const componentInfo: ComponentInfo = {
 								${step.labelText}
 									${step.items && step.items.length > 0
 										? `<section>
-											${step.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
+											${step.items.map((element: any) =>
+												jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 										</section>`
 									: ''}
 								</Tab>`
@@ -390,7 +396,8 @@ export const componentInfo: ComponentInfo = {
 								${step.labelText}
 									${step.items && step.items.length > 0
 										? `<section>
-											${step.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
+											${step.items.map((element: any) =>
+												jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 										</section>`
 									: ''}
 								</Tab>`
@@ -418,7 +425,8 @@ export const componentInfo: ComponentInfo = {
 								${step.labelText}
 									${step.items && step.items.length > 0
 										? `<section>
-											${step.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
+											${step.items.map((element: any) =>
+												jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 										</section>`
 									: ''}
 								</Tab>`
@@ -438,7 +446,8 @@ export const componentInfo: ComponentInfo = {
 								${step.labelText}
 									${step.items && step.items.length > 0
 										? `<section>
-											${step.items.map((element: any) => jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
+											${step.items.map((element: any) =>
+												jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 										</section>`
 									: ''}
 								</Tab>`

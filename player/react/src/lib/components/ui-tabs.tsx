@@ -77,9 +77,8 @@ export const slots = {
 	toggleNavigation: (state: TabsState) => ({
 		...state,
 		isNavigation: !state.isNavigation
-	}),
+	})
 };
-
 
 export const UITabs = ({ state, setState, setGlobalState, sendSignal }: {
 	state: TabsState;
