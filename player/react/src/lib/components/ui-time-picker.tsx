@@ -1,5 +1,5 @@
-import { TimePickerSelect, TimePicker, SelectItem } from '@carbon/react';
 import React from 'react';
+import { TimePickerSelect, TimePicker, SelectItem } from '@carbon/react';
 import { commonSlots, slotsDisabled } from '../common-slots';
 import { SendSignal } from '../types';
 
@@ -17,7 +17,10 @@ export interface TimePickerState {
 	size?: string;
 	value?: string;
 	label?: string;
-	items: [];
+	timezones?: [];
+	showTimePeriod?: boolean;
+	timePeriod?: [];
+	timezone?: string;
 }
 
 export const type = 'time-picker';
@@ -87,18 +90,23 @@ export const UITimePicker = ({ state, sendSignal }: {
 		onChange={(event: any) => {
 			sendSignal(state.id, 'valueChange', [event.value], { ...state, value: event.value });
 		}}>
+		{state.showTimePeriod &&
 		<TimePickerSelect id={state.codeContext?.name + '-select-1'}>
 			<SelectItem value='AM' text='AM' />
 			<SelectItem value='PM' text='PM' />
 		</TimePickerSelect>
+		}
+		{state.timezones?.length &&
 		<TimePickerSelect id={state.codeContext?.name + '-select-2'}>
 			{
-				state.items.map((step: any, index: number) => <SelectItem
+				state.timezones.map((step: any, index: number) => <SelectItem
 					value={step.value}
 					text={step.text}
+					selected={step.selected}
 					key={index}
 				/>)
 			}
 		</TimePickerSelect>
+		}
 	</TimePicker>;
 };
