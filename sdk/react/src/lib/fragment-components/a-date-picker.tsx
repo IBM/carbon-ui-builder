@@ -198,7 +198,8 @@ export const componentInfo: ComponentInfo = {
 			latest: {
 				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value: any = "${json.value ? json.value : ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsLight = "${json.light ? json.light : false}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangeStartLabel = "${json.rangeStartLabel ? json.rangeStartLabel : ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangeStartLabel = "${
+						json.rangeStartLabel ? json.rangeStartLabel : ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangeEndLabel = "${json.rangeEndLabel ? json.rangeEndLabel : ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = "${json.disabled ? json.disabled : ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = "${json.invalid ? json.invalid : ''}";
@@ -257,7 +258,8 @@ export const componentInfo: ComponentInfo = {
 			v10: {
 				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value: any = "${json.value ? json.value : ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsLight = "${json.light ? json.light : false}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangeStartLabel = "${json.rangeStartLabel ? json.rangeStartLabel : ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangeStartLabel = "${
+						json.rangeStartLabel ? json.rangeStartLabel : ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangeEndLabel = "${json.rangeEndLabel ? json.rangeEndLabel : ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = "${json.disabled ? json.disabled : false}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = "${json.invalid ? json.invalid : false}";
@@ -337,7 +339,7 @@ export const componentInfo: ComponentInfo = {
 										${json.rangeEndLabel ? `labelText='${json.rangeEndLabel}'` : ''}
 										${json.disabled ? `disabled='${json.disabled}'` : ''}
 										${json.invalid ? `invalid='${json.invalid}'` : ''}
-										${json.invalidText ? `invalidText='${json.invalidText}'` : ''} 
+										${json.invalidText ? `invalidText='${json.invalidText}'` : ''}
 										placeholder="${json.placeholder}"
 										size="${json.size}"
 										type='text' />`
@@ -368,7 +370,7 @@ export const componentInfo: ComponentInfo = {
 										${json.rangeEndLabel ? `labelText='${json.rangeEndLabel}'` : ''}
 										${json.disabled ? `disabled='${json.disabled}'` : ''}
 										${json.invalid ? `invalid='${json.invalid}'` : ''}
-										${json.invalidText ? `invalidText='${json.invalidText}'` : ''} 
+										${json.invalidText ? `invalidText='${json.invalidText}'` : ''}
 										placeholder="${json.placeholder}"
 										size="${json.size}"
 										type='text' />`
