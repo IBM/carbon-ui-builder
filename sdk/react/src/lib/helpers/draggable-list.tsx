@@ -37,17 +37,6 @@ const trashButtonStyle = css`
 	}
 `;
 
-const developerIconStyle = css`
-	top: 0;
-	right: 24px;
-	border-color: transparent;
-	color: black;
-
-	&.bx--btn.bx--btn--icon-only.bx--tooltip__trigger {
-		position: absolute;
-	}
-`;
-
 const draggableIconStyle = css`
 	position: absolute;
 	top: 50%;
@@ -144,20 +133,6 @@ export const DraggableTileList = ({
 		setDataList([
 			...dataList.slice(0, index),
 			...dataList.slice(index + 1)
-		]);
-	};
-
-	const addDeveloperOption = (index: number) => {
-		const item = dataList[index];
-
-		item.showDeveloperOption = !item.showDeveloperOption;
-		if (item.items) {
-			item.items.forEach((option: any) => option.showDeveloperOption = !option.showDeveloperOption);
-		}
-
-		// for refreshing
-		setDataList([
-			...dataList
 		]);
 	};
 
