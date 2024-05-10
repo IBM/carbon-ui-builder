@@ -127,8 +127,8 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 						checked={selectedItem.disabled}
 						onChange={(checked: boolean) => updateListItems('disabled', checked, index, selectedComponent)} />
 					<Button
-						size="sm"
-						kind="ghost"
+						size='sm'
+						kind='ghost'
 						className={iconStyle}
 						onClick={(event: any) => {
 							event.stopPropagation();
@@ -262,8 +262,8 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 		<h4>Option items</h4>
 		<Button
 			className={addButtonStyle}
-			size="sm"
-			kind="ghost"
+			size='sm'
+			kind='ghost'
 			onClick={(event: any) => {
 				event.stopPropagation();
 				addNewCategory();
