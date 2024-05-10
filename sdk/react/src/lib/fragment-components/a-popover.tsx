@@ -53,57 +53,57 @@ export const APopoverSettingsUI = ({ selectedComponent, setComponent }: any) => 
 		})} />
 
         <Checkbox
-            labelText='Tab tip'
-            id='is-tab-tip'
-			checked={selectedComponent.isTabTip}
-			onChange={(_: any, { checked }: any) => setComponent({
+        labelText='Tab tip'
+        id='is-tab-tip'
+        checked={selectedComponent.isTabTip}
+        onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				isTabTip: checked
 		})} />
 
         <Checkbox
-			labelText='Caret'
-			id='caret'
-			checked={selectedComponent.isShowCaret}
-			onChange={(_: any, { checked }: any) => setComponent({
+        labelText='Caret'
+        id='caret'
+        checked={selectedComponent.isShowCaret}
+        onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				isShowCaret: checked
 		})} />
 
         <Checkbox
-			labelText='Drop shadow'
-			id='drop-shadow'
-			checked={selectedComponent.isDropShadow}
-			onChange={(_: any, { checked }: any) => setComponent({
+        labelText='Drop shadow'
+        id='drop-shadow'
+        checked={selectedComponent.isDropShadow}
+        onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				isDropShadow: checked
 		})} />
 
         <Checkbox
-			labelText='High contrast'
-			id='high-contrast'
-			checked={selectedComponent.isHighContrast}
-			onChange={(_: any, { checked }: any) => setComponent({
+        labelText='High contrast'
+        id='high-contrast'
+        checked={selectedComponent.isHighContrast}
+        onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
 				isHighContrast: checked
 		})} />
 
         <Dropdown
-			id='align'
-			label='Align'
-			titleText='Align'
-			items={alignItems}
-			selectedItem={alignItems.find(item => item.id === selectedComponent.align)}
-			itemToString={(item: any) => (item ? item.text : '')}
-			onChange={(event: any) => setComponent({
+        id='align'
+        label='Align'
+        titleText='Align'
+        items={alignItems}
+        selectedItem={alignItems.find(item => item.id === selectedComponent.align)}
+        itemToString={(item: any) => (item ? item.text : '')}
+        onChange={(event: any) => setComponent({
 				...selectedComponent,
 				align: event.selectedItem.id
 			})} />
 
         <TextInput
-			value={selectedComponent.text}
-			labelText='Popover text'
-			onChange={(event: any) => setComponent({
+        value={selectedComponent.text}
+        labelText='Popover text'
+        onChange={(event: any) => setComponent({
 				...selectedComponent,
 				text: event.currentTarget.value
 			})} />
@@ -116,13 +116,13 @@ export const APopoverSettingsUI = ({ selectedComponent, setComponent }: any) => 
 				...selectedComponent,
 				label: event.currentTarget.value
 			})} />
-	</>
-}
+	</>;
+};
 
 export const APopoverCodeUI = ({ selectedComponent, setComponent }: any) => <TextInput
-    value={selectedComponent.codeContext?.name}
-    labelText='Input name'
-    onChange={(event: any) => {
+value={selectedComponent.codeContext?.name}
+labelText='Input name'
+onChange={(event: any) => {
         setComponent({
             ...selectedComponent,
             codeContext: {
@@ -143,12 +143,12 @@ export const APopover = ({
 		rejectDrop={true}
 		{...rest}>
             <Popover
-                align={componentObj.align}
-                caret={componentObj.isShowCaret}
-                dropShadow={componentObj.isDropShadow}
-                highContrast={componentObj.isHighContrast}
-                open={componentObj.isOpen}
-                className={cx(
+            align={componentObj.align}
+            caret={componentObj.isShowCaret}
+            dropShadow={componentObj.isDropShadow}
+            highContrast={componentObj.isHighContrast}
+            open={componentObj.isOpen}
+            className={cx(
                     componentObj.cssClasses?.map((cc: any) => cc.id).join(' '),
                     css`${styleObjectToString(componentObj.style)}`
                 )}>
@@ -160,7 +160,7 @@ export const APopover = ({
                 </Popover>
 		</AComponent>
 	);
-}
+};
 
 export const componentInfo: ComponentInfo = {
 	component: APopover,
@@ -211,7 +211,12 @@ export const componentInfo: ComponentInfo = {
                         (onClose)="${nameStringToVariableString(json.codeContext?.name)}onClose.emit($event)"
                         (isOpenChange)="${nameStringToVariableString(json.codeContext?.name)}IsOpenChange.emit($event)">
                             <div class="popover-trigger">
-                                <svg preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32">
+                                <svg
+									preserveAspectRatio="xMidYMid meet"
+									xmlns="http://www.w3.org/2000/svg"
+									width="16"
+									height="16"
+									viewBox="0 0 32 32">
                                     <path d="M26,4H6A2,2,0,0,0,4,6V26a2,2,0,0,0,2,2H26a2,2,0,0,0,2-2V6A2,2,0,0,0,26,4ZM6,26V6H26V26Z"></path>
                                 </svg>
                             </div>
