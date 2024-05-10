@@ -20,6 +20,7 @@ import { UINumberInput } from './components/ui-number-input';
 import { UIOverflowMenu } from './components/ui-overflow-menu';
 import { UIOverflowMenuItem } from './components/ui-overflow-menu-item';
 import { UIProgressIndicator } from './components/ui-progress-indicator';
+import { UIPopover } from './components/ui-popover';
 import { UIRadio } from './components/ui-radio';
 import { UIRadioGroup } from './components/ui-radio-group';
 import { UIRadioTileGroup } from './components/ui-radio-tile-group';
@@ -267,6 +268,9 @@ export const renderComponents = (
 
 		case 'progress-indicator':
 			return <UIProgressIndicator key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'popover':
+			return <UIPopover key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'search':
 			return <UISearchInput key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
