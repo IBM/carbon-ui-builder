@@ -24,7 +24,7 @@ export interface TimePickerState {
 
 export const type = 'time-picker';
 
-export const signals = ['valueChange', 'click'];
+export const signals = ['valueChange', 'click', 'timezoneValueChange', 'timePeriodValueChange'];
 
 export const slots = {
 	...commonSlots,
@@ -90,22 +90,30 @@ export const UITimePicker = ({ state, sendSignal }: {
 			sendSignal(state.id, 'valueChange', [event.value], { ...state, value: event.value });
 		}}>
 		{state.showTimePeriod &&
-		<TimePickerSelect id={state.codeContext?.name + '-select-1'}>
-			<SelectItem value='AM' text='AM' />
-			<SelectItem value='PM' text='PM' />
-		</TimePickerSelect>
+			<TimePickerSelect
+				id={state.codeContext?.name + '-select-1'}
+				onChange={(event: any) => {
+					sendSignal(state.id, 'timePeriodValueChange', [event.value], { ...state, value: event.value });
+				}}>
+				<SelectItem value='AM' text='AM' />
+				<SelectItem value='PM' text='PM' />
+			</TimePickerSelect>
 		}
 		{state.timezones?.length &&
-		<TimePickerSelect id={state.codeContext?.name + '-select-2'}>
-			{
-				state.timezones.map((step: any, index: number) => <SelectItem
-					value={step.value}
-					text={step.text}
-					selected={step.selected}
-					key={index}
-				/>)
-			}
-		</TimePickerSelect>
+			<TimePickerSelect
+				id={state.codeContext?.name + '-select-2'}
+				onChange={(event: any) => {
+					sendSignal(state.id, 'timezoneValueChange', [event.value], { ...state, value: event.value });
+				}}>
+				{
+					state.timezones.map((step: any, index: number) => <SelectItem
+						value={step.value}
+						text={step.text}
+						selected={step.selected}
+						key={index}
+					/>)
+				}
+			</TimePickerSelect>
 		}
 	</TimePicker>;
 };
