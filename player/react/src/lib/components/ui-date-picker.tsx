@@ -21,6 +21,7 @@ export interface DatePickerState {
 	id: string;
 	invalid?: boolean;
 	invalidText?: string;
+	rangeInvalidText?: string;
 	light?: boolean;
 	size?: string;
 	datePickerType?: string;
@@ -42,6 +43,7 @@ export const slots = {
 	invalidText: 'string',
 	rangeStartLabel: 'string',
 	rangeEndLabel: 'string',
+	rangeInvalidText: 'string',
 	value: 'string',
 	invalid: 'boolean',
 	setInvalid: (state: DatePickerState) => ({
@@ -111,7 +113,7 @@ export const UIDatePicker = ({ state, sendSignal }: {
 						size={state.size}
 						disabled={state.disabled}
 						invalid={state.invalid}
-						invalidText={state.invalidText} />
+						invalidText={state.rangeInvalidText} />
 			}
 		</DatePicker>;
 };
