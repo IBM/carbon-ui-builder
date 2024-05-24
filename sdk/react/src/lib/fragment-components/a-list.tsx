@@ -60,16 +60,6 @@ export const AListSettingsUI = ({ selectedComponent, setComponent }: any) => {
 				...selectedComponent,
 				isOrderedList: checked
 		})} />
-		<TextInput
-		value={selectedComponent.legendName}
-		labelText='Legend name'
-		placeholder='Legend name'
-		onChange={(event: any) => {
-			setComponent({
-				...selectedComponent,
-				legendName: event.currentTarget.value
-			});
-		}} />
 		<hr />
 		<h4>Items</h4>
 		<DraggableTileList
@@ -110,10 +100,7 @@ export const AList = ({
 		headingCss={css`width: fit-content; min-width: 9rem;`}
 		componentObj={componentObj}
 		{...rest}>
-			<legend className={cx('bx--label', css`margin-left: 3px;`)}>
-				{componentObj.legendName}
-			</legend>
-			<ListComponent className={orderedListStyle}>
+			<ListComponent>
 				{
 					componentObj.items?.map((item: any, index: any) => <ListItem key={index}>{item.value}</ListItem>)
 				}
@@ -131,12 +118,10 @@ export const componentInfo: ComponentInfo = {
 	type: 'list',
 	defaultComponentObj: {
 		type: 'list',
-		isOrderedList: true,
-		legendName: 'Ordered list',
+		isOrderedList: false,
 		items: [
 			{ value: 'Item' }
-		],
-		cssClasses: [{ id: 'margin-left', content: 'margin-left: 30px;' }]
+		]
 	},
 	image: image,
 	hideFromElementsPane: false,
@@ -147,10 +132,11 @@ export const componentInfo: ComponentInfo = {
 				outputs: (_) => '',
 				imports: ['ListModule'],
 				code: ({ json }) => {
-					return `<ol cdsList
-                        ${angularClassNamesFromComponentObj(json)}>
+					const listElement = json.isOrderedList? 'ol' : 'ul';
+					return `<${listElement} cdsList
+						${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any, index: any) => `<li cdsListItem key=${index}>${element.value}</li>`).join('\n')}
-                    </ol>`;
+					</${listElement}>`;
 				}
 			},
 			v10: {
@@ -158,31 +144,31 @@ export const componentInfo: ComponentInfo = {
 				outputs: (_) => '',
 				imports: ['ListModule'],
 				code: ({ json }) => {
-					return `<ol cdsList
-                        ${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any, index: any) => `<li cdsListItem key=${index}>${element.value}</li>`).join('\n')}
-                    </ol>`;
+					const listElement = json.isOrderedList? 'ol' : 'ul';
+					return `<${listElement} ibmList
+						${angularClassNamesFromComponentObj(json)}>
+						${json.items.map((element: any, index: any) => `<li ibmListItem key=${index}>${element.value}</li>`).join('\n')}
+					</${listElement}>`;
 				}
 			}
-
 		},
 		react: {
 			latest: {
-				imports: ['OrderedList'],
+				imports: ({ json }) => [json.isOrderedList ? 'OrderedList' : 'UnorderedList'],
 				code: ({ json }) => {
-					return `<OrderedList
-                        ${reactClassNamesFromComponentObj(json)}>
+					const listComponent = json.isOrderedList? 'OrderedList' : 'UnorderedList';
+					return `<${listComponent} ${reactClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any, index: any) => `<ListItem key=${index}>${element.value}</ListItem>`).join('\n')}
-                    </OrderedList>`;
+                    </${listComponent}>`;
 				}
 			},
 			v10: {
-				imports: ['OrderedList'],
+				imports: ({ json }) => [json.isOrderedList ? 'OrderedList' : 'UnorderedList'],
 				code: ({ json }) => {
-					return `<OrderedList
-                        ${reactClassNamesFromComponentObj(json)}>
+					const listComponent = json.isOrderedList? 'OrderedList' : 'UnorderedList';
+					return `<${listComponent} ${reactClassNamesFromComponentObj(json)}>
 						${json.items.map((element: any, index: any) => `<ListItem key=${index}>${element.value}</ListItem>`).join('\n')}
-                    </OrderedList>`;
+                    </${listComponent}>`;
 				}
 			}
 		}
