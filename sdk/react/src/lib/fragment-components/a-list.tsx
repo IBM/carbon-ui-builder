@@ -4,7 +4,13 @@ import { AComponent, ComponentInfo } from './a-component';
 import { css, cx } from 'emotion';
 import image from './../assets/component-icons/list.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../helpers/tools';
-import { TextInput, OrderedList, ListItem } from '@carbon/react';
+import {
+	TextInput,
+	OrderedList,
+	UnorderedList,
+	ListItem,
+	Checkbox
+} from '@carbon/react';
 import { DraggableTileList } from '../helpers/draggable-list';
 
 const orderedListStyle = css`
@@ -46,6 +52,14 @@ export const AListSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	};
 
 	return <>
+		<Checkbox
+			labelText='Ordered'
+			id='checkbox-ordered'
+			checked={selectedComponent.isOrderedList}
+			onChange={(_: any, { checked }: any) => setComponent({
+				...selectedComponent,
+				isOrderedList: checked
+		})} />
 		<TextInput
 		value={selectedComponent.legendName}
 		labelText='Legend name'
@@ -89,6 +103,7 @@ export const AList = ({
 	selected,
 	...rest
 }: any) => {
+	const ListComponent = componentObj.isOrderedList? OrderedList : UnorderedList;
 	return (
 		<AComponent
 		selected={selected}
@@ -98,11 +113,11 @@ export const AList = ({
 			<legend className={cx('bx--label', css`margin-left: 3px;`)}>
 				{componentObj.legendName}
 			</legend>
-			<OrderedList className={orderedListStyle}>
+			<ListComponent className={orderedListStyle}>
 				{
 					componentObj.items?.map((item: any, index: any) => <ListItem key={index}>{item.value}</ListItem>)
 				}
-			</OrderedList>
+			</ListComponent>
 		</AComponent>
 	);
 };
@@ -116,6 +131,7 @@ export const componentInfo: ComponentInfo = {
 	type: 'list',
 	defaultComponentObj: {
 		type: 'list',
+		isOrderedList: true,
 		legendName: 'Ordered list',
 		items: [
 			{ value: 'Item' }
