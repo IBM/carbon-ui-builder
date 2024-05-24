@@ -1,6 +1,5 @@
 import React from 'react';
 import { CssClasses } from '../types';
-import { renderComponents, setItemInState } from '../utils';
 import {
 	OrderedList,
 	UnorderedList,

@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { AComponent, ComponentInfo } from './a-component';
-import { css, cx } from 'emotion';
 import image from './../assets/component-icons/list.svg';
 import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../helpers/tools';
 import {
@@ -12,10 +11,6 @@ import {
 	Checkbox
 } from '@carbon/react';
 import { DraggableTileList } from '../helpers/draggable-list';
-
-const orderedListStyle = css`
-	margin-left: 30px;
-`;
 
 export const AListSettingsUI = ({ selectedComponent, setComponent }: any) => {
 
@@ -97,7 +92,6 @@ export const AList = ({
 	return (
 		<AComponent
 		selected={selected}
-		headingCss={css`width: fit-content; min-width: 9rem;`}
 		componentObj={componentObj}
 		{...rest}>
 			<ListComponent>
