@@ -10,24 +10,6 @@ const preventCheckEventStyle = css`
 	pointer-events: none;
 `;
 
-const labelDescriptionStyle = css`
-    color: #525252;
-    font-size: .875rem;
-    font-weight: 400;
-    letter-spacing: .16px;
-	line-height: 1.28572;
-	margin-top: 0.5rem;
-    margin-bottom: 1rem;
-`;
-
-const labelTitleStyle = css`
-    color: #161616;
-    font-size: .875rem;
-    font-weight: 600;
-    letter-spacing: .16px;
-    line-height: 1.28572;
-`;
-
 export const AFileUploaderSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const buttonKind = [
 		{ id: 'primary', text: 'Primary' },
@@ -95,10 +77,18 @@ export const AFileUploaderSettingsUI = ({ selectedComponent, setComponent }: any
 				...selectedComponent,
 				filenameStatus: event.selectedItem.id
 			})} />
-
+		<TextInput
+			id='acceptedFileFormat'
+			value={selectedComponent.acceptedFileFormat}
+			labelText='Accepted file format'
+			onChange={(event: any) => setComponent({
+				...selectedComponent,
+				acceptedFileFormat: event.currentTarget.value
+			})} />
 		{
 			selectedComponent.dragAndDrop ?
 			<TextInput
+				id='dragAndDropLabel'
 				value={selectedComponent.dragAndDroplabelText}
 				labelText='Drag and drop label text'
 				onChange={(event: any) => setComponent({
@@ -131,6 +121,7 @@ export const AFileUploaderSettingsUI = ({ selectedComponent, setComponent }: any
 				})} />
 
 			<TextInput
+				id='buttonLabel'
 				value={selectedComponent.buttonLabel}
 				labelText='Button label'
 				onChange={(event: any) => setComponent({
@@ -139,6 +130,7 @@ export const AFileUploaderSettingsUI = ({ selectedComponent, setComponent }: any
 				})} />
 
 			<TextInput
+				id='iconDescription'
 				value={selectedComponent.iconDescription}
 				labelText='Icon description'
 				onChange={(event: any) => setComponent({
@@ -148,21 +140,27 @@ export const AFileUploaderSettingsUI = ({ selectedComponent, setComponent }: any
 				</>
 		}
 
-		<TextInput
-			value={selectedComponent.labelTitle}
-			labelText='Label title'
-			onChange={(event: any) => setComponent({
-				...selectedComponent,
-				labelTitle: event.currentTarget.value
-			})} />
+		{!selectedComponent.dragAndDrop &&
+			<>
+				<TextInput
+					id='labelTitle'
+					value={selectedComponent.labelTitle}
+					labelText='Label title'
+					onChange={(event: any) => setComponent({
+						...selectedComponent,
+						labelTitle: event.currentTarget.value
+					})} />
 
-		<TextInput
-			value={selectedComponent.labelDescription}
-			labelText='Label description'
-			onChange={(event: any) => setComponent({
-				...selectedComponent,
-				labelDescription: event.currentTarget.value
-			})} />
+				<TextInput
+					id='labelDescription'
+					value={selectedComponent.labelDescription}
+					labelText='Label description'
+					onChange={(event: any) => setComponent({
+						...selectedComponent,
+						labelDescription: event.currentTarget.value
+					})} />
+			</>
+		}
 	</>;
 };
 
@@ -184,34 +182,22 @@ export const AFileUploader = ({
 	componentObj,
 	...rest
 }: any) => {
+	const acceptedFileFormat = componentObj.acceptedFileFormat.split(',');
 	return (
 		<AComponent
 		componentObj={componentObj}
 		rejectDrop={true}
 		{...rest}>
 			{
-				componentObj.dragAndDrop ? <>
-				<strong className={labelTitleStyle}>{componentObj.labelTitle}</strong>
-				<p className={labelDescriptionStyle}>
-					{componentObj.labelDescription}
-				</p>
-				<FileUploaderDropContainer
+				componentObj.dragAndDrop ? <FileUploaderDropContainer
 				className={cx(preventCheckEventStyle, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}
-				accept={[
-				'image/jpeg',
-				'image/png'
-				]}
+				accept={acceptedFileFormat}
 				multiple={componentObj.multiple}
 				disabled={componentObj.disabled}
 				labelText={componentObj.dragAndDroplabelText}
-				tabIndex={0} />
-					</> :
-				<FileUploader
+				tabIndex={0} /> : <FileUploader
 				className={cx(preventCheckEventStyle, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}
-				accept={[
-					'.jpg',
-					'.png'
-				]}
+				accept={acceptedFileFormat}
 				buttonKind={componentObj.buttonKind}
 				buttonLabel={componentObj.buttonLabel}
 				filenameStatus={componentObj.filenameStatus}
@@ -240,6 +226,7 @@ export const componentInfo: ComponentInfo = {
 	name: 'File uploader',
 	type: 'file-uploader',
 	defaultComponentObj: {
+		acceptedFileFormat: 'png,jpeg',
 		type: 'file-uploader',
 		buttonKind: 'primary',
 		buttonLabel: 'Add files',
@@ -251,27 +238,7 @@ export const componentInfo: ComponentInfo = {
 		size: 'md',
 		multiple: false,
 		disabled: false,
-		dragAndDrop: false,
-		cssClasses: [
-			{
-				id: 'labelTitleStyle',
-				content: `color: #161616;
-					font-size: .875rem;
-					font-weight: 600;
-					letter-spacing: .16px;
-					line-height: 1.28572;`
-			},
-			{
-				id: 'labelDescriptionStyle',
-				content: `color: #525252;
-					font-size: .875rem;
-					font-weight: 400;
-					letter-spacing: .16px;
-					line-height: 1.28572;
-					margin-top: 0.5rem;
-					margin-bottom: 1rem;`
-			}
-		]
+		dragAndDrop: false
 	},
 	image,
 	codeExport: {
@@ -279,10 +246,7 @@ export const componentInfo: ComponentInfo = {
 			latest: {
 				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Title = "${json.labelTitle}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Description = "${json.labelDescription}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Accept = [
-					'.jpg',
-					'.png'
-				];
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Accept = ${json.acceptedFileFormat.split(',')};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Multiple = ${json.multiple};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}DropText = "${json.dragAndDroplabelText}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
@@ -293,7 +257,7 @@ export const componentInfo: ComponentInfo = {
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}onDropped = new EventEmitter();`,
 				imports: ['FileUploaderModule', 'ButtonModule', 'NotificationModule'],
 				code: ({ json }) => {
-					return `<ibm-file-uploader
+					return `<cds-file-uploader
 				${angularClassNamesFromComponentObj(json)}
 				[title]="${nameStringToVariableString(json.codeContext?.name)}Title"
 				[description]="${nameStringToVariableString(json.codeContext?.name)}Description"
@@ -307,16 +271,13 @@ export const componentInfo: ComponentInfo = {
 				${json.dragAndDrop ? '' : `[buttonText]="${nameStringToVariableString(json.codeContext?.name)}ButtonText"`}
 				${json.dragAndDrop ? '' : `[buttonType]="${nameStringToVariableString(json.codeContext?.name)}ButtonType"`}
 				(filesChange)= ${nameStringToVariableString(json.codeContext?.name)}onDropped.emit($event)>
-				</ibm-file-uploader>`;
+				</cds-file-uploader>`;
 				}
 			},
 			v10: {
 				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Title = "${json.labelTitle}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Description = "${json.labelDescription}";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Accept = [
-					'.jpg',
-					'.png'
-				];
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Accept = ${json.acceptedFileFormat.split(',')}
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Multiple = ${json.multiple};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}DropText = "${json.dragAndDroplabelText}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
@@ -349,28 +310,19 @@ export const componentInfo: ComponentInfo = {
 			latest: {
 				imports: ['FileUploader', 'FileUploaderDropContainer'],
 				code: ({ json }) => {
-					return `${json.dragAndDrop ?
-						`<strong className="labelTitleStyle">${json.labelTitle}</strong>
-						<p className="labelDescriptionStyle">
-							${json.labelDescription}
-						</p>
-						<FileUploaderDropContainer
+					if (json.dragAndDrop) {
+						return `<FileUploaderDropContainer
+							${reactClassNamesFromComponentObj(json)}
+							accept={${json.acceptedFileFormat.split(',')}}
+							${json.multiple ? `multiple={${json.multiple}}` : ''}
+							${json.disabled ? `disabled={${json.disabled}}` : ''}
+							${json.dragAndDroplabelText ? `labelText="${json.dragAndDroplabelText}"` : ''}
+							tabIndex={0} />`;
+					}
+
+					return `<FileUploader
 						${reactClassNamesFromComponentObj(json)}
-						accept={[
-						'image/jpeg',
-						'image/png'
-						]}
-						${json.multiple ? `multiple={${json.multiple}}` : ''}
-						${json.disabled ? `disabled={${json.disabled}}` : ''}
-						${json.dragAndDroplabelText ? `labelText="${json.dragAndDroplabelText}"` : ''}
-						tabIndex={0} />`
-							:
-						`<FileUploader
-						${reactClassNamesFromComponentObj(json)}
-						accept={[
-							'.jpg',
-							'.png'
-						]}
+						accept={${json.acceptedFileFormat.split(',')}}
 						buttonKind="${json.buttonKind}"
 						buttonLabel="${json.buttonLabel}"
 						filenameStatus="${json.filenameStatus}"
@@ -379,35 +331,25 @@ export const componentInfo: ComponentInfo = {
 						${json.iconDescription ? `iconDescription="${json.iconDescription}"` : ''}
 						${json.multiple ? `multiple={${json.multiple}}` : ''}
 						${json.disabled ? `disabled={${json.disabled}}` : ''}
-						${json.size ? `size="${json.size}"` : ''} />`
-					}`;
+						${json.size ? `size="${json.size}"` : ''} />`;
 				}
 			},
 			v10: {
 				imports: ['FileUploader', 'FileUploaderDropContainer'],
 				code: ({ json }) => {
-					return `${json.dragAndDrop ?
-						`<strong className="labelTitleStyle">${json.labelTitle}</strong>
-						<p className="labelDescriptionStyle">
-							${json.labelDescription}
-						</p>
-						<FileUploaderDropContainer
+					if (json.dragAndDrop) {
+						return `<FileUploaderDropContainer
+							${reactClassNamesFromComponentObj(json)}
+							accept={${json.acceptedFileFormat.split(',')}}
+							${json.multiple ? `multiple={${json.multiple}}` : ''}
+							${json.disabled ? `disabled={${json.disabled}}` : ''}
+							${json.dragAndDroplabelText ? `labelText="${json.dragAndDroplabelText}"` : ''}
+							tabIndex={0} />`;
+					}
+
+					return `<FileUploader
 						${reactClassNamesFromComponentObj(json)}
-						accept={[
-						'image/jpeg',
-						'image/png'
-						]}
-						${json.multiple ? `multiple={${json.multiple}}` : ''}
-						${json.disabled ? `disabled={${json.disabled}}` : ''}
-						${json.dragAndDroplabelText ? `labelText="${json.dragAndDroplabelText}"` : ''}
-						tabIndex={0} />`
-							:
-						`<FileUploader
-						${reactClassNamesFromComponentObj(json)}
-						accept={[
-							'.jpg',
-							'.png'
-						]}
+						accept={${json.acceptedFileFormat.split(',')}}
 						buttonKind="${json.buttonKind}"
 						buttonLabel="${json.buttonLabel}"
 						filenameStatus="${json.filenameStatus}"
@@ -416,8 +358,7 @@ export const componentInfo: ComponentInfo = {
 						${json.iconDescription ? `iconDescription="${json.iconDescription}"` : ''}
 						${json.multiple ? `multiple={${json.multiple}}` : ''}
 						${json.disabled ? `disabled={${json.disabled}}` : ''}
-						${json.size ? `size="${json.size}"` : ''} />`
-					}`;
+						${json.size ? `size="${json.size}"` : ''} />`;
 				}
 			}
 		}

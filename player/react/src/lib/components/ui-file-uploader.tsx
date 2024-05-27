@@ -1,31 +1,13 @@
 import React from 'react';
-import { css } from 'emotion';
 import { CssClasses, SendSignal } from '../types';
 import { FileUploaderDropContainer, FileUploader } from '@carbon/react';
 import { commonSlots, slotsDisabled } from '../common-slots';
-
-const labelDescriptionStyle = css`
-    color: #525252;
-    font-size: .875rem;
-    font-weight: 400;
-    letter-spacing: .16px;
-	line-height: 1.28572;
-	margin-top: 0.5rem;
-    margin-bottom: 1rem;
-`;
-
-const labelTitleStyle = css`
-    color: #161616;
-    font-size: .875rem;
-    font-weight: 600;
-    letter-spacing: .16px;
-    line-height: 1.28572;
-`;
 
 export interface FileUploaderState {
 	id: string;
 	type: string;
 	cssClasses?: CssClasses[];
+	acceptedFileFormat: string;
 	buttonKind: string;
 	buttonLabel: string;
 	labelTitle: string;
@@ -75,6 +57,7 @@ export const slots = {
 		...state,
 		dragAndDrop: !state.dragAndDrop
 	}),
+	acceptedFileFormat: 'string',
 	type: 'string',
 	buttonLabel: 'string',
 	labelTitle: 'string',
@@ -97,43 +80,30 @@ export const UIFileUploader = ({ state, sendSignal }: {
 		return <></>;
 	}
 
-	return <>
-		{
-			state.dragAndDrop ? <>
-		<strong className={labelTitleStyle}>{state.labelTitle}</strong>
-		<p className={labelDescriptionStyle}>
-			{state.labelDescription}
-		</p>
-		<FileUploaderDropContainer
+	if (state.dragAndDrop) {
+		return <FileUploaderDropContainer
 			onClick={() => {
 				sendSignal(state.id, 'click');
 			}}
 			onChange={(event: any) => {
 				sendSignal(state.id, 'valueChange', [event.value], { ...state, value: event.value });
 			}}
-accept={[
-            'image/jpeg',
-            'image/png'
-            ]}
-multiple={state.multiple}
-disabled={state.disabled}
-labelText={state.dragAndDroplabelText}
-tabIndex={0} />
-			</> :
-		<FileUploader
-accept={[
-                '.jpg',
-                '.png'
-            ]}
-buttonKind={state.buttonKind}
-buttonLabel={state.buttonLabel}
-filenameStatus={state.filenameStatus}
-iconDescription={state.iconDescription}
-labelDescription={state.labelDescription}
-labelTitle={state.labelTitle}
-multiple={state.multiple}
-disabled={state.disabled}
-size={state.size} />
-		};
-	</>;
+			accept={state.acceptedFileFormat.split(',')}
+			multiple={state.multiple}
+			disabled={state.disabled}
+			labelText={state.dragAndDroplabelText}
+			tabIndex={0} />;
+	}
+
+	return <FileUploader
+		accept={state.acceptedFileFormat.split(',')}
+		buttonKind={state.buttonKind}
+		buttonLabel={state.buttonLabel}
+		filenameStatus={state.filenameStatus}
+		iconDescription={state.iconDescription}
+		labelDescription={state.labelDescription}
+		labelTitle={state.labelTitle}
+		multiple={state.multiple}
+		disabled={state.disabled}
+		size={state.size} />;
 };
