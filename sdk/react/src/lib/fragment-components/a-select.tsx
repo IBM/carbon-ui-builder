@@ -17,28 +17,22 @@ import {
 	updatedState
 } from '../helpers/tools';
 import { DraggableTileList } from '../helpers/draggable-list';
+import { css, cx } from 'emotion';
 
-import { css } from 'emotion';
+const preventCheckEventStyle = css`
+	pointer-events: none;
+`;
 
-const iconStyle = css`
+const addOptionButtonStyle = css`
 	min-height: 1rem;
 	float: right;
 	cursor: pointer;
 `;
 
-const addButtonStyle = css`
+const addCategoryButtonStyle = css`
 	width: 100%;
 	display: flex;
 	justify-content: center;
-`;
-
-const checkBoxContainer = css`
-	display:flex; 
-	margin-top: 0.1825rem;
-
-	.bx--form-item.bx--checkbox-wrapper:first-of-type {
-		margin-top: 0
-	}
 `;
 
 export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, setFragment }: any) => {
@@ -120,7 +114,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 					value={selectedItem.label}
 					labelText='Category label'
 					onChange={(event: any) => updateListItems('label', event.currentTarget.value, index, selectedComponent)} />
-				<section className={checkBoxContainer}>
+				<section>
 					<Checkbox
 						labelText='Disabled'
 						id={`disabled-${index}`}
@@ -129,7 +123,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 					<Button
 						size='sm'
 						kind='ghost'
-						className={iconStyle}
+						className={addOptionButtonStyle}
 						onClick={(event: any) => {
 							event.stopPropagation();
 							addOption(0, selectedItem);
@@ -148,7 +142,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 							labelText='Option display text'
 							onChange={(event: any) => updateListItems('text', event.currentTarget.value, childIndex, selectedItem)} />
 
-						<section className={checkBoxContainer}>
+						<section>
 							<Checkbox
 								labelText='Disabled'
 								id={`isDisabled-checkbox-${child.id}`}
@@ -177,7 +171,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 						value={selectedItem.text}
 						labelText='Option display text'
 						onChange={(event: any) => updateListItems('text', event.currentTarget.value, index, selectedComponent)} />
-					<section className={checkBoxContainer}>
+					<section>
 						<Checkbox
 							labelText='Disabled'
 							id={`disabled-${index}`}
@@ -229,7 +223,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 			labelText='Warning text value'
 			onChange={(event: any) => setComponent({ ...selectedComponent, warnText: event.currentTarget.value })} />
 
-		<section className={checkBoxContainer}>
+		<section>
 			<Checkbox
 				labelText='Warning'
 				id='warning-label'
@@ -244,7 +238,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 
 		</section>
 
-		<section className={checkBoxContainer}>
+		<section>
 			<Checkbox
 				labelText='Inline'
 				id='inline'
@@ -261,7 +255,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 		<hr />
 		<h4>Option items</h4>
 		<Button
-			className={addButtonStyle}
+			className={addCategoryButtonStyle}
 			size='sm'
 			kind='ghost'
 			onClick={(event: any) => {
@@ -307,7 +301,7 @@ export const ASelect = ({
 		componentObj={componentObj}
 		{...rest}>
 			<Select
-			id='select'
+			className={cx(preventCheckEventStyle, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}
 			defaultValue={componentObj.defaultValue}
 			helperText={componentObj.helperText}
 			invalidText={componentObj.invalidText}
