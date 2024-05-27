@@ -65,21 +65,21 @@ export const UISlider = ({ state, sendSignal }: {
 	}
 
 	return <Slider
-	id={state.id}
-	labelText={state.labelText}
-	min={state.min}
-	max={state.max}
-	value={state.value}
-	disabled={state.disabled}
-	step={state.step}
-	hideTextInput={state.textInputHidden}
-	stepMultiplier={state.stepMultiplier}
-	minLabel={state.minLabel}
-	maxLabel={state.maxLabel}
-	light={state.light}
-	onClick={() => sendSignal(state.id, 'click')}
-	onChange={(event: any) => {
-		sendSignal(state.id, 'valueChange', [event.value], { ...state, value: event.value });
-	}}
-	className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />;
+		id={state.id}
+		labelText={state.labelText}
+		min={state.min}
+		max={state.max}
+		value={state.value}
+		disabled={state.disabled}
+		step={state.step}
+		hideTextInput={state.textInputHidden}
+		stepMultiplier={state.stepMultiplier}
+		minLabel={state.minLabel}
+		maxLabel={state.maxLabel}
+		light={state.light}
+		onClick={() => sendSignal(state.id, 'click')}
+		onChange={({ value }: any) => {
+			sendSignal(state.id, 'valueChange', [value], { ...state, value });
+		}}
+		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')} />;
 };
