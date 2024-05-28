@@ -264,7 +264,7 @@ export const renderComponents = (
 			return <UILink key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'list':
-			return <UIList key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
+			return <UIList key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'number-input':
 			return <UINumberInput key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;

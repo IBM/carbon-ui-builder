@@ -23,6 +23,8 @@ export const slots = {
 
 export const UIList = ({ state }: {
 	state: ListState;
+	setState: (state: any) => void;
+	setGlobalState: (state: any) => void;
 }) => {
 	if (state.type !== 'list') {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
