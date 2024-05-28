@@ -61,7 +61,7 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 				datePickerType: event.selectedItem.id
 			})} />
 		{
-			(selectedComponent.datePickerType === 'simple' || selectedComponent.datePickerType === 'range') &&
+			(selectedComponent.datePickerType === 'single' || selectedComponent.datePickerType === 'range') &&
 			<TextInput
 				id='date-format'
 				value={selectedComponent.dateFormat}
