@@ -5,14 +5,6 @@ import {
 } from '@carbon/react';
 import { commonSlots, slotsDisabled } from '../common-slots';
 import { SendSignal } from '../types';
-import { css } from 'emotion';
-
-const pickerInputAlignment = css `
-	.cds--date-picker {
-		display: flex;
-		align-items: flex-end !important;
-	}
-`;
 
 export interface DatePickerState {
 	type: string;
@@ -86,7 +78,6 @@ export const UIDatePicker = ({ state, sendSignal }: {
 		return <></>;
 	}
 	return <DatePicker
-		className={pickerInputAlignment}
 		id={state.id}
 		dateFormat={state.dateFormat}
 		datePickerType={state.datePickerType}
