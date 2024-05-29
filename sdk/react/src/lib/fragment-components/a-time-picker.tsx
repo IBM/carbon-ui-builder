@@ -143,7 +143,8 @@ export const ATimePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 			updateItem={updateListItems}
 			defaultObject={{
 				text: 'New timezone',
-				value: 'New timezone value'
+				value: 'New timezone value',
+				selected: false
 			}}
 			template={template} />
 	</>;
@@ -235,11 +236,13 @@ export const componentInfo: ComponentInfo = {
 		timePeriod: [
 			{
 				value:'AM',
-				text:'AM'
+				text:'AM',
+				selected: false
 			},
 			{
 				value:'PM',
-				text:'PM'
+				text:'PM',
+				selected: false
 			}
 		],
 		size: 'md',
@@ -252,17 +255,18 @@ export const componentInfo: ComponentInfo = {
 			latest: {
 				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.label}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme: "light" | "dark" = "${json.light ? 'light' : 'dark'}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = ${json.invalid};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: "sm" | "md" | "lg" = "${json.size}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}HideLabel = ${json.hideLabel};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = ${json.disabled};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.label}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}showTimePeriod = ${json.showTimePeriod};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}TimePeriod = ${JSON.stringify(json.timePeriod)};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Timezone = ${JSON.stringify(json.timezones)}`,
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}TimePeriod: {value: string; text: string; selected: boolean}[]
+					= ${JSON.stringify(json.timePeriod)};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Timezone: {value: string; text: string; selected: boolean}[]
+					= ${JSON.stringify(json.timezones)}`,
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter<any>();`,
 				imports: ['TimePickerModule', 'TimePickerSelectModule'],
 				code: ({ json }) => {
@@ -279,7 +283,7 @@ export const componentInfo: ComponentInfo = {
 						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 						[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled">
 							<cds-timepicker-select
-								*ngIf="showTimePeriod"
+								*ngIf="${nameStringToVariableString(json.codeContext?.name)}showTimePeriod"
 								[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 								[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled">
 								<option
@@ -306,17 +310,18 @@ export const componentInfo: ComponentInfo = {
 			v10: {
 				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.label}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme: "light" | "dark" = "${json.light ? 'light' : 'dark'}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = ${json.invalid};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: "sm" | "md" | "lg" = "${json.size}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}HideLabel = ${json.hideLabel};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = ${json.disabled};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.label}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}showTimePeriod = ${json.showTimePeriod};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}TimePeriod = ${JSON.stringify(json.timePeriod)};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Timezone = ${JSON.stringify(json.timezones)}`,
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}TimePeriod: {value: string; text: string; selected: boolean}[]
+					= ${JSON.stringify(json.timePeriod)};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Timezone: {value: string; text: string; selected: boolean}[]
+					= ${JSON.stringify(json.timezones)}`,
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter<any>();`,
 				imports: ['TimePickerModule', 'TimePickerSelectModule'],
 				code: ({ json }) => {
@@ -333,6 +338,7 @@ export const componentInfo: ComponentInfo = {
 						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 						[disabled]="${json.disabled}">
 							<ibm-timepicker-select
+								*ngIf="${nameStringToVariableString(json.codeContext?.name)}showTimePeriod"
 								[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 								[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled">
 								<option
