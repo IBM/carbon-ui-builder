@@ -471,15 +471,15 @@ export const componentInfo: ComponentInfo = {
 					return `<Select
 						id="select"
 						size="${json.size}"
-						warn={${json.warn}}
-						warnText="${json.warnText}"
-						defaultValue="${json.defaultValue}"
-						helperText="${json.helperText}"
-						invalidText="${json.invalidText}"
 						labelText="${json.labelText}"
-						inline={${json.inline}}
-						invalid={${json.invalid}}
-						disabled={${json.disabled}}
+						${json.warnText ? `warnText="${json.warnText}"` : ''}
+						${json.warn ? `warn={${json.warn}}` : ''}
+						${json.defaultValue ? `defaultValue=${json.defaultValue}`: ''}
+						${json.helperText ? `helperText=${json.helperText}`: ''}
+						${json.invalidText ? `invalidText="${json.invalidText}"`: ''}
+						${json.inline ? `inline={${json.inline}}`: ''}
+						${json.invalid ? `invalid={${json.invalid}}`: ''}
+						${json.disabled ? `disabled={${json.disabled}}`: ''}
 						${reactClassNamesFromComponentObj(json)}>
 						${json.items.map((step: any, index: any) =>
 							step.items && step.items.length > 0
@@ -487,12 +487,12 @@ export const componentInfo: ComponentInfo = {
 							`<SelectItemGroup
 							key="${index}"
 							label="${step.label}"
-							disabled={${step.disabled}}>
+							${step.disabled ? `disabled={${step.disabled}}`: ''}>
 							${step.items.map((child: any, index: any) => `<SelectItem
 								text="${child.text}"
 								value="${child.value}"
-								disabled={${child.disabled}}
-								hidden={${child.hidden}}
+								${child.disabled ? `disabled={${child.disabled}}`: ''}
+								${child.hidden ? `hidden={${child.hidden}}`: ''}
 								key="${index}" />`
 							).join('\n')}
 							</SelectItemGroup>`
@@ -500,8 +500,8 @@ export const componentInfo: ComponentInfo = {
 							`<SelectItem
 								text="${step.text}"
 								value="${step.value}"
-								disabled={${step.disabled}}
-								hidden={${step.hidden}}
+								${step.disabled ? `disabled={${step.disabled}}`: ''}
+								${step.hidden ? `hidden={${step.hidden}}`: ''}
 								key="${index}" />`
 						).join('\n')}
 					</Select>`;
@@ -517,15 +517,15 @@ export const componentInfo: ComponentInfo = {
 					return `<Select
 						id="select"
 						size="${json.size}"
-						warn={${json.warn}}
-						warnText="${json.warnText}"
-						defaultValue="${json.defaultValue}"
-						helperText="${json.helperText}"
-						invalidText="${json.invalidText}"
 						labelText="${json.labelText}"
-						inline={${json.inline}}
-						invalid={${json.invalid}}
-						disabled={${json.disabled}}
+						${json.warnText ? `warnText="${json.warnText}"` : ''}
+						${json.warn ? `warn={${json.warn}}` : ''}
+						${json.defaultValue ? `defaultValue=${json.defaultValue}`: ''}
+						${json.helperText ? `helperText=${json.helperText}`: ''}
+						${json.invalidText ? `invalidText="${json.invalidText}"`: ''}
+						${json.inline ? `inline={${json.inline}}`: ''}
+						${json.invalid ? `invalid={${json.invalid}}`: ''}
+						${json.disabled ? `disabled={${json.disabled}}`: ''}
 						${reactClassNamesFromComponentObj(json)}>
 						${json.items.map((step: any, index: any) =>
 							step.items && step.items.length > 0
@@ -533,12 +533,12 @@ export const componentInfo: ComponentInfo = {
 							`<SelectItemGroup
 							key="${index}"
 							label="${step.label}"
-							disabled={${step.disabled}}>
+							${step.disabled ? `disabled={${step.disabled}}`: ''}>
 							${step.items.map((child: any, index: any) => `<SelectItem
 								text="${child.text}"
 								value="${child.value}"
-								disabled={${child.disabled}}
-								hidden={${child.hidden}}
+								${child.disabled ? `disabled={${child.disabled}}`: ''}
+								${child.hidden ? `hidden={${child.hidden}}`: ''}
 								key="${index}" />`
 							).join('\n')}
 							</SelectItemGroup>`
@@ -546,8 +546,8 @@ export const componentInfo: ComponentInfo = {
 							`<SelectItem
 								text="${step.text}"
 								value="${step.value}"
-								disabled={${step.disabled}}
-								hidden={${step.hidden}}
+								${step.disabled ? `disabled={${step.disabled}}`: ''}
+								${step.hidden ? `hidden={${step.hidden}}`: ''}
 								key="${index}" />`
 						).join('\n')}
 					</Select>`;
