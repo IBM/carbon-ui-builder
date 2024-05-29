@@ -98,7 +98,7 @@ export const UIDatePicker = ({ state, sendSignal }: {
 			{
 				state.datePickerType === 'range' &&
 					<DatePickerInput
-						id={`${state.id} + '-end'`}
+						id={`${state.id}-end`}
 						placeholder={state.placeholder}
 						labelText={state.rangeEndLabel}
 						size={state.size}
