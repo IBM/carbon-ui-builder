@@ -14,6 +14,7 @@ import { UIDropdown } from './components/ui-dropdown';
 import { UIExpandableTile } from './components/ui-expandable-tile';
 import { UIGrid } from './components/ui-grid';
 import { UILink } from './components/ui-link';
+import { UIList } from './components/ui-list';
 import { UIInlineLoading } from './components/ui-inline-loading';
 import { UILoading } from './components/ui-loading';
 import { UINumberInput } from './components/ui-number-input';
@@ -261,6 +262,9 @@ export const renderComponents = (
 
 		case 'link':
 			return <UILink key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'list':
+			return <UIList key={state.id} state={state} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'number-input':
 			return <UINumberInput key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
