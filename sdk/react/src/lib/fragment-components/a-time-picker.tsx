@@ -367,18 +367,19 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			latest: {
-				imports: ['TimePicker','TimePickerSelect','SelectItem'],
+				imports: ({ json }) => ['TimePicker',
+					...((json.timePeriod && json.showTimePeriod) || json.timezones.length ? ['TimePickerSelect', 'SelectItem'] : [])],
 				code: ({ json }) => {
 					return `<TimePicker
 						${reactClassNamesFromComponentObj(json)}
-						disabled={${json.disabled}}
+						${json.disabled ? `disabled={${json.disabled}}` : ''}
 						labelText="${json.label}"
-						size="${json.size}"
-						invalid={${json.invalid}}
+						${json.size ? `size="${json.size}"` : ''}
+						${json.invalid ? `invalid={${json.invalid}}` : ''}
 						invalidText="${json.invalidText}"
 						placeholder="${json.placeholder}"
-						hideLabel={${json.hideLabel}}
-						light={${json.light}}
+						${json.hideLabel ? `hideLabel={${json.hideLabel}}` : ''}
+						${json.light ? `light={${json.light}}` : ''}
 						name="${json.codeContext?.name}"
 						onChange={(event) => handleInputChange({
 							target: {
@@ -424,18 +425,19 @@ export const componentInfo: ComponentInfo = {
 				}
 			},
 			v10: {
-				imports: ['TimePicker','TimePickerSelect','SelectItem'],
+				imports: ({ json }) => ['TimePicker',
+					...((json.timePeriod && json.showTimePeriod) || json.timezones.length ? ['TimePickerSelect', 'SelectItem'] : [])],
 				code: ({ json }) => {
 					return `<TimePicker
 						${reactClassNamesFromComponentObj(json)}
-						disabled={${json.disabled}}
+						${json.disabled ? `disabled={${json.disabled}}` : ''}
 						labelText="${json.label}"
-						size="${json.size}"
-						invalid={${json.invalid}}
+						${json.size ? `size="${json.size}"` : ''}
+						${json.invalid ? `invalid={${json.invalid}}` : ''}
 						invalidText="${json.invalidText}"
 						placeholder="${json.placeholder}"
-						hideLabel={${json.hideLabel}}
-						light={${json.light}}
+						${json.hideLabel ? `hideLabel={${json.hideLabel}}` : ''}
+						${json.light ? `light={${json.light}}` : ''}
 						name="${json.codeContext?.name}"
 						onChange={(event) => handleInputChange({
 							target: {
@@ -446,10 +448,10 @@ export const componentInfo: ComponentInfo = {
 							${(json.timePeriod && json.showTimePeriod) ?
 								`<TimePickerSelect
 									id="${json.codeContext?.name + '-select-1'}"
-									name="${json.codeContext?.name}TimePeriod"
+									name="${json.codeContext?.name}TimeZone"
 									onChange={(event) => handleInputChange({
 										target: {
-											name: "${json.codeContext?.name}TimePeriod",
+											name: "${json.codeContext?.name}TimeZone",
 											value: event.target.value
 										}
 									})}>
