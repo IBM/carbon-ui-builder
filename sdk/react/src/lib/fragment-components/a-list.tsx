@@ -2,7 +2,11 @@ import React from 'react';
 
 import { AComponent, ComponentInfo } from './a-component';
 import image from './../assets/component-icons/list.svg';
-import { angularClassNamesFromComponentObj, reactClassNamesFromComponentObj } from '../helpers/tools';
+import {
+	angularClassNamesFromComponentObj,
+	nameStringToVariableString,
+	reactClassNamesFromComponentObj
+} from '../helpers/tools';
 import {
 	TextInput,
 	OrderedList,
@@ -16,15 +20,15 @@ export const AListSettingsUI = ({ selectedComponent, setComponent }: any) => {
 
 	const handleItemUpdate = (key: string, value: any, index: number) => {
 		const item = {
-			...selectedComponent.items[index],
+			...selectedComponent.listItems[index],
 			[key]: value
 		};
 		setComponent({
 			...selectedComponent,
-			items: [
-				...selectedComponent.items.slice(0, index),
+			listItems: [
+				...selectedComponent.listItems.slice(0, index),
 				item,
-				...selectedComponent.items.slice(index + 1)
+				...selectedComponent.listItems.slice(index + 1)
 			]
 		});
 	};
@@ -32,7 +36,7 @@ export const AListSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const updateStepList = (newList: any[]) => {
 		setComponent({
 			...selectedComponent,
-			items: newList
+			listItems: newList
 		});
 	};
 
@@ -58,7 +62,7 @@ export const AListSettingsUI = ({ selectedComponent, setComponent }: any) => {
 		<hr />
 		<h4>Items</h4>
 		<DraggableTileList
-			dataList={[...selectedComponent.items]}
+			dataList={[...selectedComponent.listItems]}
 			setDataList={updateStepList}
 			updateItem={handleItemUpdate}
 			defaultObject={{
@@ -96,7 +100,7 @@ export const AList = ({
 		{...rest}>
 			<ListComponent>
 				{
-					componentObj.items?.map((item: any, index: any) => <ListItem key={index}>{item.value}</ListItem>)
+					componentObj.listItems?.map((item: any, index: any) => <ListItem key={index}>{item.value}</ListItem>)
 				}
 			</ListComponent>
 		</AComponent>
@@ -113,7 +117,7 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'list',
 		isOrderedList: false,
-		items: [
+		listItems: [
 			{ value: 'Item' }
 		]
 	},
@@ -122,46 +126,46 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			latest: {
-				inputs: (_) => '',
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}List = ${JSON.stringify(json.listItems)}`,
 				outputs: (_) => '',
 				imports: ['ListModule'],
 				code: ({ json }) => {
 					const listElement = json.isOrderedList? 'ol' : 'ul';
 					return `<${listElement} cdsList
 						${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any, index: any) => `<li cdsListItem key=${index}>${element.value}</li>`).join('\n')}
+						<li cdsListItem *ngFor="let item of ${nameStringToVariableString(json.codeContext?.name)}List">{{item.value}}</li>
 					</${listElement}>`;
 				}
 			},
 			v10: {
-				inputs: (_) => '',
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}List = ${JSON.stringify(json.listItems)}`,
 				outputs: (_) => '',
 				imports: ['ListModule'],
 				code: ({ json }) => {
 					const listElement = json.isOrderedList? 'ol' : 'ul';
 					return `<${listElement} ibmList
 						${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any, index: any) => `<li ibmListItem key=${index}>${element.value}</li>`).join('\n')}
+						<li ibmListItem *ngFor="let item of ${nameStringToVariableString(json.codeContext?.name)}List">{{item.value}}</li>
 					</${listElement}>`;
 				}
 			}
 		},
 		react: {
 			latest: {
-				imports: ({ json }) => [json.isOrderedList ? 'OrderedList' : 'UnorderedList'].concat(json.items.length > 0 ? ['ListItem'] : []),
+				imports: ({ json }) => [json.isOrderedList ? 'OrderedList' : 'UnorderedList'].concat(json.listItems.length > 0 ? ['ListItem'] : []),
 				code: ({ json }) => {
 					const listComponent = json.isOrderedList? 'OrderedList' : 'UnorderedList';
 					return `<${listComponent} ${reactClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any, index: any) => `<ListItem key="${index}">${element.value}</ListItem>`).join('\n')}
+						${json.listItems.map((element: any, index: any) => `<ListItem key="${index}">${element.value}</ListItem>`).join('\n')}
                     </${listComponent}>`;
 				}
 			},
 			v10: {
-				imports: ({ json }) => [json.isOrderedList ? 'OrderedList' : 'UnorderedList'].concat(json.items.length > 0 ? ['ListItem'] : []),
+				imports: ({ json }) => [json.isOrderedList ? 'OrderedList' : 'UnorderedList'].concat(json.listItems.length > 0 ? ['ListItem'] : []),
 				code: ({ json }) => {
 					const listComponent = json.isOrderedList? 'OrderedList' : 'UnorderedList';
 					return `<${listComponent} ${reactClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any, index: any) => `<ListItem key="${index}">${element.value}</ListItem>`).join('\n')}
+						${json.listItems.map((element: any, index: any) => `<ListItem key="${index}">${element.value}</ListItem>`).join('\n')}
                     </${listComponent}>`;
 				}
 			}

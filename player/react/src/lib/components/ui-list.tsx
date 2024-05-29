@@ -8,7 +8,7 @@ import { commonSlots } from '../common-slots';
 
 export interface ListState {
 	type: string;
-	items: [];
+	listItems: [];
 	id: string | number;
 	isOrderedList: boolean;
 	cssClasses?: CssClasses[];
@@ -34,7 +34,7 @@ export const UIList = ({ state }: {
 
 	return <ListComponent>
 		{
-			state.items?.map((item: any, index: any) => <ListItem key={index}>{item.value}</ListItem>)
+			state.listItems?.map((item: any, index: any) => <ListItem key={index}>{item.value}</ListItem>)
 		}
 	</ListComponent>;
 };
