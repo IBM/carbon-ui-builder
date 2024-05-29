@@ -262,7 +262,9 @@ export const componentInfo: ComponentInfo = {
 					= ${JSON.stringify(json.timePeriod)};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Timezone: {value: string; text: string; selected: boolean}[]
 					= ${JSON.stringify(json.timezones)}`,
-				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter<any>();`,
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter<any>();
+					@Output() ${nameStringToVariableString(json.codeContext?.name)}TimeperiodChange = new EventEmitter<any>();
+					@Output() ${nameStringToVariableString(json.codeContext?.name)}TimezoneChange = new EventEmitter<any>();`,
 				imports: ['TimePickerModule', 'TimePickerSelectModule'],
 				code: ({ json }) => {
 					return `<cds-timepicker
@@ -280,7 +282,8 @@ export const componentInfo: ComponentInfo = {
 							<cds-timepicker-select
 								*ngIf="${nameStringToVariableString(json.codeContext?.name)}showTimePeriod"
 								[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
-								[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled">
+								[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
+								(change)="${nameStringToVariableString(json.codeContext?.name)}TimeperiodChange.emit($event)">
 								<option
 									*ngFor="let step of ${nameStringToVariableString(json.codeContext?.name)}TimePeriod"
 									[value]="step.value"
@@ -289,9 +292,10 @@ export const componentInfo: ComponentInfo = {
 								</option>
 							</cds-timepicker-select>
 							<cds-timepicker-select
-								*ngIf="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
+								*ngIf="${nameStringToVariableString(json.codeContext?.name)}timezones.length"
 								[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
-								[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled">
+								[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
+								(change)="${nameStringToVariableString(json.codeContext?.name)}TimezoneChange.emit($event)">
 								<option
 									*ngFor="let step of ${nameStringToVariableString(json.codeContext?.name)}Timezone"
 									[value]="step.value"
@@ -317,7 +321,9 @@ export const componentInfo: ComponentInfo = {
 					= ${JSON.stringify(json.timePeriod)};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Timezone: {value: string; text: string; selected: boolean}[]
 					= ${JSON.stringify(json.timezones)}`,
-				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter<any>();`,
+				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter<any>();
+					@Output() ${nameStringToVariableString(json.codeContext?.name)}TimeperiodChange = new EventEmitter<any>();
+					@Output() ${nameStringToVariableString(json.codeContext?.name)}TimezoneChange = new EventEmitter<any>();`,
 				imports: ['TimePickerModule', 'TimePickerSelectModule'],
 				code: ({ json }) => {
 					return `<ibm-timepicker
@@ -335,7 +341,8 @@ export const componentInfo: ComponentInfo = {
 							<ibm-timepicker-select
 								*ngIf="${nameStringToVariableString(json.codeContext?.name)}showTimePeriod"
 								[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
-								[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled">
+								[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
+								(change)="${nameStringToVariableString(json.codeContext?.name)}TimeperiodChange.emit($event)">>
 								<option
 									*ngFor="let step of ${nameStringToVariableString(json.codeContext?.name)}TimePeriod"
 									[value]="step.value"
@@ -345,7 +352,8 @@ export const componentInfo: ComponentInfo = {
 							</ibm-timepicker-select>
 							<ibm-timepicker-select
 								[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
-								[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled">
+								[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
+								(change)="${nameStringToVariableString(json.codeContext?.name)}TimezoneChange.emit($event)">
 								<option
 									*ngFor="let step of ${nameStringToVariableString(json.codeContext?.name)}Timezone"
 									[value]="step.value"
@@ -370,24 +378,47 @@ export const componentInfo: ComponentInfo = {
 						invalidText="${json.invalidText}"
 						placeholder="${json.placeholder}"
 						hideLabel={${json.hideLabel}}
-						light={${json.light}}>
-							${json.timePeriod && json.showTimePeriod &&
-								`<TimePickerSelect id="${json.codeContext?.name + '-select-1'}">
+						light={${json.light}}
+						name="${json.codeContext?.name}"
+						onChange={(event) => handleInputChange({
+							target: {
+								name: "${json.codeContext?.name}",
+								value: event.target.value
+							}
+						})}>
+							${(json.timePeriod && json.showTimePeriod) ?
+								`<TimePickerSelect
+									id="${json.codeContext?.name + '-select-1'}"
+									name="${json.codeContext?.name}TimeZone"
+									onChange={(event) => handleInputChange({
+										target: {
+											name: "${json.codeContext?.name}TimeZone",
+											value: event.target.value
+										}
+									})}>
 									${json.timePeriod.map((step: any) => (`<SelectItem
 										value="${step.value}"
 										text="${step.text}"
-										selected={${!!step.selected}} />`
+										${step.selected ? 'selected={true}' : ''} />`
 									)).join('\n')}
-								</TimePickerSelect>`
+								</TimePickerSelect>` : ''
 							}
-							${json.timezones.length &&
-								`<TimePickerSelect id="${json.codeContext?.name + '-select-2'}">
+							${json.timezones.length ?
+								`<TimePickerSelect
+									id="${json.codeContext?.name + '-select-2'}"
+									name="${json.codeContext?.name}TimeZone"
+									onChange={(event) => handleInputChange({
+										target: {
+											name: "${json.codeContext?.name}TimeZone",
+											value: event.target.value
+										}
+									})}>
 									${json.timezones.map((step: any) => (`<SelectItem
 										value="${step.value}"
 										text="${step.text}"
-										selected={${!!step.selected}} />`
+										${step.selected ? 'selected={true}' : ''} />`
 									)).join('\n')}
-								</TimePickerSelect>`
+								</TimePickerSelect>` : ''
 							}
 					</TimePicker>`;
 				}
@@ -404,24 +435,47 @@ export const componentInfo: ComponentInfo = {
 						invalidText="${json.invalidText}"
 						placeholder="${json.placeholder}"
 						hideLabel={${json.hideLabel}}
-						light={${json.light}}>
-							${json.timePeriod && json.showTimePeriod &&
-								`<TimePickerSelect id="${json.codeContext?.name + '-select-1'}">
+						light={${json.light}}
+						name="${json.codeContext?.name}"
+						onChange={(event) => handleInputChange({
+							target: {
+								name: "${json.codeContext?.name}",
+								value: event.target.value
+							}
+						})}>
+							${(json.timePeriod && json.showTimePeriod) ?
+								`<TimePickerSelect
+									id="${json.codeContext?.name + '-select-1'}"
+									name="${json.codeContext?.name}TimePeriod"
+									onChange={(event) => handleInputChange({
+										target: {
+											name: "${json.codeContext?.name}TimePeriod",
+											value: event.target.value
+										}
+									})}>
 									${json.timePeriod.map((step: any) => (`<SelectItem
 										value="${step.value}"
 										text="${step.text}"
 										${step.selected ? 'selected={true}' : ''} />`
 									)).join('\n')}
-								</TimePickerSelect>`
+								</TimePickerSelect>` : ''
 							}
-							${json.timezones.length &&
-								`<TimePickerSelect id="${json.codeContext?.name + '-select-2'}">
+							${json.timezones.length ?
+								`<TimePickerSelect
+									id="${json.codeContext?.name + '-select-2'}"
+									name="${json.codeContext?.name}TimeZone"
+									onChange={(event) => handleInputChange({
+										target: {
+											name: "${json.codeContext?.name}TimeZone",
+											value: event.target.value
+										}
+									})}>
 									${json.timezones.map((step: any) => (`<SelectItem
 										value="${step.value}"
 										text="${step.text}"
 										${step.selected ? 'selected={true}' : ''} />`
 									)).join('\n')}
-								</TimePickerSelect>`
+								</TimePickerSelect>` : ''
 							}
 					</TimePicker>`;
 				}
