@@ -4,7 +4,8 @@ import {
 	DatePickerInput
 } from '@carbon/react';
 import { commonSlots, slotsDisabled } from '../common-slots';
-import { SendSignal } from '../types';
+import { SendSignal, CssClasses } from '../types';
+import { stringToCssClassName } from '../utils';
 
 export interface DatePickerState {
 	type: string;
@@ -16,11 +17,16 @@ export interface DatePickerState {
 	rangeInvalidText?: string;
 	light?: boolean;
 	size?: string;
-	datePickerType?: string;
+	kind?: string;
 	dateFormat?: string;
 	value?: string;
 	rangeStartLabel?: string;
 	rangeEndLabel?: string;
+	cssClasses?: CssClasses[];
+	codeContext: {
+		name: string;
+	};
+	style?: any;
 }
 
 export const type = 'date-picker';
@@ -29,7 +35,7 @@ export const slots = {
 	...commonSlots,
 	...slotsDisabled,
 	dateFormat: 'string',
-	datePickerType: 'string',
+	kind: 'string',
 	placeholder: 'string',
 	size: 'string',
 	invalidText: 'string',
@@ -77,10 +83,21 @@ export const UIDatePicker = ({ state, sendSignal }: {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;
 	}
+
+	let cssClasses = state.cssClasses?.map((cc: any) => cc.id).join(' ') || '';
+
+	if (state.style) {
+		if (cssClasses.length > 0) {
+			cssClasses += ' ';
+		}
+		cssClasses += stringToCssClassName(state.codeContext.name);
+	}
+
 	return <DatePicker
+		className={cssClasses}
 		id={state.id}
 		dateFormat={state.dateFormat}
-		datePickerType={state.datePickerType}
+		datePickerType={state.kind}
 		value={state.value}
 		light={state.light}
 		onClick={() => sendSignal(state.id, 'click')}
@@ -96,7 +113,7 @@ export const UIDatePicker = ({ state, sendSignal }: {
 				invalid={state.invalid}
 				invalidText={state.invalidText}/>
 			{
-				state.datePickerType === 'range' &&
+				state.kind === 'range' &&
 					<DatePickerInput
 						id={`${state.id}-end`}
 						placeholder={state.placeholder}

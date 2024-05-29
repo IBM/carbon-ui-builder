@@ -54,14 +54,14 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 			label='Date picker type'
 			titleText='Date picker type'
 			items={datePickerType}
-			selectedItem={datePickerType.find(item => item.id === selectedComponent.datePickerType)}
+			selectedItem={datePickerType.find(item => item.id === selectedComponent.kind)}
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
-				datePickerType: event.selectedItem.id
+				kind: event.selectedItem.id
 			})} />
 		{
-			(selectedComponent.datePickerType === 'single' || selectedComponent.datePickerType === 'range') &&
+			(selectedComponent.kind === 'single' || selectedComponent.kind === 'range') &&
 			<TextInput
 				id='date-format'
 				value={selectedComponent.dateFormat}
@@ -92,13 +92,13 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 		<TextInput
 			id='range-start-label'
 			value={selectedComponent.rangeStartLabel}
-			labelText={selectedComponent.datePickerType === 'range' ? 'Date picker range start label' : 'Date picker label'}
+			labelText={selectedComponent.kind === 'range' ? 'Date picker range start label' : 'Date picker label'}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				rangeStartLabel: event.currentTarget.value
 			})} />
 		{
-			selectedComponent.datePickerType === 'range'
+			selectedComponent.kind === 'range'
 			&& <TextInput
 			id='range-end-label'
 				value={selectedComponent.rangeEndLabel}
@@ -125,7 +125,7 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 				invalidText: event.currentTarget.value
 			})} />
 		{
-			selectedComponent.datePickerType === 'range'
+			selectedComponent.kind === 'range'
 			&& <TextInput
 				id='range-invalid-text'
 				value={selectedComponent.rangeInvalidText}
@@ -164,7 +164,7 @@ export const ADatePicker = ({
 					id={componentObj.id}
 					className={cx(preventCheckEventStyle, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}
 					dateFormat={componentObj.dateFormat}
-					datePickerType={componentObj.datePickerType}
+					datePickerType={componentObj.kind}
 					light={componentObj.light}>
 					<DatePickerInput
 						id={componentObj.id}
@@ -175,7 +175,7 @@ export const ADatePicker = ({
 						labelText={componentObj.rangeStartLabel}
 						size={componentObj.size} />
 					{
-						componentObj.datePickerType === 'range' &&
+						componentObj.kind === 'range' &&
 						<DatePickerInput
 							id={`${componentObj.id}-end`}
 							placeholder={componentObj.placeholder}
@@ -220,7 +220,7 @@ export const componentInfo: ComponentInfo = {
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 				imports: ['DatePickerModule'],
 				code: ({ json }) => {
-					return `${json.datePickerType === 'simple' ? '<cds-date-picker-input' : '<cds-date-picker'}
+					return `${json.kind === 'simple' ? '<cds-date-picker-input' : '<cds-date-picker'}
 						${angularClassNamesFromComponentObj(json)}
 						[theme]="${nameStringToVariableString(json.codeContext?.name)}IsLight"
 						[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
@@ -231,11 +231,11 @@ export const componentInfo: ComponentInfo = {
 						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 						[placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
 						[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
-						${json.datePickerType === 'simple' ?
+						${json.kind === 'simple' ?
 							`[dateFormat]="${nameStringToVariableString(json.codeContext?.name)}DateFormat"` :
 							`[range]="true"
 						[rangeLabel]="${nameStringToVariableString(json.codeContext?.name)}RangeEndLabel"`}>
-						${json.datePickerType === 'simple' ? '</cds-date-picker-input>' : '</cds-date-picker>'}
+						${json.kind === 'simple' ? '</cds-date-picker-input>' : '</cds-date-picker>'}
 					`;
 				}
 			},
@@ -253,7 +253,7 @@ export const componentInfo: ComponentInfo = {
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 				imports: ['DatePickerModule'],
 				code: ({ json }) => {
-					return `${json.datePickerType === 'simple' ? '<ibm-date-picker-input' : '<ibm-date-picker'}
+					return `${json.kind === 'simple' ? '<ibm-date-picker-input' : '<ibm-date-picker'}
 						${angularClassNamesFromComponentObj(json)}
 						[theme]="${nameStringToVariableString(json.codeContext?.name)}IsLight"
 						[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
@@ -264,11 +264,11 @@ export const componentInfo: ComponentInfo = {
 						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 						[placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
 						[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
-						${json.datePickerType === 'simple' ?
+						${json.kind === 'simple' ?
 							`[dateFormat]="${nameStringToVariableString(json.codeContext?.name)}DateFormat"` :
 							`[range]="true"
 						[rangeLabel]="${nameStringToVariableString(json.codeContext?.name)}RangeEndLabel"`}>
-						${json.datePickerType === 'simple' ? '</cds-date-picker-input>' : '</cds-date-picker>'}
+						${json.kind === 'simple' ? '</cds-date-picker-input>' : '</cds-date-picker>'}
 					`;
 				}
 			}
@@ -280,9 +280,9 @@ export const componentInfo: ComponentInfo = {
 					return `<DatePicker
 					${reactClassNamesFromComponentObj(json)}
 					dateFormat="${json.dateFormat}"
-					datePickerType="${json.datePickerType}"
+					datePickerType="${json.kind}"
 					${json.light ? 'light={true}' : ''}
-					${json.datePickerType !== 'simple' ? `onChange={(dates) => handleInputChange({
+					${json.kind !== 'simple' ? `onChange={(dates) => handleInputChange({
 						target: {
 							name: "${json.codeContext?.name}",
 							value: dates
@@ -296,14 +296,14 @@ export const componentInfo: ComponentInfo = {
 						${json.invalid ? `invalid='${json.invalid}'` : ''}
 						${json.invalidText ? `invalidText='${json.invalidText}'` : ''}
 						${json.size ? `size='${json.size}'` : ''}
-						${json.datePickerType === 'simple' ? `onChange={(dates) => handleInputChange({
+						${json.kind === 'simple' ? `onChange={(dates) => handleInputChange({
 							target: {
 								name: "${json.codeContext?.name}",
 								value: dates
 							}
 						})}` : ''}
 					/>
-					${json.datePickerType === 'range' ? `<DatePickerInput
+					${json.kind === 'range' ? `<DatePickerInput
 						id="${json.id + '-end'}"
 						placeholder="${json.placeholder}"
 						${json.rangeEndLabel ? `labelText='${json.rangeEndLabel}'` : ''}
@@ -322,9 +322,9 @@ export const componentInfo: ComponentInfo = {
 					return `<DatePicker
 					${reactClassNamesFromComponentObj(json)}
 					dateFormat="${json.dateFormat}"
-					datePickerType="${json.datePickerType}"
+					datePickerType="${json.kind}"
 					${json.light ? 'light={true}' : ''}
-					${json.datePickerType !== 'simple' ? `onChange={(dates) => handleInputChange({
+					${json.kind !== 'simple' ? `onChange={(dates) => handleInputChange({
 						target: {
 							name: "${json.codeContext?.name}",
 							value: dates
@@ -338,14 +338,14 @@ export const componentInfo: ComponentInfo = {
 						${json.invalid ? `invalid='${json.invalid}'` : ''}
 						${json.invalidText ? `invalidText='${json.invalidText}'` : ''}
 						${json.size ? `size='${json.size}'` : ''}
-						${json.datePickerType === 'simple' ? `onChange={(dates) => handleInputChange({
+						${json.kind === 'simple' ? `onChange={(dates) => handleInputChange({
 							target: {
 								name: "${json.codeContext?.name}",
 								value: dates
 							}
 						})}` : ''}
 					/>
-					${json.datePickerType === 'range' ? `<DatePickerInput
+					${json.kind === 'range' ? `<DatePickerInput
 						id="${json.id + '-end'}"
 						placeholder="${json.placeholder}"
 						${json.rangeEndLabel ? `labelText='${json.rangeEndLabel}'` : ''}
