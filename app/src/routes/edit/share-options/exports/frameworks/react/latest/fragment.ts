@@ -94,8 +94,8 @@ export const createReactApp = (fragment: any, fragments: any[], globalStyleClass
 `;
 	const componentJs
 		= `import React from 'react';
+import './component.scss';
 ${fragmentTemplate.imports};
-${hasFragmentStyleClasses(fragment) ? "\nimport './component.scss';\n" : ''}
 export const FragmentComponent = ({state, setState}) => {
 	const handleInputChange = (event) => {
 		setState({...state, [event.target.name]: event.target.value});
@@ -107,21 +107,23 @@ export const FragmentComponent = ({state, setState}) => {
 };
 `;
 
-	const componentScss = getAllFragmentStyleClasses(fragment, [], globalStyleClasses).map((styleClass: any) => {
-		if (!styleClass.content || !styleClass.content.trim()) {
-			return null;
-		}
+	const componentScss = `
+@use '@carbon/react' with (
+	$use-flexbox-grid: true
+);
 
-		return `.${styleClass.id} {
-			${styleClass.content}
-		}`;
-	}).join('\n');
+${getAllFragmentStyleClasses(fragment, [], globalStyleClasses).map((styleClass: any) => {
+	if (!styleClass.content || !styleClass.content.trim()) {
+		return null;
+	}
+	return `.${styleClass.id} {
+		${styleClass.content}
+	}`;
+}).join('\n')}`;
 
 	const indexJs
 		= `import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
-
-import "@carbon/styles/css/styles.css";
+import { createRoot } from 'react-dom/client';';
 
 import { FragmentComponent } from './component.js';
 
@@ -134,18 +136,21 @@ const App = () => {
 		</div>
 	);
 }
-ReactDOM.render(<App />, document.getElementById('root'));
-`;
+
+const domNode = document.getElementById('root');
+const root = createRoot(domNode);
+root.render(
+	<React.StrictMode>
+		<App />
+	</React.StrictMode>
+);`;
+
 	const packageJson = {
 		dependencies: {
-			'carbon-components': '10.58.0',
-			'@carbon/react': '1.36.0',
-			'@carbon/styles': '1.36.0',
-			react: '16.12.0',
-			'react-dom': '16.12.0',
-			'react-scripts': '3.0.1',
-			'sass': '1.45.0',
-			emotion: '10.0.27'
+			'@carbon/react': '1.41.0',
+			react: '18.2.0',
+			'react-dom': '18.2.0',
+			'sass': '1.45.0'
 		}
 	};
 
