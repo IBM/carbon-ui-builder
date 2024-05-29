@@ -119,7 +119,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 						labelText='Disabled'
 						id={`disabled-${index}`}
 						checked={selectedItem.disabled}
-						onChange={(checked: boolean) => updateListItems('disabled', checked, index, selectedComponent)} />
+						onChange={(_: any, { checked }: any) => updateListItems('disabled', checked, index, selectedComponent)} />
 					<Button
 						size='sm'
 						kind='ghost'
@@ -147,12 +147,12 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 								labelText='Disabled'
 								id={`isDisabled-checkbox-${child.id}`}
 								checked={child.disabled}
-								onChange={(checked: boolean) => updateListItems('disabled', checked, childIndex, selectedItem)} />
+								onChange={(_: any, { checked }: any) => updateListItems('disabled', checked, childIndex, selectedItem)} />
 							<Checkbox
 								labelText='Hidden'
 								id={`isHidden-checkbox-${child.id}`}
 								checked={child.hidden}
-								onChange={(checked: boolean) => updateListItems('hidden', checked, childIndex, selectedItem)} />
+								onChange={(_: any, { checked }: any) => updateListItems('hidden', checked, childIndex, selectedItem)} />
 						</section>
 						{
 							child.showDeveloperOption &&
@@ -176,12 +176,12 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 							labelText='Disabled'
 							id={`disabled-${index}`}
 							checked={selectedItem.disabled}
-							onChange={(checked: boolean) => updateListItems('disabled', checked, index, selectedComponent)} />
+							onChange={(_: any, { checked }: any) => updateListItems('disabled', checked, index, selectedComponent)} />
 						<Checkbox
 							labelText='Hidden'
 							id={`hidden-${index}`}
 							checked={selectedItem.hidden}
-							onChange={(checked: boolean) => updateListItems('hidden', checked, index, selectedComponent)} />
+							onChange={(_: any, { checked }: any) => updateListItems('hidden', checked, index, selectedComponent)} />
 					</section>
 					{
 						selectedItem.showDeveloperOption &&
@@ -228,13 +228,13 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 				labelText='Warning'
 				id='warning-label'
 				checked={selectedComponent.warn}
-				onChange={(checked: boolean) => setComponent({ ...selectedComponent, warn: checked })} />
+				onChange={(_: any, { checked }: any) => setComponent({ ...selectedComponent, warn: checked })} />
 
 			<Checkbox
 				labelText='Disabled'
 				id='disable-label'
 				checked={selectedComponent.disabled}
-				onChange={(checked: boolean) => setComponent({ ...selectedComponent, disabled: checked })} />
+				onChange={(_: any, { checked }: any) => setComponent({ ...selectedComponent, disabled: checked })} />
 
 		</section>
 
@@ -243,13 +243,13 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 				labelText='Inline'
 				id='inline'
 				checked={selectedComponent.inline}
-				onChange={(checked: boolean) => setComponent({ ...selectedComponent, inline: checked })} />
+				onChange={(_: any, { checked }: any) => setComponent({ ...selectedComponent, inline: checked })} />
 
 			<Checkbox
 				labelText='Invalid'
 				id='invalid'
 				checked={selectedComponent.invalid}
-				onChange={(checked: boolean) => setComponent({ ...selectedComponent, invalid: checked })} />
+				onChange={(_: any, { checked }: any) => setComponent({ ...selectedComponent, invalid: checked })} />
 		</section>
 
 		<hr />
@@ -481,7 +481,7 @@ export const componentInfo: ComponentInfo = {
 							step.items && step.items.length > 0
 								?
 							`<SelectItemGroup
-							key={${index}}
+							key="${index}"
 							label="${step.label}"
 							disabled={${step.disabled}}>
 							${step.items.map((child: any, index: any) => `<SelectItem
@@ -489,7 +489,7 @@ export const componentInfo: ComponentInfo = {
 								value="${child.value}"
 								disabled={${child.disabled}}
 								hidden={${child.hidden}}
-								key={${index}} />`
+								key="${index}" />`
 							).join('\n')}
 							</SelectItemGroup>`
 								:
@@ -498,7 +498,7 @@ export const componentInfo: ComponentInfo = {
 								value="${step.value}"
 								disabled={${step.disabled}}
 								hidden={${step.hidden}}
-								key={${index}} />`
+								key="${index}" />`
 						).join('\n')}
 					</Select>`;
 				}
@@ -523,7 +523,7 @@ export const componentInfo: ComponentInfo = {
 							step.items && step.items.length > 0
 								?
 							`<SelectItemGroup
-							key={${index}}
+							key="${index}"
 							label="${step.label}"
 							disabled={${step.disabled}}>
 							${step.items.map((child: any, index: any) => `<SelectItem
@@ -531,7 +531,7 @@ export const componentInfo: ComponentInfo = {
 								value="${child.value}"
 								disabled={${child.disabled}}
 								hidden={${child.hidden}}
-								key={${index}} />`
+								key="${index}" />`
 							).join('\n')}
 							</SelectItemGroup>`
 								:
@@ -540,7 +540,7 @@ export const componentInfo: ComponentInfo = {
 								value="${step.value}"
 								disabled={${step.disabled}}
 								hidden={${step.hidden}}
-								key={${index}} />`
+								key="${index}" />`
 						).join('\n')}
 					</Select>`;
 				}
