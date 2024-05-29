@@ -20,6 +20,7 @@ import * as searchinput from './ui-search-input';
 import * as text from './ui-text';
 import * as textarea from './ui-text-area';
 import * as textinput from './ui-text-input';
+import * as timepicker from './ui-time-picker';
 import * as link from './ui-link';
 import * as loading from './ui-loading';
 import * as inlineLoading from './ui-inline-loading';
@@ -59,6 +60,7 @@ export const allComponents = {
 	text,
 	textarea,
 	textinput,
+	timepicker,
 	overflowMenu,
 	// Tiles
 	tile,

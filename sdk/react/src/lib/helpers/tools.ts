@@ -146,7 +146,7 @@ export const getUsedCollectionsStyleUrls = (collections: any[], componentObj: an
 	}
 
 	return collections
-		.filter((collection) => usedCollectionsNames.includes(collection.name))
+		?.filter((collection) => usedCollectionsNames.includes(collection.name))
 		.flatMap((collection) => collection.styleUrls);
 };
 
