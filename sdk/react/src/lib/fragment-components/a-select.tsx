@@ -214,6 +214,11 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 			onChange={(event: any) => setComponent({ ...selectedComponent, labelText: event.currentTarget.value })} />
 
 		<TextInput
+			value={selectedComponent.helperText}
+			labelText='Helper text'
+			onChange={(event: any) => setComponent({ ...selectedComponent, helperText: event.currentTarget.value })} />
+
+		<TextInput
 			value={selectedComponent.invalidText}
 			labelText='Invalid text value'
 			onChange={(event: any) => setComponent({ ...selectedComponent, invalidText: event.currentTarget.value })} />
@@ -372,14 +377,15 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			latest: {
-				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: any = "${json.size}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Invalid = ${json.invalid};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}HelperText = "${json.helperText}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}WarnText = "${json.warnText}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Warn = ${json.warn};`,
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled ?? false};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Invalid = ${json.invalid ?? false};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Warn = ${json.warn ?? false};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Inline = "${json.inline ? 'inline' : 'default'}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: any = "${json.size ?? ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText ?? ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText ?? ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}HelperText = "${json.helperText ?? ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}WarnText = "${json.warnText ?? ''}";`,
 				outputs: (_) => '',
 				imports: ['SelectModule'],
 				code: ({ json }) => {
@@ -392,7 +398,7 @@ export const componentInfo: ComponentInfo = {
 						[invalidText]="${nameStringToVariableString(json.codeContext?.name)}InvalidText"
 						[label]="${nameStringToVariableString(json.codeContext?.name)}Label"
 						[helperText]="${nameStringToVariableString(json.codeContext?.name)}HelperText"
-						${json.inline ? 'display="inline"' : 'display="default"'}
+						[display]="${nameStringToVariableString(json.codeContext?.name)}Inline"
 						${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((step: any) =>
 							step.items && step.items.length > 0 ? `<optgroup
@@ -416,14 +422,15 @@ export const componentInfo: ComponentInfo = {
 				}
 			},
 			v10: {
-				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: any = "${json.size}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Invalid = ${json.invalid};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}HelperText = "${json.helperText}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}WarnText = "${json.warnText}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Warn = ${json.warn};`,
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled ?? false};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Invalid = ${json.invalid ?? false};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Warn = ${json.warn ?? false};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Inline = "${json.inline ? 'inline' : 'default'}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: any = "${json.size ?? ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText ?? ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText ?? ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}HelperText = "${json.helperText ?? ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}WarnText = "${json.warnText ?? ''}";`,
 				outputs: (_) => '',
 				imports: ['SelectModule'],
 				code: ({ json }) => {
@@ -436,7 +443,7 @@ export const componentInfo: ComponentInfo = {
 						[invalidText]="${nameStringToVariableString(json.codeContext?.name)}InvalidText"
 						[label]="${nameStringToVariableString(json.codeContext?.name)}Label"
 						[helperText]="${nameStringToVariableString(json.codeContext?.name)}HelperText"
-						${json.inline ? 'display="inline"' : 'display="default"'}
+						[display]="${nameStringToVariableString(json.codeContext?.name)}Inline"
 						${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((step: any) =>
 							step.items && step.items.length > 0 ? `<optgroup
