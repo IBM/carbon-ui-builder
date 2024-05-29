@@ -187,8 +187,6 @@ export const createAngularApp = (fragment: any, fragments: any[], globalStyleCla
 		`import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 		import { AppModule } from './app/app.module';
 
-		import "@carbon/styles/css/styles.css";
-
 		platformBrowserDynamic()
 			.bootstrapModule(AppModule)
 			.catch(err => console.log(err));
@@ -220,26 +218,37 @@ export const createAngularApp = (fragment: any, fragments: any[], globalStyleCla
 		]
 	}, null, '\t');
 
-	const styleScss = getUsedCollectionsAngularStyleImportPaths(customComponentsCollections, fragment.data)
+	const styleScss = `@use "@carbon/styles/scss/config" with (
+			// Use flexbox for grid - stick to CSS Grid or Flexbox
+			// CSS Grid has become the default grid system in v11
+			$use-flexbox-grid: true
+		);
+
+		@use "@carbon/styles";
+
+		body {
+			@include styles.theme(styles.$white);
+		}
+	${getUsedCollectionsAngularStyleImportPaths(customComponentsCollections, fragment.data)
 		.map(path => `@import '${path}';`)
-		.join('\n');
+		.join('\n')}`;
 
 	const packageJson = {
 		dependencies: {
-			'@angular/animations': '12.2.0',
-			'@angular/common': '12.2.0',
-			'@angular/compiler': '12.2.0',
-			'@angular/core': '12.2.0',
-			'@angular/forms': '12.2.0',
-			'@angular/platform-browser': '12.2.0',
-			'@angular/platform-browser-dynamic': '12.2.0',
-			'@angular/router': '12.2.0',
-			'@carbon/styles': '1.36.0',
-			'rxjs': '6.6.0',
+			'@angular/animations': '14.2.0',
+			'@angular/common': '14.2.0',
+			'@angular/compiler': '14.2.0',
+			'@angular/core': '14.2.0',
+			'@angular/forms': '14.2.0',
+			'@angular/platform-browser': '14.2.0',
+			'@angular/platform-browser-dynamic': '14.2.0',
+			'@angular/router': '14.2.0',
+			'@carbon/styles': '1.45.0',
+			'rxjs': '7.5.0',
 			'tslib': '2.3.0',
 			'sass': '1.45.0',
 			'zone.js': '0.11.4',
-			'carbon-components-angular': '5.14.10',
+			'carbon-components-angular': '5.25.0',
 			...getUsedCollectionsAngularDependencies(customComponentsCollections, fragment.data)
 		}
 	};
