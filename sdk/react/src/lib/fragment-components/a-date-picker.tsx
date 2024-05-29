@@ -331,7 +331,7 @@ export const componentInfo: ComponentInfo = {
 						}
 					})}`: ''}>
 					<DatePickerInput
-						id="${json.id + '-start'}"
+						id="${json.id}"
 						placeholder="${json.placeholder}"
 						${json.rangeStartLabel ? `labelText='${json.rangeStartLabel}'` : ''}
 						${json.disabled ? `disabled='${json.disabled}'` : ''}
