@@ -152,7 +152,7 @@ export const componentInfo: ComponentInfo = {
 				code: ({ json }) => {
 					const listComponent = json.isOrderedList? 'OrderedList' : 'UnorderedList';
 					return `<${listComponent} ${reactClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any, index: any) => `<ListItem key={${index}}>${element.value}</ListItem>`).join('\n')}
+						${json.items.map((element: any, index: any) => `<ListItem key="${index}">${element.value}</ListItem>`).join('\n')}
                     </${listComponent}>`;
 				}
 			},
@@ -161,7 +161,7 @@ export const componentInfo: ComponentInfo = {
 				code: ({ json }) => {
 					const listComponent = json.isOrderedList? 'OrderedList' : 'UnorderedList';
 					return `<${listComponent} ${reactClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any, index: any) => `<ListItem key={${index}}>${element.value}</ListItem>`).join('\n')}
+						${json.items.map((element: any, index: any) => `<ListItem key="${index}">${element.value}</ListItem>`).join('\n')}
                     </${listComponent}>`;
 				}
 			}
