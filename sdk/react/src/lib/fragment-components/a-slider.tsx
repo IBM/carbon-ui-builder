@@ -177,11 +177,8 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'slider',
 		labelText: 'Slider label',
-		value: 0,
 		min: 0,
-		max: 100,
-		step: 1,
-		stepMultiplier: 1
+		max: 100
 	},
 	image,
 	codeExport: {
@@ -189,14 +186,14 @@ export const componentInfo: ComponentInfo = {
 			latest: {
 				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled ?? false};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = ${json.value};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = ${json.value ?? 0};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Min = ${json.min};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Max = ${json.max};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}MinLabel = "${json.minLabel ?? ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}MaxLabel = "${json.maxLabel ?? ''}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Step = ${json.step};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}StepMultiplier = ${json.stepMultiplier};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}" `,
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Step = ${json.step ?? 1};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}StepMultiplier = ${json.stepMultiplier ?? 1};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}"; `,
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 				imports: ['SliderModule'],
 				code: ({ json }) => {
@@ -209,24 +206,24 @@ export const componentInfo: ComponentInfo = {
 						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 						[shiftMultiplier]="${nameStringToVariableString(json.codeContext?.name)}StepMultiplier"
 						[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
-						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
+						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event)">
 						<span minLabel>{{${nameStringToVariableString(json.codeContext?.name)}MinLabel}}</span>
 						<span maxLabel>{{${nameStringToVariableString(json.codeContext?.name)}MaxLabel}}</span>
-						<input [ngClass]="{'cds--text-input--light': ${nameStringToVariableString(json.codeContext?.name)}Theme === 'light'}"></input>
+						<input [ngClass]="{'cds--text-input--light': ${nameStringToVariableString(json.codeContext?.name)}Theme === 'light'}"/>
 					</cds-slider>`;
 				}
 			},
 			v10: {
 				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled ?? false};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = ${json.value};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = ${json.value ?? 0};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Min = ${json.min};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Max = ${json.max};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}MinLabel = "${json.minLabel ?? ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}MaxLabel = "${json.maxLabel ?? ''}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Step = ${json.step};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}StepMultiplier = ${json.stepMultiplier};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}" `,
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Step = ${json.step ?? 1};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}StepMultiplier = ${json.stepMultiplier ?? 1};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme = "${json.light ? 'light' : 'dark'}"; `,
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 				imports: ['SliderModule'],
 				code: ({ json }) => {
@@ -239,10 +236,10 @@ export const componentInfo: ComponentInfo = {
 						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 						[shiftMultiplier]="${nameStringToVariableString(json.codeContext?.name)}StepMultiplier"
 						[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
-						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)">
+						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event)">
 						<span minLabel>{{${nameStringToVariableString(json.codeContext?.name)}MinLabel}}</span>
 						<span maxLabel>{{${nameStringToVariableString(json.codeContext?.name)}MaxLabel}}</span>
-						<input [ngClass]="{'cds--text-input--light': ${nameStringToVariableString(json.codeContext?.name)}Theme === 'light'}"></input>
+						<input [ngClass]="{'cds--text-input--light': ${nameStringToVariableString(json.codeContext?.name)}Theme === 'light'}"/>
 					</ibm-slider>`;
 				}
 			}
