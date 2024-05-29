@@ -25,6 +25,7 @@ import * as link from './a-link';
 import * as loading from './a-loading';
 import * as inlineLoading from './a-inline-loading';
 import * as overflowMenu from './a-overflow-menu';
+import * as select from './a-select';
 // Tiles
 import * as tile from './tiles/a-tile';
 import * as toggle from './a-toggle';
@@ -37,6 +38,7 @@ import * as radiotile from './tiles/a-radio-tile';
 import * as radioTileGroup from './tiles/a-radio-tile-group';
 
 // Accordion
+export { ASelect, ASelectCodeUI, ASelectSettingsUI } from './a-select';
 export { AAccordion, AAccordionSettingsUI } from './accordion/a-accordion';
 export { AAccordionItem, AAccordionItemCodeUI, AAccordionItemSettingsUI } from './accordion/a-accordion-item';
 export { AButton, AButtonCodeUI, AButtonSettingsUI } from './a-button';
@@ -108,6 +110,7 @@ export const allComponents = {
 	clickabletile,
 	expandabletile,
 	tilefold,
+	select,
 	selectabletile,
 	selectableTileGroup,
 	radiotile,

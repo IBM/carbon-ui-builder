@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="select_large_01_enabled" data-name="select / large / 01 enabled" width="77" height="44" viewBox="0 0 77 44">
+    <g id="background" transform="translate(0 16)">
+        <g id="text_input_default_medium_piece_input_background" data-name="text input / default (medium) / piece / input background">
+        <rect id="input" width="77" height="28" fill="#f4f4f4"/>
+        <rect id="border-bottom" width="77" height="1" transform="translate(0 27)" fill="#8d8d8d"/>
+        </g>
+        <text id="Choose_an_option" data-name="Choose an option" transform="translate(4 15)" fill="#161616" font-size="7" font-family="IBMPlexSans, IBM Plex Sans" letter-spacing="0.011em"><tspan x="0" y="0">Choose an option</tspan></text>
+    </g>
+    <g id="Actions_Navigation_chevron--down_16" data-name="Actions / Navigation / chevron--down / 16" transform="translate(62 24)">
+        <path id="Fill" d="M3.75,4.275,0,.525.525,0,3.75,3.225,6.975,0,7.5.525Z" transform="translate(2.25 3.975)" fill="#161616"/>
+    </g>
+    <g id="Label">
+        <text id="Label-2" data-name="Label" fill="#525252" font-size="10" font-family="IBMPlexSans, IBM Plex Sans"><tspan x="0" y="10">Label</tspan></text>
+    </g>
+</svg>
