@@ -246,7 +246,6 @@ export const createAngularApp = (fragment: any, fragments: any[], globalStyleCla
 			'@carbon/styles': '1.45.0',
 			'rxjs': '7.5.0',
 			'tslib': '2.3.0',
-			'sass': '1.45.0',
 			'zone.js': '0.11.4',
 			'carbon-components-angular': '5.25.0',
 			...getUsedCollectionsAngularDependencies(customComponentsCollections, fragment.data)
