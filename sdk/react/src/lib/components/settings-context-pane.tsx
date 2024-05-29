@@ -211,7 +211,7 @@ export const SettingsContextPane = ({
 	}, [settings]);
 
 	return (
-		<div className={cx(styleContextPaneStyle, 'context-pane-content')}>
+		<div className='context-pane-content'>
 			{
 				selectedComponent &&
 					<SelectedComponentBreadcrumbs
@@ -237,7 +237,7 @@ export const SettingsContextPane = ({
 					</>
 				}
 				{
-					!selectedComponent && <>
+					!selectedComponent && <div className={cx(styleContextPaneStyle)}>
 						<Checkbox
 							id='setFragmentAsTemplate'
 							checked={fragment.labels && fragment.labels.includes('template')}
@@ -291,7 +291,7 @@ export const SettingsContextPane = ({
 							className={tooltipStyle}>
 							micro layout
 						</DefinitionTooltip>
-					</>
+					</div>
 				}
 				</div>
 			}
