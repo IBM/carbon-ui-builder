@@ -36,8 +36,7 @@ export const slots = {
 	...commonSlots,
 	...slotsDisabled,
 	labelText: 'string',
-	defaultValue: 'string',
-	lowContrast: 'boolean'
+	defaultValue: 'string'
 };
 
 export const UISelect = ({ state, sendSignal }: {
