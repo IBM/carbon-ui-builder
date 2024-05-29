@@ -62,7 +62,7 @@ export const AListSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			setDataList={updateStepList}
 			updateItem={handleItemUpdate}
 			defaultObject={{
-				value: 'Text'
+				value: 'Item'
 			}}
 			template={template} />
 		<hr />
@@ -148,20 +148,20 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			latest: {
-				imports: ({ json }) => [json.isOrderedList ? 'OrderedList' : 'UnorderedList'],
+				imports: ({ json }) => [json.isOrderedList ? 'OrderedList' : 'UnorderedList'].concat(json.items.length > 0 ? ['ListItem'] : []),
 				code: ({ json }) => {
 					const listComponent = json.isOrderedList? 'OrderedList' : 'UnorderedList';
 					return `<${listComponent} ${reactClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any, index: any) => `<ListItem key=${index}>${element.value}</ListItem>`).join('\n')}
+						${json.items.map((element: any, index: any) => `<ListItem key={${index}}>${element.value}</ListItem>`).join('\n')}
                     </${listComponent}>`;
 				}
 			},
 			v10: {
-				imports: ({ json }) => [json.isOrderedList ? 'OrderedList' : 'UnorderedList'],
+				imports: ({ json }) => [json.isOrderedList ? 'OrderedList' : 'UnorderedList'].concat(json.items.length > 0 ? ['ListItem'] : []),
 				code: ({ json }) => {
 					const listComponent = json.isOrderedList? 'OrderedList' : 'UnorderedList';
 					return `<${listComponent} ${reactClassNamesFromComponentObj(json)}>
-						${json.items.map((element: any, index: any) => `<ListItem key=${index}>${element.value}</ListItem>`).join('\n')}
+						${json.items.map((element: any, index: any) => `<ListItem key={${index}}>${element.value}</ListItem>`).join('\n')}
                     </${listComponent}>`;
 				}
 			}
