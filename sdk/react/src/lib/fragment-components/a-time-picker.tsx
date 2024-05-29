@@ -225,13 +225,9 @@ export const componentInfo: ComponentInfo = {
 	type: 'time-picker',
 	defaultComponentObj: {
 		type: 'time-picker',
-		disabled: false,
-		invalid: false,
 		invalidText: 'A valid value is required',
 		placeholder: 'hh:mm',
 		label: 'Select a time',
-		hideLabel: false,
-		light: false,
 		showTimePeriod: false,
 		timePeriod: [
 			{
@@ -245,7 +241,6 @@ export const componentInfo: ComponentInfo = {
 				selected: false
 			}
 		],
-		size: 'md',
 		value: '',
 		timezones: []
 	},
@@ -256,13 +251,13 @@ export const componentInfo: ComponentInfo = {
 				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.label}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme: "light" | "dark" = "${json.light ? 'light' : 'dark'}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = ${json.invalid};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = ${json.invalid ?? false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: "sm" | "md" | "lg" = "${json.size}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}HideLabel = ${json.hideLabel};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: "sm" | "md" | "lg" = "${json.size ?? 'md'}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}HideLabel = ${json.hideLabel ?? false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = ${json.disabled};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}showTimePeriod = ${json.showTimePeriod};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = ${json.disabled ?? false};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}showTimePeriod = ${json.showTimePeriod ?? false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}TimePeriod: {value: string; text: string; selected: boolean}[]
 					= ${JSON.stringify(json.timePeriod)};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Timezone: {value: string; text: string; selected: boolean}[]
