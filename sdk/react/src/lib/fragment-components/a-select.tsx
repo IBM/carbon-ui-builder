@@ -462,7 +462,11 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			latest: {
-				imports: ['Select', 'SelectItem', 'SelectItemGroup'],
+				imports:({ json }) => {
+					const selectItem = json.items?.length ? ['SelectItem'] : [];
+					const selectItemGroup = json.items && json.items[0].items?.length > 0 ? ['SelectItemGroup'] : [];
+					return ['Select', ...selectItem, ...selectItemGroup];
+				},
 				code: ({ json }) => {
 					return `<Select
 						id="select"
@@ -504,7 +508,11 @@ export const componentInfo: ComponentInfo = {
 				}
 			},
 			v10: {
-				imports: ['Select', 'SelectItem', 'SelectItemGroup'],
+				imports:({ json }) => {
+					const selectItem = json.items?.length ? ['SelectItem'] : [];
+					const selectItemGroup = json.items && json.items[0].items?.length > 0 ? ['SelectItemGroup'] : [];
+					return ['Select', ...selectItem, ...selectItemGroup];
+				},
 				code: ({ json }) => {
 					return `<Select
 						id="select"
