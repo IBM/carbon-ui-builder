@@ -363,7 +363,6 @@ export const componentInfo: ComponentInfo = {
 	type: 'select',
 	defaultComponentObj: {
 		type: 'select',
-		size: 'md',
 		labelText: 'Select',
 		items: [
 			{
@@ -380,8 +379,9 @@ export const componentInfo: ComponentInfo = {
 				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled ?? false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Invalid = ${json.invalid ?? false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Warn = ${json.warn ?? false};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Inline = "${json.inline ? 'inline' : 'default'}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: any = "${json.size ?? ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Inline: "inline" | "default"
+					= "${json.inline ? 'inline' : 'default'}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: "sm" | "md" | "lg" = "${json.size ?? ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText ?? ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText ?? ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}HelperText = "${json.helperText ?? ''}";
@@ -389,7 +389,7 @@ export const componentInfo: ComponentInfo = {
 				outputs: (_) => '',
 				imports: ['SelectModule'],
 				code: ({ json }) => {
-					return `<ibm-select
+					return `<cds-select
 						[disabled]="${nameStringToVariableString(json.codeContext?.name)}Disabled"
 						[warn]="${nameStringToVariableString(json.codeContext?.name)}Warn"
 						[warnText]="${nameStringToVariableString(json.codeContext?.name)}WarnText"
@@ -418,15 +418,16 @@ export const componentInfo: ComponentInfo = {
 								${step.text}
 							</option>`
 						).join('\n')}
-					</ibm-select>`;
+					</cds-select>`;
 				}
 			},
 			v10: {
 				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Disabled = ${json.disabled ?? false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Invalid = ${json.invalid ?? false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Warn = ${json.warn ?? false};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Inline = "${json.inline ? 'inline' : 'default'}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: any = "${json.size ?? ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Inline: "inline" | "default"
+					= "${json.inline ? 'inline' : 'default'}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: "sm" | "md" | "lg" = "${json.size ?? ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText ?? ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText ?? ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}HelperText = "${json.helperText ?? ''}";
