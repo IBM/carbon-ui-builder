@@ -177,7 +177,7 @@ export const ADatePicker = ({
 					{
 						componentObj.datePickerType === 'range' &&
 						<DatePickerInput
-							id={`${componentObj.id} + '-end'`}
+							id={`${componentObj.id}-end`}
 							placeholder={componentObj.placeholder}
 							labelText={componentObj.rangeEndLabel}
 							size={componentObj.size}
