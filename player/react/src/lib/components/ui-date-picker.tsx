@@ -88,7 +88,7 @@ export const UIDatePicker = ({ state, sendSignal }: {
 			sendSignal(state.id, 'valueChange', [event[0].toISOString()], { ...state, value: event[0].toISOString() });
 		}}>
 			<DatePickerInput
-				id={`${state.id} + '-start'`}
+				id={state.id}
 				placeholder={state.placeholder}
 				labelText={state.rangeStartLabel}
 				size={state.size}
