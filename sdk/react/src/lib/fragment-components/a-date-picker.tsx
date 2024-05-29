@@ -167,7 +167,7 @@ export const ADatePicker = ({
 					datePickerType={componentObj.datePickerType}
 					light={componentObj.light}>
 					<DatePickerInput
-						id={`${componentObj.id} + '-start'`}
+						id={componentObj.id}
 						placeholder={componentObj.placeholder}
 						disabled={componentObj.disabled}
 						invalid={componentObj.invalid}
