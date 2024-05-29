@@ -201,11 +201,7 @@ export const componentInfo: ComponentInfo = {
 	defaultComponentObj: {
 		type: 'date-picker',
 		placeholder: 'mm/dd/yyyy',
-		size: 'md',
-		datePickerType: 'simple',
-		dateFormat: 'm/d/Y',
-		rangeStartLabel: 'Start',
-		rangeEndLabel: 'End'
+		rangeStartLabel: 'Date'
 	},
 	image,
 	codeExport: {
@@ -299,7 +295,7 @@ export const componentInfo: ComponentInfo = {
 						${json.disabled ? `disabled='${json.disabled}'` : ''}
 						${json.invalid ? `invalid='${json.invalid}'` : ''}
 						${json.invalidText ? `invalidText='${json.invalidText}'` : ''}
-						size="${json.size}"
+						${json.size ? `size='${json.size}'` : ''}
 						${json.datePickerType === 'simple' ? `onChange={(dates) => handleInputChange({
 							target: {
 								name: "${json.codeContext?.name}",
@@ -341,7 +337,7 @@ export const componentInfo: ComponentInfo = {
 						${json.disabled ? `disabled='${json.disabled}'` : ''}
 						${json.invalid ? `invalid='${json.invalid}'` : ''}
 						${json.invalidText ? `invalidText='${json.invalidText}'` : ''}
-						size="${json.size}"
+						${json.size ? `size='${json.size}'` : ''}
 						${json.datePickerType === 'simple' ? `onChange={(dates) => handleInputChange({
 							target: {
 								name: "${json.codeContext?.name}",
