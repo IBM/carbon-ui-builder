@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	DatePicker,
 	DatePickerInput,
@@ -19,7 +19,14 @@ const preventCheckEventStyle = css`
 	pointer-events: none;
 `;
 
+const checkboxStyle = css`
+	padding-top: 0.5rem;
+`;
+
 export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) => {
+	const [showRangePlaceholder, setShowRangePlaceholder] = useState(false);
+	const [rangePlaceholder, setRangePlaceholder] = useState('Range placeholder');
+
 	const size = [
 		{ id: 'sm', text: 'Small' },
 		{ id: 'md', text: 'Medium' },
@@ -58,7 +65,8 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 			itemToString={(item: any) => (item ? item.text : '')}
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
-				kind: event.selectedItem.id
+				kind: event.selectedItem.id,
+				...(event.selectedItem.id === 'range' && selectedComponent.rangeEndLabel === undefined) ? { rangeEndLabel: 'Range end' } : {}
 			})} />
 		{
 			(selectedComponent.kind === 'single' || selectedComponent.kind === 'range') &&
@@ -72,12 +80,50 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 				})} />
 		}
 		<TextInput
+			id='placeholder'
 			value={selectedComponent.placeholder}
 			labelText='Placeholder'
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				placeholder: event.currentTarget.value
 			})} />
+		{selectedComponent.kind === 'range' &&
+			<Checkbox
+				className={checkboxStyle}
+				labelText='Override range placeholder'
+				id='override-range-placeholder'
+				checked={showRangePlaceholder}
+				onChange={(_: any, { checked }: any) => {
+					setShowRangePlaceholder(checked);
+					const componentAttributes = selectedComponent;
+
+					if (!checked) {
+						// Deleting the attributes from the model
+						delete componentAttributes.rangePlaceholder;
+					} else {
+						// Restore user set range placeholder
+						componentAttributes.rangePlaceholder = rangePlaceholder;
+					}
+
+					setComponent({
+						...componentAttributes
+					});
+				}} />
+		}
+		{
+			showRangePlaceholder &&
+			<TextInput
+				id='range-placeholder'
+				value={selectedComponent.rangePlaceholder}
+				labelText='Range placeholder'
+				onChange={(event: any) => {
+					setRangePlaceholder(event.currentTarget.value);
+					setComponent({
+						...selectedComponent,
+						rangePlaceholder: event.currentTarget.value
+					});
+				}} />
+		}
 		<Dropdown
 			id='size-select'
 			label='Size'
@@ -100,7 +146,7 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 		{
 			selectedComponent.kind === 'range'
 			&& <TextInput
-			id='range-end-label'
+				id='range-end-label'
 				value={selectedComponent.rangeEndLabel}
 				labelText='Date picker range end label'
 				onChange={(event: any) => setComponent({
@@ -109,6 +155,7 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 				})} />
 		}
 		<Checkbox
+			className={checkboxStyle}
 			labelText='Invalid'
 			id='invalid'
 			checked={selectedComponent.invalid}
@@ -178,7 +225,7 @@ export const ADatePicker = ({
 						componentObj.kind === 'range' &&
 						<DatePickerInput
 							id={`${componentObj.id}-end`}
-							placeholder={componentObj.placeholder}
+							placeholder={componentObj.rangePlaceholder || componentObj.placeholder}
 							labelText={componentObj.rangeEndLabel}
 							size={componentObj.size}
 							disabled={componentObj.disabled}
@@ -200,23 +247,23 @@ export const componentInfo: ComponentInfo = {
 	type: 'date-picker',
 	defaultComponentObj: {
 		type: 'date-picker',
-		placeholder: 'mm/dd/yyyy',
-		rangeStartLabel: 'Date'
+		rangeStartLabel: 'Label'
 	},
 	image,
 	codeExport: {
 		angular: {
 			latest: {
 				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value ? json.value : ''}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsLight = ${json.light};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsLight = ${json.light ?? false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangeStartLabel = "${json.rangeStartLabel}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangeEndLabel = "${json.rangeEndLabel ?? ''}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = ${json.disabled ?? false };
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = ${json.disabled ?? false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = ${json.invalid ?? false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText ?? ''}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder ?? ''}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size ?? ''}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}DateFormat = "${json.dateFormat ? json.dateFormat : ''}";`,
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder ?? 'mm/dd/yyyy'}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangePlaceholder = "${json.rangePlaceholder ?? ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size || 'md'}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}DateFormat = "${json.dateFormat || 'm/d/Y'}";`,
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 				imports: ['DatePickerModule'],
 				code: ({ json }) => {
@@ -240,16 +287,16 @@ export const componentInfo: ComponentInfo = {
 				}
 			},
 			v10: {
-				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value: any = "${json.value}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsLight = ${json.light};
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsLight = ${json.light ?? false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangeStartLabel = "${json.rangeStartLabel}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangeEndLabel = "${json.rangeEndLabel ?? ''}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = ${json.disabled ?? false };
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = ${json.disabled ?? false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = ${json.invalid ?? false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText ?? ''}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder ?? ''}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}DateFormat = "${json.dateFormat ?? ''}";`,
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder ?? 'mm/dd/yyyy'}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size || 'md'}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}DateFormat = "${json.dateFormat || 'm/d/Y'}";`,
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 				imports: ['DatePickerModule'],
 				code: ({ json }) => {
@@ -279,8 +326,8 @@ export const componentInfo: ComponentInfo = {
 				code: ({ json }) => {
 					return `<DatePicker
 					${reactClassNamesFromComponentObj(json)}
-					dateFormat="${json.dateFormat}"
-					datePickerType="${json.kind}"
+					${json.kind ? `datePickerType="${json.kind}"` : ''}
+					${json.dateFormat ? `dateFormat="${json.dateFormat}"` : ''}
 					${json.light ? 'light={true}' : ''}
 					${json.kind !== 'simple' ? `onChange={(dates) => handleInputChange({
 						target: {
@@ -289,13 +336,13 @@ export const componentInfo: ComponentInfo = {
 						}
 					})}`: ''}>
 					<DatePickerInput
-						id="${json.id}"
-						placeholder="${json.placeholder}"
+						id="${nameStringToVariableString(json.codeContext?.name)}"
+						${json.placeholder ? `placeholder='${json.placeholder}'` : ''}
 						${json.rangeStartLabel ? `labelText='${json.rangeStartLabel}'` : ''}
 						${json.disabled ? `disabled='${json.disabled}'` : ''}
 						${json.invalid ? `invalid='${json.invalid}'` : ''}
 						${json.invalidText ? `invalidText='${json.invalidText}'` : ''}
-						${json.size ? `size='${json.size}'` : ''}
+						${json.size && json.size !== 'md' ? `size="${json.size}"` : ''}
 						${json.kind === 'simple' ? `onChange={(dates) => handleInputChange({
 							target: {
 								name: "${json.codeContext?.name}",
@@ -304,15 +351,14 @@ export const componentInfo: ComponentInfo = {
 						})}` : ''}
 					/>
 					${json.kind === 'range' ? `<DatePickerInput
-						id="${json.id + '-end'}"
-						placeholder="${json.placeholder}"
+						id="${nameStringToVariableString(json.codeContext?.name) + '-end'}"
+						${json.rangePlaceholder ? `placeholder="${json.rangePlaceholder}"` : `placeholder="${json.placeholder}"`}
 						${json.rangeEndLabel ? `labelText='${json.rangeEndLabel}'` : ''}
 						${json.disabled ? `disabled='${json.disabled}'` : ''}
 						${json.invalid ? `invalid='${json.invalid}'` : ''}
 						${json.invalidText ? `invalidText='${json.rangeInvalidText}'` : ''}
-						size="${json.size}"
-						/>`
-					: ''}
+						${json.size && json.size !== 'md' ? `size="${json.size}"` : ''}
+						/>` : ''}
 					</DatePicker>`;
 				}
 			},
@@ -321,8 +367,8 @@ export const componentInfo: ComponentInfo = {
 				code: ({ json }) => {
 					return `<DatePicker
 					${reactClassNamesFromComponentObj(json)}
-					dateFormat="${json.dateFormat}"
-					datePickerType="${json.kind}"
+					${json.kind ? `datePickerType="${json.kind}"` : ''}
+					${json.dateFormat ? `dateFormat="${json.dateFormat}"` : ''}
 					${json.light ? 'light={true}' : ''}
 					${json.kind !== 'simple' ? `onChange={(dates) => handleInputChange({
 						target: {
@@ -331,13 +377,13 @@ export const componentInfo: ComponentInfo = {
 						}
 					})}`: ''}>
 					<DatePickerInput
-						id="${json.id}"
-						placeholder="${json.placeholder}"
+						id="${nameStringToVariableString(json.codeContext?.name)}"
+						${json.placeholder ? `placeholder='${json.placeholder}'` : ''}
 						${json.rangeStartLabel ? `labelText='${json.rangeStartLabel}'` : ''}
 						${json.disabled ? `disabled='${json.disabled}'` : ''}
 						${json.invalid ? `invalid='${json.invalid}'` : ''}
 						${json.invalidText ? `invalidText='${json.invalidText}'` : ''}
-						${json.size ? `size='${json.size}'` : ''}
+						${json.size && json.size !== 'md' ? `size="${json.size}"` : ''}
 						${json.kind === 'simple' ? `onChange={(dates) => handleInputChange({
 							target: {
 								name: "${json.codeContext?.name}",
@@ -346,15 +392,15 @@ export const componentInfo: ComponentInfo = {
 						})}` : ''}
 					/>
 					${json.kind === 'range' ? `<DatePickerInput
-						id="${json.id + '-end'}"
-						placeholder="${json.placeholder}"
+						id="${nameStringToVariableString(json.codeContext?.name) + '-end'}"
+						${json.rangePlaceholder ? `placeholder="${json.rangePlaceholder}"` : `placeholder="${json.placeholder}"`}
 						${json.rangeEndLabel ? `labelText='${json.rangeEndLabel}'` : ''}
 						${json.disabled ? `disabled='${json.disabled}'` : ''}
 						${json.invalid ? `invalid='${json.invalid}'` : ''}
 						${json.invalidText ? `invalidText='${json.rangeInvalidText}'` : ''}
-						size="${json.size}"
+						${json.size && json.size !== 'md' ? `size="${json.size}"` : ''}
 						/>`
-					: ''}
+							: ''}
 					</DatePicker>`;
 				}
 			}
