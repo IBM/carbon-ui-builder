@@ -95,7 +95,6 @@ export const UIDatePicker = ({ state, sendSignal }: {
 
 	return <DatePicker
 		className={cssClasses}
-		id={state.id}
 		dateFormat={state.dateFormat}
 		datePickerType={state.kind}
 		value={state.value}
