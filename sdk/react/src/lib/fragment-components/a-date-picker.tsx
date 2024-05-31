@@ -253,8 +253,9 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			latest: {
-				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value ? json.value : ''}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsLight = ${json.light ?? false};
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value: (string | Date)[]
+					= ${json.value ? json.value : "['']"};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme: "light" | "dark" = "${json.light ? 'light' : 'dark'}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangeStartLabel = "${json.rangeStartLabel}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangeEndLabel = "${json.rangeEndLabel ?? ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = ${json.disabled ?? false};
@@ -262,60 +263,62 @@ export const componentInfo: ComponentInfo = {
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText ?? ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder ?? 'mm/dd/yyyy'}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangePlaceholder = "${json.rangePlaceholder ?? ''}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size || 'md'}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: "sm" | "md" | "lg" = "${json.size || 'md'}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}DateFormat = "${json.dateFormat || 'm/d/Y'}";`,
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 				imports: ['DatePickerModule'],
 				code: ({ json }) => {
-					return `${json.kind === 'simple' ? '<cds-date-picker-input' : '<cds-date-picker'}
+					return `<cds-date-picker
 						${angularClassNamesFromComponentObj(json)}
-						[theme]="${nameStringToVariableString(json.codeContext?.name)}IsLight"
+						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 						[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
 						[invalid]="${nameStringToVariableString(json.codeContext?.name)}IsInvalid"
 						[label]="${nameStringToVariableString(json.codeContext?.name)}RangeStartLabel"
 						[invalidText]="${nameStringToVariableString(json.codeContext?.name)}InvalidText"
-						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
+						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event)"
 						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 						[placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
 						[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
-						${json.kind === 'simple' ?
+						${!json.kind || json.kind === 'simple' ?
 							`[dateFormat]="${nameStringToVariableString(json.codeContext?.name)}DateFormat"` :
 							`[range]="true"
 						[rangeLabel]="${nameStringToVariableString(json.codeContext?.name)}RangeEndLabel"`}>
-						${json.kind === 'simple' ? '</cds-date-picker-input>' : '</cds-date-picker>'}
+						</cds-date-picker>
 					`;
 				}
 			},
 			v10: {
-				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value = "${json.value}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsLight = ${json.light ?? false};
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}Value: (string | Date)[]
+					= ${json.value ? json.value : "['']"};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme: "light" | "dark" = "${json.light ? 'light' : 'dark'}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangeStartLabel = "${json.rangeStartLabel}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangeEndLabel = "${json.rangeEndLabel ?? ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = ${json.disabled ?? false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = ${json.invalid ?? false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText ?? ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder ?? 'mm/dd/yyyy'}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size = "${json.size || 'md'}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangePlaceholder = "${json.rangePlaceholder ?? ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: "sm" | "md" | "lg" = "${json.size || 'md'}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}DateFormat = "${json.dateFormat || 'm/d/Y'}";`,
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter();`,
 				imports: ['DatePickerModule'],
 				code: ({ json }) => {
-					return `${json.kind === 'simple' ? '<ibm-date-picker-input' : '<ibm-date-picker'}
+					return `<cds-date-picker
 						${angularClassNamesFromComponentObj(json)}
-						[theme]="${nameStringToVariableString(json.codeContext?.name)}IsLight"
+						[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 						[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
 						[invalid]="${nameStringToVariableString(json.codeContext?.name)}IsInvalid"
 						[label]="${nameStringToVariableString(json.codeContext?.name)}RangeStartLabel"
 						[invalidText]="${nameStringToVariableString(json.codeContext?.name)}InvalidText"
-						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event.value)"
+						(valueChange)="${nameStringToVariableString(json.codeContext?.name)}ValueChange.emit($event)"
 						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 						[placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
 						[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
-						${json.kind === 'simple' ?
+						${!json.kind || json.kind === 'simple' ?
 							`[dateFormat]="${nameStringToVariableString(json.codeContext?.name)}DateFormat"` :
 							`[range]="true"
 						[rangeLabel]="${nameStringToVariableString(json.codeContext?.name)}RangeEndLabel"`}>
-						${json.kind === 'simple' ? '</cds-date-picker-input>' : '</cds-date-picker>'}
+						</cds-date-picker>
 					`;
 				}
 			}
