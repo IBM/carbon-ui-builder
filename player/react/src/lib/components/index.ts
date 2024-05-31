@@ -9,6 +9,7 @@ import * as column from './ui-column';
 import * as combobox from './ui-combobox';
 import * as contentSwitcher from './ui-content-switcher';
 import * as dropdown from './ui-dropdown';
+import * as datePicker from './ui-date-picker';
 import * as grid from './ui-grid';
 import * as numberinput from './ui-number-input';
 import * as radio from './ui-radio';
@@ -45,6 +46,7 @@ export const allComponents = {
 	contentSwitcher,
 	column,
 	dropdown,
+	datePicker,
 	grid,
 	loading,
 	inlineLoading,
