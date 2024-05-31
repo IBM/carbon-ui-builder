@@ -339,8 +339,8 @@ export const componentInfo: ComponentInfo = {
 						id="${nameStringToVariableString(json.codeContext?.name)}"
 						${json.placeholder ? `placeholder='${json.placeholder}'` : ''}
 						${json.rangeStartLabel ? `labelText='${json.rangeStartLabel}'` : ''}
-						${json.disabled ? `disabled='${json.disabled}'` : ''}
-						${json.invalid ? `invalid='${json.invalid}'` : ''}
+						${json.disabled ? `disabled={${json.disabled}}` : ''}
+						${json.invalid ? `invalid={${json.invalid}}` : ''}
 						${json.invalidText ? `invalidText='${json.invalidText}'` : ''}
 						${json.size && json.size !== 'md' ? `size="${json.size}"` : ''}
 						${json.kind === 'simple' ? `onChange={(dates) => handleInputChange({
@@ -354,8 +354,8 @@ export const componentInfo: ComponentInfo = {
 						id="${nameStringToVariableString(json.codeContext?.name) + '-end'}"
 						${json.rangePlaceholder ? `placeholder="${json.rangePlaceholder}"` : `placeholder="${json.placeholder}"`}
 						${json.rangeEndLabel ? `labelText='${json.rangeEndLabel}'` : ''}
-						${json.disabled ? `disabled='${json.disabled}'` : ''}
-						${json.invalid ? `invalid='${json.invalid}'` : ''}
+						${json.disabled ? `disabled={${json.disabled}}` : ''}
+						${json.invalid ? `invalid={${json.invalid}}` : ''}
 						${json.invalidText ? `invalidText='${json.rangeInvalidText}'` : ''}
 						${json.size && json.size !== 'md' ? `size="${json.size}"` : ''}
 						/>` : ''}
@@ -380,8 +380,8 @@ export const componentInfo: ComponentInfo = {
 						id="${nameStringToVariableString(json.codeContext?.name)}"
 						${json.placeholder ? `placeholder='${json.placeholder}'` : ''}
 						${json.rangeStartLabel ? `labelText='${json.rangeStartLabel}'` : ''}
-						${json.disabled ? `disabled='${json.disabled}'` : ''}
-						${json.invalid ? `invalid='${json.invalid}'` : ''}
+						${json.disabled ? `disabled={${json.disabled}}` : ''}
+						${json.invalid ? `invalid={${json.invalid}}` : ''}
 						${json.invalidText ? `invalidText='${json.invalidText}'` : ''}
 						${json.size && json.size !== 'md' ? `size="${json.size}"` : ''}
 						${json.kind === 'simple' ? `onChange={(dates) => handleInputChange({
@@ -395,8 +395,8 @@ export const componentInfo: ComponentInfo = {
 						id="${nameStringToVariableString(json.codeContext?.name) + '-end'}"
 						${json.rangePlaceholder ? `placeholder="${json.rangePlaceholder}"` : `placeholder="${json.placeholder}"`}
 						${json.rangeEndLabel ? `labelText='${json.rangeEndLabel}'` : ''}
-						${json.disabled ? `disabled='${json.disabled}'` : ''}
-						${json.invalid ? `invalid='${json.invalid}'` : ''}
+						${json.disabled ? `disabled={${json.disabled}}` : ''}
+						${json.invalid ? `invalid={${json.invalid}}` : ''}
 						${json.invalidText ? `invalidText='${json.rangeInvalidText}'` : ''}
 						${json.size && json.size !== 'md' ? `size="${json.size}"` : ''}
 						/>`
