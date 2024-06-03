@@ -133,8 +133,7 @@ export const componentInfo: ComponentInfo = {
 	type: 'definition-tooltip',
 	defaultComponentObj: {
 		type: 'definition-tooltip',
-		description: 'description',
-		alignment: 'bottom-left'
+		description: 'description'
 	},
 	image,
 	codeExport: {
@@ -143,14 +142,14 @@ export const componentInfo: ComponentInfo = {
 				inputs: ({ json }) => `
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Description = "${json.description ? json.description : 'description'}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}IsOpen = ${json.isDefaultOpened ? json.isDefaultOpened : false};
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}Align: any = "${json.alignment ? json.alignment : 'bottom-left' }";
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Align: any = "${json.alignment ? json.alignment : 'bottom-start' }";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}definition = "${json.definition ?
 					json.definition : 'default tooltip message' }";`,
 				outputs: ({ json }) => {
 					const name = nameStringToVariableString(json.codeContext?.name);
 					return `@Output() ${name}isOpenChange = new EventEmitter<any>();
 					@Output() ${name}onClose = new EventEmitter<any>();
-					@Output() ${name}onOpen = new EventEmitter<string>();`;
+					@Output() ${name}onOpen = new EventEmitter<any>();`;
 				},
 				imports: ['TooltipModule'],
 				code: ({ json }) => {
@@ -158,11 +157,11 @@ export const componentInfo: ComponentInfo = {
 					return `<cds-tooltip-definition
 						[isOpen]="${name}IsOpen"
 						[align]="${name}Align"
-						(onOpen)="${name}onOpen.emit(event)"
-						(onClose)="${name}onClose.emit(event)"
-						(isOpenChange)="${name}isOpenChange.emit(event)"
+						(onOpen)="${name}onOpen.emit($event)"
+						(onClose)="${name}onClose.emit($event)"
+						(isOpenChange)="${name}isOpenChange.emit($event)"
 						[description]="${name}definition">
-						${name}Description
+						{{${name}Description}}
 					</cds-tooltip-definition>`;
 				}
 			},
@@ -177,20 +176,20 @@ export const componentInfo: ComponentInfo = {
 					const name = nameStringToVariableString(json.codeContext?.name);
 					return `@Output() ${name}isOpenChange = new EventEmitter<any>();
 					@Output() ${name}onClose = new EventEmitter<any>();
-					@Output() ${name}onOpen = new EventEmitter<string>();`;
+					@Output() ${name}onOpen = new EventEmitter<any>();`;
 				},
 				imports: ['TooltipModule'],
 				code: ({ json }) => {
 					const name = nameStringToVariableString(json.codeContext?.name);
-					return `<cds-tooltip-definition
+					return `<ibm-tooltip-definition
 						[isOpen]="${name}IsOpen"
 						[align]="${name}Align"
-						(onOpen)="${name}onOpen.emit(event)"
-						(onClose)="${name}onClose.emit(event)"
-						(isOpenChange)="${name}isOpenChange.emit(event)"
+						(onOpen)="${name}onOpen.emit($event)"
+						(onClose)="${name}onClose.emit($event)"
+						(isOpenChange)="${name}isOpenChange.emit($event)"
 						[description]="${name}definition">
-						${name}Description
-					</cds-tooltip-definition>`;
+						{{${name}Description}}
+					</ibm-tooltip-definition>`;
 				}
 			}
 		},
