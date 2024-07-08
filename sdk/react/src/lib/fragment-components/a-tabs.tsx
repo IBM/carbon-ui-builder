@@ -142,7 +142,6 @@ export const ATabs = ({
 	componentObj,
 	fragment,
 	setFragment,
-	onDrop,
 	...rest
 }: any) => {
 	console.log('children ', children);
@@ -154,64 +153,60 @@ export const ATabs = ({
 			componentObj={componentObj}
 			{...rest}>
 			<Tabs className={componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')}>
-				{
-					componentObj.tabType === 'line' ?
-					<>
-						<TabList aria-label='List of tabs'>
-							{
-								componentObj.items.map((step: any, index: number) => <Tab
-									onClick= {() => componentObj.selectedTab = index}
-									className={cx(step.className, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}
-									disabled={step.disabled}
-									key={index}>
-										{step.labelText}
-								</Tab>)
-							}
-						</TabList>
-						<TabPanels>
-							{
-								componentObj.items.map((step: any, index: number) => {
-									return <TabPanel key={index} ref={holderRef} onDrop={(event: any) => {
-											event.stopPropagation();
-											event.preventDefault();
-											const dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
-											const items = componentObj.items.map((item: any, index: any) => {
-												if (index === componentObj.selectedTab) {
-													return {
-														...step,
-														items: [
-															...step.items,
-															dragObj.component
-														]
-													};
+				<>
+					<TabList aria-label='List of tabs'
+					{...(componentObj.tabType !== 'line' ? { contained: true } : {})}>
+						{
+							componentObj.items.map((step: any, index: number) => <Tab
+								onClick= {() => componentObj.selectedTab = index}
+								className={cx(step.className, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}
+								disabled={step.disabled}
+								key={index}>
+									{step.labelText}
+							</Tab>)
+						}
+					</TabList>
+					<TabPanels>
+						{
+							componentObj.items.map((step: any, index: number) => {
+								return <TabPanel key={index} ref={holderRef} onDrop={(event: any) => {
+										event.stopPropagation();
+										event.preventDefault();
+										const dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
+										const items = componentObj.items.map((item: any, index: any) => {
+											if (index === componentObj.selectedTab) {
+												return {
+													...step,
+													items: [
+														...step.items,
+														dragObj.component
+													]
+												};
+											}
+											return item;
+										});
+										setFragment({
+											...fragment,
+											data: updatedState(fragment.data, {
+												type: 'update',
+												component: {
+													...componentObj,
+													items
 												}
-												return item;
-											});
-											setFragment({
-												...fragment,
-												data: updatedState(fragment.data, {
-													type: 'update',
-													component: {
-														...componentObj,
-														items
-													}
-												})
-											}, false);
-										}}>
-										{
-											step.items && step.items.length > 0
-											? children.filter((child: any, index: any) => index === componentObj.selectedTab)
-											: <APlaceholder componentObj={step} select={rest.select} />
-										}
-									</TabPanel>
-								}
-								)
+											})
+										}, false);
+									}}>
+									{
+										step.items && step.items.length > 0
+										? children.filter((child: any, index: any) => index === componentObj.selectedTab)
+										: <APlaceholder componentObj={step} select={rest.select} />
+									}
+								</TabPanel>;
 							}
-						</TabPanels>
-					</>
-					:
-					<>hello</>
-				}
+							)
+						}
+					</TabPanels>
+				</>
 			</Tabs>
 		</AComponent>
 	);
@@ -221,11 +216,10 @@ export const componentInfo: ComponentInfo = {
 	component: ATabs,
 	settingsUI: ATabsSettingsUI,
 	codeUI: ATabsCodeUI,
-	render: ({ componentObj, select, selected, remove, onDrop, renderComponents, outline, fragment, setFragment }) => <ATabs
+	render: ({ componentObj, select, selected, remove, renderComponents, outline, fragment, setFragment }) => <ATabs
 	componentObj={componentObj}
 	select={select}
 	remove={remove}
-	onDrop={onDrop}
 	fragment={fragment}
 	setFragment={setFragment}
 	selected={selected}>
