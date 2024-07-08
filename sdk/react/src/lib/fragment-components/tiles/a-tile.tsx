@@ -54,8 +54,6 @@ export const ATile = ({
 	selected,
 	...rest
 }: any) => {
-	console.log('children ', children);
-	debugger
 	return (
 		<AComponent
 		componentObj={componentObj}

@@ -5,23 +5,21 @@ import {
 	TabList,
 	Checkbox,
 	Dropdown,
-	TextInput
+	TextInput,
+	TabPanel,
+	TabPanels
 } from '@carbon/react';
 import { AComponent, ComponentInfo } from './a-component';
 import image from '../assets/component-icons/tabs.svg';
 import { APlaceholder } from './a-placeholder';
 import { cx } from 'emotion';
 import {
-	getParentComponent,
 	reactClassNamesFromComponentObj,
 	angularClassNamesFromComponentObj,
 	nameStringToVariableString,
 	updatedState
 } from '../helpers/tools';
-import { Adder } from '../helpers/adder';
 import { DraggableTileList } from '../helpers/draggable-list';
-import { TabPanel } from '@carbon/react';
-import { TabPanels } from '@carbon/react';
 
 export const ATabsSettingsUI = ({ selectedComponent, setComponent }: any) => {
 
@@ -144,8 +142,6 @@ export const ATabs = ({
 	setFragment,
 	...rest
 }: any) => {
-	console.log('children ', children);
-	const holderRef = useRef(null as any);
 	return (
 		<AComponent
 			fragment={fragment}
@@ -169,7 +165,7 @@ export const ATabs = ({
 					<TabPanels>
 						{
 							componentObj.items.map((step: any, index: number) => {
-								return <TabPanel key={index} ref={holderRef} onDrop={(event: any) => {
+								return <TabPanel key={index} onDrop={(event: any) => {
 										event.stopPropagation();
 										event.preventDefault();
 										const dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
