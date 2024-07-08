@@ -169,6 +169,7 @@ export const ATabs = ({
 										event.stopPropagation();
 										event.preventDefault();
 										const dragObj = JSON.parse(event.dataTransfer.getData('drag-object'));
+										// update the tab content in the item list for the selected tab
 										const items = componentObj.items.map((item: any, index: any) => {
 											if (index === componentObj.selectedTab) {
 												return {
@@ -240,7 +241,6 @@ export const componentInfo: ComponentInfo = {
 			{
 				type: 'tab',
 				labelText: 'Tab 1',
-				disabled: false,
 				items: []
 			}
 		]
@@ -258,13 +258,13 @@ export const componentInfo: ComponentInfo = {
 				outputs: () => '',
 				imports: ['TabsModule'],
 				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
-					return `<ibm-tabs
+					return `<cds-tabs
 						[type]="${nameStringToVariableString(json.codeContext?.name)}TabType"
 						[cacheActive]="${nameStringToVariableString(json.codeContext?.name)}CacheActive"
 						[followFocus]="${nameStringToVariableString(json.codeContext?.name)}FollowFocus"
 						[isNavigation]="${nameStringToVariableString(json.codeContext?.name)}isNavigation"
 						${angularClassNamesFromComponentObj(json)}>
-						${json.items.map((step: any) => `<ibm-tab
+						${json.items.map((step: any) => `<cds-tab
 							heading="${step.labelText}"
 							[disabled]=${step.disabled}>
 								${step.items && step.items.length > 0
@@ -273,9 +273,9 @@ export const componentInfo: ComponentInfo = {
 											jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
 									</section>`
 								: ''}
-							</ibm-tab>`
+							</cds-tab>`
 						).join('\n')}
-					</ibm-tabs>`;
+					</cds-tabs>`;
 				}
 			},
 			v10: {
@@ -312,10 +312,9 @@ export const componentInfo: ComponentInfo = {
 			latest: {
 				imports: ['Tabs', 'Tab'],
 				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
-					return `${json.tabType === 'line' ?
-						`<Tabs
+					return `<Tabs
 						${reactClassNamesFromComponentObj(json)}>
-						<TabList aria-label="List of tabs">
+						<TabList aria-label="List of tabs" ${json.tabType === 'line'? '' : 'contained'}>
 							${json.items.map((step: any, index: any) => `<Tab
 								onClick={(index) => handleInputChange({
 									target: {
@@ -334,38 +333,15 @@ export const componentInfo: ComponentInfo = {
 								</Tab>`
 							).join('\n')}
 						</TabList>
-					</Tabs>`: `<Tabs
-						${reactClassNamesFromComponentObj(json)}>
-						<TabList aria-label="List of tabs" contained>
-							${json.items.map((step: any, index: any) => `<Tab
-								onClick={(index) => handleInputChange({
-									target: {
-										selectedTab: ${index}
-									}
-								})}
-								key= {${index}}
-								disabled={${step.disabled}}>
-								${step.labelText}
-									${step.items && step.items.length > 0
-										? `<section>
-											${step.items.map((element: any) =>
-												jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
-										</section>`
-									: ''}
-								</Tab>`
-							).join('\n')}
-						</TabList>
-					</Tabs>`
-					}`;
+					</Tabs>`;
 				}
 			},
 			v10: {
 				imports: ['Tabs', 'Tab'],
 				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
-					return `${json.tabType === 'line' ?
-						`<Tabs
+					return `<Tabs
 						${reactClassNamesFromComponentObj(json)}>
-						<TabList aria-label="List of tabs">
+						<TabList aria-label="List of tabs" ${json.tabType === 'line'? '' : 'contained'}>
 							${json.items.map((step: any, index: any) => `<Tab
 								onClick={(index) => handleInputChange({
 									target: {
@@ -384,29 +360,7 @@ export const componentInfo: ComponentInfo = {
 								</Tab>`
 							).join('\n')}
 						</TabList>
-					</Tabs>`: `<Tabs
-						${reactClassNamesFromComponentObj(json)}>
-						<TabList aria-label="List of tabs" contained>
-							${json.items.map((step: any, index: any) => `<Tab
-								onClick={(index) => handleInputChange({
-									target: {
-										selectedTab: ${index}
-									}
-								})}
-								key= {${index}}
-								disabled={${step.disabled}}>
-								${step.labelText}
-									${step.items && step.items.length > 0
-										? `<section>
-											${step.items.map((element: any) =>
-												jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
-										</section>`
-									: ''}
-								</Tab>`
-							).join('\n')}
-						</TabList>
-					</Tabs>`
-					}`;
+					</Tabs>`;
 				}
 			}
 		}
