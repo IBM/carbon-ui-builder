@@ -236,7 +236,6 @@ export const componentInfo: ComponentInfo = {
 	type: 'tabs',
 	defaultComponentObj: {
 		type: 'tabs',
-		selectedTab: 0,
 		items: [
 			{
 				type: 'tab',
@@ -268,11 +267,8 @@ export const componentInfo: ComponentInfo = {
 							heading="${step.labelText}"
 							[disabled]=${step.disabled}>
 								${step.items && step.items.length > 0
-									? `<section>
-										${step.items.map((element: any) =>
-											jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
-									</section>`
-								: ''}
+									? step.items.map((element: any) =>
+										jsonToTemplate(element, fragments, customComponentsCollections)).join('\n') : ''}
 							</cds-tab>`
 						).join('\n')}
 					</cds-tabs>`;
@@ -297,11 +293,8 @@ export const componentInfo: ComponentInfo = {
 							heading="${step.labelText}"
 							[disabled]=${step.disabled}>
 								${step.items && step.items.length > 0
-									? `<section>
-										${step.items.map((element: any) =>
-											jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
-									</section>`
-								: ''}
+									? step.items.map((element: any) =>
+										jsonToTemplate(element, fragments, customComponentsCollections)).join('\n') : ''}
 							</ibm-tab>`
 						).join('\n')}
 					</ibm-tabs>`;
@@ -310,7 +303,7 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			latest: {
-				imports: ['Tabs', 'Tab'],
+				imports: ['Tabs', 'Tab', 'TabList', 'TabPanels', 'TabPanel'],
 				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<Tabs
 						${reactClassNamesFromComponentObj(json)}>
@@ -323,21 +316,23 @@ export const componentInfo: ComponentInfo = {
 								})}
 								key= {${index}}
 								disabled={${step.disabled}}>
-								${step.labelText}
-									${step.items && step.items.length > 0
-										? `<section>
-											${step.items.map((element: any) =>
-												jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
-										</section>`
-									: ''}
+									${step.labelText}
 								</Tab>`
 							).join('\n')}
 						</TabList>
+						<TabPanels>
+							${json.items.map((step: any) => `<TabPanel>
+								${step.items && step.items.length > 0
+									? step.items.map((element: any) =>
+											jsonToTemplate(element, fragments, customComponentsCollections)).join('\n') : ''}
+								</TabPanel>`
+							).join('\n')}
+						</TabPanels>
 					</Tabs>`;
 				}
 			},
 			v10: {
-				imports: ['Tabs', 'Tab'],
+				imports: ['Tabs', 'Tab', 'TabList', 'TabPanels', 'TabPanel'],
 				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<Tabs
 						${reactClassNamesFromComponentObj(json)}>
@@ -350,16 +345,18 @@ export const componentInfo: ComponentInfo = {
 								})}
 								key= {${index}}
 								disabled={${step.disabled}}>
-								${step.labelText}
-									${step.items && step.items.length > 0
-										? `<section>
-											${step.items.map((element: any) =>
-												jsonToTemplate(element, fragments, customComponentsCollections)).join('\n')}
-										</section>`
-									: ''}
+									${step.labelText}
 								</Tab>`
 							).join('\n')}
 						</TabList>
+						<TabPanels>
+							${json.items.map((step: any) => `<TabPanel>
+								${step.items && step.items.length > 0
+									? step.items.map((element: any) =>
+											jsonToTemplate(element, fragments, customComponentsCollections)).join('\n') : ''}
+								</TabPanel>`
+							).join('\n')}
+						</TabPanels>
 					</Tabs>`;
 				}
 			}
