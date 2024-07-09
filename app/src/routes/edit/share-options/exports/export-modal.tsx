@@ -14,7 +14,7 @@ import {
 	TreeView,
 	InlineNotification
 } from '@carbon/react';
-import { Copy } from '@carbon/react/icons';
+import { Copy, Download } from '@carbon/react/icons';
 import { css } from 'emotion';
 import Editor, { useMonaco } from '@monaco-editor/react';
 
@@ -30,6 +30,7 @@ import { GlobalStateContext } from '../../../../context';
 import { ExportImageComponent } from './export-image-component';
 import { filenameToLanguage, getFragmentJsonExportString } from '@carbon-builder/sdk-react';
 import JSONCrush from 'jsoncrush';
+import JSZip from 'jszip';
 
 const exportCodeModalStyle = css`
 	.cds--tab-content {
@@ -88,6 +89,17 @@ const versionDropdownStyle = css`
 	right: 1rem;
 `;
 
+const addToZip = (parent: JSZip, items: any[]) => {
+	items.forEach(item => {
+		if (item.items && item.items.length) {
+			const folder = parent.folder(item.name);
+			addToZip(folder as JSZip, item.items);
+		} else {
+			parent.file(item.name, item.code);
+		}
+	});
+};
+
 const renderCodeTree = (nodes: any, path = '') => {
 	if (!nodes) {
 		return;
@@ -109,7 +121,26 @@ const renderCodeTree = (nodes: any, path = '') => {
 			renderIcon={icon}
 			isExpanded={isExpanded}
 			value={code}
-			label={name}
+			className={css`.cds--tree-node__icon { align-self: center; }`}
+			label={<>
+				{name}
+				{
+					items && items.length > 0 &&
+					<Button
+						hasIconOnly
+						onClick={() => {
+							const zip = new JSZip();
+							addToZip(zip, items);
+							zip.generateAsync({ type: 'blob' }).then(content => {
+								saveBlob(content, `${name}.zip`);
+							});
+						}}
+						iconDescription='Download as ZIP'
+						className={css`margin-left: 0.5rem;`}
+						kind='ghost'
+						size='sm'
+						renderIcon={Download} />}
+			</>}
 			{...nodeProps}>
 			{renderCodeTree(items, fullPath)}
 		</TreeNode>;
@@ -228,7 +259,7 @@ export const ExportModal = () => {
 		}
 
 		setSelectedAngularFileItem(fileItem || selectedAngularFileItem);
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [angularCode, fragmentExportModal.isVisible]);
 
 	useEffect(() => {
@@ -297,10 +328,10 @@ export const ExportModal = () => {
 			{
 				fragmentExportModal.isVisible &&
 				<Tabs
-				selectedIndex={+settings?.selectedExportTabIndex || 0}
-				onChange={({ selectedIndex }: {selectedIndex: number}) => {
-					setSettings({ ...settings, selectedExportTabIndex: selectedIndex });
-				}}>
+					selectedIndex={+settings?.selectedExportTabIndex || 0}
+					onChange={({ selectedIndex }: { selectedIndex: number }) => {
+						setSettings({ ...settings, selectedExportTabIndex: selectedIndex });
+					}}>
 					<TabList aria-label='Export list' className={tabListStyle}>
 						<Tab>Angular</Tab>
 						<Tab>React</Tab>
