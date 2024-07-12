@@ -122,7 +122,6 @@ export const componentInfo: ComponentInfo = {
 		]
 	},
 	image: image,
-	hideFromElementsPane: false,
 	codeExport: {
 		angular: {
 			latest: {
