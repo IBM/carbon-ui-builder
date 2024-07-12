@@ -20,15 +20,15 @@ export const AListSettingsUI = ({ selectedComponent, setComponent }: any) => {
 
 	const handleItemUpdate = (key: string, value: any, index: number) => {
 		const item = {
-			...selectedComponent.listItems[index],
+			...selectedComponent.items[index],
 			[key]: value
 		};
 		setComponent({
 			...selectedComponent,
-			listItems: [
-				...selectedComponent.listItems.slice(0, index),
+			items: [
+				...selectedComponent.items.slice(0, index),
 				item,
-				...selectedComponent.listItems.slice(index + 1)
+				...selectedComponent.items.slice(index + 1)
 			]
 		});
 	};
@@ -36,7 +36,7 @@ export const AListSettingsUI = ({ selectedComponent, setComponent }: any) => {
 	const updateStepList = (newList: any[]) => {
 		setComponent({
 			...selectedComponent,
-			listItems: newList
+			items: newList
 		});
 	};
 
@@ -62,7 +62,7 @@ export const AListSettingsUI = ({ selectedComponent, setComponent }: any) => {
 		<hr />
 		<h4>Items</h4>
 		<DraggableTileList
-			dataList={[...selectedComponent.listItems]}
+			dataList={[...selectedComponent.items]}
 			setDataList={updateStepList}
 			updateItem={handleItemUpdate}
 			defaultObject={{
@@ -100,7 +100,7 @@ export const AList = ({
 		{...rest}>
 			<ListComponent>
 				{
-					componentObj.listItems?.map((item: any, index: any) => <ListItem key={index}>{item.value}</ListItem>)
+					componentObj.items?.map((item: any, index: any) => <ListItem key={index}>{item.value}</ListItem>)
 				}
 			</ListComponent>
 		</AComponent>
@@ -116,7 +116,7 @@ export const componentInfo: ComponentInfo = {
 	type: 'list',
 	defaultComponentObj: {
 		type: 'list',
-		listItems: [
+		items: [
 			{ value: 'Item' }
 		]
 	},
@@ -124,7 +124,7 @@ export const componentInfo: ComponentInfo = {
 	codeExport: {
 		angular: {
 			latest: {
-				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}List = ${JSON.stringify(json.listItems)}`,
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}List = ${JSON.stringify(json.items)}`,
 				outputs: (_) => '',
 				imports: ['ListModule'],
 				code: ({ json }) => {
@@ -136,7 +136,7 @@ export const componentInfo: ComponentInfo = {
 				}
 			},
 			v10: {
-				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}List = ${JSON.stringify(json.listItems)}`,
+				inputs: ({ json }) => `@Input() ${nameStringToVariableString(json.codeContext?.name)}List = ${JSON.stringify(json.items)}`,
 				outputs: (_) => '',
 				imports: ['ListModule'],
 				code: ({ json }) => {
@@ -150,20 +150,20 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			latest: {
-				imports: ({ json }) => [json.isOrderedList ? 'OrderedList' : 'UnorderedList'].concat(json.listItems.length > 0 ? ['ListItem'] : []),
+				imports: ({ json }) => [json.isOrderedList ? 'OrderedList' : 'UnorderedList'].concat(json.items.length > 0 ? ['ListItem'] : []),
 				code: ({ json }) => {
 					const listComponent = json.isOrderedList? 'OrderedList' : 'UnorderedList';
 					return `<${listComponent} ${reactClassNamesFromComponentObj(json)}>
-						${json.listItems.map((element: any, index: any) => `<ListItem key="${index}">${element.value}</ListItem>`).join('\n')}
+						${json.items.map((element: any, index: any) => `<ListItem key="${index}">${element.value}</ListItem>`).join('\n')}
                     </${listComponent}>`;
 				}
 			},
 			v10: {
-				imports: ({ json }) => [json.isOrderedList ? 'OrderedList' : 'UnorderedList'].concat(json.listItems.length > 0 ? ['ListItem'] : []),
+				imports: ({ json }) => [json.isOrderedList ? 'OrderedList' : 'UnorderedList'].concat(json.items.length > 0 ? ['ListItem'] : []),
 				code: ({ json }) => {
 					const listComponent = json.isOrderedList? 'OrderedList' : 'UnorderedList';
 					return `<${listComponent} ${reactClassNamesFromComponentObj(json)}>
-						${json.listItems.map((element: any, index: any) => `<ListItem key="${index}">${element.value}</ListItem>`).join('\n')}
+						${json.items.map((element: any, index: any) => `<ListItem key="${index}">${element.value}</ListItem>`).join('\n')}
                     </${listComponent}>`;
 				}
 			}
