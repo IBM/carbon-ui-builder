@@ -3,7 +3,8 @@ import { CssClasses } from '../types';
 import {
 	OrderedList,
 	UnorderedList,
-	ListItem } from '@carbon/react';
+	ListItem
+} from '@carbon/react';
 import { commonSlots } from '../common-slots';
 
 export interface ListState {
