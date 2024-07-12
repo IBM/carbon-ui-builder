@@ -111,7 +111,7 @@ export const componentInfo: ComponentInfo = {
 	component: AList,
 	settingsUI: AListSettingsUI,
 	codeUI: AListCodeUI,
-	keywords: ['list'],
+	keywords: ['list', 'unordered', 'ordered', 'items'],
 	name: 'List',
 	type: 'list',
 	defaultComponentObj: {
