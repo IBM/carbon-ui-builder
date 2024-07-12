@@ -116,7 +116,6 @@ export const componentInfo: ComponentInfo = {
 	type: 'list',
 	defaultComponentObj: {
 		type: 'list',
-		isOrderedList: false,
 		listItems: [
 			{ value: 'Item' }
 		]
