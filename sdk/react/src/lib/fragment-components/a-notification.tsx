@@ -167,15 +167,8 @@ export const componentInfo: ComponentInfo = {
 	type: 'notification',
 	defaultComponentObj: {
 		type: 'notification',
-		lowContrast: false,
-		hideCloseButton: false,
 		kind: 'error',
-		variant: 'toastNotification',
-		link: '',
-		subtitleText: '',
-		linkText: '',
-		title: '',
-		captionText: ''
+		variant: 'toastNotification'
 	},
 	image,
 	codeExport: {
@@ -183,36 +176,38 @@ export const componentInfo: ComponentInfo = {
 			latest: {
 				inputs: ({ json }) => `
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}notificationObj: any = {
-					type: "${json.kind}",
-					title: "${json.title}",
-					${json.variant === 'toastNotification' ? `subtitle: "${json.subtitleText}",` : ''}
-					${json.variant === 'toastNotification' ? `caption: "${json.captionText}",` : `message: "${json.captionText}",`}
-					lowContrast:${json.lowContrast},
+					type: "${json.kind ? json.kind : 'error'}",
+					title: "${json.title ? json.title : ''}",
+					${json.variant === 'toastNotification' ? `subtitle: "${json.subtitleText ? json.subtitleText : ''}",` : ''}
+					${json.variant === 'toastNotification' ?
+						`caption: "${json.captionText ? json.captionText : ''}",` : `message: "${json.captionText ? json.captionText : ''}",`}
+					lowContrast:${json.lowContrast ? json.lowContrast : false},
 					showClose: ${!json.hideCloseButton}
 				};`,
 				outputs: () => '',
 				imports: ['NotificationModule', 'ButtonModule'],
 				code: ({ json }) => {
 					return `${json.variant === 'toastNotification'
-							? `<ibm-toast
+							? `<cds-toast
 						${angularClassNamesFromComponentObj(json)}
 						[notificationObj]="${nameStringToVariableString(json.codeContext?.name)}notificationObj">
-						</ibm-toast>`
-							: `<ibm-notification
+						</cds-toast>`
+							: `<cds-inline-notification
 						${angularClassNamesFromComponentObj(json)}
 						[notificationObj]="${nameStringToVariableString(json.codeContext?.name)}notificationObj">
-						</ibm-notification>`
+						</cds-inline-notification>`
 					}`;
 				}
 			},
 			v10: {
 				inputs: ({ json }) => `
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}notificationObj: any = {
-					type: "${json.kind}",
-					title: "${json.title}",
-					${json.variant === 'toastNotification' ? `subtitle: "${json.subtitleText}",` : ''}
-					${json.variant === 'toastNotification' ? `caption: "${json.captionText}",` : `message: "${json.captionText}",`}
-					lowContrast:${json.lowContrast},
+					type: "${json.kind ? json.kind : 'error'}",
+					title: "${json.title ? json.title : ''}",
+					${json.variant === 'toastNotification' ? `subtitle: "${json.subtitleText ? json.subtitleText : ''}",` : ''}
+					${json.variant === 'toastNotification' ?
+						`caption: "${json.captionText ? json.captionText : ''}",` : `message: "${json.captionText ? json.captionText : ''}",`}
+					lowContrast:${json.lowContrast ? json.lowContrast : false},
 					showClose: ${!json.hideCloseButton}
 				};`,
 				outputs: () => '',
