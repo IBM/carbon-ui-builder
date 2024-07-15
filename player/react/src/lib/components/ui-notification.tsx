@@ -14,7 +14,7 @@ export interface NotificationState {
 	lowContrast?: boolean;
 	hideCloseButton?: boolean;
 	kind?: string;
-	variantSelector?: string;
+	variant?: string;
 	link?: string;
 	subtitleText?: string;
 	linkText?: string;
@@ -60,7 +60,7 @@ export const slots = {
 	}),
 	type: 'string',
 	kind: 'string',
-	variantSelector: 'string',
+	variant: 'string',
 	link: 'string',
 	subtitleText: 'string',
 	linkText: 'string',
@@ -83,7 +83,7 @@ export const UINotification = ({ state, sendSignal }: {
 
 	return <>
 		{
-			state.variantSelector === 'toastNotification'
+			state.variant === 'toastNotification'
 				? <ToastNotification
 			className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}
 			onClick={() => {
