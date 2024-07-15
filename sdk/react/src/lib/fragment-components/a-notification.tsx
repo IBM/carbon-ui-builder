@@ -7,8 +7,7 @@ import {
 	Checkbox,
 	TextInput,
 	ToastNotification,
-	InlineNotification,
-	NotificationActionButton
+	InlineNotification
 } from '@carbon/react';
 import {
 	angularClassNamesFromComponentObj,
@@ -98,22 +97,13 @@ export const ANotificationSettingsUI = ({ selectedComponent, setComponent }: any
 				subtitleText: event.currentTarget.value
 			})} />
 		{
-			selectedComponent.variant === 'toastNotification'
-				? <TextInput
+			selectedComponent.variant === 'toastNotification' && <TextInput
 			light
 			value={selectedComponent.captionText}
 			labelText='Caption text'
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				captionText: event.currentTarget.value
-			})} />
-				: <TextInput
-			light
-			value={selectedComponent.actionButtonText}
-			labelText='Action button text'
-			onChange={(event: any) => setComponent({
-				...selectedComponent,
-				actionButtonText: event.currentTarget.value
 			})} />
 		}
 	</>;
@@ -161,11 +151,6 @@ export const ANotification = ({
 				kind={componentObj.kind}
 				hideCloseButton={componentObj.hideCloseButton}
 				lowContrast={componentObj.lowContrast}
-				actions={
-					<NotificationActionButton>
-						{componentObj.actionButtonText}
-					</NotificationActionButton>
-				}
 				subtitle={componentObj.subtitleText}
 				title={componentObj.title} />
 			}
@@ -190,8 +175,7 @@ export const componentInfo: ComponentInfo = {
 		subtitleText: '',
 		linkText: '',
 		title: '',
-		captionText: '',
-		actionButtonText: ''
+		captionText: ''
 	},
 	image,
 	codeExport: {
@@ -204,17 +188,9 @@ export const componentInfo: ComponentInfo = {
 					${json.variant === 'toastNotification' ? `subtitle: "${json.subtitleText}",` : ''}
 					${json.variant === 'toastNotification' ? `caption: "${json.captionText}",` : `message: "${json.captionText}",`}
 					lowContrast:${json.lowContrast},
-					showClose: ${!json.hideCloseButton},
-					${json.actionButtonText
-						? `actions: [
-							{
-								text: "${json.actionButtonText}",
-								click: "${nameStringToVariableString(json.codeContext?.name)}ActionClick.emit()"
-							}]`
-						: ''
-					}
+					showClose: ${!json.hideCloseButton}
 				};`,
-				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ActionClick = new EventEmitter<any>();`,
+				outputs: () => '',
 				imports: ['NotificationModule', 'ButtonModule'],
 				code: ({ json }) => {
 					return `${json.variant === 'toastNotification'
@@ -237,17 +213,9 @@ export const componentInfo: ComponentInfo = {
 					${json.variant === 'toastNotification' ? `subtitle: "${json.subtitleText}",` : ''}
 					${json.variant === 'toastNotification' ? `caption: "${json.captionText}",` : `message: "${json.captionText}",`}
 					lowContrast:${json.lowContrast},
-					showClose: ${!json.hideCloseButton},
-					${json.actionButtonText
-						? `actions: [
-							{
-								text: "${json.actionButtonText}",
-								click: "${nameStringToVariableString(json.codeContext?.name)}ActionClick.emit()"
-							}];`
-						: ''
-					}
+					showClose: ${!json.hideCloseButton}
 				};`,
-				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ActionClick = new EventEmitter<any>();`,
+				outputs: () => '',
 				imports: ['NotificationModule', 'ButtonModule'],
 				code: ({ json }) => {
 					return `${json.variant === 'toastNotification'
@@ -265,7 +233,7 @@ export const componentInfo: ComponentInfo = {
 		},
 		react: {
 			latest: {
-				imports: ['ToastNotification','InlineNotification','NotificationActionButton'],
+				imports: ['ToastNotification','InlineNotification'],
 				code: ({ json }) => {
 					return `${json.variant === 'toastNotification'
                             ? `<ToastNotification
@@ -287,17 +255,6 @@ export const componentInfo: ComponentInfo = {
                         kind="${json.kind}"
                         hideCloseButton={${json.hideCloseButton}}
                         lowContrast={${json.lowContrast}}
-                        actions={
-                            <NotificationActionButton
-                            onClick={(selectedItem) => handleInputChange({
-                                target: {
-                                    name: "${nameStringToVariableString(json.codeContext?.name)}",
-                                    value: selectedItem
-                                }
-                            })} >
-                                ${json.actionButtonText}
-                            </NotificationActionButton>
-                        }
                         ${json.subtitleText ? `subtitle= { <span> ${json.subtitleText} </span> }`: ''}
                         title="${json.title}"
                         onClose={(selectedItem) => handleInputChange({
@@ -311,7 +268,7 @@ export const componentInfo: ComponentInfo = {
 				}
 			},
 			v10: {
-				imports: ['ToastNotification','InlineNotification','NotificationActionButton'],
+				imports: ['ToastNotification','InlineNotification'],
 				code: ({ json }) => {
 					return `${json.variant === 'toastNotification'
                             ? `<ToastNotification
@@ -333,17 +290,6 @@ export const componentInfo: ComponentInfo = {
                         kind="${json.kind}"
                         hideCloseButton={${json.hideCloseButton}}
                         lowContrast={${json.lowContrast}}
-                        actions={
-                            <NotificationActionButton
-                            onClick={(selectedItem) => handleInputChange({
-                                target: {
-                                    name: "${nameStringToVariableString(json.codeContext?.name)}",
-                                    value: selectedItem
-                                }
-                            })} >
-                                ${json.actionButtonText}
-                            </NotificationActionButton>
-                        }
 						${json.subtitleText ? `subtitle= { <span> ${json.subtitleText} </span> }`: ''}
                         title="${json.title}"
                         onClose={(selectedItem) => handleInputChange({

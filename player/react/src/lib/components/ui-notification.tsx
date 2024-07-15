@@ -2,8 +2,7 @@ import React from 'react';
 import { CssClasses, SendSignal } from '../types';
 import {
 	ToastNotification,
-	InlineNotification,
-	NotificationActionButton
+	InlineNotification
 } from '@carbon/react';
 
 import { commonSlots, slotsDisabled } from '../common-slots';
@@ -21,7 +20,6 @@ export interface NotificationState {
 	title?: string;
 	iconDescription?: string;
 	captionText?: string;
-	actionButtonText?: string;
 	cssClasses?: CssClasses[];
 }
 
@@ -66,8 +64,7 @@ export const slots = {
 	linkText: 'string',
 	title: 'string',
 	iconDescription: 'string',
-	captionText: 'string',
-	actionButtonText: 'string'
+	captionText: 'string'
 };
 
 export const UINotification = ({ state, sendSignal }: {
@@ -103,13 +100,6 @@ export const UINotification = ({ state, sendSignal }: {
 				: <InlineNotification
 			className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}
 			kind={state.kind}
-			actions={
-				<NotificationActionButton
-				hideCloseButton={state.hideCloseButton}
-				lowContrast={state.lowContrast}>
-					{state.actionButtonText}
-				</NotificationActionButton>
-			}
 			iconDescription={state.iconDescription}
 			subtitle= {state.subtitleText}
 			title={state.title} />
