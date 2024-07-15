@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import {
 	Tabs,
 	Tab,
@@ -53,7 +53,7 @@ export const ATabsSettingsUI = ({ selectedComponent, setComponent }: any) => {
 				onChange={(event: any) => {
 					updateListItems('labelText', event.currentTarget.value, index);
 				}} />
-			<div style={{ display: 'flex', flexWrap: 'wrap' }}>
+			<div>
 				<Checkbox
 					labelText='Disabled'
 					id={`disabled-${index}`}
@@ -113,7 +113,6 @@ export const ATabsSettingsUI = ({ selectedComponent, setComponent }: any) => {
 			defaultObject={{
 				type: 'tab',
 				labelText: 'New tab',
-				disabled: false,
 				items: []
 			}}
 			template={template} />
@@ -332,31 +331,24 @@ export const componentInfo: ComponentInfo = {
 				}
 			},
 			v10: {
-				imports: ['Tabs', 'Tab', 'TabList', 'TabPanels', 'TabPanel'],
+				imports: ['Tabs', 'Tab'],
 				code: ({ json, fragments, jsonToTemplate, customComponentsCollections }) => {
 					return `<Tabs
 						${reactClassNamesFromComponentObj(json)}>
-						<TabList aria-label="List of tabs" ${json.tabType === 'line'? '' : 'contained'}>
-							${json.items.map((step: any, index: any) => `<Tab
-								onClick={(index) => handleInputChange({
-									target: {
-										selectedTab: ${index}
-									}
-								})}
-								key= {${index}}
-								disabled={${step.disabled}}>
-									${step.labelText}
-								</Tab>`
-							).join('\n')}
-						</TabList>
-						<TabPanels>
-							${json.items.map((step: any) => `<TabPanel>
+						${json.items.map((step: any, index: any) => `<Tab
+							onClick={(index) => handleInputChange({
+								target: {
+									selectedTab: ${index}
+								}
+							})}
+							key= {${index}}
+							disabled={${step.disabled}}
+							label="${step.labelText}">
 								${step.items && step.items.length > 0
 									? step.items.map((element: any) =>
 											jsonToTemplate(element, fragments, customComponentsCollections)).join('\n') : ''}
-								</TabPanel>`
-							).join('\n')}
-						</TabPanels>
+							</Tab>`
+						).join('\n')}
 					</Tabs>`;
 				}
 			}

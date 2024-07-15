@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs, Tab } from '@carbon/react';
+import { Tabs, Tab, TabList, TabPanels, TabPanel } from '@carbon/react';
 import { CssClasses, SendSignal } from '../types';
 import { renderComponents, setItemInState } from '../utils';
 import { cx } from 'emotion';
@@ -8,6 +8,7 @@ import { commonSlots, slotsDisabled } from '../common-slots';
 export interface TabsState {
 	type: string;
 	id: string | number;
+	tabType: string;
 	isFollowFocused: boolean;
 	isCacheActive: boolean;
 	isNavigation: boolean;
@@ -90,28 +91,32 @@ export const UITabs = ({ state, setState, setGlobalState, sendSignal }: {
 		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <></>;
 	}
-
-	return <Tabs
-	className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}
-	onClick={() => sendSignal(state.id, 'click')}
-	>
-		{
-			state.items?.map((tab: any, index: number) => {
-				const setTabItem = (i: any) => setItemInState(i, tab, setState);
-				return <Tab
-					className={cx(tab.className, tab.cssClasses?.map((cc: any) => cc.id).join(' '))}
-					onClick= {() => state.selectedTab = index}
-					key={index}
-					disabled={tab.disabled}
-					label={tab.labelText}>
+	return <Tabs>
+		<TabList aria-label='List of tabs' {...(state.tabType !== 'line' ? { contained: true } : {})}>
+			{
+				state.items?.map((step: any, index: any) => <Tab
+					className={cx(step.className, step.cssClasses?.map((cc: any) => cc.id).join(' '))}
+					onClick={(i: any) => state.selectedTab = i}
+					key= {index}
+					disabled={step.disabled}>
+						{step.labelText}
+					</Tab>)
+			}
+		</TabList>
+		<TabPanels>
+			{
+				state.items?.map((step: any, index: any) => {
+					const setTabItem = (i: any) => setItemInState(i, step, setState);
+					return <TabPanel key={index}>
 						{
-							tab.items?.map((item: any) => {
-								const setItem = (i: any) => setItemInState(i, item, setTabItem);
-								return renderComponents(item, setItem, setGlobalState, sendSignal);
+							step.items?.map((element: any) => {
+								const setItem = (j: any) => setItemInState(j, element, setTabItem);
+								return renderComponents(element, setItem, setGlobalState, sendSignal);
 							})
 						}
-				</Tab>;
-			})
-		}
+					</TabPanel>;
+				})
+			}
+		</TabPanels>
 	</Tabs>;
 };
