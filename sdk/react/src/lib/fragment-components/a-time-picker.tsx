@@ -67,7 +67,7 @@ export const ATimePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 	return <>
 		<Checkbox
 			labelText='AM/PM'
-			id='apPm'
+			id='amPm'
 			checked={selectedComponent.showTimePeriod}
 			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
