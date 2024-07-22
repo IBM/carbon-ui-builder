@@ -143,7 +143,7 @@ export const ATimePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 			updateItem={updateListItems}
 			defaultObject={{
 				text: 'New timezone',
-				value: 'New timezone value',
+				value: 'Time Zone 1',
 				selected: false
 			}}
 			template={template} />
@@ -260,7 +260,7 @@ export const componentInfo: ComponentInfo = {
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsShowTimePeriod = ${json.isShowTimePeriod ?? false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}TimePeriod: {value: string; text: string; selected: boolean}[]
 					= ${JSON.stringify(json.timePeriod)};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Timezone: {value: string; text: string; selected: boolean}[]
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Timezones: {value: string; text: string; selected: boolean}[]
 					= ${JSON.stringify(json.timezones)}`,
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter<any>();
 					@Output() ${nameStringToVariableString(json.codeContext?.name)}TimeperiodChange = new EventEmitter<any>();
@@ -292,12 +292,12 @@ export const componentInfo: ComponentInfo = {
 								</option>
 							</cds-timepicker-select>
 							<cds-timepicker-select
-								*ngIf="${nameStringToVariableString(json.codeContext?.name)}timezones.length"
+								*ngIf="${nameStringToVariableString(json.codeContext?.name)}Timezones.length"
 								[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 								[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
 								(change)="${nameStringToVariableString(json.codeContext?.name)}TimezoneChange.emit($event)">
 								<option
-									*ngFor="let step of ${nameStringToVariableString(json.codeContext?.name)}Timezone"
+									*ngFor="let step of ${nameStringToVariableString(json.codeContext?.name)}Timezones"
 									[value]="step.value"
 									[selected]="step.selected">
 									{{step.text}}
@@ -319,7 +319,7 @@ export const componentInfo: ComponentInfo = {
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsShowTimePeriod = ${json.isShowTimePeriod ?? false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}TimePeriod: {value: string; text: string; selected: boolean}[]
 					= ${JSON.stringify(json.timePeriod)};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Timezone: {value: string; text: string; selected: boolean}[]
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Timezones: {value: string; text: string; selected: boolean}[]
 					= ${JSON.stringify(json.timezones)}`,
 				outputs: ({ json }) => `@Output() ${nameStringToVariableString(json.codeContext?.name)}ValueChange = new EventEmitter<any>();
 					@Output() ${nameStringToVariableString(json.codeContext?.name)}TimeperiodChange = new EventEmitter<any>();
@@ -355,7 +355,7 @@ export const componentInfo: ComponentInfo = {
 								[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
 								(change)="${nameStringToVariableString(json.codeContext?.name)}TimezoneChange.emit($event)">
 								<option
-									*ngFor="let step of ${nameStringToVariableString(json.codeContext?.name)}Timezone"
+									*ngFor="let step of ${nameStringToVariableString(json.codeContext?.name)}Timezones"
 									[value]="step.value"
 									[selected]="step.selected">
 									{{step.text}}
