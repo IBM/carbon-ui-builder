@@ -74,7 +74,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 					type: 'select-item',
 					text: 'New option',
 					value: 'new-option',
-					showDeveloperOption: itemsList.showDeveloperOption
+					isShowDeveloperOption: itemsList.isShowDeveloperOption
 				}
 			},
 			itemsList.id,
@@ -91,12 +91,12 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 				component: {
 					label: 'New category',
 					disabled: false,
-					showDeveloperOption: false,
+					isShowDeveloperOption: false,
 					items: [{
 						type: 'select-item',
 						text: 'New option',
 						value: 'new-option',
-						showDeveloperOption: false
+						isShowDeveloperOption: false
 					}]
 				}
 			},
@@ -155,7 +155,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 								onChange={(_: any, { checked }: any) => updateListItems('hidden', checked, childIndex, selectedItem)} />
 						</section>
 						{
-							child.showDeveloperOption &&
+							child.isShowDeveloperOption &&
 							<TextInput
 								light
 								value={child.value}
@@ -184,7 +184,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 							onChange={(_: any, { checked }: any) => updateListItems('hidden', checked, index, selectedComponent)} />
 					</section>
 					{
-						selectedItem.showDeveloperOption &&
+						selectedItem.isShowDeveloperOption &&
 						<TextInput
 							light
 							value={selectedItem.value}
@@ -277,7 +277,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 				value: 'new-option',
 				disabled: false,
 				hidden: false,
-				showDeveloperOption: false
+				isShowDeveloperOption: false
 			}}
 			template={template} />
 	</>;
@@ -352,12 +352,6 @@ export const componentInfo: ComponentInfo = {
 	component: ASelect,
 	settingsUI: ASelectSettingsUI,
 	codeUI: ASelectCodeUI,
-	render: ({ componentObj, select, remove, selected }) => <ASelect
-		componentObj={componentObj}
-		select={select}
-		remove={remove}
-		selected={selected}>
-	</ASelect>,
 	keywords: ['select'],
 	name: 'Select',
 	type: 'select',
@@ -381,7 +375,7 @@ export const componentInfo: ComponentInfo = {
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Warn = ${json.warn ?? false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Inline: "inline" | "default"
 					= "${json.inline ? 'inline' : 'default'}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: "sm" | "md" | "lg" = "${json.size ?? ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: "sm" | "md" | "lg" = "${json.size ?? 'md'}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText ?? ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.label ?? ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}HelperText = "${json.helperText ?? ''}";
@@ -427,7 +421,7 @@ export const componentInfo: ComponentInfo = {
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Warn = ${json.warn ?? false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Inline: "inline" | "default"
 					= "${json.inline ? 'inline' : 'default'}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: "sm" | "md" | "lg" = "${json.size ?? ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: "sm" | "md" | "lg" = "${json.size ?? 'md'}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText ?? ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.label ?? ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}HelperText = "${json.helperText ?? ''}";
