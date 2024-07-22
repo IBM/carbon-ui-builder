@@ -68,10 +68,10 @@ export const ATimePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 		<Checkbox
 			labelText='AM/PM'
 			id='amPm'
-			checked={selectedComponent.showTimePeriod}
+			checked={selectedComponent.isShowTimePeriod}
 			onChange={(_: any, { checked }: any) => setComponent({
 				...selectedComponent,
-				showTimePeriod: checked
+				isShowTimePeriod: checked
 		})} />
 		<Checkbox
 			labelText='Light'
@@ -186,7 +186,7 @@ export const ATimePicker = ({
 				labelText={componentObj.label}
 				light={componentObj.light}
 				size={componentObj.size}>
-					{componentObj.showTimePeriod &&
+					{componentObj.isShowTimePeriod &&
 						<TimePickerSelect disabled={componentObj.disabled} id={componentObj.codeContext?.name + '-select-1'}>
 							{
 								componentObj.timePeriod.map((step: any, index: number) => <SelectItem
@@ -228,7 +228,7 @@ export const componentInfo: ComponentInfo = {
 		invalidText: 'A valid value is required',
 		placeholder: 'hh:mm',
 		label: 'Select a time',
-		showTimePeriod: false,
+		isShowTimePeriod: false,
 		timePeriod: [
 			{
 				value:'AM',
@@ -257,7 +257,7 @@ export const componentInfo: ComponentInfo = {
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}HideLabel = ${json.hideLabel ?? false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = ${json.disabled ?? false};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}showTimePeriod = ${json.showTimePeriod ?? false};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsShowTimePeriod = ${json.isShowTimePeriod ?? false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}TimePeriod: {value: string; text: string; selected: boolean}[]
 					= ${JSON.stringify(json.timePeriod)};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Timezone: {value: string; text: string; selected: boolean}[]
@@ -280,7 +280,7 @@ export const componentInfo: ComponentInfo = {
 						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 						[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled">
 							<cds-timepicker-select
-								*ngIf="${nameStringToVariableString(json.codeContext?.name)}showTimePeriod"
+								*ngIf="${nameStringToVariableString(json.codeContext?.name)}IsShowTimePeriod"
 								[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 								[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
 								(change)="${nameStringToVariableString(json.codeContext?.name)}TimeperiodChange.emit($event)">
@@ -316,7 +316,7 @@ export const componentInfo: ComponentInfo = {
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}HideLabel = ${json.hideLabel ?? false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = ${json.disabled ?? false};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}showTimePeriod = ${json.showTimePeriod ?? false};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsShowTimePeriod = ${json.isShowTimePeriod ?? false};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}TimePeriod: {value: string; text: string; selected: boolean}[]
 					= ${JSON.stringify(json.timePeriod)};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Timezone: {value: string; text: string; selected: boolean}[]
@@ -339,7 +339,7 @@ export const componentInfo: ComponentInfo = {
 						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 						[disabled]="${json.disabled}">
 							<ibm-timepicker-select
-								*ngIf="${nameStringToVariableString(json.codeContext?.name)}showTimePeriod"
+								*ngIf="${nameStringToVariableString(json.codeContext?.name)}IsShowTimePeriod"
 								[theme]="${nameStringToVariableString(json.codeContext?.name)}Theme"
 								[disabled]="${nameStringToVariableString(json.codeContext?.name)}IsDisabled"
 								(change)="${nameStringToVariableString(json.codeContext?.name)}TimeperiodChange.emit($event)">>
@@ -368,7 +368,7 @@ export const componentInfo: ComponentInfo = {
 		react: {
 			latest: {
 				imports: ({ json }) => ['TimePicker',
-					...((json.timePeriod && json.showTimePeriod) || json.timezones.length ? ['TimePickerSelect', 'SelectItem'] : [])],
+					...((json.timePeriod && json.isShowTimePeriod) || json.timezones.length ? ['TimePickerSelect', 'SelectItem'] : [])],
 				code: ({ json }) => {
 					return `<TimePicker
 						${reactClassNamesFromComponentObj(json)}
@@ -387,7 +387,7 @@ export const componentInfo: ComponentInfo = {
 								value: event.target.value
 							}
 						})}>
-							${(json.timePeriod && json.showTimePeriod) ?
+							${(json.timePeriod && json.isShowTimePeriod) ?
 								`<TimePickerSelect
 									id="${json.codeContext?.name + '-select-1'}"
 									name="${json.codeContext?.name}TimeZone"
@@ -426,7 +426,7 @@ export const componentInfo: ComponentInfo = {
 			},
 			v10: {
 				imports: ({ json }) => ['TimePicker',
-					...((json.timePeriod && json.showTimePeriod) || json.timezones.length ? ['TimePickerSelect', 'SelectItem'] : [])],
+					...((json.timePeriod && json.isShowTimePeriod) || json.timezones.length ? ['TimePickerSelect', 'SelectItem'] : [])],
 				code: ({ json }) => {
 					return `<TimePicker
 						${reactClassNamesFromComponentObj(json)}
@@ -445,7 +445,7 @@ export const componentInfo: ComponentInfo = {
 								value: event.target.value
 							}
 						})}>
-							${(json.timePeriod && json.showTimePeriod) ?
+							${(json.timePeriod && json.isShowTimePeriod) ?
 								`<TimePickerSelect
 									id="${json.codeContext?.name + '-select-1'}"
 									name="${json.codeContext?.name}TimeZone"

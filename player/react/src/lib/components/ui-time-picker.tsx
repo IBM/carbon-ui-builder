@@ -18,7 +18,7 @@ export interface TimePickerState {
 	value?: string;
 	label?: string;
 	timezones?: [];
-	showTimePeriod?: boolean;
+	isShowTimePeriod?: boolean;
 	timePeriod?: [];
 }
 
@@ -89,7 +89,7 @@ export const UITimePicker = ({ state, sendSignal }: {
 		onChange={(event: any) => {
 			sendSignal(state.id, 'valueChange', [event.value], { ...state, value: event.value });
 		}}>
-		{state.showTimePeriod &&
+		{state.isShowTimePeriod &&
 			<TimePickerSelect
 				id={state.codeContext?.name + '-select-period'}
 				onChange={(event: any) => {
