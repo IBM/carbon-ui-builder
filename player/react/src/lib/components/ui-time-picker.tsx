@@ -91,7 +91,7 @@ export const UITimePicker = ({ state, sendSignal }: {
 		}}>
 		{state.showTimePeriod &&
 			<TimePickerSelect
-				id={state.codeContext?.name + '-select-1'}
+				id={state.codeContext?.name + '-select-period'}
 				onChange={(event: any) => {
 					sendSignal(state.id, 'timePeriodValueChange', [event.value], { ...state, value: event.value });
 				}}>
