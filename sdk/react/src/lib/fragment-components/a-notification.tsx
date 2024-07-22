@@ -37,11 +37,11 @@ export const ANotificationSettingsUI = ({ selectedComponent, setComponent }: any
 		<Checkbox
 			labelText='Hide close button'
 			id='hide-close-button'
-			checked={selectedComponent.hideCloseButton}
+			checked={selectedComponent.isHideCloseButton}
 			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
-					hideCloseButton: checked
+					isHideCloseButton: checked
 				});
 			}} />
 		<Checkbox
@@ -90,20 +90,20 @@ export const ANotificationSettingsUI = ({ selectedComponent, setComponent }: any
 			})} />
 		<TextInput
 			light
-			value={selectedComponent.subtitleText}
+			value={selectedComponent.subtitle}
 			labelText='Subtitle text'
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
-				subtitleText: event.currentTarget.value
+				subtitle: event.currentTarget.value
 			})} />
 		{
 			selectedComponent.variant === 'toastNotification' && <TextInput
 			light
-			value={selectedComponent.captionText}
+			value={selectedComponent.caption}
 			labelText='Caption text'
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
-				captionText: event.currentTarget.value
+				caption: event.currentTarget.value
 			})} />
 		}
 	</>;
@@ -139,19 +139,19 @@ export const ANotification = ({
 				componentObj.variant === 'toastNotification'
 					? <ToastNotification
 				className={cx(preventCheckEventStyle, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}
-				caption={componentObj.captionText}
-				hideCloseButton={componentObj.hideCloseButton}
+				caption={componentObj.caption}
+				hideCloseButton={componentObj.isHideCloseButton}
 				lowContrast={componentObj.lowContrast}
 				kind={componentObj.kind}
-				subtitle={componentObj.subtitleText}
+				subtitle={componentObj.subtitle}
 				timeout={0}
 				title={componentObj.title} />
 					: <InlineNotification
 				className={cx(preventCheckEventStyle, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}
 				kind={componentObj.kind}
-				hideCloseButton={componentObj.hideCloseButton}
+				hideCloseButton={componentObj.isHideCloseButton}
 				lowContrast={componentObj.lowContrast}
-				subtitle={componentObj.subtitleText}
+				subtitle={componentObj.subtitle}
 				title={componentObj.title} />
 			}
 		</AComponent>
@@ -166,9 +166,7 @@ export const componentInfo: ComponentInfo = {
 	name: 'Notification',
 	type: 'notification',
 	defaultComponentObj: {
-		type: 'notification',
-		kind: 'error',
-		variant: 'toastNotification'
+		type: 'notification'
 	},
 	image,
 	codeExport: {
@@ -178,11 +176,11 @@ export const componentInfo: ComponentInfo = {
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}notificationObj: any = {
 					type: "${json.kind ? json.kind : 'error'}",
 					title: "${json.title ? json.title : ''}",
-					${json.variant === 'toastNotification' ? `subtitle: "${json.subtitleText ? json.subtitleText : ''}",` : ''}
+					${json.variant === 'toastNotification' ? `subtitle: "${json.subtitle ? json.subtitle : ''}",` : ''}
 					${json.variant === 'toastNotification' ?
-						`caption: "${json.captionText ? json.captionText : ''}",` : `message: "${json.captionText ? json.captionText : ''}",`}
+						`caption: "${json.caption ? json.caption : ''}",` : `message: "${json.caption ? json.caption : ''}",`}
 					lowContrast:${json.lowContrast ? json.lowContrast : false},
-					showClose: ${!json.hideCloseButton}
+					showClose: ${json.isHideCloseButton ? json.isHideCloseButton : false}
 				};`,
 				outputs: () => '',
 				imports: ['NotificationModule', 'ButtonModule'],
@@ -204,11 +202,11 @@ export const componentInfo: ComponentInfo = {
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}notificationObj: any = {
 					type: "${json.kind ? json.kind : 'error'}",
 					title: "${json.title ? json.title : ''}",
-					${json.variant === 'toastNotification' ? `subtitle: "${json.subtitleText ? json.subtitleText : ''}",` : ''}
+					${json.variant === 'toastNotification' ? `subtitle: "${json.subtitle ? json.subtitle : ''}",` : ''}
 					${json.variant === 'toastNotification' ?
-						`caption: "${json.captionText ? json.captionText : ''}",` : `message: "${json.captionText ? json.captionText : ''}",`}
+						`caption: "${json.caption ? json.caption : ''}",` : `message: "${json.caption ? json.caption : ''}",`}
 					lowContrast:${json.lowContrast ? json.lowContrast : false},
-					showClose: ${!json.hideCloseButton}
+					showClose: ${json.isHideCloseButton ? json.isHideCloseButton : false}
 				};`,
 				outputs: () => '',
 				imports: ['NotificationModule', 'ButtonModule'],
@@ -232,11 +230,11 @@ export const componentInfo: ComponentInfo = {
 				code: ({ json }) => {
 					return `${json.variant === 'toastNotification'
 							? `<ToastNotification
-						caption="${json.captionText}"
-						hideCloseButton={${json.hideCloseButton}}
+						caption="${json.caption}"
+						hideCloseButton={${json.isHideCloseButton}}
 						lowContrast={${json.lowContrast}}
 						kind="${json.kind}"
-						${json.subtitleText ? `subtitle= { <span> ${json.subtitleText} </span> }`: ''}
+						${json.subtitle ? `subtitle= { <span> ${json.subtitle} </span> }`: ''}
 						timeout={${0}}
 						title="${json.title}"
 						onClose={(selectedItem) => handleInputChange({
@@ -248,9 +246,9 @@ export const componentInfo: ComponentInfo = {
 						${reactClassNamesFromComponentObj(json)} />`
 							: `<InlineNotification
 						kind="${json.kind}"
-						hideCloseButton={${json.hideCloseButton}}
+						hideCloseButton={${json.isHideCloseButton}}
 						lowContrast={${json.lowContrast}}
-						${json.subtitleText ? `subtitle= { <span> ${json.subtitleText} </span> }`: ''}
+						${json.subtitle ? `subtitle= { <span> ${json.subtitle} </span> }`: ''}
 						title="${json.title}"
 						onClose={(selectedItem) => handleInputChange({
 							target: {
@@ -267,11 +265,11 @@ export const componentInfo: ComponentInfo = {
 				code: ({ json }) => {
 					return `${json.variant === 'toastNotification'
 							? `<ToastNotification
-						caption="${json.captionText}"
-						hideCloseButton={${json.hideCloseButton}}
+						caption="${json.caption}"
+						hideCloseButton={${json.isHideCloseButton}}
 						lowContrast={${json.lowContrast}}
 						kind="${json.kind}"
-						${json.subtitleText ? `subtitle= { <span> ${json.subtitleText} </span> }`: ''}
+						${json.subtitle ? `subtitle= { <span> ${json.subtitle} </span> }`: ''}
 						timeout={${0}}
 						title="${json.title}"
 						onClose={(selectedItem) => handleInputChange({
@@ -283,9 +281,9 @@ export const componentInfo: ComponentInfo = {
 						${reactClassNamesFromComponentObj(json)} />`
 							: `<InlineNotification
 						kind="${json.kind}"
-						hideCloseButton={${json.hideCloseButton}}
+						hideCloseButton={${json.isHideCloseButton}}
 						lowContrast={${json.lowContrast}}
-						${json.subtitleText ? `subtitle= { <span> ${json.subtitleText} </span> }`: ''}
+						${json.subtitle ? `subtitle= { <span> ${json.subtitle} </span> }`: ''}
 						title="${json.title}"
 						onClose={(selectedItem) => handleInputChange({
 							target: {
