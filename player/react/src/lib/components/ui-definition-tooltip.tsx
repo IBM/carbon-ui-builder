@@ -7,7 +7,7 @@ import { commonSlots, slotsDisabled } from '../common-slots';
 export interface DefinitionTooltipState {
 	id: string;
 	type: string;
-	alignment: string;
+	alignment?: string;
 	codeContext: {
 		name: string;
 	};
