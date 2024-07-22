@@ -38,7 +38,7 @@ export const ADefinitionTooltipSettingsUI = ({ selectedComponent, setComponent }
 	return <>
 		<Dropdown
 			id='alignment'
-			label='Alignment the text'
+			label='Alignment of text'
 			titleText='Alignment'
 			items={alignments}
 			selectedItem={alignments.find(item => item.id === selectedComponent.alignment)}
@@ -104,7 +104,6 @@ export const ADefinitionTooltip = ({
 		<AComponent
 		componentObj={componentObj}
 		rejectDrop={true}
-
 		{...rest}>
 			<div className={`${preventCheckEvent} ${componentObj.cssClasses?.map((cc: any) => cc.id).join(' ')} `}>
 				<DefinitionTooltip
@@ -122,17 +121,12 @@ export const componentInfo: ComponentInfo = {
 	component: ADefinitionTooltip,
 	settingsUI: ADefinitionTooltipSettingsUI,
 	codeUI: ADefinitionTooltipCodeUI,
-	render: ({ componentObj, select, remove, selected }) => <ADefinitionTooltip
-		componentObj={componentObj}
-		select={select}
-		remove={remove}
-		selected={selected} />,
 	keywords: ['definition tooltip', 'definition', 'tooltip'],
 	name: 'Definition tooltip',
 	type: 'definition-tooltip',
 	defaultComponentObj: {
 		type: 'definition-tooltip',
-		description: 'description'
+		description: 'sample text'
 	},
 	image,
 	codeExport: {
@@ -142,13 +136,13 @@ export const componentInfo: ComponentInfo = {
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Description = "${json.description ? json.description : 'description'}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}IsOpen = ${json.isDefaultOpened ? json.isDefaultOpened : false};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Align: any = "${json.alignment ? json.alignment : 'bottom-start' }";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}definition = "${json.definition ?
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Definition = "${json.definition ?
 					json.definition : 'default tooltip message' }";`,
 				outputs: ({ json }) => {
 					const name = nameStringToVariableString(json.codeContext?.name);
-					return `@Output() ${name}isOpenChange = new EventEmitter<any>();
-					@Output() ${name}onClose = new EventEmitter<any>();
-					@Output() ${name}onOpen = new EventEmitter<any>();`;
+					return `@Output() ${name}IsOpenChange = new EventEmitter<any>();
+					@Output() ${name}OnClose = new EventEmitter<any>();
+					@Output() ${name}OnOpen = new EventEmitter<any>();`;
 				},
 				imports: ['TooltipModule'],
 				code: ({ json }) => {
@@ -156,10 +150,10 @@ export const componentInfo: ComponentInfo = {
 					return `<cds-tooltip-definition
 						[isOpen]="${name}IsOpen"
 						[align]="${name}Align"
-						(onOpen)="${name}onOpen.emit($event)"
-						(onClose)="${name}onClose.emit($event)"
-						(isOpenChange)="${name}isOpenChange.emit($event)"
-						[description]="${name}definition">
+						(onOpen)="${name}OnOpen.emit($event)"
+						(onClose)="${name}OnClose.emit($event)"
+						(isOpenChange)="${name}IsOpenChange.emit($event)"
+						[description]="${name}Definition">
 						{{${name}Description}}
 					</cds-tooltip-definition>`;
 				}
@@ -169,13 +163,13 @@ export const componentInfo: ComponentInfo = {
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Description = "${json.description ? json.description : 'description'}";
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}IsOpen = ${json.isDefaultOpened ? json.isDefaultOpened : false};
 				@Input() ${nameStringToVariableString(json.codeContext?.name)}Align: any = "${json.alignment ? json.alignment : 'bottom-left' }";
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}definition = "${json.definition ?
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}Definition = "${json.definition ?
 					json.definition : 'default tooltip message' }";`,
 				outputs: ({ json }) => {
 					const name = nameStringToVariableString(json.codeContext?.name);
-					return `@Output() ${name}isOpenChange = new EventEmitter<any>();
-					@Output() ${name}onClose = new EventEmitter<any>();
-					@Output() ${name}onOpen = new EventEmitter<any>();`;
+					return `@Output() ${name}IsOpenChange = new EventEmitter<any>();
+					@Output() ${name}OnClose = new EventEmitter<any>();
+					@Output() ${name}OnOpen = new EventEmitter<any>();`;
 				},
 				imports: ['TooltipModule'],
 				code: ({ json }) => {
@@ -183,10 +177,10 @@ export const componentInfo: ComponentInfo = {
 					return `<ibm-tooltip-definition
 						[isOpen]="${name}IsOpen"
 						[align]="${name}Align"
-						(onOpen)="${name}onOpen.emit($event)"
-						(onClose)="${name}onClose.emit($event)"
-						(isOpenChange)="${name}isOpenChange.emit($event)"
-						[description]="${name}definition">
+						(onOpen)="${name}OnOpen.emit($event)"
+						(onClose)="${name}OnClose.emit($event)"
+						(isOpenChange)="${name}IsOpenChange.emit($event)"
+						[description]="${name}Definition">
 						{{${name}Description}}
 					</ibm-tooltip-definition>`;
 				}

@@ -82,8 +82,8 @@ export const UIDefinitionTooltip = ({ state, sendSignal }: {
 		align={state.alignment ? state.alignment : 'bottom-left'}
 		definition={state.definition}
 		name={state.codeContext?.name}
-		openOnHover={state.isOpenOnHover ? state.isOpenOnHover : false}
-		defaultOpen={state.isDefaultOpened ? state.isDefaultOpened : false}
+		openOnHover={state.isOpenOnHover}
+		defaultOpen={state.isDefaultOpened}
 		className={cssClasses}>
 			{state.description}
 		</DefinitionTooltip>;
