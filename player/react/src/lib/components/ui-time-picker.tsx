@@ -101,7 +101,7 @@ export const UITimePicker = ({ state, sendSignal }: {
 		}
 		{state.timezones?.length &&
 			<TimePickerSelect
-				id={state.codeContext?.name + '-select-2'}
+				id={state.codeContext?.name + '-select-zone'}
 				onChange={(event: any) => {
 					sendSignal(state.id, 'timezoneValueChange', [event.value], { ...state, value: event.value });
 				}}>
