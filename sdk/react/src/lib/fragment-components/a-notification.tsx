@@ -186,14 +186,14 @@ export const componentInfo: ComponentInfo = {
 				imports: ['NotificationModule', 'ButtonModule'],
 				code: ({ json }) => {
 					return `${json.variant === 'toastNotification'
-							? `<cds-toast
-						${angularClassNamesFromComponentObj(json)}
-						[notificationObj]="${nameStringToVariableString(json.codeContext?.name)}notificationObj">
-						</cds-toast>`
-							: `<cds-inline-notification
-						${angularClassNamesFromComponentObj(json)}
-						[notificationObj]="${nameStringToVariableString(json.codeContext?.name)}notificationObj">
-						</cds-inline-notification>`
+						? `<cds-toast
+					${angularClassNamesFromComponentObj(json)}
+					[notificationObj]="${nameStringToVariableString(json.codeContext?.name)}notificationObj">
+					</cds-toast>`
+						: `<cds-inline-notification
+					${angularClassNamesFromComponentObj(json)}
+					[notificationObj]="${nameStringToVariableString(json.codeContext?.name)}notificationObj">
+					</cds-inline-notification>`
 					}`;
 				}
 			},
@@ -212,14 +212,14 @@ export const componentInfo: ComponentInfo = {
 				imports: ['NotificationModule', 'ButtonModule'],
 				code: ({ json }) => {
 					return `${json.variant === 'toastNotification'
-							? `<ibm-toast
-						${angularClassNamesFromComponentObj(json)}
-						[notificationObj]="${nameStringToVariableString(json.codeContext?.name)}notificationObj">
-						</ibm-toast>`
-							: `<ibm-notification
-						${angularClassNamesFromComponentObj(json)}
-						[notificationObj]="${nameStringToVariableString(json.codeContext?.name)}notificationObj">
-						</ibm-notification>`
+						? `<ibm-toast
+					${angularClassNamesFromComponentObj(json)}
+					[notificationObj]="${nameStringToVariableString(json.codeContext?.name)}notificationObj">
+					</ibm-toast>`
+						: `<ibm-notification
+					${angularClassNamesFromComponentObj(json)}
+					[notificationObj]="${nameStringToVariableString(json.codeContext?.name)}notificationObj">
+					</ibm-notification>`
 					}`;
 				}
 			}
