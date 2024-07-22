@@ -26,7 +26,7 @@ export const ANotificationSettingsUI = ({ selectedComponent, setComponent }: any
 		{ id: 'info-square', text: 'Info square' },
 		{ id: 'success', text: 'Success' },
 		{ id: 'warning', text: 'Warning' },
-		{ id: 'warning-alt', text: 'Warning alt' }
+		{ id: 'warning-alt', text: 'Alternative warning' }
 	];
 	const varients = [
 		{ id: 'toastNotification', text: 'Toast notification' },
