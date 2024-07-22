@@ -9,12 +9,12 @@ import { commonSlots, slotsDisabled } from '../common-slots';
 
 export interface SelectState {
 	id?: string;
-	type?: string;
+	type: string;
 	inline?: boolean;
 	invalid?: boolean;
 	disabled?: boolean;
 	warn?: boolean;
-	labelText: string;
+	label: string;
 	invalidText?: string;
 	warnText?: string;
 	size?: string;
@@ -35,7 +35,7 @@ export const signals = ['click'];
 export const slots = {
 	...commonSlots,
 	...slotsDisabled,
-	labelText: 'string',
+	label: 'string',
 	defaultValue: 'string'
 };
 
@@ -59,7 +59,7 @@ export const UISelect = ({ state, sendSignal }: {
 		warn={state.warn}
 		warnText={state.warnText}
 		size={state.size}
-		labelText={state.labelText}
+		label={state.label}
 		inline={state.inline}
 		invalid={state.invalid}
 		disabled={state.disabled}>

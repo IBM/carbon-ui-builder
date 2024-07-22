@@ -209,9 +209,9 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 			})} />
 
 		<TextInput
-			value={selectedComponent.labelText}
+			value={selectedComponent.label}
 			labelText='Select value'
-			onChange={(event: any) => setComponent({ ...selectedComponent, labelText: event.currentTarget.value })} />
+			onChange={(event: any) => setComponent({ ...selectedComponent, label: event.currentTarget.value })} />
 
 		<TextInput
 			value={selectedComponent.helperText}
@@ -312,7 +312,7 @@ export const ASelect = ({
 			invalidText={componentObj.invalidText}
 			warn={componentObj.warn}
 			warnText={componentObj.warnText}
-			labelText={componentObj.labelText}
+			labelText={componentObj.label}
 			size={componentObj.size}
 			inline={componentObj.inline}
 			invalid={componentObj.invalid}
@@ -363,7 +363,7 @@ export const componentInfo: ComponentInfo = {
 	type: 'select',
 	defaultComponentObj: {
 		type: 'select',
-		labelText: 'Select',
+		label: 'Select',
 		items: [
 			{
 				text: 'Option 1',
@@ -383,7 +383,7 @@ export const componentInfo: ComponentInfo = {
 					= "${json.inline ? 'inline' : 'default'}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: "sm" | "md" | "lg" = "${json.size ?? ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText ?? ''}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText ?? ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.label ?? ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}HelperText = "${json.helperText ?? ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}WarnText = "${json.warnText ?? ''}";`,
 				outputs: (_) => '',
@@ -429,7 +429,7 @@ export const componentInfo: ComponentInfo = {
 					= "${json.inline ? 'inline' : 'default'}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Size: "sm" | "md" | "lg" = "${json.size ?? ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText ?? ''}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.labelText ?? ''}";
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}Label = "${json.label ?? ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}HelperText = "${json.helperText ?? ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}WarnText = "${json.warnText ?? ''}";`,
 				outputs: (_) => '',
@@ -479,7 +479,7 @@ export const componentInfo: ComponentInfo = {
 					return `<Select
 						id="select"
 						size="${json.size}"
-						labelText="${json.labelText}"
+						labelText="${json.label}"
 						${json.warnText ? `warnText="${json.warnText}"` : ''}
 						${json.warn ? `warn={${json.warn}}` : ''}
 						${json.defaultValue ? `defaultValue=${json.defaultValue}`: ''}
@@ -525,7 +525,7 @@ export const componentInfo: ComponentInfo = {
 					return `<Select
 						id="select"
 						size="${json.size}"
-						labelText="${json.labelText}"
+						labelText="${json.label}"
 						${json.warnText ? `warnText="${json.warnText}"` : ''}
 						${json.warn ? `warn={${json.warn}}` : ''}
 						${json.defaultValue ? `defaultValue=${json.defaultValue}`: ''}
