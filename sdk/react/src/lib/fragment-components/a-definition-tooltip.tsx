@@ -20,7 +20,6 @@ const preventCheckEvent = css`
 `;
 
 export const ADefinitionTooltipSettingsUI = ({ selectedComponent, setComponent }: any) => {
-
 	const alignments = [
 		{ id: 'top', text: 'Top' },
 		{ id: 'top-left', text: 'Top left' },
