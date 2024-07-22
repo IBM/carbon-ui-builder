@@ -233,7 +233,7 @@ export const componentInfo: ComponentInfo = {
 			{
 				value:'AM',
 				text:'AM',
-				selected: false
+				selected: true
 			},
 			{
 				value:'PM',
