@@ -44,6 +44,33 @@
 		}(window.location))
 	</script>
 	<!-- End Single Page Apps for GitHub Pages -->
+
+	<script type="module" src="https://1.www.s81c.com/common/carbon-for-ibm-dotcom/tag/v1/latest/footer.min.js"></script>
+
+	<!-- Tealium/GA Set up -->
+	<script type="text/javascript">
+		window._ibmAnalytics = {
+			settings: {
+				name: 'CarbonUIBuilder',
+				isSpa: true,
+				tealiumProfileName: 'ibm-web-app',
+			},
+			onLoad: [['ibmStats.pageview', []]],
+		};
+		digitalData = {
+			page: {
+				pageInfo: {
+					ibm: {
+						siteId: 'IBM_' + _ibmAnalytics.settings.name,
+					},
+				},
+				category: {
+					primaryCategory: 'PC100',
+				},
+			},
+		};
+	</script>
+	<script src="//1.www.s81c.com/common/stats/ibm-common.js" type="text/javascript" async="async"></script>
 </head>
 
 <body>
@@ -60,6 +87,9 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+	<footer>
+		<dds-footer-container key="footer" disable-locale-button="true" size="micro"></dds-footer-container>
+	</footer>
 </body>
 
 </html>
