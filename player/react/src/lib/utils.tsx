@@ -35,6 +35,7 @@ import { UITile } from './components/ui-tile';
 import { UITileFold } from './components/ui-tile-fold';
 import { UIToggle } from './components/ui-toggle';
 import { kebabCase } from 'lodash';
+import { UIDefinitionTooltip } from './components/ui-definition-tooltip';
 import { SendSignal } from './types';
 
 export const setItemInState = (item: any, state: any, setState: (state: any) => void) => {
@@ -210,6 +211,9 @@ export const renderComponents = (
 	switch (state.type) {
 		case 'accordion':
 			return <UIAccordion key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'definition-tooltip':
+			return <UIDefinitionTooltip key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'accordion-item':
 			return <UIAccordionItem key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
