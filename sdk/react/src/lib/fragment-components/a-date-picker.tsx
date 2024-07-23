@@ -222,8 +222,8 @@ export const ADatePicker = ({
 						labelText={componentObj.rangeStartLabel}
 						size={componentObj.size} />
 					{
-						componentObj.kind === 'range' &&
-						<DatePickerInput
+						componentObj.kind === 'range'
+						&& <DatePickerInput
 							id={`${componentObj.id}-end`}
 							placeholder={componentObj.rangePlaceholder || componentObj.placeholder}
 							labelText={componentObj.rangeEndLabel}
@@ -279,10 +279,11 @@ export const componentInfo: ComponentInfo = {
 						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 						[placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
 						[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
-						${!json.kind || json.kind === 'simple' ?
-							`[dateFormat]="${nameStringToVariableString(json.codeContext?.name)}DateFormat"` :
-							`[range]="true"
-						[rangeLabel]="${nameStringToVariableString(json.codeContext?.name)}RangeEndLabel"`}>
+						${
+							!json.kind || json.kind === 'simple'
+								? `[dateFormat]="${nameStringToVariableString(json.codeContext?.name)}DateFormat"`
+								: `[range]="true" [rangeLabel]="${nameStringToVariableString(json.codeContext?.name)}RangeEndLabel"`
+						}>
 						</cds-date-picker>
 					`;
 				}
@@ -314,10 +315,11 @@ export const componentInfo: ComponentInfo = {
 						[value]="${nameStringToVariableString(json.codeContext?.name)}Value"
 						[placeholder]="${nameStringToVariableString(json.codeContext?.name)}Placeholder"
 						[size]="${nameStringToVariableString(json.codeContext?.name)}Size"
-						${!json.kind || json.kind === 'simple' ?
-							`[dateFormat]="${nameStringToVariableString(json.codeContext?.name)}DateFormat"` :
-							`[range]="true"
-						[rangeLabel]="${nameStringToVariableString(json.codeContext?.name)}RangeEndLabel"`}>
+						${
+							!json.kind || json.kind === 'simple'
+								? `[dateFormat]="${nameStringToVariableString(json.codeContext?.name)}DateFormat"`
+								: `[range]="true" [rangeLabel]="${nameStringToVariableString(json.codeContext?.name)}RangeEndLabel"`
+						}>
 						</cds-date-picker>
 					`;
 				}
@@ -346,22 +348,29 @@ export const componentInfo: ComponentInfo = {
 						${json.invalid ? `invalid={${json.invalid}}` : ''}
 						${json.invalidText ? `invalidText='${json.invalidText}'` : ''}
 						${json.size && json.size !== 'md' ? `size="${json.size}"` : ''}
-						${json.kind === 'simple' ? `onChange={(dates) => handleInputChange({
-							target: {
-								name: "${json.codeContext?.name}",
-								value: dates
-							}
-						})}` : ''}
+						${
+							json.kind === 'simple'
+								? `onChange={(dates) => handleInputChange({
+									target: {
+										name: "${json.codeContext?.name}",
+										value: dates
+									}})}`
+								: ''
+						}
 					/>
-					${json.kind === 'range' ? `<DatePickerInput
-						id="${nameStringToVariableString(json.codeContext?.name) + '-end'}"
-						${json.rangePlaceholder ? `placeholder="${json.rangePlaceholder}"` : `placeholder="${json.placeholder}"`}
-						${json.rangeEndLabel ? `labelText='${json.rangeEndLabel}'` : ''}
-						${json.disabled ? `disabled={${json.disabled}}` : ''}
-						${json.invalid ? `invalid={${json.invalid}}` : ''}
-						${json.invalidText ? `invalidText='${json.rangeInvalidText}'` : ''}
-						${json.size && json.size !== 'md' ? `size="${json.size}"` : ''}
-						/>` : ''}
+					${
+						json.kind === 'range'
+							? `<DatePickerInput
+								id="${nameStringToVariableString(json.codeContext?.name) + '-end'}"
+								${json.rangePlaceholder ? `placeholder="${json.rangePlaceholder}"` : `placeholder="${json.placeholder}"`}
+								${json.rangeEndLabel ? `labelText='${json.rangeEndLabel}'` : ''}
+								${json.disabled ? `disabled={${json.disabled}}` : ''}
+								${json.invalid ? `invalid={${json.invalid}}` : ''}
+								${json.invalidText ? `invalidText='${json.rangeInvalidText}'` : ''}
+								${json.size && json.size !== 'md' ? `size="${json.size}"` : ''}
+								/>`
+							: ''
+					}
 					</DatePicker>`;
 				}
 			},
@@ -387,23 +396,29 @@ export const componentInfo: ComponentInfo = {
 						${json.invalid ? `invalid={${json.invalid}}` : ''}
 						${json.invalidText ? `invalidText='${json.invalidText}'` : ''}
 						${json.size && json.size !== 'md' ? `size="${json.size}"` : ''}
-						${json.kind === 'simple' ? `onChange={(dates) => handleInputChange({
-							target: {
-								name: "${json.codeContext?.name}",
-								value: dates
-							}
-						})}` : ''}
+						${
+							json.kind === 'simple'
+								? `onChange={(dates) => handleInputChange({
+									target: {
+										name: "${json.codeContext?.name}",
+										value: dates
+									}})}`
+								: ''
+						}
 					/>
-					${json.kind === 'range' ? `<DatePickerInput
-						id="${nameStringToVariableString(json.codeContext?.name) + '-end'}"
-						${json.rangePlaceholder ? `placeholder="${json.rangePlaceholder}"` : `placeholder="${json.placeholder}"`}
-						${json.rangeEndLabel ? `labelText='${json.rangeEndLabel}'` : ''}
-						${json.disabled ? `disabled={${json.disabled}}` : ''}
-						${json.invalid ? `invalid={${json.invalid}}` : ''}
-						${json.invalidText ? `invalidText='${json.rangeInvalidText}'` : ''}
-						${json.size && json.size !== 'md' ? `size="${json.size}"` : ''}
-						/>`
-							: ''}
+					${
+						json.kind === 'range'
+							? `<DatePickerInput
+								id="${nameStringToVariableString(json.codeContext?.name) + '-end'}"
+								${json.rangePlaceholder ? `placeholder="${json.rangePlaceholder}"` : `placeholder="${json.placeholder}"`}
+								${json.rangeEndLabel ? `labelText='${json.rangeEndLabel}'` : ''}
+								${json.disabled ? `disabled={${json.disabled}}` : ''}
+								${json.invalid ? `invalid={${json.invalid}}` : ''}
+								${json.invalidText ? `invalidText='${json.rangeInvalidText}'` : ''}
+								${json.size && json.size !== 'md' ? `size="${json.size}"` : ''}
+								/>`
+							: ''
+					}
 					</DatePicker>`;
 				}
 			}
