@@ -42,24 +42,24 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 		{ id: 'lg', text: 'Large' }
 	];
 
-	const updateStepList = (newList: any[]) => {
+	const updateOptionList = (newList: any[]) => {
 		setComponent({
 			...selectedComponent,
 			items: newList
 		});
 	};
 
-	const updateListItems = (key: string, value: any, index: number, list: any) => {
+	const updateCategoryOption = (categoryComponentObj: any, index: number, key: string, value: any) => {
 		const step = {
-			...list.items[index],
+			...categoryComponentObj.items[index],
 			[key]: value
 		};
 		setComponent({
-			...list,
+			...categoryComponentObj,
 			items: [
-				...list.items.slice(0, index),
+				...categoryComponentObj.items.slice(0, index),
 				step,
-				...list.items.slice(index + 1)
+				...categoryComponentObj.items.slice(index + 1)
 			]
 		});
 	};
@@ -113,13 +113,13 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 					light
 					value={selectedItem.label}
 					labelText='Category label'
-					onChange={(event: any) => updateListItems('label', event.currentTarget.value, index, selectedComponent)} />
+					onChange={(event: any) => updateCategoryOption(selectedComponent, index, 'label', event.currentTarget.value)} />
 				<section>
 					<Checkbox
 						labelText='Disabled'
 						id={`disabled-${index}`}
 						checked={selectedItem.disabled}
-						onChange={(_: any, { checked }: any) => updateListItems('disabled', checked, index, selectedComponent)} />
+						onChange={(_: any, { checked }: any) => updateCategoryOption(selectedComponent, index, 'disabled', checked)} />
 					<Button
 						size='sm'
 						kind='ghost'
@@ -140,19 +140,19 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 							value={child.text}
 							key={`text-${child.id}`}
 							labelText='Option display text'
-							onChange={(event: any) => updateListItems('text', event.currentTarget.value, childIndex, selectedItem)} />
+							onChange={(event: any) => updateCategoryOption(selectedItem, childIndex, 'text', event.currentTarget.value)} />
 
 						<section>
 							<Checkbox
 								labelText='Disabled'
 								id={`isDisabled-checkbox-${child.id}`}
 								checked={child.disabled}
-								onChange={(_: any, { checked }: any) => updateListItems('disabled', checked, childIndex, selectedItem)} />
+								onChange={(_: any, { checked }: any) => updateCategoryOption(selectedItem, childIndex, 'disabled', checked)} />
 							<Checkbox
 								labelText='Hidden'
 								id={`isHidden-checkbox-${child.id}`}
 								checked={child.hidden}
-								onChange={(_: any, { checked }: any) => updateListItems('hidden', checked, childIndex, selectedItem)} />
+								onChange={(_: any, { checked }: any) => updateCategoryOption(selectedItem, childIndex, 'hidden', checked)} />
 						</section>
 						{
 							child.isShowDeveloperOption &&
@@ -161,7 +161,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 								value={child.value}
 								key={`child-value-${index}-${childIndex}-${child.text}`}
 								labelText='Option value'
-								onChange={(event: any) => updateListItems('value', event.currentTarget.value, childIndex, selectedItem)} />
+								onChange={(event: any) => updateCategoryOption(selectedItem, childIndex, 'value', event.currentTarget.value)} />
 						}
 					</>)
 				} </> : <>
@@ -170,18 +170,18 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 						light
 						value={selectedItem.text}
 						labelText='Option display text'
-						onChange={(event: any) => updateListItems('text', event.currentTarget.value, index, selectedComponent)} />
+						onChange={(event: any) => updateCategoryOption(selectedComponent, index, 'text', event.currentTarget.value)} />
 					<section>
 						<Checkbox
 							labelText='Disabled'
 							id={`disabled-${index}`}
 							checked={selectedItem.disabled}
-							onChange={(_: any, { checked }: any) => updateListItems('disabled', checked, index, selectedComponent)} />
+							onChange={(_: any, { checked }: any) => updateCategoryOption(selectedComponent, index, 'disabled', checked)} />
 						<Checkbox
 							labelText='Hidden'
 							id={`hidden-${index}`}
 							checked={selectedItem.hidden}
-							onChange={(_: any, { checked }: any) => updateListItems('hidden', checked, index, selectedComponent)} />
+							onChange={(_: any, { checked }: any) => updateCategoryOption(selectedComponent, index, 'hidden', checked)} />
 					</section>
 					{
 						selectedItem.isShowDeveloperOption &&
@@ -189,7 +189,7 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 							light
 							value={selectedItem.value}
 							labelText='Option value'
-							onChange={(event: any) => updateListItems('value', event.currentTarget.value, index, selectedComponent)} />
+							onChange={(event: any) => updateCategoryOption(selectedComponent, index, 'value', event.currentTarget.value)} />
 					}
 			</>
 		}
@@ -270,8 +270,8 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 
 		<DraggableTileList
 			dataList={[...selectedComponent.items]}
-			setDataList={updateStepList}
-			updateItem={updateListItems}
+			setDataList={updateOptionList}
+			updateItem={updateCategoryOption}
 			defaultObject={{
 				text: 'New option',
 				value: 'new-option',
