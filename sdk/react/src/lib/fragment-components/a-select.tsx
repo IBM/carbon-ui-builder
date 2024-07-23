@@ -108,90 +108,92 @@ export const ASelectSettingsUI = ({ selectedComponent, setComponent, fragment, s
 	const template = (selectedItem: any, index: number) => <>
 		{
 			// category template conditioned on that it has any chidren items
-			selectedItem.items && selectedItem.items.length > 0 ? <>
-				<TextInput
-					light
-					value={selectedItem.label}
-					labelText='Category label'
-					onChange={(event: any) => updateCategoryOption(selectedComponent, index, 'label', event.currentTarget.value)} />
-				<section>
-					<Checkbox
-						labelText='Disabled'
-						id={`disabled-${index}`}
-						checked={selectedItem.disabled}
-						onChange={(_: any, { checked }: any) => updateCategoryOption(selectedComponent, index, 'disabled', checked)} />
-					<Button
-						size='sm'
-						kind='ghost'
-						className={addOptionButtonStyle}
-						onClick={(event: any) => {
-							event.stopPropagation();
-							addOption(0, selectedItem);
-						}}>
-							Add item
-					</Button>
-				</section>
-				{
-					selectedItem.items.map((child: any, childIndex: any) => <>
-						<hr />
-						{/* category items */}
-						<TextInput
-							light
-							value={child.text}
-							key={`text-${child.id}`}
-							labelText='Option display text'
-							onChange={(event: any) => updateCategoryOption(selectedItem, childIndex, 'text', event.currentTarget.value)} />
-
-						<section>
-							<Checkbox
-								labelText='Disabled'
-								id={`isDisabled-checkbox-${child.id}`}
-								checked={child.disabled}
-								onChange={(_: any, { checked }: any) => updateCategoryOption(selectedItem, childIndex, 'disabled', checked)} />
-							<Checkbox
-								labelText='Hidden'
-								id={`isHidden-checkbox-${child.id}`}
-								checked={child.hidden}
-								onChange={(_: any, { checked }: any) => updateCategoryOption(selectedItem, childIndex, 'hidden', checked)} />
-						</section>
-						{
-							child.isShowDeveloperOption &&
-							<TextInput
-								light
-								value={child.value}
-								key={`child-value-${index}-${childIndex}-${child.text}`}
-								labelText='Option value'
-								onChange={(event: any) => updateCategoryOption(selectedItem, childIndex, 'value', event.currentTarget.value)} />
-						}
-					</>)
-				} </> : <>
-				{/* standalone option items */}
+			selectedItem.items && selectedItem.items.length > 0
+				? <>
 					<TextInput
 						light
-						value={selectedItem.text}
-						labelText='Option display text'
-						onChange={(event: any) => updateCategoryOption(selectedComponent, index, 'text', event.currentTarget.value)} />
+						value={selectedItem.label}
+						labelText='Category label'
+						onChange={(event: any) => updateCategoryOption(selectedComponent, index, 'label', event.currentTarget.value)} />
 					<section>
 						<Checkbox
 							labelText='Disabled'
 							id={`disabled-${index}`}
 							checked={selectedItem.disabled}
 							onChange={(_: any, { checked }: any) => updateCategoryOption(selectedComponent, index, 'disabled', checked)} />
-						<Checkbox
-							labelText='Hidden'
-							id={`hidden-${index}`}
-							checked={selectedItem.hidden}
-							onChange={(_: any, { checked }: any) => updateCategoryOption(selectedComponent, index, 'hidden', checked)} />
+						<Button
+							size='sm'
+							kind='ghost'
+							className={addOptionButtonStyle}
+							onClick={(event: any) => {
+								event.stopPropagation();
+								addOption(0, selectedItem);
+							}}>
+								Add item
+						</Button>
 					</section>
 					{
-						selectedItem.isShowDeveloperOption &&
+						selectedItem.items.map((child: any, childIndex: any) => <>
+							<hr />
+							{/* category items */}
+							<TextInput
+								light
+								value={child.text}
+								key={`text-${child.id}`}
+								labelText='Option display text'
+								onChange={(event: any) => updateCategoryOption(selectedItem, childIndex, 'text', event.currentTarget.value)} />
+
+							<section>
+								<Checkbox
+									labelText='Disabled'
+									id={`isDisabled-checkbox-${child.id}`}
+									checked={child.disabled}
+									onChange={(_: any, { checked }: any) => updateCategoryOption(selectedItem, childIndex, 'disabled', checked)} />
+								<Checkbox
+									labelText='Hidden'
+									id={`isHidden-checkbox-${child.id}`}
+									checked={child.hidden}
+									onChange={(_: any, { checked }: any) => updateCategoryOption(selectedItem, childIndex, 'hidden', checked)} />
+							</section>
+							{
+								child.isShowDeveloperOption &&
+								<TextInput
+									light
+									value={child.value}
+									key={`child-value-${index}-${childIndex}-${child.text}`}
+									labelText='Option value'
+									onChange={(event: any) => updateCategoryOption(selectedItem, childIndex, 'value', event.currentTarget.value)} />
+							}
+						</>)
+					} </>
+				: <>
+					{/* standalone option items */}
 						<TextInput
 							light
-							value={selectedItem.value}
-							labelText='Option value'
-							onChange={(event: any) => updateCategoryOption(selectedComponent, index, 'value', event.currentTarget.value)} />
-					}
-			</>
+							value={selectedItem.text}
+							labelText='Option display text'
+							onChange={(event: any) => updateCategoryOption(selectedComponent, index, 'text', event.currentTarget.value)} />
+						<section>
+							<Checkbox
+								labelText='Disabled'
+								id={`disabled-${index}`}
+								checked={selectedItem.disabled}
+								onChange={(_: any, { checked }: any) => updateCategoryOption(selectedComponent, index, 'disabled', checked)} />
+							<Checkbox
+								labelText='Hidden'
+								id={`hidden-${index}`}
+								checked={selectedItem.hidden}
+								onChange={(_: any, { checked }: any) => updateCategoryOption(selectedComponent, index, 'hidden', checked)} />
+						</section>
+						{
+							selectedItem.isShowDeveloperOption &&
+							<TextInput
+								light
+								value={selectedItem.value}
+								labelText='Option value'
+								onChange={(event: any) => updateCategoryOption(selectedComponent, index, 'value', event.currentTarget.value)} />
+						}
+				</>
 		}
 	</>;
 
@@ -320,27 +322,26 @@ export const ASelect = ({
 			{
 				componentObj.items.map((step: any, index: any) =>
 					step.items && step.items.length > 0
-						?
-					<SelectItemGroup
-					key={index}
-					label={step.label}
-					disabled={step.disabled}>
-					{
-						step.items.map((child: any, index: any) => <SelectItem
-							text={child.text}
-							value={child.value}
-							disabled={child.disabled}
-							hidden={child.hidden}
-							key={index} />)
-					}
-					</SelectItemGroup>
-						:
-					<SelectItem
-						text={step.text}
-						value={step.value}
-						disabled={step.disabled}
-						hidden={step.hidden}
-						key={index} />
+						? <SelectItemGroup
+							key={index}
+							label={step.label}
+							disabled={step.disabled}>
+							{
+								step.items.map((child: any, index: any) => <SelectItem
+									text={child.text}
+									value={child.value}
+									disabled={child.disabled}
+									hidden={child.hidden}
+									key={index} />
+								)
+							}
+							</SelectItemGroup>
+						: <SelectItem
+							text={step.text}
+							value={step.value}
+							disabled={step.disabled}
+							hidden={step.hidden}
+							key={index} />
 				)
 			}
 			</Select>
@@ -395,23 +396,26 @@ export const componentInfo: ComponentInfo = {
 						[display]="${nameStringToVariableString(json.codeContext?.name)}Inline"
 						${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((step: any) =>
-							step.items && step.items.length > 0 ? `<optgroup
-							label="${step.label}"
-							${step.disabled ? 'disabled' : ''}>
-							${step.items.map((child: any) => `<option
-								value="${child.value}"
-								${child.disabled ? 'disabled' : ''}
-								${child.hidden ? 'hidden' : ''}>
-									${child.text}
-								</option>`
-							).join('\n')}
-							</optgroup>` : `<option
-							value="${step.value}"
-							${step.disabled ? 'disabled' : ''}
-							${step.hidden ? 'hidden' : ''}>
-								${step.text}
-							</option>`
-						).join('\n')}
+							step.items && step.items.length > 0
+								? `<optgroup
+									label="${step.label}"
+									${step.disabled ? 'disabled' : ''}>
+									${step.items.map((child: any) => `<option
+										value="${child.value}"
+										${child.disabled ? 'disabled' : ''}
+										${child.hidden ? 'hidden' : ''}>
+											${child.text}
+										</option>`
+									).join('\n')}
+									</optgroup>`
+								: `<option
+									value="${step.value}"
+									${step.disabled ? 'disabled' : ''}
+									${step.hidden ? 'hidden' : ''}>
+										${step.text}
+									</option>`
+							).join('\n')
+						}
 					</cds-select>`;
 				}
 			},
@@ -441,23 +445,26 @@ export const componentInfo: ComponentInfo = {
 						[display]="${nameStringToVariableString(json.codeContext?.name)}Inline"
 						${angularClassNamesFromComponentObj(json)}>
 						${json.items.map((step: any) =>
-							step.items && step.items.length > 0 ? `<optgroup
-							label="${step.label}"
-							${step.disabled ? 'disabled' : ''}>
-							${step.items.map((child: any) => `<option
-								value="${child.value}"
-								${child.disabled ? 'disabled' : ''}
-								${child.hidden ? 'hidden' : ''}>
-									${child.text}
-								</option>`
-							).join('\n')}
-							</optgroup>` : `<option
-							value="${step.value}"
-							${step.disabled ? 'disabled' : ''}
-							${step.hidden ? 'hidden' : ''}>
-								${step.text}
-							</option>`
-						).join('\n')}
+							step.items && step.items.length > 0
+								? `<optgroup
+									label="${step.label}"
+									${step.disabled ? 'disabled' : ''}>
+									${step.items.map((child: any) => `<option
+										value="${child.value}"
+										${child.disabled ? 'disabled' : ''}
+										${child.hidden ? 'hidden' : ''}>
+											${child.text}
+										</option>`
+									).join('\n')}
+									</optgroup>`
+								: `<option
+									value="${step.value}"
+									${step.disabled ? 'disabled' : ''}
+									${step.hidden ? 'hidden' : ''}>
+										${step.text}
+									</option>`
+							).join('\n')
+						}
 					</ibm-select>`;
 				}
 			}
@@ -485,27 +492,26 @@ export const componentInfo: ComponentInfo = {
 						${reactClassNamesFromComponentObj(json)}>
 						${json.items.map((step: any, index: any) =>
 							step.items && step.items.length > 0
-								?
-							`<SelectItemGroup
-							key="${index}"
-							label="${step.label}"
-							${step.disabled ? `disabled={${step.disabled}}`: ''}>
-							${step.items.map((child: any, index: any) => `<SelectItem
-								text="${child.text}"
-								value="${child.value}"
-								${child.disabled ? `disabled={${child.disabled}}`: ''}
-								${child.hidden ? `hidden={${child.hidden}}`: ''}
-								key="${index}" />`
-							).join('\n')}
-							</SelectItemGroup>`
-								:
-							`<SelectItem
+							? `<SelectItemGroup
+								key="${index}"
+								label="${step.label}"
+								${step.disabled ? `disabled={${step.disabled}}`: ''}>
+								${step.items.map((child: any, index: any) => `<SelectItem
+									text="${child.text}"
+									value="${child.value}"
+									${child.disabled ? `disabled={${child.disabled}}`: ''}
+									${child.hidden ? `hidden={${child.hidden}}`: ''}
+									key="${index}" />`
+								).join('\n')}
+								</SelectItemGroup>`
+							: `<SelectItem
 								text="${step.text}"
 								value="${step.value}"
 								${step.disabled ? `disabled={${step.disabled}}`: ''}
 								${step.hidden ? `hidden={${step.hidden}}`: ''}
 								key="${index}" />`
-						).join('\n')}
+							).join('\n')
+						}
 					</Select>`;
 				}
 			},
@@ -531,27 +537,26 @@ export const componentInfo: ComponentInfo = {
 						${reactClassNamesFromComponentObj(json)}>
 						${json.items.map((step: any, index: any) =>
 							step.items && step.items.length > 0
-								?
-							`<SelectItemGroup
-							key="${index}"
-							label="${step.label}"
-							${step.disabled ? `disabled={${step.disabled}}`: ''}>
-							${step.items.map((child: any, index: any) => `<SelectItem
-								text="${child.text}"
-								value="${child.value}"
-								${child.disabled ? `disabled={${child.disabled}}`: ''}
-								${child.hidden ? `hidden={${child.hidden}}`: ''}
-								key="${index}" />`
-							).join('\n')}
-							</SelectItemGroup>`
-								:
-							`<SelectItem
+							? `<SelectItemGroup
+								key="${index}"
+								label="${step.label}"
+								${step.disabled ? `disabled={${step.disabled}}`: ''}>
+								${step.items.map((child: any, index: any) => `<SelectItem
+									text="${child.text}"
+									value="${child.value}"
+									${child.disabled ? `disabled={${child.disabled}}`: ''}
+									${child.hidden ? `hidden={${child.hidden}}`: ''}
+									key="${index}" />`
+								).join('\n')}
+								</SelectItemGroup>`
+							: `<SelectItem
 								text="${step.text}"
 								value="${step.value}"
 								${step.disabled ? `disabled={${step.disabled}}`: ''}
 								${step.hidden ? `hidden={${step.hidden}}`: ''}
 								key="${index}" />`
-						).join('\n')}
+							).join('\n')
+						}
 					</Select>`;
 				}
 			}

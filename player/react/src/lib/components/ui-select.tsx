@@ -65,8 +65,8 @@ export const UISelect = ({ state, sendSignal }: {
 		disabled={state.disabled}>
 		{
 			state.items.map((step: any) =>
-				step.items && step.items.length > 0 ?
-				<SelectItemGroup
+				step.items && step.items.length > 0
+				? <SelectItemGroup
 					key={step.id}
 					label={step.label}
 					disabled={step.disabled}>
@@ -80,9 +80,8 @@ export const UISelect = ({ state, sendSignal }: {
 									hidden={child.hidden}
 								/>)
 						}
-				</SelectItemGroup>
-					:
-				<SelectItem
+					</SelectItemGroup>
+				: <SelectItem
 					onClick={() => sendSignal(step.id, 'click')}
 					key={step.id}
 					text={step.text}
