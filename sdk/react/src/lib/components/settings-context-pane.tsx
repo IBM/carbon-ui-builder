@@ -211,7 +211,7 @@ export const SettingsContextPane = ({
 	}, [settings]);
 
 	return (
-		<div className='context-pane-content'>
+		<div className={cx(styleContextPaneStyle, 'context-pane-content')}>
 			{
 				selectedComponent &&
 					<SelectedComponentBreadcrumbs
