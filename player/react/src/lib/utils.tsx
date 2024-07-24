@@ -33,6 +33,7 @@ import { UITextAreaInput } from './components/ui-text-area';
 import { UITextInput } from './components/ui-text-input';
 import { UITile } from './components/ui-tile';
 import { UITileFold } from './components/ui-tile-fold';
+import { UITimePicker } from './components/ui-time-picker';
 import { UIToggle } from './components/ui-toggle';
 import { kebabCase } from 'lodash';
 import { SendSignal } from './types';
@@ -282,6 +283,9 @@ export const renderComponents = (
 
 		case 'text-input':
 			return <UITextInput key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
+
+		case 'time-picker':
+			return <UITimePicker key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
 
 		case 'overflow-menu':
 			return <UIOverflowMenu key={state.id} state={state} sendSignal={sendSignal} setState={setState} setGlobalState={setGlobalState} />;
