@@ -30,28 +30,28 @@ export const slots = {
 	...commonSlots,
 	...slotsDisabled,
 	invalid: 'boolean',
-	isInvalid: (state: TimePickerState) => ({
+	setInvalid: (state: TimePickerState) => ({
 		...state,
 		invalid: true
 	}),
-	isValid: (state: TimePickerState) => ({
+	setValid: (state: TimePickerState) => ({
 		...state,
 		invalid: false
 	}),
-	toggleIsInvalid: (state: TimePickerState) => ({
+	toggleInvalid: (state: TimePickerState) => ({
 		...state,
 		invalid: !state.invalid
 	}),
 	light: 'boolean',
-	isLight: (state: TimePickerState) => ({
+	setLight: (state: TimePickerState) => ({
 		...state,
 		light: true
 	}),
-	isDark: (state: TimePickerState) => ({
+	setDark: (state: TimePickerState) => ({
 		...state,
 		light: false
 	}),
-	toggleIsLight: (state: TimePickerState) => ({
+	toggleLight: (state: TimePickerState) => ({
 		...state,
 		light: !state.light
 	}),
@@ -110,8 +110,8 @@ export const UITimePicker = ({ state, sendSignal }: {
 						value={step.value}
 						text={step.text}
 						selected={step.selected}
-						key={index}
-					/>)
+						key={index}/>
+					)
 				}
 			</TimePickerSelect>
 		}

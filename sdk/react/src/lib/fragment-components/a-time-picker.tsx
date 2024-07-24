@@ -193,8 +193,8 @@ export const ATimePicker = ({
 									value={step.value}
 									text={step.text}
 									key={index}
-									selected={step.selected}
-								/>)
+									selected={step.selected} />
+								)
 							}
 						</TimePickerSelect>
 					}
@@ -205,8 +205,8 @@ export const ATimePicker = ({
 									value={step.value}
 									text={step.text}
 									key={index}
-									selected={step.selected}
-								/>)
+									selected={step.selected} />
+								)
 							}
 						</TimePickerSelect>
 					}
