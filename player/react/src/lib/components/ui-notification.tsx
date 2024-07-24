@@ -31,24 +31,24 @@ export const slots = {
 	...commonSlots,
 	...slotsDisabled,
 	lowContrast: 'boolean',
-	isLowContrast: (state: NotificationState) => ({
+	setLowContrast: (state: NotificationState) => ({
 		...state,
 		lowContrast: true
 	}),
-	isNotLowContrast: (state: NotificationState) => ({
+	setHighContrast: (state: NotificationState) => ({
 		...state,
 		lowContrast: false
 	}),
-	toggleIsLowContrast: (state: NotificationState) => ({
+	toggleContrast: (state: NotificationState) => ({
 		...state,
 		lowContrast: !state.lowContrast
 	}),
 	hideCloseButton: 'boolean',
-	isHideCloseButton: (state: NotificationState) => ({
+	toHideCloseButton: (state: NotificationState) => ({
 		...state,
 		hideCloseButton: true
 	}),
-	isShowCloseButton: (state: NotificationState) => ({
+	toShowCloseButton: (state: NotificationState) => ({
 		...state,
 		hideCloseButton: false
 	}),
@@ -82,27 +82,27 @@ export const UINotification = ({ state, sendSignal }: {
 		{
 			state.variant === 'toastNotification'
 				? <ToastNotification
-			className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}
-			onClick={() => {
-				sendSignal(state.id, 'click');
-			}}
-			onChange={(event: any) => {
-				sendSignal(state.id, 'valueChange', [event.value], { ...state, value: event.value });
-			}}
-			caption={state.caption}
-			iconDescription={state.iconDescription}
-			hideCloseButton={state.isHideCloseButton}
-			lowContrast={state.lowContrast}
-			kind={state.kind}
-			subtitle={state.subtitle}
-			timeout={0}
-			title={state.title} />
+					className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}
+					onClick={() => {
+						sendSignal(state.id, 'click');
+					}}
+					onChange={(event: any) => {
+						sendSignal(state.id, 'valueChange', [event.value], { ...state, value: event.value });
+					}}
+					caption={state.caption}
+					iconDescription={state.iconDescription}
+					hideCloseButton={state.isHideCloseButton}
+					lowContrast={state.lowContrast}
+					kind={state.kind}
+					subtitle={state.subtitle}
+					timeout={0}
+					title={state.title} />
 				: <InlineNotification
-			className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}
-			kind={state.kind}
-			iconDescription={state.iconDescription}
-			subtitle= {state.subtitle}
-			title={state.title} />
+					className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}
+					kind={state.kind}
+					iconDescription={state.iconDescription}
+					subtitle= {state.subtitle}
+					title={state.title} />
 		}
 	</>;
 };
