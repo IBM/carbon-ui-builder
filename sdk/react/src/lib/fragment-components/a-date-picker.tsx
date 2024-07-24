@@ -95,19 +95,17 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 				checked={showRangePlaceholder}
 				onChange={(_: any, { checked }: any) => {
 					setShowRangePlaceholder(checked);
-					const componentAttributes = selectedComponent;
-
 					if (!checked) {
-						// Deleting the attributes from the model
-						delete componentAttributes.rangePlaceholder;
+						delete selectedComponent.rangePlaceholder;
+						setComponent({
+							...selectedComponent
+						});
 					} else {
-						// Restore user set range placeholder
-						componentAttributes.rangePlaceholder = rangePlaceholder;
+						setComponent({
+							...selectedComponent,
+							rangePlaceholder
+						});
 					}
-
-					setComponent({
-						...componentAttributes
-					});
 				}} />
 		}
 		{
@@ -144,8 +142,8 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 				rangeStartLabel: event.currentTarget.value
 			})} />
 		{
-			selectedComponent.kind === 'range'
-			&& <TextInput
+			selectedComponent.kind === 'range' &&
+			<TextInput
 				id='range-end-label'
 				value={selectedComponent.rangeEndLabel}
 				labelText='Date picker range end label'
@@ -367,8 +365,7 @@ export const componentInfo: ComponentInfo = {
 								${json.disabled ? `disabled={${json.disabled}}` : ''}
 								${json.invalid ? `invalid={${json.invalid}}` : ''}
 								${json.invalidText ? `invalidText='${json.rangeInvalidText}'` : ''}
-								${json.size && json.size !== 'md' ? `size="${json.size}"` : ''}
-								/>`
+								${json.size && json.size !== 'md' ? `size="${json.size}"` : ''} />`
 							: ''
 					}
 					</DatePicker>`;
@@ -415,8 +412,7 @@ export const componentInfo: ComponentInfo = {
 								${json.disabled ? `disabled={${json.disabled}}` : ''}
 								${json.invalid ? `invalid={${json.invalid}}` : ''}
 								${json.invalidText ? `invalidText='${json.rangeInvalidText}'` : ''}
-								${json.size && json.size !== 'md' ? `size="${json.size}"` : ''}
-								/>`
+								${json.size && json.size !== 'md' ? `size="${json.size}"` : ''} />`
 							: ''
 					}
 					</DatePicker>`;
