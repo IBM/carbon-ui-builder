@@ -32,11 +32,11 @@ export const AInlineNotificationSettingsUI = ({ selectedComponent, setComponent 
 		<Checkbox
 			labelText='Hide close button'
 			id='hide-close-button'
-			checked={selectedComponent.isHideCloseButton}
+			checked={selectedComponent.closeButtonHidden}
 			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
-					isHideCloseButton: checked
+					closeButtonHidden: checked
 				});
 			}} />
 		<Checkbox
@@ -110,7 +110,7 @@ export const AInlineNotification = ({
 			<InlineNotification
 				className={cx(preventCheckEventStyle, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}
 				kind={componentObj.kind}
-				hideCloseButton={componentObj.isHideCloseButton}
+				hideCloseButton={componentObj.closeButtonHidden}
 				lowContrast={componentObj.lowContrast}
 				subtitle={componentObj.subtitle}
 				title={componentObj.title} />
@@ -133,34 +133,34 @@ export const componentInfo: ComponentInfo = {
 		angular: {
 			latest: {
 				inputs: ({ json }) => `
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}notificationObj: any = {
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}NotificationObj: any = {
 					type: "${json.kind ? json.kind : 'error'}",
 					title: "${json.title ? json.title : ''}",
 					message: "${json.caption ? json.caption : ''}",
-					lowContrast:${json.lowContrast ? json.lowContrast : false},
-					showClose: ${json.isHideCloseButton ? json.isHideCloseButton : false}
+					lowContrast: ${!!json.lowContrast},
+					showClose: ${!!json.closeButtonHidden}
 				};`,
 				outputs: () => '',
 				imports: ['NotificationModule', 'ButtonModule'],
 				code: ({ json }) => `<cds-inline-notification
 					${angularClassNamesFromComponentObj(json)}
-					[notificationObj]="${nameStringToVariableString(json.codeContext?.name)}notificationObj">
+					[notificationObj]="${nameStringToVariableString(json.codeContext?.name)}NotificationObj">
 				</cds-inline-notification>`
 			},
 			v10: {
 				inputs: ({ json }) => `
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}notificationObj: any = {
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}NotificationObj: any = {
 					type: "${json.kind ? json.kind : 'error'}",
 					title: "${json.title ? json.title : ''}",
 					message: "${json.caption ? json.caption : ''}",
-					lowContrast:${json.lowContrast ? json.lowContrast : false},
-					showClose: ${json.isHideCloseButton ? json.isHideCloseButton : false}
+					lowContrast: ${!!json.lowContrast},
+					showClose: ${!!json.closeButtonHidden}
 				};`,
 				outputs: () => '',
 				imports: ['NotificationModule', 'ButtonModule'],
 				code: ({ json }) => `<ibm-notification
 					${angularClassNamesFromComponentObj(json)}
-					[notificationObj]="${nameStringToVariableString(json.codeContext?.name)}notificationObj">
+					[notificationObj]="${nameStringToVariableString(json.codeContext?.name)}NotificationObj">
 				</ibm-notification>`
 			}
 		},
@@ -169,8 +169,8 @@ export const componentInfo: ComponentInfo = {
 				imports: ['InlineNotification'],
 				code: ({ json }) => `<InlineNotification
 					kind="${json.kind ? json.kind : 'error'}"
-					hideCloseButton={${json.isHideCloseButton ? json.isHideCloseButton : false}}
-					lowContrast={${json.lowContrast ? json.lowContrast : false}}
+					hideCloseButton={${!!json.closeButtonHidden}}
+					lowContrast={${!!json.lowContrast}}
 					${json.subtitle ? `subtitle= { <span> ${json.subtitle} </span> }`: ''}
 					title="${json.title ? json.title : ''}"
 					onClose={(selectedItem) => handleInputChange({
@@ -185,8 +185,8 @@ export const componentInfo: ComponentInfo = {
 				imports: ['InlineNotification'],
 				code: ({ json }) => `<InlineNotification
 					kind="${json.kind ? json.kind : 'error'}"
-					hideCloseButton={${json.isHideCloseButton ? json.isHideCloseButton : false}}
-					lowContrast={${json.lowContrast ? json.lowContrast : false}}
+					hideCloseButton={${!!json.closeButtonHidden}}
+					lowContrast={${!!json.lowContrast}}
 					${json.subtitle ? `subtitle= { <span> ${json.subtitle} </span> }`: ''}
 					title="${json.title ? json.title : ''}"
 					onClose={(selectedItem) => handleInputChange({

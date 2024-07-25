@@ -8,20 +8,17 @@ export interface InlineNotificationState {
 	id: string;
 	type: string;
 	lowContrast?: boolean;
-	isHideCloseButton?: boolean;
+	closeButtonHidden?: boolean;
 	kind?: string;
-	link?: string;
 	subtitle?: string;
-	linkText?: string;
 	title?: string;
-	iconDescription?: string;
 	caption?: string;
 	cssClasses?: CssClasses[];
 }
 
 export const type = 'inline-notification';
 
-export const signals = ['valueChange', 'click'];
+export const signals = ['close'];
 
 export const slots = {
 	...commonSlots,
@@ -39,18 +36,18 @@ export const slots = {
 		...state,
 		lowContrast: !state.lowContrast
 	}),
-	hideCloseButton: 'boolean',
-	toHideCloseButton: (state: InlineNotificationState) => ({
+	closeButtonHidden: 'boolean',
+	hideCloseButton: (state: InlineNotificationState) => ({
 		...state,
-		hideCloseButton: true
+		closeButtonHidden: true
 	}),
-	toShowCloseButton: (state: InlineNotificationState) => ({
+	showCloseButton: (state: InlineNotificationState) => ({
 		...state,
-		hideCloseButton: false
+		closeButtonHidden: false
 	}),
-	toggleCloseButton: (state: InlineNotificationState) => ({
+	toggleCloseButtonVisibility: (state: InlineNotificationState) => ({
 		...state,
-		hideCloseButton: !state.isHideCloseButton
+		closeButtonHidden: !state.closeButtonHidden
 	}),
 	type: 'string',
 	kind: 'string',
@@ -77,6 +74,7 @@ export const UIInlineNotification = ({ state, sendSignal }: {
 		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}
 		kind={state.kind}
 		iconDescription={state.iconDescription}
-		subtitle= {state.subtitle}
-		title={state.title} />;
+		subtitle={state.subtitle}
+		title={state.title}
+		onClose={() => sendSignal(state.id, 'close')}/>;
 };
