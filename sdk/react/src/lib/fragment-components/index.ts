@@ -11,7 +11,7 @@ import * as contentSwitcher from './a-content-switcher';
 import * as dropdown from './a-dropdown';
 import * as fragment from './a-fragment';
 import * as grid from './a-grid';
-import * as notification from './a-notification';
+import * as inlineNotification from './a-inline-notification';
 import * as numberinput from './a-numberinput';
 import * as radio from './a-radio';
 import * as radioGroup from './a-radio-group';
@@ -53,7 +53,7 @@ export { AGrid, AGridCodeUI, AGridSettingsUI } from './a-grid';
 export { ALoading, ALoadingCodeUI, ALoadingSettingsUI } from './a-loading';
 export { ALink, ALinkSettingsUI, ALinkCodeUI } from './a-link';
 export { AInlineLoading, AInlineLoadingCodeUI, AInlineLoadingSettingsUI } from './a-inline-loading';
-export { ANotification, ANotificationSettingsUI, ANotificationCodeUI } from './a-notification';
+export { AInlineNotification, AInlineNotificationSettingsUI, AInlineNotificationCodeUI } from './a-inline-notification';
 export { ANumberInput, ANumberInputSettingsUI, ANumberInputCodeUI } from './a-numberinput';
 export { AProgressIndicator, AProgressIndicatorSettingsUI, AProgressIndicatorCodeUI } from './a-progress-indicator';
 export { ARow, ARowCodeUI, ARowSettingsUI } from './a-row';
@@ -90,7 +90,7 @@ export const allComponents = {
 	dropdown,
 	fragment,
 	grid,
-	notification,
+	notification: inlineNotification,
 	loading,
 	inlineLoading,
 	radio,
