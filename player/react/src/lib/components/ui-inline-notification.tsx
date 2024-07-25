@@ -51,11 +51,8 @@ export const slots = {
 	}),
 	type: 'string',
 	kind: 'string',
-	link: 'string',
 	subtitle: 'string',
-	linkText: 'string',
 	title: 'string',
-	iconDescription: 'string',
 	caption: 'string'
 };
 
