@@ -1,6 +1,6 @@
 import React from 'react';
 import { AComponent, ComponentInfo } from './a-component';
-import image from './../assets/component-icons/notification.svg';
+import image from './../assets/component-icons/toast-notification.svg';
 import { css, cx } from 'emotion';
 import {
 	Dropdown,
