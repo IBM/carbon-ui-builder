@@ -66,7 +66,7 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 			onChange={(event: any) => setComponent({
 				...selectedComponent,
 				kind: event.selectedItem.id,
-				...(event.selectedItem.id === 'range' && selectedComponent.rangeEndLabel === undefined) ? { rangeEndLabel: 'Range end' } : {}
+				rangeEndLabel: event.selectedItem.id === 'range' ? 'Range end' : undefined
 			})} />
 		{
 			(selectedComponent.kind === 'single' || selectedComponent.kind === 'range') &&
@@ -95,22 +95,15 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 				checked={showRangePlaceholder}
 				onChange={(_: any, { checked }: any) => {
 					setShowRangePlaceholder(checked);
-					if (!checked) {
-						delete selectedComponent.rangePlaceholder;
-						setComponent({
-							...selectedComponent
-						});
-					} else {
-						setComponent({
-							...selectedComponent,
-							rangePlaceholder
-						});
-					}
+					setComponent({
+						...selectedComponent,
+						rangePlaceholder: checked ? rangePlaceholder : undefined
+					});
 				}} />
 		}
 		{
-			showRangePlaceholder &&
-			<TextInput
+			showRangePlaceholder
+			&& <TextInput
 				id='range-placeholder'
 				value={selectedComponent.rangePlaceholder}
 				labelText='Range placeholder'
@@ -142,8 +135,8 @@ export const ADatePickerSettingsUI = ({ selectedComponent, setComponent }: any) 
 				rangeStartLabel: event.currentTarget.value
 			})} />
 		{
-			selectedComponent.kind === 'range' &&
-			<TextInput
+			selectedComponent.kind === 'range'
+			&& <TextInput
 				id='range-end-label'
 				value={selectedComponent.rangeEndLabel}
 				labelText='Date picker range end label'
@@ -256,8 +249,8 @@ export const componentInfo: ComponentInfo = {
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme: "light" | "dark" = "${json.light ? 'light' : 'dark'}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangeStartLabel = "${json.rangeStartLabel}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangeEndLabel = "${json.rangeEndLabel ?? ''}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = ${json.disabled ?? false};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = ${json.invalid ?? false};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = ${!!json.disabled};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = ${!!json.invalid};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText ?? ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder ?? 'mm/dd/yyyy'}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangePlaceholder = "${json.rangePlaceholder ?? ''}";
@@ -292,8 +285,8 @@ export const componentInfo: ComponentInfo = {
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Theme: "light" | "dark" = "${json.light ? 'light' : 'dark'}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangeStartLabel = "${json.rangeStartLabel}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangeEndLabel = "${json.rangeEndLabel ?? ''}";
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = ${json.disabled ?? false};
-					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = ${json.invalid ?? false};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsDisabled = ${!!json.disabled};
+					@Input() ${nameStringToVariableString(json.codeContext?.name)}IsInvalid = ${!!json.invalid};
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}InvalidText = "${json.invalidText ?? ''}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}Placeholder = "${json.placeholder ?? 'mm/dd/yyyy'}";
 					@Input() ${nameStringToVariableString(json.codeContext?.name)}RangePlaceholder = "${json.rangePlaceholder ?? ''}";

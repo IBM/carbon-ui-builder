@@ -10,8 +10,8 @@ import { stringToCssClassName } from '../utils';
 export interface DatePickerState {
 	type: string;
 	placeholder: string;
-	disabled?: boolean;
 	id: string;
+	disabled?: boolean;
 	invalid?: boolean;
 	invalidText?: string;
 	rangeInvalidText?: string;
@@ -22,6 +22,7 @@ export interface DatePickerState {
 	value?: string;
 	rangeStartLabel?: string;
 	rangeEndLabel?: string;
+	rangePlaceholder?: string;
 	cssClasses?: CssClasses[];
 	codeContext: {
 		name: string;
@@ -41,6 +42,7 @@ export const slots = {
 	invalidText: 'string',
 	rangeStartLabel: 'string',
 	rangeEndLabel: 'string',
+	rangePlaceholder: 'string',
 	rangeInvalidText: 'string',
 	value: 'string',
 	invalid: 'boolean',
@@ -112,15 +114,15 @@ export const UIDatePicker = ({ state, sendSignal }: {
 				invalid={state.invalid}
 				invalidText={state.invalidText}/>
 			{
-				state.kind === 'range' &&
-					<DatePickerInput
-						id={`${state.id}-end`}
-						placeholder={state.placeholder}
-						labelText={state.rangeEndLabel}
-						size={state.size}
-						disabled={state.disabled}
-						invalid={state.invalid}
-						invalidText={state.rangeInvalidText} />
+				state.kind === 'range'
+				&& <DatePickerInput
+					id={`${state.id}-end`}
+					placeholder={state.placeholder}
+					labelText={state.rangePlaceholder}
+					size={state.size}
+					disabled={state.disabled}
+					invalid={state.invalid}
+					invalidText={state.rangeInvalidText} />
 			}
 		</DatePicker>;
 };
