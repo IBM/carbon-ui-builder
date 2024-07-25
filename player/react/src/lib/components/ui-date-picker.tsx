@@ -9,8 +9,8 @@ import { stringToCssClassName } from '../utils';
 
 export interface DatePickerState {
 	type: string;
-	placeholder: string;
 	id: string;
+	placeholder?: string;
 	disabled?: boolean;
 	invalid?: boolean;
 	invalidText?: string;
