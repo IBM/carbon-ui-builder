@@ -6,8 +6,7 @@ import {
 	Dropdown,
 	Checkbox,
 	TextInput,
-	ToastNotification,
-	InlineNotification
+	ToastNotification
 } from '@carbon/react';
 import {
 	angularClassNamesFromComponentObj,
@@ -43,11 +42,11 @@ export const AToastNotificationSettingsUI = ({ selectedComponent, setComponent }
 		<Checkbox
 			labelText='Low contrast'
 			id='low-contrast'
-			checked={selectedComponent.lowContrast}
+			checked={selectedComponent.isLowContrast}
 			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
-					lowContrast: checked
+					isLowContrast: checked
 				});
 			}} />
 		<Dropdown
@@ -120,7 +119,7 @@ export const AToastNotification = ({
 				className={cx(preventCheckEventStyle, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}
 				caption={componentObj.caption}
 				hideCloseButton={componentObj.isHideCloseButton}
-				lowContrast={componentObj.lowContrast}
+				lowContrast={componentObj.isLowContrast}
 				kind={componentObj.kind}
 				subtitle={componentObj.subtitle}
 				timeout={0}
@@ -134,10 +133,10 @@ export const componentInfo: ComponentInfo = {
 	settingsUI: AToastNotificationSettingsUI,
 	codeUI: AToastNotificationCodeUI,
 	keywords: ['notification', 'toast'],
-	name: 'ToastNotification',
-	type: 'toastNotification',
+	name: 'Toast notification',
+	type: 'toast-notification',
 	defaultComponentObj: {
-		type: 'toastNotification'
+		type: 'toast-notification'
 	},
 	image,
 	codeExport: {
@@ -149,7 +148,7 @@ export const componentInfo: ComponentInfo = {
 					title: "${json.title ? json.title : ''}",
 					subtitle: "${json.subtitle ? json.subtitle : ''}",
 					caption: "${json.caption ? json.caption : ''}",
-					lowContrast:${json.lowContrast ? json.lowContrast : false},
+					lowContrast:${json.isLowContrast ? json.isLowContrast : false},
 					showClose: ${json.isHideCloseButton ? json.isHideCloseButton : false}
 				};`,
 				outputs: () => '',
@@ -166,7 +165,7 @@ export const componentInfo: ComponentInfo = {
 					title: "${json.title ? json.title : ''}",
 					subtitle: "${json.subtitle ? json.subtitle : ''}",
 					caption: "${json.caption ? json.caption : ''}",
-					lowContrast:${json.lowContrast ? json.lowContrast : false},
+					lowContrast:${json.isLowContrast ? json.isLowContrast : false},
 					showClose: ${json.isHideCloseButton ? json.isHideCloseButton : false}
 				};`,
 				outputs: () => '',
@@ -181,13 +180,13 @@ export const componentInfo: ComponentInfo = {
 			latest: {
 				imports: ['ToastNotification'],
 				code: ({ json }) => `<ToastNotification
-					caption="${json.caption}"
-					hideCloseButton={${json.isHideCloseButton}}
-					lowContrast={${json.lowContrast}}
-					kind="${json.kind}"
+					caption="${json.caption ? json.caption : ''}"
+					hideCloseButton={${json.isHideCloseButton ? json.isHideCloseButton : false}}
+					lowContrast={${json.isLowContrast ? json.isLowContrast : false}}
+					kind="${json.kind ? json.kind : 'error'}"
 					${json.subtitle ? `subtitle= { <span> ${json.subtitle} </span> }`: ''}
 					timeout={${0}}
-					title="${json.title}"
+					title="${json.title ? json.title : ''}"
 					onClose={(selectedItem) => handleInputChange({
 						target: {
 							name: "${nameStringToVariableString(json.codeContext?.name)}",
@@ -199,13 +198,13 @@ export const componentInfo: ComponentInfo = {
 			v10: {
 				imports: ['ToastNotification'],
 				code: ({ json }) => `<ToastNotification
-					caption="${json.caption}"
-					hideCloseButton={${json.isHideCloseButton}}
-					lowContrast={${json.lowContrast}}
-					kind="${json.kind}"
+					caption="${json.caption ? json.caption : ''}"
+					hideCloseButton={${json.isHideCloseButton ? json.isHideCloseButton : false}}
+					lowContrast={${json.isLowContrast ? json.isLowContrast : false}}
+					kind="${json.kind ? json.kind : 'error'}"
 					${json.subtitle ? `subtitle= { <span> ${json.subtitle} </span> }`: ''}
 					timeout={${0}}
-					title="${json.title}"
+					title="${json.title ? json.title : ''}"
 					onClose={(selectedItem) => handleInputChange({
 						target: {
 							name: "${nameStringToVariableString(json.codeContext?.name)}",

@@ -9,7 +9,7 @@ import { commonSlots, slotsDisabled } from '../common-slots';
 export interface ToastNotificationState {
 	id: string;
 	type: string;
-	lowContrast?: boolean;
+	isLowContrast?: boolean;
 	isHideCloseButton?: boolean;
 	kind?: string;
 	link?: string;
@@ -28,18 +28,18 @@ export const signals = ['valueChange', 'click'];
 export const slots = {
 	...commonSlots,
 	...slotsDisabled,
-	lowContrast: 'boolean',
+	isLowContrast: 'boolean',
 	setLowContrast: (state: ToastNotificationState) => ({
 		...state,
-		lowContrast: true
+		isLowContrast: true
 	}),
 	setHighContrast: (state: ToastNotificationState) => ({
 		...state,
-		lowContrast: false
+		isLowContrast: false
 	}),
 	toggleContrast: (state: ToastNotificationState) => ({
 		...state,
-		lowContrast: !state.lowContrast
+		isLowContrast: !state.isLowContrast
 	}),
 	hideCloseButton: 'boolean',
 	toHideCloseButton: (state: ToastNotificationState) => ({
@@ -86,7 +86,7 @@ export const UIToastNotification = ({ state, sendSignal }: {
 	caption={state.caption}
 	iconDescription={state.iconDescription}
 	hideCloseButton={state.isHideCloseButton}
-	lowContrast={state.lowContrast}
+	lowContrast={state.isLowContrast}
 	kind={state.kind}
 	subtitle={state.subtitle}
 	timeout={0}
