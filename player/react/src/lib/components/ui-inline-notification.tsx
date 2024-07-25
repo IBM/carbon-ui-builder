@@ -70,7 +70,7 @@ export const UIInlineNotification = ({ state, sendSignal }: {
 	return <InlineNotification
 		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}
 		kind={state.kind}
-		iconDescription={state.iconDescription}
+		statusIconDescription={state.iconDescription}
 		subtitle={state.subtitle}
 		title={state.title}
 		onClose={() => sendSignal(state.id, 'close')}/>;
