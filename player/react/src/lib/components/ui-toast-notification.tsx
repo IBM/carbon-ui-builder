@@ -9,19 +9,17 @@ import { commonSlots, slotsDisabled } from '../common-slots';
 export interface ToastNotificationState {
 	id: string;
 	type: string;
-	isLowContrast?: boolean;
-	isHideCloseButton?: boolean;
-	kind?: string;
-	link?: string;
-	subtitle?: string;
-	linkText?: string;
-	title?: string;
 	iconDescription?: string;
+	lowContrast?: boolean;
+	closeButtonHidden?: boolean;
+	kind?: string;
+	subtitle?: string;
+	title?: string;
 	caption?: string;
 	cssClasses?: CssClasses[];
 }
 
-export const type = 'notification';
+export const type = 'toast-notification';
 
 export const signals = ['valueChange', 'click'];
 
@@ -39,28 +37,25 @@ export const slots = {
 	}),
 	toggleContrast: (state: ToastNotificationState) => ({
 		...state,
-		isLowContrast: !state.isLowContrast
+		isLowContrast: !state.lowContrast
 	}),
-	hideCloseButton: 'boolean',
-	toHideCloseButton: (state: ToastNotificationState) => ({
+	closeButtonHidden: 'boolean',
+	hideCloseButton: (state: ToastNotificationState) => ({
 		...state,
-		hideCloseButton: true
+		closeButtonHidden: true
 	}),
-	toShowCloseButton: (state: ToastNotificationState) => ({
+	showCloseButton: (state: ToastNotificationState) => ({
 		...state,
-		hideCloseButton: false
+		closeButtonHidden: false
 	}),
-	toggleCloseButton: (state: ToastNotificationState) => ({
+	toggleCloseButtonVisibility: (state: ToastNotificationState) => ({
 		...state,
-		hideCloseButton: !state.isHideCloseButton
+		closeButtonHidden: !state.closeButtonHidden
 	}),
 	type: 'string',
 	kind: 'string',
-	link: 'string',
 	subtitle: 'string',
-	linkText: 'string',
 	title: 'string',
-	iconDescription: 'string',
 	caption: 'string'
 };
 
@@ -76,19 +71,18 @@ export const UIToastNotification = ({ state, sendSignal }: {
 	}
 
 	return <ToastNotification
-	className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}
-	onClick={() => {
-		sendSignal(state.id, 'click');
-	}}
-	onChange={(event: any) => {
-		sendSignal(state.id, 'valueChange', [event.value], { ...state, value: event.value });
-	}}
-	caption={state.caption}
-	iconDescription={state.iconDescription}
-	hideCloseButton={state.isHideCloseButton}
-	lowContrast={state.isLowContrast}
-	kind={state.kind}
-	subtitle={state.subtitle}
-	timeout={0}
-	title={state.title} />;
+		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}
+		onClick={() => {
+			sendSignal(state.id, 'click');
+		}}
+		onChange={(event: any) => {
+			sendSignal(state.id, 'valueChange', [event.value], { ...state, value: event.value });
+		}}
+		caption={state.caption}
+		statusIconDescription={state.iconDescription}
+		hideCloseButton={state.closeButtonHidden}
+		lowContrast={state.lowContrast}
+		kind={state.kind}
+		subtitle={state.subtitle}
+		title={state.title} />;
 };

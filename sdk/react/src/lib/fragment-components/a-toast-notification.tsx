@@ -32,21 +32,21 @@ export const AToastNotificationSettingsUI = ({ selectedComponent, setComponent }
 		<Checkbox
 			labelText='Hide close button'
 			id='hide-close-button'
-			checked={selectedComponent.isHideCloseButton}
+			checked={selectedComponent.closeButtonHidden}
 			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
-					isHideCloseButton: checked
+					closeButtonHidden: checked
 				});
 			}} />
 		<Checkbox
 			labelText='Low contrast'
 			id='low-contrast'
-			checked={selectedComponent.isLowContrast}
+			checked={selectedComponent.lowContrast}
 			onChange={(_: any, { checked }: any) => {
 				setComponent({
 					...selectedComponent,
-					isLowContrast: checked
+					lowContrast: checked
 				});
 			}} />
 		<Dropdown
@@ -118,11 +118,10 @@ export const AToastNotification = ({
 			<ToastNotification
 				className={cx(preventCheckEventStyle, componentObj.cssClasses?.map((cc: any) => cc.id).join(' '))}
 				caption={componentObj.caption}
-				hideCloseButton={componentObj.isHideCloseButton}
-				lowContrast={componentObj.isLowContrast}
+				hideCloseButton={componentObj.closeButtonHidden}
+				lowContrast={componentObj.lowContrast}
 				kind={componentObj.kind}
 				subtitle={componentObj.subtitle}
-				timeout={0}
 				title={componentObj.title} />
 		</AComponent>
 	);
@@ -143,36 +142,36 @@ export const componentInfo: ComponentInfo = {
 		angular: {
 			latest: {
 				inputs: ({ json }) => `
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}notificationObj: any = {
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}NotificationObj: any = {
 					type: "${json.kind ? json.kind : 'error'}",
 					title: "${json.title ? json.title : ''}",
 					subtitle: "${json.subtitle ? json.subtitle : ''}",
 					caption: "${json.caption ? json.caption : ''}",
-					lowContrast:${json.isLowContrast ? json.isLowContrast : false},
-					showClose: ${json.isHideCloseButton ? json.isHideCloseButton : false}
+					lowContrast:${!!json.lowContrast},
+					showClose: ${!!json.closeButtonHidden}
 				};`,
 				outputs: () => '',
 				imports: ['NotificationModule', 'ButtonModule'],
 				code: ({ json }) => `<cds-toast
 					${angularClassNamesFromComponentObj(json)}
-					[notificationObj]="${nameStringToVariableString(json.codeContext?.name)}notificationObj">
+					[notificationObj]="${nameStringToVariableString(json.codeContext?.name)}NotificationObj">
 				</cds-toast>`
 			},
 			v10: {
 				inputs: ({ json }) => `
-				@Input() ${nameStringToVariableString(json.codeContext?.name)}notificationObj: any = {
+				@Input() ${nameStringToVariableString(json.codeContext?.name)}NotificationObj: any = {
 					type: "${json.kind ? json.kind : 'error'}",
 					title: "${json.title ? json.title : ''}",
 					subtitle: "${json.subtitle ? json.subtitle : ''}",
 					caption: "${json.caption ? json.caption : ''}",
-					lowContrast:${json.isLowContrast ? json.isLowContrast : false},
-					showClose: ${json.isHideCloseButton ? json.isHideCloseButton : false}
+					lowContrast:${!!json.lowContrast},
+					showClose: ${!!json.closeButtonHidden}
 				};`,
 				outputs: () => '',
 				imports: ['NotificationModule', 'ButtonModule'],
 				code: ({ json }) => `<ibm-toast
 					${angularClassNamesFromComponentObj(json)}
-					[notificationObj]="${nameStringToVariableString(json.codeContext?.name)}notificationObj">
+					[notificationObj]="${nameStringToVariableString(json.codeContext?.name)}NotificationObj">
 				</ibm-toast>`
 			}
 		},
@@ -181,8 +180,8 @@ export const componentInfo: ComponentInfo = {
 				imports: ['ToastNotification'],
 				code: ({ json }) => `<ToastNotification
 					caption="${json.caption ? json.caption : ''}"
-					hideCloseButton={${json.isHideCloseButton ? json.isHideCloseButton : false}}
-					lowContrast={${json.isLowContrast ? json.isLowContrast : false}}
+					hideCloseButton={${!!json.closeButtonHidden}}
+					lowContrast={${!!json.lowContrast}}
 					kind="${json.kind ? json.kind : 'error'}"
 					${json.subtitle ? `subtitle= { <span> ${json.subtitle} </span> }`: ''}
 					timeout={${0}}
@@ -199,8 +198,8 @@ export const componentInfo: ComponentInfo = {
 				imports: ['ToastNotification'],
 				code: ({ json }) => `<ToastNotification
 					caption="${json.caption ? json.caption : ''}"
-					hideCloseButton={${json.isHideCloseButton ? json.isHideCloseButton : false}}
-					lowContrast={${json.isLowContrast ? json.isLowContrast : false}}
+					hideCloseButton={${!!json.closeButtonHidden}}
+					lowContrast={${!!json.lowContrast}}
 					kind="${json.kind ? json.kind : 'error'}"
 					${json.subtitle ? `subtitle= { <span> ${json.subtitle} </span> }`: ''}
 					timeout={${0}}
