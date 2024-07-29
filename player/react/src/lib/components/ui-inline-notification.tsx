@@ -7,6 +7,7 @@ import { commonSlots, slotsDisabled } from '../common-slots';
 export interface InlineNotificationState {
 	id: string;
 	type: string;
+	iconDescription?: string;
 	lowContrast?: boolean;
 	closeButtonHidden?: boolean;
 	kind?: string;
