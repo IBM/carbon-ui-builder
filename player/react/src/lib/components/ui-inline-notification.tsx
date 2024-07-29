@@ -72,6 +72,8 @@ export const UIInlineNotification = ({ state, sendSignal }: {
 		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}
 		kind={state.kind}
 		statusIconDescription={state.iconDescription}
+		hideCloseButton={state.closeButtonHidden}
+		lowContrast={state.lowContrast}
 		subtitle={state.subtitle}
 		title={state.title}
 		onClose={() => sendSignal(state.id, 'close')}/>;
