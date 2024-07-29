@@ -72,12 +72,7 @@ export const UIToastNotification = ({ state, sendSignal }: {
 
 	return <ToastNotification
 		className={state.cssClasses?.map((cc: any) => cc.id).join(' ')}
-		onClick={() => {
-			sendSignal(state.id, 'click');
-		}}
-		onChange={(event: any) => {
-			sendSignal(state.id, 'valueChange', [event.value], { ...state, value: event.value });
-		}}
+		onClose={() => sendSignal(state.id, 'close')}
 		caption={state.caption}
 		statusIconDescription={state.iconDescription}
 		hideCloseButton={state.closeButtonHidden}
