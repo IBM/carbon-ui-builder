@@ -171,7 +171,7 @@ export const componentInfo: ComponentInfo = {
 					kind="${json.kind ? json.kind : 'error'}"
 					hideCloseButton={${!!json.closeButtonHidden}}
 					lowContrast={${!!json.lowContrast}}
-					${json.subtitle ? `subtitle= { <span> ${json.subtitle} </span> }`: ''}
+					${json.subtitle ? `subtitle={<span>${json.subtitle}</span>}`: ''}
 					title="${json.title ? json.title : ''}"
 					onClose={(selectedItem) => handleInputChange({
 						target: {
@@ -187,7 +187,7 @@ export const componentInfo: ComponentInfo = {
 					kind="${json.kind ? json.kind : 'error'}"
 					hideCloseButton={${!!json.closeButtonHidden}}
 					lowContrast={${!!json.lowContrast}}
-					${json.subtitle ? `subtitle= { <span> ${json.subtitle} </span> }`: ''}
+					${json.subtitle ? `subtitle={<span>${json.subtitle}</span>}`: ''}
 					title="${json.title ? json.title : ''}"
 					onClose={(selectedItem) => handleInputChange({
 						target: {

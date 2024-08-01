@@ -53,7 +53,7 @@ export const allComponents = {
 	radioGroup,
 	link,
 	numberinput,
-	notification: inlineNotification,
+	inlineNotification,
 	progressIndicator,
 	row,
 	searchinput,

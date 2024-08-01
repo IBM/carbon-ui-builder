@@ -90,7 +90,7 @@ export const allComponents = {
 	dropdown,
 	fragment,
 	grid,
-	notification: inlineNotification,
+	inlineNotification,
 	loading,
 	inlineLoading,
 	radio,
