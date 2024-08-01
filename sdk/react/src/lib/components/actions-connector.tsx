@@ -50,6 +50,7 @@ const ActionItem = ({ item, index, updateItem, fragment }: any) => {
 
 	const component = getComponentById(fragment.data, item.source);
 	const signalDropdownItems: any[] = signalsFromType(component.type).map((item: any) => ({ text: item }));
+
 	useEffect(() => {
 		if (signalDropdownItems.length === 1) {
 			setSelectedSignal(signalDropdownItems[0].text);
