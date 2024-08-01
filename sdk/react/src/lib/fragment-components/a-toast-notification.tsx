@@ -131,7 +131,7 @@ export const componentInfo: ComponentInfo = {
 	component: AToastNotification,
 	settingsUI: AToastNotificationSettingsUI,
 	codeUI: AToastNotificationCodeUI,
-	keywords: ['notification', 'toast'],
+	keywords: ['notification', 'toast', 'notify', 'alert'],
 	name: 'Toast notification',
 	type: 'toast-notification',
 	defaultComponentObj: {
@@ -183,7 +183,7 @@ export const componentInfo: ComponentInfo = {
 					hideCloseButton={${!!json.closeButtonHidden}}
 					lowContrast={${!!json.lowContrast}}
 					kind="${json.kind ? json.kind : 'error'}"
-					${json.subtitle ? `subtitle= { <span> ${json.subtitle} </span> }`: ''}
+					${json.subtitle ? `subtitle={<span>${json.subtitle}</span>}`: ''}
 					timeout={${0}}
 					title="${json.title ? json.title : ''}"
 					onClose={(selectedItem) => handleInputChange({
@@ -201,7 +201,7 @@ export const componentInfo: ComponentInfo = {
 					hideCloseButton={${!!json.closeButtonHidden}}
 					lowContrast={${!!json.lowContrast}}
 					kind="${json.kind ? json.kind : 'error'}"
-					${json.subtitle ? `subtitle= { <span> ${json.subtitle} </span> }`: ''}
+					${json.subtitle ? `subtitle={<span>${json.subtitle}</span>}`: ''}
 					timeout={${0}}
 					title="${json.title ? json.title : ''}"
 					onClose={(selectedItem) => handleInputChange({
