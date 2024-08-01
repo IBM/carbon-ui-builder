@@ -122,7 +122,7 @@ export const componentInfo: ComponentInfo = {
 	component: AInlineNotification,
 	settingsUI: AInlineNotificationSettingsUI,
 	codeUI: AInlineNotificationCodeUI,
-	keywords: ['notification', 'inline'],
+	keywords: ['notification', 'inline', 'notify', 'alert'],
 	name: 'Inline notification',
 	type: 'inline-notification',
 	defaultComponentObj: {
